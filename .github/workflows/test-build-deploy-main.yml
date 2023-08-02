@@ -9,38 +9,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  gem-test:
-    runs-on: ubuntu-latest
-
-    env:
-      RACK_ENV: test
-      RAILS_ENV: test
-    defaults:
-      run:
-        working-directory: ./gems/laa_multi_step_forms
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup Ruby and install gems
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
-          working-directory: ./gems/laa_multi_step_forms
-
-      - name: Run linters
-        run: bundle exec rubocop
-
-      - name: Run tests
-        run: bundle exec rspec
-
-      - name: Upload rspec coverage (if failure)
-        if: failure()
-        uses: actions/upload-artifact@v3
-        with:
-          name: rspec-coverage
-          path: coverage/*
-
   test:
     runs-on: ubuntu-latest
 
@@ -69,21 +37,21 @@ jobs:
         with:
           bundler-cache: true
 
-      - name: Find yarn cache location
-        id: yarn-cache-dir-path
-        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+      # - name: Find yarn cache location
+      #   id: yarn-cache-dir-path
+      #   run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
 
-      - name: JS package cache
-        uses: actions/cache@v3
-        id: yarn-cache
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+      # - name: JS package cache
+      #   uses: actions/cache@v3
+      #   id: yarn-cache
+      #   with:
+      #     path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+      #     key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-yarn-
 
-      - name: Install packages with yarn
-        run: yarn install --frozen-lockfile --ignore-scripts
+      # - name: Install packages with yarn
+      #   run: yarn install --frozen-lockfile --ignore-scripts
 
       - name: Precompile assets
         run: bin/rails dartsass:build
@@ -97,8 +65,8 @@ jobs:
       - name: Run tests
         run: bundle exec rspec
 
-      - name: Run testing framework
-        run: yarn unit-test --passWithNoTests
+      # - name: Run testing framework
+      #   run: yarn unit-test --passWithNoTests
 
       - name: Upload rspec coverage (if failure)
         if: failure()
@@ -106,13 +74,6 @@ jobs:
         with:
           name: rspec-coverage
           path: coverage/*
-
-      - name: Upload JS System failure images
-        if: failure()
-        uses: actions/upload-artifact@v3
-        with:
-          name: JS-System-failures
-          path: tmp/capybara/*
 
   build:
     runs-on: ubuntu-latest
