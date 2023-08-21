@@ -7,10 +7,17 @@ orbs:
 # REFERENCES
 # ------------------
 references:
+  _not_main: &not-main
+    filters:
+          branches:
+            ignore: 
+              - main
+  
   _main-only: &main-only
       filters:
         branches:
-          only: main
+          only: 
+            - main
 
   _restore-bundle: &restore-bundle
     restore_cache:
@@ -98,14 +105,15 @@ jobs:
 # ------------------
 workflows:
   build-deploy-main:
-    <<: *main-only
     jobs:
       - build
+      <<: *main-only
   
   build-deploy-branch: 
     jobs: 
       - build:
         filters:
           branches:
-            ignore: main
+            ignore:
+              - main
         
