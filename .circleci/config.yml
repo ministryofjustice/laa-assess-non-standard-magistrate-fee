@@ -98,6 +98,7 @@ jobs:
 # ------------------
 workflows:
   build-deploy-main:
+    <<: *main-only
     jobs:
       - build
   
@@ -107,5 +108,5 @@ workflows:
         ignore:
           - main
     jobs: 
-      - build:
-        <<: *main-only
+      - build
+        
