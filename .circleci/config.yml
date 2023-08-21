@@ -58,25 +58,25 @@ references:
         - app/assets/builds
 
 # ------------------
-# COMMANDS
+# JOBS
 # ------------------  
-commands: 
+commands:
   install-gems:
     steps:
       - *restore-bundle
       - *install-bundle
       - *save-bundle
 
-    install-compile-assets:
-      steps:
-        - *restore-assets
-        - *install-assets
-        - *save-assets
+  install-compile-assets:
+    steps:
+      - *restore-assets
+      - *install-assets
+      - *save-assets
 
-    restore-dependencies:
-      steps:
-        - *restore-bundle
-        - *restore-assets
+  restore-dependencies:
+    steps:
+      - *restore-bundle
+      - *restore-assets
 
 # ------------------
 # JOBS
