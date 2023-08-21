@@ -106,8 +106,8 @@ jobs:
 workflows:
   build-deploy-main:
     jobs:
-      - build
-      <<: *main-only
+      - build:
+        <<: *main-only
   
   build-deploy-branch: 
     jobs: 
@@ -116,4 +116,3 @@ workflows:
           branches:
             ignore:
               - main
-        
