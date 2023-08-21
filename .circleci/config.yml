@@ -103,10 +103,10 @@ workflows:
       - build
   
   build-deploy-branch: 
-    filters:
-      branches:
-        ignore:
-          - main
     jobs: 
-      - build
+      - build:
+        filters:
+          branches:
+            ignore:
+              - main
         
