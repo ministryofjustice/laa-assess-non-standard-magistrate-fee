@@ -3,6 +3,11 @@ version: 2.1
 orbs:
   ruby: circleci/ruby@2.0.1
 
+references:
+  _main-only: &main-only
+      filters:
+        branches:
+          only: main
 jobs:
   build:
     docker:
@@ -17,6 +22,15 @@ jobs:
 
 
 workflows:
-  branch-build-approval:
+  build-deploy-main:
     jobs:
       - build
+  
+  build-deploy-branch: 
+    filters:
+      branches:
+        ignore:
+          - main
+    jobs: 
+      - build:
+        <<: *main-only
