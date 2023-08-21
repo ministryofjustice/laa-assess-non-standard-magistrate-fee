@@ -36,3 +36,6 @@
 .env.local
 .env.test.local
 
+# ignore code testing coverage folders
+/coverage
+
