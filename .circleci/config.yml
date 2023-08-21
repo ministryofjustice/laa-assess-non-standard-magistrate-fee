@@ -11,8 +11,8 @@ references:
       filters:
         branches:
           only: main
- 
- _restore-bundle: &restore-bundle
+
+  _restore-bundle: &restore-bundle
     restore_cache:
       keys:
         - v1-bundle-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
