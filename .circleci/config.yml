@@ -112,7 +112,4 @@ workflows:
   build-deploy-branch: 
     jobs: 
       - build:
-        filters:
-          branches:
-            ignore:
-              - main
+        <<: *not-main
