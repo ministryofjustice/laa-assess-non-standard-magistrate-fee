@@ -3,11 +3,84 @@ version: 2.1
 orbs:
   ruby: circleci/ruby@2.0.1
 
+# ------------------
+# REFERENCES
+# ------------------
 references:
   _main-only: &main-only
       filters:
         branches:
           only: main
+          _restore-bundle: &restore-bundle
+  
+  _restore_cache:
+      keys:
+        - v1-bundle-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+        # fallback to using the latest cache if no exact match is found
+        - v1-bundle-
+
+  _install-bundle: &install-bundle
+    run:
+      name: Install gems
+      command: |
+        bundler_version=$(cat Gemfile.lock | tail -1 | tr -d " ")
+        gem install bundler -v $bundler_version
+        bundle config set path '~/vendor/bundle'
+        bundle check || bundle install --jobs=4 --retry=3
+        bundle clean --force
+
+  _save-bundle: &save-bundle
+    save_cache:
+      key: v1-bundle-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+      paths:
+        - ~/.bundle
+        - ~/vendor/bundle
+
+  _restore-assets: &restore-assets
+    restore_cache:
+      keys:
+        - v4-yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
+        # fallback to using the latest asset cache if no exact match is found
+        - v4-yarn-
+
+  _install-assets: &install-assets
+    run:
+      name: Install and compile assets
+      command: |
+        RUBYOPT=-W:no-deprecated \
+        yarn install && yarn build --progress --color
+
+  _save-assets: &save-assets
+    save_cache:
+      key: v4-yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
+      paths:
+        - node_modules
+        - app/assets/builds
+
+# ------------------
+# COMMANDS
+# ------------------  
+commands: 
+  install-gems:
+      steps:
+        - *restore-bundle
+        - *install-bundle
+        - *save-bundle
+
+    install-compile-assets:
+      steps:
+        - *restore-assets
+        - *install-assets
+        - *save-assets
+
+    restore-dependencies:
+      steps:
+        - *restore-bundle
+        - *restore-assets
+
+# ------------------
+# JOBS
+# ------------------      
 jobs:
   build:
     docker:
@@ -20,7 +93,9 @@ jobs:
           command: bundle -v
       - ruby/install-deps
 
-
+# ------------------
+# WORKFLOWS
+# ------------------
 workflows:
   build-deploy-main:
     jobs:
