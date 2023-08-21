@@ -12,8 +12,9 @@ references:
         branches:
           only: main
           _restore-bundle: &restore-bundle
-  
-  _restore_cache:
+ 
+ _restore-bundle: &restore-bundle
+    restore_cache:
       keys:
         - v1-bundle-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
         # fallback to using the latest cache if no exact match is found
