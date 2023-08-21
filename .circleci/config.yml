@@ -62,10 +62,10 @@ references:
 # ------------------  
 commands: 
   install-gems:
-      steps:
-        - *restore-bundle
-        - *install-bundle
-        - *save-bundle
+    steps:
+      - *restore-bundle
+      - *install-bundle
+      - *save-bundle
 
     install-compile-assets:
       steps:
