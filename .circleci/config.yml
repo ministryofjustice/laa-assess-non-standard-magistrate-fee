@@ -61,6 +61,10 @@ references:
         - node_modules
         - app/assets/builds
 
+  _attach-tmp-workspace: &attach-tmp-workspace
+    attach_workspace:
+      at: ~/repo/tmp
+
 # ------------------
 # EXECUTORS
 # ------------------  
@@ -154,6 +158,7 @@ jobs:
     steps:
       - checkout
       - restore-dependencies
+      - *attach-tmp-workspace
       - rubocop
   
   rspec-tests:
@@ -161,6 +166,7 @@ jobs:
     steps:
       - checkout
       - restore-dependencies
+      - *attach-tmp-workspace
       - rspec
 
 
@@ -171,13 +177,13 @@ workflows:
   test:
     jobs:
       - build-test-container:
-        filters:
-          branches:
-            ignore: 
-              - main
+          filters:
+            branches:
+              ignore:
+                - main
       - linter-tests:
-        requires:
-          - build-test-container
+          requires:
+            - build-test-container
       - rspec-tests:
-        requires:
-          - build-test-container
+          requires:
+            - build-test-container
