@@ -9,9 +9,9 @@ orbs:
 references:
   _not_main: &not-main
     filters:
-          branches:
-            ignore: 
-              - main
+      branches:
+        ignore: 
+          - main
   
   _main-only: &main-only
       filters:
