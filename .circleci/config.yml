@@ -20,7 +20,7 @@ references:
       command: |
         bundler_version=$(cat Gemfile.lock | tail -1 | tr -d " ")
         gem install bundler -v $bundler_version
-        bundle config set path 'vendor/bundle'
+        bundle config set path '~/vendor/bundle'
         bundle check || bundle install --jobs=4 --retry=3
         bundle clean --force
 
