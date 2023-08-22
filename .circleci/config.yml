@@ -52,7 +52,8 @@ references:
       name: Install and compile assets
       command: |
         RUBYOPT=-W:no-deprecated \
-        yarn install && bin/rails dartsass:build
+        yarn install && bin/rails dartsass:build \
+        ls
 
   _save-assets: &save-assets
     save_cache:
@@ -60,11 +61,6 @@ references:
       paths:
         - node_modules
         - app/assets/builds
-
-  _print_directory: &print-directory 
-    run:
-      name: Show files in working directory
-      command: ls
 
 # ------------------
 # EXECUTORS
@@ -98,7 +94,6 @@ commands:
     steps:
       - *restore-assets
       - *install-assets
-      - *print-directory
       - *save-assets
 
   restore-dependencies:
