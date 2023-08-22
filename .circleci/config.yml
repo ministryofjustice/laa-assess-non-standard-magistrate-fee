@@ -65,6 +65,15 @@ references:
         - app/assets/builds
 
 # ------------------
+# EXECUTORS
+# ------------------  
+executors:
+  build-image-executor:
+    resource_class: small
+    docker:
+      - image: cimg/ruby:3.2.2
+
+# ------------------
 # COMMANDS
 # ------------------  
 commands:
@@ -145,12 +154,14 @@ jobs:
       - ruby/install-deps
   
   linter-tests:
+    executor: build-image-executor
     steps:
       - checkout
       - install-requirements
       - rubocop
   
   rspec-tests:
+    executor: build-image-executor
     steps:
       - checkout
       - install-requirements
