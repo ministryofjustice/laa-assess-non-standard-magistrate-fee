@@ -110,9 +110,7 @@ commands:
     steps:
       - run:
           name: Run rubocop
-          command: |
-            ls
-            bundle exec rubocop
+          command: bundle exec rubocop
 
   rspec:
     steps:
