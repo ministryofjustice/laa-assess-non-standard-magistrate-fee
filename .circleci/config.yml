@@ -55,7 +55,7 @@ references:
       name: Install and compile assets
       command: |
         RUBYOPT=-W:no-deprecated \
-        yarn install && yarn build --progress --color
+        yarn install && bin/rails dartsass:build
 
   _save-assets: &save-assets
     save_cache:
@@ -65,7 +65,7 @@ references:
         - app/assets/builds
 
 # ------------------
-# JOBS
+# COMMANDS
 # ------------------  
 commands:
   install-gems:
@@ -85,6 +85,53 @@ commands:
       - *restore-bundle
       - *restore-assets
 
+  rubocop:
+    steps:
+      - run:
+          name: Run rubocop
+          command: bundle exec rubocop
+
+  rspec:
+    steps:
+      - run:
+          name: Run rspec tests
+          command: |
+            mkdir /tmp/test-results
+            tmp/cc-test-reporter before-build
+            TESTFILES=$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+            RUBYOPT=-W:no-deprecated \
+            bundle exec rspec \
+              --format progress \
+              --format RspecJunitFormatter \
+              --out /tmp/test-results/rspec.xml \
+              $TESTFILES
+            tmp/cc-test-reporter format-coverage -t simplecov -o "tmp/coverage/codeclimate.$CIRCLE_NODE_INDEX.json"
+      - store_test_results:
+          path: /tmp/test-results
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: test-results
+
+  upload-coverage:
+      steps:
+        - run:
+            name: Upload coverage results to Code Climate
+            command: |
+              tmp/cc-test-reporter sum-coverage --output - tmp/coverage/codeclimate.*.json | tmp/cc-test-reporter upload-coverage --input -
+
+  install-codeclimate-tt:
+      steps:
+        - run:
+            name: Install codeclimate test reporter
+            command: |
+              mkdir -p tmp/
+              mkdir -p tmp/coverage/
+              curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > tmp/cc-test-reporter
+              chmod +x tmp/cc-test-reporter
+        - persist_to_workspace:
+            root: tmp
+            paths:
+              - cc-test-reporter
 # ------------------
 # JOBS
 # ------------------      
@@ -95,15 +142,25 @@ jobs:
     executor: ruby/default
     steps:
       - checkout
-      - run:
-          name: Which bundler?
-          command: bundle -v
       - ruby/install-deps
+  
+  linter-tests:
+    steps:
+      - rubocop
+  
+  rspec-tests:
+    steps:
+      - rspec
+
 
 # ------------------
 # WORKFLOWS
 # ------------------
 workflows:
+  test:
+    jobs:
+      - linter-tests
+      - rspec-tests
   build-deploy-main:
     jobs:
       - build:
