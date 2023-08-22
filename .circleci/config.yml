@@ -61,6 +61,11 @@ references:
         - node_modules
         - app/assets/builds
 
+  _print_directory: &print-directory 
+    run:
+      name: Show files in working directory
+      command: ls
+
 # ------------------
 # EXECUTORS
 # ------------------  
@@ -93,6 +98,7 @@ commands:
     steps:
       - *restore-assets
       - *install-assets
+      - *print_directory
       - *save-assets
 
   restore-dependencies:
