@@ -52,8 +52,8 @@ references:
       name: Install and compile assets
       command: |
         RUBYOPT=-W:no-deprecated \
+        ls \
         yarn install && bin/rails dartsass:build \
-        ls
 
   _save-assets: &save-assets
     save_cache:
