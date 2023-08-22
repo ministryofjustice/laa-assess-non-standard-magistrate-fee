@@ -146,10 +146,14 @@ jobs:
   
   linter-tests:
     steps:
+      - checkout
+      - install-requirements
       - rubocop
   
   rspec-tests:
     steps:
+      - checkout
+      - install-requirements
       - rspec
 
 
