@@ -19,7 +19,7 @@ references:
   _restore-bundle: &restore-bundle
     restore_cache:
       keys:
-        - v1-bundle-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+        - v1-bundle-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
         # fallback to using the latest cache if no exact match is found
         - v1-bundle-
 
@@ -35,10 +35,9 @@ references:
 
   _save-bundle: &save-bundle
     save_cache:
-      key: v1-bundle-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+      key: v1-bundle-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
       paths:
-        - ~/.bundle
-        - ~/vendor/bundle
+        - vendor/bundle
 
   _restore-assets: &restore-assets
     restore_cache:
