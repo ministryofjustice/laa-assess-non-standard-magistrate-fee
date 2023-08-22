@@ -7,15 +7,6 @@ orbs:
 # REFERENCES
 # ------------------
 references:
-  _not_main: &not-main
-    
-  
-  _main-only: &main-only
-      filters:
-        branches:
-          only:
-            - main
-
   _restore-bundle: &restore-bundle
     restore_cache:
       keys:
@@ -170,6 +161,7 @@ jobs:
 # WORKFLOWS
 # ------------------
 workflows:
+  version: 2
   test:
     jobs:
       - build-test-container:
