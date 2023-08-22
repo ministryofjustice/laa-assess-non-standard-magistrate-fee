@@ -72,6 +72,14 @@ executors:
     resource_class: small
     docker:
       - image: cimg/ruby:3.2.2
+  
+  cloud-platform-executor:
+    resource_class: small
+    docker:
+      - image: ministryofjustice/cloud-platform-tools
+        environment:
+          GITHUB_TEAM_NAME_SLUG: crm7team
+          REPO_NAME: laa-assess-non-standard-magistrate-fee
 
 # ------------------
 # COMMANDS
@@ -93,6 +101,12 @@ commands:
     steps:
       - *restore-bundle
       - *restore-assets
+
+  build-base:
+    steps:
+      - install-gems
+      - install-compile-assets
+      - install-codeclimate-tt
 
   rubocop:
     steps:
@@ -145,7 +159,12 @@ commands:
 # JOBS
 # ------------------      
 jobs:
-  build:
+  build-test-container:
+    executor: build-image-executor
+    steps:
+      - checkout
+      - build-base
+  build-app-container:
     docker:
       - image: cimg/ruby:3.2.2
     executor: ruby/default
@@ -174,14 +193,20 @@ jobs:
 workflows:
   test:
     jobs:
-      - linter-tests
-      - rspec-tests
-  build-deploy-main:
-    jobs:
-      - build:
-        <<: *main-only
-  
-  build-deploy-branch: 
-    jobs: 
-      - build:
+      build-test-container:
         <<: *not-main
+      - linter-tests:
+        requires:
+          - build-test-container
+      - rspec-tests:
+        requires:
+          - build-test-container
+  # build-deploy-main:
+  #   jobs:
+  #     - build-app-container:
+  #       <<: *main-only
+  
+  # build-deploy-branch: 
+  #   jobs: 
+  #     - build:
+  #       <<: *not-main
