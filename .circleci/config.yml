@@ -51,7 +51,6 @@ references:
     run:
       name: Install and compile assets
       command: |
-        ls
         RUBYOPT=-W:no-deprecated \
         yarn install && bin/rails dartsass:build
 
