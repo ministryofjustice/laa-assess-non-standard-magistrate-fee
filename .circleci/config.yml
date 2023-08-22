@@ -28,8 +28,8 @@ references:
     save_cache:
       key: v1-bundle-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
       paths:
-        - vendor/bundle
-        - .bundle
+        - ~/.bundle
+        - ~/vendor/bundle
 
   _restore-assets: &restore-assets
     restore_cache:
