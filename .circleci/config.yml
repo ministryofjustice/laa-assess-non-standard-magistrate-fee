@@ -66,6 +66,7 @@ references:
 # ------------------  
 executors:
   build-image-executor:
+    working_directory: ~/repo
     resource_class: small
     docker:
       - image: cimg/ruby:3.2.2-browsers
