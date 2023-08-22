@@ -64,7 +64,8 @@ references:
   _print_directory: &print-directory 
     run:
       name: Show files in working directory
-      command: ls
+      command: |
+        ls
 
 # ------------------
 # EXECUTORS
