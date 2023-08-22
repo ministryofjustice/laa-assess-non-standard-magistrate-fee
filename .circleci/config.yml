@@ -64,11 +64,13 @@ references:
 # EXECUTORS
 # ------------------  
 executors:
-  build-image-executor:
+  test-executor:
     working_directory: ~/repo
     resource_class: small
     docker:
       - image: cimg/ruby:3.2.2-browsers
+        environment:
+          RAILS_ENV: test
   
   cloud-platform-executor:
     resource_class: small
@@ -138,7 +140,7 @@ commands:
 # ------------------      
 jobs:
   build-test-container:
-    executor: build-image-executor
+    executor: test-executor
     steps:
       - checkout
       - build-base
@@ -152,14 +154,14 @@ jobs:
       - ruby/install-deps
   
   linter-tests:
-    executor: build-image-executor
+    executor: test-executor
     steps:
       - checkout
       - restore-dependencies
       - rubocop
   
   rspec-tests:
-    executor: build-image-executor
+    executor: test-executor
     steps:
       - checkout
       - restore-dependencies
