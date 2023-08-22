@@ -8,15 +8,12 @@ orbs:
 # ------------------
 references:
   _not_main: &not-main
-    filters:
-      branches:
-        ignore: 
-          - main
+    
   
   _main-only: &main-only
       filters:
         branches:
-          only: 
+          only:
             - main
 
   _restore-bundle: &restore-bundle
@@ -106,7 +103,6 @@ commands:
     steps:
       - install-gems
       - install-compile-assets
-      - install-codeclimate-tt
 
   rubocop:
     steps:
@@ -135,26 +131,6 @@ commands:
           path: /tmp/test-results
           destination: test-results
 
-  upload-coverage:
-      steps:
-        - run:
-            name: Upload coverage results to Code Climate
-            command: |
-              tmp/cc-test-reporter sum-coverage --output - tmp/coverage/codeclimate.*.json | tmp/cc-test-reporter upload-coverage --input -
-
-  install-codeclimate-tt:
-      steps:
-        - run:
-            name: Install codeclimate test reporter
-            command: |
-              mkdir -p tmp/
-              mkdir -p tmp/coverage/
-              curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > tmp/cc-test-reporter
-              chmod +x tmp/cc-test-reporter
-        - persist_to_workspace:
-            root: tmp
-            paths:
-              - cc-test-reporter
 # ------------------
 # JOBS
 # ------------------      
@@ -164,6 +140,7 @@ jobs:
     steps:
       - checkout
       - build-base
+  
   build-app-container:
     docker:
       - image: cimg/ruby:3.2.2
@@ -176,14 +153,14 @@ jobs:
     executor: build-image-executor
     steps:
       - checkout
-      - install-requirements
+      - restore-dependencies
       - rubocop
   
   rspec-tests:
     executor: build-image-executor
     steps:
       - checkout
-      - install-requirements
+      - restore-dependencies
       - rspec
 
 
@@ -193,20 +170,14 @@ jobs:
 workflows:
   test:
     jobs:
-      build-test-container:
-        <<: *not-main
+      - build-test-container:
+        filters:
+          branches:
+            ignore: 
+              - main
       - linter-tests:
         requires:
           - build-test-container
       - rspec-tests:
         requires:
           - build-test-container
-  # build-deploy-main:
-  #   jobs:
-  #     - build-app-container:
-  #       <<: *main-only
-  
-  # build-deploy-branch: 
-  #   jobs: 
-  #     - build:
-  #       <<: *not-main
