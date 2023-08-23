@@ -130,11 +130,7 @@ commands:
             mkdir /tmp/test-results
             TESTFILES=$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
             RUBYOPT=-W:no-deprecated \
-            bundle exec rspec \
-              --format progress \
-              --format RspecJunitFormatter \
-              --out /tmp/test-results/rspec.xml \
-              $TESTFILES
+            bundle exec rspec 
       - store_test_results:
           path: /tmp/test-results
       - store_artifacts:
