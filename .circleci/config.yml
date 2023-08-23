@@ -127,6 +127,8 @@ commands:
       - run:
           name: Run rspec tests
           command: |
+            mkdir /tmp/test-results
+            TESTFILES=$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
             RUBYOPT=-W:no-deprecated \
             bundle exec rspec 
 
