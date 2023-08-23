@@ -9,6 +9,10 @@ class PullLatestVersionData < ApplicationJob
       return
     end
 
-    # something to pull the data and store it in a sensible fashion
+    # something to pull the data and app store and create new version
+
+    # reset any data confirmations where data has changed
+
+    # create chnage log since previous version??? or should this be done in provider or app store?
   end
 end
