@@ -64,6 +64,12 @@ executors:
       - image: cimg/ruby:3.2.2-browsers
         environment:
           RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:circleci@127.0.0.1:5432/laa_assess_non_standard_magistrate_fee_test
+      - image: cimg/postgres:11.21
+          environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: "circleci"
+            POSTGRES_DB: laa_assess_non_standard_magistrate_fee_test
   
   cloud-platform-executor:
     docker:
