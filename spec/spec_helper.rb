@@ -1,5 +1,5 @@
 require 'simplecov'
-require "simplecov_json_formatter"
+require 'simplecov_json_formatter'
 require 'simplecov-lcov'
 
 # This allows both LCOV and HTML formatting -
