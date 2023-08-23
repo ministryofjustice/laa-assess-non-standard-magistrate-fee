@@ -211,6 +211,12 @@ jobs:
       - store_artifacts:
           path: tmp/coverage
 
+  upload-test-coverage:
+    executor: test-executor
+    steps:
+      - *attach-tmp-workspace
+      - upload-coverage
+
 # ------------------
 # WORKFLOWS
 # ------------------
