@@ -115,7 +115,10 @@ commands:
       - run:
           name: Run rspec tests
           command: |
+            RUBYOPT=-W:no-deprecated \
             bundle exec rspec \
+              --format progress \
+              --format RspecJunitFormatter \
 
 # ------------------
 # JOBS
