@@ -19,7 +19,6 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 group :development, :test do
   gem 'debug'
   gem 'dotenv-rails'
-  gem 'erb_lint', require: false
   gem 'pry'
   gem 'rspec-expectations'
   gem 'rspec-rails'
