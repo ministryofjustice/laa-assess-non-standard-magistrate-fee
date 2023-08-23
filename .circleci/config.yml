@@ -152,7 +152,7 @@ jobs:
   
   rspec-tests:
     executor: test-executor
-    parralelism: 4
+    parallelism: 4
     steps:
       - checkout
       - restore-dependencies
