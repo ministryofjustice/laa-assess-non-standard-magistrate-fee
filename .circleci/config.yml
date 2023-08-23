@@ -23,6 +23,8 @@ references:
         bundle config set path 'vendor/bundle'
         bundle check || bundle install --jobs=4 --retry=3
         bundle clean --force
+        ls vendor/bundle/ruby/3.2.0/bin
+        ls vendor/bundle/ruby/
 
   _save-bundle: &save-bundle
     save_cache:
