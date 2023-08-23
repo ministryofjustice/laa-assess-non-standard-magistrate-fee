@@ -114,7 +114,7 @@ commands:
           command: |
             RUBYOPT=-W:no-deprecated \
             bundle exec rails db:schema:load --trace
-å
+
   rubocop:
     steps:
       - run:
