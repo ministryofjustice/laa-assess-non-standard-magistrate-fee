@@ -114,7 +114,15 @@ commands:
     steps:
       - run:
           name: Run rspec tests
-          command: bundle exec rspec
+          command: |
+            mkdir /tmp/test-results
+            TESTFILES=$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+            RUBYOPT=-W:no-deprecated \
+            bundle exec rspec \
+              --format progress \
+              --format RspecJunitFormatter \
+              --out /tmp/test-results/rspec.xml \
+              -- $TESTFILES
     
 
 # ------------------
