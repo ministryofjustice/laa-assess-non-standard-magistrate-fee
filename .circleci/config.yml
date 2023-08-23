@@ -103,6 +103,17 @@ commands:
     steps:
       - install-gems
       - install-compile-assets
+  
+  db-setup:
+  steps:
+    - run:
+        name: Wait for DB
+        command: dockerize -wait tcp://localhost:5432 -timeout 1m
+    - run:
+        name: Database setup
+        command: |
+          RUBYOPT=-W:no-deprecated \
+          bundle exec rails db:schema:load --trace
 
   rubocop:
     steps:
@@ -112,6 +123,7 @@ commands:
 
   rspec:
     steps:
+      - db-setup
       - run:
           name: Run rspec tests
           command: |
