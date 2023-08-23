@@ -145,7 +145,7 @@ jobs:
     executor: test-executor
     steps:
       - checkout
-      - restore-dependencies
+      - install-gems
       - rubocop
   
   rspec-tests:
