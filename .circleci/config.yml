@@ -88,10 +88,10 @@ commands:
       - *install-assets
       - *save-assets
 
-  restore-dependencies:
-    steps:
-      - *restore-bundle
-      - *restore-assets
+  # restore-dependencies:
+  #   steps:
+  #     - *restore-bundle
+  #     - *restore-assets
 
   build-base:
     steps:
@@ -153,7 +153,7 @@ jobs:
     parallelism: 4
     steps:
       - checkout
-      - restore-dependencies
+      - install-gems
       - rspec
 
 
