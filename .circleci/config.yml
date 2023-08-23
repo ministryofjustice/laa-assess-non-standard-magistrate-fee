@@ -109,6 +109,7 @@ commands:
     steps:
       - install-gems
       - install-compile-assets
+      - install-codeclimate-tt
   
   db-setup:
     steps:
