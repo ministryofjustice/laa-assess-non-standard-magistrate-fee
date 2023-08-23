@@ -152,6 +152,7 @@ jobs:
   
   rspec-tests:
     executor: test-executor
+    parralelism: 4
     steps:
       - checkout
       - restore-dependencies
@@ -162,7 +163,6 @@ jobs:
 # WORKFLOWS
 # ------------------
 workflows:
-  version: 2
   test:
     jobs:
       - build-test-container:
