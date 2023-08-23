@@ -228,3 +228,6 @@ workflows:
       - rspec-tests:
           requires:
             - build-test-container
+      - upload-test-coverage:
+                requires:
+                  - rspec-tests            
