@@ -3,7 +3,8 @@ version: 2.1
 orbs:
   ruby: circleci/ruby@2.0.1
   browser-tools: circleci/browser-tools@1.1
-
+  aws-cli: circleci/aws-cli@4.0.0
+  aws-ecr: circleci/aws-ecr@8.2.1
 # ------------------
 # REFERENCES
 # ------------------
@@ -59,6 +60,17 @@ references:
     attach_workspace:
       at: ~/repo/tmp
 
+  _push-docker-image: &push-docker-image
+    run:
+      name: Tag and push images
+      command: |
+          docker tag app "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${REPO_NAME}:${CIRCLE_SHA1}"
+          docker push "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${REPO_NAME}:${CIRCLE_SHA1}"
+          case "${CIRCLE_BRANCH}" in
+            main)
+              docker tag app "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${REPO_NAME}:latest"
+              docker push "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${REPO_NAME}:latest"
+          esac
 # ------------------
 # EXECUTORS
 # ------------------  
@@ -76,13 +88,6 @@ executors:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: laa_assess_non_standard_magistrate_fee_test
-  
-  cloud-platform-executor:
-    docker:
-      - image: ministryofjustice/cloud-platform-tools
-        environment:
-          GITHUB_TEAM_NAME_SLUG: crm7team
-          REPO_NAME: laa-assess-non-standard-magistrate-fee
 
 # ------------------
 # COMMANDS
@@ -170,6 +175,30 @@ commands:
             paths:
               - cc-test-reporter
 
+  # build-app:
+  #     steps:
+  #       - run:
+  #           name: Build docker image for app
+  #           command: |
+  #             docker build \
+  #             --label build.git.sha=${CIRCLE_SHA1} \
+  #             --label build.git.branch=${CIRCLE_BRANCH} \
+  #             --label build.date=$(date +%Y-%m-%dT%H:%M:%S%z) \
+  #             --build-arg APP_BUILD_DATE=$(date +%Y-%m-%dT%H:%M:%S%z) \
+  #             --build-arg APP_BUILD_TAG=${CIRCLE_SHA1} \
+  #             --build-arg APP_GIT_COMMIT=${CIRCLE_SHA1} \
+  #             --build-arg APP_BRANCH_NAME=${CIRCLE_BRANCH} \
+  #             -t app .
+  
+  aws_ecr_login:
+      steps:
+        - run: 
+            name: Login to ECR
+            command: |
+              aws ecr get-login-password --region $ECR_REGION | docker login \
+              --username AWS --password-stdin \
+              ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
+
 # ------------------
 # JOBS
 # ------------------      
@@ -179,14 +208,6 @@ jobs:
     steps:
       - checkout
       - build-base
-  
-  build-app-container:
-    docker:
-      - image: cimg/ruby:3.2.2
-    executor: ruby/default
-    steps:
-      - checkout
-      - ruby/install-deps
   
   linter-tests:
     executor: test-executor
@@ -217,6 +238,20 @@ jobs:
       - *attach-tmp-workspace
       - upload-coverage
 
+  build-deploy-to-ecr:
+    executor: aws-ecr/default
+    steps:
+      - checkout
+      - aws-cli/setup:
+          role_arn: $ECR_ROLE_TO_ASSUME
+          region: $ECR_REGION
+      - aws_ecr_login
+      - aws-ecr/build-image:
+          push-image: true 
+          tag: ${CIRCLE_SHA1}
+          region: $ECR_REGION
+          repo: $ECR_REPOSITORY
+
 # ------------------
 # WORKFLOWS
 # ------------------
@@ -236,4 +271,13 @@ workflows:
             - build-test-container
       - upload-test-coverage:
                 requires:
-                  - rspec-tests            
+                  - rspec-tests
+
+  build-deploy-branch:
+    jobs:
+      - build-deploy-to-ecr:
+          context: laa-assess-non-standard-magistrates-fee-dev
+          filters:
+            branches:
+              ignore:
+                - main
