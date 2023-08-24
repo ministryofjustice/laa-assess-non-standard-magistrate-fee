@@ -57,7 +57,7 @@ COPY . .
 
 # Some ENV variables need to be present by the time
 # the assets pipeline run, but doesn't matter their value.
-RUN SECRET_KEY_BASE=needed_for_assets_precompile \
+RUN SECRET_KEY_BASE=$SECRET_KEY_BASE \
   RAILS_ENV=production \
   ENV_NAME=production \
   rails assets:precompile --trace
