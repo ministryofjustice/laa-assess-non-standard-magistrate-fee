@@ -2,9 +2,9 @@ version: 2.1
 
 orbs:
   ruby: circleci/ruby@2.0.1
+  helm: circleci/helm@1.2.0
   browser-tools: circleci/browser-tools@1.1
-  aws-cli: circleci/aws-cli@4.0.0
-  aws-ecr: circleci/aws-ecr@8.2.1
+  
 # ------------------
 # REFERENCES
 # ------------------
@@ -71,6 +71,26 @@ references:
               docker tag app "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${REPO_NAME}:latest"
               docker push "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${REPO_NAME}:latest"
           esac
+
+  _aws-ecr-login: &aws-ecr-login
+    run: 
+      name: Login to ECR
+      command: |
+        aws ecr get-login-password --region $ECR_REGION | docker login \
+        --username AWS --password-stdin \
+        ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
+
+  _authenticate-kubectl: &authenticate-kubectl
+    run:
+      name: Authenticate K8s
+      command: |
+          echo -n ${K8S_CLUSTER_CERT} | base64 -d > ./ca.crt
+          kubectl config set-cluster ${K8S_CLUSTER_NAME} --certificate-authority=./ca.crt --server=${K8S_CLUSTER_URL}
+          kubectl config set-credentials circleci --token=${K8S_TOKEN}
+          kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=${K8S_NAMESPACE}
+          kubectl config use-context ${K8S_CLUSTER_NAME}
+          kubectl --namespace=${K8S_NAMESPACE} get pods  
+
 # ------------------
 # EXECUTORS
 # ------------------  
@@ -88,6 +108,14 @@ executors:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: laa_assess_non_standard_magistrate_fee_test
+
+  cloud-platform-executor:
+    resource_class: small
+    docker:
+      - image: ministryofjustice/cloud-platform-tools
+        environment:
+          GITHUB_TEAM_NAME_SLUG: crm7team
+          REPO_NAME: laa-assess-non-standard-magistrate-fee
 
 # ------------------
 # COMMANDS
@@ -175,29 +203,42 @@ commands:
             paths:
               - cc-test-reporter
 
-  # build-app:
-  #     steps:
-  #       - run:
-  #           name: Build docker image for app
-  #           command: |
-  #             docker build \
-  #             --label build.git.sha=${CIRCLE_SHA1} \
-  #             --label build.git.branch=${CIRCLE_BRANCH} \
-  #             --label build.date=$(date +%Y-%m-%dT%H:%M:%S%z) \
-  #             --build-arg APP_BUILD_DATE=$(date +%Y-%m-%dT%H:%M:%S%z) \
-  #             --build-arg APP_BUILD_TAG=${CIRCLE_SHA1} \
-  #             --build-arg APP_GIT_COMMIT=${CIRCLE_SHA1} \
-  #             --build-arg APP_BRANCH_NAME=${CIRCLE_BRANCH} \
-  #             -t app .
-  
-  aws_ecr_login:
+  build-docker-image:
       steps:
-        - run: 
-            name: Login to ECR
+        - run:
+            name: Build docker image for app
             command: |
-              aws ecr get-login-password --region $ECR_REGION | docker login \
-              --username AWS --password-stdin \
-              ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
+              docker build \
+              --label build.git.sha=${CIRCLE_SHA1} \
+              --label build.git.branch=${CIRCLE_BRANCH} \
+              --label build.date=$(date +%Y-%m-%dT%H:%M:%S%z) \
+              --build-arg APP_BUILD_DATE=$(date +%Y-%m-%dT%H:%M:%S%z) \
+              --build-arg APP_BUILD_TAG=${CIRCLE_SHA1} \
+              --build-arg APP_GIT_COMMIT=${CIRCLE_SHA1} \
+              --build-arg APP_BRANCH_NAME=${CIRCLE_BRANCH} \
+              -t app .
+
+  deploy-to-environment:
+      description: Deploy image to the specified environment
+      parameters:
+        environment:
+          description: Name of environment to deploy to
+          type: string
+      steps:
+        - checkout
+        - *aws-ecr-login
+        - *authenticate-kubectl
+        - run:
+            name: Deploy to namespace
+            command: |
+                helm upgrade laa-assess-non-standard-magistrate-fee \
+                  ./helm_deploy/. \
+                    --install --wait --force \
+                    --namespace=${K8S_NAMESPACE} \
+                    --values ./helm_deploy/values-<< parameters.environment >>.yaml \
+                    --set image.repository="${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${REPO_NAME}" \
+                    --set image.tag="${CIRCLE_SHA1}" \
+                    --atomic
 
 # ------------------
 # JOBS
@@ -238,19 +279,21 @@ jobs:
       - *attach-tmp-workspace
       - upload-coverage
 
-  build-deploy-to-ecr:
-    executor: aws-ecr/default
+  build-push-to-ecr:
+    executor: cloud-platform-executor
     steps:
       - checkout
-      - aws-cli/setup:
-          role_arn: $ECR_ROLE_TO_ASSUME
-          region: $ECR_REGION
-      - aws_ecr_login
-      - aws-ecr/build-image:
-          push-image: true 
-          tag: ${CIRCLE_SHA1}
-          region: $ECR_REGION
-          repo: $ECR_REPOSITORY
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - *aws-ecr-login
+      - build-docker-image
+      - *push-docker-image
+  
+  deploy-dev:
+    executor: cloud-platform-executor
+    steps:
+      - deploy-to-environment:
+          environment: dev
 
 # ------------------
 # WORKFLOWS
@@ -270,14 +313,18 @@ workflows:
           requires:
             - build-test-container
       - upload-test-coverage:
-                requires:
-                  - rspec-tests
+          requires:
+            - rspec-tests
 
-  build-deploy-branch:
+  build-push-branch:
     jobs:
-      - build-deploy-to-ecr:
+      - build-push-to-ecr:
           context: laa-assess-non-standard-magistrates-fee-dev
-          filters:
-            branches:
-              ignore:
-                - main
+      - hold-dev:
+          type: approval
+          requires:
+            - build-push-to-ecr
+      - deploy-dev:
+          context: laa-assess-non-standard-magistrates-fee
+          requires:
+            - hold-dev
