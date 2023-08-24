@@ -22,6 +22,8 @@ FROM base AS dependencies
 RUN apk add --update \
   git
 
+WORKDIR /usr/src/
+
 COPY Gemfile Gemfile.lock .ruby-version package.json yarn.lock ./
 
 RUN bundle config set frozen 'true' && \
