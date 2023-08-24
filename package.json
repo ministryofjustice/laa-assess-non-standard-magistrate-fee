@@ -1,0 +1,10 @@
+{
+  "name": "laa-assess-non-standard-magistrate-fee",
+  "version": "1.0.0",
+  "description": "Assess a non-standard magnistrates' court claim",
+  "main": "index.js",
+  "repository": "https://github.com/ministryofjustice/laa-assess-non-standard-magistrate-fee.git",
+  "author": "ivanELEC <ivan.yohuno@digital.justice.gov.uk>",
+  "license": "MIT",
+  "private": true
+}
