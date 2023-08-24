@@ -7,6 +7,7 @@ ruby File.read('.ruby-version').strip
 
 gem 'bootsnap', require: false
 gem 'dartsass-rails', '~> 0.5.0'
+gem 'httparty'
 gem 'importmap-rails'
 gem 'jbuilder'
 gem 'pg'

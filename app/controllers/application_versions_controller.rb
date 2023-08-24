@@ -5,12 +5,11 @@ class ApplicationVersionsController < ApplicationVersionsController
     claim.received_on ||= Date.tiday
     # think about what should happen with state? maybe don't care for now
     claim.state ||= params.dig(:application, :state)
-    new_data = claim.changed?(:current_version)
 
     if claim.save
-      if new_data
+      if claim.saved_change_to_current_version?
         # we don't need to invalidate as everything is tied to current_version
-        PullLatestVersionData.perform_later(claim.id)
+        PullLatestVersionData.perform_later(claim)
       end
 
       render head: :ok

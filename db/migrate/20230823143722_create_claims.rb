@@ -4,7 +4,7 @@ class CreateClaims < ActiveRecord::Migration[7.0]
       t.string :state
       t.string :risk
       t.string :current_version
-      t.date :receive_on
+      t.date :received_on
 
       t.timestamps
     end

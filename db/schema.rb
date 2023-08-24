@@ -31,7 +31,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_23_144356) do
     t.string "state"
     t.string "risk"
     t.string "current_version"
-    t.date "receive_on"
+    t.date "received_on"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -48,6 +48,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_23_144356) do
 
   create_table "versions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "claim_id"
+    t.integer "version"
+    t.integer "json_schema_version"
+    t.string "state"
     t.jsonb "data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
