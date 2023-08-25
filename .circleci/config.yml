@@ -291,9 +291,7 @@ jobs:
   build-push-to-ecr:
     executor: aws-ecr/default
     steps:
-      - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
+      - checkout 
       - *test-context-env
       - *aws-ecr-login
       - build-docker-image
