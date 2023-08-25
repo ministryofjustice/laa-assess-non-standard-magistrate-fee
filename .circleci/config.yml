@@ -86,7 +86,8 @@ references:
     run:
       name: Print an env variable
       command: | 
-        echo '${ECR_REGION} ${AWS_ECR_REGISTRY_ID}'
+        echo $ECR_REGION
+        echo $AWS_ECR_REGISTRY_ID
 
   _authenticate-kubectl: &authenticate-kubectl
     run:
