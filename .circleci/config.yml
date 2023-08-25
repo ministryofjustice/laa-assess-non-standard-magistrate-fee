@@ -86,7 +86,7 @@ references:
     run:
       name: Authenticate K8s
       command: |
-          echo ${K8S_CLUSTER_CERT}
+          echo -n ${K8S_CLUSTER_CERT} | base64 -d > ./ca.crt
 
 # ------------------
 # EXECUTORS
