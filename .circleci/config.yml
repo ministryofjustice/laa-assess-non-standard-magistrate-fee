@@ -82,13 +82,6 @@ references:
         --username AWS --password-stdin \
         ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
 
-  _test-context-env: &test-context-env
-    run:
-      name: Print an env variable
-      command: | 
-        echo $ECR_REGION
-        echo $AWS_ECR_REGISTRY_ID
-
   _authenticate-kubectl: &authenticate-kubectl
     run:
       name: Authenticate K8s
@@ -235,6 +228,9 @@ commands:
           type: string
       steps:
         - checkout
+        - aws-cli/setup:
+          role_arn: $ECR_ROLE_TO_ASSUME
+          region: $ECR_REGION
         - *aws-ecr-login
         - *authenticate-kubectl
         - run:
@@ -288,17 +284,15 @@ jobs:
       - *attach-tmp-workspace
       - upload-coverage
 
-  build-push-to-ecr:
+  build-to-ecr:
     executor: aws-ecr/default
     steps:
       - checkout 
-      - *test-context-env
       - aws-cli/setup:
           role_arn: $ECR_ROLE_TO_ASSUME
           region: $ECR_REGION
       - *aws-ecr-login
       - aws-ecr/build-image:
-          push-image: true
           tag: ${CIRCLE_SHA1}
           region: $ECR_REGION
           repo: $ECR_REPOSITORY 
@@ -332,7 +326,7 @@ workflows:
 
   build-push-branch:
     jobs:
-      - build-push-to-ecr:
+      - build-to-ecr:
           context: laa-assess-non-standard-magistrates-fee-dev
       - hold-dev:
           type: approval
