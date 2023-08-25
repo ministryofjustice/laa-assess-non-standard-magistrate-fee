@@ -289,7 +289,7 @@ jobs:
       - upload-coverage
 
   build-push-to-ecr:
-    executor: cloud-platform-executor
+    executor: aws-ecr/default
     steps:
       - checkout
       - setup_remote_docker:
