@@ -82,6 +82,12 @@ references:
         --username AWS --password-stdin \
         ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
 
+  _test-context-env: &test-context-env
+    run:
+      name: Print an env variable
+      command: | 
+        echo '${ECR_REGION} ${AWS_ECR_REGISTRY_ID}
+
   _authenticate-kubectl: &authenticate-kubectl
     run:
       name: Authenticate K8s
@@ -287,6 +293,7 @@ jobs:
       - checkout
       - setup_remote_docker:
           docker_layer_caching: true
+      - *test-context-env
       - *aws-ecr-login
       - build-docker-image
       - *push-docker-image
