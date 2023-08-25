@@ -228,10 +228,6 @@ commands:
           type: string
       steps:
         - checkout
-        - aws-cli/setup:
-          role_arn: $ECR_ROLE_TO_ASSUME
-          region: $ECR_REGION
-        - *aws-ecr-login
         - *authenticate-kubectl
         - run:
             name: Deploy to namespace
@@ -331,7 +327,7 @@ workflows:
       - hold-dev:
           type: approval
           requires:
-            - build-push-to-ecr
+            - build-to-ecr
       - deploy-dev:
           context: laa-assess-non-standard-magistrates-fee
           requires:
