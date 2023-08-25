@@ -297,8 +297,11 @@ jobs:
           role_arn: $ECR_ROLE_TO_ASSUME
           region: $ECR_REGION
       - *aws-ecr-login
-      - build-docker-image
-      - *push-docker-image
+      - aws-ecr/build-image:
+          push-image: true
+          tag: ${CIRCLE_SHA1}
+          region: $ECR_REGION
+          repo: $ECR_REPOSITORY 
   
   deploy-dev:
     executor: cloud-platform-executor
