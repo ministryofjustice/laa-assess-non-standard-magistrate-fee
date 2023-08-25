@@ -293,6 +293,9 @@ jobs:
     steps:
       - checkout 
       - *test-context-env
+      - aws-cli/setup:
+          role_arn: $ECR_ROLE_TO_ASSUME
+          region: $ECR_REGION
       - *aws-ecr-login
       - build-docker-image
       - *push-docker-image
