@@ -1,6 +1,132 @@
 {
   "RSpec": {
     "coverage": {
+      "/Users/david.henry/dev/laa-assess-non-standard-magistrate-fee/app/helpers/application_helper.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          null
+        ],
+        "branches": {
+        }
+      },
+      "/Users/david.henry/dev/laa-assess-non-standard-magistrate-fee/app/services/receive_application_metadata.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          1,
+          6,
+          null,
+          null,
+          1,
+          6,
+          null,
+          6,
+          null,
+          6,
+          null,
+          6,
+          6,
+          null,
+          4,
+          null,
+          null,
+          6,
+          null,
+          0,
+          null,
+          null,
+          null
+        ],
+        "branches": {
+          "[:if, 0, 16, 6, 19, 9]": {
+            "[:then, 1, 18, 8, 18, 50]": 4,
+            "[:else, 2, 16, 6, 19, 9]": 2
+          },
+          "[:if, 3, 15, 4, 24, 7]": {
+            "[:then, 4, 16, 6, 21, 10]": 6,
+            "[:else, 5, 23, 6, 23, 11]": 0
+          }
+        }
+      },
+      "/Users/david.henry/dev/laa-assess-non-standard-magistrate-fee/app/jobs/pull_latest_version_data.rb": {
+        "lines": [
+          1,
+          null,
+          null,
+          1,
+          null,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          null,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          1,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "branches": {
+          "[:if, 0, 6, 4, 6, 68]": {
+            "[:then, 1, 6, 4, 6, 10]": 0,
+            "[:else, 2, 6, 4, 6, 68]": 0
+          },
+          "[:if, 3, 12, 4, 17, 126]": {
+            "[:then, 4, 12, 4, 17, 126]": 0,
+            "[:else, 5, 17, 6, 17, 126]": 0
+          },
+          "[:if, 6, 10, 4, 18, 7]": {
+            "[:then, 7, 11, 6, 11, 38]": 0,
+            "[:else, 8, 12, 4, 17, 126]": 0
+          }
+        }
+      },
+      "/Users/david.henry/dev/laa-assess-non-standard-magistrate-fee/app/models/claim.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          null
+        ],
+        "branches": {
+        }
+      },
+      "/Users/david.henry/dev/laa-assess-non-standard-magistrate-fee/app/models/application_record.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          null
+        ],
+        "branches": {
+        }
+      },
       "/Users/david.henry/dev/laa-assess-non-standard-magistrate-fee/app/channels/application_cable/channel.rb": {
         "lines": [
           null,
@@ -39,18 +165,11 @@
         "lines": [
           0,
           0,
-          0,
-          0,
-          0,
-          null,
-          0,
           null,
           0,
           0,
           null,
           0,
-          0,
-          null,
           0,
           0,
           0,
@@ -84,26 +203,6 @@
         "branches": {
         }
       },
-      "/Users/david.henry/dev/laa-assess-non-standard-magistrate-fee/app/controllers/details_controller.rb": {
-        "lines": [
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/Users/david.henry/dev/laa-assess-non-standard-magistrate-fee/app/controllers/evidence_controller.rb": {
-        "lines": [
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
       "/Users/david.henry/dev/laa-assess-non-standard-magistrate-fee/app/controllers/healthcheck_controller.rb": {
         "lines": [
           null,
@@ -119,122 +218,6 @@
           0,
           0,
           0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/Users/david.henry/dev/laa-assess-non-standard-magistrate-fee/app/controllers/history_controller.rb": {
-        "lines": [
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/Users/david.henry/dev/laa-assess-non-standard-magistrate-fee/app/controllers/review_controller.rb": {
-        "lines": [
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/Users/david.henry/dev/laa-assess-non-standard-magistrate-fee/app/helpers/application_helper.rb": {
-        "lines": [
-          null,
-          null,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/Users/david.henry/dev/laa-assess-non-standard-magistrate-fee/app/jobs/pull_latest_version_data.rb": {
-        "lines": [
-          0,
-          0,
-          null,
-          0,
-          null,
-          0,
-          null,
-          0,
-          null,
-          0,
-          0,
-          0,
-          null,
-          null,
-          null,
-          0,
-          0,
-          0,
-          null,
-          null,
-          null,
-          null,
-          0,
-          null,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/Users/david.henry/dev/laa-assess-non-standard-magistrate-fee/app/models/application_record.rb": {
-        "lines": [
-          null,
-          null,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/Users/david.henry/dev/laa-assess-non-standard-magistrate-fee/app/models/assignment.rb": {
-        "lines": [
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/Users/david.henry/dev/laa-assess-non-standard-magistrate-fee/app/models/change_log.rb": {
-        "lines": [
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/Users/david.henry/dev/laa-assess-non-standard-magistrate-fee/app/models/claim.rb": {
-        "lines": [
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/Users/david.henry/dev/laa-assess-non-standard-magistrate-fee/app/models/review_log.rb": {
-        "lines": [
           0,
           0
         ],
@@ -258,7 +241,6 @@
           0,
           0,
           null,
-          0,
           0,
           0,
           0,
@@ -296,8 +278,14 @@
           0,
           0,
           0,
+          0,
+          0,
           null,
           0,
+          0,
+          0,
+          0,
+          null,
           0,
           0,
           0,
@@ -307,6 +295,6 @@
         }
       }
     },
-    "timestamp": 1692877172
+    "timestamp": 1693303192
   }
 }

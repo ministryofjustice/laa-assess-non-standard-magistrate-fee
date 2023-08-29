@@ -10,40 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_23_144356) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_23_144048) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "change_logs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "claim_id"
-    t.uuid "object_id"
-    t.string "object_type"
-    t.string "field"
-    t.string "from_value"
-    t.string "new_value"
-    t.string "comment"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["claim_id"], name: "index_change_logs_on_claim_id"
-  end
 
   create_table "claims", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "state"
     t.string "risk"
-    t.string "current_version"
+    t.integer "current_version"
     t.date "received_on"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "review_logs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "claim_id"
-    t.uuid "object_id"
-    t.string "object_type"
-    t.boolean "approved"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["claim_id"], name: "index_review_logs_on_claim_id"
   end
 
   create_table "versions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -57,4 +34,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_23_144356) do
     t.index ["claim_id"], name: "index_versions_on_claim_id"
   end
 
+  add_foreign_key "versions", "claims"
 end

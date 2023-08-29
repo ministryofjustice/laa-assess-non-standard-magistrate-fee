@@ -7,11 +7,5 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   resources :application_versions, only: [:update]
-  resources :claims, only: [:index, :show] do
-    resource :details, only: [:show]
-    resources :review
-    resource :evidence, only: [:show]
-    resource :history, only: [:show]
-  end
-
+  resources :claims, only: [:index, :show]
 end

@@ -7,7 +7,6 @@ class HttpPuller
 
     case response.code
     when 200
-      debugger
       JSON.parse(response.body)
     else
       raise "Unexpected response from AppStore - status #{response.code} for '#{message[:application_id]}'"

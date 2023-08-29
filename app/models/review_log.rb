@@ -1,2 +1,0 @@
-class ReviewLog < ApplicationRecord
-end

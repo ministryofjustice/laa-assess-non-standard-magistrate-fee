@@ -3,7 +3,7 @@ class CreateClaims < ActiveRecord::Migration[7.0]
     create_table :claims, id: :uuid do |t|
       t.string :state
       t.string :risk
-      t.string :current_version
+      t.integer :current_version
       t.date :received_on
 
       t.timestamps

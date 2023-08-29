@@ -1,5 +1,5 @@
 class PullLatestVersionData < ApplicationJob
-  queue :default
+  # queue :default
 
   def perform(claim)
     # data for required version is already here
