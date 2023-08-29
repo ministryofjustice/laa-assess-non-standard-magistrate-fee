@@ -37,7 +37,7 @@ ingress:
       SecRuleEngine On
       SecAction "id:900110,phase:1,nolog,pass,t:none,setvar:tx.inbound_anomaly_score_threshold=6"
       SecAction "id:900200,phase:1,nolog,pass,t:none,setvar:tx.allowed_methods=GET HEAD POST OPTIONS PUT PATCH DELETE"
-    external-dns.alpha.kubernetes.io/set-identifier: laa-assess-non-standard-magistrate-fee-dev-laa-assess-non-standard-magistrate-fee-dev-green
+    external-dns.alpha.kubernetes.io/set-identifier: laa-assess-non-standard-magistrate-fee-app-laa-assess-non-standard-magistrate-fee-dev-green
     external-dns.alpha.kubernetes.io/aws-weight: "100"
   hosts:
     - host: nsmassessdev.apps.live.cloud-platform.service.justice.gov.uk
