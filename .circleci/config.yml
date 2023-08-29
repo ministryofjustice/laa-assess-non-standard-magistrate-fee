@@ -198,7 +198,9 @@ commands:
               --build-arg APP_BUILD_TAG=${CIRCLE_SHA1} \
               --build-arg APP_GIT_COMMIT=${CIRCLE_SHA1} \
               --build-arg APP_BRANCH_NAME=${CIRCLE_BRANCH} \
-              -t app .
+              --pull \
+              --tag app \
+              --file Dockerfile .
 
   deploy-to-environment:
       description: Deploy image to the specified environment
@@ -277,6 +279,7 @@ jobs:
             --username AWS --password-stdin \
             ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
       - aws-ecr/build-image:
+          push-image: true
           tag: ${CIRCLE_SHA1}
           region: $ECR_REGION
           repo: $ECR_REPOSITORY 
