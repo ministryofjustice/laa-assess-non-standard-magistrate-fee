@@ -62,26 +62,6 @@ references:
     attach_workspace:
       at: ~/repo/tmp
 
-  _push-docker-image: &push-docker-image
-    run:
-      name: Tag and push images
-      command: |
-          docker tag app "abcd/${GITHUB_TEAM_NAME_SLUG}/${REPO_NAME}:${CIRCLE_SHA1}"
-          docker push "abcd/${GITHUB_TEAM_NAME_SLUG}/${REPO_NAME}:${CIRCLE_SHA1}"
-          case "${CIRCLE_BRANCH}" in
-            main)
-              docker tag app "abcd/${GITHUB_TEAM_NAME_SLUG}/${REPO_NAME}:latest"
-              docker push "abcd/${GITHUB_TEAM_NAME_SLUG}/${REPO_NAME}:latest"
-          esac
-
-  _aws-ecr-login: &aws-ecr-login
-    run: 
-      name: Login to ECR
-      command: |
-        aws ecr get-login-password --region $ECR_REGION | docker login \
-        --username AWS --password-stdin \
-        ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
-
   _authenticate-kubectl: &authenticate-kubectl
     run:
       name: Authenticate K8s
@@ -226,6 +206,9 @@ commands:
         environment:
           description: Name of environment to deploy to
           type: string
+        registry:
+          description: Location of ECR images
+          type: string
       steps:
         - checkout
         - *authenticate-kubectl
@@ -237,7 +220,7 @@ commands:
                     --install --wait --force \
                     --namespace=${K8S_NAMESPACE} \
                     --values ./helm_deploy/values-<< parameters.environment >>.yaml \
-                    --set image.repository="${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${REPO_NAME}" \
+                    --set image.repository="<< parameters.registry >>/${GITHUB_TEAM_NAME_SLUG}/${REPO_NAME}" \
                     --set image.tag="${CIRCLE_SHA1}" \
                     --atomic
 
@@ -287,7 +270,12 @@ jobs:
       - aws-cli/setup:
           role_arn: $ECR_ROLE_TO_ASSUME
           region: $ECR_REGION
-      - *aws-ecr-login
+      - run:
+          name: Login to ECR
+          command: |
+            aws ecr get-login-password --region $ECR_REGION | docker login \
+            --username AWS --password-stdin \
+            ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
       - aws-ecr/build-image:
           tag: ${CIRCLE_SHA1}
           region: $ECR_REGION
@@ -298,6 +286,7 @@ jobs:
     steps:
       - deploy-to-environment:
           environment: dev
+          registry: ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
 
 # ------------------
 # WORKFLOWS
