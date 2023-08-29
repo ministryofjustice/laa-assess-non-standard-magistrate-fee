@@ -66,12 +66,12 @@ references:
     run:
       name: Tag and push images
       command: |
-          docker tag app "${AWS_ECR_REGISTRY_ID}/${GITHUB_TEAM_NAME_SLUG}/${REPO_NAME}:${CIRCLE_SHA1}"
-          docker push "${AWS_ECR_REGISTRY_ID}/${GITHUB_TEAM_NAME_SLUG}/${REPO_NAME}:${CIRCLE_SHA1}"
+          docker tag app "abcd/${GITHUB_TEAM_NAME_SLUG}/${REPO_NAME}:${CIRCLE_SHA1}"
+          docker push "abcd/${GITHUB_TEAM_NAME_SLUG}/${REPO_NAME}:${CIRCLE_SHA1}"
           case "${CIRCLE_BRANCH}" in
             main)
-              docker tag app "${AWS_ECR_REGISTRY_ID}/${GITHUB_TEAM_NAME_SLUG}/${REPO_NAME}:latest"
-              docker push "${AWS_ECR_REGISTRY_ID}/${GITHUB_TEAM_NAME_SLUG}/${REPO_NAME}:latest"
+              docker tag app "abcd/${GITHUB_TEAM_NAME_SLUG}/${REPO_NAME}:latest"
+              docker push "abcd/${GITHUB_TEAM_NAME_SLUG}/${REPO_NAME}:latest"
           esac
 
   _aws-ecr-login: &aws-ecr-login
