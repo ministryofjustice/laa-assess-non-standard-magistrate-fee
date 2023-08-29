@@ -5,9 +5,9 @@ class ApplicationVersionsController < ApplicationController
     receiver = ReceiveApplicationMetadata.new(params[:id])
 
     if receiver.save(application_params, params.dig(:application, :state))
-      render head: :ok
+      render plain: :success
     else
-      render json: { error: :here }, status: 401
+      render json: { error: receiver.errors }, status: 401
     end
   end
 

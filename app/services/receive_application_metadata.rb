@@ -1,5 +1,6 @@
 class ReceiveApplicationMetadata
   attr_reader :claim
+  delegate :errors, to: :claim
 
   def initialize(claim_id)
     @claim = Claim.find_or_initialize_by(id: claim_id)

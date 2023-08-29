@@ -1,3 +1,5 @@
+# TODO: confirm if this is the right  structure for the view models
+
 class ClaimSummary
   include ActiveModel::Model
   include ActiveModel::Attributes

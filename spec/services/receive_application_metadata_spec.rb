@@ -75,4 +75,14 @@ RSpec.describe ReceiveApplicationMetadata do
       expect(PullLatestVersionData).to have_received(:perform_later).with(claim)
     end
   end
+
+  context 'when claim fails to save' do
+    let(:claim) { create(:claim) }
+    let(:claim_id) { claim.id }
+    let(:current_version) { -1 }
+
+    it 'returns false' do
+      expect(subject.save(params, 'submitted')).to be_falsey
+    end
+  end
 end

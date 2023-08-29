@@ -25,7 +25,7 @@ class PullLatestVersionData < ApplicationJob
   private
 
   def create_version(claim, json_data)
-    claim.versions.create(
+    claim.versions.create!(
       version: json_data['version'],
       json_schema_version: json_data['json_schema_version'],
       state: json_data['application_state'],
