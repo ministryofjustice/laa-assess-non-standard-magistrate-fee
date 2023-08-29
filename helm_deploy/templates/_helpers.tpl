@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "laa-assess-non-standard-magistrate-fee-app.name" -}}
+{{- define "helm-deploy.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "laa-assess-non-standard-magistrate-fee-app.fullname" -}}
+{{- define "helm-deploy.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "laa-assess-non-standard-magistrate-fee-app.chart" -}}
+{{- define "helm-deploy.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "laa-assess-non-standard-magistrate-fee-app.labels" -}}
-helm.sh/chart: {{ include "laa-assess-non-standard-magistrate-fee-app.chart" . }}
-{{ include "laa-assess-non-standard-magistrate-fee-app.selectorLabels" . }}
+{{- define "helm-deploy.labels" -}}
+helm.sh/chart: {{ include "helm-deploy.chart" . }}
+{{ include "helm-deploy.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "laa-assess-non-standard-magistrate-fee-app.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "laa-assess-non-standard-magistrate-fee-app.name" . }}
+{{- define "helm-deploy.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "helm-deploy.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "laa-assess-non-standard-magistrate-fee-app.serviceAccountName" -}}
+{{- define "helm-deploy.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "laa-assess-non-standard-magistrate-fee-app.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "helm-deploy.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
