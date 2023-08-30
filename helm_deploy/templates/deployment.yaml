@@ -52,7 +52,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: rds-postgresql-instance-output
-                  key: rds_instance_address
+                  key: url
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
