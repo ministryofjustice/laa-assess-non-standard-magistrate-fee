@@ -7,7 +7,7 @@ class ApplicationVersionsController < ApplicationController
     if receiver.save(application_params, params.dig(:application, :state))
       render plain: :success
     else
-      render json: { error: receiver.errors }, status: 401
+      render json: { error: receiver.errors }, status: :unauthorized
     end
   end
 

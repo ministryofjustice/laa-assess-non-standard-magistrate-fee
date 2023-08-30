@@ -24,7 +24,7 @@ RSpec.describe ClaimsController do
       allow(controller).to receive(:render)
       get :show, params: { id: }
 
-      expect(controller).to have_received(:render).with(locals: { claim:, claim_summary:})
+      expect(controller).to have_received(:render).with(locals: { claim:, claim_summary: })
       expect(response).to be_successful
     end
   end

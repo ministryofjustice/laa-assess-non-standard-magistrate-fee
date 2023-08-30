@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ReceiveApplicationMetadata do
   subject { described_class.new(claim_id) }
+
   let(:params) { { id: claim_id, risk: 'high', current_version: current_version } }
   let(:current_version) { 1 }
 
@@ -17,7 +18,7 @@ RSpec.describe ReceiveApplicationMetadata do
       expect(Claim.last).to have_attributes(
         risk: 'high',
         current_version: 1,
-        received_on: Date.today,
+        received_on: Time.zone.today,
         state: 'submitted',
       )
     end
@@ -52,7 +53,7 @@ RSpec.describe ReceiveApplicationMetadata do
     end
   end
 
-  context 'when claim already exits and version is unchanged' do
+  context 'when claim already exits but the version is changed' do
     let(:claim) { create(:claim) }
     let(:claim_id) { claim.id }
     let(:current_version) { 2 }

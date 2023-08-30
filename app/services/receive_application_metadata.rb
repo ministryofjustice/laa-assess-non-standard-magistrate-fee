@@ -1,5 +1,6 @@
 class ReceiveApplicationMetadata
   attr_reader :claim
+
   delegate :errors, to: :claim
 
   def initialize(claim_id)
@@ -9,7 +10,7 @@ class ReceiveApplicationMetadata
   def save(params, state)
     claim.assign_attributes(params)
     # set default if this is a new record
-    claim.received_on ||= Date.today
+    claim.received_on ||= Time.zone.today
     # TODO: think if state should be allow to be updated in the future
     claim.state ||= state
 

@@ -16,7 +16,7 @@ class HttpPuller
   private
 
   def options
-    options = { }
+    options = {}
 
     username = ENV.fetch('APP_STORE_USERNAME', nil)
     return options if username.blank?

@@ -1,6 +1,5 @@
 class ClaimsController < ApplicationController
-  def index
-  end
+  def index; end
 
   def show
     claim = Claim.find(params[:id])

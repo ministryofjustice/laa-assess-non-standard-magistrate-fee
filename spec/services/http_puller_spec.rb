@@ -46,7 +46,7 @@ RSpec.describe HttpPuller do
 
     it 'add basic auth creditals' do
       expect(described_class).to receive(:get).with("http://localhost:8000/v1/application/#{claim.id}",
-                                                     basic_auth: { username: 'jimbob', password: 'kimbob' },)
+                                                    basic_auth: { username: 'jimbob', password: 'kimbob' },)
 
       subject.get(claim)
     end

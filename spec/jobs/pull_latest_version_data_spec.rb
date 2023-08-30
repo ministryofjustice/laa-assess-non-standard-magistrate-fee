@@ -2,17 +2,19 @@ require 'rails_helper'
 
 RSpec.describe PullLatestVersionData do
   let(:claim) { instance_double(Claim, id:, current_version:, versions:) }
-  let(:versions) { double(:versions, find_by: find_by, 'create!': true) }
+  let(:versions) { double(:versions, find_by: find_by, create!: true) }
   let(:id) { SecureRandom.uuid }
   let(:current_version) { 2 }
   let(:find_by) { nil }
   let(:http_puller) { instance_double(HttpPuller, get: http_response) }
-  let(:http_response) { {
-    'version' => 2,
+  let(:http_response) do
+    {
+      'version' => 2,
     'json_schema_version' => 1,
     'application_state' => 'submitted',
     'application' => { 'same' => 'data' }
-  } }
+    }
+  end
 
   before do
     allow(HttpPuller).to receive(:new).and_return(http_puller)

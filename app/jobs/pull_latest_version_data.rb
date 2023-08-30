@@ -14,7 +14,8 @@ class PullLatestVersionData < ApplicationJob
       # we could handle it here but that complicates the flow
       # NOTE: this should never happen
     else
-      raise "Correct version not found on AppStore: #{claim.id} - #{claim.current_version} only found #{json_data['version']}"
+      raise "Correct version not found on AppStore: #{claim.id} - " \
+            "#{claim.current_version} only found #{json_data['version']}"
     end
 
     # reset any data confirmations where data has changed
