@@ -222,7 +222,7 @@ commands:
                     --install --wait --force \
                     --namespace=${K8S_NAMESPACE} \
                     --values ./helm_deploy/values-<< parameters.environment >>.yaml \
-                    --set image.repository="<< parameters.registry >>/${GITHUB_TEAM_NAME_SLUG}/${REPO_NAME}" \
+                    --set image.repository="<< parameters.registry >>/${ECR_REPOSITORY}" \
                     --set image.tag="${CIRCLE_SHA1}" \
                     --atomic
 
