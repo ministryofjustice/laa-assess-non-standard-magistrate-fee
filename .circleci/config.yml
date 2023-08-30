@@ -287,6 +287,9 @@ jobs:
   deploy-dev:
     executor: cloud-platform-executor
     steps:
+      - aws-cli/setup:
+          role_arn: $ECR_ROLE_TO_ASSUME
+          region: $ECR_REGION
       - deploy-to-environment:
           environment: dev
           registry: ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
