@@ -45,10 +45,9 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+  tls:
+    - hosts:
+      - nsmassessdev.apps.live.cloud-platform.service.justice.gov.uk
 
 resources:
   limits:
