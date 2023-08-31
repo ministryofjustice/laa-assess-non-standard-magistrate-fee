@@ -26,7 +26,6 @@ securityContext:
 service:
   type: ClusterIP
   port: 80
-  internalPort: 3000
 
 ingress:
   enabled: true
@@ -52,10 +51,10 @@ ingress:
 resources:
   limits:
     cpu: 500m
-    memory: 500Mi
+    memory: 3GB
   requests:
     cpu: 10m
-    memory: 500Mi
+    memory: 3GB
 
 autoscaling:
   enabled: false
