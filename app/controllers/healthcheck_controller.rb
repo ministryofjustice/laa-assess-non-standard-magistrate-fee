@@ -2,7 +2,7 @@
 
 class HealthcheckController < ApplicationController
   def ping
-    render json: build_args, status: :ok
+    render json: build_args
   end
 
   private

@@ -7,17 +7,16 @@ class HttpPuller
 
     case response.code
     when 200
-      debugger
       JSON.parse(response.body)
     else
-      raise "Unexpected response from AppStore - status #{response.code} for '#{message[:application_id]}'"
+      raise "Unexpected response from AppStore - status #{response.code} for '#{claim.id}'"
     end
   end
 
   private
 
   def options
-    options = { }
+    options = {}
 
     username = ENV.fetch('APP_STORE_USERNAME', nil)
     return options if username.blank?

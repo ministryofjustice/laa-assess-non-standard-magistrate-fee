@@ -6,6 +6,11 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
 
+  resources :healthcheck, only: [] do
+    collection do
+      get :ping
+    end
+  end
   resources :application_versions, only: [:update]
   resources :claims, only: [:index, :show] do
     resource :details, only: [:show]
@@ -13,5 +18,4 @@ Rails.application.routes.draw do
     resource :evidence, only: [:show]
     resource :history, only: [:show]
   end
-
 end

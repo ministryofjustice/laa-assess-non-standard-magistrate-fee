@@ -1,5 +1,5 @@
 class PullLatestVersionData < ApplicationJob
-  queue :default
+  # queue :default
 
   def perform(claim)
     # data for required version is already here
@@ -14,7 +14,8 @@ class PullLatestVersionData < ApplicationJob
       # we could handle it here but that complicates the flow
       # NOTE: this should never happen
     else
-      raise "Correct version not found on AppStore: #{claim.id} - #{claim.current_version} only found #{json_data['version']}"
+      raise "Correct version not found on AppStore: #{claim.id} - " \
+            "#{claim.current_version} only found #{json_data['version']}"
     end
 
     # reset any data confirmations where data has changed
@@ -25,7 +26,7 @@ class PullLatestVersionData < ApplicationJob
   private
 
   def create_version(claim, json_data)
-    claim.versions.create(
+    claim.versions.create!(
       version: json_data['version'],
       json_schema_version: json_data['json_schema_version'],
       state: json_data['application_state'],
