@@ -4,6 +4,8 @@ orbs:
   ruby: circleci/ruby@2.0.1
   aws-cli: circleci/aws-cli@4.0.0
   aws-ecr: circleci/aws-ecr@8.2.1
+  browser-tools: circleci/browser-tools@1.1
+
   
 # ------------------
 # REFERENCES
@@ -93,9 +95,7 @@ executors:
     resource_class: small
     docker:
       - image: ministryofjustice/cloud-platform-tools
-        environment:
-          GITHUB_TEAM_NAME_SLUG: crm7team
-          REPO_NAME: laa-assess-non-standard-magistrate-fee
+
 
 # ------------------
 # COMMANDS
