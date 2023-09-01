@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
-  # root "articles#index"
+  root "claims#index"
 
   resources :healthcheck, only: [] do
     collection do
@@ -13,4 +13,11 @@ Rails.application.routes.draw do
   end
   resources :application_versions, only: [:update]
   resources :claims, only: [:index, :show]
+
+  namespace :about do
+    get :privacy
+    get :contact
+    get :feedback
+    get :accessibility
+  end
 end
