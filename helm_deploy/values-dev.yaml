@@ -45,6 +45,10 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
+          service:
+            name: laa-assess-non-standard-magistrate-fee-dev
+            port:
+              number: 3000
   tls:
     - hosts:
       - nsmassessdev.apps.live.cloud-platform.service.justice.gov.uk
@@ -62,10 +66,9 @@ autoscaling:
   minReplicas: 1
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
 
 secrets:
-  environment: dev
+  environment: development
 
 service_account:
   name: circleci
