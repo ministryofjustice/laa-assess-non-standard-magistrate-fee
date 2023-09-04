@@ -1,0 +1,30 @@
+<% content_for(:page_title) do %>
+  &nbsp;
+<% end %>
+
+<% content_for(:back_link) do %>
+  <%= link_to t('helpers.back_link'), claims_path, class: 'govuk-back-link' %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <%= render partial: 'claims/claim_summary', locals: { claim:, claim_summary: } %>
+    <%= render partial: 'claims/claim_nav', locals: { claim: claim, current_page: 'claim_details' } %>
+
+    <% claim_details.each do |header, rows| %>
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m"><%= header %></caption>
+        <tbody class="govuk-table__body">
+          <% rows.each do |(field, value)| %>
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header"><%= field %></th>
+              <td class="govuk-table__cell"><%= value %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+</div>
+

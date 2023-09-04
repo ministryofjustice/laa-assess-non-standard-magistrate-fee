@@ -8,7 +8,7 @@ class ClaimSummary
 
   def main_defendant_name
     main_defendant = defendants.detect { |defendant| defendant['main'] }
-    main_defendant ? main_defendant['name'] : ''
+    main_defendant ? main_defendant['full_name'] : ''
   end
 
   def self.build(attributes)

@@ -3,6 +3,7 @@
   "private": "true",
   "version": "1.0.0",
   "dependencies": {
+    "@ministryofjustice/frontend": "^1.8.0",
     "govuk-frontend": "^4.7.0"
   },
   "scripts": {
