@@ -7,7 +7,7 @@ RSpec.describe ClaimDetailsController do
     let(:current_version_record) { instance_double(Version, data:) }
     let(:data) { { 'some' => 'data' } }
     let(:claim_summary) { instance_double(ClaimSummary) }
-    let(:claim_details) { an_instance_of(Hash)}
+    let(:claim_details) { an_instance_of(Hash) }
 
     before do
       allow(Claim).to receive(:find).and_return(claim)
@@ -25,7 +25,7 @@ RSpec.describe ClaimDetailsController do
       allow(controller).to receive(:render)
       get :show, params: { claim_id: }
 
-      expect(controller).to have_received(:render).with(locals: { claim:, claim_summary:, claim_details:})
+      expect(controller).to have_received(:render).with(locals: { claim:, claim_summary:, claim_details: })
       expect(response).to be_successful
     end
   end
