@@ -119,8 +119,8 @@ GEM
     factory_bot_rails (6.2.0)
       factory_bot (~> 6.2.0)
       railties (>= 5.0.0)
-    globalid (1.1.0)
-      activesupport (>= 5.0)
+    globalid (1.2.0)
+      activesupport (>= 6.1)
     google-protobuf (3.24.2-x86_64-darwin)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
@@ -160,7 +160,7 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.9)
-    nokogiri (1.15.4)
+    nokogiri (1.15.4-x86_64-darwin)
       racc (~> 1.4)
     optimist (3.1.0)
     parallel (1.23.0)
@@ -315,7 +315,7 @@ GEM
     zeitwerk (2.6.11)
 
 PLATFORMS
-  ruby
+  x86_64-darwin-22
 
 DEPENDENCIES
   bootsnap
