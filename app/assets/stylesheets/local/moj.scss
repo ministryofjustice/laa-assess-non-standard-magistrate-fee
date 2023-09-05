@@ -1,0 +1,13 @@
+// MOJ Design System
+// https://design-patterns.service.justice.gov.uk
+//
+// NOTE: using hand-picked components instead of importing
+// the whole library, as we only need a few ones.
+
+// Sub navigation
+// https://design-patterns.service.justice.gov.uk/components/sub-navigation/
+@import "@ministryofjustice/frontend/moj/components/sub-navigation/sub-navigation";
+
+// Sortable table
+// https://design-patterns.service.justice.gov.uk/components/sortable-table/
+@import "@ministryofjustice/frontend/moj/components/sortable-table/sortable-table";

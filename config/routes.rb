@@ -12,7 +12,9 @@ Rails.application.routes.draw do
     end
   end
   resources :application_versions, only: [:update]
-  resources :claims, only: [:index, :show]
+  resources :claims, only: [:index] do
+    resource :claim_details, only: [:show]
+  end
 
   namespace :about do
     get :privacy

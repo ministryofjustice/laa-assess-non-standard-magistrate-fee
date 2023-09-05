@@ -911,6 +911,14 @@
     "@types/yargs" "^17.0.8"
     chalk "^4.0.0"
 
+"@ministryofjustice/frontend@^1.8.0":
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/@ministryofjustice/frontend/-/frontend-1.8.0.tgz#2d1372c689e6da95efe07a11d5ff99d83be2f445"
+  integrity sha512-N4791HcFoqJNLNrK6EN4oMaTJjeFp9ileavCpXkda3qvpEWQByxZUsOd6sDA69FuLRpB6jBFL2C2bqfYbcTdqg==
+  dependencies:
+    govuk-frontend "^3.0.0 || ^4.0.0"
+    moment "^2.27.0"
+
 "@sinclair/typebox@^0.27.8":
   version "0.27.8"
   resolved "https://registry.yarnpkg.com/@sinclair/typebox/-/typebox-0.27.8.tgz#6667fac16c436b5434a387a34dedb013198f6e6e"
@@ -1277,7 +1285,7 @@ globals@^11.1.0:
   resolved "https://registry.yarnpkg.com/globals/-/globals-11.12.0.tgz#ab8795338868a0babd8525758018c2a7eb95c42e"
   integrity sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA==
 
-govuk-frontend@^4.7.0:
+"govuk-frontend@^3.0.0 || ^4.0.0", govuk-frontend@^4.7.0:
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-4.7.0.tgz#69950b6c2e69f435ffe9aa60d8dee232dac977de"
   integrity sha512-0OsdCusF5qvLWwKziU8zqxiC0nq6WP0ZQuw51ymZ/1V0tO71oIKMlSLN2S9bm8RcEGSoidPt2A34gKxePrLjvg==
@@ -1475,6 +1483,11 @@ mime-types@^2.1.12:
   integrity sha512-ZDY+bPm5zTTF+YpCrAU9nK0UgICYPT0QtT1NZWFv4s++TNkcgVaT0g6+4R2uI4MjQjzysHB1zxuWL50hzaeXiw==
   dependencies:
     mime-db "1.52.0"
+
+moment@^2.27.0:
+  version "2.29.4"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
+  integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
 
 ms@2.1.2:
   version "2.1.2"

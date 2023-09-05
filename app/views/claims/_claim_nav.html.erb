@@ -1,0 +1,19 @@
+<nav class="moj-sub-navigation" aria-label="Sub navigation" id="claim_nav">
+  <ul class="moj-sub-navigation__list">
+    <li class="moj-sub-navigation__item">
+      <%= link_to t('.claim_details'), claim_claim_details_path(claim), class: 'moj-sub-navigation__link', 'aria-current': (current_page == 'claim_details' ? "page" : nil) %>
+    </li>
+
+    <li class="moj-sub-navigation__item">
+      <%= link_to t('.review_and_adjust'), '#2', class: 'moj-sub-navigation__link', 'aria-current': (current_page == 'review_and_adjust' ? "page" : nil) %>
+    </li>
+
+    <li class="moj-sub-navigation__item">
+      <%= link_to t('.supporting_evidence'), '#3', class: 'moj-sub-navigation__link', 'aria-current': (current_page == 'supporting_evidence' ? "page" : nil) %>
+    </li>
+
+    <li class="moj-sub-navigation__item">
+      <%= link_to t('.claim_history'), '#4', class: 'moj-sub-navigation__link', 'aria-current': (current_page == 'claim_history' ? "page" : nil) %>
+    </li>
+  </ul>
+</nav>
