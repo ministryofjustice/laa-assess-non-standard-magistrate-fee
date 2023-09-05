@@ -12,11 +12,11 @@ class BaseViewModel
     klass.new(attributes.slice(*klass.attribute_names))
   end
 
-  def self.build_all(class_type, claim, *nesting)
+  def self.build_all(class_type, claim, *)
     version = claim.current_version_record
     klass = "V#{version.json_schema_version}::#{class_type.to_s.camelcase}".constantize
 
-    rows = version.data.dig(*nesting)
+    rows = version.data[*]
 
     rows.map do |attributes|
       klass.new(attributes.slice(*klass.attribute_names))
