@@ -1,0 +1,27 @@
+<div class="govuk-tabs" data-module="govuk-tabs">
+  <h2>
+    <%= t('.review_and_adjust') %>
+  </h2>
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+      <a class="govuk-tabs__tab" href="#work-items">
+        <%= t('.work_items') %>
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#letter-and-calls">
+        <%= t('.letters_and_calls') %>
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#disbursements">
+        <%= t('.disbursements') %>
+      </a>
+    </li>
+  </ul>
+
+  <div class="govuk-tabs__panel" id="past-day">
+    <%= yield(:review_and_adjust_nav) %>
+  </div>
+</div>
+

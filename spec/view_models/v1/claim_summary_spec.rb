@@ -1,16 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ClaimSummary do
-  describe '#build' do
-    it 'builds the object from the hash of attributes' do
-      summary = described_class.build('laa_reference' => 'LA111', 'defendants' => [])
-      expect(summary).to have_attributes(
-        laa_reference: 'LA111',
-        defendants: []
-      )
-    end
-  end
-
+RSpec.describe V1::ClaimSummary do
   describe 'main_defendant_name' do
     it 'returns the name attibute from the main defendant' do
       defendants = [

@@ -1,0 +1,46 @@
+<% content_for(:page_title) do %>
+  &nbsp;
+<% end %>
+
+<% content_for(:back_link) do %>
+  <%= link_to t('helpers.back_link'), claims_path, class: 'govuk-back-link' %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <%= render partial: 'claims/claim_summary', locals: { claim:, claim_summary: } %>
+    <%= render partial: 'claims/claim_nav', locals: { claim: claim, current_page: 'review_and_adjust' } %>
+
+    <%= content_for :review_and_adjust_nav do %>
+      <%= button_to(t(".remove_from_list"), '#', class: "govuk-button govuk-button--secondary", data_module: "govuk-button") %>
+
+      <% work_items.each do |completed_on, work_items_for_date| %>
+        <table class="govuk-table">
+          <caption class="govuk-table__caption govuk-table__caption--m"><%= completed_on.strftime('%-d %B %Y') %></caption>
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header"><%= t('.type_of_work') %></th>
+              <th scope="col" class="govuk-table__header"><%= t('.submitted') %></th>
+              <th scope="col" class="govuk-table__header"><%= t('.adjusted') %></th>
+              <th scope="col" class="govuk-table__header"><%= t('.action') %></th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            <% work_items_for_date.each do |work_item| %>
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell"><%= work_item.work_type %></td>
+                <td class="govuk-table__cell"><%= work_item.time_spent %></td>
+                <td class="govuk-table__cell"><%= work_item.adjustment %></td>
+                <td class="govuk-table__cell"><%= link_to t('.change'), '#' %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+    <% end %>
+
+    <%= render partial: 'claims/review_and_adjust_nav', locals: { claim: claim, current_page: 'review_and_adjust' } %>
+  </div>
+</div>
+
