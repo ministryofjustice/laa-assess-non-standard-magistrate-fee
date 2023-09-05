@@ -27,6 +27,8 @@ service:
   type: ClusterIP
   port: 80
   internalPort: 3000
+  readinessDelay: 10
+  livenessDelay: 10
 
 ingress:
   enabled: true
