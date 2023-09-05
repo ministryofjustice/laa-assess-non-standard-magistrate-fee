@@ -23,6 +23,7 @@ RUN apk add --update \
   git
 
 COPY Gemfile Gemfile.lock .ruby-version package.json yarn.lock ./
+COPY ./gems ./gems
 
 RUN bundle config set frozen 'true' && \
   bundle config set without test:development && \
