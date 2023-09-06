@@ -222,7 +222,7 @@ commands:
                     --values ./helm_deploy/values-<< parameters.environment >>.yaml \
                     --set image.repository="<< parameters.registry >>/${ECR_REPOSITORY}" \
                     --set image.tag="${CIRCLE_SHA1}" \
-                    --debug
+                    --debug \
                     --atomic
 
 # ------------------
