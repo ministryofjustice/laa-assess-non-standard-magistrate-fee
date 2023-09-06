@@ -291,6 +291,23 @@ jobs:
           environment: dev
           registry: ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
 
+  scan-docker-image:
+    executor: test-executor
+    parallelism: 1
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - build-docker-image
+      - snyk/scan:
+          token-variable: SNYK_TOKEN
+          docker-image-name: app
+          target-file: ./Dockerfile
+          organization: 'legal-aid-agency'
+          project: ministryofjustice/laa-assess-non-magistrate-fee
+          severity-threshold: "high"
+          fail-on-issues: true
+
 # ------------------
 # WORKFLOWS
 # ------------------
@@ -311,6 +328,9 @@ workflows:
       - upload-test-coverage:
           requires:
             - rspec-tests
+      - scan-docker-image:
+          requires:
+            - upload-test-coverage
 
   build-push-branch:
     jobs:
