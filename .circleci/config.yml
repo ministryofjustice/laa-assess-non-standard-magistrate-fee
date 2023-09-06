@@ -243,7 +243,6 @@ jobs:
   
   rspec-tests:
     executor: test-executor
-    parallelism: 4
     steps:
       - checkout
       - install-gems
