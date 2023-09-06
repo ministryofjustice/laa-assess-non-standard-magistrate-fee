@@ -252,6 +252,7 @@ jobs:
     steps:
       - checkout
       - install-gems
+      - install-compile-assets
       - *attach-tmp-workspace
       - browser-tools/install-browser-tools
       - view-files
