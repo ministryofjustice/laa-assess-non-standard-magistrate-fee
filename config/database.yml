@@ -82,5 +82,5 @@ test:
 production:
   <<: *default
   database: laa_assess_non_standard_magistrate_fee_production
-  username: crm7restbackend
-  password: <%= ENV["CRM7RESTBACKEND_DATABASE_PASSWORD"] %>
+  username: crm7_assess
+  password: <%= ENV["CRM7ASSESS_DATABASE_PASSWORD"] %>

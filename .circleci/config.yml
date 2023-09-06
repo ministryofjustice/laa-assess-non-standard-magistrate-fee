@@ -131,7 +131,7 @@ commands:
           name: Database setup
           command: |
             RUBYOPT=-W:no-deprecated \
-            bundle exec rails db:prepare
+            bundle exec rails db:prepare --trace
 
   rubocop:
     steps:
@@ -242,7 +242,6 @@ jobs:
   
   rspec-tests:
     executor: test-executor
-    parallelism: 4
     steps:
       - checkout
       - install-gems
