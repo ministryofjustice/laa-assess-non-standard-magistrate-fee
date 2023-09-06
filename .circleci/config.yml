@@ -227,7 +227,7 @@ commands:
     steps:
       - run: 
           name: View files in directory
-          command: ls
+          command: ls bin
 
 # ------------------
 # JOBS
