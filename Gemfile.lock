@@ -119,10 +119,12 @@ GEM
     factory_bot_rails (6.2.0)
       factory_bot (~> 6.2.0)
       railties (>= 5.0.0)
-    globalid (1.2.0)
-      activesupport (>= 6.1)
-    google-protobuf (3.24.2-x86_64-darwin)
-    google-protobuf (3.24.2-x86_64-linux)
+    globalid (1.1.0)
+      activesupport (>= 5.0)
+    google-protobuf (3.24.1)
+    httparty (0.21.0)
+      mini_mime (>= 1.0.0)
+      multi_xml (>= 0.5.2)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     importmap-rails (1.2.1)
@@ -148,9 +150,11 @@ GEM
     marcel (1.0.2)
     matrix (0.4.2)
     method_source (1.0.0)
-    mini_mime (1.1.5)
+    mini_mime (1.1.2)
+    mini_portile2 (2.8.4)
     minitest (5.19.0)
     msgpack (1.7.2)
+    multi_xml (0.6.0)
     net-imap (0.3.7)
       date
       net-protocol
@@ -161,9 +165,8 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.9)
-    nokogiri (1.15.4-x86_64-darwin)
-      racc (~> 1.4)
-    nokogiri (1.15.4-x86_64-linux)
+    nokogiri (1.15.4)
+      mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     optimist (3.1.0)
     parallel (1.23.0)
@@ -198,7 +201,7 @@ GEM
       activestorage (= 7.0.7.2)
       activesupport (= 7.0.7.2)
       bundler (>= 1.15.0)
-      railties (= 7.0.7.2)
+      railties (= 7.0.6)
     rails-dom-testing (2.2.0)
       activesupport (>= 5.0.0)
       minitest
@@ -275,10 +278,9 @@ GEM
       rubocop-capybara (~> 2.17)
       rubocop-factory_bot (~> 2.22)
     ruby-progressbar (1.13.0)
-    sass-embedded (1.66.1-x86_64-darwin)
+    sass-embedded (1.66.1)
       google-protobuf (~> 3.23)
-    sass-embedded (1.66.1-x86_64-linux-musl)
-      google-protobuf (~> 3.23)
+      rake (>= 13.0.0)
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -331,6 +333,7 @@ DEPENDENCIES
   dotenv-rails
   erb_lint
   factory_bot_rails
+  httparty
   importmap-rails
   jbuilder
   pg

@@ -1,0 +1,37 @@
+  <div>
+    <strong class="govuk-tag">
+      <%= claim.state %>
+    </strong>
+  </div>
+
+  <p class="govuk-!-margin-top-5 govuk-!-font-size-24">
+    <%= claim_summary.laa_reference %>
+  </p>
+  <h1 class="govuk-heading-xl">
+    <%= claim_summary.main_defendant_name %>
+  </h1>
+
+  <div class="govuk-!-font-size-24">
+    £#Pending#
+  </div>
+
+  <div class="govuk-!-font-size-24">
+    <%= t(".risk.#{claim.risk}") %>
+    <%= link_to t('.risk.change'), '#', class: 'govuk-!-font-size-19' %>
+  </div>
+
+  <div class="govuk-grid-row govuk-!-margin-top-3">
+    <div class="govuk-grid-column-two-thirds">
+      <div class="govuk-!-font-size-24">
+        <span class="govuk-!-font-weight-bold"><%= t(".assigned_to") %></span>
+        <%= '#Pending#' %>
+      </div>
+      <div class="govuk-!-font-size-24">
+        <span class="govuk-!-font-weight-bold"><%= t(".date_received") %></span>
+        <%= claim.received_on %>
+      </div>
+    </div>
+    <div class="govuk-grid-column-one-thirds govuk-!-padding-top-2">
+      <%= button_to(t(".remove_from_list"), '#', class: "govuk-button govuk-button--secondary", data_module: "govuk-button") %>
+    </div>
+  </div>

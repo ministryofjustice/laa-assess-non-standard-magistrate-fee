@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe HealthcheckController do
-  context 'index' do
+  context 'ping' do
     before do
       get :ping
     end
@@ -18,6 +18,14 @@ RSpec.describe HealthcheckController do
 
     it 'displays correct hash values' do
       expect(parsed_body.keys).to contain_exactly('hello')
+    end
+    
+    it 'find and builds the required object' do
+      allow(controller).to receive(:render)
+
+      get :ping, format: :json
+
+      expect(response).to be_successful
     end
   end
 

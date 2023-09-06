@@ -7,4 +7,17 @@
   "author": "ivanELEC <ivan.yohuno@digital.justice.gov.uk>",
   "license": "MIT",
   "private": true
+  "version": "1.0.0",
+  "dependencies": {
+    "@ministryofjustice/frontend": "^1.8.0",
+    "govuk-frontend": "^4.7.0"
+  },
+  "scripts": {
+    "postinstall": "bin/importmap pin govuk-frontend@4.5.0",
+    "unit-test": "jest"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.22.10",
+    "jest-environment-jsdom": "^29.6.2"
+  }
 }
