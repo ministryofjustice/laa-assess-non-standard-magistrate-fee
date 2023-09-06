@@ -15,5 +15,9 @@ module V1
     def adjustment
       '#pending#'
     end
+
+    def table_fields
+      [work_type, "#{time_spent}min", adjustment]
+    end
   end
 end

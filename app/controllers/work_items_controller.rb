@@ -1,4 +1,6 @@
 class WorkItemsController < ApplicationController
+  layout nil
+
   def index
     claim = Claim.find(params[:claim_id])
     claim_summary = BaseViewModel.build(:claim_summary, claim)

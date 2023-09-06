@@ -1,0 +1,56 @@
+<% content_for(:page_title) do %>
+  &nbsp;
+<% end %>
+
+<% content_for(:back_link) do %>
+  <%= link_to t('helpers.back_link'), claims_path, class: 'govuk-back-link' %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <%= render partial: 'claims/claim_summary', locals: { claim:, claim_summary: } %>
+    <%= render partial: 'claims/claim_nav', locals: { claim: claim, current_page: 'review_and_adjust' } %>
+
+    <div class="govuk-tabs" data-module="govuk-tabs">
+      <h2>
+        <%= t('.review_and_adjust') %>
+      </h2>
+      <ul class="govuk-tabs__list">
+        <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+          <a class="govuk-tabs__tab" href="#work-items">
+            <%= t('.work_items') %>
+          </a>
+        </li>
+        <li class="govuk-tabs__list-item">
+          <a class="govuk-tabs__tab" href="#letter-and-calls">
+            <%= t('.letters_and_calls') %>
+          </a>
+        </li>
+        <li class="govuk-tabs__list-item">
+          <a class="govuk-tabs__tab" href="#disbursements">
+            <%= t('.disbursements') %>
+          </a>
+        </li>
+      </ul>
+
+      <div class="govuk-tabs__panel" id="work-items">
+        <%= turbo_frame_tag 'work_items', src: claim_work_items_path(claim), lazy: true do %>
+          Loading
+        <% end %>
+      </div>
+      <div class="govuk-tabs__panel" id="letter-and-calls">
+        <%= turbo_frame_tag 'work_items', lazy: true do %>
+          Loading
+        <% end %>
+      </div>
+      <div class="govuk-tabs__panel" id="disbursements">
+        <%= turbo_frame_tag 'work_items', lazy: true do %>
+          Loading
+        <% end %>
+      </div>
+    </div>
+
+  </div>
+</div>
+
