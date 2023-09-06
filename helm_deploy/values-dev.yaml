@@ -15,18 +15,18 @@ nameOverride: laa-assess-non-standard-magistrate-fee-app
 fullnameOverride: laa-assess-non-standard-magistrate-fee-app
 
 securityContext:
-   capabilities:
-     drop:
-     - ALL
-   readOnlyRootFilesystem: true
-   runAsNonRoot: true
-   runAsUser: 10000
-   allowPrivilegeEscalation: false
+  #  capabilities:
+  #    drop:
+  #    - ALL
+  #  readOnlyRootFilesystem: true
+  #  runAsNonRoot: true
+  #  runAsUser: 10000
+  #  allowPrivilegeEscalation: false
 
 service:
   type: ClusterIP
   port: 80
-  internalPort: 3001
+  internalPort: 3000
 
 ingress:
   enabled: true
@@ -69,6 +69,3 @@ autoscaling:
 
 secrets:
   environment: development
-
-service_account:
-  name: circleci
