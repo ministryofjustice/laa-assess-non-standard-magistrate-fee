@@ -111,10 +111,10 @@ commands:
       - *install-assets
       - *save-assets
 
-  restore-dependencies:
-    steps:
-      - *restore-bundle
-      - *restore-assets
+  # restore-dependencies:
+  #   steps:
+  #     - *restore-bundle
+  #     - *restore-assets
 
   build-base:
     steps:
@@ -243,7 +243,7 @@ jobs:
     executor: test-executor
     steps:
       - checkout
-      - restore-dependencies
+      - install-gems
       - rubocop
   
   rspec-tests:
@@ -251,7 +251,7 @@ jobs:
     parallelism: 4
     steps:
       - checkout
-      - restore-dependencies
+      - install-gems
       - *attach-tmp-workspace
       - browser-tools/install-browser-tools
       - view-files
