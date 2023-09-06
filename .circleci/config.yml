@@ -223,12 +223,6 @@ commands:
                     --debug \
                     --atomic
 
-  view-files:
-    steps:
-      - run: 
-          name: View files in directory
-          command: ls bin
-
 # ------------------
 # JOBS
 # ------------------      
@@ -255,7 +249,6 @@ jobs:
       - install-compile-assets
       - *attach-tmp-workspace
       - browser-tools/install-browser-tools
-      - view-files
       - rspec
       - persist_to_workspace:
           root: tmp
