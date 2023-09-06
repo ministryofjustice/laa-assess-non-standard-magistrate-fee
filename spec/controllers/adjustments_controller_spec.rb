@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe WorkItemsController do
+RSpec.describe AdjustmentsController do
   context 'index' do
     let(:claim) { instance_double(Claim, id: claim_id) }
     let(:claim_id) { SecureRandom.uuid }
@@ -12,7 +12,7 @@ RSpec.describe WorkItemsController do
     end
 
     it 'find and builds the required object' do
-      get :index, params: { claim_id: }
+      get :show, params: { claim_id: }
 
       expect(Claim).to have_received(:find).with(claim_id)
       expect(BaseViewModel).to have_received(:build).with(:claim_summary, claim)
@@ -20,9 +20,9 @@ RSpec.describe WorkItemsController do
 
     it 'renders successfully with claims' do
       allow(controller).to receive(:render)
-      get :index, params: { claim_id: }
+      get :show, params: { claim_id: }
 
-      expect(controller).to have_received(:render).with(locals: { claim: claim, claim_summary: claim_summary })
+      expect(controller).to have_received(:render).with(locals: { claim:, claim_summary: })
       expect(response).to be_successful
     end
   end
