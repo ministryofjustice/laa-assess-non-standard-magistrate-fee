@@ -1,16 +1,10 @@
 module V1
   class WorkItem < BaseViewModel
-    attribute :id
-    attribute :uplift
-    attribute :rate
+    # TODO: include translated_work_item (EN) in json feed
     attribute :work_type
-    attribute :fee_earner
+    # TODO: import time_period code from provider app
     attribute :time_spent
     attribute :completed_on, :date
-
-    attribute :total
-    attribute :total_without_uplift
-    attribute :total_with_uplift
 
     def adjustment
       '#pending#'
