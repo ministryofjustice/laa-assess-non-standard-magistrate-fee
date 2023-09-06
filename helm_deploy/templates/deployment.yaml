@@ -52,6 +52,17 @@ spec:
                 secretKeyRef:
                   name: rds-postgresql-instance-output
                   key: url
+            - name: SECRET_KEY_BASE
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: secret_key_base
+            - name: RACK_ENV
+              value: 'production'
+            - name: RAILS_ENV
+              value: 'production'
+            - name: RAILS_LOG_TO_STDOUT
+              value: enabled
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
