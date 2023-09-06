@@ -19,7 +19,7 @@ RSpec.describe HealthcheckController do
     it 'displays correct hash values' do
       expect(parsed_body.keys).to contain_exactly('hello')
     end
-    
+
     it 'find and builds the required object' do
       allow(controller).to receive(:render)
 
