@@ -112,11 +112,6 @@ commands:
       - *install-assets
       - *save-assets
 
-  # restore-dependencies:
-  #   steps:
-  #     - *restore-bundle
-  #     - *restore-assets
-
   build-base:
     steps:
       - install-gems
