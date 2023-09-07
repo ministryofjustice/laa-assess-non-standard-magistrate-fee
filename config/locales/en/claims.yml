@@ -3,8 +3,12 @@ en:
   claims:
     index:
       page_title: "Review criminal legal aid applications"
-    show:
-      page_title: "Review criminal legal aid applications"
+    claim_nav:
+      claim_details: Claim details
+      review_and_adjust: Review and adjust
+      supporting_evidence: Supporting evidence
+      claim_history: Claim history
+    claim_summary:
       risk:
         high: High risk
         medium: Medium risk
@@ -13,7 +17,19 @@ en:
       assigned_to: "Assigned to:"
       date_received: "Date received:"
       remove_from_list: Remove from list
-      claim_details: Claim details
+    review_and_adjust_nav:
       review_and_adjust: Review and adjust
-      supporting_evidence: Supporting evidence
-      claim_history: Claim history
+      work_items: Work items
+      letters_and_calls: Letters and calls
+      disbursements: Disbursements
+  claim_details:
+    show:
+      page_title: "Review criminal legal aid applications"
+  work_items:
+    index:
+      page_title: "Review criminal legal aid applications"
+      type_of_work: Type of Work
+      submitted: Provider submitted
+      adjusted: Adjustment
+      action: Action
+      change: Change

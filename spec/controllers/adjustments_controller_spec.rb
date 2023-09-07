@@ -1,15 +1,14 @@
 require 'rails_helper'
 
-RSpec.describe ClaimDetailsController do
-  context 'show' do
+RSpec.describe AdjustmentsController do
+  context 'index' do
     let(:claim) { instance_double(Claim, id: claim_id) }
     let(:claim_id) { SecureRandom.uuid }
     let(:claim_summary) { instance_double(V1::ClaimSummary) }
-    let(:claim_details) { an_instance_of(Hash) }
 
     before do
       allow(Claim).to receive(:find).and_return(claim)
-      allow(BaseViewModel).to receive(:build).and_return(claim_summary)
+      allow(BaseViewModel).to receive_messages(build: claim_summary)
     end
 
     it 'find and builds the required object' do
@@ -23,7 +22,7 @@ RSpec.describe ClaimDetailsController do
       allow(controller).to receive(:render)
       get :show, params: { claim_id: }
 
-      expect(controller).to have_received(:render).with(locals: { claim:, claim_summary:, claim_details: })
+      expect(controller).to have_received(:render).with(locals: { claim:, claim_summary: })
       expect(response).to be_successful
     end
   end

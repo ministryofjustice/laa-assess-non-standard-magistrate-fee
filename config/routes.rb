@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   resources :application_versions, only: [:update]
   resources :claims, only: [:index] do
     resource :claim_details, only: [:show]
+    resource :adjustments, only: [:show]
+    resources :work_items, only: [:index]
   end
 
   namespace :about do

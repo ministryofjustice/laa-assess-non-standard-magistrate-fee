@@ -1,0 +1,14 @@
+<turbo-frame id="work_items">
+  <%= button_to(t(".remove_from_list"), '#', class: "govuk-button govuk-button--secondary", data_module: "govuk-button") %>
+
+
+  <% work_items.each do |completed_on, work_items_for_date| %>
+    <%=
+      head = [t('.type_of_work'), t('.submitted'), t('.adjusted'), t('.action')]
+      rows = work_items_for_date.map do |work_item|
+        [*work_item.table_fields, { text: link_to(t('.change'), '#') }]
+      end
+      govuk_table(caption: completed_on.strftime('%-d %B %Y'), head:, rows:)
+    %>
+  <% end %>
+</turbo-frame>
