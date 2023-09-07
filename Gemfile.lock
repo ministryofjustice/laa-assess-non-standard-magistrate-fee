@@ -355,6 +355,7 @@ DEPENDENCIES
   simplecov
   simplecov-lcov
   simplecov-rcov
+  simplecov_json_formatter (~> 0.1.4)
   sprockets-rails
   stimulus-rails
   super_diff
