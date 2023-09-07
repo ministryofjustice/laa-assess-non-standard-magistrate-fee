@@ -14,7 +14,7 @@ module V1
 
     def summed_fields
       total_time_spent = data_by_type.sum { |_, time_spent, _| time_spent }
-      total_cost =data_by_type.sum { |_, _, cost| cost }
+      total_cost = data_by_type.sum { |_, _, cost| cost }
       [
         "#{total_time_spent}min",
         NumberTo.pounds(total_cost)
@@ -30,7 +30,7 @@ module V1
         by_work_item.map do |work_type, work_items_for_type|
           # TODO: convert this to a time period to enable easy formating of output
           total_time_spent = work_items_for_type.sum { |work_item| work_item['time_spent'] }
-          total_cost = work_items_for_type.sum { |work_item| Calculator.cost(:work_item, work_item) }
+          total_cost = work_items_for_type.sum { |work_item| CostCalculator.cost(:work_item, work_item) }
           [
             work_type,
             total_time_spent,
@@ -38,15 +38,6 @@ module V1
           ]
         end
       end
-    end
-  end
-end
-
-module Calculator
-  def self.cost(type, object)
-    case type
-    when :work_item
-      object['pricing'] * object['time_spent'] * (100 + object['uplift'].to_i) / 100 / 60
     end
   end
 end
