@@ -37,6 +37,7 @@ group :test do
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
   gem 'simplecov'
+  gem 'simplecov_json_formatter', '~> 0.1.4'
   gem 'simplecov-lcov'
   gem 'simplecov-rcov'
   gem 'super_diff'

@@ -1,4 +1,5 @@
 require 'simplecov'
+require 'simplecov_json_formatter'
 require 'simplecov-lcov'
 
 # This allows both LCOV and HTML formatting -
@@ -9,6 +10,7 @@ module SimpleCov
       def format(result)
         SimpleCov::Formatter::HTMLFormatter.new.format(result)
         SimpleCov::Formatter::LcovFormatter.new.format(result)
+        SimpleCov::Formatter::JSONFormatter.new.format(result)
       end
     end
   end
