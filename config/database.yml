@@ -84,6 +84,3 @@ production:
   database: laa_assess_non_standard_magistrate_fee_production
   username: crm7restbackend
   password: <%= ENV["CRM7RESTBACKEND_DATABASE_PASSWORD"] %>
-
-#uncomment line below if you want to run via docker compose up
-# host: localhost
