@@ -28,8 +28,13 @@ en:
   work_items:
     index:
       page_title: "Review criminal legal aid applications"
+      check_totals: Check time and cost totals for all work items
       type_of_work: Type of Work
-      submitted: Provider submitted
+      requested: Provider requested
       adjusted: Adjustment
       action: Action
       change: Change
+      items: Items
+      total_time: Total time
+      total_cost: Cost total
+      total: Total
