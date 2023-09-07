@@ -57,6 +57,21 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: secret_key_base
+            - name: APP_STORE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: app_store_url
+            - name: APP_STORE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: app_store_username
+            - name: APP_STORE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: app_store_password
             - name: RACK_ENV
               value: 'production'
             - name: RAILS_ENV
