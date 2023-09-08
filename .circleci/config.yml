@@ -6,6 +6,7 @@ version: 2.1
 # ------------------
 orbs:
   ruby: circleci/ruby@2.0.1
+  browser-tools: circleci/browser-tools@1.4.5
 
 # ------------------
 # EXECUTORS
@@ -120,6 +121,45 @@ commands:
           name: Run rubocop
           command: bundle exec rubocop
 
+  db-setup:
+    steps:
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run:
+          name: Database setup
+          command: |
+            RUBYOPT=-W:no-deprecated \
+            bundle exec rails db:prepare --trace
+
+  rspec:
+    steps:
+      - db-setup
+      - run:
+          name: Run rspec tests
+          command: |
+            mkdir /tmp/test-results
+            tmp/cc-test-reporter before-build
+            TESTFILES=$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+            RUBYOPT=-W:no-deprecated \
+            bundle exec rspec \
+             --format progress \
+             --out /tmp/test-results/rspec.xml \
+              $TESTFILES
+            tmp/cc-test-reporter format-coverage -t simplecov -o "tmp/coverage/codeclimate.$CIRCLE_NODE_INDEX.json"
+      - store_test_results:
+          path: /tmp/test-results
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: test-results
+
+  upload-coverage:
+      steps:
+        - run:
+            name: Upload coverage results to Code Climate
+            command: |
+              tmp/cc-test-reporter sum-coverage --output - tmp/coverage/codeclimate.*.json | tmp/cc-test-reporter upload-coverage --input -
+
 # ------------------
 # JOBS
 # ------------------
@@ -137,6 +177,28 @@ jobs:
       - install-gems
       - rubocop
 
+  rspec-tests:
+    executor: test-executor
+    steps:
+      - checkout
+      - install-gems
+      - install-compile-assets
+      - *attach-tmp-workspace
+      - browser-tools/install-browser-tools
+      - rspec
+      - persist_to_workspace:
+          root: tmp
+          paths:
+            - coverage/codeclimate.*.json
+      - store_artifacts:
+          path: tmp/coverage
+
+  upload-test-coverage:
+    executor: test-executor
+    steps:
+      - *attach-tmp-workspace
+      - upload-coverage
+
 # ------------------
 # WORKFLOWS
 # ------------------
@@ -151,3 +213,9 @@ workflows:
       - linter-tests:
           requires:
             - build-test-container
+      - rspec-tests:
+          requires:
+            - build-test-container
+      - upload-test-coverage:
+          requires:
+            - rspec-tests
