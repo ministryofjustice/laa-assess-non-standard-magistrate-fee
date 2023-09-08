@@ -8,6 +8,8 @@ orbs:
   ruby: circleci/ruby@2.0.1
   browser-tools: circleci/browser-tools@1.4.5
   snyk: snyk/snyk@1.1.2
+  aws-cli: circleci/aws-cli@4.0.0
+  aws-ecr: circleci/aws-ecr@8.2.1
 
 # ------------------
 # EXECUTORS
@@ -232,6 +234,26 @@ jobs:
           project: ministryofjustice/laa-assess-non-magistrate-fee
           severity-threshold: "high"
           fail-on-issues: true
+
+  build-to-ecr:
+    executor: aws-ecr/default
+    steps:
+      - checkout 
+      - aws-cli/setup:
+          role_arn: $ECR_ROLE_TO_ASSUME
+          region: $ECR_REGION
+      - run:
+          name: Login to ECR
+          command: |
+            aws ecr get-login-password --region $ECR_REGION | docker login \
+            --username AWS --password-stdin \
+            ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
+      - aws-ecr/build-image:
+          push-image: true
+          tag: ${CIRCLE_SHA1}
+          region: $ECR_REGION
+          repo: $ECR_REPOSITORY 
+
 
 # ------------------
 # WORKFLOWS
