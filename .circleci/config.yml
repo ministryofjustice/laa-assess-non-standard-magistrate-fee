@@ -185,13 +185,13 @@ commands:
             name: Build docker image for app
             command: |
               docker build \
-              --label build.git.sha=$CIRCLE_SHA1 \
-              --label build.git.branch=$CIRCLE_BRANCH \
+              --label build.git.sha=${CIRCLE_SHA1} \
+              --label build.git.branch=${CIRCLE_BRANCH} \
               --label build.date=$(date +%Y-%m-%dT%H:%M:%S%z) \
               --build-arg APP_BUILD_DATE=$(date +%Y-%m-%dT%H:%M:%S%z) \
-              --build-arg APP_BUILD_TAG=$CIRCLE_SHA1 \
-              --build-arg APP_GIT_COMMIT=$CIRCLE_SHA1 \
-              --build-arg APP_BRANCH_NAME=$CIRCLE_BRANCH \
+              --build-arg APP_BUILD_TAG=${CIRCLE_SHA1} \
+              --build-arg APP_GIT_COMMIT=${CIRCLE_SHA1} \
+              --build-arg APP_BRANCH_NAME=${CIRCLE_BRANCH} \
               --pull \
               --tag app \
               --file Dockerfile .\
