@@ -334,7 +334,7 @@ workflows:
   build-push-branch:
     jobs:
       - build-to-ecr:
-          context: laa-assess-non-standard-magistrates-fee-dev\
+          context: laa-assess-non-standard-magistrates-fee-dev
       - hold-dev:
           type: approval
           requires:
