@@ -278,3 +278,8 @@ workflows:
       - scan-docker-image:
           requires:
             - upload-test-coverage
+
+  build-push-branch:
+    jobs:
+      - build-to-ecr:
+          context: laa-assess-non-standard-magistrates-fee-dev
