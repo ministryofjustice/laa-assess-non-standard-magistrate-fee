@@ -1,30 +1,137 @@
 # Use the latest 2.1 version of CircleCI pipeline process engine.
 # See: https://circleci.com/docs/configuration-reference
 version: 2.1
-
-# Orbs are reusable packages of CircleCI configuration that you may share across projects, enabling you to create encapsulated, parameterized commands, jobs, and executors that can be used across multiple projects.
-# See: https://circleci.com/docs/orb-intro/
+# ------------------
+# ORBS
+# ------------------
 orbs:
   ruby: circleci/ruby@2.0.1
 
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/configuration-reference/#jobs
-jobs:
-  build:
+# ------------------
+# EXECUTORS
+# ------------------
+executors:
+  test-executor:
+    working_directory: ~/repo
     docker:
-      - image: cimg/ruby:3.2.2
-    executor: ruby/default
+      - image: cimg/ruby:3.2.2-browsers
+        environment:
+          RACK_ENV: test
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:circleci@127.0.0.1:5432/laa_assess_non_standard_magistrate_fee_test
+      - image: cimg/postgres:13.12
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: laa_assess_non_standard_magistrate_fee_test
+
+# ------------------
+# REFERENCES
+# ------------------
+references:
+  _restore-bundle: &restore-bundle
+    restore_cache:
+      keys:
+        - v1-bundle-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+        # fallback to using the latest cache if no exact match is found
+        - v1-bundle-
+
+  _install-bundle: &install-bundle
+    run:
+      name: Install gems
+      command: |
+        bundler_version=$(cat Gemfile.lock | tail -1 | tr -d " ")
+        gem install bundler -v $bundler_version
+        bundle config set path 'vendor/bundle'
+        bundle check || bundle install --jobs=4 --retry=3
+        bundle clean --force
+
+  _save-bundle: &save-bundle
+    save_cache:
+      key: v1-bundle-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+      paths:
+        - ~/.bundle
+        - vendor/bundle
+
+  _restore-assets: &restore-assets
+    restore_cache:
+      keys:
+        - v4-yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
+        # fallback to using the latest asset cache if no exact match is found
+        - v4-yarn-
+
+  _install-assets: &install-assets
+    run:
+      name: Install and compile assets
+      command: |
+        RUBYOPT=-W:no-deprecated \
+        yarn install && bin/rails dartsass:build
+
+  _save-assets: &save-assets
+    save_cache:
+      key: v4-yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
+      paths:
+        - node_modules
+        - app/assets/builds
+
+  _attach-tmp-workspace: &attach-tmp-workspace
+    attach_workspace:
+      at: ~/repo/tmp
+
+# ------------------
+# COMMANDS
+# ------------------
+commands:
+  install-gems:
+    steps:
+      - *restore-bundle
+      - *install-bundle
+      - *save-bundle
+
+  install-compile-assets:
+    steps:
+      - *restore-assets
+      - *install-assets
+      - *save-assets
+
+  build-base:
+    steps:
+      - install-gems
+      - install-compile-assets
+      - install-codeclimate-tt
+
+  install-codeclimate-tt:
+      steps:
+        - run:
+            name: Install codeclimate test reporter
+            command: |
+              mkdir -p tmp/
+              mkdir -p tmp/coverage/
+              curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > tmp/cc-test-reporter
+              chmod +x tmp/cc-test-reporter
+        - persist_to_workspace:
+            root: tmp
+            paths:
+              - cc-test-reporter
+
+# ------------------
+# JOBS
+# ------------------
+jobs:
+  build-test-container:
+    executor: test-executor
     steps:
       - checkout
-      - run:
-          name: Which bundler?
-          command: bundle -v
-      - ruby/install-deps
+      - build-base
 
-# Orchestrate jobs using workflows
-# See: https://circleci.com/docs/configuration-reference/#workflows
+# ------------------
+# WORKFLOWS
+# ------------------
 workflows:
-  sample: # This is the name of the workflow, feel free to change it to better match your workflow.
-    # Inside the workflow, you define the jobs you want to run.
+  test:
     jobs:
-      - build
+      - build-test-container:
+          filters:
+            branches:
+              ignore:
+                - main
