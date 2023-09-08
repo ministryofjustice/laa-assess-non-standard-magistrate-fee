@@ -29,6 +29,11 @@ executors:
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: laa_assess_non_standard_magistrate_fee_test
 
+  cloud-platform-executor:
+    resource_class: small
+    docker:
+      - image: ministryofjustice/cloud-platform-tools
+
 # ------------------
 # REFERENCES
 # ------------------
@@ -81,6 +86,17 @@ references:
   _attach-tmp-workspace: &attach-tmp-workspace
     attach_workspace:
       at: ~/repo/tmp
+
+  _authenticate-kubectl: &authenticate-kubectl
+    run:
+      name: Authenticate K8s
+      command: |
+          echo -n ${K8S_CLUSTER_CERT} | base64 -d > ./ca.crt
+          kubectl config set-cluster ${K8S_CLUSTER_NAME} --certificate-authority=./ca.crt --server=${K8S_CLUSTER_URL}
+          kubectl config set-credentials circleci --token=${K8S_TOKEN}
+          kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=${K8S_NAMESPACE}
+          kubectl config use-context ${K8S_CLUSTER_NAME}
+          kubectl --namespace=${K8S_NAMESPACE} get pods 
 
 # ------------------
 # COMMANDS
@@ -178,7 +194,33 @@ commands:
               --build-arg APP_BRANCH_NAME=${CIRCLE_BRANCH} \
               --pull \
               --tag app \
-              --file Dockerfile .
+              --file Dockerfile .\
+
+  deploy-to-environment:
+      description: Deploy image to the specified environment
+      parameters:
+        environment:
+          description: Name of environment to deploy to
+          type: string
+        registry:
+          description: Location of ECR images
+          type: string
+      steps:
+        - checkout
+        - *authenticate-kubectl
+        - run:
+            name: Deploy to namespace
+            command: |
+                helm upgrade laa-assess-non-standard-magistrate-fee \
+                  ./helm_deploy/. \
+                    --install --wait --force \
+                    --namespace=${K8S_NAMESPACE} \
+                    --values ./helm_deploy/values-<< parameters.environment >>.yaml \
+                    --set image.repository="<< parameters.registry >>/${ECR_REPOSITORY}" \
+                    --set image.tag="${CIRCLE_SHA1}" \
+                    --debug \
+                    --atomic
+
 # ------------------
 # JOBS
 # ------------------
@@ -254,6 +296,16 @@ jobs:
           region: $ECR_REGION
           repo: $ECR_REPOSITORY 
 
+  deploy-dev:
+    executor: cloud-platform-executor
+    steps:
+      - aws-cli/setup:
+          role_arn: $ECR_ROLE_TO_ASSUME
+          region: $ECR_REGION
+      - deploy-to-environment:
+          environment: dev
+          registry: ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
+
 
 # ------------------
 # WORKFLOWS
@@ -282,4 +334,12 @@ workflows:
   build-push-branch:
     jobs:
       - build-to-ecr:
+          context: laa-assess-non-standard-magistrates-fee-dev\
+      - hold-dev:
+          type: approval
+          requires:
+            - build-to-ecr
+      - deploy-dev:
           context: laa-assess-non-standard-magistrates-fee-dev
+          requires:
+            - hold-dev
