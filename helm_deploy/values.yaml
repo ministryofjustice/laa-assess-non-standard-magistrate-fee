@@ -20,9 +20,9 @@ service:
   internalPort: 3000
 
 ingress:
-  enabled: false
+  enabled: true
   namespace: laa-assess-non-standard-magistrate-fee-dev
-  className: ""
+  className: "modsec"
   annotations: 
       nginx.ingress.kubernetes.io/enable-modsecurity: "true"
       nginx.ingress.kubernetes.io/modsecurity-snippet: |
