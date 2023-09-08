@@ -113,6 +113,12 @@ commands:
             root: tmp
             paths:
               - cc-test-reporter
+  
+  rubocop:
+    steps:
+      - run:
+          name: Run rubocop
+          command: bundle exec rubocop
 
 # ------------------
 # JOBS
@@ -123,6 +129,13 @@ jobs:
     steps:
       - checkout
       - build-base
+
+  linter-tests:
+    executor: test-executor
+    steps:
+      - checkout
+      - install-gems
+      - rubocop
 
 # ------------------
 # WORKFLOWS
@@ -135,3 +148,6 @@ workflows:
             branches:
               ignore:
                 - main
+      - linter-tests:
+          requires:
+            - build-test-container
