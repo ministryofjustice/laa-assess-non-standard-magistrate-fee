@@ -20,7 +20,7 @@ service:
   internalPort: 3000
 
 ingress:
-  enabled: false
+  enabled: true
   namespace: laa-assess-non-standard-magistrate-fee-dev
   className: "modsec"
   annotations: 
