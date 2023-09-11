@@ -11,6 +11,8 @@ module V1
     attribute :agent_instructed
     attribute :remitted_to_magistrate
     attribute :remitted_to_magistrate_date
+    attribute :reasons_for_claim
+    
     def main_defendant_name
       main_defendant = defendants.detect { |defendant| defendant['main'] }
       main_defendant ? main_defendant['full_name'] : ''

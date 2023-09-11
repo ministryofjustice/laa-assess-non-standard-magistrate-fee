@@ -22,6 +22,7 @@ en:
       work_items: Work items
       letters_and_calls: Letters and calls
       disbursements: Disbursements
+  
   claim_details:
     show:
       page_title: "Review criminal legal aid applications"
@@ -45,9 +46,10 @@ en:
       agent_instructed: Instructed agent
       remitted_to_magistrate: Case remitted from Crown Court to magistrates' court
       remitted_to_magistrate_date: Remittal date
-  claim_types:
-    non_standard_magistrate: Non-standard magistrate's court payment
-    breach_of_injunction: Breach of injunction
+    claim_justification:
+      title: Claim Justification
+      reasons_for_claim: Why are you claiming a non-standard magistrates' payment?
+
   work_items:
     index:
       page_title: "Review criminal legal aid applications"
@@ -56,3 +58,11 @@ en:
       adjusted: Adjustment
       action: Action
       change: Change
+
+  reasons_for_claim:
+    enhanced_rates_claimed: Enhanced rates claimed
+    core_costs_exceed_higher_limit: Core costs exceed higher limit
+    councel_or_agent_assigned: Counsel or agent assigned
+    representation_order_withdrawn: Representation order withdrawn
+    extradition: Extradition
+    other: Other
