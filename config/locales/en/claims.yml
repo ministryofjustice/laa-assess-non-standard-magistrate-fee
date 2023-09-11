@@ -25,6 +25,10 @@ en:
   claim_details:
     show:
       page_title: "Review criminal legal aid applications"
+    details_of_claim:
+      title: Details of claim
+      ufn: Unique file number
+      claim_type: Type of claim
   work_items:
     index:
       page_title: "Review criminal legal aid applications"
