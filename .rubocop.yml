@@ -87,11 +87,10 @@ RSpec/Rails/InferredSpecType:
 RSpec/MessageChain:
   Enabled: false
 
-Naming/VariableNumber:
+RSpec/SpecFilePathFormat:
   Enabled: false
 
-# fully disabled as could not exclude spec/steps/ directory
-RSpec/FilePath:
+Naming/VariableNumber:
   Enabled: false
 
 # Enabled but tweaked cops
