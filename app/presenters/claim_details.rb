@@ -11,7 +11,7 @@ module ClaimDetails
         { title: I18n.t('.claim_details.details_of_claim.title'), data: details_of_claim_section },
         { title: I18n.t('.claim_details.defendant_details.title'), data: defendant_details_section },
         { title: I18n.t('.claim_details.case_details.title'), data: case_details_section },
-      # {title: I18n.t('.claim_details.case_disposal.title'), data: case_disposal_section },
+        { title: I18n.t('.claim_details.case_disposal.title'), data: case_disposal_section },
         { title: I18n.t('.claim_details.claim_justification.title'), data: case_justification_section },
         { title: I18n.t('.claim_details.hearing_details.title'), data: hearing_details_section },
         { title: I18n.t('.claim_details.other_info.title'), data: other_info_section },
@@ -71,6 +71,15 @@ module ClaimDetails
         {
           title: I18n.t('.claim_details.case_details.remitted_to_magistrate_date'),
           value: ApplicationController.helpers.format_date_string(claim_details.remitted_to_magistrate_date)
+        }
+      ]
+    end
+
+    def case_disposal_section
+      [
+        {
+          title: claim_details.category,
+          value:  I18n.t(".plea_option.#{claim_details.plea}")
         }
       ]
     end
