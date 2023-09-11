@@ -13,12 +13,16 @@ Rails.application.routes.draw do
       get :ping
     end
   end
+
   resources :application_versions, only: [:update]
+  
   resources :claims, only: [:index] do
     resource :claim_details, only: [:show]
     resource :adjustments, only: [:show]
     resources :work_items, only: [:index]
   end
+
+  get 'claims/:claim', to: redirect('claims/%{claim}/claim_details')
 
   namespace :about do
     get :privacy
