@@ -58,6 +58,13 @@ en:
       youth_court: Youth court
       hearing_outcome: Hearing outcome
       matter_type: Matter type
+    other_info:
+      title: Other relevant information
+      is_other_info: Any other information
+      other_info: Other information added
+      concluded: Proceedings concluded over 3 months ago
+      conclusion: Reason for not claiming within 3 months
+
 
   work_items:
     index:

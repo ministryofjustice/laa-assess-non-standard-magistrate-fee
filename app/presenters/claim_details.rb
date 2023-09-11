@@ -14,8 +14,7 @@ module ClaimDetails
       # {title: I18n.t('.claim_details.case_disposal.title'), data: case_disposal_section },
         { title: I18n.t('.claim_details.claim_justification.title'), data: case_justification_section },
         { title: I18n.t('.claim_details.hearing_details.title'), data: hearing_details_section },
-      #   {title: 'Hearing details', data: DetailsOfClaimSection },
-      #   {title: 'Other relevant information', data: DetailsOfClaimSection },
+        { title: 'Other relevant information', data: other_info_section },
       #   {title: 'Contact details', data: DetailsOfClaimSection },
       #   {title: 'Claim details', data: DetailsOfClaimSection }
       ]
@@ -111,6 +110,27 @@ module ClaimDetails
         {
           title: I18n.t('.claim_details.hearing_details.matter_type'),
           value: I18n.t(".matter_type.#{claim_details.matter_type}")
+        }
+      ]
+    end
+
+    def other_info_section
+      [
+        {
+          title: I18n.t('.claim_details.other_info.is_other_info'),
+          value: claim_details.is_other_info&.capitalize
+        },
+        {
+          title: I18n.t('.claim_details.other_info.other_info'),
+          value: ApplicationController.helpers.multiline_text(claim_details.other_info)
+        },
+        {
+          title: I18n.t('.claim_details.other_info.concluded'),
+          value: claim_details.concluded&.capitalize
+        },
+        {
+          title: I18n.t('.claim_details.other_info.conclusion'),
+          value: ApplicationController.helpers.multiline_text(claim_details.conclusion)
         }
       ]
     end

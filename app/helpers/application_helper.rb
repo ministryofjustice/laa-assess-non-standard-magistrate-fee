@@ -38,4 +38,8 @@ module ApplicationHelper
     date = DateTime.parse(string)
     formatted_date = date.strftime('%d %B %Y')
   end
+
+  def multiline_text(string)
+    ApplicationController.helpers.sanitize(string.gsub("\n", '<br>'), tags: %w[br])
+  end
 end

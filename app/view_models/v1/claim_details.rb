@@ -19,6 +19,10 @@ module V1
     attribute :youth_count
     attribute :hearing_outcome
     attribute :matter_type
+    attribute :is_other_info
+    attribute :other_info
+    attribute :concluded
+    attribute :conclusion
     
     def main_defendant_name
       main_defendant = defendants.detect { |defendant| defendant['main'] }
