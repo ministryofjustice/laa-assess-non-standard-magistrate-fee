@@ -30,6 +30,12 @@ en:
       ufn: Unique file number
       claim_type: Type of claim
       rep_order_date: Representation order date
+    defendant_details:
+      title: Defendant Details
+      main_defendant_name: Main defendant full name
+      main_defendant_maat: Main defendant MAAT ID
+      defendant_name: Additional defendant %{count} full name
+      defendant_maat: Additional defendant %{count} MAAT ID
   claim_types:
     non_standard_magistrate: Non-standard magistrate's court payment
     breach_of_injunction: Breach of injunction
