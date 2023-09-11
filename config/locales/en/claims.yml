@@ -64,6 +64,13 @@ en:
       other_info: Other information added
       concluded: Proceedings concluded over 3 months ago
       conclusion: Reason for not claiming within 3 months
+    contact_details:
+      title: Contact details
+      firm_name: Firm name
+      firm_account_number: Firm account number
+      firm_address: Firm address
+      solicitor_full_name: Solicitor full name
+      solicitor_ref_number: Solicitor reference number
 
 
   work_items:

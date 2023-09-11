@@ -14,9 +14,8 @@ module ClaimDetails
       # {title: I18n.t('.claim_details.case_disposal.title'), data: case_disposal_section },
         { title: I18n.t('.claim_details.claim_justification.title'), data: case_justification_section },
         { title: I18n.t('.claim_details.hearing_details.title'), data: hearing_details_section },
-        { title: 'Other relevant information', data: other_info_section },
-      #   {title: 'Contact details', data: DetailsOfClaimSection },
-      #   {title: 'Claim details', data: DetailsOfClaimSection }
+        { title: I18n.t('.claim_details.other_info.title'), data: other_info_section },
+        { title: I18n.t('.claim_details.contact_details.title'), data: contact_details_section }
       ]
     end
 
@@ -37,6 +36,10 @@ module ClaimDetails
           value: ApplicationController.helpers.format_date_string(claim_details.rep_order_date) 
         }
       ]
+    end
+
+    def defendant_details_section
+      defendant_rows.flatten
     end
 
     def case_details_section
@@ -76,7 +79,7 @@ module ClaimDetails
       [
         {
           title: I18n.t('.claim_details.claim_justification.reasons_for_claim'),
-          value: reasons_for_claim
+          value: claim_details.reasons_for_claim_list
         }
       ]
     end
@@ -135,8 +138,29 @@ module ClaimDetails
       ]
     end
 
-    def defendant_details_section
-      defendant_rows.flatten
+    def contact_details_section
+      [
+        {
+          title: I18n.t('.claim_details.contact_details.firm_name'),
+          value: claim_details.firm_name
+        },
+        {
+          title: I18n.t('.claim_details.contact_details.firm_account_number'),
+          value: claim_details.firm_account_number
+        },
+        {
+          title: I18n.t('.claim_details.contact_details.firm_address'),
+          value: claim_details.firm_address
+        },
+        {
+          title: I18n.t('.claim_details.contact_details.solicitor_full_name'),
+          value: claim_details.solicitor_full_name
+        },
+        {
+          title: I18n.t('.claim_details.contact_details.solicitor_ref_number'),
+          value: claim_details.solicitor_ref_number
+        }
+      ]
     end
 
     def defendant_rows
@@ -169,13 +193,6 @@ module ClaimDetails
           }
         ]
       end  
-    end
-
-    def reasons_for_claim
-      reasons = claim_details.reasons_for_claim.map do |reason|
-        I18n.t(".reasons_for_claim.#{reason}")
-      end
-      ApplicationController.helpers.sanitize(reasons.join('<br>'), tags: %w[br])
     end
   end
 end

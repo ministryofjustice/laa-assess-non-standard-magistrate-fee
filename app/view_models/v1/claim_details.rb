@@ -23,6 +23,8 @@ module V1
     attribute :other_info
     attribute :concluded
     attribute :conclusion
+    attribute :firm_office
+    attribute :solicitor
     
     def main_defendant_name
       main_defendant = defendants.detect { |defendant| defendant['main'] }
@@ -36,6 +38,38 @@ module V1
 
     def additional_defendants
       defendants.reject { |defendant| defendant['main'] == true }
+    end
+
+    def firm_name
+      firm_office['name']
+    end
+
+    def firm_account_number
+      firm_office['account_number']
+    end
+
+    def solicitor_full_name
+      solicitor['full_name']
+    end
+
+    def solicitor_ref_number
+      solicitor['reference_number']
+    end
+
+    def firm_address
+      ApplicationController.helpers.sanitize([
+        firm_office['address_line_1'],
+        firm_office['address_line_2'],
+        firm_office['town'],
+        firm_office['postcode']].join('<br>'),
+      tags: %w[br])
+    end
+
+    def reasons_for_claim_list
+      reasons = reasons_for_claim.map do |reason|
+        I18n.t(".reasons_for_claim.#{reason}")
+      end
+      ApplicationController.helpers.sanitize(reasons.join('<br>'), tags: %w[br])
     end
   end
 end
