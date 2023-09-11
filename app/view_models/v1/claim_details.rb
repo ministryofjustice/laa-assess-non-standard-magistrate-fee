@@ -12,6 +12,13 @@ module V1
     attribute :remitted_to_magistrate
     attribute :remitted_to_magistrate_date
     attribute :reasons_for_claim
+    attribute :first_hearing_date
+    attribute :number_of_hearing
+    attribute :court
+    attribute :in_area
+    attribute :youth_count
+    attribute :hearing_outcome
+    attribute :matter_type
     
     def main_defendant_name
       main_defendant = defendants.detect { |defendant| defendant['main'] }

@@ -12,8 +12,8 @@ module ClaimDetails
         { title: I18n.t('.claim_details.defendant_details.title'), data: defendant_details_section },
         { title: I18n.t('.claim_details.case_details.title'), data: case_details_section },
       # {title: I18n.t('.claim_details.case_disposal.title'), data: case_disposal_section },
-        {title: I18n.t('.claim_details.claim_justification.title'), data: case_justification_section },
-      #   {title: 'Claim details', data: DetailsOfClaimSection },
+        { title: I18n.t('.claim_details.claim_justification.title'), data: case_justification_section },
+        { title: I18n.t('.claim_details.hearing_details.title'), data: hearing_details_section },
       #   {title: 'Hearing details', data: DetailsOfClaimSection },
       #   {title: 'Other relevant information', data: DetailsOfClaimSection },
       #   {title: 'Contact details', data: DetailsOfClaimSection },
@@ -78,6 +78,39 @@ module ClaimDetails
         {
           title: I18n.t('.claim_details.claim_justification.reasons_for_claim'),
           value: reasons_for_claim
+        }
+      ]
+    end
+
+    def hearing_details_section
+      [
+        {
+          title: I18n.t('.claim_details.hearing_details.first_hearing_date'),
+          value: ApplicationController.helpers.format_date_string(claim_details.first_hearing_date)
+        },
+        {
+          title: I18n.t('.claim_details.hearing_details.number_of_hearing'),
+          value: claim_details.number_of_hearing
+        },
+        {
+          title: I18n.t('.claim_details.hearing_details.court'),
+          value: claim_details.court
+        },
+        {
+          title: I18n.t('.claim_details.hearing_details.in_area'),
+          value: claim_details.in_area&.capitalize
+        },
+        {
+          title: I18n.t('.claim_details.hearing_details.youth_court'),
+          value: claim_details.youth_count&.capitalize
+        },
+        {
+          title: I18n.t('.claim_details.hearing_details.hearing_outcome'),
+          value: I18n.t(".hearing_outcome.#{claim_details.hearing_outcome}")
+        },
+        {
+          title: I18n.t('.claim_details.hearing_details.matter_type'),
+          value: I18n.t(".matter_type.#{claim_details.matter_type}")
         }
       ]
     end

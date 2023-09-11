@@ -49,6 +49,15 @@ en:
     claim_justification:
       title: Claim Justification
       reasons_for_claim: Why are you claiming a non-standard magistrates' payment?
+    hearing_details:
+      title: Hearing details
+      first_hearing_date: Date of first hearing
+      number_of_hearing: Number of hearings
+      court: Magistrates' court
+      in_area: Court is in designated area of the firm
+      youth_court: Youth court
+      hearing_outcome: Hearing outcome
+      matter_type: Matter type
 
   work_items:
     index:
@@ -66,3 +75,46 @@ en:
     representation_order_withdrawn: Representation order withdrawn
     extradition: Extradition
     other: Other
+  
+  matter_type:
+    1: Offences against the person
+    2: Homicide and related grave offences
+    3: Sexual offences and associated offences against children
+    4: Robbery
+    5: Burglary
+    6: Criminal damage
+    7: Theft (including taking vehicle without consent)
+    8: Fraud and forgery and other offences of dishonesty not otherwise categorised
+    9: Public order offences
+    10: Drug offences
+    11: Driving and motor vehicle offences (other than those covered by codes 1, 6 & 7)
+    12: Other offences
+    13: Terrorism
+    14: Anti-social behaviour orders (for applications made prior to 23rd March 2015)
+    15: Sexual offender orders
+    16: Other prescribed proceedings
+
+  hearing_outcome:
+    CP01: Arrest warrant issued/adjourned indefinitely
+    CP02: Change of solicitor
+    CP03: Representation order withdrawn
+    CP04: 'Trial: acquitted'
+    CP05: 'Trial: mixed verdicts'
+    CP06: 'Trial: convicted'
+    CP07: Discontinued (before any pleas entered)
+    CP08: Discontinued (after pleas entered)
+    CP09: Guilty plea to all charges put – not listed for trial
+    CP10: Guilty plea to all charges put after case listed for trial
+    CP11: Guilty plea to substitute charges put – after case listed for trial
+    CP12: Mix of guilty plea(s) and discontinuance – Not listed for trial
+    CP13: Mix of guilty plea(s) and discontinuance – listed for trial
+    CP16: 'Committal: discharged'
+    CP17: Extradition
+    CP18: Case remitted from Crown to magistrates’ court for sentencing
+    CP19: Deferred sentence
+    CP20: Granted anti-social behaviour order / sexual offences order / other order
+    CP21: Part-granted anti-social behaviour order/ sexual offences order / other order
+    CP22: Refused anti-social behaviour order/ sexual offences order / other order
+    CP23: Varied anti-social behaviour order/ sexual offences order / other order
+    CP24: Discharged anti-social behaviour order/ sexual offences order / other order
+
