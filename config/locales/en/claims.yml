@@ -32,6 +32,7 @@ en:
       rep_order_date: Representation order date
   claim_types:
     non_standard_magistrate: Non-standard magistrate's court payment
+    breach_of_injunction: Breach of injunction
   work_items:
     index:
       page_title: "Review criminal legal aid applications"
