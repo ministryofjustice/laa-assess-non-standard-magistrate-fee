@@ -1,6 +1,6 @@
 module ClaimDetails
   class Table
-    attr_reader :claim
+    attr_reader :claim_details
     
     def initialize(claim)
       @claim_details = BaseViewModel.build(:claim_details, claim)
@@ -25,8 +25,9 @@ module ClaimDetails
     
     def details_of_claim_section
       [
-        {title: I18n.t('.claim_details.details_of_claim.ufn'), value: "abc" },
-        {title: I18n.t('.claim_details.details_of_claim.claim_type'), value: "abc" }
+        {title: I18n.t('.claim_details.details_of_claim.ufn'), value: claim_details.ufn },
+        {title: I18n.t('.claim_details.details_of_claim.claim_type'), value: I18n.t(".claim_types.#{claim_details.claim_type}") },
+        {title: I18n.t('.claim_details.details_of_claim.rep_order_date'), value: ApplicationController.helpers.format_date_string(claim_details.rep_order_date) }
       ]
     end
   end

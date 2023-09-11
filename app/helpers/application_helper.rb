@@ -33,4 +33,9 @@ module ApplicationHelper
     t('helpers.time_period.hours', count: period / 60) +
       t('helpers.time_period.minutes', count: period % 60)
   end
+
+  def format_date_string(string)
+    date = DateTime.parse(string)
+    formatted_date = date.strftime('%d %B %Y')
+  end
 end
