@@ -10,7 +10,7 @@ module ClaimDetails
       [
         { title: I18n.t('.claim_details.details_of_claim.title'), data: details_of_claim_section },
         { title: I18n.t('.claim_details.defendant_details.title'), data: defendant_details_section },
-      #   {title: 'Case details', data: DetailsOfClaimSection },
+        { title: I18n.t('.claim_details.case_details.title'), data: case_details_section },
       #   {title: 'Case disposal', data: DetailsOfClaimSection },
       #   {title: 'Claim justification', data: DetailsOfClaimSection },
       #   {title: 'Claim details', data: DetailsOfClaimSection },
@@ -36,6 +36,39 @@ module ClaimDetails
         { 
           title: I18n.t('.claim_details.details_of_claim.rep_order_date'),
           value: ApplicationController.helpers.format_date_string(claim_details.rep_order_date) 
+        }
+      ]
+    end
+
+    def case_details_section
+      [
+        {
+          title: I18n.t('.claim_details.case_details.main_offence'),
+          value: claim_details.main_offence
+        },
+        {
+          title: I18n.t('.claim_details.case_details.main_offence_date'),
+          value: ApplicationController.helpers.format_date_string(claim_details.main_offence_date)
+        },
+        {
+          title: I18n.t('.claim_details.case_details.assigned_counsel'),
+          value: claim_details.assigned_counsel&.capitalize
+        },
+        {
+          title: I18n.t('.claim_details.case_details.unassigned_counsel'),
+          value: claim_details.unassigned_counsel&.capitalize
+        },
+        {
+          title: I18n.t('.claim_details.case_details.agent_instructed'),
+          value: claim_details.agent_instructed&.capitalize
+        },
+        {
+          title: I18n.t('.claim_details.case_details.remitted_to_magistrate'),
+          value: claim_details.remitted_to_magistrate&.capitalize
+        },
+        {
+          title: I18n.t('.claim_details.case_details.remitted_to_magistrate_date'),
+          value: ApplicationController.helpers.format_date_string(claim_details.remitted_to_magistrate_date)
         }
       ]
     end

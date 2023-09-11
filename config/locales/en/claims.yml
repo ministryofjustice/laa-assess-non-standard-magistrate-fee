@@ -36,6 +36,15 @@ en:
       main_defendant_maat: Main defendant MAAT ID
       defendant_name: Additional defendant %{count} full name
       defendant_maat: Additional defendant %{count} MAAT ID
+    case_details: 
+      title: Case details
+      main_offence: Main offence name
+      main_offence_date: Main offence date
+      assigned_counsel: Assigned counsel
+      unassigned_counsel: Unassigned counsel
+      agent_instructed: Instructed agent
+      remitted_to_magistrate: Case remitted from Crown Court to magistrates' court
+      remitted_to_magistrate_date: Remittal date
   claim_types:
     non_standard_magistrate: Non-standard magistrate's court payment
     breach_of_injunction: Breach of injunction
