@@ -82,6 +82,9 @@ en:
       action: Action
       change: Change
 
+  claim_type:
+    non_standard_magistrate: Non-standard magistrates' court payment
+
   reasons_for_claim:
     enhanced_rates_claimed: Enhanced rates claimed
     core_costs_exceed_higher_limit: Core costs exceed higher limit

@@ -29,7 +29,7 @@ module ClaimDetails
         },
         { 
           title: I18n.t('.claim_details.details_of_claim.claim_type'),
-          value: I18n.t(".claim_types.#{claim_details.claim_type}") 
+          value: I18n.t(".claim_type.#{claim_details.claim_type}") 
         },
         { 
           title: I18n.t('.claim_details.details_of_claim.rep_order_date'),
