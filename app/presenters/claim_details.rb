@@ -45,7 +45,6 @@ module ClaimDetails
     end
 
     def defendant_rows
-      binding.pry
       main_defendant_rows + additional_defendant_rows 
     end
 
