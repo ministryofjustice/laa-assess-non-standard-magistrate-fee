@@ -1,6 +1,6 @@
 module V1
   class ClaimSummary < BaseViewModel
-    include  NumberHelper
+    include NumberHelper
     attribute :laa_reference
     attribute :defendants
     attribute :submitted_total
@@ -16,7 +16,7 @@ module V1
         ApplicationController.helpers.pounds(adjusted_total)
       elsif submitted_total.present?
         ApplicationController.helpers.pounds(submitted_total)
-    
+
       end
     end
   end

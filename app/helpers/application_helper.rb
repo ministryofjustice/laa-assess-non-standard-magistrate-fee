@@ -2,7 +2,7 @@
 
 module ApplicationHelper
   include NumberHelper
-  
+
   def current_application
     raise 'implement this action, in subclasses'
   end
