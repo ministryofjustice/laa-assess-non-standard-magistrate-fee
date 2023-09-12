@@ -8,7 +8,7 @@ module ClaimDetails
 
     def table
       [
-        { title: I18n.t('.claim_details.details_of_claim.title'), data: details_of_claim_section },
+        DetailsOfClaim.new(claim_details).rows,
         { title: I18n.t('.claim_details.defendant_details.title'), data: defendant_details_section },
         { title: I18n.t('.claim_details.case_details.title'), data: case_details_section },
         { title: I18n.t('.claim_details.case_disposal.title'), data: case_disposal_section },
@@ -20,23 +20,6 @@ module ClaimDetails
     end
 
     private
-
-    def details_of_claim_section
-      [
-        {
-          title: I18n.t('.claim_details.details_of_claim.ufn'),
-          value: claim_details.ufn
-        },
-        {
-          title: I18n.t('.claim_details.details_of_claim.claim_type'),
-          value: I18n.t(".claim_type.#{claim_details.claim_type}")
-        },
-        {
-          title: I18n.t('.claim_details.details_of_claim.rep_order_date'),
-          value: ApplicationController.helpers.format_date_string(claim_details.rep_order_date)
-        }
-      ]
-    end
 
     def defendant_details_section
       defendant_rows.flatten
