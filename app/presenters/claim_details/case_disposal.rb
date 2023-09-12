@@ -10,8 +10,8 @@ module ClaimDetails
     def data
       [
         {
-          title: claim_details.category,
-          value:  I18n.t(".plea_option.#{claim_details.plea}")
+          title: claim_details.plea_category,
+          value:  claim_details.plea_en
         }
       ]
     end

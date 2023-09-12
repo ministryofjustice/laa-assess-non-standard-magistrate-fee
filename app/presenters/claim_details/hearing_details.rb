@@ -32,11 +32,11 @@ module ClaimDetails
         },
         {
           title: I18n.t('.claim_details.hearing_details.hearing_outcome'),
-          value: I18n.t(".hearing_outcome.#{claim_details.hearing_outcome}")
+          value: claim_details.hearing_outcome_en
         },
         {
           title: I18n.t('.claim_details.hearing_details.matter_type'),
-          value: I18n.t(".matter_type.#{claim_details.matter_type}")
+          value: claim_details.matter_type_en
         }
       ]
     end

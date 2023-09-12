@@ -26,6 +26,23 @@ module V1
     attribute :firm_office
     attribute :solicitor
     attribute :plea
+    attribute :plea_category
+
+    def claim_type_en
+      claim_type['en']
+    end
+
+    def matter_type_en
+      matter_type['en']
+    end
+
+    def hearing_outcome_en
+      hearing_outcome['en']
+    end
+
+    def plea_en
+      plea['en']
+    end
 
     def main_defendant_name
       main_defendant = defendants.detect { |defendant| defendant['main'] }
@@ -68,36 +85,8 @@ module V1
     end
 
     def reasons_for_claim_list
-      reasons = reasons_for_claim.map do |reason|
-        I18n.t(".reasons_for_claim.#{reason}")
-      end
+      reasons = reasons_for_claim.pluck('en')
       ApplicationController.helpers.sanitize(reasons.join('<br>'), tags: %w[br])
-    end
-
-    GUILTY_OPTIONS = %w[
-      guilty
-      breach
-      discontinuance_cat1
-      bind_over
-      deferred_sentence
-      change_solicitor
-      arrest_warrant
-    ].freeze
-
-    NOT_GUILTY_OPTIONS = %w[
-      not_guilty
-      cracked_trial
-      contested
-      discontinuance_cat2
-      mixed
-    ].freeze
-
-    def category
-      if plea.in?(GUILTY_OPTIONS)
-        'Category 1'
-      elsif plea.in?(NOT_GUILTY_OPTIONS)
-        'Category 2'
-      end
     end
   end
 end

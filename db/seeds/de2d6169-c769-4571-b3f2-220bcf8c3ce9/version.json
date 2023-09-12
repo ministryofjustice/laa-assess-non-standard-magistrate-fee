@@ -9,9 +9,13 @@
         "submitted_total": 100,
         "adjusted_total": 40,
         "ufn": "121111/001",
-        "plea": "cracked_trial",
+        "plea_category": "Category 2",
+        "plea": {
+          "value": "cracked_trial",
+          "en": "Cracked Trial"
+        },
         "calls": 13,
-        "court": "Apples",
+        "court": "Central London County Court",
         "gender": null,
         "status": "completed",
         "in_area": "no",
@@ -20,34 +24,33 @@
             "email": "provider@example.com",
             "description": null
         },
-        "cntp_date": null,
+        "cntp_date": "2022-10-09",
         "concluded": "no",
         "solicitor": {
-            "full_name": "gg ss",
+            "full_name": "Daniel Treaty",
             "previous_id": null,
-            "contact_email": "ggg@mmm.com",
-            "reference_number": "gg",
-            "contact_full_name": "hgg sss"
+            "contact_email": "f.solomon@solicitor.com",
+            "reference_number": "1212333",
+            "contact_full_name": "Frank Solomon"
         },
         "claim_type": {
             "value": "non_standard_magistrate",
-            "en": "Non-standard fee - magistrate",
-            "cy": "Non-standard fee - magistrate"
+            "en": "Non-standard fee - magistrate"
         },
         "cntp_order": null,
-        "conclusion": "",
+        "conclusion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. \nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
         "created_at": "2023-07-06T10:04:02.444Z",
         "defendants": [
             {
                 "id": "40fb1f88-6dea-4b03-9087-590436b62dd8",
-                "maat": "gg",
+                "maat": "AB12123",
                 "main": true,
                 "position": 1,
-                "full_name": "gg"
+                "full_name": "Tracy Linklater"
             }
         ],
         "disability": null,
-        "other_info": "",
+        "other_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. \nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
         "time_spent": null,
         "updated_at": "2023-09-01T13:04:19.096Z",
         "work_after": "no",
@@ -63,21 +66,24 @@
             }
         ],
         "firm_office": {
-            "name": "ff",
-            "town": "ff",
-            "postcode": "aa1 2bb",
+            "name": "Blundon Solicitor Firm",
+            "town": "Stoke Newington",
+            "postcode": "NE10 4AB",
             "previous_id": null,
-            "account_number": "ff",
-            "address_line_1": "ff",
-            "address_line_2": "fff"
+            "account_number": "121234",
+            "address_line_1": "Suite 3",
+            "address_line_2": "5 Princess Road"
         },
-        "matter_type": "1",
+        "matter_type": {
+          "value": "1",
+          "en": "Offences against the person"
+        },
         "office_code": "1A123B",
         "work_before": "no",
         "youth_count": "no",
         "calls_uplift": null,
         "ethnic_group": null,
-        "main_offence": "Apples",
+        "main_offence": "Stole an apple",
         "send_by_post": true,
         "disbursements": [
             {
@@ -99,32 +105,41 @@
         "laa_reference": "LAA-5xQ5z2",
         "letters_uplift": 10,
         "rep_order_date": "2012-12-12",
-        "signatory_name": "aa aa",
-        "hearing_outcome": "CP04",
+        "signatory_name": "Lisa Beakley",
+        "hearing_outcome": {
+          "value": "CP04",
+          "en": "Trial: acquitted"
+        },
         "work_after_date": null,
         "agent_instructed": "yes",
         "assigned_counsel": "no",
         "preparation_time": "no",
-        "work_before_date": null,
+        "work_before_date": "2022-01-01",
         "defence_statement": 2,
         "has_disbursements": "yes",
         "main_offence_date": "2022-12-12",
         "number_of_hearing": 2,
         "reasons_for_claim": [
-            "enhanced_rates_claimed",
-            "councel_or_agent_assigned"
+            {
+              "value": "enhanced_rates_claimed",
+              "en": "Enhanced rates claimed"
+            },
+            {
+              "value": "councel_or_agent_assigned",
+              "en": "Counsel or agent assigned"
+            }
         ],
         "cracked_trial_date": "2012-11-11",
         "first_hearing_date": "2022-12-12",
         "supplemental_claim": "no",
         "unassigned_counsel": "no",
-        "arrest_warrant_date": null,
+        "arrest_warrant_date": "2022-10-10",
         "number_of_witnesses": 2,
         "prosecution_evidence": 2,
         "remitted_to_magistrate": "no",
         "remitted_to_magistrate_date": "2022-12-12",
         "reason_for_claim_other_details": "",
-        "representation_order_withdrawn_date": null
+        "representation_order_withdrawn_date": "20-01-11"
     },
     "created_at": "2023-09-01T13:14:17.150Z",
     "updated_at": "2023-09-01T13:14:17.150Z"
