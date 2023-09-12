@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
+  include NumberHelper
+  
   def current_application
     raise 'implement this action, in subclasses'
   end
