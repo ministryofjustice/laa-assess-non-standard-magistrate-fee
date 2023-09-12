@@ -150,6 +150,9 @@ commands:
           command: |
             RUBYOPT=-W:no-deprecated \
             bundle exec rails db:prepare --trace
+      - run:
+          name: Seed database
+          command: rake custom_seeds:load
 
   rspec:
     steps:
