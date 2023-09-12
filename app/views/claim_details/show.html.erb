@@ -18,7 +18,7 @@
         <tbody class="govuk-table__body">
           <% section[:data].each do |row| %>
             <tr class="govuk-table__row">
-              <th scope="row" class="govuk-table__header"><%= row[:title] %></th>
+              <th scope="row" class="govuk-table__header govuk-!-width-one-third"><%= row[:title] %></th>
               <td class="govuk-table__cell"><%= row[:value] %></td>
             </tr>
           <% end %>
@@ -27,4 +27,3 @@
     <% end %>
   </div>
 </div>
-
