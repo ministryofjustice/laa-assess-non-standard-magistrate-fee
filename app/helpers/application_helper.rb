@@ -36,7 +36,7 @@ module ApplicationHelper
 
   def format_date_string(string)
     date = DateTime.parse(string)
-    formatted_date = date.strftime('%d %B %Y')
+    date.strftime('%d %B %Y')
   end
 
   def multiline_text(string)

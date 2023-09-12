@@ -26,7 +26,7 @@ module V1
     attribute :firm_office
     attribute :solicitor
     attribute :plea
-    
+
     def main_defendant_name
       main_defendant = defendants.detect { |defendant| defendant['main'] }
       main_defendant ? main_defendant['full_name'] : ''
@@ -62,8 +62,9 @@ module V1
         firm_office['address_line_1'],
         firm_office['address_line_2'],
         firm_office['town'],
-        firm_office['postcode']].join('<br>'),
-      tags: %w[br])
+        firm_office['postcode']
+      ].join('<br>'),
+                                             tags: %w[br])
     end
 
     def reasons_for_claim_list
@@ -73,22 +74,22 @@ module V1
       ApplicationController.helpers.sanitize(reasons.join('<br>'), tags: %w[br])
     end
 
-    GUILTY_OPTIONS = [
-      'guilty',
-      'breach',
-      'discontinuance_cat1',
-      'bind_over',
-      'deferred_sentence',
-      'change_solicitor',
-      'arrest_warrant'
+    GUILTY_OPTIONS = %w[
+      guilty
+      breach
+      discontinuance_cat1
+      bind_over
+      deferred_sentence
+      change_solicitor
+      arrest_warrant
     ].freeze
-  
-    NOT_GUILTY_OPTIONS = [
-      'not_guilty',
-      'cracked_trial',
-      'contested',
-      'discontinuance_cat2',
-      'mixed',
+
+    NOT_GUILTY_OPTIONS = %w[
+      not_guilty
+      cracked_trial
+      contested
+      discontinuance_cat2
+      mixed
     ].freeze
 
     def category
