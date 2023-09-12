@@ -10,8 +10,8 @@ module ClaimDetails
     def data
       defendant_rows.flatten
     end
-    
-    private 
+
+    private
 
     def defendant_rows
       main_defendant_rows + additional_defendant_rows

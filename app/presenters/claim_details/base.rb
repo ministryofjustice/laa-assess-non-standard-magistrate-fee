@@ -11,7 +11,7 @@ module ClaimDetails
     end
 
     def rows
-      { title: title, data: data }
+      { title:, data: }
     end
   end
 end
