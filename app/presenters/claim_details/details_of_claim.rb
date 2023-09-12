@@ -7,6 +7,7 @@ module ClaimDetails
       @key = 'details_of_claim'
     end
 
+    # rubocop:disable Metrics/MethodLength
     def data
       [
         {
@@ -23,5 +24,6 @@ module ClaimDetails
         }
       ]
     end
+    # rubocop:enable Metrics/MethodLength
   end
 end

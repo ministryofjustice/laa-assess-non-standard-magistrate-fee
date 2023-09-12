@@ -7,6 +7,7 @@ module ClaimDetails
       @key = 'other_info'
     end
 
+    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     def data
       [
         {
@@ -27,5 +28,6 @@ module ClaimDetails
         }
       ]
     end
+    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
   end
 end

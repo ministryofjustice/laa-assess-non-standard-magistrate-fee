@@ -6,6 +6,7 @@ module ClaimDetails
       @claim_details = BaseViewModel.build(:claim_details, claim)
     end
 
+    # rubocop:disable Metrics/AbcSize
     def table
       [
         DetailsOfClaim.new(claim_details).rows,
@@ -18,5 +19,6 @@ module ClaimDetails
         ContactDetails.new(claim_details).rows
       ]
     end
+    # rubocop:enable Metrics/AbcSize
   end
 end
