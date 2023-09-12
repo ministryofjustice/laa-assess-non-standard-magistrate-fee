@@ -4,14 +4,20 @@ module V1
     attribute :laa_reference
     attribute :defendants
     attribute :submitted_total
+    attribute :adjusted_total
 
     def main_defendant_name
       main_defendant = defendants.detect { |defendant| defendant['main'] }
       main_defendant ? main_defendant['full_name'] : ''
     end
 
-    def submitted_total_pounds
-      ApplicationController.helpers.pounds(submitted_total)
+    def total
+      if adjusted_total.present?
+        ApplicationController.helpers.pounds(adjusted_total)
+      elsif submitted_total.present?
+        ApplicationController.helpers.pounds(submitted_total)
+    
+      end
     end
   end
 end

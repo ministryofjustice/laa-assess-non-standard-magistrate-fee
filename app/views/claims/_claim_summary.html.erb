@@ -9,7 +9,7 @@
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">
         <%= claim_summary.main_defendant_name %>
       </h1>
-      <p class="govuk-body-l govuk-!-margin-bottom-2"><%= claim_summary.submitted_total_pounds %></p>
+      <p class="govuk-body-l govuk-!-margin-bottom-2"><%= claim_summary.total %></p>
       <p class="govuk-body-l">
         <%= t(".risk.#{claim.risk}") %>
       <%= link_to t('.risk.change'), '#', class: 'govuk-!-font-size-19 govuk-!-margin-left-2' %>
