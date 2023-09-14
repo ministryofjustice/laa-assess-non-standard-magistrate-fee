@@ -5,6 +5,11 @@ module ApplicationHelper
     raise 'implement this action, in subclasses'
   end
 
+  def current_page?(page)
+    current_page = request.path.delete_prefix('/')
+    current_page == page ? 'page' : nil
+  end
+
   def title(page_title)
     content_for(
       :page_title, [page_title.presence, service_name, 'GOV.UK'].compact.join(' - ')

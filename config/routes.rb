@@ -4,10 +4,10 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
-  root "claims#index"
+  root "your_claims#index"
 
   get :ping, to: 'healthcheck#ping'
-  
+
   resources :healthcheck, only: [] do
     collection do
       get :ping
@@ -19,7 +19,8 @@ Rails.application.routes.draw do
     resource :adjustments, only: [:show]
     resources :work_items, only: [:index]
   end
-
+  resources :your_claims, only: [:index]
+  resources :assessed_claims, only: [:index]
   namespace :about do
     get :privacy
     get :contact

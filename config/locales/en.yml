@@ -19,6 +19,10 @@ en:
       manage_users: Manage users
       sign_in: Sign in
       sign_out: Sign out
+    primary_navigation:
+      your_claims: Your claims
+      all_claims: All claims
+      assessed_claims: Assessed claims
     phase_banner:
       phase: BETA
       phase_description_html: This is a new service – your <a>feedback</a> will help us to improve it.
