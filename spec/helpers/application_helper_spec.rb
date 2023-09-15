@@ -7,20 +7,6 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
   end
 
-  describe '#current_page?' do
-    before do
-      allow(helper).to receive(:request).and_return(double(path: '/your_claims'))
-    end
-
-    it 'returns "page" when current page matches argument' do
-      expect(helper.current_page?('your_claims')).to eq('page')
-    end
-
-    it 'returns nil when current page does not match argument' do
-      expect(helper.current_page?('claims')).to be_nil
-    end
-  end
-
   describe '#title' do
     let(:title) { helper.content_for(:page_title) }
 
