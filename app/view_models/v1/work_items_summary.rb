@@ -26,14 +26,14 @@ module V1
     def data_by_type
       @data_by_type ||= begin
         by_work_item = work_items.map { |work_item| WorkItem.build_self(work_item) }
-                                 .group_by { |work_item| work_item.work_type }
+                                 .group_by { |work_item| work_item.work_type.to_s }
 
         by_work_item.map do |work_type, work_items_for_type|
           # TODO: convert this to a time period to enable easy formating of output
           total_time_spent = work_items_for_type.sum { |work_item| work_item.time_spent }
           total_cost = work_items_for_type.sum { |work_item| CostCalculator.cost(:work_item, work_item) }
           [
-            work_type.to_s,
+            work_type,
             total_time_spent,
             total_cost
           ]
