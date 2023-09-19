@@ -7,7 +7,7 @@ RSpec.describe CostCalculator do
     let(:type) { :work_item }
 
     context 'when uplift is present' do
-      let(:object) { { 'time_spent' => 90, 'pricing' => 24.4, 'uplift' => 25 } }
+      let(:object) { V1::WorkItem.new('time_spent' => 90, 'pricing' => 24.4, 'uplift' => 25) }
 
       it 'calculates the time * price * uplift' do
         expect(subject).to eq(45.75) # (90 / 60) * 24.4 * (125 / 100)
@@ -15,11 +15,19 @@ RSpec.describe CostCalculator do
     end
 
     context 'when uplift is not set' do
-      let(:object) { { 'time_spent' => 90, 'pricing' => 24.4, 'uplift' => nil } }
+      let(:object) { V1::WorkItem.new('time_spent' => 90, 'pricing' => 24.4, 'uplift' => nil) }
 
       it 'calculates the time * price' do
         expect(subject).to eq(36.6) # (90 / 60) * 24.4
       end
     end
+  end
+
+  # placeholder for 100% coverage
+  context 'when type is disbursement' do
+    let(:type) { :disbursement }
+    let(:object) { nil }
+
+    it { expect(subject).to be_nil }
   end
 end

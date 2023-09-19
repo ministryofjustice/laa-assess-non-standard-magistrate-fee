@@ -22,4 +22,8 @@ class BaseViewModel
       klass.new(attributes.slice(*klass.attribute_names))
     end
   end
+
+  def self.build_self(attributes)
+    new(attributes.slice(*attribute_names))
+  end
 end
