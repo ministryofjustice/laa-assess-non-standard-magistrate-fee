@@ -4,16 +4,17 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
-  root "claims#index"
+  root "landing#index"
 
   get :ping, to: 'healthcheck#ping'
-  
+
   resources :healthcheck, only: [] do
     collection do
       get :ping
     end
   end
   resources :application_versions, only: [:update]
+  resources :landing, only: [:index]
   resources :claims, only: [:index] do
     resource :claim_details, only: [:show]
     resource :adjustments, only: [:show]
