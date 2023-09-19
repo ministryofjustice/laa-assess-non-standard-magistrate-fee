@@ -22,4 +22,12 @@ RSpec.describe CostCalculator do
       end
     end
   end
+
+  # placeholder for 100% coverage
+  context 'when type is disbursement' do
+    let(:type) { :disbursement }
+    let(:object) { nil }
+
+    it { expect(subject).to be_nil }
+  end
 end

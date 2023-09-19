@@ -4,15 +4,14 @@ module Type
       :translated
     end
 
-    def serialize(value)
-      value.hash
+    def serialize(_value)
+      raise 'Value cannot be re-serialized'
     end
 
     private
 
     def cast_value(value)
-      return if value.nil?
-      raise 'invalid_type' unless value.is_a?(Hash)
+      raise 'Invalid Type' unless value.is_a?(Hash)
 
       TranslationObject.new(value)
     end

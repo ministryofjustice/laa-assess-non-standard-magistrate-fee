@@ -18,7 +18,8 @@ RSpec.describe V1::WorkItemsSummary do
 
       it 'returns the summed time and cost' do
         subject.summed_fields
-        expect(V1::WorkItem).to have_received(:build_self).with('work_type' => { 'en' => 'waiting' }, 'time_spent' => 20)
+        expect(V1::WorkItem).to have_received(:build_self).with('work_type' => { 'en' => 'waiting' },
+                                                                'time_spent' => 20)
       end
 
       it 'returns a single table field row' do
@@ -34,7 +35,8 @@ RSpec.describe V1::WorkItemsSummary do
 
     context 'when multiple work item of diffent types exists' do
       let(:work_items) do
-        [{ 'work_type' => { 'en' => 'waiting' }, 'time_spent' => 20 }, { 'work_type' => { 'en' => 'travel' }, 'time_spent' => 30 }]
+        [{ 'work_type' => { 'en' => 'waiting' }, 'time_spent' => 20 },
+         { 'work_type' => { 'en' => 'travel' }, 'time_spent' => 30 }]
       end
 
       it 'returns a single table field row' do
@@ -44,7 +46,8 @@ RSpec.describe V1::WorkItemsSummary do
 
     context 'when multiple work item of the same types exists' do
       let(:work_items) do
-        [{ 'work_type' => { 'en' => 'waiting' }, 'time_spent' => 20 }, { 'work_type' => { 'en' => 'waiting' }, 'time_spent' => 30 }]
+        [{ 'work_type' => { 'en' => 'waiting' }, 'time_spent' => 20 },
+         { 'work_type' => { 'en' => 'waiting' }, 'time_spent' => 30 }]
       end
 
       it 'returns a single table field row' do
@@ -62,9 +65,10 @@ RSpec.describe V1::WorkItemsSummary do
         allow(V1::WorkItem).to receive(:build_self).and_return(work_item)
       end
 
-      it 'returns the summed time and cost' do
+      it 'builds a WorkType record to use in the calculations' do
         subject.summed_fields
-        expect(V1::WorkItem).to have_received(:build_self).with('work_type' => { 'en' => 'waiting' }, 'time_spent' => 20)
+        expect(V1::WorkItem).to have_received(:build_self).with('work_type' => { 'en' => 'waiting' },
+                                                                'time_spent' => 20)
       end
 
       it 'returns the summed time and cost' do
@@ -80,7 +84,8 @@ RSpec.describe V1::WorkItemsSummary do
 
     context 'when multiple work item of diffent types exists' do
       let(:work_items) do
-        [{ 'work_type' =>{ 'en' =>  'waiting' }, 'time_spent' => 20 }, { 'work_type' => { 'en' => 'travel' }, 'time_spent' => 30 }]
+        [{ 'work_type' => { 'en' => 'waiting' }, 'time_spent' => 20 },
+         { 'work_type' => { 'en' => 'travel' }, 'time_spent' => 30 }]
       end
 
       it 'returns the summed time and cost' do
@@ -90,7 +95,8 @@ RSpec.describe V1::WorkItemsSummary do
 
     context 'when multiple work item of the same types exists' do
       let(:work_items) do
-        [{ 'work_type' => { 'en' => 'waiting' }, 'time_spent' => 20 }, { 'work_type' => { 'en' => 'waiting' }, 'time_spent' => 30 }]
+        [{ 'work_type' => { 'en' => 'waiting' }, 'time_spent' => 20 },
+         { 'work_type' => { 'en' => 'waiting' }, 'time_spent' => 30 }]
       end
 
       it 'returns the summed time and cost' do

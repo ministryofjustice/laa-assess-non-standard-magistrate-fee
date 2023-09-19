@@ -16,7 +16,9 @@ RSpec.describe V1::ClaimSummary do
     end
 
     context 'when using nesting' do
-      let(:data) { { 'work_items' => [{ 'work_type' => { 'value' => 'first'} }, { 'work_type' => { 'value' => 'second'} }] } }
+      let(:data) do
+        { 'work_items' => [{ 'work_type' => { 'value' => 'first' } }, { 'work_type' => { 'value' => 'second' } }] }
+      end
 
       it 'builds the object from the hash of attributes specified by the nested location' do
         work_item = described_class.build(:work_item, claim, 'work_items', 1)
@@ -26,7 +28,9 @@ RSpec.describe V1::ClaimSummary do
   end
 
   describe '#build_all' do
-    let(:data) { { 'work_items' => [{ 'work_type' => { 'value' =>  'first' } }, { 'work_type' => { 'value' => 'second' } }] } }
+    let(:data) do
+      { 'work_items' => [{ 'work_type' => { 'value' => 'first' } }, { 'work_type' => { 'value' => 'second' } }] }
+    end
 
     it 'builds the object from the array of hashes of attributes' do
       work_items = described_class.build_all(:work_item, claim, 'work_items')
