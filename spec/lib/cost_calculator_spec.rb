@@ -3,6 +3,13 @@ require 'rails_helper'
 RSpec.describe CostCalculator do
   subject { described_class.cost(type, object) }
 
+  context 'when type is unknownn' do
+    let(:type) { :unknonwn }
+    let(:object) { nil }
+
+    it { expect(subject).to be_nil }
+  end
+
   context 'when type is work_item' do
     let(:type) { :work_item }
 
@@ -23,11 +30,19 @@ RSpec.describe CostCalculator do
     end
   end
 
-  # placeholder for 100% coverage
   context 'when type is disbursement' do
     let(:type) { :disbursement }
-    let(:object) { nil }
 
-    it { expect(subject).to be_nil }
+    context 'and type is not other' do
+      let(:object) { V1::Disbursement.new('disbursement_type' => { 'value' => 'car' }, 'miles' => 90, 'pricing' => 0.45, 'vat_rate' => 0.2) }
+
+      it { expect(subject).to eq(40.5) }
+    end
+
+    context 'and type is other' do
+      let(:object) { V1::Disbursement.new('disbursement_type' => { 'value' => 'other' }, 'total_cost_without_vat' => 45.0, 'vat_rate' => 0.2) }
+
+      it { expect(subject).to eq(45.0) }
+    end
   end
 end

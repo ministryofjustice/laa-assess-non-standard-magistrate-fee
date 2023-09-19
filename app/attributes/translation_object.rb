@@ -1,7 +1,7 @@
 class TranslationObject
   attr_reader :values
 
-  delegate :to_s, :blank?, to: :value
+  delegate :to_s, :blank?, to: :translated
 
   def initialize(values)
     @values = values
@@ -13,7 +13,11 @@ class TranslationObject
   alias === ==
   alias eql? ==
 
+  def translated
+    values[I18n.locale.to_s] || value
+  end
+
   def value
-    values[I18n.locale.to_s] || values['value']
+    values['value']
   end
 end
