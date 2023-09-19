@@ -20,7 +20,8 @@ Rails.application.routes.draw do
     resource :adjustments, only: [:show]
     resources :work_items, only: [:index]
   end
-
+  resources :your_claims, only: [:index]
+  resources :assessed_claims, only: [:index]
   namespace :about do
     get :privacy
     get :contact
