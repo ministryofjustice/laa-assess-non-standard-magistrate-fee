@@ -1,0 +1,17 @@
+---
+en:
+  letters_and_calls:
+    index:
+      page_title: "Your claims"
+      heading: "Letters and calls"
+      items: "Items"
+      number: "Number"
+      uplift_requested: "Uplift requested"
+      provider_requested: "Provider requested"
+      uplift_allowed: "Uplift allowed"
+      caseworker_allowed: "Caseworker allowed"
+      action: "Action"
+      view_costs: "View core costs"
+      total_cost: "Cost"
+      total: "Total"
+      remove_uplift_all: "Remove uplifts for all items"
