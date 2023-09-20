@@ -1,7 +1,5 @@
 module V1
   class Disbursement < BaseViewModel
-    include ActionView::Helpers::NumberHelper
-
     attribute :disbursement_type, :translated
     attribute :other_type, :translated
     # TODO: import time_period code from provider app
@@ -28,10 +26,10 @@ module V1
     def table_fields
       [
         other_type.to_s.presence || disbursement_type.to_s,
-        number_to_currency(requested, unit: '£'),
+        NumberTo.pounds(requested),
         '£'
         # TODO: once adjustment is calculated:
-        # adjustments.zero? ? '£' : number_to_currency(adjustments, unit: '£')
+        # adjustments.zero? ? '£' : NumberTo.pounds(adjustments)
       ]
     end
   end
