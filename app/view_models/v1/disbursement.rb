@@ -11,8 +11,12 @@ module V1
     attribute :vat_rate, :decimal, precision: 3, scale: 2
     attribute :disbursement_date, :date
 
+    def current
+      CostCalculator.cost(:disbursement, self)
+    end
+
     def requested
-      CostCalculator.cost(:disbursement, self) - adjustments
+      current - adjustments
     end
 
     # TODO: calculate this fro events

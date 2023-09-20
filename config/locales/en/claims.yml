@@ -42,6 +42,8 @@ en:
       total: Total
   disbursements:
     index:
+      disbursements: Disbursements
+      disbursement_total: Disbursement total
       disbursement: Disbursement
       requested: Provider requested
       adjustment: Adjustment

@@ -1,4 +1,14 @@
 <turbo-frame id="disbursements">
+  <h3 class="govuk-heading-m">
+    <%= t('.disbursements') %>
+  </h3>
+
+  <div class="govuk-body-m">
+    <%= t('.disbursement_total') %>
+    <div class="govuk-heading-l">
+      <%= number_to_currency(disbursements.flat_map(&:last).sum(&:current), unit: '£') %>
+    </div>
+  </div>
 
   <% disbursements.each do |disbursement_date, disbursements_for_date| %>
     <%=
