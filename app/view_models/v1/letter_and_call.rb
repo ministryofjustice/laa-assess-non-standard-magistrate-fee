@@ -18,11 +18,7 @@ module V1
     end
 
     def uplift_amount
-      if uplift.nil?
-        '-'
-      else
-        "#{uplift}%"
-      end
+      uplift.nil? ? '0' : "#{uplift}%"
     end
 
     def table_fields
