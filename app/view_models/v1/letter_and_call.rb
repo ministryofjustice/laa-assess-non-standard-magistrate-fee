@@ -18,7 +18,7 @@ module V1
     end
 
     def uplift_amount
-      uplift.nil? ? '0' : "#{uplift}%"
+      uplift.nil? ? '0%' : "#{uplift}%"
     end
 
     def table_fields

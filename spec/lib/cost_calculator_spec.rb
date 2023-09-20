@@ -30,4 +30,14 @@ RSpec.describe CostCalculator do
 
     it { expect(subject).to be_nil }
   end
+
+  context 'when type is letters and calls' do
+    let(:type) { :letter_and_call }
+    let(:object) do
+      V1::LetterAndCall.new('type' => { 'en' => 'Letters', 'value' => 'letters' },
+                            'count' => 12, 'uplift' => 0, 'pricing' => 3.56)
+    end
+
+    it { expect(subject).to eq(42.72) }
+  end
 end

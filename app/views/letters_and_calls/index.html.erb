@@ -22,7 +22,6 @@
     rows = letters_and_calls_items.map do |letter_and_call|
       [*letter_and_call.table_fields, { text: link_to(t('.change'), '#') }]
     end
-    #TODO: add foot fields to table
     foot = [t('.total'), *letters_and_calls_summary.summary_row]
     govuk_table(head:, rows:, foot:)
     %>
