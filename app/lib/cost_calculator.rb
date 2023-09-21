@@ -7,12 +7,12 @@ module CostCalculator
       when :letter_and_call
         letter_and_call_cost(object)
       when :disbursement
-        disbursement_cost(object)      
+        disbursement_cost(object)
       end
     end
 
-    private 
-    
+    private
+
     def work_item_cost(object)
       object.pricing * object.time_spent * (100 + object.uplift.to_i) / 100 / 60
     end
