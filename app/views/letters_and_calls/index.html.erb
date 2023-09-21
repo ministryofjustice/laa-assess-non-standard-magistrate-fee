@@ -1,0 +1,30 @@
+<turbo-frame id="letters_and_calls">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-m">
+        <%= t('.heading') %>
+    </h1>
+
+    <%= govuk_details(summary_text: t('.view_costs')) do %>
+      <%=
+        head = [t('.items'), t('.total_cost')]
+        rows = letters_and_calls_summary.table_fields
+        foot = [t('.total'), *letters_and_calls_summary.summed_fields]
+        govuk_table(first_cell_is_header: true, head:, rows:, foot:,html_attributes: { class: 'govuk-!-margin-bottom-0' })
+      %>
+      <hr class="govuk-section-break govuk-section-break--visible">
+    <% end %>
+    <%= button_to(t(".remove_uplift_all"), '#', class: "govuk-button govuk-button--secondary", data_module: "govuk-button") %>
+  </div>
+  <div class="govuk-grid-column-full">
+    <%=
+    head = [t('.items'), t('.number'),t('.uplift_requested'), t('.provider_requested'),t('.uplift_allowed'), t('.caseworker_allowed'), t('.action')]
+    rows = letters_and_calls_items.map do |letter_and_call|
+      [*letter_and_call.table_fields, { text: link_to(t('.change'), '#') }]
+    end
+    foot = [t('.total'), *letters_and_calls_summary.summary_row]
+    govuk_table(head:, rows:, foot:)
+    %>
+  </div>
+</div>
+</turbo-frame>

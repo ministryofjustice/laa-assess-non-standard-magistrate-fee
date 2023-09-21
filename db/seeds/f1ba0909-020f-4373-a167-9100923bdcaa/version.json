@@ -1,1 +1,226 @@
-{"id":"4fcaa712-87a9-4292-a0e1-c9e9d632f1fc","claim_id":"f1ba0909-020f-4373-a167-9100923bdcaa","version":1,"json_schema_version":1,"state":"submitted","data":{"id":"f1ba0909-020f-4373-a167-9100923bdcaa","ufn":"111111/111","plea":"bind_over","court":"Aldershot Magistrates' Court","gender":null,"status":"completed","in_area":"no","submiter":{"email":"provider@example.com","description":null},"cntp_date":null,"concluded":"no","solicitor":{"full_name":"jj jj","previous_id":null,"contact_email":null,"reference_number":"jj","contact_full_name":null},"claim_type":"non_standard_magistrate","cntp_order":null,"conclusion":"","created_at":"2023-08-09T16:44:55.969Z","defendants":[{"id":"92b44456-59ae-4305-9650-607c2d306d51","maat":"sss","main":true,"position":1,"full_name":"ss ss"}],"disability":null,"other_info":"","time_spent":null,"updated_at":"2023-09-07T10:25:44.724Z","work_after":"no","work_items":[{"id":"a1749671-8585-4804-ab42-65bd76c04c78","uplift":20,"pricing":31.03,"work_type":{"en":"Attendance without counsel","value":"attendance_without_counsel"},"fee_earner":"aaa","time_spent":72,"completed_on":"2022-01-01"},{"id":"06598359-ee1e-40c2-8cc1-07bd8d53b01c","uplift":null,"pricing":24.0,"work_type":{"en":"Travel","value":"travel"},"fee_earner":"www","time_spent":284,"completed_on":"2022-01-01"},{"id":"787a0c61-2ccf-4b25-adb2-6bf3e69dced2","uplift":24,"pricing":45.35,"work_type":{"en":"Preparation","value":"preparation"},"fee_earner":"sss","time_spent":142,"completed_on":"2022-02-02"},{"id":"fbe52f83-e239-48a2-b43e-24aa56f0951a","uplift":null,"pricing":45.35,"work_type":{"en":"Preparation","value":"preparation"},"fee_earner":"ddd","time_spent":671,"completed_on":"2023-01-01"}],"firm_office":{"name":"dd","town":"hh","postcode":"aa1 2bb","previous_id":null,"account_number":"hh","address_line_1":"hh","address_line_2":"hh"},"matter_type":"3","office_code":"1A123B","work_before":"no","youth_count":"no","ethnic_group":null,"main_offence":"Assault (common)","send_by_post":false,"disbursements":[{"id":"abf97dd9-ef21-4e75-b8f8-6b65cb5cbbb0","miles":"111.0","details":"sss","pricing":0.45,"vat_rate":0.2,"apply_vat":null,"other_type":{"en":null,"value":null},"vat_amount":"9.99","prior_authority":"yes","disbursement_date":"2022-01-01","disbursement_type":{"en":"Car","value":"car"},"total_cost_without_vat":"49.95"},{"id":"18032dc2-357c-4a70-a009-0b85e32b6ef8","miles":null,"details":"222","pricing":1.0,"vat_rate":0.2,"apply_vat":null,"other_type":{"en":"apples","value":"apples"},"vat_amount":"44.4","prior_authority":"yes","disbursement_date":"2022-02-02","disbursement_type":{"en":"Other disbursement type","value":"other"},"total_cost_without_vat":"222.0"},{"id":"5c796ff8-a14b-4359-b02c-9ffe5fc669cb","miles":null,"details":"sss","pricing":1.0,"vat_rate":0.2,"apply_vat":null,"other_type":{"en":"Accident \u0026 Emergency Report","value":"accident_emergency_report"},"vat_amount":"0.0","prior_authority":"yes","disbursement_date":"2022-02-02","disbursement_type":{"en":"Other disbursement type","value":"other"},"total_cost_without_vat":"1234.0"}],"is_other_info":"no","laa_reference":"LAA-FHaMVK","rep_order_date":"2012-12-12","signatory_name":"dave aa","hearing_outcome":"CP03","work_after_date":null,"agent_instructed":"no","assigned_counsel":"no","preparation_time":"no","work_before_date":null,"defence_statement":1,"has_disbursements":"yes","letters_and_calls":[{"type":"letters","count":11,"uplift":22,"pricing":3.56},{"type":"calls","count":22,"uplift":11,"pricing":3.56}],"main_offence_date":"2022-12-12","number_of_hearing":1,"reasons_for_claim":["enhanced_rates_claimed","extradition"],"cracked_trial_date":null,"first_hearing_date":"2022-12-12","supplemental_claim":"no","unassigned_counsel":"no","arrest_warrant_date":null,"number_of_witnesses":1,"prosecution_evidence":1,"remitted_to_magistrate":"no","remitted_to_magistrate_date":null,"reason_for_claim_other_details":"","representation_order_withdrawn_date":null},"created_at":"2023-09-18T14:13:29.025Z","updated_at":"2023-09-18T14:13:29.025Z"}
+{
+    "id": "4fcaa712-87a9-4292-a0e1-c9e9d632f1fc",
+    "claim_id": "f1ba0909-020f-4373-a167-9100923bdcaa",
+    "version": 1,
+    "json_schema_version": 1,
+    "state": "submitted",
+    "data": {
+        "id": "f1ba0909-020f-4373-a167-9100923bdcaa",
+        "ufn": "111111/111",
+        "plea": "bind_over",
+        "court": "Aldershot Magistrates' Court",
+        "gender": null,
+        "status": "completed",
+        "in_area": "no",
+        "submiter": {
+            "email": "provider@example.com",
+            "description": null
+        },
+        "cntp_date": null,
+        "concluded": "no",
+        "solicitor": {
+            "full_name": "jj jj",
+            "previous_id": null,
+            "contact_email": null,
+            "reference_number": "jj",
+            "contact_full_name": null
+        },
+        "claim_type": "non_standard_magistrate",
+        "cntp_order": null,
+        "conclusion": "",
+        "created_at": "2023-08-09T16:44:55.969Z",
+        "defendants": [
+            {
+                "id": "92b44456-59ae-4305-9650-607c2d306d51",
+                "maat": "sss",
+                "main": true,
+                "position": 1,
+                "full_name": "ss ss"
+            }
+        ],
+        "disability": null,
+        "other_info": "",
+        "time_spent": null,
+        "updated_at": "2023-09-07T10:25:44.724Z",
+        "work_after": "no",
+        "work_items": [
+            {
+                "id": "a1749671-8585-4804-ab42-65bd76c04c78",
+                "uplift": 20,
+                "pricing": 31.03,
+                "work_type": {
+                    "en": "Attendance without counsel",
+                    "value": "attendance_without_counsel"
+                },
+                "fee_earner": "aaa",
+                "time_spent": 72,
+                "completed_on": "2022-01-01"
+            },
+            {
+                "id": "06598359-ee1e-40c2-8cc1-07bd8d53b01c",
+                "uplift": null,
+                "pricing": 24.0,
+                "work_type": {
+                    "en": "Travel",
+                    "value": "travel"
+                },
+                "fee_earner": "www",
+                "time_spent": 284,
+                "completed_on": "2022-01-01"
+            },
+            {
+                "id": "787a0c61-2ccf-4b25-adb2-6bf3e69dced2",
+                "uplift": 24,
+                "pricing": 45.35,
+                "work_type": {
+                    "en": "Preparation",
+                    "value": "preparation"
+                },
+                "fee_earner": "sss",
+                "time_spent": 142,
+                "completed_on": "2022-02-02"
+            },
+            {
+                "id": "fbe52f83-e239-48a2-b43e-24aa56f0951a",
+                "uplift": null,
+                "pricing": 45.35,
+                "work_type": {
+                    "en": "Preparation",
+                    "value": "preparation"
+                },
+                "fee_earner": "ddd",
+                "time_spent": 671,
+                "completed_on": "2023-01-01"
+            }
+        ],
+        "firm_office": {
+            "name": "dd",
+            "town": "hh",
+            "postcode": "aa1 2bb",
+            "previous_id": null,
+            "account_number": "hh",
+            "address_line_1": "hh",
+            "address_line_2": "hh"
+        },
+        "matter_type": "3",
+        "office_code": "1A123B",
+        "work_before": "no",
+        "youth_count": "no",
+        "ethnic_group": null,
+        "main_offence": "Assault (common)",
+        "send_by_post": false,
+        "disbursements": [
+            {
+                "id": "abf97dd9-ef21-4e75-b8f8-6b65cb5cbbb0",
+                "miles": "111.0",
+                "details": "sss",
+                "pricing": 0.45,
+                "vat_rate": 0.2,
+                "apply_vat": null,
+                "other_type": {
+                    "en": null,
+                    "value": null
+                },
+                "vat_amount": "9.99",
+                "prior_authority": "yes",
+                "disbursement_date": "2022-01-01",
+                "disbursement_type": {
+                    "en": "Car",
+                    "value": "car"
+                },
+                "total_cost_without_vat": "49.95"
+            },
+            {
+                "id": "18032dc2-357c-4a70-a009-0b85e32b6ef8",
+                "miles": null,
+                "details": "222",
+                "pricing": 1.0,
+                "vat_rate": 0.2,
+                "apply_vat": null,
+                "other_type": {
+                    "en": "apples",
+                    "value": "apples"
+                },
+                "vat_amount": "44.4",
+                "prior_authority": "yes",
+                "disbursement_date": "2022-02-02",
+                "disbursement_type": {
+                    "en": "Other disbursement type",
+                    "value": "other"
+                },
+                "total_cost_without_vat": "222.0"
+            },
+            {
+                "id": "5c796ff8-a14b-4359-b02c-9ffe5fc669cb",
+                "miles": null,
+                "details": "sss",
+                "pricing": 1.0,
+                "vat_rate": 0.2,
+                "apply_vat": null,
+                "other_type": {
+                    "en": "Accident \u0026 Emergency Report",
+                    "value": "accident_emergency_report"
+                },
+                "vat_amount": "0.0",
+                "prior_authority": "yes",
+                "disbursement_date": "2022-02-02",
+                "disbursement_type": {
+                    "en": "Other disbursement type",
+                    "value": "other"
+                },
+                "total_cost_without_vat": "1234.0"
+            }
+        ],
+        "is_other_info": "no",
+        "laa_reference": "LAA-FHaMVK",
+        "rep_order_date": "2012-12-12",
+        "signatory_name": "dave aa",
+        "hearing_outcome": "CP03",
+        "work_after_date": null,
+        "agent_instructed": "no",
+        "assigned_counsel": "no",
+        "preparation_time": "no",
+        "work_before_date": null,
+        "defence_statement": 1,
+        "has_disbursements": "yes",
+        "letters_and_calls": [
+            {
+                "type": {
+                    "en": "Letters",
+                    "value": "letters"
+                },
+                "count": 11,
+                "uplift": 22,
+                "pricing": 3.56
+            },
+            {
+                "type": {
+                    "en": "Calls",
+                    "value": "calls"
+                },
+                "count": 22,
+                "uplift": 11,
+                "pricing": 3.56
+            }
+        ],
+        "main_offence_date": "2022-12-12",
+        "number_of_hearing": 1,
+        "reasons_for_claim": [
+            "enhanced_rates_claimed",
+            "extradition"
+        ],
+        "cracked_trial_date": null,
+        "first_hearing_date": "2022-12-12",
+        "supplemental_claim": "no",
+        "unassigned_counsel": "no",
+        "arrest_warrant_date": null,
+        "number_of_witnesses": 1,
+        "prosecution_evidence": 1,
+        "remitted_to_magistrate": "no",
+        "remitted_to_magistrate_date": null,
+        "reason_for_claim_other_details": "",
+        "representation_order_withdrawn_date": null
+    },
+    "created_at": "2023-09-18T14:13:29.025Z",
+    "updated_at": "2023-09-18T14:13:29.025Z"
+}
