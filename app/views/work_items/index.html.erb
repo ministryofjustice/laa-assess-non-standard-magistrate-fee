@@ -1,9 +1,20 @@
 <turbo-frame id="work_items">
+  <h3 class="govuk-heading-m">
+    <%= t('.work_items') %>
+  </h3>
+
+  <div class="govuk-body-m">
+    <%= t('.core_cost') %>
+    <div class="govuk-heading-l">
+      <%= work_items_summary.summed_field %>
+    </div>
+  </div>
+
   <%= govuk_details(summary_text: t('.check_totals')) do %>
     <%=
       head = [t('.items'), t('.total_time'), t('.total_cost')]
       rows = work_items_summary.table_fields
-      foot = [t('.total'), *work_items_summary.summed_fields]
+      foot = [t('.total'), work_items_summary.summed_field]
       govuk_table(first_cell_is_header: true, head:, rows:, foot:)
     %>
   <% end %>

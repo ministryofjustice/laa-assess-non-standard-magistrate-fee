@@ -28,9 +28,11 @@ en:
       page_title: "Review criminal legal aid applications"
   work_items:
     index:
+      work_items: Work items
+      core_cost: Core costs
       remove_uplift_all: Remove uplifts for all items
       page_title: "Review criminal legal aid applications"
-      check_totals: Check time and cost totals for all work items
+      check_totals: View core costs
       type_of_work: Type of Work
       requested: Provider requested
       adjusted: Adjustment
