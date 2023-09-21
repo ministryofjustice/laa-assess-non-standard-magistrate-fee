@@ -1,0 +1,22 @@
+<turbo-frame id="disbursements">
+  <h3 class="govuk-heading-m">
+    <%= t('.disbursements') %>
+  </h3>
+
+  <div class="govuk-body-m">
+    <%= t('.disbursement_total') %>
+    <div class="govuk-heading-l">
+      <%= NumberTo.pounds(disbursements.flat_map(&:last).sum(&:current)) %>
+    </div>
+  </div>
+
+  <% disbursements.each do |disbursement_date, disbursements_for_date| %>
+    <%=
+      head = [t('.disbursement'), t('.requested'), t('.adjusted'), t('.action')]
+      rows = disbursements_for_date.map do |disbursement|
+        [*disbursement.table_fields, { text: link_to(t('.change'), '#') }]
+      end
+      govuk_table(caption: disbursement_date.strftime('%-d %B %Y'), head:, rows:)
+    %>
+  <% end %>
+</turbo-frame>
