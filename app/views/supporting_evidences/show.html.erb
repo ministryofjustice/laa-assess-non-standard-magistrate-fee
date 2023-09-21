@@ -8,12 +8,13 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= render partial: 'claims/claim_summary', locals: { claim:, claim_summary: } %>
-    <%= render partial: 'claims/claim_nav', locals: { claim: claim, current_page: 'supporting_evidences' } %>
+    <%= render 'claims/claim_summary', { claim:, claim_summary: } %>
+    <%= render 'claims/claim_nav', { claim: claim, current_page: 'supporting_evidences' } %>
     <h2 class="govuk-heading-l">
       <%= t('.heading') %>
     </h2>
-    <%= render partial: 'supporting_evidence_table', locals: { supporting_evidence: } %>
-
+    <%= render 'shared/pagination_info', { pagy: @pagy, item: t('.heading') } %>
+    <%= render 'supporting_evidence_table', { supporting_evidence: @supporting_evidence } %>
+    <%= render "shared/pagination", pagy: @pagy %>
   </div>
 </div>
