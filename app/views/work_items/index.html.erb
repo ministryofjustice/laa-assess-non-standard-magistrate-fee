@@ -9,7 +9,9 @@
 
   <% work_items.each do |completed_on, work_items_for_date| %>
     <%=
-      head = [t('.type_of_work'), t('.requested'), t('.adjusted'), t('.action')]
+      head = [t('.type_of_work'), t('.uplift_request'), t('.requested'), t('.uplift_allowed'), t('.allowed')]
+
+
       rows = work_items_for_date.map do |work_item|
         [*work_item.table_fields, { text: link_to(t('.change'), '#') }]
       end
