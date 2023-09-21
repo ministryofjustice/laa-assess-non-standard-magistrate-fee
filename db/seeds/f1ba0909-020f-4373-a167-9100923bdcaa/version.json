@@ -185,13 +185,19 @@
         "has_disbursements": "yes",
         "letters_and_calls": [
             {
-                "type": "letters",
+                "type": {
+                    "en": "Letters",
+                    "value": "letters"
+                },
                 "count": 11,
                 "uplift": 22,
                 "pricing": 3.56
             },
             {
-                "type": "calls",
+                "type": {
+                    "en": "Calls",
+                    "value": "calls"
+                },
                 "count": 22,
                 "uplift": 11,
                 "pricing": 3.56
