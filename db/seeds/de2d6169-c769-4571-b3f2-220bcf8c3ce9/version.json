@@ -138,7 +138,7 @@
         "remitted_to_magistrate_date": null,
         "reason_for_claim_other_details": "",
         "representation_order_withdrawn_date": null,
-        "supporting_evidence": [
+        "supporting_evidences": [
             {
                 "id": "b48078c7-ee8f-4d17-90bf-0ceab70267b0",
                 "file_url": "http://localhost:3000/supporting-evidence/121111/001/1",
