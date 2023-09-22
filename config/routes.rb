@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     resources :work_items, only: [:index]
     resources :letters_and_calls, only: [:index]
     resources :disbursements, only: [:index]
+    resource :supporting_evidences, only: [:show]
   end
   resources :your_claims, only: [:index]
   resources :assessed_claims, only: [:index]
