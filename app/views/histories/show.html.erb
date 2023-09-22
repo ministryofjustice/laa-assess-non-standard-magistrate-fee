@@ -1,0 +1,46 @@
+<% content_for(:page_title) do %>
+  &nbsp;
+<% end %>
+
+<% content_for(:back_link) do %>
+  <%= link_to t('helpers.back_link'), claims_path, class: 'govuk-back-link' %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters govuk-!-padding-right-0">
+
+    <%= render partial: 'claims/claim_summary', locals: { claim:, claim_summary: } %>
+    <%= render partial: 'claims/claim_nav', locals: { claim: claim, current_page: 'review_and_adjust' } %>
+
+    <h2>
+      <%= t('.history') %>
+    </h2>
+
+    <%=
+      govuk_table do |table|
+        history_events.each do |event|
+          table.with_head do |head|
+            head.with_row do |row|
+              row.with_cell(text: t('.when'))
+              row.with_cell(text: t('.caseworker'))
+              row.with_cell(text: t('.what'))
+            end
+          end
+          table.with_body do |body|
+            body.with_row do |row|
+              row.with_cell(text: l(event.created_at, format: '%B<br>%d %b %Y<br>%I:%m%P').html_safe)
+              row.with_cell(text: event.primary_user&.name || '')
+              row.with_cell do %>
+              <b><%= event.title %></b>
+              <%= event.details %>
+              <%
+              end
+            end
+          end
+        end
+      end
+    %>
+
+  </div>
+</div>
+
