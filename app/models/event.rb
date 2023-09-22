@@ -23,7 +23,7 @@ class Event < ApplicationRecord
 
   private
 
-  def t(key, **options)
-    I18n.t("#{self.class.to_s.underscore}.#{key}", **options)
+  def t(key, **)
+    I18n.t("#{self.class.to_s.underscore}.#{key}", **)
   end
 end

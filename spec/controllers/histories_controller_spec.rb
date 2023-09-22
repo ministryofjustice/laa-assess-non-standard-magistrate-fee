@@ -4,7 +4,7 @@ RSpec.describe HistoriesController do
   context 'show' do
     let(:claim) { instance_double(Claim, id: claim_id, events: events) }
     let(:events) { double(history: history_events) }
-    let(:history_events) {  [instance_double(Event, id: SecureRandom.uuid)] }
+    let(:history_events) { [instance_double(Event, id: SecureRandom.uuid)] }
     let(:claim_id) { SecureRandom.uuid }
     let(:claim_summary) { instance_double(V1::ClaimSummary) }
 
