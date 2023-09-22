@@ -14,7 +14,7 @@
             row.with_cell do
                     govuk_link_to(item.file_name, item.file_url)
                   end
-            row.with_cell(text: item.updated_at.strftime('%A %-d %B %Y'))
+            row.with_cell(text: l(item.updated_at, format: '%A<br>%-d %B %Y').html_safe)
           end
         end
       end
