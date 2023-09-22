@@ -11,7 +11,7 @@ RSpec.describe V1::WorkItem do
   describe 'table_fields' do
     it 'returns the fields for the table display' do
       summary = described_class.new('work_type' => { 'en' => 'waiting' }, 'time_spent' => 61)
-      expect(summary.table_fields).to eq(["waiting", "0%", "61min", "#pending#", "#pending#"])
+      expect(summary.table_fields).to eq(['waiting', '0%', '61min', '#pending#', '#pending#'])
     end
   end
 end
