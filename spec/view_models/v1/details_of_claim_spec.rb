@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe V1::DetailsOfClaim do
   describe '#title' do
     it 'shows correct title' do
-      expect(subject.title).to eq('Details of claim')
+      expect(subject.title).to eq('Claim summary')
     end
   end
 

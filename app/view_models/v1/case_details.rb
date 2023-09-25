@@ -43,11 +43,13 @@ module V1
           title: I18n.t(".claim_details.#{key}.remitted_to_magistrate"),
           value: remitted_to_magistrate&.capitalize
         },
-        {
-          title: I18n.t(".claim_details.#{key}.remitted_to_magistrate_date"),
-          value: ApplicationController.helpers.format_date_string(remitted_to_magistrate_date)
-        }
-      ]
+        (unless remitted_to_magistrate == 'no'
+          {
+            title: I18n.t(".claim_details.#{key}.remitted_to_magistrate_date"),
+            value: ApplicationController.helpers.format_date_string(remitted_to_magistrate_date)
+          }
+        end)
+      ].compact
     end
     # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
