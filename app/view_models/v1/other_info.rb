@@ -20,7 +20,7 @@ module V1
           title: I18n.t(".claim_details.#{key}.is_other_info"),
           value: is_other_info&.capitalize
         },
-        *(unless is_other_info == 'no'
+        (unless is_other_info == 'no'
             {
               title: I18n.t(".claim_details.#{key}.other_info"),
             value: ApplicationController.helpers.multiline_text(other_info)
@@ -30,13 +30,13 @@ module V1
           title: I18n.t(".claim_details.#{key}.concluded"),
           value: concluded&.capitalize
         },
-        *(unless concluded == 'no'
+        (unless concluded == 'no'
             {
               title: I18n.t(".claim_details.#{key}.conclusion"),
             value: ApplicationController.helpers.multiline_text(conclusion)
             }
           end)
-      ]
+        ].compact
     end
     # rubocop:enable Metrics/MethodLength
 

@@ -52,8 +52,9 @@
         "disability": null,
         "other_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. \nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
         "time_spent": null,
+        "evidence_recorded": "no",
         "updated_at": "2023-09-01T13:04:19.096Z",
-        "work_after": "no",
+        "work_after": "yes",
         "work_items": [
             {
                 "id": "cf5e303e-98dd-4b0f-97ea-3560c4c5f137",
@@ -79,7 +80,7 @@
           "en": "Offences against the person"
         },
         "office_code": "1A123B",
-        "work_before": "no",
+        "work_before": "yes",
         "youth_count": "no",
         "calls_uplift": null,
         "ethnic_group": null,
@@ -110,7 +111,7 @@
           "value": "CP04",
           "en": "Trial: acquitted"
         },
-        "work_after_date": null,
+        "work_after_date": "2023-04-20",
         "agent_instructed": "yes",
         "assigned_counsel": "no",
         "preparation_time": "no",

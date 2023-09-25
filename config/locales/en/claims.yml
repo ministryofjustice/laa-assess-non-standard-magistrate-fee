@@ -24,58 +24,6 @@ en:
       letters_and_calls: Letters and calls
       disbursements: Disbursements
 
-  claim_details:
-    show:
-      page_title: "Review criminal legal aid applications"
-    details_of_claim:
-      title: Claim summary
-      ufn: Unique file number
-      claim_type: Type of claim
-      rep_order_date: Representation order date
-    defendant_details:
-      title: Defendant Details
-      main_defendant_name: Main defendant full name
-      main_defendant_maat: Main defendant MAAT ID
-      defendant_name: Additional defendant %{count} full name
-      defendant_maat: Additional defendant %{count} MAAT ID
-    case_details:
-      title: Case details
-      main_offence: Main offence name
-      main_offence_date: Main offence date
-      assigned_counsel: Assigned counsel
-      unassigned_counsel: Unassigned counsel
-      agent_instructed: Instructed agent
-      remitted_to_magistrate: Case remitted from Crown Court to magistrates' court
-      remitted_to_magistrate_date: Remittal date
-    case_disposal:
-      title: Case disposal
-    claim_justification:
-      title: Claim Justification
-      reasons_for_claim: Why are you claiming a non-standard magistrates' payment?
-    hearing_details:
-      title: Hearing details
-      first_hearing_date: Date of first hearing
-      number_of_hearing: Number of hearings
-      court: Magistrates' court
-      in_area: Court is in designated area of the firm
-      youth_court: Youth court
-      hearing_outcome: Hearing outcome
-      matter_type: Matter type
-    other_info:
-      title: Other relevant information
-      is_other_info: Any other information
-      other_info: Other information added
-      concluded: Proceedings concluded over 3 months ago
-      conclusion: Reason for not claiming within 3 months
-    contact_details:
-      title: Contact details
-      firm_name: Firm name
-      firm_account_number: Firm account number
-      firm_address: Firm address
-      solicitor_full_name: Solicitor full name
-      solicitor_ref_number: Solicitor reference number
-
-
   work_items:
     index:
       remove_uplift_all: Remove uplifts for all items

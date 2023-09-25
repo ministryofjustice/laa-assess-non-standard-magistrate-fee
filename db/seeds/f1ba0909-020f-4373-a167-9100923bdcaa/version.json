@@ -40,7 +40,8 @@
         ],
         "disability": null,
         "other_info": "",
-        "time_spent": null,
+        "time_spent": 110,
+        "evidence_recorded": "yes",
         "updated_at": "2023-09-07T10:25:44.724Z",
         "work_after": "no",
         "work_items": [

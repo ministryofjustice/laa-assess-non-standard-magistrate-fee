@@ -37,6 +37,8 @@ module ApplicationHelper
   end
 
   def format_date_string(string)
+    return if string.nil?
+
     date = DateTime.parse(string)
     date.strftime('%d %B %Y')
   end
