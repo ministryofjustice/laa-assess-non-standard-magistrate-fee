@@ -27,6 +27,7 @@ en:
       date_received: "Date received:"
       remove_from_list: Remove from list
     review_and_adjust_nav:
+      page_title: "Review criminal legal aid applications"
       review_and_adjust: Review and adjust
       work_items: Work items
       letters_and_calls: Letters and calls
@@ -62,3 +63,10 @@ en:
       requested: Provider requested
       adjustment: Adjustment
       ation: Action
+  histories:
+    show:
+      page_title: "Review criminal legal aid applications"
+      history: Claim history
+      when: When
+      caseworker: Caseworker
+      what: What
