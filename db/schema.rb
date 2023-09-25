@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_18_150931) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_22_111558) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,6 +21,31 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_18_150931) do
     t.date "received_on"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "claim_id", null: false
+    t.integer "claim_version"
+    t.string "event_type"
+    t.uuid "primary_user_id"
+    t.uuid "secondary_user_id"
+    t.string "linked_type"
+    t.uuid "linked_id"
+    t.jsonb "details", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["claim_id"], name: "index_events_on_claim_id"
+    t.index ["primary_user_id"], name: "index_events_on_primary_user_id"
+    t.index ["secondary_user_id"], name: "index_events_on_secondary_user_id"
+  end
+
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "email", null: false
+    t.string "name"
+    t.string "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email"
   end
 
   create_table "versions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -34,5 +59,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_18_150931) do
     t.index ["claim_id"], name: "index_versions_on_claim_id"
   end
 
+  add_foreign_key "events", "claims"
+  add_foreign_key "events", "users", column: "primary_user_id"
+  add_foreign_key "events", "users", column: "secondary_user_id"
   add_foreign_key "versions", "claims"
 end

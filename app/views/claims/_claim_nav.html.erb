@@ -13,7 +13,7 @@
     </li>
 
     <li class="moj-sub-navigation__item">
-      <%= link_to t('.claim_history'), '#4', class: 'moj-sub-navigation__link', 'aria-current': (current_page == 'claim_history' ? "page" : nil) %>
+      <%= link_to t('.claim_history'), claim_history_path(claim), class: 'moj-sub-navigation__link', 'aria-current': (current_page == 'history' ? "page" : nil) %>
     </li>
   </ul>
 </nav>

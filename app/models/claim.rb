@@ -1,5 +1,6 @@
 class Claim < ApplicationRecord
   has_many :versions, dependent: :destroy
+  has_many :events, dependent: :destroy
   has_one :current_version_record, ->(claim) { where(version: claim.current_version) },
           class_name: 'Version', inverse_of: :claim, dependent: :destroy
 

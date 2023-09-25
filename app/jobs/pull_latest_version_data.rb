@@ -19,8 +19,6 @@ class PullLatestVersionData < ApplicationJob
     end
 
     # reset any data confirmations where data has changed
-
-    # create chnage log since previous version??? or should this be done in provider or app store?
   end
 
   private
@@ -32,5 +30,6 @@ class PullLatestVersionData < ApplicationJob
       state: json_data['application_state'],
       data: json_data['application']
     )
+    Event::NewVersion.build(claim:)
   end
 end
