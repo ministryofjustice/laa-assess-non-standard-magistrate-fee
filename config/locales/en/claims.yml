@@ -3,6 +3,7 @@ en:
   claims:
     index:
       page_title: "Review criminal legal aid applications"
+      heading: "All claims"
     claim_nav:
       claim_details: Claim details
       review_and_adjust: Review and adjust
@@ -77,10 +78,23 @@ en:
 
   work_items:
     index:
+      remove_uplift_all: Remove uplifts for all items
       page_title: "Review criminal legal aid applications"
+      check_totals: Check time and cost totals for all work items
       type_of_work: Type of Work
-      submitted: Provider submitted
+      requested: Provider requested
       adjusted: Adjustment
       action: Action
       change: Change
-
+      items: Items
+      total_time: Total time
+      total_cost: Cost total
+      total: Total
+  disbursements:
+    index:
+      disbursements: Disbursements
+      disbursement_total: Disbursement total
+      disbursement: Disbursement
+      requested: Provider requested
+      adjustment: Adjustment
+      ation: Action

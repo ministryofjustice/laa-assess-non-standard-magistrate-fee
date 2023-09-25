@@ -21,12 +21,11 @@
     <div class="govuk-grid-column-two-thirds">
       <p class="govuk-body-l govuk-!-margin-bottom-2">
         <span class="govuk-!-font-weight-bold"><%= t(".assigned_to") %></span>
-        <%# TO DO: Link to data %>
         <%= "Ukaleq Christina" %>
       </p>
       <p class="govuk-body-l govuk-!-margin-bottom-2">
         <span class="govuk-!-font-weight-bold"><%= t(".date_received") %></span>
-        <%= claim.received_on.strftime('%d %b %Y') %>
+        <%= l(claim.received_on, format:'%d %b %Y') %>
       </p>
     </div>
     <div class="govuk-grid-column-one-thirds govuk-!-padding-top-2">

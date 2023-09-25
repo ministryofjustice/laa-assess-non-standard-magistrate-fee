@@ -7,7 +7,7 @@
 <% end %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-three-quarters govuk-!-padding-right-0">
 
     <%= render partial: 'claims/claim_summary', locals: { claim:, claim_summary: } %>
     <%= render partial: 'claims/claim_nav', locals: { claim: claim, current_page: 'review_and_adjust' } %>
@@ -23,7 +23,7 @@
           </a>
         </li>
         <li class="govuk-tabs__list-item">
-          <a class="govuk-tabs__tab" href="#letter-and-calls">
+          <a class="govuk-tabs__tab" href="#letters-and-calls">
             <%= t('.letters_and_calls') %>
           </a>
         </li>
@@ -39,13 +39,13 @@
           Loading
         <% end %>
       </div>
-      <div class="govuk-tabs__panel" id="letter-and-calls">
-        <%= turbo_frame_tag 'work_items', lazy: true do %>
+      <div class="govuk-tabs__panel" id="letters-and-calls">
+        <%= turbo_frame_tag 'letters_and_calls', src: claim_letters_and_calls_path(claim), lazy: true do %>
           Loading
         <% end %>
       </div>
       <div class="govuk-tabs__panel" id="disbursements">
-        <%= turbo_frame_tag 'work_items', lazy: true do %>
+        <%= turbo_frame_tag 'disbursements', src: claim_disbursements_path(claim), lazy: true do %>
           Loading
         <% end %>
       </div>

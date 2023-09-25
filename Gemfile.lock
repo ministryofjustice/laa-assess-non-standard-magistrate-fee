@@ -250,7 +250,7 @@ GEM
       rspec-mocks (~> 3.12)
       rspec-support (~> 3.12)
     rspec-support (3.12.1)
-    rubocop (1.56.2)
+    rubocop (1.56.3)
       base64 (~> 0.1.1)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
@@ -289,7 +289,7 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.12.3)
     simplecov-lcov (0.8.0)
-    simplecov-rcov (0.3.1)
+    simplecov-rcov (0.3.3)
       simplecov (>= 0.4.1)
     simplecov_json_formatter (0.1.4)
     smart_properties (1.17.0)
@@ -341,6 +341,7 @@ DEPENDENCIES
   httparty
   importmap-rails
   jbuilder
+  pagy
   pg
   pry
   puma (~> 6.3)

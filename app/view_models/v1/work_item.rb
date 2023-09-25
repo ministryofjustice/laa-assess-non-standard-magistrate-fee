@@ -1,17 +1,24 @@
 module V1
   class WorkItem < BaseViewModel
-    # TODO: include translated_work_item (EN) in json feed
-    attribute :work_type
+    attribute :work_type, :translated
     # TODO: import time_period code from provider app
     attribute :time_spent
     attribute :completed_on, :date
 
-    def adjustment
+    attribute :pricing, :float
+    attribute :uplift, :integer
+
+    def requested
+      # TODO: update once we can calculate adjustments
+      time_spent - 0 # adjustments
+    end
+
+    def adjustments
       '#pending#'
     end
 
     def table_fields
-      [work_type, "#{time_spent}min", adjustment]
+      [work_type.to_s, "#{requested}min", adjustments]
     end
   end
 end

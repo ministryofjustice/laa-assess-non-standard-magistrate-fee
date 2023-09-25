@@ -1,10 +1,19 @@
 <turbo-frame id="work_items">
-  <%= button_to(t(".remove_from_list"), '#', class: "govuk-button govuk-button--secondary", data_module: "govuk-button") %>
+  <%= govuk_details(summary_text: t('.check_totals')) do %>
+    <%=
+      head = [t('.items'), t('.total_time'), t('.total_cost')]
+      rows = work_items_summary.table_fields
+      foot = [t('.total'), *work_items_summary.summed_fields]
+      govuk_table(first_cell_is_header: true, head:, rows:, foot:)
+    %>
+  <% end %>
+
+  <%= button_to(t(".remove_uplift_all"), '#', class: "govuk-button govuk-button--secondary", data_module: "govuk-button") %>
 
 
   <% work_items.each do |completed_on, work_items_for_date| %>
     <%=
-      head = [t('.type_of_work'), t('.submitted'), t('.adjusted'), t('.action')]
+      head = [t('.type_of_work'), t('.requested'), t('.adjusted'), t('.action')]
       rows = work_items_for_date.map do |work_item|
         [*work_item.table_fields, { text: link_to(t('.change'), '#') }]
       end
