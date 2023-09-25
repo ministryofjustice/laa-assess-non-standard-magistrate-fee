@@ -1,8 +1,8 @@
 module ClaimDetails
   class Table
     attr_reader :details_of_claim, :defendant_details,
-    :case_details, :case_disposal, :claim_justification,
-    :hearing_details, :contact_details, :other_info
+                :case_details, :case_disposal, :claim_justification,
+                :hearing_details, :contact_details, :other_info
 
     def initialize(claim)
       @details_of_claim = BaseViewModel.build(:details_of_claim, claim)
@@ -15,7 +15,6 @@ module ClaimDetails
       @other_info = BaseViewModel.build(:other_info, claim)
     end
 
-    # rubocop:disable Metrics/AbcSize
     def table
       [
         details_of_claim.rows,
@@ -28,6 +27,5 @@ module ClaimDetails
         other_info.rows
       ]
     end
-    # rubocop:enable Metrics/AbcSize
   end
 end
