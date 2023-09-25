@@ -28,18 +28,6 @@ module V1
     attribute :plea
     attribute :plea_category
 
-    def claim_type_en
-      claim_type['en']
-    end
-
-    def matter_type_en
-      matter_type['en']
-    end
-
-    def hearing_outcome_en
-      hearing_outcome['en']
-    end
-
     def main_defendant_name
       main_defendant = defendants.detect { |defendant| defendant['main'] }
       main_defendant ? main_defendant['full_name'] : ''
