@@ -1,0 +1,27 @@
+require 'rails_helper'
+
+RSpec.describe V1::DetailsOfClaim do
+  describe '#title' do
+    it 'shows correct title' do
+      expect(subject.title).to eq('Details of claim')
+    end
+  end
+
+  describe '#data' do
+    subject = described_class.new(
+      { 
+        ufn: 'ABC/12345', 
+        claim_type: 'non_standard_magistrate', 
+        rep_order_date: '2023-02-01'
+      }
+    )
+    
+    it 'shows correct table data' do
+      expect(subject.data).to eq([
+        { title: 'Unique file number', value: 'ABC/12345' },
+        { title: 'Type of claim', value: 'Non-standard fee - magistrate' },
+        { title: 'Representation order date', value: '01 February 2023' },
+      ])
+    end
+  end
+end
