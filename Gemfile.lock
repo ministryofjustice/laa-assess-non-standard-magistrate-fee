@@ -341,6 +341,7 @@ DEPENDENCIES
   httparty
   importmap-rails
   jbuilder
+  pagy
   pg
   pry
   puma (~> 6.3)

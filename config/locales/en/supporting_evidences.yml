@@ -1,0 +1,9 @@
+---
+en:
+  supporting_evidences:
+    show:
+      page_title: "Supporting evidence"
+      heading: "Supporting evidence"
+    supporting_evidence_table:
+      file_name: "File name"
+      date_received: "Date received"
