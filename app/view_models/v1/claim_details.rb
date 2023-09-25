@@ -19,6 +19,7 @@ module V1
       I18n.t(".claim_details.#{key}.title")
     end
 
+    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
     def data
       [
         {
@@ -42,36 +43,36 @@ module V1
           value:  evidence_recorded&.capitalize
         },
         (unless evidence_recorded == 'no'
-          {
-            title: I18n.t(".claim_details.#{key}.evidence_recorded"),
-            value: ApplicationController.helpers.format_period(time_spent)
-          }
-        end),
+           {
+             title: I18n.t(".claim_details.#{key}.evidence_recorded"),
+             value: ApplicationController.helpers.format_period(time_spent)
+           }
+         end),
         {
           title: I18n.t(".claim_details.#{key}.work_before"),
           value:  work_before&.capitalize
         },
         (unless work_before == 'no'
-          {
-            title: I18n.t(".claim_details.#{key}.work_before_date"),
-            value: ApplicationController.helpers.format_date_string(work_before_date)
-          }
-        end),
+           {
+             title: I18n.t(".claim_details.#{key}.work_before_date"),
+             value: ApplicationController.helpers.format_date_string(work_before_date)
+           }
+         end),
         {
           title: I18n.t(".claim_details.#{key}.work_after"),
           value:  work_after&.capitalize
         },
         (unless work_after == 'no'
-          {
-            title: I18n.t(".claim_details.#{key}.work_after_date"),
-            value: ApplicationController.helpers.format_date_string(work_after_date)
-          }
-        end),
+           {
+             title: I18n.t(".claim_details.#{key}.work_after_date"),
+             value: ApplicationController.helpers.format_date_string(work_after_date)
+           }
+         end),
       ].compact
     end
+    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
 
     def rows
-      binding.pry
       { title:, data: }
     end
   end

@@ -32,7 +32,7 @@ module V1
           value: ApplicationController.helpers.format_date_string(first_hearing_date)
         },
         {
-          title: I18n.t(".claim_details.hearing_details.number_of_hearing"),
+          title: I18n.t('.claim_details.hearing_details.number_of_hearing'),
           value: number_of_hearing
         },
         {
