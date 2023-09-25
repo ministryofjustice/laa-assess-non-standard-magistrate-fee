@@ -41,23 +41,23 @@ module V1
     def data
       [
         {
-          title: I18n.t('.claim_details.contact_details.firm_name'),
+          title: I18n.t(".claim_details.#{key}.firm_name"),
           value: firm_name
         },
         {
-          title: I18n.t('.claim_details.contact_details.firm_account_number'),
+          title: I18n.t(".claim_details.#{key}.firm_account_number"),
           value: firm_account_number
         },
         {
-          title: I18n.t('.claim_details.contact_details.firm_address'),
+          title: I18n.t(".claim_details.#{key}.firm_address"),
           value: firm_address
         },
         {
-          title: I18n.t('.claim_details.contact_details.solicitor_full_name'),
+          title: I18n.t(".claim_details.#{key}.solicitor_full_name"),
           value: solicitor_full_name
         },
         {
-          title: I18n.t('.claim_details.contact_details.solicitor_ref_number'),
+          title: I18n.t(".claim_details.#{key}.solicitor_ref_number"),
           value: solicitor_ref_number
         }
       ]

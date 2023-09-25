@@ -35,11 +35,11 @@ module V1
     def main_defendant_rows
       [
         {
-          title:  I18n.t('.claim_details.defendant_details.main_defendant_name'),
+          title:  I18n.t(".claim_details.#{key}.main_defendant_name"),
           value: main_defendant_name
         },
         {
-          title: I18n.t('.claim_details.defendant_details.main_defendant_maat'),
+          title: I18n.t(".claim_details.#{key}.main_defendant_maat"),
           value: main_defendant_maat
         }
       ]
@@ -49,11 +49,11 @@ module V1
       additional_defendants.map.with_index do |defendant, index|
         [
           {
-            title: I18n.t('.claim_details.defendant_details.defendant_name', count: index + 1),
+            title: I18n.t(".claim_details.#{key}.defendant_name", count: index + 1),
             value: defendant['full_name']
           },
           {
-            title: I18n.t('.claim_details.defendant_details.defendant_maat', count: index + 1),
+            title: I18n.t(".claim_details.#{key}.defendant_maat", count: index + 1),
             value: defendant['maat']
           }
         ]

@@ -28,31 +28,31 @@ module V1
     def data
       [
         {
-          title: I18n.t('.claim_details.hearing_details.first_hearing_date'),
+          title: I18n.t(".claim_details.#{key}.first_hearing_date"),
           value: ApplicationController.helpers.format_date_string(first_hearing_date)
         },
         {
-          title: I18n.t('.claim_details.hearing_details.number_of_hearing'),
+          title: I18n.t(".claim_details.hearing_details.number_of_hearing"),
           value: number_of_hearing
         },
         {
-          title: I18n.t('.claim_details.hearing_details.court'),
+          title: I18n.t(".claim_details.#{key}.court"),
           value: court
         },
         {
-          title: I18n.t('.claim_details.hearing_details.in_area'),
+          title: I18n.t(".claim_details.#{key}.in_area"),
           value: in_area&.capitalize
         },
         {
-          title: I18n.t('.claim_details.hearing_details.youth_court'),
+          title: I18n.t(".claim_details.#{key}.youth_court"),
           value: youth_count&.capitalize
         },
         {
-          title: I18n.t('.claim_details.hearing_details.hearing_outcome'),
+          title: I18n.t(".claim_details.#{key}.hearing_outcome"),
           value: hearing_outcome_en
         },
         {
-          title: I18n.t('.claim_details.hearing_details.matter_type'),
+          title: I18n.t(".claim_details.#{key}.matter_type"),
           value: matter_type_en
         }
       ]

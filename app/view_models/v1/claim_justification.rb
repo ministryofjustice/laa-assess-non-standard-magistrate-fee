@@ -18,7 +18,7 @@ module V1
     def data
       [
         {
-          title: I18n.t('.claim_details.claim_justification.reasons_for_claim'),
+          title: I18n.t(".claim_details.#{key}.reasons_for_claim"),
           value: reasons_for_claim_list
         }
       ]

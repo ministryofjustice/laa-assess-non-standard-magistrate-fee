@@ -17,22 +17,22 @@ module V1
     def data
       [
         {
-          title: I18n.t('.claim_details.other_info.is_other_info'),
+          title: I18n.t(".claim_details.#{key}.is_other_info"),
           value: is_other_info&.capitalize
         },
         *(unless is_other_info == 'no'
             {
-              title: I18n.t('.claim_details.other_info.other_info'),
+              title: I18n.t(".claim_details.#{key}.other_info"),
             value: ApplicationController.helpers.multiline_text(other_info)
             }
           end),
         {
-          title: I18n.t('.claim_details.other_info.concluded'),
+          title: I18n.t(".claim_details.#{key}.concluded"),
           value: concluded&.capitalize
         },
         *(unless concluded == 'no'
             {
-              title: I18n.t('.claim_details.other_info.conclusion'),
+              title: I18n.t(".claim_details.#{key}.conclusion"),
             value: ApplicationController.helpers.multiline_text(conclusion)
             }
           end)

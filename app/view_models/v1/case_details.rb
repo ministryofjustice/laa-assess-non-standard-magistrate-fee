@@ -20,31 +20,31 @@ module V1
     def data
       [
         {
-          title: I18n.t('.claim_details.case_details.main_offence'),
+          title: I18n.t(".claim_details.#{key}.main_offence"),
           value: main_offence
         },
         {
-          title: I18n.t('.claim_details.case_details.main_offence_date'),
+          title: I18n.t(".claim_details.#{key}.main_offence_date"),
           value: ApplicationController.helpers.format_date_string(main_offence_date)
         },
         {
-          title: I18n.t('.claim_details.case_details.assigned_counsel'),
+          title: I18n.t(".claim_details.#{key}.assigned_counsel"),
           value: assigned_counsel&.capitalize
         },
         {
-          title: I18n.t('.claim_details.case_details.unassigned_counsel'),
+          title: I18n.t(".claim_details.#{key}.unassigned_counsel"),
           value: unassigned_counsel&.capitalize
         },
         {
-          title: I18n.t('.claim_details.case_details.agent_instructed'),
+          title: I18n.t(".claim_details.#{key}.agent_instructed"),
           value: agent_instructed&.capitalize
         },
         {
-          title: I18n.t('.claim_details.case_details.remitted_to_magistrate'),
+          title: I18n.t(".claim_details.#{key}.remitted_to_magistrate"),
           value: remitted_to_magistrate&.capitalize
         },
         {
-          title: I18n.t('.claim_details.case_details.remitted_to_magistrate_date'),
+          title: I18n.t(".claim_details.#{key}.remitted_to_magistrate_date"),
           value: ApplicationController.helpers.format_date_string(remitted_to_magistrate_date)
         }
       ]
