@@ -9,13 +9,16 @@ RSpec.describe V1::DetailsOfClaim do
 
   describe '#data' do
     subject = described_class.new(
-      { 
-        ufn: 'ABC/12345', 
-        claim_type: 'non_standard_magistrate', 
+      {
+        ufn: 'ABC/12345',
+        claim_type: {
+          'value': 'non_standard_magistrate',
+          'en': 'Non-standard fee - magistrate'
+        },
         rep_order_date: '2023-02-01'
       }
     )
-    
+
     it 'shows correct table data' do
       expect(subject.data).to eq([
         { title: 'Unique file number', value: 'ABC/12345' },

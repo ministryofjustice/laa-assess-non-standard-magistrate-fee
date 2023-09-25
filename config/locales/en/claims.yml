@@ -23,12 +23,12 @@ en:
       work_items: Work items
       letters_and_calls: Letters and calls
       disbursements: Disbursements
-  
+
   claim_details:
     show:
       page_title: "Review criminal legal aid applications"
     details_of_claim:
-      title: Details of claim
+      title: Claim summary
       ufn: Unique file number
       claim_type: Type of claim
       rep_order_date: Representation order date
@@ -38,7 +38,7 @@ en:
       main_defendant_maat: Main defendant MAAT ID
       defendant_name: Additional defendant %{count} full name
       defendant_maat: Additional defendant %{count} MAAT ID
-    case_details: 
+    case_details:
       title: Case details
       main_offence: Main offence name
       main_offence_date: Main offence date
