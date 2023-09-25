@@ -34,20 +34,26 @@ en:
   claim_details:
     show:
       page_title: "Review criminal legal aid applications"
-  work_items:
-    index:
-      remove_uplift_all: Remove uplifts for all items
-      page_title: "Review criminal legal aid applications"
-      check_totals: Check time and cost totals for all work items
-      type_of_work: Type of Work
-      requested: Provider requested
-      adjusted: Adjustment
-      action: Action
-      change: Change
+  adjustments:
+    show:
+      check_totals: View core costs
       items: Items
-      total_time: Total time
+      total_time: Time total
       total_cost: Cost total
       total: Total
+  work_items:
+    index:
+      work_items: Work items
+      core_cost: Core costs
+      remove_uplift_all: Remove uplifts for all items
+      page_title: "Review criminal legal aid applications"
+      type_of_work: Type of Work
+      uplift_request: Uplift requested
+      requested: Provider requested
+      uplift_allowed: Uplift allowed
+      allowed: Caseworker allowed
+      action: Action
+      change: Change
   disbursements:
     index:
       disbursements: Disbursements

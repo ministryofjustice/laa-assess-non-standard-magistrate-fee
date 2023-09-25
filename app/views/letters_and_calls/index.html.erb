@@ -5,15 +5,6 @@
         <%= t('.heading') %>
     </h1>
 
-    <%= govuk_details(summary_text: t('.view_costs')) do %>
-      <%=
-        head = [t('.items'), t('.total_cost')]
-        rows = letters_and_calls_summary.table_fields
-        foot = [t('.total'), *letters_and_calls_summary.summed_fields]
-        govuk_table(first_cell_is_header: true, head:, rows:, foot:,html_attributes: { class: 'govuk-!-margin-bottom-0' })
-      %>
-      <hr class="govuk-section-break govuk-section-break--visible">
-    <% end %>
     <%= button_to(t(".remove_uplift_all"), '#', class: "govuk-button govuk-button--secondary", data_module: "govuk-button") %>
   </div>
   <div class="govuk-grid-column-full">
