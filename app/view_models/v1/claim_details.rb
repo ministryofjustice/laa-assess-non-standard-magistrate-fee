@@ -40,10 +40,6 @@ module V1
       hearing_outcome['en']
     end
 
-    def plea_en
-      plea['en']
-    end
-
     def main_defendant_name
       main_defendant = defendants.detect { |defendant| defendant['main'] }
       main_defendant ? main_defendant['full_name'] : ''
