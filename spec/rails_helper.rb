@@ -39,6 +39,7 @@ RSpec.configure do |config|
   # As a default, we assume a user is signed in all controllers.
   # For specific scenarios, the user can be "signed off".
   config.before(:each, type: :controller) { sign_in }
+  config.before(:each, type: :system) { driven_by :rack_test }
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false

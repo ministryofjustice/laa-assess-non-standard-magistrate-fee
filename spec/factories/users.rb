@@ -7,6 +7,10 @@ FactoryBot.define do
     role { 'caseworker' }
     auth_oid { SecureRandom.uuid }
     auth_subject_id { SecureRandom.uuid }
+
+    trait :deactivated do
+      deactivated_at { Time.now }
+    end
   end
 
   factory :supervisor, class: User do

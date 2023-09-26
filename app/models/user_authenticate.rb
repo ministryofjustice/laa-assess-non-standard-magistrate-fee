@@ -23,14 +23,10 @@ class UserAuthenticate
   attr_reader :auth_subject_id, :email
 
   def user
-    @user ||= find_active_user || find_invited_user
+    @user ||= find_active_user
   end
 
   def find_active_user
     User.active.find_by(auth_subject_id:)
-  end
-
-  def find_invited_user
-    User.pending_activation.find_by(email:)
   end
 end

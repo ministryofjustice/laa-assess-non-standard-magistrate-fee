@@ -25,6 +25,7 @@ module OmniAuth
 
       # Redirect to the dev_auth form, so that a user can be selected.
       def request_phase
+        debugger
         redirect('/dev_auth')
       end
 
