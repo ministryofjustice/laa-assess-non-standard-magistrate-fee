@@ -7,9 +7,9 @@
 
       table.with_head do |head|
         head.with_row do |row|
-          row.with_cell(html_attributes:{'aria-sort': 'none'},text: t('.laa_reference'))
-          row.with_cell(html_attributes:{'aria-sort': 'none'},text: t('.firm_name'))
-          row.with_cell(html_attributes:{'aria-sort': 'none'},text: t('.defendant_name'))
+          row.with_cell(text: t('.laa_reference'))
+          row.with_cell(text: t('.firm_name'))
+          row.with_cell(text: t('.defendant_name'))
           row.with_cell(html_attributes:{'aria-sort': 'ascending'},text: t('.date_received'))
           row.with_cell(html_attributes:{'aria-sort': 'ascending'},text: t('.caseworker_name'))
         end
