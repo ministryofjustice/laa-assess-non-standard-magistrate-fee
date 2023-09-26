@@ -22,6 +22,24 @@ namespace :custom_seeds do
   end
 
   task load: :environment do
+    case_worker = User.find_or_initialize_by(email: 'case.worker@test.com')
+    case_worker.update(
+      first_name: 'case',
+      last_name: 'worker',
+      role: 'caseworker',
+      auth_oid: SecureRandom.uuid,
+      auth_subject_id: SecureRandom.uuid,
+    )
+
+    case_worker = User.find_or_initialize_by(email: 'super.visor@test.com')
+    case_worker.update(
+      first_name: 'super',
+      last_name: 'visor',
+      role: 'supervisor',
+      auth_oid: SecureRandom.uuid,
+      auth_subject_id: SecureRandom.uuid,
+    )
+
     Dir[Rails.root.join("db/seeds/*")].each do |path|
       claim_id = path.split('/').last
       puts "Processing import for claim: #{claim_id}"
@@ -35,14 +53,18 @@ namespace :custom_seeds do
         claim = Claim.find_by(id: claim_id)
 
         if claim
+          claim.events.delete_all
           claim.versions.delete_all
           claim.delete
         end
 
         claim = Claim.create(claim_hash)
         claim.versions.create(version_hash)
+        Event::NewVersion.build(claim:)
+
+        # TODO: add an assignment event
       rescue => e
-        puts "Error processing import for claim: #{claim_id}"
+        puts "Error processing import for claim: #{claim_id}\n"
         puts e.inspect
       end
     end
