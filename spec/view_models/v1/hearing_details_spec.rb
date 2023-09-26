@@ -10,18 +10,18 @@ RSpec.describe V1::HearingDetails do
   describe '#data' do
     subject = described_class.new(
       {
-        first_hearing_date: '2023-01-02',
-        number_of_hearing: 3,
-        court: 'A Mag Court',
-        in_area: 'yes',
-        youth_count: 'no',
-        hearing_outcome: {
-          value: 'CP01',
-          en: 'Hearing Done'
+        'first_hearing_date' => '2023-01-02',
+        'number_of_hearing' => 3,
+        'court' => 'A Mag Court',
+        'in_area' => 'yes',
+        'youth_count' => 'no',
+        'hearing_outcome' => {
+          'value' => 'CP01',
+          'en' => 'Hearing Done'
         },
-        matter_type: {
-          value: 'a_matter',
-          en: 'A Simple Matter'
+        'matter_type' => {
+          'value' => 'a_matter',
+          'en' => 'A Simple Matter'
         }
       }
     )

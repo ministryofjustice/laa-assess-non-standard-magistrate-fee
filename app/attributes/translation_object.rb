@@ -14,7 +14,7 @@ class TranslationObject
   alias eql? ==
 
   def translated
-    values[I18n.locale.to_s] || values[I18n.locale] || value
+    values[I18n.locale.to_s] || value
   end
 
   def value

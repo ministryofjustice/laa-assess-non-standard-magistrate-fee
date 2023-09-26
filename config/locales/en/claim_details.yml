@@ -33,7 +33,7 @@ en:
       claim_type: Type of claim
       rep_order_date: Representation order date
     defendant_details:
-      title: Defendant Details
+      title: Defendant details
       main_defendant_name: Main defendant full name
       main_defendant_maat: Main defendant MAAT ID
       defendant_name: Additional defendant %{count} full name

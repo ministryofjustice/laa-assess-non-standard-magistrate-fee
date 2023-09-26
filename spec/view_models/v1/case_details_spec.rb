@@ -11,13 +11,13 @@ RSpec.describe V1::CaseDetails do
     context 'Remittal' do
       subject = described_class.new(
         {
-          main_offence: 'Stole an apple',
-          main_offence_date: '2023-01-01',
-          assigned_counsel: 'yes',
-          unassigned_counsel: 'no',
-          agent_instructed: 'yes',
-          remitted_to_magistrate: 'yes',
-          remitted_to_magistrate_date: '2023-02-01'
+          'main_offence' => 'Stole an apple',
+          'main_offence_date' => '2023-01-01',
+          'assigned_counsel' => 'yes',
+          'unassigned_counsel' => 'no',
+          'agent_instructed' => 'yes',
+          'remitted_to_magistrate' => 'yes',
+          'remitted_to_magistrate_date' => '2023-02-01'
         }
       )
 
@@ -37,13 +37,13 @@ RSpec.describe V1::CaseDetails do
     context 'No remittal' do
       subject = described_class.new(
         {
-          main_offence: 'Stole an apple',
-          main_offence_date: '2023-01-01',
-          assigned_counsel: 'yes',
-          unassigned_counsel: 'no',
-          agent_instructed: 'yes',
-          remitted_to_magistrate: 'no',
-          remitted_to_magistrate_date: '2023-02-01'
+          'main_offence' => 'Stole an apple',
+          'main_offence_date' => '2023-01-01',
+          'assigned_counsel' => 'yes',
+          'unassigned_counsel' => 'no',
+          'agent_instructed' => 'yes',
+          'remitted_to_magistrate' => 'no',
+          'remitted_to_magistrate_date' => '2023-02-01'
         }
       )
 

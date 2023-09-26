@@ -10,11 +10,11 @@ RSpec.describe V1::CaseDisposal do
   describe '#data' do
     subject = described_class.new(
       {
-        plea: {
-          'value': 'cracked_trial',
-          'en': 'Cracked Trial'
+        'plea' => {
+          'value' => 'cracked_trial',
+          'en' => 'Cracked Trial'
         },
-        plea_category: 'Category 2'
+        'plea_category' => 'Category 2'
       }
     )
 
