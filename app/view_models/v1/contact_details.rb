@@ -33,7 +33,7 @@ module V1
         firm_office['address_line_2'],
         firm_office['town'],
         firm_office['postcode']
-      ].join('<br>'),
+      ].compact.join('<br>'),
                                              tags: %w[br])
     end
 
