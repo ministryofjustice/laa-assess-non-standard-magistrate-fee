@@ -7,6 +7,28 @@ RSpec.describe V1::ClaimDetails do
     end
   end
 
+  describe '#rows' do
+    it 'has correct structure' do
+      subject = described_class.new(
+        {
+          'prosecution_evidence' => 5,
+          'defence_statement' => 10,
+          'number_of_witnesses' => 2,
+          'supplemental_claim' => 'no',
+          'evidence_recorded' => 'yes',
+          'time_spent' => 110,
+          'work_before' => 'yes',
+          'work_before_date' => '2023-01-20',
+          'work_after' => 'yes',
+          'work_after_date' => '2023-02-02'
+        }
+      )
+
+      expect(subject.rows).to have_key(:title)
+      expect(subject.rows).to have_key(:data)
+    end
+  end
+
   describe '#data' do
     context 'work done before and after' do
       subject = described_class.new(

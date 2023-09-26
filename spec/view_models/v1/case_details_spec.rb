@@ -7,6 +7,25 @@ RSpec.describe V1::CaseDetails do
     end
   end
 
+  describe '#rows' do
+    it 'has correct structure' do
+      subject = described_class.new(
+        {
+          'main_offence' => 'Stole an apple',
+          'main_offence_date' => '2023-01-01',
+          'assigned_counsel' => 'yes',
+          'unassigned_counsel' => 'no',
+          'agent_instructed' => 'yes',
+          'remitted_to_magistrate' => 'yes',
+          'remitted_to_magistrate_date' => '2023-02-01'
+        }
+      )
+
+      expect(subject.rows).to have_key(:title)
+      expect(subject.rows).to have_key(:data)
+    end
+  end
+
   describe '#data' do
     context 'Remittal' do
       subject = described_class.new(

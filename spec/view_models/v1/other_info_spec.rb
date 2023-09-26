@@ -7,6 +7,22 @@ RSpec.describe V1::OtherInfo do
     end
   end
 
+  describe '#rows' do
+    it 'has correct structure' do
+      subject = described_class.new(
+        {
+          'is_other_info' => 'yes',
+          'other_info' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. \nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+          'concluded' => 'yes',
+          'conclusion' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+        }
+      )
+
+      expect(subject.rows).to have_key(:title)
+      expect(subject.rows).to have_key(:data)
+    end
+  end
+
   describe '#data' do
     context 'other info and case concluded is yes' do
       subject = described_class.new(

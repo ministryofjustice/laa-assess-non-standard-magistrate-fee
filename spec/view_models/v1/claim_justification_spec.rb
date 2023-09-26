@@ -7,6 +7,26 @@ RSpec.describe V1::ClaimJustification do
     end
   end
 
+  describe '#rows' do
+    it 'has correct structure' do
+      subject = described_class.new(
+        'reasons_for_claim' => [
+            {
+              'value' => 'enhanced_rates_claimed',
+              'en' => 'Enhanced rates claimed'
+            },
+            {
+              'value' => 'councel_or_agent_assigned',
+              'en' => 'Counsel or agent assigned'
+            }
+        ]
+      )
+
+      expect(subject.rows).to have_key(:title)
+      expect(subject.rows).to have_key(:data)
+    end
+  end
+
   describe '#data' do
     subject = described_class.new(
       'reasons_for_claim' => [

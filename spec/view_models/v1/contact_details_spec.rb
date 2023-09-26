@@ -7,6 +7,30 @@ RSpec.describe V1::ContactDetails do
     end
   end
 
+  describe '#rows' do
+    it 'has correct structure' do
+      subject = described_class.new(
+        {
+          'firm_office'=> {
+            'name' => 'Blundon Solicitor Firm',
+            'town' => 'Stoke Newington',
+            'postcode' => 'NE10 4AB',
+            'account_number' => '121234',
+            'address_line_1' => '1 Princess Road',
+            'address_line_2' => nil
+          },
+          'solicitor' => {
+            'full_name' => 'Daniel Treaty',
+            'reference_number' => '1212333',
+        }
+        }
+      )
+
+      expect(subject.rows).to have_key(:title)
+      expect(subject.rows).to have_key(:data)
+    end
+  end
+
   describe '#data' do
     context 'One line in firm address' do
       subject = described_class.new(

@@ -7,6 +7,24 @@ RSpec.describe V1::DetailsOfClaim do
     end
   end
 
+  describe '#rows' do
+    it 'has correct structure' do
+      subject = described_class.new(
+        {
+          'ufn' => 'ABC/12345',
+          'claim_type' => {
+            'value' => 'non_standard_magistrate',
+            'en' => 'Non-standard fee - magistrate'
+          },
+          'rep_order_date' => '2023-02-01'
+        }
+      )
+
+      expect(subject.rows).to have_key(:title)
+      expect(subject.rows).to have_key(:data)
+    end
+  end
+
   describe '#data' do
     subject = described_class.new(
       {

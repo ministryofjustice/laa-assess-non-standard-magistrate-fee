@@ -7,6 +7,23 @@ RSpec.describe V1::CaseDisposal do
     end
   end
 
+  describe '#rows' do
+    it 'has correct structure' do
+      subject = described_class.new(
+        {
+          'plea' => {
+            'value' => 'cracked_trial',
+            'en' => 'Cracked Trial'
+          },
+          'plea_category' => 'Category 2'
+        }
+      )
+
+      expect(subject.rows).to have_key(:title)
+      expect(subject.rows).to have_key(:data)
+    end
+  end
+
   describe '#data' do
     subject = described_class.new(
       {

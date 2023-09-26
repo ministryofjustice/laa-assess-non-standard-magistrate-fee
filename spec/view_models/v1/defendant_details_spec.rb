@@ -7,6 +7,41 @@ RSpec.describe V1::DefendantDetails do
     end
   end
 
+  describe '#rows' do
+    it 'has correct structure' do
+      subject = described_class.new(
+        {
+          "defendants" => [
+            {
+                "id" => "40fb1f88-6dea-4b03-9087-590436b62dd8",
+                "maat" => "AB12123",
+                "main" => true,
+                "position" => 1,
+                "full_name" => "Main Defendant"
+            },
+            {
+              "id" => "40fb1f98-6dea-4b03-9087-590436b62dd8",
+              "maat" => "AB454545",
+              "main" => false,
+              "position" => 2,
+              "full_name" => "Defendant 1"
+            },
+            {
+              "id" => "40fb2f88-6dea-4b03-9087-590436b62dd8",
+              "maat" => "AB676767",
+              "main" => false,
+              "position" => 3,
+              "full_name" => "Defendant 2"
+            }
+          ]
+        }
+      )
+
+      expect(subject.rows).to have_key(:title)
+      expect(subject.rows).to have_key(:data)
+    end
+  end
+
   describe '#data' do
     context 'Main defendant and additional defendants' do
       subject = described_class.new(

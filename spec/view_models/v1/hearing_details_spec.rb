@@ -7,6 +7,31 @@ RSpec.describe V1::HearingDetails do
     end
   end
 
+  describe '#rows' do
+    it 'has correct structure' do
+      subject = described_class.new(
+        {
+          'first_hearing_date' => '2023-01-02',
+          'number_of_hearing' => 3,
+          'court' => 'A Mag Court',
+          'in_area' => 'yes',
+          'youth_count' => 'no',
+          'hearing_outcome' => {
+            'value' => 'CP01',
+            'en' => 'Hearing Done'
+          },
+          'matter_type' => {
+            'value' => 'a_matter',
+            'en' => 'A Simple Matter'
+          }
+        }
+      )
+
+      expect(subject.rows).to have_key(:title)
+      expect(subject.rows).to have_key(:data)
+    end
+  end
+
   describe '#data' do
     subject = described_class.new(
       {
