@@ -1,15 +1,10 @@
 <% title t('.page_title') %>
 
 <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
-        <%= claims.to_json %>
-        <%=
-          head = [t('.laa_reference'), t('.firm_name'),t('.defendant_name'), t('.date_received'),t('.caseworker_name')]
-          rows = claims.map do |claim|
-            [*claim.table_fields]
-          end
-          govuk_table(head:, rows:)
-        %>
-    </div>
+  <div class="govuk-grid-column-two-quarters">
+    <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+    <%= render 'shared/pagination_info', { pagy: @pagy, item: t('.table_info_item') } %>
+    <%= render 'claims_table', { claims: @claims} %>
+    <%= render "shared/pagination", pagy: @pagy %>
+  </div>
 </div>

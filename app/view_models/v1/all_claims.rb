@@ -4,6 +4,7 @@ module V1
     attribute :defendants
     attribute :firm_office
     attribute :created_at, :date
+    attribute :id
 
     def main_defendant_name
       main_defendant = defendants.detect { |defendant| defendant['main'] }
@@ -20,10 +21,10 @@ module V1
 
     def table_fields
       [
-        laa_reference,
-        main_defendant_name,
+        { laa_reference: laa_reference, claim_id: id },
         firm_name,
-        I18n.l(created_at, format: '%-d %B %Y'),
+        main_defendant_name,
+        { text: I18n.l(created_at, format: '%-d %b %Y'), sort_value: created_at.to_fs(:db) },
         case_worker_name
       ]
     end
