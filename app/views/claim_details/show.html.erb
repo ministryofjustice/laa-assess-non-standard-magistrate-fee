@@ -12,18 +12,19 @@
     <%= render partial: 'claims/claim_summary', locals: { claim:, claim_summary: } %>
     <%= render partial: 'claims/claim_nav', locals: { claim: claim, current_page: 'claim_details' } %>
 
-    <% claim_details.table.each do |section| %>
-      <table class="govuk-table">
-        <caption class="govuk-table__caption govuk-table__caption--m"><%= section[:title] %></caption>
-        <tbody class="govuk-table__body">
-          <% section[:data].each do |row| %>
-            <tr class="govuk-table__row">
-              <th scope="row" class="govuk-table__header govuk-!-width-one-third"><%= row[:title] %></th>
-              <td class="govuk-table__cell"><%= row[:value] %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    <% end %>
+  <% claim_details.table.each do |section| %>
+    <%= govuk_table do |table|
+          table.with_caption( text: section[:title] )
+
+          table.with_body do |body|
+            section[:data].each do | field |
+              body.with_row do |row|
+                row.with_cell(html_attributes: { class: "govuk-table__header govuk-!-width-one-third" }, text: field[:title])
+                row.with_cell(text: field[:value])
+              end
+            end
+          end
+    end %>
+  <% end %>
   </div>
 </div>
