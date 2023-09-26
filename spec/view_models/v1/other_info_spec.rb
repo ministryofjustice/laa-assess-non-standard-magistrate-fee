@@ -12,9 +12,9 @@ RSpec.describe V1::OtherInfo do
       subject = described_class.new(
         {
           'is_other_info' => 'yes',
-          'other_info' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. \nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+          'other_info' => 'Line 1 \nLine 2',
           'concluded' => 'yes',
-          'conclusion' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+          'conclusion' => 'Line 1'
         }
       )
 
@@ -28,20 +28,18 @@ RSpec.describe V1::OtherInfo do
       subject = described_class.new(
         {
           'is_other_info' => 'yes',
-          'other_info' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. \nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+          'other_info' => 'Line 1 \nLine 2',
           'concluded' => 'yes',
-          'conclusion' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+          'conclusion' => 'Line 1'
         }
       )
 
       it 'shows correct table data' do
         expect(subject.data).to eq([
                                      { title: 'Any other information', value: 'Yes' },
-                                     { title: 'Other information added',
- value: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. \\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.' },
+                                     { title: 'Other information added', value: 'Line 1 \\nLine 2' },
                                      { title: 'Proceedings concluded over 3 months ago', value: 'Yes' },
-                                     { title: 'Reason for not claiming within 3 months',
- value: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' }
+                                     { title: 'Reason for not claiming within 3 months', value: 'Line 1' }
                                    ])
       end
     end
@@ -50,9 +48,9 @@ RSpec.describe V1::OtherInfo do
       subject = described_class.new(
         {
           'is_other_info' => 'no',
-          'other_info' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. \nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+          'other_info' => 'Line 1 \nLine 2',
           'concluded' => 'no',
-          'conclusion' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+          'conclusion' => 'Line 1'
         }
       )
 
