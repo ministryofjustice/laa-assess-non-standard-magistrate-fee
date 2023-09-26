@@ -5,8 +5,8 @@ module V1
     attribute :court
     attribute :in_area
     attribute :youth_count
-    attribute :hearing_outcome
-    attribute :matter_type
+    attribute :hearing_outcome, :translated
+    attribute :matter_type, :translated
 
     def key
       'hearing_details'
@@ -14,14 +14,6 @@ module V1
 
     def title
       I18n.t(".claim_details.#{key}.title")
-    end
-
-    def matter_type_en
-      matter_type['en']
-    end
-
-    def hearing_outcome_en
-      hearing_outcome['en']
     end
 
     # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
@@ -49,11 +41,11 @@ module V1
         },
         {
           title: I18n.t(".claim_details.#{key}.hearing_outcome"),
-          value: hearing_outcome_en
+          value: hearing_outcome.to_s
         },
         {
           title: I18n.t(".claim_details.#{key}.matter_type"),
-          value: matter_type_en
+          value: matter_type.to_s
         }
       ]
     end

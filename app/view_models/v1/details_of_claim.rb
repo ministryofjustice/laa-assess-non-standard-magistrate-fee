@@ -1,7 +1,7 @@
 module V1
   class DetailsOfClaim < BaseViewModel
     attribute :ufn
-    attribute :claim_type
+    attribute :claim_type, :translated
     attribute :rep_order_date
 
     def key
