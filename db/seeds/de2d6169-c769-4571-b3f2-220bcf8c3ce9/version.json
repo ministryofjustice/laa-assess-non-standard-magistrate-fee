@@ -25,7 +25,7 @@
             "description": null
         },
         "cntp_date": "2022-10-09",
-        "concluded": "no",
+        "concluded": "yes",
         "solicitor": {
             "full_name": "Daniel Treaty",
             "previous_id": null,
@@ -102,7 +102,7 @@
                 "total_cost_without_vat": "100.0"
             }
         ],
-        "is_other_info": "no",
+        "is_other_info": "yes",
         "laa_reference": "LAA-5xQ5z2",
         "letters_uplift": 10,
         "rep_order_date": "2012-12-12",
