@@ -11,7 +11,7 @@ module V1
     end
 
     def reasons_for_claim_list
-      reasons = reasons_for_claim.pluck(I18n.locale.to_s)
+      reasons = reasons_for_claim.pluck(I18n.locale)
       ApplicationController.helpers.sanitize(reasons.join('<br>'), tags: %w[br])
     end
 

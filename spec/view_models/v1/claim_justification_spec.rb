@@ -9,8 +9,7 @@ RSpec.describe V1::ClaimJustification do
 
   describe '#data' do
     subject = described_class.new(
-      {
-        reasons_for_claim: [
+      reasons_for_claim: [
           {
             "value": "enhanced_rates_claimed",
             "en": "Enhanced rates claimed"
@@ -19,8 +18,7 @@ RSpec.describe V1::ClaimJustification do
             "value": "councel_or_agent_assigned",
             "en": "Counsel or agent assigned"
           }
-        ]
-      }
+      ]
     )
 
     it 'shows correct table data' do
