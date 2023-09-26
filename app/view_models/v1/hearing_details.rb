@@ -33,11 +33,11 @@ module V1
         },
         {
           title: I18n.t(".claim_details.#{key}.in_area"),
-          value: in_area&.capitalize
+          value: in_area.capitalize
         },
         {
           title: I18n.t(".claim_details.#{key}.youth_court"),
-          value: youth_count&.capitalize
+          value: youth_count.capitalize
         },
         {
           title: I18n.t(".claim_details.#{key}.hearing_outcome"),

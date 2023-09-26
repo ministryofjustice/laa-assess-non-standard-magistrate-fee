@@ -29,19 +29,19 @@ module V1
         },
         {
           title: I18n.t(".claim_details.#{key}.assigned_counsel"),
-          value: assigned_counsel&.capitalize
+          value: assigned_counsel.capitalize
         },
         {
           title: I18n.t(".claim_details.#{key}.unassigned_counsel"),
-          value: unassigned_counsel&.capitalize
+          value: unassigned_counsel.capitalize
         },
         {
           title: I18n.t(".claim_details.#{key}.agent_instructed"),
-          value: agent_instructed&.capitalize
+          value: agent_instructed.capitalize
         },
         {
           title: I18n.t(".claim_details.#{key}.remitted_to_magistrate"),
-          value: remitted_to_magistrate&.capitalize
+          value: remitted_to_magistrate.capitalize
         },
         (unless remitted_to_magistrate == 'no'
           {

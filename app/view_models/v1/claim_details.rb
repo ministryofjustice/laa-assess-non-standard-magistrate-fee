@@ -36,11 +36,11 @@ module V1
         },
         {
           title: I18n.t(".claim_details.#{key}.supplemental_claim"),
-          value:  supplemental_claim&.capitalize
+          value:  supplemental_claim.capitalize
         },
         {
           title: I18n.t(".claim_details.#{key}.evidence_recorded"),
-          value:  evidence_recorded&.capitalize
+          value:  evidence_recorded.capitalize
         },
         (unless evidence_recorded == 'no'
            {
@@ -50,7 +50,7 @@ module V1
          end),
         {
           title: I18n.t(".claim_details.#{key}.work_before"),
-          value:  work_before&.capitalize
+          value:  work_before.capitalize
         },
         (unless work_before == 'no'
            {
@@ -60,7 +60,7 @@ module V1
          end),
         {
           title: I18n.t(".claim_details.#{key}.work_after"),
-          value:  work_after&.capitalize
+          value:  work_after.capitalize
         },
         (unless work_after == 'no'
            {

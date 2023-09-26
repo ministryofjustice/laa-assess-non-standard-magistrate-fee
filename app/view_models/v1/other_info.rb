@@ -18,7 +18,7 @@ module V1
       [
         {
           title: I18n.t(".claim_details.#{key}.is_other_info"),
-          value: is_other_info&.capitalize
+          value: is_other_info.capitalize
         },
         (unless is_other_info == 'no'
            {
@@ -28,7 +28,7 @@ module V1
          end),
         {
           title: I18n.t(".claim_details.#{key}.concluded"),
-          value: concluded&.capitalize
+          value: concluded.capitalize
         },
         (unless concluded == 'no'
            {
