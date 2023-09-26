@@ -39,8 +39,8 @@ RSpec.describe V1::ClaimSummary do
 
     context 'no total' do
       it 'returns nil' do
-        summary = described_class.new()
-        expect(summary.total).to eq(nil)
+        summary = described_class.new
+        expect(summary.total).to be_nil
       end
     end
   end

@@ -11,14 +11,14 @@ RSpec.describe V1::ClaimJustification do
     it 'has correct structure' do
       subject = described_class.new(
         'reasons_for_claim' => [
-            {
-              'value' => 'enhanced_rates_claimed',
-              'en' => 'Enhanced rates claimed'
-            },
-            {
-              'value' => 'councel_or_agent_assigned',
-              'en' => 'Counsel or agent assigned'
-            }
+          {
+            'value' => 'enhanced_rates_claimed',
+            'en' => 'Enhanced rates claimed'
+          },
+          {
+            'value' => 'councel_or_agent_assigned',
+            'en' => 'Counsel or agent assigned'
+          }
         ]
       )
 
@@ -30,21 +30,22 @@ RSpec.describe V1::ClaimJustification do
   describe '#data' do
     subject = described_class.new(
       'reasons_for_claim' => [
-          {
-            'value' => 'enhanced_rates_claimed',
-            'en' => 'Enhanced rates claimed'
-          },
-          {
-            'value' => 'councel_or_agent_assigned',
-            'en' => 'Counsel or agent assigned'
-          }
+        {
+          'value' => 'enhanced_rates_claimed',
+          'en' => 'Enhanced rates claimed'
+        },
+        {
+          'value' => 'councel_or_agent_assigned',
+          'en' => 'Counsel or agent assigned'
+        }
       ]
     )
 
     it 'shows correct table data' do
       expect(subject.data).to eq(
         [
-          { title: "Why are you claiming a non-standard magistrates' payment?", value: 'Enhanced rates claimed<br>Counsel or agent assigned' }
+          { title: "Why are you claiming a non-standard magistrates' payment?",
+value: 'Enhanced rates claimed<br>Counsel or agent assigned' }
         ]
       )
     end

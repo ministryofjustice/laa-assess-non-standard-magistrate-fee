@@ -11,7 +11,7 @@ RSpec.describe V1::ContactDetails do
     it 'has correct structure' do
       subject = described_class.new(
         {
-          'firm_office'=> {
+          'firm_office' => {
             'name' => 'Blundon Solicitor Firm',
             'town' => 'Stoke Newington',
             'postcode' => 'NE10 4AB',
@@ -22,7 +22,7 @@ RSpec.describe V1::ContactDetails do
           'solicitor' => {
             'full_name' => 'Daniel Treaty',
             'reference_number' => '1212333',
-        }
+          }
         }
       )
 
@@ -35,7 +35,7 @@ RSpec.describe V1::ContactDetails do
     context 'One line in firm address' do
       subject = described_class.new(
         {
-          'firm_office'=> {
+          'firm_office' => {
             'name' => 'Blundon Solicitor Firm',
             'town' => 'Stoke Newington',
             'postcode' => 'NE10 4AB',
@@ -46,7 +46,7 @@ RSpec.describe V1::ContactDetails do
           'solicitor' => {
             'full_name' => 'Daniel Treaty',
             'reference_number' => '1212333',
-        }
+          }
         }
       )
 
@@ -66,7 +66,7 @@ RSpec.describe V1::ContactDetails do
     context 'Two lines in firm address' do
       subject = described_class.new(
         {
-          'firm_office'=> {
+          'firm_office' => {
             'name' => 'Blundon Solicitor Firm',
             'town' => 'Stoke Newington',
             'postcode' => 'NE10 4AB',
@@ -77,7 +77,7 @@ RSpec.describe V1::ContactDetails do
           'solicitor' => {
             'full_name' => 'Daniel Treaty',
             'reference_number' => '1212333',
-        }
+          }
         }
       )
 

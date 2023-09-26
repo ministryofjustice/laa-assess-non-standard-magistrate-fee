@@ -32,7 +32,6 @@ unless ENV['NOCOVERAGE']
     add_filter 'app/jobs/application_job.rb'
     add_filter 'app/mailers/application_mailer.rb'
 
-
     enable_coverage :branch
     primary_coverage :branch
     minimum_coverage branch: 100, line: 100

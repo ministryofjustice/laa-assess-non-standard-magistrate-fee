@@ -36,11 +36,13 @@ RSpec.describe V1::OtherInfo do
 
       it 'shows correct table data' do
         expect(subject.data).to eq([
-                                    { title: 'Any other information', value: 'Yes' },
-                                    { title: 'Other information added', value: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. \\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.' },
-                                    { title: 'Proceedings concluded over 3 months ago', value: 'Yes' },
-                                    { title: 'Reason for not claiming within 3 months', value: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' }
-                                  ])
+                                     { title: 'Any other information', value: 'Yes' },
+                                     { title: 'Other information added',
+ value: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. \\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.' },
+                                     { title: 'Proceedings concluded over 3 months ago', value: 'Yes' },
+                                     { title: 'Reason for not claiming within 3 months',
+ value: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' }
+                                   ])
       end
     end
 
@@ -56,9 +58,9 @@ RSpec.describe V1::OtherInfo do
 
       it 'shows correct table data' do
         expect(subject.data).to eq([
-          { title: 'Any other information', value: 'No' },
-          { title: 'Proceedings concluded over 3 months ago', value: 'No' },
-                                  ])
+                                     { title: 'Any other information', value: 'No' },
+                                     { title: 'Proceedings concluded over 3 months ago', value: 'No' },
+                                   ])
       end
     end
   end

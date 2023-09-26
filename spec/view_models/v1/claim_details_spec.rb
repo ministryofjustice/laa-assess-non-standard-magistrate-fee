@@ -48,17 +48,17 @@ RSpec.describe V1::ClaimDetails do
 
       it 'shows correct table data' do
         expect(subject.data).to eq([
-                                    { title: 'Number of pages of prosecution evidence', value: 5 },
-                                    { title: 'Number of pages of defence statements', value: 10 },
-                                    { title: 'Number of witnesses', value: 2 },
-                                    { title: 'Supplemental claim', value: 'No' },
-                                    { title: 'Recorded evidence', value: 'Yes' },
-                                    { title: 'Recorded evidence', value: '1 Hr 50 Mins' },
-                                    { title: 'Work done before order was granted', value: 'Yes' },
-                                    { title: 'Date of work before order was granted', value: '20 January 2023' },
-                                    { title: 'Work was done after last hearing', value: 'Yes' },
-                                    { title: 'Date of work after last hearing', value: '02 February 2023' }
-                                  ])
+                                     { title: 'Number of pages of prosecution evidence', value: 5 },
+                                     { title: 'Number of pages of defence statements', value: 10 },
+                                     { title: 'Number of witnesses', value: 2 },
+                                     { title: 'Supplemental claim', value: 'No' },
+                                     { title: 'Recorded evidence', value: 'Yes' },
+                                     { title: 'Recorded evidence', value: '1 Hr 50 Mins' },
+                                     { title: 'Work done before order was granted', value: 'Yes' },
+                                     { title: 'Date of work before order was granted', value: '20 January 2023' },
+                                     { title: 'Work was done after last hearing', value: 'Yes' },
+                                     { title: 'Date of work after last hearing', value: '02 February 2023' }
+                                   ])
       end
     end
 
@@ -78,13 +78,14 @@ RSpec.describe V1::ClaimDetails do
 
       it 'shows correct table data' do
         expect(subject.data).to eq([
-          { title: 'Number of pages of prosecution evidence', value: 5 },
-          { title: 'Number of pages of defence statements', value: 10 },
-          { title: 'Number of witnesses', value: 2 },
-          { title: 'Supplemental claim', value: 'No' },
-          { title: 'Recorded evidence', value: 'No' },
-          { title: 'Work done before order was granted', value: 'No' },
-          { title: 'Work was done after last hearing', value: 'No' }        ])
+                                     { title: 'Number of pages of prosecution evidence', value: 5 },
+                                     { title: 'Number of pages of defence statements', value: 10 },
+                                     { title: 'Number of witnesses', value: 2 },
+                                     { title: 'Supplemental claim', value: 'No' },
+                                     { title: 'Recorded evidence', value: 'No' },
+                                     { title: 'Work done before order was granted', value: 'No' },
+                                     { title: 'Work was done after last hearing', value: 'No' }
+                                   ])
       end
     end
   end

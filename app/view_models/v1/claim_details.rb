@@ -19,7 +19,7 @@ module V1
       I18n.t(".claim_details.#{key}.title")
     end
 
-    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     def data
       [
         {
@@ -70,7 +70,7 @@ module V1
          end),
       ].compact
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
     def rows
       { title:, data: }
