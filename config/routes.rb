@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     resources :letters_and_calls, only: [:index]
     resources :disbursements, only: [:index]
     resource :supporting_evidences, only: [:show]
+    resource :history, only: [:show]
   end
   
   get 'claims/:claim', to: redirect('claims/%{claim}/claim_details')

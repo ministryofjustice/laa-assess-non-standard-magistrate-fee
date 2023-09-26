@@ -17,6 +17,7 @@ RSpec.describe PullLatestVersionData do
   end
 
   before do
+    allow(Event::NewVersion).to receive(:build).and_return(true)
     allow(HttpPuller).to receive(:new).and_return(http_puller)
   end
 
@@ -46,6 +47,12 @@ RSpec.describe PullLatestVersionData do
           state: 'submitted',
           data: { 'same' => 'data' }
         )
+      end
+
+      it 'creates a new version event' do
+        subject.perform(claim)
+
+        expect(Event::NewVersion).to have_received(:build).with(claim:)
       end
     end
 

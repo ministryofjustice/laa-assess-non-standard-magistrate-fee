@@ -18,7 +18,7 @@ module V1
     end
 
     def table_fields
-      [work_type.to_s, "#{requested}min", adjustments]
+      [work_type.to_s, "#{uplift.to_i}%", "#{requested}min", '#pending#', '#pending#']
     end
   end
 end
