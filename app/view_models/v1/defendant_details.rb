@@ -20,12 +20,12 @@ module V1
 
     def main_defendant_name
       main_defendant = defendants.detect { |defendant| defendant['main'] }
-      main_defendant ? main_defendant['full_name'] : ''
+      main_defendant['full_name']
     end
 
     def main_defendant_maat
       main_defendant = defendants.detect { |defendant| defendant['main'] }
-      main_defendant ? main_defendant['maat'] : ''
+      main_defendant['maat']
     end
 
     def additional_defendants
