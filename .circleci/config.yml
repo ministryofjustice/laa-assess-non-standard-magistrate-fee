@@ -96,7 +96,7 @@ references:
           kubectl config set-credentials circleci --token=${K8S_TOKEN}
           kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=${K8S_NAMESPACE}
           kubectl config use-context ${K8S_CLUSTER_NAME}
-          kubectl --namespace=${K8S_NAMESPACE} get pods 
+          kubectl --namespace=${K8S_NAMESPACE} get pods
 
 # ------------------
 # COMMANDS
@@ -133,7 +133,7 @@ commands:
             root: tmp
             paths:
               - cc-test-reporter
-  
+
   rubocop:
     steps:
       - run:
@@ -150,9 +150,6 @@ commands:
           command: |
             RUBYOPT=-W:no-deprecated \
             bundle exec rails db:prepare --trace
-      - run:
-          name: Seed database
-          command: rake custom_seeds:load
 
   rspec:
     steps:
@@ -283,7 +280,7 @@ jobs:
   build-to-ecr:
     executor: aws-ecr/default
     steps:
-      - checkout 
+      - checkout
       - aws-cli/setup:
           role_arn: $ECR_ROLE_TO_ASSUME
           region: $ECR_REGION
@@ -297,7 +294,7 @@ jobs:
           push-image: true
           tag: ${CIRCLE_SHA1}
           region: $ECR_REGION
-          repo: $ECR_REPOSITORY 
+          repo: $ECR_REPOSITORY
           extra-build-args: |
             --build-arg APP_BUILD_DATE=$(date +%Y-%m-%dT%H:%M:%S%z) \
             --build-arg APP_BUILD_TAG=${CIRCLE_SHA1} \
