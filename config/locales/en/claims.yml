@@ -56,6 +56,13 @@ en:
       requested: Provider requested
       adjustment: Adjustment
       ation: Action
+  adjustments:
+    show:
+      check_totals: View core costs
+      items: Items
+      total_time: Time total
+      total_cost: Cost total
+      total: Total
   histories:
     show:
       page_title: "Review criminal legal aid applications"
