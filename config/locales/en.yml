@@ -31,3 +31,11 @@ en:
     claim_button_group:
       make_decision: Make a decision
       send_back: Send back to provider
+
+  calls_to_action:
+    sign_in: Sign in
+
+  users:
+    dev_auth:
+      new:
+        page_title: Dev Auth for testing
