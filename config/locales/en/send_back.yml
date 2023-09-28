@@ -1,0 +1,6 @@
+---
+en:
+  send_back:
+    index:
+      page_title: Send back to provider
+      heading: Send back %{defendant_name}’s claim

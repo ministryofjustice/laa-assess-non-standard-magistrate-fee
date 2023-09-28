@@ -24,13 +24,15 @@ Rails.application.routes.draw do
     resources :disbursements, only: [:index]
     resource :supporting_evidences, only: [:show]
     resource :history, only: [:show]
+    resources :send_back, only: [:index]
+    resources :make_decision, only: [:index]
   end
-  
+
   get 'claims/:claim', to: redirect('claims/%{claim}/claim_details')
-  
+
   resources :your_claims, only: [:index]
   resources :assessed_claims, only: [:index]
-  
+
   namespace :about do
     get :privacy
     get :contact
