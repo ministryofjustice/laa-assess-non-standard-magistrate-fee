@@ -33,4 +33,13 @@ module ApplicationHelper
     t('helpers.time_period.hours', count: period / 60) +
       t('helpers.time_period.minutes', count: period % 60)
   end
+
+  def format_date_string(string)
+    date = DateTime.parse(string)
+    date.strftime('%d %B %Y')
+  end
+
+  def multiline_text(string)
+    ApplicationController.helpers.sanitize(string.gsub("\n", '<br>'), tags: %w[br])
+  end
 end

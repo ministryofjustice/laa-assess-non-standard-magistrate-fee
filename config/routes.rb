@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       get :ping
     end
   end
+
   resources :application_versions, only: [:update]
   resources :landing, only: [:index]
   resources :claims, only: [:index] do
@@ -24,8 +25,12 @@ Rails.application.routes.draw do
     resource :supporting_evidences, only: [:show]
     resource :history, only: [:show]
   end
+  
+  get 'claims/:claim', to: redirect('claims/%{claim}/claim_details')
+  
   resources :your_claims, only: [:index]
   resources :assessed_claims, only: [:index]
+  
   namespace :about do
     get :privacy
     get :contact

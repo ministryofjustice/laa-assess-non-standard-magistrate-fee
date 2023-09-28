@@ -5,11 +5,12 @@ RSpec.describe ClaimDetailsController do
     let(:claim) { instance_double(Claim, id: claim_id) }
     let(:claim_id) { SecureRandom.uuid }
     let(:claim_summary) { instance_double(V1::ClaimSummary) }
-    let(:claim_details) { an_instance_of(Hash) }
+    let(:claim_details) { instance_double(ClaimDetails::Table) }
 
     before do
       allow(Claim).to receive(:find).and_return(claim)
       allow(BaseViewModel).to receive(:build).and_return(claim_summary)
+      allow(ClaimDetails::Table).to receive(:new).and_return(claim_details)
     end
 
     it 'find and builds the required object' do
