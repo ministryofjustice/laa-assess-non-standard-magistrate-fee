@@ -32,11 +32,20 @@ module LaaAssessNonStandardMagistrateFee
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    # The maximum time since a users was last authenticated on DOM1 before
+
+    # they are automatically signed out.
+    config.x.auth.reauthenticate_in = 12.hours
+
+    # The maximum period of inactivity before a user is
+    # automatically signed out.
+    config.x.auth.timeout_in = 30.minutes
 
     # Don't generate system test files.
     config.generators.system_tests = nil
 
     config.exceptions_app = ->(env) {
+      debugger
       ErrorsController.action(:show).call(env)
     }
   end

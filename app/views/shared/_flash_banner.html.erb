@@ -1,17 +1,7 @@
 <% flash.each do |type, msg| %>
-  <% next unless msg.is_a?(String) %>
-
-  <div class="govuk-notification-banner govuk-notification-banner--<%= type %>" role="alert"
-       aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
-    <div class="govuk-notification-banner__header">
-      <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
-        <%= t(:title, scope: "flash.#{type}") %>
-      </h2>
-    </div>
-    <div class="govuk-notification-banner__content">
-      <p class="govuk-notification-banner__heading">
-        <%= msg %>
-      </p>
-    </div>
-  </div>
+  <%= govuk_notification_banner(title_text: t(:title, scope: "flash.#{type}"), success: type == 'success') do |banner| %>
+    <% Array(msg).each do |detail| %>
+      <p><%= sanitize(detail, tags: %w[a]) %></p>
+    <% end %>
+  <% end %>
 <% end %>

@@ -22,11 +22,11 @@ RSpec.describe 'Authenticating with the DevAuth strategy' do
         click_button 'Sign in'
       end
 
-      xit 'redirects to the forbidden page' do
+      it 'redirects to the forbidden page' do
         expect(page).to have_content 'Access to this service is restricted'
       end
 
-      xit 'shows the forbidden page' do
+      it 'shows the forbidden page' do
         expect(page).to have_content 'Access to this service is restricted'
         expect(page).not_to have_css('nav.moj-primary-navigation')
       end
