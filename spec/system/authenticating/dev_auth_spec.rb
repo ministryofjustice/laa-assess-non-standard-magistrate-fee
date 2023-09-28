@@ -85,4 +85,14 @@ RSpec.describe 'Authenticating with the DevAuth strategy' do
       end
     end
   end
+
+  context 'when dev_auth is disabled' do
+    before { allow(FeatureFlags).to receive(:dev_auth).and_return(double(enabled?: false)) }
+
+    it 'raises an error' do
+      visit '/dev_auth'
+
+      expect(page).to have_http_status(500)
+    end
+  end
 end

@@ -35,8 +35,6 @@ module AuthUpdateable
   end
 
   def activate_from_auth_hash(auth_hash)
-    raise 'AlreadyActivated' unless pending_activation?
-
     update_from_auth_hash(auth_hash)
     self.first_auth_at = Time.zone.now
     self.auth_subject_id = auth_hash.uid

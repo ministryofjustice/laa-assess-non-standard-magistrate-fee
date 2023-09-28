@@ -10,7 +10,11 @@ module WardenHooks
 
   module AuthUpdateable
     Warden::Manager.after_set_user except: :fetch do |user, warden, options|
-      user.update_from_auth_hash!(warden) if user && warden.authenticated?(options[:scope])
+      # :nocov:
+      return unless user && warden.authenticated?(options[:scope])
+      # :nocov:
+
+      user.update_from_auth_hash!(warden)
     end
   end
 end

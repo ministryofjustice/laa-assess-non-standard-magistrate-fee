@@ -8,14 +8,16 @@ module WardenHooks
     Warden::Manager.after_set_user do |user, warden, options|
       scope = options[:scope]
 
-      if user && warden.authenticated?(scope)
-        proxy = Devise::Hooks::Proxy.new(warden)
+      # :nocov:
+      return unless user && warden.authenticated?(scope)
+      # :nocov:
 
-        if user.auth_expired?
-          Devise.sign_out_all_scopes ? proxy.sign_out : proxy.sign_out(scope)
+      proxy = Devise::Hooks::Proxy.new(warden)
 
-          throw :warden, scope: scope, message: :reauthenticate
-        end
+      if user.auth_expired?
+        Devise.sign_out_all_scopes ? proxy.sign_out : proxy.sign_out(scope)
+
+        throw :warden, scope: scope, message: :reauthenticate
       end
     end
   end

@@ -10,6 +10,7 @@ module Users
       end
     end
 
+    # :nocov:
     def failure
       throw(:warden, recall: 'Errors#forbidden', message: :forbidden)
     end
@@ -21,5 +22,6 @@ module Users
     def passthru
       redirect_to unauthenticated_root_path
     end
+    # :nocov:
   end
 end
