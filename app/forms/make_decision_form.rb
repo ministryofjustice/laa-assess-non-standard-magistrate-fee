@@ -13,6 +13,7 @@ class MakeDecisionForm
   attribute :state
   attribute :partial_comment
   attribute :reject_comment
+  attribute :current_user
 
   validates :claim, presence: true
   validates :state, inclusion: { in: STATES }
@@ -26,7 +27,7 @@ class MakeDecisionForm
 
     Claim.transaction do
       claim.update!(state:)
-      Event::Decision.build(claim:, comment:, previous_state:)
+      Event::Decision.build(claim:, comment:, previous_state:, current_user:)
       NotifyAppStore.process(claim)
     end
 
