@@ -18,11 +18,10 @@ module AuthUpdateable
     if pending_activation?
       activate_from_auth_hash(auth_hash)
 
-      save!
     else
       update_from_auth_hash(auth_hash)
-      save!
     end
+    save!
   end
 
   private

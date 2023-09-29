@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   ROLES = [
-    CASEWORKER = 'caseworker',
-    SUPERVISOR = 'supervisor',
+    CASEWORKER = 'caseworker'.freeze,
+    SUPERVISOR = 'supervisor'.freeze,
   ].freeze
   devise :omniauthable, :timeoutable
 
@@ -10,7 +10,7 @@ class User < ApplicationRecord
 
   validates :role, inclusion: { in: ROLES }
 
-  scope :active, lambda { where(deactivated_at: nil).where.not(auth_subject_id: nil) }
+  scope :active, -> { where(deactivated_at: nil).where.not(auth_subject_id: nil) }
   scope :pending_activation, -> { where(auth_subject_id: nil, deactivated_at: nil) }
 
   def display_name

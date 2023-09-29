@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def after_sign_in_path_for(user)
+  def after_sign_in_path_for(_user)
     claims_path
   end
 

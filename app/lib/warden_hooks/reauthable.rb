@@ -5,6 +5,7 @@ module WardenHooks
   # User#last_auth_at is set by UserAuthenticate#authenticate!
   #
   module Reauthable
+    # rubocop:disable Lint/NonLocalExitFromIterator
     Warden::Manager.after_set_user do |user, warden, options|
       scope = options[:scope]
 
@@ -20,5 +21,6 @@ module WardenHooks
         throw :warden, scope: scope, message: :reauthenticate
       end
     end
+    # rubocop:enable Lint/NonLocalExitFromIterator
   end
 end

@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :caseworker, class: User do
+  factory :caseworker, class: 'User' do
     id { SecureRandom.uuid }
     email { 'case.worker@test.com' }
     first_name { 'case' }
@@ -9,11 +9,11 @@ FactoryBot.define do
     auth_subject_id { SecureRandom.uuid }
 
     trait :deactivated do
-      deactivated_at { Time.now }
+      deactivated_at { Time.zone.now }
     end
   end
 
-  factory :supervisor, class: User do
+  factory :supervisor, class: 'User' do
     id { SecureRandom.uuid }
     email { 'super.visor@test.com' }
     first_name { 'super' }

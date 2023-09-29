@@ -13,7 +13,7 @@ RSpec.describe 'Error pages' do
 
       it 'shows the application not found error page' do
         expect(page).to have_http_status(:not_found)
-        expect(page).to have_content "If you typed the web address, check it is correct"
+        expect(page).to have_content 'If you typed the web address, check it is correct'
       end
     end
 
