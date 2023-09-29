@@ -35,6 +35,7 @@ namespace :custom_seeds do
         claim = Claim.find_by(id: claim_id)
 
         if claim
+          claim.events.delete_all
           claim.versions.delete_all
           claim.delete
         end

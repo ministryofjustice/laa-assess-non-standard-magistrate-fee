@@ -2,4 +2,5 @@
 
 class ApplicationController < ActionController::Base
   include ApplicationHelper
+  default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
 end

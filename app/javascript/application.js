@@ -6,3 +6,5 @@ import "./component/sortable_table"
 import { initAll } from 'govuk-frontend'
 
 initAll()
+
+Turbo.setFormMode("off")
