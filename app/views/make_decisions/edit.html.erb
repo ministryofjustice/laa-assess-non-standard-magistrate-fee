@@ -7,13 +7,11 @@
 </div>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-  apples
-here
     <%= form_with model: decision, url: claim_make_decision_path(claim_id: decision.id), method: :put, id: dom_id(decision) do |f| %>
       <%= govuk_error_summary(decision) %>
       <%= f.govuk_radio_buttons_fieldset :state, legend: { size: 's' } do %>
         <%= f.govuk_radio_button :state, MakeDecisionForm::GRANT %>
-        <%= f.govuk_radio_button :state, MakeDecisionForm::PARTIAL_GRANT do %>
+        <%= f.govuk_radio_button :state, MakeDecisionForm::PART_GRANT do %>
           <%= f.govuk_text_area :partial_comment, width: 'one-third', autocomplete: 'off', label: { size: 'm' } %>
         <% end %>
         <%= f.govuk_radio_button :state, MakeDecisionForm::REJECT do %>
