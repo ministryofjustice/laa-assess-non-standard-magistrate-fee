@@ -14,7 +14,7 @@ en:
       make_decision_form:
         state_options:
           grant: Grant it
-          'partial-grant': Part grant it
+          part_grant: Part grant it
           reject: Reject it
         partial_comment: Explain your decision
         reject_comment: Explain your decision
@@ -29,6 +29,7 @@ en:
         make_decision_form:
           attributes:
             state:
+              blank: Please select a decision
               inclusion: Please select a decision
             partial_comment:
               blank: Reason must be given to part grant

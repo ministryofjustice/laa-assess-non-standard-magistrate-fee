@@ -5,7 +5,7 @@ class MakeDecisionForm
 
   STATES = [
     GRANT = 'grant',
-    PARTIAL_GRANT = 'partial-grant',
+    PART_GRANT = 'part_grant',
     REJECT = 'reject'
   ].freeze
 
@@ -17,14 +17,13 @@ class MakeDecisionForm
 
   validates :claim, presence: true
   validates :state, inclusion: { in: STATES }
-  validates :partial_comment, presence: true, if: -> { state == PARTIAL_GRANT }
+  validates :partial_comment, presence: true, if: -> { state == PART_GRANT }
   validates :reject_comment, presence: true, if: -> { state == REJECT }
 
   def save
     return false unless valid?
 
     previous_state = claim.state
-
     Claim.transaction do
       claim.update!(state:)
       Event::Decision.build(claim:, comment:, previous_state:, current_user:)
@@ -36,18 +35,18 @@ class MakeDecisionForm
     false
   end
 
-  private
-
-  def claim
-    Claim.find_by(id:)
-  end
-
   def comment
     case state
-    when PARTIAL_GRANT
+    when PART_GRANT
       partial_comment
     when REJECT
       reject_comment
     end
+  end
+
+  private
+
+  def claim
+    Claim.find_by(id:)
   end
 end

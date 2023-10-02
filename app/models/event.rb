@@ -14,7 +14,7 @@ class Event < ApplicationRecord
   end
 
   def title
-    t('title')
+    t('title', **title_options)
   end
 
   def body
@@ -22,6 +22,10 @@ class Event < ApplicationRecord
   end
 
   private
+
+  def title_options
+    {}
+  end
 
   def t(key, **)
     I18n.t("#{self.class.to_s.underscore}.#{key}", **)

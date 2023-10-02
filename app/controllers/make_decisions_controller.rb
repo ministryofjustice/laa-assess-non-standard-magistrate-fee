@@ -5,11 +5,12 @@ class MakeDecisionsController < ApplicationController
     render locals: { claim:, decision: }
   end
 
+  # TODO: put some sort of permissions here for non supervisors?
   def update
     claim = Claim.find(params[:claim_id])
     decision = MakeDecisionForm.new(decision_params)
     if decision.save
-      redierect_to claims_path, flash: { success: 'claim success text' }
+      redirect_to claims_path, flash: { success: 'claim success text' }
     else
       render :edit, locals: { claim:, decision: }
     end
