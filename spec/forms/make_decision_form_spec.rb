@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe MakeDecisionForm do
   subject { described_class.new(params) }
+
   let(:claim) { create(:claim) }
 
   describe '#validations' do
@@ -133,7 +134,7 @@ RSpec.describe MakeDecisionForm do
       end
     end
 
-    context 'when state is grant' do
+    context 'when state is part_grant' do
       let(:state) { 'part_grant' }
 
       it 'uses the partial_comment field' do

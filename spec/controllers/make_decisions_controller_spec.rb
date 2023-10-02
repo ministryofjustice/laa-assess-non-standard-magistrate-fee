@@ -50,8 +50,7 @@ RSpec.describe MakeDecisionsController do
           make_decision_form: { state: 'grant', partial_comment: nil, reject_comment: nil, id: claim.id }
         }
 
-        expect(response).to redirect_to(claims_path) #, flash: { success: 'claim success text' })
-
+        expect(response).to redirect_to(claims_path) # , flash: { success: 'claim success text' })
       end
     end
 

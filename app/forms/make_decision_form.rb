@@ -4,9 +4,9 @@ class MakeDecisionForm
   include ActiveRecord::AttributeAssignment
 
   STATES = [
-    GRANT = 'grant',
-    PART_GRANT = 'part_grant',
-    REJECT = 'reject'
+    GRANT = 'grant'.freeze,
+    PART_GRANT = 'part_grant'.freeze,
+    REJECT = 'reject'.freeze
   ].freeze
 
   attribute :id
@@ -31,7 +31,7 @@ class MakeDecisionForm
     end
 
     true
-  rescue
+  rescue StandardError
     false
   end
 

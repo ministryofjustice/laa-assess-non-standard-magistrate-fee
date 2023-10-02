@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Event::Decision do
-  subject { described_class.build(claim:, previous_state:, comment: , current_user:) }
+  subject { described_class.build(claim:, previous_state:, comment:, current_user:) }
 
-  let(:claim) { create(:claim, state: ) }
+  let(:claim) { create(:claim, state:) }
   let(:state) { 'grant' }
   let(:current_user) { create(:user) }
   let(:previous_state) { 'submitted' }

@@ -1,7 +1,6 @@
 class Event
   class Decision < Event
     def self.build(claim:, previous_state:, comment:, current_user:)
-
       create(
         claim: claim,
         claim_version: claim.current_version,
