@@ -8,20 +8,10 @@ class Event
         details: {
           field: 'risk',
           from: previous_risk_level,
-          to: claim.state,
+          to: claim.risk,
           comment: explanation
         }
       )
-    end
-
-    def body
-      details['explanation']
-    end
-
-    private
-
-    def title_options
-      { state: details['to'].tr('_', ' ') }
     end
   end
 end

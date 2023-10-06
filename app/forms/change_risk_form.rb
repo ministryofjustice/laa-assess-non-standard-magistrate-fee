@@ -2,7 +2,7 @@ class ChangeRiskForm
   include ActiveModel::Model
   include ActiveModel::Attributes
   include ActiveRecord::AttributeAssignment
-  RiskLevels = Struct.new(:id, :level) unless defined?(RiskLevels)
+  RiskLevels = Struct.new(:id, :level)
 
   attribute :id
   attribute :risk_level
