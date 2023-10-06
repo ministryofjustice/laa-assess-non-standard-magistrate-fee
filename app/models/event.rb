@@ -9,10 +9,17 @@ class Event < ApplicationRecord
 
   scope :history, -> { where(event_type: HISTORY_EVENTS) }
 
+  # simplifies the rehydrate process
+  attribute :public
+
   # Make these methods private to ensure tehy are created via the various `build` methods`
   class << self
     private :new
     private :create
+
+    def rehydrate!(params)
+      new(params).save!
+    end
   end
 
   def title
@@ -23,6 +30,12 @@ class Event < ApplicationRecord
     nil
   end
 
+  def as_json(*)
+    super
+      .slice!('id', 'claim_id')
+      .merge(public: PUBLIC_EVENTS.include?(event_type))
+  end
+
   private
 
   def title_options
@@ -31,11 +44,5 @@ class Event < ApplicationRecord
 
   def t(key, **)
     I18n.t("#{self.class.to_s.underscore}.#{key}", **)
-  end
-
-  def as_json(*)
-    super
-      .slice!('id', 'claim_id')
-      .merge(public: PUBLIC_EVENTS.include?(event_type))
   end
 end
