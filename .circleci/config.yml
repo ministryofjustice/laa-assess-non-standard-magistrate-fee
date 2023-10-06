@@ -262,7 +262,6 @@ jobs:
 
   scan-docker-image:
     executor: test-executor
-    parallelism: 1
     steps:
       - checkout
       - setup_remote_docker:
