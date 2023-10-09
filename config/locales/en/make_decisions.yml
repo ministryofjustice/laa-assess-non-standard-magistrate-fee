@@ -1,7 +1,7 @@
 ---
 en:
   make_decisions:
-    show:
+    edit:
       page_title: Make a decision
       heading: Make a decision
       submit: Submit decision
