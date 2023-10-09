@@ -90,6 +90,10 @@ RSpec/MessageChain:
 RSpec/SpecFilePathFormat:
   Enabled: false
 
+RSpec/FilePath:
+  Exclude:
+    - 'spec/view_models/base_value_model_spec.rb'
+
 Naming/VariableNumber:
   Enabled: false
 
