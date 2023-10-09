@@ -18,8 +18,13 @@ gem 'sprockets-rails'
 gem 'stimulus-rails'
 gem 'turbo-rails'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+
 # Pagination
 gem 'pagy'
+
+# Exception monitoring
+gem 'sentry-ruby'
+gem 'sentry-rails'
 
 group :development, :test do
   gem 'debug'
