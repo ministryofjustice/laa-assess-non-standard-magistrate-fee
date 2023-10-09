@@ -13,17 +13,10 @@ class NotifyAppStore
         application_id: claim.id,
         json_schema_version: JSON_SCHEMA_VERSION,
         application_state: claim.state,
-        application: data,
+        application: claim.current_version_record.data,
+        events: claim.events.map(&:as_json),
         application_risk: claim.risk,
       }
-    end
-
-    private
-
-    def data
-      claim.current_version_record.data.merge(
-        events: claim.events.map(&:as_json)
-      )
     end
   end
 end

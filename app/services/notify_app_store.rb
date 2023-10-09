@@ -1,12 +1,12 @@
 class NotifyAppStore < ApplicationJob
   queue_as :default
 
-  def process(claim:)
+  def self.process(claim:)
     if ENV.key?('REDIS_HOST')
-      self.class.perform_later(claim)
+      perform_later(claim)
     else
       begin
-        notify(MessageBuilder.new(claim:))
+        new.notify(MessageBuilder.new(claim:))
       rescue StandardError => e
         # we only get errors here when processing inline, which we don't want
         # to be visible to the end user, so swallow errors
