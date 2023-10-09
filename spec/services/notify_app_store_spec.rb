@@ -37,7 +37,7 @@ RSpec.describe NotifyAppStore do
           allow(http_notifier).to receive(:patch).and_raise('annoying_error')
         end
 
-        xit 'sends the error to sentry and ignores it' do
+        it 'sends the error to sentry and ignores it' do
           expect(Sentry).to receive(:capture_exception)
 
           expect { described_class.process(claim:) }.not_to raise_error
