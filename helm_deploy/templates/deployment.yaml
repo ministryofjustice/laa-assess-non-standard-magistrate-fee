@@ -78,6 +78,11 @@ spec:
               value: 'production'
             - name: RAILS_LOG_TO_STDOUT
               value: enabled
+            - name: SENTRY_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: sentry-dsn
+                  key: url
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
