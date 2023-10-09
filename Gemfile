@@ -23,8 +23,8 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'pagy'
 
 # Exception monitoring
-gem 'sentry-ruby'
 gem 'sentry-rails'
+gem 'sentry-ruby'
 
 group :development, :test do
   gem 'debug'
