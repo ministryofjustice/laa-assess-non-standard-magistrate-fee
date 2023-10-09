@@ -22,7 +22,8 @@ RSpec.describe NotifyAppStore::HttpNotifier do
     end
 
     it 'patchs the message to the specified URL' do
-      expect(described_class).to receive(:patch).with("http://some.url/v1/application/#{application_id}", body: message.to_json)
+      expect(described_class).to receive(:patch).with("http://some.url/v1/application/#{application_id}",
+                                                      body: message.to_json)
 
       subject.patch(message)
     end
@@ -30,7 +31,8 @@ RSpec.describe NotifyAppStore::HttpNotifier do
 
   context 'when APP_STORE_URL is not present' do
     it 'patchs the message to default localhost url' do
-      expect(described_class).to receive(:patch).with("http://localhost:8000/v1/application/#{application_id}", body: message.to_json)
+      expect(described_class).to receive(:patch).with("http://localhost:8000/v1/application/#{application_id}",
+                                                      body: message.to_json)
 
       subject.patch(message)
     end
@@ -46,8 +48,8 @@ RSpec.describe NotifyAppStore::HttpNotifier do
 
     it 'add basic auth creditals' do
       expect(described_class).to receive(:patch).with("http://localhost:8000/v1/application/#{application_id}",
-                                                     body: message.to_json,
-                                                     basic_auth: { username: 'jimbob', password: 'kimbob' },)
+                                                      body: message.to_json,
+                                                      basic_auth: { username: 'jimbob', password: 'kimbob' },)
 
       subject.patch(message)
     end

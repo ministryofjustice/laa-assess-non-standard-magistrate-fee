@@ -84,7 +84,7 @@ RSpec.describe ReceiveApplicationMetadata do
 
     context 'but state is not valid' do
       it 'does not update the existing claim' do
-        expect { subject.save(params, 'grant') }.not_to change { claim.reload.attributes }
+        expect { subject.save(params, 'grant') }.not_to(change { claim.reload.attributes })
       end
     end
   end

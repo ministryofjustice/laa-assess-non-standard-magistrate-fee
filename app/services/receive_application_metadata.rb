@@ -14,6 +14,7 @@ class ReceiveApplicationMetadata
     claim.received_on ||= Time.zone.today
     # TODO: think if state should be allow to be updated in the future
     return unless ASSESSIBLE_STATES.include?(state)
+
     claim.state = state
 
     if claim.save

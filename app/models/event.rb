@@ -33,7 +33,10 @@ class Event < ApplicationRecord
   def as_json(*)
     super
       .slice!('id', 'claim_id')
-      .merge(public: PUBLIC_EVENTS.include?(event_type))
+      .merge(
+        public: PUBLIC_EVENTS.include?(event_type),
+        event_type: event_type
+      )
   end
 
   private

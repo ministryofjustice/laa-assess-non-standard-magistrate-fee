@@ -1,8 +1,14 @@
+class EventCreatable < Event
+  class << self
+    public :new
+  end
+end
+
 FactoryBot.define do
-  factory :event do
+  factory :event, class: 'EventCreatable' do
     id { SecureRandom.uuid }
     claim
-    claim_vesion { claim.version }
+    claim_version { claim.current_version }
 
     trait :decision do
       event_type { Event::Decision.to_s }

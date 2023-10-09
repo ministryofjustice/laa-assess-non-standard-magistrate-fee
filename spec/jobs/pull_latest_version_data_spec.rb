@@ -44,15 +44,15 @@ RSpec.describe PullLatestVersionData do
       let(:user) { create(:user) }
       let(:events_data) do
         [{
-          "claim_version"=>1,
-          "primary_user_id"=>user.id,
-          "secondary_user_id"=>nil,
-          "linked_type"=>nil,
-          "linked_id"=>nil,
-          "details"=>{"to"=>"grant", "from"=>"submitted", "field"=>"state", "comment"=>nil},
-          "created_at"=>"2023-10-02T14:41:45.136Z",
-          "updated_at"=>"2023-10-02T14:41:45.136Z",
-          "public" => true
+          'claim_version' => 1,
+          'primary_user_id' => user.id,
+          'secondary_user_id' => nil,
+          'linked_type' => nil,
+          'linked_id' => nil,
+          'details' => { 'to' => 'grant', 'from' => 'submitted', 'field' => 'state', 'comment' => nil },
+          'created_at' => '2023-10-02T14:41:45.136Z',
+          'updated_at' => '2023-10-02T14:41:45.136Z',
+          'public' => true
         }]
       end
 
@@ -66,9 +66,9 @@ RSpec.describe PullLatestVersionData do
           secondary_user_id: nil,
           linked_type: nil,
           linked_id: nil,
-          details: {"to"=>"grant", "from"=>"submitted", "field"=>"state", "comment"=>nil},
-          created_at: Time.parse("2023-10-02T14:41:45.136Z"),
-          updated_at: Time.parse("2023-10-02T14:41:45.136Z"),
+          details: { 'to' => 'grant', 'from' => 'submitted', 'field' => 'state', 'comment' => nil },
+          created_at: Time.parse('2023-10-02T14:41:45.136Z'),
+          updated_at: Time.parse('2023-10-02T14:41:45.136Z'),
         )
       end
     end
