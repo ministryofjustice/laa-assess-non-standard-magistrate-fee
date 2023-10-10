@@ -17,7 +17,7 @@ class Event < ApplicationRecord
     t('title')
   end
 
-  def details
+  def body
     nil
   end
 
