@@ -83,4 +83,49 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
     end
   end
+
+  describe '#govuk_error_summary' do
+    context 'when no form object is given' do
+      let(:form_object) { nil }
+
+      it 'returns nil' do
+        expect(helper.govuk_error_summary(form_object)).to be_nil
+      end
+    end
+
+    context 'when a form object without errors is given' do
+      let(:form_object) { MakeDecisionForm.new }
+
+      it 'returns nil' do
+        expect(helper.govuk_error_summary(form_object)).to be_nil
+      end
+    end
+
+    context 'when a form object with errors is given' do
+      let(:form_object) { MakeDecisionForm.new }
+      let(:title) { helper.content_for(:page_title) }
+
+      before do
+        helper.title('A page')
+        form_object.errors.add(:base, :blank)
+      end
+
+      it 'returns the summary' do
+        expect(
+          helper.govuk_error_summary(form_object)
+        ).to eq(
+          '<div class="govuk-error-summary" data-module="govuk-error-summary"><div role="alert">' \
+          '<h2 class="govuk-error-summary__title">There is a problem on this page</h2>' \
+          '<div class="govuk-error-summary__body"><ul class="govuk-list govuk-error-summary__list">' \
+          '<li><a data-turbo="false" href="#make-decision-form-base-field-error">can&#39;t be blank</a></li>' \
+          '</ul></div></div></div>'
+        )
+      end
+
+      it 'prepends the page title with an error hint' do
+        helper.govuk_error_summary(form_object)
+        expect(title).to start_with('Error: A page')
+      end
+    end
+  end
 end

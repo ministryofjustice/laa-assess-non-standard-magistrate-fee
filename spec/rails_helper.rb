@@ -42,4 +42,9 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  config.expect_with :rspec do |c|
+    # Or a very large value, if you do want to truncate at some point
+    c.max_formatted_output_length = nil
+  end
 end

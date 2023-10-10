@@ -1,0 +1,37 @@
+---
+en:
+  make_decisions:
+    show:
+      page_title: Make a decision
+      heading: Make a decision
+      submit: Submit decision
+
+  helpers:
+    legend:
+      make_decision_form:
+        state: What do you want to do with this claim?
+    label:
+      make_decision_form:
+        state_options:
+          grant: Grant it
+          part_grant: Part grant it
+          reject: Reject it
+        partial_comment: Explain your decision
+        reject_comment: Explain your decision
+    hint:
+      make_decision_form:
+        partial_comment: We’ll share this information with the provider
+        reject_comment: We’ll share this information with the provider
+
+  activemodel:
+    errors:
+      models:
+        make_decision_form:
+          attributes:
+            state:
+              blank: Please select a decision
+              inclusion: Please select a decision
+            partial_comment:
+              blank: Reason must be given to part grant
+            reject_comment:
+              blank: Reason must be given to reject
