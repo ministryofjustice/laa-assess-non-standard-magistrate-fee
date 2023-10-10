@@ -57,26 +57,6 @@ RSpec.describe ChangeRiskForm, type: :model do
 
       it { expect(subject.save).to be_falsey }
     end
-
-    # context 'when the form is invalid' do
-    #   subject do
-    #     described_class.new(
-    #       id: claim.id,
-    #       risk_level: nil,
-    #       explanation: nil,
-    #       current_user: user
-    #     )
-    #   end
-
-    #   it 'does not update the claim risk level or create an event' do
-    #     expect { subject.save }.not_to(change { claim.reload.risk })
-    #     expect(Event::ChangeRisk.count).to eq(0)
-    #   end
-
-    #   it 'returns false' do
-    #     expect(subject.save).to be(false)
-    #   end
-    # end
   end
 
   describe '#claim' do
