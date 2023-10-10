@@ -6,7 +6,6 @@ class Event < ApplicationRecord
 
   PUBLIC_EVENTS = ['Event::Decision'].freeze
   HISTORY_EVENTS = ['Event::NewVersion', 'Event::Decision'].freeze
-
   scope :history, -> { where(event_type: HISTORY_EVENTS) }
 
   # simplifies the rehydrate process
