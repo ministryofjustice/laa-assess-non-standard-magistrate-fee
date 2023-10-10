@@ -31,3 +31,9 @@ en:
     claim_button_group:
       make_decision: Make a decision
       send_back: Send back to provider
+
+  errors:
+    page_title_prefix: "Error: "
+
+    error_summary:
+      heading: There is a problem on this page

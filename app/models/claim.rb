@@ -6,4 +6,6 @@ class Claim < ApplicationRecord
 
   validates :risk, inclusion: { in: %w[low medium high] }
   validates :current_version, numericality: { only_integer: true, greater_than: 0 }
+
+  scope :pending_decision, -> { where.not(state: MakeDecisionForm::STATES) }
 end

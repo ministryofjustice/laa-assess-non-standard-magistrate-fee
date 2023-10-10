@@ -8,6 +8,7 @@ ruby File.read('.ruby-version').strip
 gem 'bootsnap', require: false
 gem 'dartsass-rails', '~> 0.5.0'
 gem 'govuk-components'
+gem 'govuk_design_system_formbuilder'
 gem 'httparty'
 gem 'importmap-rails'
 gem 'jbuilder'

@@ -46,9 +46,9 @@ RSpec.describe Type::TranslatedObject do
   end
 
   describe 'when value is `string`' do
-    let(:value) { 'Applke' }
+    let(:value) { 'Apple' }
 
-    it { expect { coerced_value }.to raise_error('Invalid Type') }
+    it { expect { coerced_value }.to raise_error('Invalid Type for "Apple"') }
   end
 
   describe '#serialize' do
