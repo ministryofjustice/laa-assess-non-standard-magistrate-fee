@@ -24,16 +24,16 @@ module V1
       '#Pending#'
     end
 
-    def get_colour(item)
+    def status(item)
       case item
       when 'grant'
-        'green'
+        { colour: 'green', text: item, sort_value: 1 }
       when 'part_grant'
-        'blue'
+        { colour: 'blue', text: item, sort_value: 2 }
       when 'reject'
-        'red'
+        { colour: 'red', text: item, sort_value: 3 }
       else
-        'grey'
+        { colour: 'grey', text: item, sort_value: 4 }
       end
     end
 
@@ -44,7 +44,7 @@ module V1
         main_defendant_name,
         date_assessed,
         case_worker_name,
-        { colour: get_colour(state), text: state }
+        status(state)
       ]
     end
   end

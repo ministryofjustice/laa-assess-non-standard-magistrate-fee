@@ -13,7 +13,7 @@
           row.with_cell(text: t('.defendant_name'))
           row.with_cell(html_attributes:{'aria-sort': 'ascending'},text: t('.date_assessed'))
           row.with_cell(html_attributes:{'aria-sort': 'ascending'},text: t('.caseworker_name'))
-          row.with_cell(text: t('.status'))
+          row.with_cell(html_attributes:{'aria-sort': 'ascending'},text: t('.status'))
         end
       end
 
@@ -28,8 +28,8 @@
             row.with_cell(text: item[2])
             row.with_cell(text: item[3][:text], html_attributes: { 'data-sort-value': item[3][:sort_value] })
             row.with_cell(text: item[4], html_attributes: { 'data-sort-value': item[4] })
-            row.with_cell(html_attributes: { 'data-sort-value': item[5][:text] }) do
-                govuk_tag(text: item[5][:text]|'', colour: item[5][:colour])
+            row.with_cell(html_attributes: { 'data-sort-value': item[5][:sort_value] }) do
+                govuk_tag(text: t(".status_list.#{item[5][:text]}"), colour: item[5][:colour])
               end
           end
         end

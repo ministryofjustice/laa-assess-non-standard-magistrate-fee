@@ -41,12 +41,12 @@ RSpec.describe V1::AssessedClaims, type: :view_model do
     end
   end
 
-  describe '#get_colour' do
+  describe '#status' do
     it 'returns the correct color for the given item' do
-      expect(subject.get_colour('grant')).to eq('green')
-      expect(subject.get_colour('part_grant')).to eq('blue')
-      expect(subject.get_colour('reject')).to eq('red')
-      expect(subject.get_colour('invalid')).to eq('grey')
+      expect(subject.status('grant')).to eq({ colour: 'green', sort_value: 1, text: 'grant' })
+      expect(subject.status('part_grant')).to eq({ colour: 'blue', text: 'part_grant', sort_value: 2 })
+      expect(subject.status('reject')).to eq({ colour: 'red', text: 'reject', sort_value: 3 })
+      expect(subject.status('invalid')).to eq({ colour: 'grey', text: 'invalid', sort_value: 4 })
     end
   end
 
@@ -58,7 +58,7 @@ RSpec.describe V1::AssessedClaims, type: :view_model do
         'John Doe',
         { text: I18n.l(Time.zone.yesterday, format: '%-d %b %Y'), sort_value: Time.zone.yesterday.to_fs(:db) },
         '#Pending#',
-        { colour: 'green', text: 'grant' }
+        { colour: 'green', sort_value: 1, text: 'grant' }
       ]
       expect(all_claims.table_fields).to eq(expected_fields)
     end
