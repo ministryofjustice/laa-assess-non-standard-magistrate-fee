@@ -5,7 +5,7 @@ RSpec.describe Event::ChangeRisk do
 
   let(:claim) { create(:claim, risk:) }
   let(:risk) { 'low' }
-  let(:current_user) { create(:user) }
+  let(:current_user) { create(:caseworker) }
   let(:previous_risk_level) { 'high' }
   let(:explanation) { 'risk has been changed' }
 

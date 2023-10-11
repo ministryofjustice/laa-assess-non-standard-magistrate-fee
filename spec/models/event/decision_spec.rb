@@ -5,7 +5,7 @@ RSpec.describe Event::Decision do
 
   let(:claim) { create(:claim, state:) }
   let(:state) { 'grant' }
-  let(:current_user) { create(:user) }
+  let(:current_user) { create(:caseworker) }
   let(:previous_state) { 'submitted' }
   let(:comment) { 'decison was made' }
 
