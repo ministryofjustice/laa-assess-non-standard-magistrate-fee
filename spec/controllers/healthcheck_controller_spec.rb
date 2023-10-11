@@ -17,7 +17,7 @@ RSpec.describe HealthcheckController do
     end
 
     it 'displays correct hash values' do
-      expect(parsed_body.keys).to include('hello')
+      expect(parsed_body.keys).to include('branch_name')
     end
 
     it 'find and builds the required object' do
