@@ -72,6 +72,26 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: app_store_password
+            - name: OMNIAUTH_AZURE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: azure-auth
+                  key: client_id
+            - name: OMNIAUTH_AZURE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: azure-auth
+                  key: client_secret
+            - name: OMNIAUTH_AZURE_REDIRECT_URI
+              valueFrom:
+                secretKeyRef:
+                  name: azure-auth
+                  key: redirect_uri
+            - name: OMNIAUTH_AZURE_TENANT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: azure-auth
+                  key: tenant_id
             - name: RACK_ENV
               value: 'production'
             - name: RAILS_ENV
