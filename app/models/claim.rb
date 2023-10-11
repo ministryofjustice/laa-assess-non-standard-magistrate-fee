@@ -8,5 +8,5 @@ class Claim < ApplicationRecord
   validates :current_version, numericality: { only_integer: true, greater_than: 0 }
 
   scope :pending_decision, -> { where.not(state: MakeDecisionForm::STATES) }
-  scope :decision_made, -> { where(state: MakeDecisionForm::STATES) }
+  scope :decision_made, -> { where.not(state: 'submitted') }
 end
