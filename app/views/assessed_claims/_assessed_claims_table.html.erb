@@ -18,18 +18,17 @@
       end
 
       table.with_body do |body|
-        rows.each do |item|
+        rows.each do |claim, firm, defendant, date_assessed, case_worker, status|
           body.with_row do |row|
             row.with_cell do
-                    item[0]
-                    govuk_link_to(item[0][:laa_reference], claim_claim_details_path([item[0][:claim_id]]))
-                  end
-            row.with_cell(text: item[1])
-            row.with_cell(text: item[2])
-            row.with_cell(text: item[3][:text], html_attributes: { 'data-sort-value': item[3][:sort_value] })
-            row.with_cell(text: item[4], html_attributes: { 'data-sort-value': item[4] })
-            row.with_cell(html_attributes: { 'data-sort-value': item[5][:sort_value] }) do
-                govuk_tag(text: t(".status_list.#{item[5][:text]}"), colour: item[5][:colour])
+              govuk_link_to(claim[:laa_reference], claim_claim_details_path([claim[:claim_id]]))
+            end
+            row.with_cell(text: firm)
+            row.with_cell(text: defendant)
+            row.with_cell(text: date_assessed[:text], html_attributes: { 'data-sort-value': date_assessed[:sort_value] })
+            row.with_cell(text: case_worker, html_attributes: { 'data-sort-value': case_worker })
+            row.with_cell(html_attributes: { 'data-sort-value': status[:sort_value] }) do
+                govuk_tag(text: t(".status_list.#{status[:text]}"), colour: status[:colour])
               end
           end
         end
