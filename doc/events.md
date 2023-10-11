@@ -16,7 +16,7 @@ the following methods:
   `create` methods have been marked as private to avoid creating events in this manner.
 * title - this is use in the `Claim History` tab as the bolded section of the `What`
   area, and defaults to the `<event_class>.title` in the locale file
-* details - this is use in the `Claim History` tab as the non-bolded section of the `What`
+* body - this is use in the `Claim History` tab as the non-bolded section of the `What`
   area, and defaults to an empty string.
 
 ## Creating new event records
@@ -42,7 +42,7 @@ class Event::RiskChange
   	create(
   	  claim: claim,
   	  claim_version: claim.current_version
-      data: {
+      details: {
         field: 'risk',
         from: previous_risk,
         to: claim.risk
@@ -60,7 +60,7 @@ class Event::WorkItemTimeChange
       primary_user: current_user,
       linked_type: 'work_item',
       linked_id: work_item.id,
-      data: {
+      details: {
         field: 'time_psent',
         from: previous_time_spent,
         to: work_item.time_spent

@@ -31,10 +31,9 @@
               row.with_cell(text: l(event.created_at, format: '%B<br>%d %b %Y<br>%I:%m%P').html_safe)
               row.with_cell(text: event.primary_user&.name || '')
               row.with_cell do %>
-              <b><%= event.title %></b>
-              <%= event.details %>
-              <%
-              end
+                <p class="govuk-!-font-weight-bold"><%= event.title %></p>
+                <%= event.body %>
+              <% end
             end
           end
         end

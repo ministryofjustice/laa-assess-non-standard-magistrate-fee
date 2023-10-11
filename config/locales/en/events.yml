@@ -2,3 +2,5 @@
 en:
   event/new_version:
     title: New claim versions received
+  event/decision:
+    title: Decision made to %{state} claim

@@ -28,6 +28,8 @@ en:
       phase_description_html: This is a new service – your <a>feedback</a> will help us to improve it.
 
   shared:
+    save_changes: Save changes
+    cancel: Cancel
     claim_button_group:
       make_decision: Make a decision
       send_back: Send back to provider
@@ -39,3 +41,9 @@ en:
     dev_auth:
       new:
         page_title: Dev Auth for testing
+
+  errors:
+    page_title_prefix: "Error: "
+
+    error_summary:
+      heading: There is a problem on this page
