@@ -9,4 +9,6 @@ class Claim < ApplicationRecord
 
   scope :pending_decision, -> { where.not(state: MakeDecisionForm::STATES) }
   scope :decision_made, -> { where.not(state: 'submitted') }
+  # TODO: - will add the filtering to current user once we have user assignment setup
+  scope :your_claims, -> { where(state: 'submitted') }
 end
