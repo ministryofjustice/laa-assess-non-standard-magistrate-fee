@@ -4,7 +4,7 @@ class Event < ApplicationRecord
 
   self.inheritance_column = :event_type
 
-  HISTORY_EVENTS = ['Event::NewVersion', 'Event::Decision'].freeze
+  HISTORY_EVENTS = ['Event::NewVersion', 'Event::Decision', 'Event::ChangeRisk'].freeze
   scope :history, -> { where(event_type: HISTORY_EVENTS) }
 
   # Make these methods private to ensure tehy are created via the various `build` methods`
