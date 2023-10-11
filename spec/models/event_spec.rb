@@ -22,6 +22,7 @@ RSpec.describe Event do
     context 'when event_type is public' do
       it 'generates the desired public JSON' do
         event = create(:event, :decision)
+
         expect(event.as_json).to match(
           'claim_version' => 1,
           'created_at' => an_instance_of(String),

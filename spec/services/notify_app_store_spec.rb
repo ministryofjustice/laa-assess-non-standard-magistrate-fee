@@ -20,21 +20,21 @@ RSpec.describe NotifyAppStore do
           .and_return(http_notifier)
       end
 
-      let(:http_notifier) { instance_double(described_class::HttpNotifier, patch: true) }
+      let(:http_notifier) { instance_double(described_class::HttpNotifier, put: true) }
 
       it 'does not raise any errors' do
         expect { described_class.process(claim:) }.not_to raise_error
       end
 
       it 'sends a HTTP message' do
-        expect(http_notifier).to receive(:patch).with(message_builder.message)
+        expect(http_notifier).to receive(:put).with(message_builder.message)
 
         described_class.process(claim:)
       end
 
       describe 'when error during notify process' do
         before do
-          allow(http_notifier).to receive(:patch).and_raise('annoying_error')
+          allow(http_notifier).to receive(:put).and_raise('annoying_error')
         end
 
         it 'sends the error to sentry and ignores it' do
@@ -59,7 +59,7 @@ RSpec.describe NotifyAppStore do
   end
 
   describe '#perform' do
-    let(:http_notifier) { instance_double(described_class::HttpNotifier, patch: true) }
+    let(:http_notifier) { instance_double(described_class::HttpNotifier, put: true) }
 
     before do
       allow(described_class::HttpNotifier).to receive(:new)
@@ -76,7 +76,7 @@ RSpec.describe NotifyAppStore do
 
   describe '#notify' do
     context 'when SNS_URL is not present' do
-      let(:http_notifier) { instance_double(described_class::HttpNotifier, patch: true) }
+      let(:http_notifier) { instance_double(described_class::HttpNotifier, put: true) }
 
       before do
         allow(described_class::HttpNotifier).to receive(:new)
@@ -90,14 +90,14 @@ RSpec.describe NotifyAppStore do
       end
 
       it 'sends a HTTP message' do
-        expect(http_notifier).to receive(:patch).with(message_builder.message)
+        expect(http_notifier).to receive(:put).with(message_builder.message)
 
         subject.notify(message_builder)
       end
 
       describe 'when error during notify process' do
         before do
-          allow(http_notifier).to receive(:patch).and_raise('annoying_error')
+          allow(http_notifier).to receive(:put).and_raise('annoying_error')
         end
 
         it 'allows the error to be raised - should reset the sidekiq job' do

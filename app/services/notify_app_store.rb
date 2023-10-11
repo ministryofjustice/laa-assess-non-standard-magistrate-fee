@@ -28,6 +28,6 @@ class NotifyAppStore < ApplicationJob
     # able to support re-sending/submitting an appplication so we can ignore
     # put requests
     post_manager = HttpNotifier.new
-    post_manager.patch(message_builder.message)
+    post_manager.put(message_builder.message)
   end
 end
