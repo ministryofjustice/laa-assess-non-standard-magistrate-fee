@@ -13,5 +13,9 @@ class Event
         }
       )
     end
+
+    def title_options
+      { risk: details['to'] }
+    end
   end
 end
