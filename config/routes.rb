@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     resource :supporting_evidences, only: [:show]
     resource :history, only: [:show]
     resources :send_back, only: [:index]
+    resource :change_risk, only: [:edit, :update], path_names: { edit: '' }
     resource :make_decision, only: [:edit, :update], path_names: { edit: '' }
   end
 

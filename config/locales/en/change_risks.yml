@@ -1,0 +1,13 @@
+---
+en:
+  change_risks:
+    edit:
+      page_title: Change the risk of the claim
+      heading: Change the risk of the claim
+      current_risk: 'Current risk: %{level} risk'
+      legend: What do you want to change the risk to?
+      text_area:
+        label: Explain your decision
+        hint: This information is for LAA only. It will not be shared with the provider.
+    update:
+      success: You changed the claim risk to %{level}

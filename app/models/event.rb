@@ -5,7 +5,7 @@ class Event < ApplicationRecord
   self.inheritance_column = :event_type
 
   PUBLIC_EVENTS = ['Event::Decision'].freeze
-  HISTORY_EVENTS = ['Event::NewVersion', 'Event::Decision'].freeze
+  HISTORY_EVENTS = ['Event::NewVersion', 'Event::Decision', 'Event::ChangeRisk'].freeze
   scope :history, -> { where(event_type: HISTORY_EVENTS) }
 
   # simplifies the rehydrate process

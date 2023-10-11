@@ -59,9 +59,13 @@
   <%= yield(:phase_banner) %>
   <%= yield(:primary_navigation) %>
   <%= yield(:back_link) %>
-  <%= render partial: 'shared/flash_banner' %>
 
   <main class="govuk-main-wrapper" id="main-content" role="main">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <%= render partial: 'shared/flash_banner' %>
+      </div>
+    </div>
     <%= yield(:content) %>
   </main>
 </div>

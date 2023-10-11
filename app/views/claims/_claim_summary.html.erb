@@ -12,7 +12,7 @@
       <p class="govuk-body-l govuk-!-margin-bottom-2"><%= claim_summary.total %></p>
       <p class="govuk-body-l">
         <%= t(".risk.#{claim.risk}") %>
-      <%= link_to t('.risk.change'), '#', class: 'govuk-!-font-size-19 govuk-!-margin-left-2' %>
+      <%= link_to t('.risk.change'), edit_claim_change_risk_path(claim), class: 'govuk-!-font-size-19 govuk-!-margin-left-2' %>
       </p>
     </div>
   </div>

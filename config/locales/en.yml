@@ -28,6 +28,8 @@ en:
       phase_description_html: This is a new service – your <a>feedback</a> will help us to improve it.
 
   shared:
+    save_changes: Save changes
+    cancel: Cancel
     claim_button_group:
       make_decision: Make a decision
       send_back: Send back to provider
