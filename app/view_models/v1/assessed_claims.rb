@@ -24,6 +24,19 @@ module V1
       '#Pending#'
     end
 
+    def get_colour(item)
+      case item
+      when 'grant'
+        'green'
+      when 'part_grant'
+        'blue'
+      when 'reject'
+        'red'
+      else
+        'grey'
+      end
+    end
+
     def table_fields
       [
         { laa_reference: laa_reference, claim_id: id },
@@ -31,7 +44,7 @@ module V1
         main_defendant_name,
         date_assessed,
         case_worker_name,
-        state
+        { colour: get_colour(state), text: state }
       ]
     end
   end
