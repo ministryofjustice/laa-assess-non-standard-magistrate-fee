@@ -6,7 +6,7 @@ class BaseViewModel
     version = claim.current_version_record
     klass = "V#{version.json_schema_version}::#{class_type.to_s.camelcase}".constantize
 
-    attributes = version.data
+    attributes = claim.attributes.merge(version.data)
     attributes = attributes.dig(*nesting) if nesting.any?
 
     klass.new(attributes.slice(*klass.attribute_names))

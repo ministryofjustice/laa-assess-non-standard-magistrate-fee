@@ -4,3 +4,16 @@ en:
     index:
       page_title: "Assessed claims"
       heading: "Assessed claims"
+      table_info_item: "claim"
+    assessed_claims_table:
+      table_heading: "Assessed Claims"
+      laa_reference: "LAA reference"
+      firm_name: "Firm name"
+      defendant_name: "Defendant"
+      date_assessed: "Date assessed"
+      caseworker_name: "Caseworker"
+      status: "Status"
+      status_list:
+        grant: "Granted"
+        part_grant: "Part granted"
+        reject: "Rejected"
