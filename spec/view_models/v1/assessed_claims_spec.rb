@@ -41,6 +41,15 @@ RSpec.describe V1::AssessedClaims, type: :view_model do
     end
   end
 
+  describe '#get_colour' do
+    it 'returns the correct color for the given item' do
+      expect(subject.get_colour('grant')).to eq('green')
+      expect(subject.get_colour('part_grant')).to eq('blue')
+      expect(subject.get_colour('reject')).to eq('red')
+      expect(subject.get_colour('invalid')).to eq('grey')
+    end
+  end
+
   describe '#table_fields' do
     it 'returns an array of table fields' do
       expected_fields = [
@@ -49,7 +58,7 @@ RSpec.describe V1::AssessedClaims, type: :view_model do
         'John Doe',
         { text: I18n.l(Time.zone.yesterday, format: '%-d %b %Y'), sort_value: Time.zone.yesterday.to_fs(:db) },
         '#Pending#',
-        'grant'
+        { colour: 'green', text: 'grant' }
       ]
       expect(all_claims.table_fields).to eq(expected_fields)
     end
