@@ -8,6 +8,29 @@ Rails.application.routes.draw do
 
   get :ping, to: 'healthcheck#ping'
 
+  devise_for(
+    :users,
+    controllers: {
+      omniauth_callbacks: 'users/omniauth_callbacks'
+    }
+  )
+
+  get "users/auth/failure", to: "errors#forbidden"
+
+  devise_scope :user do
+    unauthenticated :user do
+      root 'users/sessions#new', as: :unauthenticated_root
+
+      if FeatureFlags.dev_auth.enabled?
+        get 'dev_auth', to: 'users/dev_auth#new'
+      end
+    end
+
+    authenticated :user do
+      delete 'sign_out', to: 'users/sessions#destroy', as: :destroy_user_session
+    end
+  end
+
   resources :healthcheck, only: [] do
     collection do
       get :ping

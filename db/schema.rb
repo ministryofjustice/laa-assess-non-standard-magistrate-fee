@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_22_111558) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_26_095853) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "citext"
   enable_extension "plpgsql"
 
   create_table "claims", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -40,11 +41,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_22_111558) do
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "email", null: false
-    t.string "name"
+    t.string "first_name"
     t.string "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.citext "email"
+    t.string "last_name"
+    t.string "auth_oid"
+    t.string "auth_subject_id"
+    t.datetime "last_auth_at"
+    t.datetime "first_auth_at"
+    t.datetime "deactivated_at"
+    t.datetime "invitation_expires_at"
+    t.index ["auth_subject_id"], name: "index_users_on_auth_subject_id"
     t.index ["email"], name: "index_users_on_email"
   end
 

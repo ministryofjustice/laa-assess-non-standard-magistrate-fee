@@ -1,0 +1,48 @@
+---
+en:
+  errors:
+    format: "%{message}"
+    page_title_prefix: "Error: "
+    attributes:
+      details:
+        blank: Give further details
+      reason:
+        inclusion: Choose a reason
+      email:
+        blank: Please enter an email
+        invalid: Invalid email format
+        taken: User already exists
+
+    error_summary:
+      heading: There is a problem on this page
+      attributes:
+        email:
+          blank: Please enter an email
+    application_not_found:
+      page_title: Page not found
+      heading: Page not found
+      body_1: If you typed the web address, check it is correct.
+      body_2: If you pasted the web address, check you copied the entire address.
+      body_3: If you're looking for a specific application, %{url}.
+      link_text: go to all open applications
+    not_found:
+      page_title: Page not found
+      heading: Page not found
+      body_1: If you typed the web address, check it is correct.
+      body_2: If you pasted the web address, check you copied the entire address.
+      body_3: If the web address is correct or you selected a link or button, contact %{url} for help.
+    internal_server_error:
+      page_title: Unexpected error
+      heading: Sorry, something went wrong with our service
+    forbidden:
+      page_title: Not authorised
+      heading: Access to this service is restricted
+    datastore_error:
+      page_title: Unexpected error
+      heading: Sorry, something went wrong with our service
+      body_1: We cannot connect to our database. This means you cannot view, search, or review applications.
+    unprocessable_entity:
+      page_title: Request error
+      heading: Sorry, there is a problem with your request
+      body_1: You can go back, refresh the page, and try again.
+      body_2: If this problem continues, contact %{url} for help.

@@ -41,7 +41,7 @@ RSpec.describe PullLatestVersionData do
 
     context 'when event data exists' do
       let(:claim) { create(:claim, current_version:) }
-      let(:user) { create(:user) }
+      let(:user) { create(:supervisor) }
       let(:events_data) do
         [{
           'claim_version' => 1,
