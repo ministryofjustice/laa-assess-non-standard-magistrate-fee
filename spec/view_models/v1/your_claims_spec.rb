@@ -41,12 +41,37 @@ RSpec.describe V1::YourClaims, type: :view_model do
     end
   end
 
-  describe '#get_risk' do
-    it 'returns the risk with sorted value' do
-      expect(subject.get_risk('high')).to eq({ text: 'high', sort_value: 1 })
-      expect(subject.get_risk('medium')).to eq({ text: 'medium', sort_value: 2 })
-      expect(subject.get_risk('low')).to eq({ text: 'low', sort_value: 3 })
-      expect(subject.get_risk('invalid')).to be_nil
+  describe '#risk_with_sort_value' do
+    context 'when risk is high' do
+      it 'returns a hash with text "high" and sort value 1' do
+        subject.risk = 'high'
+        result = subject.risk_with_sort_value
+        expect(result).to eq({ text: 'high', sort_value: 1 })
+      end
+    end
+
+    context 'when risk is medium' do
+      it 'returns a hash with text "medium" and sort value 2' do
+        subject.risk = 'medium'
+        result = subject.risk_with_sort_value
+        expect(result).to eq({ text: 'medium', sort_value: 2 })
+      end
+    end
+
+    context 'when risk is low' do
+      it 'returns a hash with text "low" and sort value 3' do
+        subject.risk = 'low'
+        result = subject.risk_with_sort_value
+        expect(result).to eq({ text: 'low', sort_value: 3 })
+      end
+    end
+
+    context 'when risk is invalid' do
+      it 'returns nil' do
+        subject.risk = nil
+        result = subject.risk_with_sort_value
+        expect(result).to be_nil
+      end
     end
   end
 

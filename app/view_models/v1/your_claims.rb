@@ -24,14 +24,14 @@ module V1
       '#Pending#'
     end
 
-    def get_risk(item)
-      case item
+    def risk_with_sort_value
+      case risk
       when 'high'
-        { text: item, sort_value: 1 }
+        { text: risk, sort_value: 1 }
       when 'medium'
-        {  text: item, sort_value: 2 }
+        {  text: risk, sort_value: 2 }
       when 'low'
-        { text: item, sort_value: 3 }
+        { text: risk, sort_value: 3 }
       end
     end
 
@@ -42,7 +42,7 @@ module V1
         main_defendant_name,
         date_created,
         case_worker_name,
-        get_risk(risk)
+        risk_with_sort_value
       ]
     end
   end
