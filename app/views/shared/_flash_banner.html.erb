@@ -1,7 +1,10 @@
 <% flash.each do |type, msg| %>
-  <%= govuk_notification_banner(title_text: t(:title, scope: "flash.#{type}"), success: type == 'success') do |banner| %>
-    <% Array(msg).each do |detail| %>
-      <p><%= sanitize(detail, tags: %w[a]) %></p>
+  <%# Filter out timedout type from devise as this returns true in the msg array %>
+  <% unless type == 'timedout' %>
+    <%= govuk_notification_banner(title_text: t(:title, scope: "flash.#{type}"), success: type == 'success') do |banner| %>
+      <% Array(msg).each do |detail| %>
+          <p><%= sanitize(detail, tags: %w[a]) %></p>
+      <% end %>
     <% end %>
   <% end %>
 <% end %>
