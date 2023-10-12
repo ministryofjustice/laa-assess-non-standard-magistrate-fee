@@ -11,4 +11,5 @@ class Claim < ApplicationRecord
   scope :decision_made, -> { where.not(state: 'submitted') }
   # TODO: - will add the filtering to current user once we have user assignment setup
   scope :your_claims, -> { where(state: 'submitted') }
+  scope :unassigned_claims, -> { where(current_version: 1) }
 end

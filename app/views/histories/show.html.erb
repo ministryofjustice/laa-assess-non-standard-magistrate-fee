@@ -12,7 +12,7 @@
     <%= render partial: 'claims/claim_summary', locals: { claim:, claim_summary: } %>
     <%= render partial: 'claims/claim_nav', locals: { claim: claim, current_page: 'history' } %>
 
-    <h2>
+    <h2 class="govuk-heading-m">
       <%= t('.history') %>
     </h2>
 
@@ -30,16 +30,15 @@
             body.with_row do |row|
               row.with_cell(text: l(event.created_at, format: '%B<br>%d %b %Y<br>%I:%m%P').html_safe)
               row.with_cell(text: event.primary_user&.name || '')
-              row.with_cell do %>
+              row.with_cell do
+    %>
                 <p class="govuk-!-font-weight-bold"><%= event.title %></p>
                 <%= event.body %>
               <% end
             end
           end
         end
-      end
-    %>
+      end %>
 
   </div>
 </div>
-

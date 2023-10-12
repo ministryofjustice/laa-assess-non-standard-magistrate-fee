@@ -13,8 +13,7 @@
     <h2 class="govuk-heading-m">
       <%= t('.heading') %>
     </h2>
-    <%= render 'shared/pagination_info', { pagy: @pagy, item: t('.heading') } %>
     <%= render 'supporting_evidence_table', { supporting_evidence: @supporting_evidence } %>
-    <%= render "shared/pagination", pagy: @pagy %>
+    <%= render "shared/pagination", { pagy: @pagy, item: t('.heading') } %>
   </div>
 </div>

@@ -3,8 +3,11 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-quarters">
     <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
-    <%= render 'shared/pagination_info', { pagy: @pagy, item: t('.table_info_item') } %>
-    <%= render 'your_claims_table', { claims: @claims} %>
-    <%= render "shared/pagination", pagy: @pagy %>
+    <div class="govuk-button-group">
+      <%= govuk_button_link_to(t('.next_claim'),claim_claim_details_path(@next_claim)) %>
+      <%= govuk_link_to(t('.all_claims'), claims_path, { no_visited_state: true }) %>
+    </div>
+    <%= render 'your_claims_table', { claims: @claims } %>
+    <%= render "shared/pagination", { pagy: @pagy, item: t('.table_info_item')} %>
   </div>
 </div>
