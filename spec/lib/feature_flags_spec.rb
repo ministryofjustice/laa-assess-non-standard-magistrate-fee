@@ -10,11 +10,11 @@ describe FeatureFlags do
       {
         enabled_foobar_feature: {
           local: true,
-          staging: true,
+          uat: true,
         },
         disabled_foobar_feature: {
           local: false,
-          staging: false,
+          uat: false,
         }
       }.with_indifferent_access
     )
@@ -47,9 +47,9 @@ describe FeatureFlags do
       end
     end
 
-    context 'when production environment on staging server' do
+    context 'when production environment on uat server' do
       before do
-        allow(HostEnv).to receive(:env_name).and_return(HostEnv::STAGING)
+        allow(HostEnv).to receive(:env_name).and_return(HostEnv::UAT)
       end
 
       it 'is enabled' do

@@ -2,7 +2,8 @@ module HostEnv
   # Update if more environments are needed
   NAMED_ENVIRONMENTS = [
     LOCAL = 'local'.freeze,
-    STAGING = 'staging'.freeze,
+    DEVELOPMENT = 'development'.freeze,
+    UAT = 'uat'.freeze,
     PRODUCTION = 'production'.freeze,
   ].freeze
 

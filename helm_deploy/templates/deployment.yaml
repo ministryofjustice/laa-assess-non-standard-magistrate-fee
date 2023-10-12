@@ -100,6 +100,8 @@ spec:
               value: enabled
             - name: DEV_AUTH_ENABLED
               value: 'true'
+            - name: ENV_NAME
+              value: development
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

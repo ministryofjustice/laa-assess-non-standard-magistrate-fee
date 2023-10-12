@@ -6,9 +6,9 @@ describe HostEnv do
       allow(Rails.env).to receive(:development?).and_return(true)
     end
 
-    describe 'HostEnv.staging?' do
+    describe 'HostEnv.uat?' do
       it 'returns false' do
-        expect(described_class.staging?).to be false
+        expect(described_class.uat?).to be false
       end
     end
 
@@ -26,9 +26,9 @@ describe HostEnv do
   end
 
   context 'when local test rails environment' do
-    describe 'HostEnv.staging?' do
+    describe 'HostEnv.uat?' do
       it 'returns false' do
-        expect(described_class.staging?).to be false
+        expect(described_class.uat?).to be false
       end
     end
 
@@ -51,11 +51,11 @@ describe HostEnv do
       allow(ENV).to receive(:fetch).with('ENV_NAME').and_return(env_name)
     end
 
-    context 'when staging host' do
-      let(:env_name) { HostEnv::STAGING }
+    context 'when uat host' do
+      let(:env_name) { HostEnv::UAT }
 
       it { expect(described_class.local?).to be(false) }
-      it { expect(described_class.staging?).to be(true) }
+      it { expect(described_class.uat?).to be(true) }
       it { expect(described_class.production?).to be(false) }
     end
 
@@ -63,7 +63,7 @@ describe HostEnv do
       let(:env_name) { HostEnv::PRODUCTION }
 
       it { expect(described_class.local?).to be(false) }
-      it { expect(described_class.staging?).to be(false) }
+      it { expect(described_class.uat?).to be(false) }
       it { expect(described_class.production?).to be(true) }
     end
 
@@ -71,7 +71,7 @@ describe HostEnv do
       let(:env_name) { 'foobar' }
 
       it { expect(described_class.local?).to be(false) }
-      it { expect(described_class.staging?).to be(false) }
+      it { expect(described_class.uat?).to be(false) }
       it { expect(described_class.production?).to be(false) }
     end
   end
