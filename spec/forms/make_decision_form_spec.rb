@@ -75,6 +75,8 @@ RSpec.describe MakeDecisionForm do
       allow(NotifyAppStore).to receive(:process)
     end
 
+    it { expect(subject.save).to be_truthy }
+
     it 'updates the claim' do
       subject.save
       expect(claim.reload).to have_attributes(state: 'part_grant')
@@ -89,10 +91,8 @@ RSpec.describe MakeDecisionForm do
 
     it 'trigger an update to the app store' do
       subject.save
-      expect(NotifyAppStore).to have_received(:process).with(claim)
+      expect(NotifyAppStore).to have_received(:process).with(claim:)
     end
-
-    it { expect(subject.save).to be_truthy }
 
     context 'when not valid' do
       let(:params) { {} }

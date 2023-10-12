@@ -10,11 +10,13 @@ RSpec.describe PullLatestVersionData do
   let(:http_response) do
     {
       'version' => 2,
-    'json_schema_version' => 1,
-    'application_state' => 'submitted',
-    'application' => { 'same' => 'data' }
+      'json_schema_version' => 1,
+      'application_state' => 'submitted',
+      'application' => { 'same' => 'data' },
+      'events' => events_data
     }
   end
+  let(:events_data) { nil }
 
   before do
     allow(Event::NewVersion).to receive(:build).and_return(true)
@@ -35,6 +37,40 @@ RSpec.describe PullLatestVersionData do
       subject.perform(claim)
 
       expect(http_puller).to have_received(:get).with(claim)
+    end
+
+    context 'when event data exists' do
+      let(:claim) { create(:claim, current_version:) }
+      let(:user) { create(:user) }
+      let(:events_data) do
+        [{
+          'claim_version' => 1,
+          'primary_user_id' => user.id,
+          'secondary_user_id' => nil,
+          'linked_type' => nil,
+          'linked_id' => nil,
+          'details' => { 'to' => 'grant', 'from' => 'submitted', 'field' => 'state', 'comment' => nil },
+          'created_at' => '2023-10-02T14:41:45.136Z',
+          'updated_at' => '2023-10-02T14:41:45.136Z',
+          'public' => true
+        }]
+      end
+
+      it 'rehydrates the events' do
+        subject.perform(claim)
+        expect(Event.count).to eq(1)
+        expect(Event.last).to have_attributes(
+          claim_id: claim.id,
+          claim_version: 1,
+          primary_user_id: user.id,
+          secondary_user_id: nil,
+          linked_type: nil,
+          linked_id: nil,
+          details: { 'to' => 'grant', 'from' => 'submitted', 'field' => 'state', 'comment' => nil },
+          created_at: Time.parse('2023-10-02T14:41:45.136Z'),
+          updated_at: Time.parse('2023-10-02T14:41:45.136Z'),
+        )
+      end
     end
 
     context 'when pulled version matches current' do

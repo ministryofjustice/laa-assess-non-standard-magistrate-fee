@@ -2,11 +2,19 @@ require 'rails_helper'
 
 RSpec.describe BaseViewModel do
   let(:implementation_class) { V1::ClaimSummary }
-  let(:claim) { instance_double(Claim, current_version_record: version) }
+  let(:claim) { instance_double(Claim, current_version_record: version, attributes: { state: }) }
   let(:version) { instance_double(Version, json_schema_version: 1, data: data) }
+  let(:state) { 'grant' }
 
   describe '#build' do
-    let(:data) { { 'laa_reference' => 'LA111', 'defendants' => [{ 'some' => 'data' }] } }
+    let(:data) { { 'laa_reference' => 'LA111', 'defendants' => [{ 'some' => 'data' }], 'state' => 'grant' } }
+
+    it 'returns an instance with the correct attributes' do
+      result = implementation_class.build(:assessed_claims, claim)
+      expect(result).to have_attributes(
+        state: 'grant',
+      )
+    end
 
     it 'builds the object from the hash of attributes' do
       summary = implementation_class.build(:claim_summary, claim)

@@ -28,6 +28,12 @@ RSpec.describe ReceiveApplicationMetadata do
 
       expect(PullLatestVersionData).to have_received(:perform_later).with(Claim.last)
     end
+
+    context 'but state is not valid' do
+      it 'does not create a new claim' do
+        expect { subject.save(params, 'grant') }.not_to change(Claim, :count)
+      end
+    end
   end
 
   context 'when claim already exits and version is unchanged' do
@@ -39,7 +45,7 @@ RSpec.describe ReceiveApplicationMetadata do
     it 'does not create a new claim' do
       expect { subject.save(params, 're-submitted') }.not_to change(Claim, :count)
       expect(Claim.last).to have_attributes(
-        risk: 'high',
+        risk: 'low',
         current_version: 1,
         received_on: Date.yesterday,
         state: 'submitted',
@@ -60,8 +66,8 @@ RSpec.describe ReceiveApplicationMetadata do
 
     before { claim }
 
-    it 'does not create a new claim' do
-      expect { subject.save(params, 're-submitted') }.not_to change(Claim, :count)
+    it 'updates the existing claim' do
+      expect { subject.save(params, 'submitted') }.not_to change(Claim, :count)
       expect(Claim.last).to have_attributes(
         risk: 'high',
         current_version: 2,
@@ -74,6 +80,12 @@ RSpec.describe ReceiveApplicationMetadata do
       subject.save(params, 'submitted')
 
       expect(PullLatestVersionData).to have_received(:perform_later).with(claim)
+    end
+
+    context 'but state is not valid' do
+      it 'does not update the existing claim' do
+        expect { subject.save(params, 'grant') }.not_to(change { claim.reload.attributes })
+      end
     end
   end
 
