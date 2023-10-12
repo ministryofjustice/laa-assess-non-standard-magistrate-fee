@@ -288,6 +288,11 @@ GEM
     sass-embedded (1.66.1)
       google-protobuf (~> 3.23)
       rake (>= 13.0.0)
+    sentry-rails (5.10.0)
+      railties (>= 5.0)
+      sentry-ruby (~> 5.10.0)
+    sentry-ruby (5.10.0)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -359,6 +364,7 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   rubocop-rspec
+  sentry-rails
   simplecov
   simplecov-lcov
   simplecov-rcov

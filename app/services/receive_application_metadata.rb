@@ -1,4 +1,5 @@
 class ReceiveApplicationMetadata
+  ASSESSIBLE_STATES = %w[submitted].freeze
   attr_reader :claim
 
   delegate :errors, to: :claim
@@ -12,7 +13,9 @@ class ReceiveApplicationMetadata
     # set default if this is a new record
     claim.received_on ||= Time.zone.today
     # TODO: think if state should be allow to be updated in the future
-    claim.state ||= state
+    return unless ASSESSIBLE_STATES.include?(state)
+
+    claim.state = state
 
     if claim.save
       if claim.saved_change_to_current_version?
