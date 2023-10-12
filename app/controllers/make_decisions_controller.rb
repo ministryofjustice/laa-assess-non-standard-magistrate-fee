@@ -10,7 +10,13 @@ class MakeDecisionsController < ApplicationController
     claim = Claim.find(params[:claim_id])
     decision = MakeDecisionForm.new(decision_params)
     if decision.save
-      redirect_to claims_path, flash: { success: 'claim success text' }
+      reference = BaseViewModel.build(:laa_reference, claim)
+      success_notice = t(
+        ".decision.#{decision.state}",
+        ref: reference.laa_reference,
+        url: claim_claim_details_path(claim.id)
+      )
+      redirect_to assessed_claims_path, flash: { success: success_notice }
     else
       render :edit, locals: { claim:, decision: }
     end
