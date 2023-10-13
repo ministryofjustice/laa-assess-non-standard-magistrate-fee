@@ -11,7 +11,7 @@ RSpec.describe V1::ClaimJustification do
     it 'has correct structure' do
       subject = described_class.new(
         'reasons_for_claim' => {
-          'value' => ['enhanced_rates_claimed', 'councel_or_agent_assigned'],
+          'value' => %w[enhanced_rates_claimed councel_or_agent_assigned],
           'en' => ['Enhanced rates claimed', 'Counsel or agent assigned']
         },
       )
@@ -24,7 +24,7 @@ RSpec.describe V1::ClaimJustification do
   describe '#data' do
     subject = described_class.new(
       'reasons_for_claim' => {
-        'value' => ['enhanced_rates_claimed', 'councel_or_agent_assigned'],
+        'value' => %w[enhanced_rates_claimed councel_or_agent_assigned],
         'en' => ['Enhanced rates claimed', 'Counsel or agent assigned']
       }
     )
