@@ -33,9 +33,9 @@ en:
         make_decision_form:
           attributes:
             state:
-              blank: Please select a decision
-              inclusion: Please select a decision
+              blank: Select what you want to do with this claim
+              inclusion: Select what you want to do with this claim
             partial_comment:
-              blank: Reason must be given to part grant
+              blank: Add an explanation for your decision
             reject_comment:
-              blank: Reason must be given to reject
+              blank: Add an explanation for your decision
