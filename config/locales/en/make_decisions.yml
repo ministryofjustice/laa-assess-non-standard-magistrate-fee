@@ -5,7 +5,11 @@ en:
       page_title: Make a decision
       heading: Make a decision
       submit: Submit decision
-
+    update:
+      decision:
+        grant: You granted this claim <a class="govuk-link" href="%{url}">%{ref}</a>
+        part_grant: You part granted this claim <a class="govuk-link" href="%{url}">%{ref}</a>
+        reject: You rejected this claim <a class="govuk-link" href="%{url}">%{ref}</a>
   helpers:
     legend:
       make_decision_form:
