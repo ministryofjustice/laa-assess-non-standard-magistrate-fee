@@ -11,3 +11,17 @@ en:
         hint: This information is for LAA only. It will not be shared with the provider.
     update:
       success: You changed the claim risk to %{level}
+
+  activemodel:
+    errors:
+      models:
+        change_risk_form:
+          attributes:
+            risk_level:
+              blank: Select what you want to change the risk to
+              inclusion: Select what you want to change the risk to
+              unchanged: You have not changed the risk, select the risk you want to change to
+            explanation:
+              blank: Explain why you are changing the risk
+
+

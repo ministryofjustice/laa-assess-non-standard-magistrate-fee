@@ -22,10 +22,67 @@ RSpec.describe ChangeRiskForm, type: :model do
     end
   end
 
+  describe '#validations' do
+    subject { described_class.new(id:, risk_level:, explanation:) }
+
+    let(:id) { claim.id }
+    let(:risk_level) { 'high' }
+    let(:explanation) { 'changed to high' }
+
+    context 'risk_level' do
+      %w[high medium].each do |valid_risk|
+        context "when risk is #{valid_risk}" do
+          let(:risk_level) { valid_risk }
+
+          it { expect(subject).to be_valid }
+        end
+      end
+
+      context 'when risk level is unchanged' do
+        let(:risk_level) { 'low' }
+
+        it 'is invalid' do
+          expect(subject).not_to be_valid
+          expect(subject.errors.of_kind?(:risk_level, :unchanged)).to be(true)
+        end
+      end
+
+      context 'when risk level is something else' do
+        let(:risk_level) { 'other' }
+
+        it 'is invalid' do
+          expect(subject).not_to be_valid
+          expect(subject.errors.of_kind?(:risk_level, :inclusion)).to be(true)
+        end
+      end
+    end
+
+    describe 'explanation' do
+      context 'when it is blank' do
+        let(:explanation) { '' }
+
+        it 'is invalid' do
+          expect(subject).not_to be_valid
+          expect(subject.errors.of_kind?(:explanation, :blank)).to be(true)
+        end
+
+        context 'but the risk level has not changed' do
+          let(:risk_level) { 'low' }
+
+          it 'is does not raise an error' do
+            expect(subject).not_to be_valid
+            expect(subject.errors.of_kind?(:explanation, :blank)).to be(false)
+          end
+        end
+      end
+    end
+  end
+
   describe '#save' do
     subject { described_class.new(params) }
 
-    let(:params) { { id: claim.id, risk_level: 'low', explanation: 'Test', current_user: user } }
+    let(:params) { { id: claim.id, risk_level: risk_level, explanation: 'Test', current_user: user } }
+    let(:risk_level) { 'high' }
 
     before do
       allow(Event::ChangeRisk).to receive(:build)
@@ -33,7 +90,7 @@ RSpec.describe ChangeRiskForm, type: :model do
 
     it 'updates the claim' do
       subject.save
-      expect(claim.reload).to have_attributes(risk: 'low')
+      expect(claim.reload).to have_attributes(risk: 'high')
     end
 
     context 'when not valid' do

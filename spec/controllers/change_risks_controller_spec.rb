@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ChangeRisksController, type: :controller do
   context 'edit' do
-    let(:claim) { instance_double(Claim, id: claim_id) }
+    let(:claim) { instance_double(Claim, id: claim_id, risk: 'high') }
     let(:claim_id) { SecureRandom.uuid }
     let(:risk) { instance_double(ChangeRiskForm) }
 
