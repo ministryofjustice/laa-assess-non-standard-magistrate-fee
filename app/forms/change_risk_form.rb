@@ -29,7 +29,7 @@ class ChangeRiskForm
     end
 
     true
-  rescue StandardError => e
+  rescue StandardError
     false
   end
 

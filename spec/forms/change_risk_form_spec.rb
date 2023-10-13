@@ -24,6 +24,7 @@ RSpec.describe ChangeRiskForm, type: :model do
 
   describe '#validations' do
     subject { described_class.new(id:, risk_level:, explanation:) }
+
     let(:id) { claim.id }
     let(:risk_level) { 'high' }
     let(:explanation) { 'changed to high' }
