@@ -41,7 +41,7 @@ en:
     case_details:
       title: Case details
       main_offence: Main offence name
-      main_offence_date: Main offence date
+      main_offence_date: Offence date
       assigned_counsel: Assigned counsel
       unassigned_counsel: Unassigned counsel
       agent_instructed: Instructed agent

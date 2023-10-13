@@ -26,8 +26,8 @@ module ClaimDetails
         claim_justification.rows,
         claim_details.rows,
         hearing_details.rows,
+        other_info.rows,
         contact_details.rows,
-        other_info.rows
       ]
     end
   end
