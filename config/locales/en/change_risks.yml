@@ -20,7 +20,7 @@ en:
             risk_level:
               blank: Select what you want to change the risk to
               inclusion: Select what you want to change the risk to
-              unchanged: You haven't changed the risk
+              unchanged: You have not changed the risk, select the risk you want to change to
             explanation:
               blank: Explain why you are changing the risk
 
