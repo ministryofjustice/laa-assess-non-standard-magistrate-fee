@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe V1::AssessedClaims, type: :view_model do
-  subject(:all_claims) do
+  subject(:assessed_claims) do
     described_class.new(laa_reference:, defendants:, firm_office:, updated_at:, id:, state:)
   end
 
@@ -31,13 +31,13 @@ RSpec.describe V1::AssessedClaims, type: :view_model do
 
   describe '#firm_name' do
     it 'returns the name of the firm office' do
-      expect(all_claims.firm_name).to eq('Acme Law Firm')
+      expect(assessed_claims.firm_name).to eq('Acme Law Firm')
     end
   end
 
   describe '#case_worker_name' do
     it 'returns the pending status' do
-      expect(all_claims.case_worker_name).to eq('#Pending#')
+      expect(assessed_claims.case_worker_name).to eq('#Pending#')
     end
   end
 
@@ -60,7 +60,7 @@ RSpec.describe V1::AssessedClaims, type: :view_model do
         '#Pending#',
         { colour: 'green', sort_value: 1, text: 'grant' }
       ]
-      expect(all_claims.table_fields).to eq(expected_fields)
+      expect(assessed_claims.table_fields).to eq(expected_fields)
     end
   end
 end

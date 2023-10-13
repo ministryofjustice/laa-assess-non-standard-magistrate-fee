@@ -4,3 +4,19 @@ en:
     index:
       page_title: "Your claims"
       heading: "Your claims"
+      table_info_item: "claim"
+      next_claim: "Assess next claim"
+      all_claims: "Check all claims"
+    your_claims_table:
+      table_heading: "Your claims"
+      laa_reference: "LAA reference"
+      firm_name: "Firm name"
+      defendant_name: "Defendant"
+      date_assessed: "Date assessed"
+      caseworker_name: "Caseworker"
+      status: "Status"
+      risk:
+        heading: "Risk"
+        low: "Low"
+        medium: "Medium"
+        high: "High"
