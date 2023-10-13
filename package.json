@@ -12,7 +12,7 @@
     "unit-test": "jest"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.22.20",
+    "@babel/preset-env": "^7.23.2",
     "jest-environment-jsdom": "^29.7.0"
   }
 }
