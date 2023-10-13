@@ -1,7 +1,7 @@
 class ChangeRisksController < ApplicationController
   def edit
     claim = Claim.find(params[:claim_id])
-    risk = ChangeRiskForm.new(id: params[:claim_id])
+    risk = ChangeRiskForm.new(id: params[:claim_id], risk_level: claim.risk)
     render locals: { claim:, risk: }
   end
 

@@ -3,6 +3,11 @@ class ChangeRiskForm
   include ActiveModel::Attributes
   include ActiveRecord::AttributeAssignment
   RiskLevels = Struct.new(:id, :level)
+  AVAILABLE_RISKS = [
+    RiskLevels.new('low', 'Low risk'),
+    RiskLevels.new('medium', 'Medium risk'),
+    RiskLevels.new('high', 'High risk'),
+  ].freeze
 
   attribute :id
   attribute :risk_level
@@ -10,8 +15,9 @@ class ChangeRiskForm
   attribute :current_user
 
   validates :claim, presence: true
-  validates :risk_level, presence: true
-  validates :explanation, presence: true
+  validates :risk_level, presence: true, inclusion: { in: AVAILABLE_RISKS.map(&:id) }
+  validate :risk_level_changed
+  validates :explanation, presence: true, if: :risk_changed?
 
   def save
     return false unless valid?
@@ -23,7 +29,7 @@ class ChangeRiskForm
     end
 
     true
-  rescue StandardError
+  rescue StandardError => e
     false
   end
 
@@ -32,9 +38,18 @@ class ChangeRiskForm
   end
 
   def available_risks
-    low_risk = RiskLevels.new('low', 'Low risk')
-    medium_risk = RiskLevels.new('medium', 'Medium risk')
-    high_risk = RiskLevels.new('high', 'High risk')
-    [low_risk, medium_risk, high_risk]
+    self.class::AVAILABLE_RISKS
+  end
+
+  private
+
+  def risk_level_changed
+    return if risk_changed?
+
+    errors.add(:risk_level, :unchanged)
+  end
+
+  def risk_changed?
+    claim&.risk != risk_level
   end
 end
