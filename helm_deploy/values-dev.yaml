@@ -23,7 +23,7 @@ ingress:
   enabled: true
   namespace: laa-assess-non-standard-magistrate-fee-dev
   className: modsec
-  annotations: 
+  annotations:
       nginx.ingress.kubernetes.io/enable-modsecurity: "true"
       nginx.ingress.kubernetes.io/modsecurity-snippet: |
         SecRuleEngine On
@@ -62,3 +62,6 @@ autoscaling:
 
 secrets:
   environment: development
+
+service_account:
+  name: laa-assess-non-standard-magistrate-fee-dev-irsa

@@ -20,6 +20,7 @@ spec:
       labels:
         {{- include "helm_deploy.selectorLabels" . | nindent 8 }}
     spec:
+      serviceAccountName: {{ .Values.service_account.name }}
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
