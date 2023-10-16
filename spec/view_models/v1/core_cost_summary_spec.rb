@@ -33,7 +33,7 @@ RSpec.describe V1::CoreCostSummary do
         end
 
         it 'does not include them' do
-          expect(subject.table_fields).to eq([["Advocacy", "£100.00", "20min"]])
+          expect(subject.table_fields).to eq([['Advocacy', '£100.00', '20min']])
         end
       end
 

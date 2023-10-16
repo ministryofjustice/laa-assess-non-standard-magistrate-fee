@@ -50,7 +50,7 @@ RSpec.describe V1::TravelAndWaiting do
 
     context 'when waiting and travel work items do not exist' do
       let(:work_items) do
-         [{ 'work_type' => { 'en' => 'preparation', 'value' => 'preparation' }, 'time_spent' => 30 }]
+        [{ 'work_type' => { 'en' => 'preparation', 'value' => 'preparation' }, 'time_spent' => 30 }]
       end
 
       it 'nothing is returned' do

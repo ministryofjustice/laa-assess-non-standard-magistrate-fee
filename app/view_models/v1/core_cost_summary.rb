@@ -37,12 +37,10 @@ module V1
                   next if SKIPPED_TYPES.include?(work_type.value)
 
                   # TODO: convert this to a time period to enable easy formating of output
-                  total_time_spent = work_items_for_type.sum(&:time_spent)
-                  total_cost = work_items_for_type.sum { |work_item| CostCalculator.cost(:work_item, work_item) }
                   [
                     translated_work_type,
-                    total_cost,
-                    total_time_spent,
+                    work_items_for_type.sum { |work_item| CostCalculator.cost(:work_item, work_item) },
+                    work_items_for_type.sum(&:time_spent),
                   ]
                 end
     end
