@@ -3,6 +3,15 @@
     <%= t('.work_items') %>
   </h3>
 
+  <% if travel_and_waiting.any? %>
+    <%= govuk_details(summary_text: t('.check_totals')) do %>
+      <%=
+        head = [t('.items'), t('.total_cost'), t('.total_time')]
+        rows = travel_and_waiting.table_fields
+        govuk_table(first_cell_is_header: true, head:, rows:)
+      %>
+    <% end %>
+  <% end %>
 
   <%= button_to(t(".remove_uplift_all"), '#', class: "govuk-button govuk-button--secondary", data_module: "govuk-button") %>
 

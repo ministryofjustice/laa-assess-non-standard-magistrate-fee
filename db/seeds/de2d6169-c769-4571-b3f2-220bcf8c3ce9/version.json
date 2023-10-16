@@ -97,11 +97,17 @@
               "pricing": 1.0,
               "vat_rate": 0.2,
               "apply_vat": null,
-              "other_type": "Apples",
+              "other_type": {
+                "en": "Apples",
+                "value": "Apples"
+              },
               "vat_amount": "0.0",
               "prior_authority": "yes",
               "disbursement_date": "2022-12-12",
-              "disbursement_type": "other",
+              "disbursement_type": {
+                "en": "Other",
+                "value": "other"
+              },
                "total_cost_without_vat": "100.0"
           }
       ],
