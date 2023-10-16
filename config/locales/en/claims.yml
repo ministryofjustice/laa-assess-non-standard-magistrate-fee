@@ -48,6 +48,7 @@ en:
       allowed: Caseworker allowed
       action: Action
       change: Change
+      travel_and_waiting: Travel and waiting
   disbursements:
     index:
       disbursements: Disbursements

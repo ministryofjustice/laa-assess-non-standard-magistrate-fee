@@ -14,6 +14,12 @@ module V1
       end
     end
 
+    def total_cost
+      NumberTo.pounds(
+        work_item_data.sum { |_, total_cost, _| total_cost }
+      )
+    end
+
     delegate :any?, to: :work_item_data
 
     private

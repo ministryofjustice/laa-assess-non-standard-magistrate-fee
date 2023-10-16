@@ -3,6 +3,13 @@
     <%= t('.work_items') %>
   </h3>
 
+  <div class="govuk-body-m">
+    <%= t('.travel_and_waiting') %>
+    <div class="govuk-heading-l">
+      <%= travel_and_waiting.total_cost %>
+    </div>
+  </div>
+
   <% if travel_and_waiting.any? %>
     <%= govuk_details(summary_text: t('.check_totals')) do %>
       <%=
