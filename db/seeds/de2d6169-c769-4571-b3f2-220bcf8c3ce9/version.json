@@ -143,10 +143,16 @@
       ],
       "main_offence_date": "2022-12-12",
       "number_of_hearing": 2,
-      "reasons_for_claim": [
+      "reasons_for_claim": {
+        "en": [
+            "Enhanced rates claimed",
+            "Councel or agent assigned"
+        ],
+        "value": [
           "enhanced_rates_claimed",
           "councel_or_agent_assigned"
-      ],
+        ]
+      },
       "cracked_trial_date": "2012-11-11",
       "first_hearing_date": "2022-12-12",
       "supplemental_claim": "no",

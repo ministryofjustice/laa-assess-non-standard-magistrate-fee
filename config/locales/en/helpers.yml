@@ -1,7 +1,6 @@
 ---
 en:
   helpers:
-    back_link: Back
     time_period:
       hours:
         one: '%{count} Hr '

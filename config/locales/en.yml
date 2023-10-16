@@ -33,6 +33,7 @@ en:
     claim_button_group:
       make_decision: Make a decision
       send_back: Send back to provider
+      save_and_come_back: Save and comeback later
 
   calls_to_action:
     sign_in: Sign in

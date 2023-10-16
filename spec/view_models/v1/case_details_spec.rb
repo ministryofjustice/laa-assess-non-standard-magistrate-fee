@@ -43,7 +43,7 @@ RSpec.describe V1::CaseDetails do
       it 'shows correct table data' do
         expect(subject.data).to eq([
                                      { title: 'Main offence name', value: 'Stole an apple' },
-                                     { title: 'Main offence date', value: '01 January 2023' },
+                                     { title: 'Offence date', value: '01 January 2023' },
                                      { title: 'Assigned counsel', value: 'Yes' },
                                      { title: 'Unassigned counsel', value: 'No' },
                                      { title: 'Instructed agent', value: 'Yes' },
@@ -69,7 +69,7 @@ RSpec.describe V1::CaseDetails do
       it 'shows correct table data' do
         expect(subject.data).to eq([
                                      { title: 'Main offence name', value: 'Stole an apple' },
-                                     { title: 'Main offence date', value: '01 January 2023' },
+                                     { title: 'Offence date', value: '01 January 2023' },
                                      { title: 'Assigned counsel', value: 'Yes' },
                                      { title: 'Unassigned counsel', value: 'No' },
                                      { title: 'Instructed agent', value: 'Yes' },
