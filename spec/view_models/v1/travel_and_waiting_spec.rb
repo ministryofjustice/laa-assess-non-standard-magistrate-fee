@@ -35,6 +35,10 @@ RSpec.describe V1::TravelAndWaiting do
       end
 
       it { expect(subject).to be_any }
+
+      it 'calculates the total_cost' do
+        expect(subject.total_cost).to eq('£100.00')
+      end
     end
 
     context 'when multiple work item of diffent types exists' do
@@ -45,6 +49,10 @@ RSpec.describe V1::TravelAndWaiting do
 
       it 'returns a single table field row' do
         expect(subject.table_fields).to include(['travel', '£100.00', '20min'], ['waiting', '£100.00', '30min'])
+      end
+
+      it 'calculates the total_cost' do
+        expect(subject.total_cost).to eq('£200.00')
       end
     end
 
