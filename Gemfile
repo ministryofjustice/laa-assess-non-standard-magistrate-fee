@@ -25,6 +25,9 @@ gem 'turbo-rails'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 # Pagination
 gem 'pagy'
+# Exception monitoring
+gem 'sentry-rails'
+gem 'sentry-ruby'
 
 group :development, :test do
   gem 'debug'

@@ -472,6 +472,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   sentry-rails
+  sentry-ruby
   simplecov
   simplecov-lcov
   simplecov-rcov
