@@ -1,5 +1,7 @@
 module V1
   class TravelAndWaiting < BaseViewModel
+    include Shared::WorkItemSummary
+
     INCLUDED_TYPES = %w[travel waiting].freeze
 
     attribute :work_items
@@ -24,23 +26,8 @@ module V1
 
     private
 
-    # rubocop:disable Metrics/CyclomaticComplexity
-    def work_item_data
-      @work_item_data ||=
-        work_items.map { |work_item| WorkItem.build_self(work_item) }
-                  .group_by { |work_item| work_item.work_type.to_s }
-                  .filter_map do |translated_work_type, work_items_for_type|
-                    work_type = work_items_for_type.first.work_type
-                    next unless INCLUDED_TYPES.include?(work_type.value)
-
-                    # TODO: convert this to a time period to enable easy formating of output
-                    [
-                      translated_work_type,
-                      work_items_for_type.sum { |work_item| CostCalculator.cost(:work_item, work_item) },
-                      work_items_for_type.sum(&:time_spent),
-                    ]
-                  end
+    def skip_work_item?(work_item)
+      INCLUDED_TYPES.exclude?(work_item.work_type.value)
     end
-    # rubocop:enable Metrics/CyclomaticComplexity
   end
 end
