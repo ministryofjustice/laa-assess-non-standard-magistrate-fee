@@ -6,3 +6,5 @@ en:
     title: Decision made to %{state} claim
   event/change_risk:
     title: Claim risk changed to %{risk} risk
+  event/note:
+    title: User note

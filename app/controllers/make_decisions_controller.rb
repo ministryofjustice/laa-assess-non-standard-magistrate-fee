@@ -30,6 +30,6 @@ class MakeDecisionsController < ApplicationController
   def decision_params
     params.require(:make_decision_form).permit(
       :state, :partial_comment, :reject_comment, :id
-    ).merge(current_user: User.first_or_create)
+    ).merge(current_user: current_user)
   end
 end

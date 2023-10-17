@@ -46,7 +46,7 @@ Rails.application.routes.draw do
     resources :letters_and_calls, only: [:index]
     resources :disbursements, only: [:index]
     resource :supporting_evidences, only: [:show]
-    resource :history, only: [:show]
+    resource :history, only: [:show, :create]
     resources :send_back, only: [:index]
     resource :change_risk, only: [:edit, :update], path_names: { edit: '' }
     resource :make_decision, only: [:edit, :update], path_names: { edit: '' }
