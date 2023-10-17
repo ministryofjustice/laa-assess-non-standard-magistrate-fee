@@ -2,7 +2,6 @@
 
 class HealthcheckController < ApplicationController
   def ping
-    1 / 0
     render json: build_args
   end
 
