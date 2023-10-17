@@ -2,10 +2,10 @@ class HistoriesController < ApplicationController
   def show
     claim = Claim.find(params[:claim_id])
     claim_summary = BaseViewModel.build(:claim_summary, claim)
-    history_events = claim.events.history
+    pagy, history_events = pagy(claim.events.history)
     claim_note = ClaimNoteForm.new(id: claim.id)
 
-    render locals: { claim:, claim_summary:, history_events:, claim_note: }
+    render locals: { claim:, claim_summary:, history_events:, claim_note:, pagy: }
   end
 
   def create
@@ -16,9 +16,9 @@ class HistoriesController < ApplicationController
     else
       claim = Claim.find(params[:claim_id])
       claim_summary = BaseViewModel.build(:claim_summary, claim)
-      history_events = claim.events.history
+      pagy, history_events = pagy(claim.events.history)
 
-      render :show, locals: { claim:, claim_summary:, history_events:, claim_note: }
+      render :show, locals: { claim:, claim_summary:, history_events:, claim_note:, pagy: }
     end
   end
 

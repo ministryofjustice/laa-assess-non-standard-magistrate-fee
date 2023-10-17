@@ -8,6 +8,7 @@ en:
       caseworker: Caseworker
       what: What
       add-note: Add to claim history
+      table_info_item: "events"
 
   helpers:
     label:

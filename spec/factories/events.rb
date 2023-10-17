@@ -23,5 +23,12 @@ FactoryBot.define do
     trait :new_version do
       event_type { Event::NewVersion.to_s }
     end
+
+    trait :note do
+      event_type { Event::Note.to_s }
+      sequence(:details) do |i|
+        "This is note: #{i}"
+      end
+    end
   end
 end

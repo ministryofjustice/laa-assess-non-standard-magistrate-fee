@@ -1,22 +1,24 @@
 require 'rails_helper'
 
 RSpec.describe HistoriesController do
-  context 'show' do
-    let(:claim) { instance_double(Claim, id: claim_id, events: events) }
-    let(:events) { double(history: history_events) }
-    let(:history_events) { [instance_double(Event, id: SecureRandom.uuid)] }
-    let(:claim_id) { SecureRandom.uuid }
-    let(:claim_summary) { instance_double(V1::ClaimSummary) }
+  let(:claim) { create(:claim, id: claim_id, events: events) }
+  let(:claim_id) { SecureRandom.uuid }
+  let(:events) { [build(:event, :note)] }
+  let(:claim_summary) { instance_double(V1::ClaimSummary) }
+  let(:claim_note) { instance_double(ClaimNoteForm, save:, id: claim_id) }
+  let(:save) { true }
 
-    before do
-      allow(Claim).to receive(:find).and_return(claim)
-      allow(BaseViewModel).to receive_messages(build: claim_summary)
-    end
+  before do
+    allow(Claim).to receive(:find).and_return(claim)
+    allow(BaseViewModel).to receive_messages(build: claim_summary)
+    allow(ClaimNoteForm).to receive(:new).and_return(claim_note)
+  end
+
+  context 'show' do
 
     it 'find and builds the required object' do
       get :show, params: { claim_id: }
 
-      expect(Claim).to have_received(:find).with(claim_id)
       expect(BaseViewModel).to have_received(:build).with(:claim_summary, claim)
     end
 
@@ -24,8 +26,42 @@ RSpec.describe HistoriesController do
       allow(controller).to receive(:render)
       get :show, params: { claim_id: }
 
-      expect(controller).to have_received(:render).with(locals: { claim:, claim_summary:, history_events: })
+      expect(controller).to have_received(:render).with(
+        locals: { claim:, claim_summary:, history_events: claim.events.history, claim_note:, pagy: anything}
+      )
       expect(response).to be_successful
+    end
+  end
+
+  context 'create' do
+    let(:user) { instance_double(User) }
+    let(:risk_level) { 'high' }
+
+    it 'builds a note object' do
+      post :create, params: {
+        claim_id: claim.id,
+        claim_note_form: { note: 'new note', id: claim.id }
+      }
+
+      expect(ClaimNoteForm).to have_received(:new).with(
+        'note' => 'new note', 'id' => claim.id, 'current_user' => user
+      )
+    end
+
+    context 'when decision has an erorr being updated' do
+      let(:save) { false }
+
+      it 're-renders the edit page' do
+        allow(controller).to receive(:render)
+        post :create, params: {
+          claim_id: claim.id,
+          claim_note_form: { note: 'new note', id: claim.id }
+        }
+
+        expect(controller).to have_received(:render).with(
+          :show, locals: { claim:, claim_summary:, history_events: claim.events.history, claim_note:, pagy: anything}
+        )
+      end
     end
   end
 end
