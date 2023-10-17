@@ -16,8 +16,8 @@ RSpec.describe V1::CoreCostSummary do
 
   describe '#table_fields' do
     context 'when a single work item exists' do
-      let(:work_items) { [{ 'work_type' => { 'en' => 'advocacy' }, 'time_spent' => 20 }] }
-      let(:work_item) { instance_double(V1::WorkItem, work_type: 'advocacy', time_spent: 20) }
+      let(:work_items) { [{ 'work_type' => { 'en' => 'advocacy', 'value' => 'advocacy' }, 'time_spent' => 20 }] }
+      let(:work_item) { instance_double(V1::WorkItem, work_type: mock_translated('advocacy'), time_spent: 20) }
 
       before do
         allow(V1::WorkItem).to receive(:build_self).and_return(work_item)
@@ -27,14 +27,26 @@ RSpec.describe V1::CoreCostSummary do
         expect(subject.table_fields).to include(['Letters', '£100.00', ''], ['Calls', '£100.00', ''])
       end
 
+      context 'when letters and calls proposed costs are zero' do
+        before do
+          allow(CostCalculator).to receive(:cost).with(:letter_and_call, anything).and_return(0.0)
+        end
+
+        it 'does not include them' do
+          expect(subject.table_fields).to eq([['Advocacy', '£100.00', '20min']])
+        end
+      end
+
       it 'builds the view model' do
         subject.summed_fields
-        expect(V1::WorkItem).to have_received(:build_self).with('work_type' => { 'en' => 'advocacy' },
-                                                                'time_spent' => 20)
+        expect(V1::WorkItem).to have_received(:build_self).with(
+          'work_type' => { 'en' => 'advocacy', 'value' => 'advocacy' },
+          'time_spent' => 20
+        )
       end
 
       it 'includes the summed table field row' do
-        expect(subject.table_fields).to include(['advocacy', '£100.00', '20min'])
+        expect(subject.table_fields).to include(['Advocacy', '£100.00', '20min'])
       end
 
       it 'calls the CostCalculator' do
@@ -46,8 +58,8 @@ RSpec.describe V1::CoreCostSummary do
 
     context 'when multiple work item of diffent types exists' do
       let(:work_items) do
-        [{ 'work_type' => { 'en' => 'advocacy' }, 'time_spent' => 20 },
-         { 'work_type' => { 'en' => 'preparation' }, 'time_spent' => 30 }]
+        [{ 'work_type' => { 'en' => 'advocacy', 'value' => 'advocacy' }, 'time_spent' => 20 },
+         { 'work_type' => { 'en' => 'preparation', 'value' => 'preparation' }, 'time_spent' => 30 }]
       end
 
       it 'returns a single table field row' do
@@ -57,9 +69,9 @@ RSpec.describe V1::CoreCostSummary do
 
     context 'when waiting and travel work items exist' do
       let(:work_items) do
-        [{ 'work_type' => { 'en' => 'travel' }, 'time_spent' => 20 },
-         { 'work_type' => { 'en' => 'waiting' }, 'time_spent' => 20 },
-         { 'work_type' => { 'en' => 'preparation' }, 'time_spent' => 30 }]
+        [{ 'work_type' => { 'en' => 'travel', 'value' => 'travel' }, 'time_spent' => 20 },
+         { 'work_type' => { 'en' => 'waiting', 'value' => 'waiting' }, 'time_spent' => 20 },
+         { 'work_type' => { 'en' => 'preparation', 'value' => 'preparation' }, 'time_spent' => 30 }]
       end
 
       it 'they are not returned' do
@@ -69,8 +81,8 @@ RSpec.describe V1::CoreCostSummary do
 
     context 'when multiple work item of the same types exists' do
       let(:work_items) do
-        [{ 'work_type' => { 'en' => 'advocacy' }, 'time_spent' => 20 },
-         { 'work_type' => { 'en' => 'advocacy' }, 'time_spent' => 30 }]
+        [{ 'work_type' => { 'en' => 'advocacy', 'value' => 'advocacy' }, 'time_spent' => 20 },
+         { 'work_type' => { 'en' => 'advocacy', 'value' => 'advocacy' }, 'time_spent' => 30 }]
       end
 
       it 'includes a summed table field row' do
@@ -81,8 +93,8 @@ RSpec.describe V1::CoreCostSummary do
 
   describe '#summed_fields' do
     context 'when a single work item exists' do
-      let(:work_items) { [{ 'work_type' => { 'en' => 'advocacy' }, 'time_spent' => 20 }] }
-      let(:work_item) { instance_double(V1::WorkItem, work_type: 'advocacy', time_spent: 20) }
+      let(:work_items) { [{ 'work_type' => { 'en' => 'advocacy', 'value' => 'advocacy' }, 'time_spent' => 20 }] }
+      let(:work_item) { instance_double(V1::WorkItem, work_type: mock_translated('advocacy'), time_spent: 20) }
 
       before do
         allow(V1::WorkItem).to receive(:build_self).and_return(work_item)
@@ -90,8 +102,10 @@ RSpec.describe V1::CoreCostSummary do
 
       it 'builds a WorkType record to use in the calculations' do
         subject.summed_fields
-        expect(V1::WorkItem).to have_received(:build_self).with('work_type' => { 'en' => 'advocacy' },
-                                                                'time_spent' => 20)
+        expect(V1::WorkItem).to have_received(:build_self).with(
+          'work_type' => { 'en' => 'advocacy', 'value' => 'advocacy' },
+          'time_spent' => 20
+        )
       end
 
       it 'returns the summed time and cost' do
@@ -107,8 +121,8 @@ RSpec.describe V1::CoreCostSummary do
 
     context 'when multiple work item of diffent types exists' do
       let(:work_items) do
-        [{ 'work_type' => { 'en' => 'advocacy' }, 'time_spent' => 20 },
-         { 'work_type' => { 'en' => 'travel' }, 'time_spent' => 30 }]
+        [{ 'work_type' => { 'en' => 'advocacy', 'value' => 'advocacy' }, 'time_spent' => 20 },
+         { 'work_type' => { 'en' => 'travel', 'value' => 'travel' }, 'time_spent' => 30 }]
       end
 
       it 'returns the summed cost' do
@@ -118,8 +132,8 @@ RSpec.describe V1::CoreCostSummary do
 
     context 'when multiple work item of the same types exists' do
       let(:work_items) do
-        [{ 'work_type' => { 'en' => 'advocacy' }, 'time_spent' => 20 },
-         { 'work_type' => { 'en' => 'advocacy' }, 'time_spent' => 30 }]
+        [{ 'work_type' => { 'en' => 'advocacy', 'value' => 'advocacy' }, 'time_spent' => 20 },
+         { 'work_type' => { 'en' => 'advocacy', 'value' => 'advocacy' }, 'time_spent' => 30 }]
       end
 
       it 'returns the summed cost' do
