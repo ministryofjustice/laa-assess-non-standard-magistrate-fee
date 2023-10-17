@@ -7,7 +7,6 @@ module ErrorHandling
 
       Sentry.capture_exception(exception) if ENV.fetch('SENTRY_DSN', nil).present?
       Rails.logger.error(exception)
-      redirect_to laa_msf.unhandled_errors_path
     end
   end
 end
