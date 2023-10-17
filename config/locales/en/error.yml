@@ -1,0 +1,9 @@
+---
+en:
+  error:
+    401_message: You do not have authorization to access this page.
+    401_title: Unauthorized
+    404_message: If you typed the web address, check it is correct.
+    404_title: Page not found
+    500_message: Try again later.
+    500_title: Sorry, something went wrong
