@@ -40,9 +40,7 @@ Rails.application.routes.draw do
     get :accessibility
   end
 
-  namespace :errors do
-    get '/401', to: :unauthorized
-    get '/404', to: :not_found
-    get '/500', to: :internal_error
-  end
-end
+  get '/401', to: 'errors#unauthorized'
+  get '/404', to: 'errors#not_found'
+  get '/500', to: 'errors#internal_error'
+
