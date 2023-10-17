@@ -1,6 +1,4 @@
 class ErrorsController < ApplicationController
-  respond_to :html
-
   def unauthorized
     respond_with_status(:unauthorized)
   end
