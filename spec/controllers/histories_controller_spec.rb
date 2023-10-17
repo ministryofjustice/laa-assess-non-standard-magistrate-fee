@@ -5,7 +5,7 @@ RSpec.describe HistoriesController do
   let(:claim_id) { SecureRandom.uuid }
   let(:events) { [build(:event, :note)] }
   let(:claim_summary) { instance_double(V1::ClaimSummary) }
-  let(:claim_note) { instance_double(ClaimNoteForm, save:, id: claim_id) }
+  let(:claim_note) { instance_double(ClaimNoteForm, save: save, id: claim_id) }
   let(:save) { true }
 
   before do
@@ -15,7 +15,6 @@ RSpec.describe HistoriesController do
   end
 
   context 'show' do
-
     it 'find and builds the required object' do
       get :show, params: { claim_id: }
 
@@ -27,7 +26,10 @@ RSpec.describe HistoriesController do
       get :show, params: { claim_id: }
 
       expect(controller).to have_received(:render).with(
-        locals: { claim:, claim_summary:, history_events: claim.events.history, claim_note:, pagy: anything}
+        locals: {
+          claim: claim, claim_summary: claim_summary, history_events: claim.events.history,
+          claim_note: claim_note, pagy: anything
+        }
       )
       expect(response).to be_successful
     end
@@ -59,7 +61,10 @@ RSpec.describe HistoriesController do
         }
 
         expect(controller).to have_received(:render).with(
-          :show, locals: { claim:, claim_summary:, history_events: claim.events.history, claim_note:, pagy: anything}
+          :show, locals: {
+            claim: claim, claim_summary: claim_summary, history_events: claim.events.history,
+            claim_note: claim_note, pagy: anything
+          }
         )
       end
     end

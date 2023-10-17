@@ -22,6 +22,6 @@ class ChangeRisksController < ApplicationController
   def risk_params
     params.require(:change_risk_form).permit(
       :id, :risk_level, :explanation
-    ).merge(current_user: current_user)
+    ).merge(current_user:)
   end
 end
