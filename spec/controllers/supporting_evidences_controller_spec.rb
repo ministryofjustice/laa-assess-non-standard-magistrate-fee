@@ -1,5 +1,5 @@
 require 'rails_helper'
-require 'pagy/extras/array'
+
 RSpec.describe SupportingEvidencesController do
   context 'show' do
     let(:claim) { instance_double(Claim, id: claim_id) }

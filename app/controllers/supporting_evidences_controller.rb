@@ -1,7 +1,4 @@
-require 'pagy/extras/array'
 class SupportingEvidencesController < ApplicationController
-  include Pagy::Backend
-
   def show
     claim = Claim.find(params[:claim_id])
     claim_summary = BaseViewModel.build(:claim_summary, claim)

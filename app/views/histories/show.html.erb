@@ -4,7 +4,7 @@
 
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-three-quarters govuk-!-padding-right-0">
+  <div class="govuk-grid-column-full govuk-!-padding-right-0">
 
     <%= render partial: 'claims/claim_summary', locals: { claim:, claim_summary: } %>
     <%= render partial: 'claims/claim_nav', locals: { claim: claim, current_page: 'history' } %>
@@ -26,7 +26,7 @@
           table.with_body do |body|
             body.with_row do |row|
               row.with_cell(text: l(event.created_at, format: '%B<br>%d %b %Y<br>%I:%m%P').html_safe)
-              row.with_cell(text: event.primary_user&.name || '')
+              row.with_cell(text: event.primary_user&.display_name || '')
               row.with_cell do
     %>
                 <p class="govuk-!-font-weight-bold"><%= event.title %></p>
@@ -36,6 +36,22 @@
           end
         end
       end %>
+    <%= render "shared/pagination",  { pagy: pagy, item: t('.table_info_item') } %>
 
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full govuk-!-padding-right-0">
+    <div class='history-input'>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-three-quarters govuk-!-padding-right-0">
+          <%= form_with model: claim_note, url: claim_history_path(claim.id) do |f| %>
+            <%= f.govuk_text_area :note, label: { size: 'm' }, rows: 5 %>
+            <%= f.govuk_submit t('.add-note') %>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

@@ -1,0 +1,30 @@
+---
+en:
+  histories:
+    show:
+      page_title: "Review criminal legal aid applications"
+      history: Claim history
+      when: When
+      caseworker: Caseworker
+      what: What
+      add-note: Add to claim history
+      table_info_item: "events"
+
+  helpers:
+    label:
+      claim_note_form:
+        note: Add a note to the claim history (optional)
+    hint:
+      claim_note_form:
+        note: This information is for internal use only
+
+
+  activemodel:
+    errors:
+      models:
+        claim_note_form:
+          attributes:
+            note:
+              blank: You cannot add an empty note to the claim history
+
+

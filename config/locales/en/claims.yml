@@ -64,10 +64,3 @@ en:
       total_time: Time total
       total_cost: Cost total
       total: Total
-  histories:
-    show:
-      page_title: "Review criminal legal aid applications"
-      history: Claim history
-      when: When
-      caseworker: Caseworker
-      what: What
