@@ -18,13 +18,15 @@ gem 'omniauth-rails_csrf_protection'
 gem 'pg'
 gem 'puma', '~> 6.4'
 gem 'rails', '~> 7.1.1'
-gem 'sentry-rails'
 gem 'sprockets-rails'
 gem 'stimulus-rails'
 gem 'turbo-rails'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 # Pagination
 gem 'pagy'
+# Exception monitoring
+gem 'sentry-rails'
+gem 'sentry-ruby'
 
 group :development, :test do
   gem 'debug'

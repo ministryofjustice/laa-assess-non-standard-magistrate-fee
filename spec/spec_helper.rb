@@ -31,6 +31,7 @@ unless ENV['NOCOVERAGE']
     add_filter 'app/presenters/claim_details/table.rb'
     add_filter 'app/jobs/application_job.rb'
     add_filter 'app/mailers/application_mailer.rb'
+    add_filter 'app/controllers/concerns/error_handling.rb'
 
     enable_coverage :branch
     primary_coverage :branch

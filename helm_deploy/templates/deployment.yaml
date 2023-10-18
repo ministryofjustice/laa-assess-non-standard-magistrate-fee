@@ -105,6 +105,11 @@ spec:
               value: development
             - name: IS_LOCAL_DOCKER_ENV
               value: 'true'
+            - name: SENTRY_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: sentry-dsn
+                  key: url
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
