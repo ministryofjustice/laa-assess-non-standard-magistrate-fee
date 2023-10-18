@@ -21,7 +21,7 @@ module V1
       [
         {
           title: I18n.t(".claim_details.#{key}.first_hearing_date"),
-          value: ApplicationController.helpers.format_date_string(first_hearing_date)
+          value: ApplicationController.helpers.format_in_zone(first_hearing_date)
         },
         {
           title: I18n.t('.claim_details.hearing_details.number_of_hearing'),
