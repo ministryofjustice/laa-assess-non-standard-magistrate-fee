@@ -22,7 +22,7 @@
       </p>
       <p class="govuk-body-l govuk-!-margin-bottom-2">
         <span class="govuk-!-font-weight-bold"><%= t(".date_received") %></span>
-        <%= l(claim.received_on, format:'%d %b %Y') %>
+        <%= format_in_zone(claim.received_on, format:'%d %b %Y') %>
       </p>
     </div>
     <div class="govuk-grid-column-one-thirds govuk-!-padding-top-2">

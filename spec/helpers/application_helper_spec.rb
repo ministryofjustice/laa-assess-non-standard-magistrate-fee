@@ -84,6 +84,44 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
   end
 
+  describe '#format_in_zone' do
+    context 'when date is a string' do
+      let(:time) { '2023/10/18 13:08 +0000' }
+
+      context 'when format is passed in' do
+        it 'converts string to a DateTime and renders format' do
+          expect(helper.format_in_zone(time, format: '%A<br>%d %b %Y<br>%I:%M%P')).to eq(
+            'Wednesday<br>18 Oct 2023<br>02:08pm'
+          )
+        end
+      end
+
+      context 'when format is not passed in' do
+        it 'converts string to a DateTime and renders as date' do
+          expect(helper.format_in_zone(time)).to eq('18 October 2023')
+        end
+      end
+    end
+
+    context 'when date is a time' do
+      let(:time) { DateTime.parse('2023/10/17 13:08 +0000') }
+
+      context 'when format is passed in' do
+        it 'converts string to a DateTime and renders format' do
+          expect(helper.format_in_zone(time, format: '%A<br>%d %b %Y<br>%I:%M%P')).to eq(
+            'Tuesday<br>17 Oct 2023<br>02:08pm'
+          )
+        end
+      end
+
+      context 'when format is not passed in' do
+        it 'converts string to a DateTime and renders as date' do
+          expect(helper.format_in_zone(time)).to eq('17 October 2023')
+        end
+      end
+    end
+  end
+
   describe '#govuk_error_summary' do
     context 'when no form object is given' do
       let(:form_object) { nil }

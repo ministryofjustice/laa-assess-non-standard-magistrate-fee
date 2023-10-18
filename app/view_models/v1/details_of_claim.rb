@@ -25,7 +25,7 @@ module V1
         },
         {
           title: I18n.t(".claim_details.#{key}.rep_order_date"),
-          value: ApplicationController.helpers.format_date_string(rep_order_date)
+          value: ApplicationController.helpers.format_in_zone(rep_order_date)
         }
       ]
     end

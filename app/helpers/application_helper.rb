@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
+  LONDON_TIMEZONE = 'Europe/London'
+
   def current_application
     raise 'implement this action, in subclasses'
   end
@@ -34,9 +36,9 @@ module ApplicationHelper
       t('helpers.time_period.minutes', count: period % 60)
   end
 
-  def format_date_string(string)
-    date = DateTime.parse(string)
-    date.strftime('%d %B %Y')
+  def format_in_zone(time_or_string, format: '%d %B %Y')
+    time_or_string = DateTime.parse(time_or_string) if time_or_string.is_a?(String)
+    l(time_or_string.in_time_zone(LONDON_TIMEZONE), format:)
   end
 
   def multiline_text(string)
