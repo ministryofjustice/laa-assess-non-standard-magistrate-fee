@@ -26,4 +26,8 @@ class BaseViewModel
   def self.build_self(attributes)
     new(attributes.slice(*attribute_names))
   end
+
+  def [](val)
+    public_send(val)
+  end
 end

@@ -12,7 +12,7 @@ RSpec.describe V1::LettersAndCallsSummary, type: :model do
 
   describe '#summary_row' do
     it 'returns an array of summary row fields' do
-      expect(letters_and_calls_summary.summary_row).to eq(['12', '-', '£10.50', '-', '#pending#'])
+      expect(letters_and_calls_summary.summary_row).to eq(['12', '-', '£10.50', '-', '£10.50'])
     end
   end
 end

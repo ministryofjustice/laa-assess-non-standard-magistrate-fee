@@ -36,13 +36,13 @@ module V1
     end
 
     def letter_and_call_data
-      letters_and_calls.filter_map do |hash|
-        letter_or_call = LetterAndCall.build_self(hash)
-        next if letter_or_call.provider_requested_amount.zero?
+      rows = LettersAndCallsSummary.build_self('letters_and_calls' => letters_and_calls).rows
+      rows.filter_map do |letter_or_call|
+        next if letter_or_call.provider_requested_count.zero?
 
         [
           letter_or_call.type.to_s,
-          letter_or_call.provider_requested_amount,
+          letter_or_call.caseworker_amount || letter_or_call.provider_requested_amount,
           nil
         ]
       end

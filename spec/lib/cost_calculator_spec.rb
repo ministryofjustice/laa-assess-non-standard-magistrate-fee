@@ -1,7 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe CostCalculator do
-  subject { described_class.cost(type, object) }
+  subject { described_class.cost(type, object, scope) }
+
+  let(:scope) { nil }
 
   context 'when type is unknownn' do
     let(:type) { :unknonwn }
@@ -58,6 +60,7 @@ RSpec.describe CostCalculator do
       V1::LetterAndCall.new('type' => { 'en' => 'Letters', 'value' => 'letters' },
                             'count' => 12, 'uplift' => 0, 'pricing' => 3.56)
     end
+    let(:scope) { :provider_requested }
 
     it { expect(subject).to eq(42.72) }
   end

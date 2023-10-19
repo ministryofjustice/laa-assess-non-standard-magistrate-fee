@@ -9,8 +9,8 @@ RSpec.describe V1::CoreCostSummary do
 
   let(:letters_and_calls) do
     [
-      { 'type' => { 'en' => 'Letters', 'count' => 10, 'pricing' => 4.04 } },
-      { 'type' => { 'en' => 'Calls', 'count' => 5, 'pricing' => 4.04 } }
+      { 'type' => { 'en' => 'Letters' }, 'count' => 10, 'pricing' => 4.04 },
+      { 'type' => { 'en' => 'Calls' }, 'count' => 5, 'pricing' => 4.04 }
     ]
   end
 
@@ -28,8 +28,11 @@ RSpec.describe V1::CoreCostSummary do
       end
 
       context 'when letters and calls proposed costs are zero' do
-        before do
-          allow(CostCalculator).to receive(:cost).with(:letter_and_call, anything).and_return(0.0)
+        let(:letters_and_calls) do
+          [
+            { 'type' => { 'en' => 'Letters' }, 'count' => 0, 'pricing' => 4.04 },
+            { 'type' => { 'en' => 'Calls' }, 'count' => 0, 'pricing' => 4.04 }
+          ]
         end
 
         it 'does not include them' do
