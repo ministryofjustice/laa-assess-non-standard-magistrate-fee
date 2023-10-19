@@ -10,25 +10,28 @@
   </div>
   <div class="govuk-grid-column-two-thirds">
     <%=
-    head = []
-    rows = [
-      [t('.number', type: item.type_name), item.count.to_s],
-      [t('.rate'), item.pricing.to_s],
-      [t('.uplift_requested'), item.uplift_amount],
-      [t('.total_claimed'), item.total_claimed]
-    ]
-    govuk_table(caption: t('.provider_submission'), head: '', first_cell_is_header: true, rows:)
+      rows = [
+        [t('.number', type: item.type_name), item.count.to_s],
+        [t('.rate'), item.pricing.to_s],
+        [t('.uplift_requested'), "#{item.provider_requested_uplift}%"],
+        [t('.total_claimed'), NumberTo.pounds(item.provider_requested_amount)]
+      ]
+      govuk_table(head: '', first_cell_is_header: true, rows:) do |tab|
+        tab.with_caption(text: t('.provider_submission'), size: 'l')
+      end
     %>
 
-    <h2 class="govuk-heading-m"><%= t('.laa_adjustments') %></h2>
+    <h2 class="govuk-heading-l"><%= t('.laa_adjustments') %></h2>
     <%= form_with model: form, url: edit_claim_change_risk_path(claim.id), method: :put do |f| %>
       <%= govuk_error_summary(form) %>
       <% if item.uplift? %>
-        <%= f.govuk_radio_buttons_fieldset(:uplift, legend: { size: 'm' }) do %>
+        <%= f.govuk_radio_buttons_fieldset(:uplift, legend: { size: 's' }) do %>
           <%= f.govuk_radio_button :uplift, 'yes' %>
           <%= f.govuk_radio_button :uplift, 'no' %>
         <% end %>
       <% end %>
+      <%= f.govuk_text_field :count, label: { size: 's' }, width: 10 %>
+      <%= f.govuk_text_area :explanation, label: { size: 's' }, rows: 5 %>
       <%= f.govuk_submit t('shared.save_changes') do %>
         <%= f.hidden_field :id %>
         <%= link_to t('shared.cancel'), :back, class: 'govuk-link' %>

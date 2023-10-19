@@ -25,3 +25,24 @@ en:
       uplift_requested: "Uplift requested"
       total_claimed: Total claimed
       laa_adjustments: LAA adjustments
+
+  helpers:
+    legend:
+      letters_calls_form:
+        uplift: Remove the uplift for this item
+    label:
+      letters_calls_form:
+        uplift_options:
+          'yes': Yes, remove uplift
+          'no': No, do not remove uplift
+        partial_comment: Explain your decision
+        reject_comment: Explain your decision
+        count: Change number of calls
+        explanation: Explain your decision
+    hint:
+      letters_calls_form:
+        uplift: You must explain your decision
+        explanation: |
+          For example, why you made adjustments to the number of calls and removed an uplift.
+          We'll share this explanation with the provider.
+
