@@ -43,7 +43,7 @@ Rails.application.routes.draw do
     resource :claim_details, only: [:show]
     resource :adjustments, only: [:show]
     resources :work_items, only: [:index]
-    resources :letters_and_calls, only: [:index]
+    resources :letters_and_calls, only: [:index, :edit, :update], path_names: { edit: '' }
     resources :disbursements, only: [:index]
     resource :supporting_evidences, only: [:show]
     resource :history, only: [:show, :create]

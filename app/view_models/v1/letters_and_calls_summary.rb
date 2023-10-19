@@ -3,29 +3,19 @@ module V1
     attribute :letters_and_calls
 
     def summary_row
-      total_number_of_letters_and_calls = letters_and_calls.sum { |item| item['count'] }
-      total_cost = data_by_type.sum { |_, cost| cost }
-      adjusted_cost = '#pending#'
       [
-        total_number_of_letters_and_calls.to_s,
+        rows.sum(&:count).to_s,
         '-',
-        NumberTo.pounds(total_cost),
+        NumberTo.pounds(rows.sum(&:provider_requested_amount)),
         '-',
-        adjusted_cost
+        NumberTo.pounds(rows.sum(&:allowed_amount))
       ]
     end
 
-    private
-
-    def data_by_type
-      @data_by_type ||=
-        letters_and_calls.map do |hash|
-          letter_or_call = LetterAndCall.build_self(hash)
-          [
-            letter_or_call.type.to_s,
-            letter_or_call.provider_requested_amount
-          ]
-        end
+    def rows
+      @rows ||= letters_and_calls.map do |data|
+        LetterAndCall.build_self(data)
+      end
     end
   end
 end
