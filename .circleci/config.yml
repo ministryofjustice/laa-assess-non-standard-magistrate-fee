@@ -361,7 +361,7 @@ workflows:
       - hold-uat:
           type: approval
           requires:
-            - deploy-dev
+            - build-to-ecr
       - deploy-uat:
           context: laa-assess-non-standard-magistrates-fee-uat
           requires:
