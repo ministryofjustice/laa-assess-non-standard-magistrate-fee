@@ -64,4 +64,4 @@ secrets:
   environment: uat
 
 service_account:
-  name: laa-assess-non-standard-magistrate-fee-uat-irsa
+  name: circleci
