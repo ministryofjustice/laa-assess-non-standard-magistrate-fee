@@ -1,6 +1,6 @@
 module CostCalculator
   class << self
-    def cost(type, object, scope=nil)
+    def cost(type, object, scope = nil)
       case type
       when :work_item
         work_item_cost(object)

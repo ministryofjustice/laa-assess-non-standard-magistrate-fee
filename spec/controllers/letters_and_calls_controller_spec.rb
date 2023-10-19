@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe LettersAndCallsController do
-  context '#index' do
+  describe '#index' do
     let(:claim) { instance_double(Claim, id: claim_id) }
     let(:claim_id) { SecureRandom.uuid }
     let(:letters_and_calls) { instance_double(V1::LettersAndCallsSummary) }
@@ -23,7 +23,7 @@ RSpec.describe LettersAndCallsController do
       get :index, params: { claim_id: }
 
       expect(controller).to have_received(:render)
-                        .with(locals: { claim: claim, letters_and_calls: letters_and_calls })
+                        .with(locals: { claim:, letters_and_calls: })
       expect(response).to be_successful
     end
   end
@@ -32,7 +32,7 @@ RSpec.describe LettersAndCallsController do
     let(:claim) { instance_double(Claim, id: claim_id, risk: 'high') }
     let(:claim_id) { SecureRandom.uuid }
     let(:form) { instance_double(LettersCallsForm) }
-    let(:letters_and_calls) { [calls, letters]}
+    let(:letters_and_calls) { [calls, letters] }
     let(:calls) { instance_double(V1::LetterAndCall, type: double(value: 'calls'), form_attributes: {}) }
     let(:letters) { instance_double(V1::LetterAndCall, type: double(value: 'letters'), form_attributes: {}) }
 
@@ -45,7 +45,7 @@ RSpec.describe LettersAndCallsController do
     context 'when URL is for letters' do
       it 'renders successfully with claims' do
         allow(controller).to receive(:render)
-        get :edit, params: { claim_id:, id: 'letters' }
+        get :edit, params: { claim_id: claim_id, id: 'letters' }
 
         expect(controller).to have_received(:render)
                           .with(locals: { claim: claim, form: form, item: letters })
@@ -53,10 +53,10 @@ RSpec.describe LettersAndCallsController do
       end
     end
 
-    context 'when URL is for letters' do
+    context 'when URL is for calls' do
       it 'renders successfully with claims' do
         allow(controller).to receive(:render)
-        get :edit, params: { claim_id:, id: 'calls' }
+        get :edit, params: { claim_id: claim_id, id: 'calls' }
 
         expect(controller).to have_received(:render)
                           .with(locals: { claim: claim, form: form, item: calls })

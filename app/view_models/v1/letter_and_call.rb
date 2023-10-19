@@ -11,11 +11,11 @@ module V1
     end
 
     def provider_requested_uplift
-      @provider_requested_uplift ||= uplift.to_i - adjustments.sum { |adj| 0 }
+      @provider_requested_uplift ||= uplift.to_i - adjustments.sum { |_adj| 0 }
     end
 
     def provider_requested_count
-      count - adjustments.sum { |adj| 0 }
+      count - adjustments.sum { |_adj| 0 }
     end
 
     def caseworker_amount

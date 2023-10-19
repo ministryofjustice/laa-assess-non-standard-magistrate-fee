@@ -61,7 +61,7 @@ RSpec.describe V1::LetterAndCall do
     let(:params) { { uplift: 5 } }
 
     it 'returns the uplift value' do
-       expect(subject.caseworker_uplift).to eq(5)
+      expect(subject.caseworker_uplift).to eq(5)
     end
   end
 
@@ -69,7 +69,7 @@ RSpec.describe V1::LetterAndCall do
     let(:params) { { count: 5 } }
 
     it 'returns the count value' do
-       expect(subject.caseworker_count).to eq(5)
+      expect(subject.caseworker_count).to eq(5)
     end
   end
 
@@ -81,7 +81,6 @@ RSpec.describe V1::LetterAndCall do
                                              .and_return(10.0)
       allow(CostCalculator).to receive(:cost).with(:letter_and_call, anything, :caseworker)
                                              .and_return(20.0)
-
     end
 
     context 'when adjustments exists' do
@@ -102,7 +101,7 @@ RSpec.describe V1::LetterAndCall do
   end
 
   describe '#type_name' do
-    let(:params) { { type: { 'en' => 'Letters', value: 'll' } } }
+    let(:params) { { type: { 'en' => 'Letters', :value => 'll' } } }
 
     it 'returns the downcase translated type' do
       expect(subject.type_name).to eq('letters')
