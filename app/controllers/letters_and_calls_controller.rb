@@ -19,6 +19,7 @@ class LettersAndCallsController < ApplicationController
   end
 
   def update
+    claim = Claim.find(params[:claim_id])
     item = BaseViewModel.build_all(:letter_and_call, claim, 'letters_and_calls').detect do |model|
       model.type.value == params[:id]
     end
@@ -27,7 +28,6 @@ class LettersAndCallsController < ApplicationController
     if form.save
       redirect_to claim_adjustments_path(claim, anchor: 'letters-and-calls-tab')
     else
-      claim = Claim.find(params[:claim_id])
       render :edit, locals: { claim:, item:, form: }
     end
   end

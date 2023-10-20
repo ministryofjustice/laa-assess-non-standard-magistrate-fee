@@ -64,4 +64,44 @@ RSpec.describe LettersAndCallsController do
       end
     end
   end
+
+  context 'update' do
+    let(:claim) { instance_double(Claim, id: claim_id, risk: 'high') }
+    let(:claim_id) { SecureRandom.uuid }
+    let(:form) { instance_double(LettersCallsForm, save:) }
+    let(:letters_and_calls) { [calls, letters] }
+    let(:calls) { instance_double(V1::LetterAndCall, type: double(value: 'calls'), form_attributes: {}) }
+    let(:letters) { instance_double(V1::LetterAndCall, type: double(value: 'letters'), form_attributes: {}) }
+
+    before do
+      allow(BaseViewModel).to receive(:build_all).and_return(letters_and_calls)
+      allow(LettersCallsForm).to receive(:new).and_return(form)
+      allow(Claim).to receive(:find).and_return(claim)
+    end
+
+    context 'when form save is successful' do
+      let(:save) { true }
+
+      it 'renders successfully with claims' do
+        allow(controller).to receive(:render)
+        put :update, params: { claim_id: claim_id, id: 'letters', letters_calls_form: { some: :data } }
+
+        expect(controller).to redirect_to(claim_adjustments_path(claim, anchor: 'letters-and-calls-tab'))
+        expect(response.status).to eq(302)
+      end
+    end
+
+    context 'when form save is unsuccessful' do
+      let(:save) { false }
+
+      it 'renders successfully with claims' do
+        allow(controller).to receive(:render)
+        put :update, params: { claim_id: claim_id, id: 'calls', letters_calls_form: { some: :data } }
+
+        expect(controller).to have_received(:render)
+                          .with(:edit, locals: { claim: claim, form: form, item: calls })
+        expect(response).to be_successful
+      end
+    end
+  end
 end
