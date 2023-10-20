@@ -14,7 +14,7 @@ module V1
     end
 
     def rows
-      @rows ||= LetterAndCall.build_from_hash(LetterAndCall, letters_and_calls, claim)
+      @rows ||= LetterAndCall.build_from_hash(letters_and_calls, claim)
     end
   end
 end

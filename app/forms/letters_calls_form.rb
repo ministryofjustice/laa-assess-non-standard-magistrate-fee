@@ -6,7 +6,8 @@ class LettersCallsForm
   attribute :id
   attribute :type, :string
   attribute :uplift, :string
-  attribute :count, :integer
+  # not set to integer so we can catch errors is non-number values are entered
+  attribute :count
   attribute :explanation, :string
   attribute :current_user
   attribute :item # used to detect changes in data
@@ -14,7 +15,7 @@ class LettersCallsForm
   validates :claim, presence: true
   validates :type, inclusion: { in: %w[letters calls] }
   validates :uplift, inclusion: { in: %w[yes no] }, if: -> { item.uplift? }
-  validates :count, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :count, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :explanation, presence: true, if: :data_has_changed?
   validate :data_changed
 
@@ -31,8 +32,9 @@ class LettersCallsForm
 
   def save
     return false unless valid?
+
     Claim.transaction do
-      process_field(value: count, field: 'count')
+      process_field(value: count.to_i, field: 'count')
       process_field(value: new_uplift, field: 'uplift')
 
       version.save
@@ -87,7 +89,7 @@ class LettersCallsForm
   # we need the item object to
   def data_has_changed?
     # change to count || uplift and uplift has changed
-    count != item.count || (item.uplift? && item.uplift.zero? == (uplift == 'no'))
+    count.to_i != item.count || (item.uplift? && item.uplift.zero? == (uplift == 'no'))
   end
 
   def version

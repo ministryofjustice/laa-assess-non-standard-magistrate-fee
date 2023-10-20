@@ -1,3 +1,5 @@
+<% title t('.page_title') %>
+
 <% content_for(:back_link) do %>
   <%= link_to t('helpers.back_link'), claim_adjustments_path(claim, anchor: 'letters-and-calls-tab'), class: 'govuk-back-link', data: { turbo: 'false' } %>
 <% end %>
@@ -34,7 +36,7 @@
       <%= f.govuk_text_field :count, label: { size: 's' }, width: 10 %>
       <%= f.govuk_text_area :explanation, label: { size: 's' }, rows: 5 %>
       <%= f.govuk_submit t('shared.save_changes') do %>
-        <%= link_to t('shared.cancel'), :back, class: 'govuk-link' %>
+        <%= link_to t('shared.cancel'), :back, class: 'govuk-link', data: { turbo: 'false' } %>
       <% end %>
     <% end %>
   </div>
