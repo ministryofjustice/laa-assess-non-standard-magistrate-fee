@@ -87,7 +87,7 @@ RSpec.describe LettersAndCallsController do
         put :update, params: { claim_id: claim_id, id: 'letters', letters_calls_form: { some: :data } }
 
         expect(controller).to redirect_to(claim_adjustments_path(claim, anchor: 'letters-and-calls-tab'))
-        expect(response.status).to eq(302)
+        expect(response).to have_http_status(:found)
       end
     end
 

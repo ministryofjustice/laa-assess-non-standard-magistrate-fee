@@ -8,13 +8,13 @@ FactoryBot.define do
       {
         'letters_and_calls' => [
           {
-              "type" => {
-                  "en" => "Letters",
-                  "value" => "letters"
-              },
-              "count" => 12,
-              "uplift" => 95,
-              "pricing" => 3.56
+            'type' => {
+              'en' => 'Letters',
+                'value' => 'letters'
+            },
+              'count' => 12,
+              'uplift' => 95,
+              'pricing' => 3.56
           },
         ]
       }

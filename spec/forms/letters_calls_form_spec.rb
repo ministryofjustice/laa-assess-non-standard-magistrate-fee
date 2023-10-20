@@ -23,7 +23,7 @@ RSpec.describe LettersCallsForm do
   let(:current_user) { instance_double(User) }
 
   describe '#validations' do
-    context '#type' do
+    describe '#type' do
       %w[letters calls].each do |type_value|
         context 'when it is letters' do
           let(:type) { type_value }
@@ -131,11 +131,11 @@ RSpec.describe LettersCallsForm do
           linked_type: 'letters',
           linked_id: nil,
           details: {
-            "field" => 'count',
-            "from" => 12,
-            "to" => 2,
-            "change" => -10,
-            "comment" => 'change to letters'
+            'field' => 'count',
+            'from' => 12,
+            'to' => 2,
+            'change' => -10,
+            'comment' => 'change to letters'
           }
         )
       end
@@ -146,10 +146,10 @@ RSpec.describe LettersCallsForm do
                        .data['letters_and_calls']
                        .detect { |row| row.dig('type', 'value') == 'letters' }
         expect(letters).to eq(
-          "count" => 2,
-          "pricing" => 3.56,
-          "type" => {"en"=>"Letters", "value"=>"letters"},
-          "uplift" => 95,
+          'count' => 2,
+          'pricing' => 3.56,
+          'type' => { 'en' => 'Letters', 'value' => 'letters' },
+          'uplift' => 95,
         )
       end
     end
@@ -166,11 +166,11 @@ RSpec.describe LettersCallsForm do
           linked_type: 'letters',
           linked_id: nil,
           details: {
-            "field" => 'uplift',
-            "from" => 95,
-            "to" => 0,
-            "change" => -95,
-            "comment" => 'change to letters'
+            'field' => 'uplift',
+            'from' => 95,
+            'to' => 0,
+            'change' => -95,
+            'comment' => 'change to letters'
           }
         )
       end
@@ -181,10 +181,10 @@ RSpec.describe LettersCallsForm do
                        .data['letters_and_calls']
                        .detect { |row| row.dig('type', 'value') == 'letters' }
         expect(letters).to eq(
-          "count" => 12,
-          "pricing" => 3.56,
-          "type" => {"en"=>"Letters", "value"=>"letters"},
-          "uplift" => 0.0,
+          'count' => 12,
+          'pricing' => 3.56,
+          'type' => { 'en' => 'Letters', 'value' => 'letters' },
+          'uplift' => 0.0,
         )
       end
     end
@@ -200,10 +200,10 @@ RSpec.describe LettersCallsForm do
                        .data['letters_and_calls']
                        .detect { |row| row.dig('type', 'value') == 'letters' }
         expect(letters).to eq(
-          "count" => 2,
-          "pricing" => 3.56,
-          "type" => {"en"=>"Letters", "value"=>"letters"},
-          "uplift" => 0,
+          'count' => 2,
+          'pricing' => 3.56,
+          'type' => { 'en' => 'Letters', 'value' => 'letters' },
+          'uplift' => 0,
         )
       end
     end
