@@ -38,7 +38,7 @@ class ChangeRiskForm
   end
 
   def available_risks
-    self.class::AVAILABLE_RISKS
+    self.class::AVAILABLE_RISKS.reject { |risk| risk.id == claim.risk }
   end
 
   private
