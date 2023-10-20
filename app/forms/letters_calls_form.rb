@@ -4,16 +4,16 @@ class LettersCallsForm
   include ActiveRecord::AttributeAssignment
 
   attribute :id
-  attribute :type
-  attribute :uplift
-  attribute :count
-  attribute :explanation
+  attribute :type, :string
+  attribute :uplift, :string
+  attribute :count, :integer
+  attribute :explanation, :string
   attribute :current_user
   attribute :item # used to detect changes in data
 
   validates :claim, presence: true
   validates :type, inclusion: { in: %w[letters calls] }
-  validates :uplift, inclusion: { in: %w[yes no] }
+  validates :uplift, inclusion: { in: %w[yes no] }, if: -> { item.uplift? }
   validates :count, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :explanation, presence: true, if: :data_has_changed?
   validate :data_changed
@@ -31,7 +31,6 @@ class LettersCallsForm
 
   def save
     return false unless valid?
-
     Claim.transaction do
       process_field(value: count, field: 'count')
       process_field(value: new_uplift, field: 'uplift')

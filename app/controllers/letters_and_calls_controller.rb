@@ -36,8 +36,10 @@ class LettersAndCallsController < ApplicationController
 
   def form_params
     params.require(:letters_calls_form).permit(
+      :id,
       :uplift,
       :count,
+      :explanation,
     ).merge(
       current_user: current_user,
       id: params[:claim_id],
