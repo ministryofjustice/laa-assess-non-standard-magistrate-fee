@@ -5,20 +5,16 @@ RSpec.describe ChangeRiskForm, type: :model do
   let(:claim) { create(:claim) }
 
   describe '#available_risks' do
-    it 'returns an array of RiskLevels' do
-      risks = subject.available_risks
-      expect(risks).to be_an(Array)
-      expect(risks.first).to be_a(ChangeRiskForm::RiskLevels)
-    end
+    context 'when the claim has a risk level' do
+      let(:claim) { create(:claim, risk: 'medium') }
+      let(:form) do
+        described_class.new(id: claim.id, risk_level: 'medium', explanation: 'Risk level changed', current_user: user)
+      end
 
-    it 'returns an array with three elements' do
-      result = subject.available_risks
-      expect(result.length).to eq(3)
-    end
-
-    it 'returns an array with the correct risk levels' do
-      result = subject.available_risks
-      expect(result.map(&:level)).to eq(['Low risk', 'Medium risk', 'High risk'])
+      it 'returns the available risks excluding the current risk level' do
+        result = form.available_risks
+        expect(result.map(&:level)).to eq(['Low risk', 'High risk'])
+      end
     end
   end
 
