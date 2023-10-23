@@ -22,11 +22,10 @@ class BaseViewModel
       klass.build_from_hash(rows, claim)
     end
 
-
     def build_from_hash(rows, claim)
       raise 'can not be called on BaseViewModel' if self == BaseViewModel
 
-      if self.const_defined?(:LINKED_TYPE)
+      if const_defined?(:LINKED_TYPE)
         all_adjustments = all_adjustments(claim, rows)
 
         rows.map do |attributes|
