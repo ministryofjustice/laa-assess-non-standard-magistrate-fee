@@ -17,4 +17,31 @@ class LettersAndCallsController < ApplicationController
 
     render locals: { claim:, item:, form: }
   end
+
+  def update
+    claim = Claim.find(params[:claim_id])
+    item = BaseViewModel.build_all(:letter_and_call, claim, 'letters_and_calls').detect do |model|
+      model.type.value == params[:id]
+    end
+    form = LettersCallsForm.new(item:, **form_params)
+
+    if form.save
+      redirect_to claim_adjustments_path(claim, anchor: 'letters-and-calls-tab')
+    else
+      render :edit, locals: { claim:, item:, form: }
+    end
+  end
+
+  private
+
+  def form_params
+    params.require(:letters_calls_form).permit(
+      :uplift,
+      :count,
+    ).merge(
+      current_user: current_user,
+      id: params[:claim_id],
+      type: params[:id]
+    )
+  end
 end

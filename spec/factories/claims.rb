@@ -5,5 +5,9 @@ FactoryBot.define do
     received_on { Date.yesterday }
     current_version { 1 }
     state { 'submitted' }
+
+    trait :with_version do
+      versions { [build(:version)] }
+    end
   end
 end
