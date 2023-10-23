@@ -10,10 +10,19 @@ FactoryBot.define do
           {
             'type' => {
               'en' => 'Letters',
-                'value' => 'letters'
+              'value' => 'letters'
             },
               'count' => 12,
               'uplift' => 95,
+              'pricing' => 3.56
+          },
+          {
+            'type' => {
+              'en' => 'Calls',
+              'value' => 'calls'
+            },
+              'count' => 4,
+              'uplift' => 20,
               'pricing' => 3.56
           },
         ]

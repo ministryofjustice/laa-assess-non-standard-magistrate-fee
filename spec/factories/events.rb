@@ -27,7 +27,33 @@ FactoryBot.define do
     trait :note do
       event_type { Event::Note.to_s }
       sequence(:details) do |i|
-        "This is note: #{i}"
+        { comment: "This is note: #{i}" }
+      end
+    end
+
+    trait :edit_uplift do
+      event_type { Event::Edit.to_s }
+      linked_type { 'letters' }
+      details do
+        {
+          field: 'uplift',
+          from: 95,
+          to: 0,
+          change: -95
+        }
+      end
+    end
+
+    trait :edit_count do
+      event_type { Event::Edit.to_s }
+      linked_type { 'letters' }
+      details do
+        {
+          field: 'count',
+          from: 10,
+          to: 5,
+          change: -5
+        }
       end
     end
   end

@@ -10,14 +10,14 @@ RSpec.describe BaseViewModel do
     let(:data) { { 'laa_reference' => 'LA111', 'defendants' => [{ 'some' => 'data' }], 'state' => 'grant' } }
 
     it 'returns an instance with the correct attributes' do
-      result = implementation_class.build(:assessed_claims, claim)
+      result = described_class.build(:assessed_claims, claim)
       expect(result).to have_attributes(
         state: 'grant',
       )
     end
 
     it 'builds the object from the hash of attributes' do
-      summary = implementation_class.build(:claim_summary, claim)
+      summary = described_class.build(:claim_summary, claim)
       expect(summary).to have_attributes(
         laa_reference: 'LA111',
         defendants: [{ 'some' => 'data' }]
@@ -30,7 +30,7 @@ RSpec.describe BaseViewModel do
       end
 
       it 'builds the object from the hash of attributes specified by the nested location' do
-        work_item = implementation_class.build(:work_item, claim, 'work_items', 1)
+        work_item = described_class.build(:work_item, claim, 'work_items', 1)
         expect(work_item).to have_attributes(work_type: TranslationObject.new('value' => 'second'))
       end
     end
@@ -42,10 +42,34 @@ RSpec.describe BaseViewModel do
     end
 
     it 'builds the object from the array of hashes of attributes' do
-      work_items = implementation_class.build_all(:work_item, claim, 'work_items')
+      work_items = described_class.build_all(:work_item, claim, 'work_items')
       expect(work_items.count).to eq(2)
       expect(work_items[0]).to have_attributes(work_type: TranslationObject.new('value' => 'first'))
       expect(work_items[1]).to have_attributes(work_type: TranslationObject.new('value' => 'second'))
+    end
+
+    context 'when adjustments exist' do
+      let(:claim) do
+        create(:claim, :with_version).tap do |claim|
+          create(:event, :edit_count, claim:)
+        end
+      end
+
+      it 'correctly applies adjustments' do
+        letters, calls = *described_class.build_all(:letter_and_call, claim, 'letters_and_calls')
+        expect(letters.adjustments).to eq(claim.events)
+        expect(calls.adjustments).to eq([])
+      end
+    end
+  end
+
+  describe '#build_from_hash' do
+    let(:rows) { [] }
+    let(:claim) { instance_double(Claim) }
+
+    it 'can not be called on the base model' do
+      expect { described_class.build_from_hash(rows, claim) }.to raise_error('can not be called on BaseViewModel')
+      expect { implementation_class.build_from_hash(rows, claim) }.not_to raise_error
     end
   end
 end
