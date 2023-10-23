@@ -2,8 +2,8 @@ class LettersCallsForm
   include ActiveModel::Model
   include ActiveModel::Attributes
   include ActiveRecord::AttributeAssignment
-  UPLIFT_PROVIDED = 'no'
-  UPLIFT_RESET = 'yes'
+  UPLIFT_PROVIDED = 'no'.freeze
+  UPLIFT_RESET = 'yes'.freeze
 
   attribute :id
   attribute :type, :string
