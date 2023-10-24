@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe PullLatestVersionData do
-  let(:claim) { instance_double(Claim, id:, current_version:, update!: true, data: data) }
+  let(:claim) { instance_double(Claim, id: id, current_version: current_version, update!: true, data: data) }
   let(:data) { {} }
   let(:id) { SecureRandom.uuid }
   let(:current_version) { 2 }
@@ -39,7 +39,7 @@ RSpec.describe PullLatestVersionData do
     end
 
     context 'when event data exists' do
-      let(:claim) { create(:claim, current_version:, data: {}) }
+      let(:claim) { create(:claim, current_version: current_version, data: {}) }
       let(:user) { create(:supervisor) }
       let(:events_data) do
         [{

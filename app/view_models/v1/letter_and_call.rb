@@ -60,7 +60,7 @@ module V1
     end
 
     def value_from_first_event(field_name)
-      field = adjustments.filter { |adj| adj.details['field'] == field_name }.first
+      field = adjustments.find { |adj| adj.details['field'] == field_name }
       return unless field
 
       field.details['from']
