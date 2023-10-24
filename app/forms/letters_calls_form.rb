@@ -39,7 +39,7 @@ class LettersCallsForm
       process_field(value: count.to_i, field: 'count')
       process_field(value: new_uplift, field: 'uplift')
 
-      version.save
+      claim.save
     end
 
     true
@@ -48,13 +48,13 @@ class LettersCallsForm
   end
 
   def claim
-    Claim.find_by(id:)
+    @claim ||= Claim.find_by(id:)
   end
 
   private
 
   def selected_record
-    @selected_record ||= version.data['letters_and_calls'].detect do |row|
+    @selected_record ||= claim.data['letters_and_calls'].detect do |row|
       row.dig('type', 'value') == type
     end
   end
@@ -91,9 +91,5 @@ class LettersCallsForm
   def data_has_changed?
     count.to_i != item.count ||
       (item.uplift? && item.uplift.zero? != (uplift == UPLIFT_RESET))
-  end
-
-  def version
-    @version ||= claim.current_version_record
   end
 end

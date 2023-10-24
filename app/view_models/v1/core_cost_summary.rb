@@ -43,7 +43,7 @@ module V1
 
         [
           letter_or_call.type.to_s,
-          letter_or_call.caseworker_amount || letter_or_call.provider_requested_amount,
+          letter_or_call.allowed_amount,
           nil
         ]
       end

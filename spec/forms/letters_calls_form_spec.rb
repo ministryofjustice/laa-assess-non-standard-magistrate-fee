@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe LettersCallsForm do
   subject { described_class.new(params) }
 
-  let(:claim) { create(:claim, :with_version) }
+  let(:claim) { create(:claim) }
   let(:params) { { id:, type:, count:, uplift:, item:, explanation:, current_user: } }
   let(:id) { claim.id }
   let(:type) { 'letters' }
@@ -142,7 +142,7 @@ RSpec.describe LettersCallsForm do
 
       it 'updates the JSON data' do
         subject.save
-        letters = claim.current_version_record.reload
+        letters = claim.reload
                        .data['letters_and_calls']
                        .detect { |row| row.dig('type', 'value') == 'letters' }
         expect(letters).to eq(
@@ -177,7 +177,7 @@ RSpec.describe LettersCallsForm do
 
       it 'updates the JSON data' do
         subject.save
-        letters = claim.current_version_record.reload
+        letters = claim.reload
                        .data['letters_and_calls']
                        .detect { |row| row.dig('type', 'value') == 'letters' }
         expect(letters).to eq(
@@ -196,7 +196,7 @@ RSpec.describe LettersCallsForm do
 
       it 'updates the JSON data' do
         subject.save
-        letters = claim.current_version_record.reload
+        letters = claim.reload
                        .data['letters_and_calls']
                        .detect { |row| row.dig('type', 'value') == 'letters' }
         expect(letters).to eq(

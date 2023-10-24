@@ -4,20 +4,18 @@ class BaseViewModel
 
   class << self
     def build(class_type, claim, *nesting)
-      version = claim.current_version_record
-      klass = "V#{version.json_schema_version}::#{class_type.to_s.camelcase}".constantize
+      klass = "V#{claim.json_schema_version}::#{class_type.to_s.camelcase}".constantize
 
-      attributes = claim.attributes.merge(version.data, 'claim' => claim)
+      attributes = claim.attributes.merge(claim.data, 'claim' => claim)
       attributes = attributes.dig(*nesting) if nesting.any?
 
       klass.new(attributes.slice(*klass.attribute_names))
     end
 
     def build_all(class_type, claim, *)
-      version = claim.current_version_record
-      klass = "V#{version.json_schema_version}::#{class_type.to_s.camelcase}".constantize
+      klass = "V#{claim.json_schema_version}::#{class_type.to_s.camelcase}".constantize
 
-      rows = version.data[*]
+      rows = claim.data[*]
 
       klass.build_from_hash(rows, claim)
     end
@@ -49,6 +47,7 @@ class BaseViewModel
 
       claim.events
            .where(linked_type: self::LINKED_TYPE, linked_id: linked_ids)
+           .order(:created_at)
            .group_by { |event| [event.linked_type, event.linked_id] }
     end
   end

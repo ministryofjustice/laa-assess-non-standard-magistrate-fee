@@ -2,8 +2,7 @@ require 'rails_helper'
 
 RSpec.describe BaseViewModel do
   let(:implementation_class) { V1::ClaimSummary }
-  let(:claim) { instance_double(Claim, current_version_record: version, attributes: { state: }) }
-  let(:version) { instance_double(Version, json_schema_version: 1, data: data) }
+  let(:claim) { instance_double(Claim, json_schema_version: 1, data: data, attributes: { state: }) }
   let(:state) { 'grant' }
 
   describe '#build' do
@@ -50,7 +49,7 @@ RSpec.describe BaseViewModel do
 
     context 'when adjustments exist' do
       let(:claim) do
-        create(:claim, :with_version).tap do |claim|
+        create(:claim).tap do |claim|
           create(:event, :edit_count, claim:)
         end
       end

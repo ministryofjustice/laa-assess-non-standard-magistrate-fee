@@ -4,10 +4,9 @@ RSpec.describe NotifyAppStore::MessageBuilder do
   subject { described_class.new(claim:) }
 
   let(:claim) do
-    instance_double(Claim, id: SecureRandom.uuid, state: 'grant', risk: 'high', current_version_record: version,
+    instance_double(Claim, id: SecureRandom.uuid, state: 'grant', risk: 'high', data: { 'version' => 'data' },
    events: events)
   end
-  let(:version) { instance_double(Version, data: { 'version' => 'data' }) }
   let(:tester) { double(:tester, process: true) }
   let(:events) do
     [instance_double(Event, as_json: { 'event' => 1 }), instance_double(Event, as_json: { 'event' => 2 })]

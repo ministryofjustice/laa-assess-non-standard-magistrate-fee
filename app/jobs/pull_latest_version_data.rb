@@ -3,7 +3,7 @@ class PullLatestVersionData < ApplicationJob
 
   def perform(claim)
     # data for required version is already here
-    return if claim.versions.find_by(version: claim.current_version)
+    return if claim.data.present?
 
     json_data = HttpPuller.new.get(claim)
 
@@ -24,10 +24,8 @@ class PullLatestVersionData < ApplicationJob
   private
 
   def save(claim, json_data)
-    claim.versions.create!(
-      version: json_data['version'],
+    claim.update!(
       json_schema_version: json_data['json_schema_version'],
-      state: json_data['application_state'],
       data: json_data['application']
     )
     json_data['events']&.each do |event|

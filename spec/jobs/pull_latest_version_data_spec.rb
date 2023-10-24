@@ -1,11 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe PullLatestVersionData do
-  let(:claim) { instance_double(Claim, id:, current_version:, versions:) }
-  let(:versions) { double(:versions, find_by: find_by, create!: true) }
+  let(:claim) { instance_double(Claim, id:, current_version:, update!: true, data: data) }
+  let(:data) { {} }
   let(:id) { SecureRandom.uuid }
   let(:current_version) { 2 }
-  let(:find_by) { nil }
   let(:http_puller) { instance_double(HttpPuller, get: http_response) }
   let(:http_response) do
     {
@@ -24,7 +23,7 @@ RSpec.describe PullLatestVersionData do
   end
 
   context 'when current version already exists' do
-    let(:find_by) { double }
+    let(:data) { { existing: :data } }
 
     it 'do nothing' do
       expect(subject.perform(claim)).to be_nil
@@ -40,7 +39,7 @@ RSpec.describe PullLatestVersionData do
     end
 
     context 'when event data exists' do
-      let(:claim) { create(:claim, current_version:) }
+      let(:claim) { create(:claim, current_version:, data: {}) }
       let(:user) { create(:supervisor) }
       let(:events_data) do
         [{
@@ -77,10 +76,8 @@ RSpec.describe PullLatestVersionData do
       it 'creates the new version' do
         subject.perform(claim)
 
-        expect(versions).to have_received(:create!).with(
-          version: 2,
+        expect(claim).to have_received(:update!).with(
           json_schema_version: 1,
-          state: 'submitted',
           data: { 'same' => 'data' }
         )
       end
@@ -98,7 +95,7 @@ RSpec.describe PullLatestVersionData do
       it 'do nothing' do
         subject.perform(claim)
 
-        expect(versions).not_to have_received(:create!)
+        expect(claim).not_to have_received(:update!)
       end
     end
 
