@@ -1,5 +1,7 @@
 module V1
   class LetterAndCall < BaseViewModel
+    LINKED_TYPE = %w[letters calls].freeze
+
     attribute :type, :translated
     attribute :count, :integer
     attribute :uplift, :integer
@@ -11,11 +13,14 @@ module V1
     end
 
     def provider_requested_uplift
-      @provider_requested_uplift ||= uplift.to_i - adjustments.sum { |_adj| 0 }
+      @provider_requested_uplift ||=
+        uplift.to_i - adjustments.filter { |adj| adj.details['field'] == 'uplift' }
+                                 .sum { |adj| adj.details['change'] }
     end
 
     def provider_requested_count
-      count - adjustments.sum { |_adj| 0 }
+      count - adjustments.filter { |adj| adj.details['field'] == 'count' }
+                         .sum { |adj| adj.details['change'] }
     end
 
     def caseworker_amount
@@ -45,7 +50,7 @@ module V1
     def table_fields
       [
         type.to_s,
-        provider_requested_count.to_s,
+        count.to_s,
         "#{provider_requested_uplift}%",
         NumberTo.pounds(provider_requested_amount),
         adjustments.any? ? "#{caseworker_uplift}%" : '',

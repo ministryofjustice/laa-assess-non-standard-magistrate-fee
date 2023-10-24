@@ -1,6 +1,7 @@
 module V1
   class LettersAndCallsSummary < BaseViewModel
     attribute :letters_and_calls
+    attribute :claim
 
     def summary_row
       [
@@ -13,9 +14,7 @@ module V1
     end
 
     def rows
-      @rows ||= letters_and_calls.map do |data|
-        LetterAndCall.build_self(data)
-      end
+      @rows ||= LetterAndCall.build_from_hash(letters_and_calls, claim)
     end
   end
 end

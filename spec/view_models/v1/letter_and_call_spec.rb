@@ -3,28 +3,38 @@ require 'rails_helper'
 RSpec.describe V1::LetterAndCall do
   subject { described_class.new(params) }
 
+  let(:adjustments) { [] }
+
   describe '#provider_requested_amount' do
-    let(:params) { { count: 1, uplift: 5, pricing: 10.0 } }
+    let(:params) { { count: 1, uplift: 5, pricing: 10.0, adjustments: adjustments } }
 
     it 'calculates the correct provider requested amount' do
       expect(subject.provider_requested_amount).to eq(10.5)
     end
 
     context 'when adjustments are present' do
-      xit 'calulates the initial uplift'
+      let(:adjustments) { [build(:event, :edit_uplift), build(:event, :edit_count)] }
+
+      it 'calulates the initial uplift' do
+        expect(subject.provider_requested_amount).to eq(10.0 * 6 * 2)
+      end
     end
   end
 
   describe '#provider_requested_uplift' do
     context 'when uplift has a value' do
-      let(:params) { { uplift: 5 } }
+      let(:params) { { uplift: 5, adjustments: adjustments } }
 
       it 'returns the uplift amount as a percentage' do
         expect(subject.provider_requested_uplift).to eq(5)
       end
 
       context 'when adjustments are present' do
-        xit 'calulates the initial uplift'
+        let(:adjustments) { [build(:event, :edit_uplift)] }
+
+        it 'calulates the initial uplift' do
+          expect(subject.provider_requested_uplift).to eq(100)
+        end
       end
     end
 
@@ -38,14 +48,18 @@ RSpec.describe V1::LetterAndCall do
   end
 
   describe '#provider_requested_count' do
-    let(:params) { { count: 5 } }
+    let(:params) { { count: 5, adjustments: adjustments } }
 
     it 'returns the uplift amount as a percentage' do
       expect(subject.provider_requested_count).to eq(5)
     end
 
     context 'when adjustments are present' do
-      xit 'calulates the initial count'
+      let(:adjustments) { [build(:event, :edit_count)] }
+
+      it 'calulates the initial count' do
+        expect(subject.provider_requested_count).to eq(10)
+      end
     end
   end
 
@@ -147,10 +161,10 @@ RSpec.describe V1::LetterAndCall do
     end
 
     context 'when adjustments exist' do
-      let(:adjustments) { [{ this: :thing }] }
+      let(:adjustments) { [build(:event, :edit_uplift)] }
 
       it 'also renders caseworker values' do
-        expect(subject.table_fields).to eq(['Letters', '12', '0%', '£10.00', '0%', '£10.00'])
+        expect(subject.table_fields).to eq(['Letters', '12', '95%', '£10.00', '0%', '£10.00'])
       end
     end
   end
@@ -169,9 +183,9 @@ RSpec.describe V1::LetterAndCall do
       it { expect(subject).not_to be_uplift }
 
       context 'but has adjustments' do
-        let(:adjustments) { [{ this: :thing }] }
+        let(:adjustments) { [build(:event, :edit_uplift)] }
 
-        xit { expect(subject).to be_uplift }
+        it { expect(subject).to be_uplift }
       end
     end
   end

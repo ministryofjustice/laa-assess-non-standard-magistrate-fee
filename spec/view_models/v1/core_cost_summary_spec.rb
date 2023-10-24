@@ -1,12 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe V1::CoreCostSummary do
-  subject { described_class.new(work_items:, letters_and_calls:) }
+  subject { described_class.new(work_items:, letters_and_calls:, claim:) }
 
   before do
     allow(CostCalculator).to receive(:cost).and_return(100.0)
   end
 
+  let(:claim) { Claim.new }
   let(:letters_and_calls) do
     [
       { 'type' => { 'en' => 'Letters' }, 'count' => 10, 'pricing' => 4.04 },

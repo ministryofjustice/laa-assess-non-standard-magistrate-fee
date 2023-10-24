@@ -6,6 +6,7 @@ module V1
 
     attribute :work_items
     attribute :letters_and_calls
+    attribute :claim
 
     def table_fields
       data_by_type.map do |work_type, total_cost, total_time_spent|
@@ -36,7 +37,7 @@ module V1
     end
 
     def letter_and_call_data
-      rows = LettersAndCallsSummary.build_self('letters_and_calls' => letters_and_calls).rows
+      rows = LettersAndCallsSummary.build_self('claim' => claim, 'letters_and_calls' => letters_and_calls).rows
       rows.filter_map do |letter_or_call|
         next if letter_or_call.provider_requested_count.zero?
 

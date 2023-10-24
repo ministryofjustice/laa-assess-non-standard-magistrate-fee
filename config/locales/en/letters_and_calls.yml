@@ -25,6 +25,9 @@ en:
       uplift_requested: "Uplift requested"
       total_claimed: Total claimed
       laa_adjustments: LAA adjustments
+    update:
+      page_title: "Your claims"
+      heading: "Adjust %{type} total"
 
   helpers:
     legend:
@@ -45,4 +48,21 @@ en:
         explanation: |
           For example, why you made adjustments to the number of calls and removed an uplift.
           We'll share this explanation with the provider.
+
+  activemodel:
+    errors:
+      models:
+        letters_calls_form:
+          attributes:
+            base:
+              no_change: The new number of letters cannot be the same as the number submitted by the provider
+            count:
+              blank: Enter the number of letters you want to change the total to
+              greater_than_or_equal_to: The number of letters must be 0 or more
+              not_a_number: The number of letters must be a number
+              not_an_integer: The number of letters must be a whole number
+            uplift:
+              inclusion: Select to include uplift or not
+            explanation:
+              blank: Add an explanation for your decision
 
