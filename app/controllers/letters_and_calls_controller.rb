@@ -13,7 +13,7 @@ class LettersAndCallsController < ApplicationController
     item = BaseViewModel.build(:letter_and_call, claim, 'letters_and_calls').detect do |model|
       model.type.value == params[:id]
     end
-    form = LettersCallsForm.new(id: claim.id, **item.form_attributes)
+    form = LettersCallsForm.new(claim:, **item.form_attributes)
 
     render locals: { claim:, item:, form: }
   end
@@ -23,7 +23,7 @@ class LettersAndCallsController < ApplicationController
     item = BaseViewModel.build(:letter_and_call, claim, 'letters_and_calls').detect do |model|
       model.type.value == params[:id]
     end
-    form = LettersCallsForm.new(item:, **form_params)
+    form = LettersCallsForm.new(claim:, item:, **form_params)
 
     if form.save
       redirect_to claim_adjustments_path(claim, anchor: 'letters-and-calls-tab')
@@ -36,13 +36,11 @@ class LettersAndCallsController < ApplicationController
 
   def form_params
     params.require(:letters_calls_form).permit(
-      :id,
       :uplift,
       :count,
       :explanation,
     ).merge(
       current_user: current_user,
-      id: params[:claim_id],
       type: params[:id]
     )
   end
