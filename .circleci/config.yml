@@ -209,6 +209,9 @@ commands:
         - checkout
         - *authenticate-kubectl
         - run:
+            name: Perform DB seeding
+            command: rake custom_seeds:load
+        - run:
             name: Deploy to namespace
             command: |
                 helm upgrade laa-assess-non-standard-magistrate-fee \
