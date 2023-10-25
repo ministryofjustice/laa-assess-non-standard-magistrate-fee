@@ -38,7 +38,7 @@ RSpec.describe LettersAndCallsController do
 
     before do
       allow(Claim).to receive(:find).and_return(claim)
-      allow(BaseViewModel).to receive(:build_all).and_return(letters_and_calls)
+      allow(BaseViewModel).to receive(:build).and_return(letters_and_calls)
       allow(LettersCallsForm).to receive(:new).and_return(form)
     end
 
@@ -74,7 +74,7 @@ RSpec.describe LettersAndCallsController do
     let(:letters) { instance_double(V1::LetterAndCall, type: double(value: 'letters'), form_attributes: {}) }
 
     before do
-      allow(BaseViewModel).to receive(:build_all).and_return(letters_and_calls)
+      allow(BaseViewModel).to receive(:build).and_return(letters_and_calls)
       allow(LettersCallsForm).to receive(:new).and_return(form)
       allow(Claim).to receive(:find).and_return(claim)
     end

@@ -3,7 +3,7 @@ class DisbursementsController < ApplicationController
 
   def index
     claim = Claim.find(params[:claim_id])
-    disbursements = BaseViewModel.build_all(:disbursement, claim, 'disbursements').group_by(&:disbursement_date)
+    disbursements = BaseViewModel.build(:disbursement, claim, 'disbursements').group_by(&:disbursement_date)
 
     render locals: { claim:, disbursements: }
   end

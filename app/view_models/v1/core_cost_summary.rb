@@ -4,8 +4,6 @@ module V1
 
     SKIPPED_TYPES = %w[travel waiting].freeze
 
-    attribute :work_items
-    attribute :letters_and_calls
     attribute :claim
 
     def table_fields
@@ -37,7 +35,7 @@ module V1
     end
 
     def letter_and_call_data
-      rows = LettersAndCallsSummary.build_self('claim' => claim, 'letters_and_calls' => letters_and_calls).rows
+      rows = LettersAndCallsSummary.new('claim' => claim).rows
       rows.filter_map do |letter_or_call|
         next if letter_or_call.provider_requested_count.zero?
 

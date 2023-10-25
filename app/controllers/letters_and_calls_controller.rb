@@ -10,7 +10,7 @@ class LettersAndCallsController < ApplicationController
 
   def edit
     claim = Claim.find(params[:claim_id])
-    item = BaseViewModel.build_all(:letter_and_call, claim, 'letters_and_calls').detect do |model|
+    item = BaseViewModel.build(:letter_and_call, claim, 'letters_and_calls').detect do |model|
       model.type.value == params[:id]
     end
     form = LettersCallsForm.new(id: claim.id, **item.form_attributes)
@@ -20,7 +20,7 @@ class LettersAndCallsController < ApplicationController
 
   def update
     claim = Claim.find(params[:claim_id])
-    item = BaseViewModel.build_all(:letter_and_call, claim, 'letters_and_calls').detect do |model|
+    item = BaseViewModel.build(:letter_and_call, claim, 'letters_and_calls').detect do |model|
       model.type.value == params[:id]
     end
     form = LettersCallsForm.new(item:, **form_params)

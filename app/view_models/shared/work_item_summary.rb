@@ -18,8 +18,8 @@ module Shared
     private
 
     def grouped_work_items
-      work_items.map { |work_item| class_scope::WorkItem.build_self(work_item) }
-                .group_by { |work_item| work_item.work_type.to_s }
+      BaseViewModel.build(:work_item, claim, 'work_items')
+                   .group_by { |work_item| work_item.work_type.to_s }
     end
 
     # overwrite if you need custom filtering
@@ -28,9 +28,5 @@ module Shared
       false
     end
     # :nocov:
-
-    def class_scope
-      @class_scope ||= self.class.module_parent
-    end
   end
 end

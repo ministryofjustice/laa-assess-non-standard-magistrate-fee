@@ -10,15 +10,15 @@ RSpec.describe WorkItemsController do
 
     before do
       allow(Claim).to receive(:find).and_return(claim)
-      allow(BaseViewModel).to receive_messages(build_all: work_items)
-      allow(BaseViewModel).to receive_messages(build: travel_and_waiting)
+      allow(BaseViewModel).to receive(:build).with(:work_item, anything, anything).and_return(work_items)
+      allow(BaseViewModel).to receive(:build).with(:travel_and_waiting, anything).and_return(travel_and_waiting)
     end
 
     it 'find and builds the required object' do
       get :index, params: { claim_id: }
 
       expect(Claim).to have_received(:find).with(claim_id)
-      expect(BaseViewModel).to have_received(:build_all).with(:work_item, claim, 'work_items')
+      expect(BaseViewModel).to have_received(:build).with(:work_item, claim, 'work_items')
       expect(BaseViewModel).to have_received(:build).with(:travel_and_waiting, claim)
     end
 

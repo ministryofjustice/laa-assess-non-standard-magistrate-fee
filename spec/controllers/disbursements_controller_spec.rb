@@ -9,14 +9,14 @@ RSpec.describe DisbursementsController do
 
     before do
       allow(Claim).to receive(:find).and_return(claim)
-      allow(BaseViewModel).to receive_messages(build_all: disbursements)
+      allow(BaseViewModel).to receive_messages(build: disbursements)
     end
 
     it 'find and builds the required object' do
       get :index, params: { claim_id: }
 
       expect(Claim).to have_received(:find).with(claim_id)
-      expect(BaseViewModel).to have_received(:build_all).with(:disbursement, claim, 'disbursements')
+      expect(BaseViewModel).to have_received(:build).with(:disbursement, claim, 'disbursements')
     end
 
     it 'renders successfully with claims' do
