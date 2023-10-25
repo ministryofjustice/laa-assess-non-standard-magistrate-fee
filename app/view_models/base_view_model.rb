@@ -2,6 +2,8 @@ class BaseViewModel
   include ActiveModel::Model
   include ActiveModel::Attributes
 
+  ID_FIELDS = ['id'].freeze
+
   class Builder
     attr_reader :klass, :claim, :rows, :return_array
 
@@ -19,20 +21,24 @@ class BaseViewModel
 
     def build
       process do |attributes|
-        data = claim.attributes
-                    .merge(attributes, 'claim' => claim)
-                    .slice(*klass.attribute_names)
+        instance = klass.new(params(attributes))
 
         if adjustments?
-          key = [attributes.dig('type', 'value') || klass::LINKED_TYPE, attributes['id']]
-          data[:adjustments] = all_adjustments.fetch(key, [])
+          key = [klass::LINKED_TYPE, instance.id]
+          instance.adjustments = all_adjustments.fetch(key, [])
         end
 
-        klass.new(data)
+        instance
       end
     end
 
     private
+
+    def params(attributes)
+      claim.attributes
+        .merge(attributes, 'claim' => claim)
+        .slice(*klass.attribute_names)
+    end
 
     def process(&block)
       result = rows.map(&block)
@@ -41,7 +47,7 @@ class BaseViewModel
 
     def all_adjustments
       @all_adjustments ||= begin
-        linked_ids = rows.pluck('id')
+        linked_ids = rows.map { |row| row.dig(*klass::ID_FIELDS) }
 
         claim.events
              .where(linked_type: klass::LINKED_TYPE, linked_id: linked_ids)

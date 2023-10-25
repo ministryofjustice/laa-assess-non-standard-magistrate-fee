@@ -1,6 +1,7 @@
 module V1
   class LetterAndCall < BaseWithAdjustments
-    LINKED_TYPE = %w[letters calls].freeze
+    LINKED_TYPE = 'letters_and_calls'.freeze
+    ID_FIELDS = ['type', 'value'].freeze
 
     attribute :type, :translated
     attribute :count, :integer
@@ -37,6 +38,10 @@ module V1
 
     def type_name
       type.to_s.downcase
+    end
+
+    def id
+      type.value
     end
 
     def form_attributes

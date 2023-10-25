@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_10_23_141211) do
+ActiveRecord::Schema[7.1].define(version: 2023_10_25_145658) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -33,7 +33,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_23_141211) do
     t.uuid "primary_user_id"
     t.uuid "secondary_user_id"
     t.string "linked_type"
-    t.uuid "linked_id"
+    t.string "linked_id"
     t.jsonb "details", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
