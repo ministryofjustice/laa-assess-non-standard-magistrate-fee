@@ -13,14 +13,11 @@ module V1
     end
 
     def provider_requested_uplift
-      @provider_requested_uplift ||=
-        uplift.to_i - adjustments.filter { |adj| adj.details['field'] == 'uplift' }
-                                 .sum { |adj| adj.details['change'] }
+      @provider_requested_uplift ||= value_from_first_event('uplift') || uplift.to_i
     end
 
     def provider_requested_count
-      count - adjustments.filter { |adj| adj.details['field'] == 'count' }
-                         .sum { |adj| adj.details['change'] }
+      value_from_first_event('count') || count
     end
 
     def caseworker_amount
@@ -60,6 +57,13 @@ module V1
 
     def uplift?
       !provider_requested_uplift.to_i.zero?
+    end
+
+    def value_from_first_event(field_name)
+      field = adjustments.find { |adj| adj.details['field'] == field_name }
+      return unless field
+
+      field.details['from']
     end
   end
 end

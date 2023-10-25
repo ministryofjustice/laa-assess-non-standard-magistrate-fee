@@ -12,10 +12,10 @@ namespace :custom_seeds do
 
     FileUtils.mkdir_p(Rails.root.join("db/seeds/#{args.claim_id}"))
     File.open(Rails.root.join("db/seeds/#{args.claim_id}/claim.json"), 'w') do |f|
-      f.puts claim.to_json
+      f.puts claim.slice!('json_schema_version', 'data').to_json
     end
     File.open(Rails.root.join("db/seeds/#{args.claim_id}/version.json"), 'w') do |f|
-      f.puts claim.current_version_record.to_json
+      f.puts claim.to_json
     end
 
     puts "Claim successfully stored: #{claim.id}"
@@ -54,12 +54,12 @@ namespace :custom_seeds do
 
         if claim
           claim.events.delete_all
-          claim.versions.delete_all
           claim.delete
         end
 
-        claim = Claim.create(claim_hash)
-        claim.versions.create(version_hash)
+        claim = Claim.create(
+          claim_hash.merge(version_hash.slice('json_schema_version', 'data'))
+        )
         Event::NewVersion.build(claim:)
 
         # TODO: add an assignment event

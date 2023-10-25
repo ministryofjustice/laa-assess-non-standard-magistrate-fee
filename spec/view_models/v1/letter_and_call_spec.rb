@@ -16,7 +16,7 @@ RSpec.describe V1::LetterAndCall do
       let(:adjustments) { [build(:event, :edit_uplift), build(:event, :edit_count)] }
 
       it 'calulates the initial uplift' do
-        expect(subject.provider_requested_amount).to eq(10.0 * 6 * 2)
+        expect(subject.provider_requested_amount).to eq(10.0 * 10.0 * 1.95)
       end
     end
   end
@@ -33,7 +33,7 @@ RSpec.describe V1::LetterAndCall do
         let(:adjustments) { [build(:event, :edit_uplift)] }
 
         it 'calulates the initial uplift' do
-          expect(subject.provider_requested_uplift).to eq(100)
+          expect(subject.provider_requested_uplift).to eq(95)
         end
       end
     end

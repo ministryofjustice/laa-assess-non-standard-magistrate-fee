@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_26_095853) do
+ActiveRecord::Schema[7.1].define(version: 2023_10_23_141211) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -22,6 +22,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_26_095853) do
     t.date "received_on"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "json_schema_version"
+    t.jsonb "data"
   end
 
   create_table "events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -57,19 +59,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_26_095853) do
     t.index ["email"], name: "index_users_on_email"
   end
 
-  create_table "versions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "claim_id"
-    t.integer "version"
-    t.integer "json_schema_version"
-    t.string "state"
-    t.jsonb "data"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["claim_id"], name: "index_versions_on_claim_id"
-  end
-
   add_foreign_key "events", "claims"
   add_foreign_key "events", "users", column: "primary_user_id"
   add_foreign_key "events", "users", column: "secondary_user_id"
-  add_foreign_key "versions", "claims"
 end
