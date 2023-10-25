@@ -2,11 +2,13 @@
 
 Adjustments are tracked via the events table as we only store the current state of the claim in the main JSON record.
 
+See Letters and Calls for an example implementation
+
 ## Calculating the initial state
 
 As we only store the current value of claim (i.e. after any adjustments have been applied) when we need to display the provider requested amounts in the view we need to calculate this using the event data stream.
 
-To avoid N+1 queries when doing this calulation in the index screen the `BaseViewModel` the build method loads and applies the adjustment data to each instance created. This allows the logic for this to be isolated within the application and avoid it being repeated in multiple ways in different locations.
+To avoid N+1 queries when doing this calulation in the index screen the `BaseViewModel`'s build method loads and applies the adjustment data to each instance laoded. This allows the logic for this to be isolated within the application and avoid it being repeated in multiple ways in different locations.
 
 To determine the initial value we look at the from value on the first adjustment (sorted by created at).
 
