@@ -19,9 +19,11 @@ class BaseViewModel
 
     def build
       process do |attributes|
-        data = attributes.slice(*klass.attribute_names)
+        data = claim.attributes
+                    .merge(attributes, 'claim' => claim)
+                    .slice(*klass.attribute_names)
 
-        if klass.const_defined?(:LINKED_TYPE)
+        if adjustments?
           key = [attributes.dig('type', 'value') || klass::LINKED_TYPE, attributes['id']]
           data[:adjustments] = all_adjustments.fetch(key, [])
         end
@@ -46,6 +48,10 @@ class BaseViewModel
              .order(:created_at)
              .group_by { |event| [event.linked_type, event.linked_id] }
       end
+    end
+
+    def adjustments?
+      klass.const_defined?(:LINKED_TYPE)
     end
   end
 
