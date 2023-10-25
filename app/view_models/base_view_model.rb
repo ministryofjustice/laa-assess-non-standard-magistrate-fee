@@ -23,7 +23,7 @@ class BaseViewModel
 
         if klass.const_defined?(:LINKED_TYPE)
           key = [attributes.dig('type', 'value') || klass::LINKED_TYPE, attributes['id']]
-          data.merge!(adjustments: all_adjustments.fetch(key, []))
+          data[:adjustments] = all_adjustments.fetch(key, [])
         end
 
         klass.new(data)
@@ -42,18 +42,14 @@ class BaseViewModel
         linked_ids = rows.pluck('id')
 
         claim.events
-            .where(linked_type: klass::LINKED_TYPE, linked_id: linked_ids)
-            .order(:created_at)
-            .group_by { |event| [event.linked_type, event.linked_id] }
+             .where(linked_type: klass::LINKED_TYPE, linked_id: linked_ids)
+             .order(:created_at)
+             .group_by { |event| [event.linked_type, event.linked_id] }
       end
     end
   end
 
   class << self
-    def build(class_type, claim)
-      Builder.new(class_type, claim).build
-    end
-
     def build(class_type, claim, *)
       Builder.new(class_type, claim, *).build
     end

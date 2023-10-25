@@ -7,7 +7,11 @@ RSpec.describe V1::CoreCostSummary do
     allow(CostCalculator).to receive(:cost).and_return(100.0)
   end
 
-  let(:claim) { build(:claim).tap { |claim| claim.data.merge!('letters_and_calls' => letters_and_calls, 'work_items' => work_items)} }
+  let(:claim) do
+    build(:claim).tap do |claim|
+      claim.data.merge!('letters_and_calls' => letters_and_calls, 'work_items' => work_items)
+    end
+  end
   let(:letters_and_calls) do
     [
       { 'type' => { 'en' => 'Letters' }, 'count' => 10, 'pricing' => 4.04 },

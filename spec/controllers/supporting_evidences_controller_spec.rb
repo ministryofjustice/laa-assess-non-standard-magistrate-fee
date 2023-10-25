@@ -9,8 +9,8 @@ RSpec.describe SupportingEvidencesController do
 
     before do
       allow(Claim).to receive(:find).and_return(claim)
-      allow(BaseViewModel).to receive_messages(build: claim_summary)
-      allow(BaseViewModel).to receive_messages(build: supporting_evidence)
+      allow(BaseViewModel).to receive(:build).with(:claim_summary, anything).and_return(claim_summary)
+      allow(BaseViewModel).to receive(:build).with(:supporting_evidence, anything, anything).and_return(supporting_evidence)
     end
 
     it 'find and builds the required object' do

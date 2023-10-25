@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe V1::TravelAndWaiting do
   subject { described_class.new(claim:) }
-  let(:claim) { build(:claim).tap { |claim| claim.data.merge!('work_items' => work_items)} }
+
+  let(:claim) { build(:claim).tap { |claim| claim.data.merge!('work_items' => work_items) } }
 
   before do
     allow(CostCalculator).to receive(:cost).and_return(100.0)
