@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe V1::TravelAndWaiting do
-  subject { described_class.new(work_items:) }
+  subject { described_class.new(claim:) }
+  let(:claim) { build(:claim).tap { |claim| claim.data.merge!('work_items' => work_items)} }
 
   before do
     allow(CostCalculator).to receive(:cost).and_return(100.0)
@@ -13,14 +14,13 @@ RSpec.describe V1::TravelAndWaiting do
       let(:work_item) { instance_double(V1::WorkItem, work_type: mock_translated('travel'), time_spent: 20) }
 
       before do
-        allow(V1::WorkItem).to receive(:build_self).and_return(work_item)
+        allow(BaseViewModel).to receive(:build).and_return([work_item])
       end
 
       it 'builds the view model' do
         subject.table_fields
-        expect(V1::WorkItem).to have_received(:build_self).with(
-          'work_type' => { 'en' => 'travel', 'value' => 'travel' },
-          'time_spent' => 20
+        expect(BaseViewModel).to have_received(:build).with(
+          :work_item, claim, 'work_items'
         )
       end
 

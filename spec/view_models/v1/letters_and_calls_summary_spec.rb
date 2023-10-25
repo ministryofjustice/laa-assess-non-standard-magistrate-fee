@@ -8,8 +8,8 @@ RSpec.describe V1::LettersAndCallsSummary, type: :model do
   let(:letters_and_calls) do
     [{ 'type' => { 'en' => 'Letters', 'value' => 'letters' }, 'count' => 12, 'uplift' => 0, 'pricing' => 3.56 }]
   end
-  let(:claim) { Claim.new }
-  let(:letters_and_calls_summary) { described_class.new(letters_and_calls:, claim:) }
+  let(:claim) { build(:claim).tap { |claim| claim.data.merge!('letters_and_calls' => letters_and_calls)} }
+  let(:letters_and_calls_summary) { described_class.new(claim:) }
 
   describe '#summary_row' do
     it 'returns an array of summary row fields' do

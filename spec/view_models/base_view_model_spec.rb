@@ -22,26 +22,15 @@ RSpec.describe BaseViewModel do
         defendants: [{ 'some' => 'data' }]
       )
     end
-
-    context 'when using nesting' do
-      let(:data) do
-        { 'work_items' => [{ 'work_type' => { 'value' => 'first' } }, { 'work_type' => { 'value' => 'second' } }] }
-      end
-
-      it 'builds the object from the hash of attributes specified by the nested location' do
-        work_item = described_class.build(:work_item, claim, 'work_items', 1)
-        expect(work_item).to have_attributes(work_type: TranslationObject.new('value' => 'second'))
-      end
-    end
   end
 
-  describe '#build_all' do
+  describe '#build' do
     let(:data) do
       { 'work_items' => [{ 'work_type' => { 'value' => 'first' } }, { 'work_type' => { 'value' => 'second' } }] }
     end
 
     it 'builds the object from the array of hashes of attributes' do
-      work_items = described_class.build_all(:work_item, claim, 'work_items')
+      work_items = described_class.build(:work_item, claim, 'work_items')
       expect(work_items.count).to eq(2)
       expect(work_items[0]).to have_attributes(work_type: TranslationObject.new('value' => 'first'))
       expect(work_items[1]).to have_attributes(work_type: TranslationObject.new('value' => 'second'))
@@ -55,20 +44,10 @@ RSpec.describe BaseViewModel do
       end
 
       it 'correctly applies adjustments' do
-        letters, calls = *described_class.build_all(:letter_and_call, claim, 'letters_and_calls')
+        letters, calls = *described_class.build(:letter_and_call, claim, 'letters_and_calls')
         expect(letters.adjustments).to eq(claim.events)
         expect(calls.adjustments).to eq([])
       end
-    end
-  end
-
-  describe '#build_from_hash' do
-    let(:rows) { [] }
-    let(:claim) { instance_double(Claim) }
-
-    it 'can not be called on the base model' do
-      expect { described_class.build_from_hash(rows, claim) }.to raise_error('can not be called on BaseViewModel')
-      expect { implementation_class.build_from_hash(rows, claim) }.not_to raise_error
     end
   end
 end

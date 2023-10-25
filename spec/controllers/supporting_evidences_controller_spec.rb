@@ -10,14 +10,14 @@ RSpec.describe SupportingEvidencesController do
     before do
       allow(Claim).to receive(:find).and_return(claim)
       allow(BaseViewModel).to receive_messages(build: claim_summary)
-      allow(BaseViewModel).to receive_messages(build_all: supporting_evidence)
+      allow(BaseViewModel).to receive_messages(build: supporting_evidence)
     end
 
     it 'find and builds the required object' do
       get :show, params: { claim_id: }
 
       expect(Claim).to have_received(:find).with(claim_id)
-      expect(BaseViewModel).to have_received(:build_all).with(:supporting_evidence, claim, 'supporting_evidences')
+      expect(BaseViewModel).to have_received(:build).with(:supporting_evidence, claim, 'supporting_evidences')
     end
 
     it 'renders successfully with claims' do

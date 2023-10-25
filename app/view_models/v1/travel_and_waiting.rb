@@ -4,7 +4,7 @@ module V1
 
     INCLUDED_TYPES = %w[travel waiting].freeze
 
-    attribute :work_items
+    attribute :claim
 
     def table_fields
       work_item_data.map do |work_type, total_cost, total_time_spent|

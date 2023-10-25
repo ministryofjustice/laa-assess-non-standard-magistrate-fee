@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe V1::CoreCostSummary do
-  subject { described_class.new(work_items:, letters_and_calls:, claim:) }
+  subject { described_class.new(claim:) }
 
   before do
     allow(CostCalculator).to receive(:cost).and_return(100.0)
   end
 
-  let(:claim) { Claim.new }
+  let(:claim) { build(:claim).tap { |claim| claim.data.merge!('letters_and_calls' => letters_and_calls, 'work_items' => work_items)} }
   let(:letters_and_calls) do
     [
       { 'type' => { 'en' => 'Letters' }, 'count' => 10, 'pricing' => 4.04 },
@@ -21,7 +21,8 @@ RSpec.describe V1::CoreCostSummary do
       let(:work_item) { instance_double(V1::WorkItem, work_type: mock_translated('advocacy'), time_spent: 20) }
 
       before do
-        allow(V1::WorkItem).to receive(:build_self).and_return(work_item)
+        allow(BaseViewModel).to receive(:build).and_call_original
+        allow(BaseViewModel).to receive(:build).with(:work_item, anything, anything).and_return([work_item])
       end
 
       it 'includes the letters and calls rows' do
@@ -43,9 +44,8 @@ RSpec.describe V1::CoreCostSummary do
 
       it 'builds the view model' do
         subject.summed_fields
-        expect(V1::WorkItem).to have_received(:build_self).with(
-          'work_type' => { 'en' => 'advocacy', 'value' => 'advocacy' },
-          'time_spent' => 20
+        expect(BaseViewModel).to have_received(:build).with(
+          :work_item, claim, 'work_items'
         )
       end
 
@@ -101,14 +101,14 @@ RSpec.describe V1::CoreCostSummary do
       let(:work_item) { instance_double(V1::WorkItem, work_type: mock_translated('advocacy'), time_spent: 20) }
 
       before do
-        allow(V1::WorkItem).to receive(:build_self).and_return(work_item)
+        allow(BaseViewModel).to receive(:build).and_call_original
+        allow(BaseViewModel).to receive(:build).with(:work_item, anything, anything).and_return([work_item])
       end
 
       it 'builds a WorkType record to use in the calculations' do
         subject.summed_fields
-        expect(V1::WorkItem).to have_received(:build_self).with(
-          'work_type' => { 'en' => 'advocacy', 'value' => 'advocacy' },
-          'time_spent' => 20
+        expect(BaseViewModel).to have_received(:build).with(
+          :work_item, claim, 'work_items'
         )
       end
 
