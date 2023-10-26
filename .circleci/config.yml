@@ -385,6 +385,6 @@ workflows:
               only:
                 - main
       - deploy-prod:
-          context: laa-assess-non-standard-magistrates-fee-uat
+          context: laa-assess-non-standard-magistrates-fee-prod
           requires:
             - hold-prod
