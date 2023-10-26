@@ -33,7 +33,8 @@ FactoryBot.define do
 
     trait :edit_uplift do
       event_type { Event::Edit.to_s }
-      linked_type { 'letters' }
+      linked_type { 'letters_and_calls' }
+      linked_id { 'letters' }
       details do
         {
           field: 'uplift',
@@ -46,7 +47,8 @@ FactoryBot.define do
 
     trait :edit_count do
       event_type { Event::Edit.to_s }
-      linked_type { 'letters' }
+      linked_type { 'letters_and_calls' }
+      linked_id { 'letters' }
       details do
         {
           field: 'count',
