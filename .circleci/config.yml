@@ -321,7 +321,7 @@ jobs:
           environment: uat
           registry: ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
 
-  deploy-uat:
+  deploy-prod:
     executor: cloud-platform-executor
     steps:
       - aws-cli/setup:
