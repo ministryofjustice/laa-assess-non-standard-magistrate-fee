@@ -6,23 +6,31 @@ function init() {
   const caseworkerAdjustedValue = document.getElementById('letters_calls_caseworker_allowed_amount');
 
   if (lettersAndCallsAdjustmentContainer && countField) {
-    calculateAdjustedAmount();
+    updateDomElements();
     calculateChangeButton.addEventListener('click', handleTestButtonClick);
   }
 
   function handleTestButtonClick(event) {
     event.preventDefault();
     claimCostTable.hidden = false;
-    calculateAdjustedAmount();
+    updateDomElements();
+  }
+
+  function updateDomElements() {
+    const totalPrice = calculateAdjustedAmount();
+    caseworkerAdjustedValue.innerHTML = totalPrice;
   }
 
   function calculateAdjustedAmount() {
     const count = countField?.value;
     const unitPrice = calculateChangeButton?.getAttribute('data-unit-price');
     const upliftAmount = calculateChangeButton?.getAttribute('data-uplift-amount');
-    const upliftFactor = (parseFloat(upliftAmount) / 100) + 1;
-    const totalPrice = "£" + (count * unitPrice * upliftFactor).toFixed(2);
-    caseworkerAdjustedValue.innerHTML = totalPrice;
+    if (upliftAmount) {
+      const upliftFactor = (parseFloat(upliftAmount) / 100) + 1;
+      return ("£" + (count * unitPrice * upliftFactor).toFixed(2));
+    } else {
+      return ("£" + (count * unitPrice).toFixed(2));
+    }
   }
 }
 
