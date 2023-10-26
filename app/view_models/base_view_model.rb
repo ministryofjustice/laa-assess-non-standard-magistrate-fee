@@ -36,8 +36,8 @@ class BaseViewModel
 
     def params(attributes)
       claim.attributes
-        .merge(attributes, 'claim' => claim)
-        .slice(*klass.attribute_names)
+           .merge(attributes, 'claim' => claim)
+           .slice(*klass.attribute_names)
     end
 
     def process(&block)
@@ -46,14 +46,11 @@ class BaseViewModel
     end
 
     def all_adjustments
-      @all_adjustments ||= begin
-        linked_ids = rows.map { |row| row.dig(*klass::ID_FIELDS) }
-
+      @all_adjustments ||=
         claim.events
-             .where(linked_type: klass::LINKED_TYPE, linked_id: linked_ids)
+             .where(linked_type: klass::LINKED_TYPE)
              .order(:created_at)
              .group_by { |event| [event.linked_type, event.linked_id] }
-      end
     end
 
     def adjustments?
