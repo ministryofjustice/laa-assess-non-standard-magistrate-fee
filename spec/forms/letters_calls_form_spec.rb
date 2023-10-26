@@ -4,8 +4,7 @@ RSpec.describe LettersCallsForm do
   subject { described_class.new(params) }
 
   let(:claim) { create(:claim) }
-  let(:params) { { id:, type:, count:, uplift:, item:, explanation:, current_user: } }
-  let(:id) { claim.id }
+  let(:params) { { claim:, type:, count:, uplift:, item:, explanation:, current_user: } }
   let(:type) { 'letters' }
   let(:count) { 2 }
   let(:uplift) { 'yes' }

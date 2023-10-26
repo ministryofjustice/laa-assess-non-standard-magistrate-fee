@@ -1,12 +1,11 @@
 module V1
-  class LetterAndCall < BaseViewModel
+  class LetterAndCall < BaseWithAdjustments
     LINKED_TYPE = %w[letters calls].freeze
 
     attribute :type, :translated
     attribute :count, :integer
     attribute :uplift, :integer
     attribute :pricing, :float
-    attribute :adjustments, default: []
 
     def provider_requested_amount
       CostCalculator.cost(:letter_and_call, self, :provider_requested)
@@ -57,13 +56,6 @@ module V1
 
     def uplift?
       !provider_requested_uplift.to_i.zero?
-    end
-
-    def value_from_first_event(field_name)
-      field = adjustments.find { |adj| adj.details['field'] == field_name }
-      return unless field
-
-      field.details['from']
     end
   end
 end

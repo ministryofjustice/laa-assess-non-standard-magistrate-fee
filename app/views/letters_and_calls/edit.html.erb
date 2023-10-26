@@ -25,7 +25,6 @@
 
     <h2 class="govuk-heading-l"><%= t('.laa_adjustments') %></h2>
     <%= form_with model: form, url: claim_letters_and_call_path(claim.id, 'letters'), method: :put do |f| %>
-      <%= f.hidden_field :id %>
       <%= govuk_error_summary(form) %>
       <% if item.uplift? %>
         <%= f.govuk_radio_buttons_fieldset(:uplift, legend: { size: 's' }) do %>
