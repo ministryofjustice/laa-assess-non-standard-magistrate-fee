@@ -1,4 +1,5 @@
 class LettersCallsForm < BaseAdjustmentForm
+  LINKED_CLASS = V1::LetterAndCall
   UPLIFT_PROVIDED = 'no'.freeze
   UPLIFT_RESET = 'yes'.freeze
 
@@ -38,14 +39,6 @@ class LettersCallsForm < BaseAdjustmentForm
   end
 
   private
-
-  # TODO: change this have linked_type of 'letters_and_calls' and linked_id of letters or calls
-  # this will better match how work item and disbursements are implemented.
-  def linked
-    {
-      type: selected_record.dig('type', 'value'),
-    }
-  end
 
   def selected_record
     @selected_record ||= claim.data['letters_and_calls'].detect do |row|

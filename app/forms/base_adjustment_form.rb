@@ -34,15 +34,12 @@ class BaseAdjustmentForm
     Event::Edit.build(claim:, details:, linked:, current_user:)
   end
 
-  # TODO: remove nocov once used
-  # :nocov:
   def linked
     {
-      type: self::LINKED_TYPE,
-      id: selected_record[:id],
+      type: self.class::LINKED_CLASS::LINKED_TYPE,
+      id: selected_record.dig(*self.class::LINKED_CLASS::ID_FIELDS),
     }
   end
-  # :nocov:
 
   def data_changed
     return if data_has_changed?
