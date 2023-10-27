@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Uplift::BaseForm do
+  subject { implementation_class.new(claim:, current_user:, explanation:) }
+
   let(:implementation_class) { Uplift::LettersAndCallsForm }
   let(:claim) { build(:claim) }
   let(:current_user) { instance_double(User) }
   let(:explanation) { 'some reason' }
-
-  subject { implementation_class.new(claim:, current_user:, explanation:) }
 
   describe '#validations' do
     it { expect(subject).to be_valid }
@@ -34,6 +34,7 @@ RSpec.describe Uplift::BaseForm do
     let(:remover) { instance_double(implementation_class::Remover, valid?: valid, save: save) }
     let(:valid) { true }
     let(:save) { true }
+
     before do
       allow(implementation_class::Remover).to receive(:new).and_return(remover)
     end
@@ -71,6 +72,7 @@ RSpec.describe Uplift::BaseForm do
 
     context 'when the remove is not valid' do
       let(:valid) { false }
+
       it 'does not calls save' do
         subject.save
 

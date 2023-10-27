@@ -22,4 +22,3 @@ module Uplift
     end
   end
 end
-

@@ -17,14 +17,14 @@ RSpec.describe 'Letters and Calls' do
         '£83.30' \
         'Change'
       )
-      click_on 'Change'
+      click_link 'Change'
     end
 
     choose 'Yes, remove uplift'
     fill_in 'Change number of letters', with: '22'
     fill_in 'Explain your decision', with: 'Testing'
 
-    click_on 'Save changes'
+    click_button 'Save changes'
 
     # need to access page directly as not JS enabled
     visit claim_letters_and_calls_path(claim)
@@ -42,7 +42,7 @@ RSpec.describe 'Letters and Calls' do
     end
   end
 
-  it 'can adjust a letter record' do
+  it 'can adjust a call record' do
     visit claim_letters_and_calls_path(claim)
 
     within('.govuk-table__row', text: 'Calls') do
@@ -53,14 +53,14 @@ RSpec.describe 'Letters and Calls' do
         '£17.09' \
         'Change'
       )
-      click_on 'Change'
+      click_link 'Change'
     end
 
     choose 'Yes, remove uplift'
     fill_in 'Change number of calls', with: '22'
     fill_in 'Explain your decision', with: 'Testing'
 
-    click_on 'Save changes'
+    click_button 'Save changes'
 
     # need to access page directly as not JS enabled
     visit claim_letters_and_calls_path(claim)
@@ -81,11 +81,11 @@ RSpec.describe 'Letters and Calls' do
   it 'can remove all uplift' do
     visit claim_letters_and_calls_path(claim)
 
-    click_on 'Remove uplifts for all items'
+    click_link 'Remove uplifts for all items'
 
     fill_in 'Explain your decision', with: 'Testing'
 
-    click_on 'Yes, remove all uplift'
+    click_button 'Yes, remove all uplift'
 
     # need to access page directly as not JS enabled
     visit claim_letters_and_calls_path(claim)

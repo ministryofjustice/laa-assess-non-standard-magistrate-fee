@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe Uplift::RemoverForm do
+  subject { implementation_class.new(claim:, current_user:, explanation:, selected_record:) }
+
   let(:implementation_class) { Uplift::LettersAndCallsForm::Remover }
   let(:claim) { build(:claim) }
   let(:current_user) { instance_double(User) }
   let(:explanation) { 'some reason' }
   let(:selected_record) { { 'some' => :data, 'uplift' => uplift } }
   let(:uplift) { 95 }
-
-  subject { implementation_class.new(claim:, current_user:, explanation:, selected_record:) }
 
   describe '#validation' do
     context 'when uplift is 0' do

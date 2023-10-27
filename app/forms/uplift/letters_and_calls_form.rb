@@ -1,6 +1,6 @@
 module Uplift
   class LettersAndCallsForm < BaseForm
-    SCOPE = 'letters_and_calls'
+    SCOPE = 'letters_and_calls'.freeze
 
     class Remover < Uplift::RemoverForm
       LINKED_CLASS = V1::LetterAndCall

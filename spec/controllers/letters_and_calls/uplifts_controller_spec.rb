@@ -13,10 +13,10 @@ RSpec.describe LettersAndCalls::UpliftsController do
 
     it 'renders successfully with claims' do
       allow(controller).to receive(:render)
-      get :edit, params: { claim_id: claim_id }
+      get :edit, params: { claim_id: }
 
       expect(controller).to have_received(:render)
-                        .with(locals: { claim: claim, form: form })
+                        .with(locals: { claim:, form: })
       expect(response).to be_successful
     end
   end
@@ -51,7 +51,7 @@ RSpec.describe LettersAndCalls::UpliftsController do
         put :update, params: { claim_id: claim_id, uplift_letters_and_calls_form: { some: :data } }
 
         expect(controller).to have_received(:render)
-                          .with(:edit, locals: { claim: claim, form: form })
+                          .with(:edit, locals: { claim:, form: })
         expect(response).to be_successful
       end
     end
