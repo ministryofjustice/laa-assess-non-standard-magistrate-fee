@@ -112,5 +112,8 @@ RSpec.describe 'Letters and Calls' do
         'Change'
       )
     end
+
+    expect(page).not_to have_content('Remove uplifts for all items')
+
   end
 end

@@ -4,8 +4,9 @@
     <h1 class="govuk-heading-m">
       <%= t('.heading') %>
     </h1>
-
-    <%= govuk_button_link_to(t(".remove_uplift_all"), edit_claim_letters_and_calls_uplift_path(claim), { secondary: true, data: { turbo: 'false' } }) %>
+    <% if letters_and_calls.uplift? %>
+      <%= govuk_button_link_to(t(".remove_uplift_all"), edit_claim_letters_and_calls_uplift_path(claim), { secondary: true, data: { turbo: 'false' } }) %>
+    <% end %>
   </div>
   <div class="govuk-grid-column-full">
     <%=
