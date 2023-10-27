@@ -62,6 +62,7 @@ autoscaling:
 
 secrets:
   environment: uat
+  devAuthEnabled: false
 
 service_account:
   name: laa-assess-non-standard-magistrate-fee-prod-irsa
