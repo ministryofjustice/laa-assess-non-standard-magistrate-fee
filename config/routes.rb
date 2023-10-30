@@ -43,6 +43,9 @@ Rails.application.routes.draw do
     resource :claim_details, only: [:show]
     resource :adjustments, only: [:show]
     resources :work_items, only: [:index]
+    namespace :letters_and_calls do
+      resource :uplift, only: [:edit, :update], path_names: { edit: '' }
+    end
     resources :letters_and_calls, only: [:index, :edit, :update], path_names: { edit: '' }
     resources :disbursements, only: [:index]
     resource :supporting_evidences, only: [:show]

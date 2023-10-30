@@ -127,8 +127,8 @@ RSpec.describe LettersCallsForm do
           claim: claim,
           claim_version: claim.current_version,
           event_type: 'Event::Edit',
-          linked_type: 'letters',
-          linked_id: nil,
+          linked_type: 'letters_and_calls',
+          linked_id: 'letters',
           details: {
             'field' => 'count',
             'from' => 12,
@@ -162,8 +162,8 @@ RSpec.describe LettersCallsForm do
           claim: claim,
           claim_version: claim.current_version,
           event_type: 'Event::Edit',
-          linked_type: 'letters',
-          linked_id: nil,
+          linked_type: 'letters_and_calls',
+          linked_id: 'letters',
           details: {
             'field' => 'uplift',
             'from' => 95,
