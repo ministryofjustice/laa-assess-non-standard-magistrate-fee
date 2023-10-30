@@ -16,7 +16,7 @@ class TranslationArray
   end
 
   def value
-    values.map { |row| row['value'] }
+    values.pluck('value')
   end
 
   def to_s

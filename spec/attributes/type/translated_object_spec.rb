@@ -104,7 +104,9 @@ RSpec.describe Type::TranslatedObject do
 
       context 'when translation keys match' do
         it 'translated object match' do
-          expect(subject.cast(value)).to eq(subject.cast(value))
+          translation1 = subject.cast(value)
+          translation2 = subject.cast(value)
+          expect(translation1).to eq(translation2)
         end
       end
 
