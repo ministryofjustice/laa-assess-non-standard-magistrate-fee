@@ -2,25 +2,23 @@
   <button type="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="<%= t('.button_aria_label') %>" hidden>
     <%= t('.menu_button') %>
   </button>
-  <ul id="navigation" class="govuk-header__navigation-list app-header-menu-hidden-on-load">
-    <% if current_user %>
+  <% if current_user %>
+    <ul id="navigation" class="govuk-header__navigation-list app-header-menu-hidden-on-load">
       <li class="govuk-header__navigation-item app-header__auth-user">
         <%= current_user.display_name %>
       </li>
+      |
 
       <% if current_user.supervisor? %>
-        <li class="govuk-header__navigation-item">
+        <li class="govuk-header__navigation-item govuk-!-static-margin-left-3">
           <%= link_to t('.manage_users'), claims_path, class: 'govuk-header__link' %>
         </li>
+        |
       <% end %>
 
-      <li class="govuk-header__navigation-item">
-        <%= button_to t('.sign_out'), destroy_user_session_path, method: :delete, class: 'govuk-header__link app-header__auth-link' %>
+      <li class="govuk-header__navigation-item govuk-!-static-margin-left-3">
+        <%= govuk_link_to t('.sign_out'), destroy_user_session_path, class: 'govuk-header__link' %>
       </li>
-    <% else %>
-      <li class="govuk-header__navigation-item">
-        <%= button_to t('.sign_in'), user_azure_ad_omniauth_authorize_path, method: :get, class: 'govuk-header__link app-header__auth-link' %>
-      </li>
-    <% end %>
-  </ul>
+    </ul>
+  <% end %>
 </nav>
