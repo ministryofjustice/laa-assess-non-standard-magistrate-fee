@@ -1,6 +1,6 @@
 module V1
   class ClaimJustification < BaseViewModel
-    attribute :reasons_for_claim, :translated
+    attribute :reasons_for_claim, :translated, array: true
 
     def key
       'claim_justification'

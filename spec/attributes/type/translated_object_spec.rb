@@ -45,6 +45,12 @@ RSpec.describe Type::TranslatedObject do
     it { expect(coerced_value).to eq('') }
   end
 
+  describe 'when value is `Array`' do
+    let(:value) { ['Apple'] }
+
+    it { expect { coerced_value }.to raise_error('Invalid Type for ["Apple"]') }
+  end
+
   describe 'when value is `string`' do
     let(:value) { 'Apple' }
 
@@ -56,6 +62,65 @@ RSpec.describe Type::TranslatedObject do
 
     it 'raises an error' do
       expect { subject.serialize(value) }.to raise_error('Value cannot be re-serialized')
+    end
+  end
+
+  context 'when `array:true` is passed in' do
+    subject { described_class.new(array: true) }
+
+    describe 'when value is `hash` of translations' do
+      let(:value) { { 'en' => 'Apple', 'value' => 'apple', 'cy' => 'Afal' } }
+
+      it { expect { coerced_value }.to raise_error('Invalid Type for {"en"=>"Apple", "value"=>"apple", "cy"=>"Afal"}') }
+    end
+
+    describe 'when value is `nil`' do
+      let(:value) { nil }
+
+      it { expect(coerced_value).to eq('') }
+    end
+
+    describe 'when value is `Array`' do
+      let(:value) { [{ 'en' => 'Apple', 'value' => 'apple', 'cy' => 'Afal' }] }
+      let(:locale) { :en }
+
+      before { allow(I18n).to receive(:locale).and_return(locale) }
+
+      context 'when locale is english' do
+        it { expect(coerced_value).to eq(['Apple']) }
+      end
+
+      context 'when locale is welsh' do
+        let(:locale) { :cy }
+
+        it { expect(coerced_value).to eq(['Afal']) }
+      end
+
+      context 'when locale is unknown it returns the `value`' do
+        let(:locale) { :ru }
+
+        it { expect(coerced_value).to eq(['apple']) }
+      end
+
+      context 'when translation keys match' do
+        it 'translated object match' do
+          expect(subject.cast(value)).to eq(subject.cast(value))
+        end
+      end
+
+      context 'when translation keys do not match' do
+        let(:pear) { [{ 'en' => 'Pear', 'value' => 'pear', 'cy' => 'Gellygen' }] }
+
+        it 'translated object do not match' do
+          expect(subject.cast(value)).not_to eq(subject.cast(pear))
+        end
+      end
+    end
+
+    describe 'when value is `string`' do
+      let(:value) { 'Apple' }
+
+      it { expect { coerced_value }.to raise_error('Invalid Type for "Apple"') }
     end
   end
 end
