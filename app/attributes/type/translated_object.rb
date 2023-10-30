@@ -18,15 +18,9 @@ module Type
     private
 
     def cast_value(value)
-      if array
-        raise "Invalid Type for #{value.inspect}" unless value.is_a?(Array) && value.all?(Hash)
+      raise "Invalid Type for #{value.inspect}" unless value.is_a?(Hash)
 
-        TranslationArray.new(value)
-      else
-        raise "Invalid Type for #{value.inspect}" unless value.is_a?(Hash)
-
-        TranslationObject.new(value)
-      end
+      TranslationObject.new(value)
     end
   end
 end
