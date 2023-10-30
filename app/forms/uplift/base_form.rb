@@ -1,4 +1,4 @@
-# Base class to allow remove uplift from all to wokr for
+# Base class to allow remove uplift from all to work for
 # letters and calls and work items. The subclass must implement
 # * SCOPE - constant to get the list of record being processed from the JSON
 # * Remover - class (inherited from `RemoverForm`) with required setup
