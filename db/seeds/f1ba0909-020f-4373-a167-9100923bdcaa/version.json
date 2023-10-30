@@ -207,8 +207,14 @@
         "main_offence_date": "2022-12-12",
         "number_of_hearing": 1,
         "reasons_for_claim": [
-            "enhanced_rates_claimed",
-            "extradition"
+            {
+                "en": "Enhanced rates claimed",
+                "value": "enhanced_rates_claimed"
+            },
+            {
+                "en": "Extraction",
+                "value": "extradition"
+            }
         ],
         "cracked_trial_date": null,
         "first_hearing_date": "2022-12-12",

@@ -1,6 +1,6 @@
 module V1
   class ClaimJustification < BaseViewModel
-    attribute :reasons_for_claim, :translated
+    attribute :reasons_for_claim
 
     def key
       'claim_justification'
@@ -11,7 +11,7 @@ module V1
     end
 
     def reasons_for_claim_list
-      reasons = reasons_for_claim.translated
+      reasons = reasons_for_claim.map { |row| row[I18n.locale.to_s] || row['value'] }
       ApplicationController.helpers.sanitize(reasons.join('<br>'), tags: %w[br])
     end
 
