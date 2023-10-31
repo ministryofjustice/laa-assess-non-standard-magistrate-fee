@@ -1,5 +1,6 @@
 module V1
   class WorkItem < BaseViewModel
+    attribute :id, :string
     attribute :work_type, :translated
     # TODO: import time_period code from provider app
     attribute :time_spent

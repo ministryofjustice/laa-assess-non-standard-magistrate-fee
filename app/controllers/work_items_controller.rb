@@ -12,7 +12,7 @@ class WorkItemsController < ApplicationController
   def edit
     claim = Claim.find(params[:claim_id])
     item = BaseViewModel.build(:work_item, claim, 'work_items').detect do |model|
-      model.work_type.value == params[:id]
+      model.id == params[:id]
     end
 
     render locals: { claim:, item: }
