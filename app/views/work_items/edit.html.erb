@@ -11,5 +11,19 @@
     </h1>
   </div>
   <div class="govuk-grid-column-two-thirds">
+    <%=
+      rows = [
+        [t('.date'), format_in_zone(item.completed_on)]
+        # [t('.time_spent'), "todo"],
+        # [t('.fee_earner'), "todo"],
+        # [t('.uplift_claimed'), "todo"],
+        # [t('.total_claimed'), "todo"]
+      ]
+      govuk_table(head: '', first_cell_is_header: true, rows:) do |tab|
+        tab.with_caption(text: t('.provider_submission'), size: 'l')
+      end
+    %>
+
+    <h2 class="govuk-heading-l"><%= t('.laa_adjustments') %></h2>
   </div>
 </div>
