@@ -35,20 +35,6 @@ en:
   claim_details:
     show:
       page_title: "Review criminal legal aid applications"
-  work_items:
-    index:
-      work_items: Work items
-      core_cost: Core costs
-      remove_uplift_all: Remove uplifts for all items
-      page_title: "Review criminal legal aid applications"
-      type_of_work: Type of Work
-      uplift_request: Uplift requested
-      requested: Provider requested
-      uplift_allowed: Uplift allowed
-      allowed: Caseworker allowed
-      action: Action
-      change: Change
-      travel_and_waiting: Travel and waiting
   disbursements:
     index:
       disbursements: Disbursements
