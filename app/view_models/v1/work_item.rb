@@ -9,6 +9,10 @@ module V1
     attribute :uplift, :integer
     attribute :fee_earner, :string
 
+    def provider_requested_amount
+      CostCalculator.cost(:work_item, self)
+    end
+
     def requested
       # TODO: update once we can calculate adjustments
       time_spent - 0 # adjustments

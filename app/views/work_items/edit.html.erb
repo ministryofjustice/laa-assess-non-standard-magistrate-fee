@@ -17,7 +17,7 @@
         [t('.time_spent'), format_period(item.time_spent)],
         [t('.fee_earner'), item.fee_earner.to_s],
         [t('.uplift_claimed'), "#{item.uplift}%"],
-        [t('.total_claimed'), "todo"]
+        [t('.total_claimed'), NumberTo.pounds(item.provider_requested_amount)]
       ]
       govuk_table(head: '', first_cell_is_header: true, rows:) do |tab|
         tab.with_caption(text: t('.provider_submission'), size: 'l')
