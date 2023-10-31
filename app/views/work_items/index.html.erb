@@ -29,7 +29,7 @@
 
 
       rows = work_items_for_date.map do |work_item|
-        [*work_item.table_fields, { text: link_to(t('.change'), '#') }]
+        [*work_item.table_fields, { text: link_to(t('.change'), edit_claim_work_item_path(claim_id: claim.id, id: work_item.work_type.value), data: { turbo: 'false' }) }]
       end
       govuk_table(caption: completed_on.strftime('%-d %B %Y'), head:, rows:)
     %>

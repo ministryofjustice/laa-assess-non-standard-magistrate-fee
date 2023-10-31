@@ -1,0 +1,15 @@
+<% title t('.page_title') %>
+
+<% content_for(:back_link) do %>
+  <%= link_to t('helpers.back_link'), claim_adjustments_path(claim, anchor: 'letters-and-calls-tab'), class: 'govuk-back-link', data: { turbo: 'false' } %>
+<% end %>
+
+<div class="govuk-grid-row" id="work-items-adjustment-container">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-xl">
+        <%= t('.heading') %>
+    </h1>
+  </div>
+  <div class="govuk-grid-column-two-thirds">
+  </div>
+</div>

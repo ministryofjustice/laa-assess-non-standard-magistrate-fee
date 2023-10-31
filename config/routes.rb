@@ -42,10 +42,10 @@ Rails.application.routes.draw do
   resources :claims, only: [:new, :index, :destroy] do
     resource :claim_details, only: [:show]
     resource :adjustments, only: [:show]
-    resources :work_items, only: [:index]
     namespace :letters_and_calls do
       resource :uplift, only: [:edit, :update], path_names: { edit: '' }
     end
+    resources :work_items, only: [:index, :edit], path_names: { edit: '' }
     resources :letters_and_calls, only: [:index, :edit, :update], path_names: { edit: '' }
     resources :disbursements, only: [:index]
     resource :supporting_evidences, only: [:show]

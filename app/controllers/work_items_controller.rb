@@ -8,4 +8,13 @@ class WorkItemsController < ApplicationController
 
     render locals: { claim:, work_items:, travel_and_waiting: }
   end
+
+  def edit
+    claim = Claim.find(params[:claim_id])
+    item = BaseViewModel.build(:work_item, claim, 'work_items').detect do |model|
+      model.work_type.value == params[:id]
+    end
+
+    render locals: { claim:, item: }
+  end
 end
