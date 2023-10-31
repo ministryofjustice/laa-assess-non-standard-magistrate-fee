@@ -27,7 +27,7 @@ Rails.application.routes.draw do
     end
 
     authenticated :user do
-      delete 'sign_out', to: 'users/sessions#destroy', as: :destroy_user_session
+      get 'sign_out', to: 'users/sessions#destroy', as: :destroy_user_session
     end
   end
 

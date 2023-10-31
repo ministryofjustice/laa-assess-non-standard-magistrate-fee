@@ -17,13 +17,13 @@ RSpec.describe ApplicationHelper, type: :helper do
     context 'for a blank value' do
       let(:value) { '' }
 
-      it { expect(title).to eq('Review criminal legal aid applications - GOV.UK') }
+      it { expect(title).to eq('Assess a non-standard magistrates’ court payment - GOV.UK') }
     end
 
     context 'for a provided value' do
       let(:value) { 'Test page' }
 
-      it { expect(title).to eq('Test page - Review criminal legal aid applications - GOV.UK') }
+      it { expect(title).to eq('Test page - Assess a non-standard magistrates’ court payment - GOV.UK') }
     end
   end
 
