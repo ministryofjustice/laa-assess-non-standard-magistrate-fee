@@ -7,6 +7,7 @@ module V1
 
     attribute :pricing, :float
     attribute :uplift, :integer
+    attribute :fee_earner, :string
 
     def requested
       # TODO: update once we can calculate adjustments
