@@ -32,4 +32,43 @@ RSpec.describe WorkItemsController do
       expect(response).to be_successful
     end
   end
+
+  context 'edit' do
+    let(:claim) { instance_double(Claim, id: claim_id) }
+    let(:claim_id) { SecureRandom.uuid }
+    let(:waiting) { instance_double(V1::WorkItem, work_type: double(value: 'waiting')) }
+    let(:travel) { instance_double(V1::WorkItem, work_type: double(value: 'travel')) }
+    let(:work_items) { [waiting, travel] }
+    before do
+      allow(Claim).to receive(:find).and_return(claim)
+      allow(BaseViewModel).to receive(:build).and_return(work_items)
+
+    end
+
+    context 'when URL is for Waiting' do
+      let(:id) { 'waiting' }
+
+      it 'renders sucessfully with claims' do
+        allow(controller).to receive(:render)
+        get :edit, params:  { claim_id: claim_id, id: id }
+
+        expect(controller).to have_received(:render)
+                          .with(locals: { claim: claim, item: waiting })
+        expect(response).to be_successful
+      end
+    end
+
+    context 'when URL is for Travel' do
+      let(:id) { 'travel' }
+
+      it 'renders sucessfully with claims' do
+        allow(controller).to receive(:render)
+        get :edit, params:  { claim_id: claim_id, id: id }
+
+        expect(controller).to have_received(:render)
+                          .with(locals: { claim: claim, item: travel })
+        expect(response).to be_successful
+      end
+    end
+  end
 end
