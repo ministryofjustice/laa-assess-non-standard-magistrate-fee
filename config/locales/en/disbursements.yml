@@ -1,0 +1,36 @@
+---
+en:
+  disbursements:
+    edit:
+      page_title: Adjust a disbursement
+      heading: Adjust a disbursement
+      summary_table:
+        caption: Provider submission
+        date: Date
+        type: Disbursement type
+        cost: Disbursement cost
+        details: Details of disbursement
+        prior_authority: Prior authority granted
+        vat: VAT
+        total: Total
+  helpers:
+    legend:
+      disbursements_form:
+        total_cost_without_vat: Do you want to refuse this disbursement?
+    label:
+      disbursements_form:
+        total_cost_without_vat:
+          'yes': Yes, remove uplift
+          'no': No, do not remove uplift
+        explanation: Explain your decision
+  activemodel:
+    errors:
+      models:
+        disbursements_form:
+          attributes:
+            base:
+              no_change: No Change
+            total_cost_without_vat:
+              inclusion: Select an option
+            explanation:
+              blank: Add an explanation for your decision

@@ -1,0 +1,46 @@
+<% title t('.page_title') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-xl">
+        <%= t('.heading') %>
+    </h1>
+  </div>
+  <div class="govuk-grid-column-two-thirds">
+    <div id='disbursement-provider-submission-summary-table'>
+      <%=
+      table_fields = item.disbursement_table_fields
+      rows = [
+        [t('.summary_table.date'), table_fields[:date]],
+        [t('.summary_table.type'),table_fields[:type]],
+        if item.miles.present?
+          [t('.summary_table.miles'), table_fields[:miles]]
+        end,
+        [t('.summary_table.details'),table_fields[:details]],
+        [t('.summary_table.prior_authority'), table_fields[:prior_authority]],
+        if item.apply_vat.present?
+          [t('.summary_table.vat'), table_fields[:vat]]
+        end,
+        [t('.summary_table.total'), table_fields[:total]]
+      ]
+      govuk_table(head: '', first_cell_is_header: true, rows:) do |tab|
+        tab.with_caption(text: t('.summary_table.caption'), size: 'l')
+      end
+      %>
+    </div>
+    <div id='disbursement-adjustment-form'>
+      <%= form_with model: form, url: claim_disbursement_path(claim.id, item.id), method: :put do |f| %>
+          <%= govuk_error_summary(form) %>
+          <%= f.govuk_radio_buttons_fieldset(:total_cost_without_vat, legend: { size: 's' }) do %>
+            <%= f.govuk_radio_button :total_cost_without_vat, 'yes' do %>
+              <%= f.govuk_text_area :explanation, label: { size: 's' }, rows: 5 %>
+            <% end %>
+            <%= f.govuk_radio_button :total_cost_without_vat, 'no' %>
+          <% end %>
+          <%= f.govuk_submit t('shared.save_changes') do %>
+            <%= govuk_link_to(t('shared.cancel'), claim_adjustments_path(claim, anchor: 'disbursements-tab'), data: { turbo: 'false' }) %>
+          <% end %>
+        <% end %>
+    </div>
+  </div>
+</div>
