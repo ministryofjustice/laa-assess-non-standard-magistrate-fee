@@ -24,3 +24,30 @@ en:
       uplift_claimed: Uplift claimed
       total_claimed: Claim cost
       laa_adjustments: LAA Adjustments
+
+  helpers:
+    legend:
+      work_item_form:
+        uplift: Remove the uplift for this item
+    label:
+      work_item_form:
+        uplift_options:
+          'yes': Yes, remove uplift
+          'no': No, do not remove uplift
+        partial_comment: Explain your decision
+        reject_comment: Explain your decision
+        explanation: Explain your decision
+    hint:
+      work_item_form:
+        uplift: You must explain your decision
+        explanation: |
+          For example, why you made adjustments to the number of calls and removed an uplift.
+          We'll share this explanation with the provider.
+
+    activemodel:
+      errors:
+        models:
+          work_item_form:
+            attributes:
+              uplift:
+                inclusion: Select to include uplift or not

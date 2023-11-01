@@ -1,7 +1,7 @@
 <% title t('.page_title') %>
 
 <% content_for(:back_link) do %>
-  <%= link_to t('helpers.back_link'), claim_adjustments_path(claim, anchor: 'letters-and-calls-tab'), class: 'govuk-back-link', data: { turbo: 'false' } %>
+  <%= link_to t('helpers.back_link'), claim_adjustments_path(claim, anchor: 'work-items-tab'), class: 'govuk-back-link', data: { turbo: 'false' } %>
 <% end %>
 
 <div class="govuk-grid-row" id="work-items-adjustment-container">
@@ -25,5 +25,17 @@
     %>
 
     <h2 class="govuk-heading-l"><%= t('.laa_adjustments') %></h2>
+    <%= form_with model: form, url: claim_work_item_path(claim.id, item.id), method: :put do |f| %>
+      <%= govuk_error_summary(form) %>
+      <% if item.uplift? %>
+        <%= f.govuk_radio_buttons_fieldset(:uplift, legend: { size: 's' }) do %>
+          <%= f.govuk_radio_button :uplift, 'yes' %>
+          <%= f.govuk_radio_button :uplift, 'no' %>
+        <% end %>
+      <% end %>
+       <%= f.govuk_submit t('shared.save_changes') do %>
+        <%= link_to t('shared.cancel'), :back, class: 'govuk-link', data: { turbo: 'false' } %>
+      <% end %>
+    <% end %>
   </div>
 </div>
