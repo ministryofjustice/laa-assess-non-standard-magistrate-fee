@@ -19,10 +19,15 @@ en:
         total_cost_without_vat: Do you want to refuse this disbursement?
     label:
       disbursements_form:
-        total_cost_without_vat:
-          'yes': Yes, remove uplift
-          'no': No, do not remove uplift
+        total_cost_without_vat_options:
+          'yes': 'Yes'
+          'no': 'No'
         explanation: Explain your decision
+    hint:
+      disbursements_form:
+        explanation: |
+          For example, why you are refusing this disbursement and changing the cost to £0.
+          We'll share this explanation with the provider.
   activemodel:
     errors:
       models:
