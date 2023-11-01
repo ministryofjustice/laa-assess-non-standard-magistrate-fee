@@ -12,7 +12,8 @@ module LettersAndCalls
       form = Uplift::LettersAndCallsForm.new(claim:, **form_params)
 
       if form.save
-        redirect_to claim_adjustments_path(claim, anchor: 'letters-and-calls-tab')
+        redirect_to claim_adjustments_path(claim, anchor: 'letters-and-calls-tab'),
+                    flash: { success: t('.uplift_removed') }
       else
         render :edit, locals: { claim:, form: }
       end
