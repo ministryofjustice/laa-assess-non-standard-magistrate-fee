@@ -1,5 +1,5 @@
 module V1
-  class WorkItem < BaseViewModel
+  class WorkItem < BaseWithAdjustments
     attribute :id, :string
     attribute :work_type, :translated
     # TODO: import time_period code from provider app
@@ -21,6 +21,10 @@ module V1
 
     def adjustments
       '#pending#'
+    end
+
+    def uplift?
+      !uplift.to_i.zero?
     end
 
     def table_fields

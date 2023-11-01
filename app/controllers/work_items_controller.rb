@@ -15,6 +15,36 @@ class WorkItemsController < ApplicationController
       model.id == params[:id]
     end
 
-    render locals: { claim:, item: }
+    form = WorkItemForm.new(claim:, item:)
+
+    render locals: { claim:, item:, form: }
+  end
+
+  def update
+    claim = Claim.find(params[:claim_id])
+    item = BaseViewModel.build(:work_item, claim, 'work_items').detect do |model|
+      model.id == params[:id]
+    end
+
+    form = WorkItemForm.new(claim:, item:, **form_params)
+
+    if form.save
+      redirect_to claim_adjustments_path(claim, anchor: 'work-items-tab')
+    else
+      render :edit, locals: { claim:, item:, form: }
+    end
+  end
+
+  private
+
+  def form_params
+    params.require(:work_item_form).permit(
+      :work_type,
+      :uplift,
+      :time_spent
+    ).merge(
+      current_user: current_user,
+      id: params[:id]
+    )
   end
 end
