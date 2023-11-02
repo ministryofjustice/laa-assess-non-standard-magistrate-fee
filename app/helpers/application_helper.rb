@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
+  include FormBuilderHelper
+
   LONDON_TIMEZONE = 'Europe/London'
 
   def current_application

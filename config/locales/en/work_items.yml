@@ -29,6 +29,7 @@ en:
     legend:
       work_item_form:
         uplift: Remove the uplift for this item
+        time_spent: Change time spent (optional)
     label:
       work_item_form:
         uplift_options:
@@ -39,6 +40,7 @@ en:
         explanation: Explain your decision
     hint:
       work_item_form:
+        time_spent: For example, 1 hour and 30 minutes
         uplift: You must explain your decision
         explanation: |
           For example, why you made adjustments to the number of calls and removed an uplift.
