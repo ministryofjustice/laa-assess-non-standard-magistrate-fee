@@ -49,7 +49,7 @@ en:
         time_spent: For example, 1 hour and 30 minutes
         uplift: You must explain your decision
         explanation: |
-          For example, why you made adjustments to the number of calls and removed an uplift.
+          For example, why you made adjustments to the work type rate, removed an uplift or changed the time spent.
           We'll share this explanation with the provider.
 
     activemodel:
