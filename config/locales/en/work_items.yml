@@ -25,6 +25,11 @@ en:
       total_claimed: Claim cost
       laa_adjustments: LAA Adjustments
       calculate_button_text: Calculate my changes
+      claim_cost_table:
+        title: "Claim cost"
+        header_one: "Provider requested"
+        header_two: "Caseworker allowed"
+        header_three: "Uplift allowed"
 
   helpers:
     legend:
