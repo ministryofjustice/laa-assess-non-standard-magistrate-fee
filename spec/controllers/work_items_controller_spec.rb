@@ -41,19 +41,21 @@ RSpec.describe WorkItemsController do
     let(:waiting) { instance_double(V1::WorkItem, id: waiting_id, work_type: double(value: 'waiting')) }
     let(:travel) { instance_double(V1::WorkItem, id: travel_id, work_type: double(value: 'travel')) }
     let(:work_items) { [waiting, travel] }
+    let(:form) { instance_double(WorkItemForm) }
+
     before do
       allow(Claim).to receive(:find).and_return(claim)
       allow(BaseViewModel).to receive(:build).and_return(work_items)
-
+      allow(WorkItemForm).to receive(:new).and_return(form)
     end
 
     context 'when URL is for Waiting' do
       it 'renders sucessfully with claims' do
         allow(controller).to receive(:render)
-        get :edit, params:  { claim_id: claim_id, id: waiting_id }
+        get :edit, params:  { claim_id: claim_id, id: waiting_id, form: form }
 
         expect(controller).to have_received(:render)
-                          .with(locals: { claim: claim, item: waiting })
+                          .with(locals: { claim: claim, item: waiting, form: form })
         expect(response).to be_successful
       end
     end
@@ -63,10 +65,10 @@ RSpec.describe WorkItemsController do
 
       it 'renders sucessfully with claims' do
         allow(controller).to receive(:render)
-        get :edit, params:  { claim_id: claim_id, id: travel_id }
+        get :edit, params:  { claim_id: claim_id, id: travel_id, form: form }
 
         expect(controller).to have_received(:render)
-                          .with(locals: { claim: claim, item: travel })
+                          .with(locals: { claim: claim, item: travel, form: form })
         expect(response).to be_successful
       end
     end
