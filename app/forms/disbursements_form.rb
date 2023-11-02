@@ -25,9 +25,8 @@ class DisbursementsForm < BaseAdjustmentForm
     end
 
     true
-    # TODO: uncomment once completes
-    # rescue StandardError
-    #   false
+  rescue StandardError
+    false
   end
 
   private
