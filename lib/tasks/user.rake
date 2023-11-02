@@ -7,8 +7,7 @@ namespace :user do
       first_name: args[:first_name],
       last_name: args[:last_name],
       role: args[:role],
-      auth_oid: SecureRandom.uuid,
-      auth_subject_id: SecureRandom.uuid,
+      auth_oid: SecureRandom.uuid
     )
   end
 end
