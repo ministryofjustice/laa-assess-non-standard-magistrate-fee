@@ -9,7 +9,7 @@ class BaseAdjustmentForm
   attribute :item # used to detect changes in data
 
   validates :claim, presence: true
-  validates :explanation, presence: true, if: :data_has_changed?
+  validates :explanation, presence: true, if: :explanation_required?
   validate :data_changed
 
   private
@@ -45,6 +45,10 @@ class BaseAdjustmentForm
     return if data_has_changed?
 
     errors.add(:base, :no_change)
+  end
+
+  def explanation_required?
+    data_has_changed?
   end
 
   # :nocov:
