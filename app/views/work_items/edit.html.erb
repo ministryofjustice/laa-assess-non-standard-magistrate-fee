@@ -34,6 +34,7 @@
         <% end %>
       <% end %>
       <%= f.govuk_period_field :time_spent, legend: { size: 's', class: 'govuk-!-font-weight-bold' }, width: 'one-third' %>
+      <%= govuk_button_link_to(t('.calculate_button_text'), '#', { secondary: true }) %>
       <%= f.govuk_submit t('shared.save_changes') do %>
         <%= link_to t('shared.cancel'), :back, class: 'govuk-link', data: { turbo: 'false' } %>
       <% end %>

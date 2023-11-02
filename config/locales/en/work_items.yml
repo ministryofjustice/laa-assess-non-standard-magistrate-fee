@@ -24,6 +24,7 @@ en:
       uplift_claimed: Uplift claimed
       total_claimed: Claim cost
       laa_adjustments: LAA Adjustments
+      calculate_button_text: Calculate my changes
 
   helpers:
     legend:
