@@ -1,4 +1,5 @@
 class DisbursementsForm < BaseAdjustmentForm
+  LINKED_CLASS = V1::Disbursement
   DISBURSEMENT_ALLOWED = 'no'.freeze
   DISBURSEMENT_REFUSED = 'yes'.freeze
 
@@ -19,6 +20,7 @@ class DisbursementsForm < BaseAdjustmentForm
 
     Claim.transaction do
       process_field(value: new_total_cost_without_vat, field: 'total_cost_without_vat')
+      process_field(value: new_vat_amount, field: 'vat_amount')
       claim.save
     end
 
@@ -40,7 +42,15 @@ class DisbursementsForm < BaseAdjustmentForm
     total_cost_without_vat == 'yes' ? 0 : item.provider_requested_total_cost_without_vat
   end
 
+  def new_vat_amount
+    total_cost_without_vat == 'yes' ? 0 : item.vat_amount
+  end
+
   def data_has_changed?
     item.total_cost_without_vat.zero? != (total_cost_without_vat == DISBURSEMENT_REFUSED)
+  end
+
+  def explanation_required?
+    super && total_cost_without_vat == DISBURSEMENT_REFUSED
   end
 end

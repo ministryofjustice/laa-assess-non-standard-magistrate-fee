@@ -6,7 +6,7 @@
   <div class="govuk-body-m">
     <%= t('.disbursement_total') %>
     <div class="govuk-heading-l">
-      <%= NumberTo.pounds(disbursements.flat_map(&:last).sum(&:current)) %>
+      <%= NumberTo.pounds(disbursements.flat_map(&:last).sum(&:caseworker_total_cost)) %>
     </div>
   </div>
 

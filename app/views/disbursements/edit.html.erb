@@ -18,7 +18,7 @@
         end,
         [t('.summary_table.details'),table_fields[:details]],
         [t('.summary_table.prior_authority'), table_fields[:prior_authority]],
-        if item.apply_vat.present?
+        if item.apply_vat = 'yes'
           [t('.summary_table.vat'), table_fields[:vat]]
         end,
         [t('.summary_table.total'), table_fields[:total]]
@@ -28,6 +28,7 @@
       end
       %>
     </div>
+
     <div id='disbursement-adjustment-form'>
       <%= form_with model: form, url: claim_disbursement_path(claim.id, item.id), method: :put do |f| %>
           <%= govuk_error_summary(form) %>

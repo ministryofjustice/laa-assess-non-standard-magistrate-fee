@@ -13,23 +13,19 @@ module V1
     attribute :id, :string
     attribute :details, :string
     attribute :prior_authority, :string
-    attribute :apply_vat, :boolean
-
-    def current
-      CostCalculator.cost(:disbursement, self)
-    end
+    attribute :apply_vat, :string
+    attribute :vat_amount, :decimal, precision: 10, scale: 2
 
     def provider_requested_total_cost_without_vat
       value_from_first_event('total_cost_without_vat') || total_cost_without_vat
     end
 
-    def requested
-      current - adjustments
+    def provider_requested_total_cost
+      @provider_requested_total_cost ||= CostCalculator.cost(:disbursement, self)
     end
 
-    # TODO: calculate this fro events
-    def adjustments
-      0
+    def caseworker_total_cost
+      total_cost_without_vat.zero? ? 0 : provider_requested_total_cost
     end
 
     def disbursement_table_fields
@@ -52,15 +48,12 @@ module V1
     def type_name
       other_type.to_s.presence || disbursement_type.to_s
     end
-    # NOTE: This is currently designed to show values without VAT being included.
 
     def table_fields
       [
         type_name,
-        NumberTo.pounds(requested),
-        '£'
-        # TODO: once adjustment is calculated:
-        # adjustments.zero? ? '£' : NumberTo.pounds(adjustments)
+        NumberTo.pounds(provider_requested_total_cost),
+        adjustments.any? ? NumberTo.pounds(caseworker_total_cost) : '',
       ]
     end
   end
