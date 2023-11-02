@@ -35,6 +35,26 @@
       <% end %>
       <%= f.govuk_period_field :time_spent, legend: { size: 's', class: 'govuk-!-font-weight-bold' }, width: 'one-third' %>
       <%= govuk_button_link_to(t('.calculate_button_text'), '#', { secondary: true }) %>
+      <div id='claim-cost-table'>
+        <%= govuk_table do |table| %>
+          <%= table.with_caption(size: 'm', text: t('.claim_cost_table.title')) %>
+          <%= table.with_head do |head| %>
+            <%= head.with_row do |row| %>
+              <%= row.with_cell(text: t('.claim_cost_table.header_one')) %>
+              <%= row.with_cell(text: t('.claim_cost_table.header_two')) %>
+              <%= row.with_cell(text: t('.claim_cost_table.header_three')) %>
+            <% end %>
+          <% end %>
+
+          <%= table.with_body do |body| %>
+            <%= body.with_row do |row| %>
+              <%= row.with_cell(text: NumberTo.pounds(item.provider_requested_amount),html_attributes: { id: 'work_item_provider_requested_amount' }) %>
+              <%= row.with_cell(text: '--',html_attributes: { id: 'work_item_caseworker_allowed_amount' }) %>
+              <%= row.with_cell(text: "#{item.uplift ? item.uplift : '0' }%",html_attributes: { id: 'work_item_uplift_allowed_amount' }) %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
       <%= f.govuk_submit t('shared.save_changes') do %>
         <%= link_to t('shared.cancel'), :back, class: 'govuk-link', data: { turbo: 'false' } %>
       <% end %>
