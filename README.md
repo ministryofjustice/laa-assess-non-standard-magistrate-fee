@@ -58,6 +58,14 @@ Records are stored based of the claim ID and need to be processed one at a time.
 It is expected that records will be generated in teh Provider app and sent across
 as apposed to being menually generated to avoid creating invalid data records.
 
+### Adding users
+
+```
+rake user:add['{email}', '{first_name}', '{last_name}', '{role}']
+```
+
+To add a user into the database that can be authenticated into the app, use the command above.
+
 **5. Run app locally**
 
 Once all the above is done, you should be able to run the application as follows:
