@@ -33,7 +33,8 @@
           <%= f.govuk_radio_button :uplift, 'no' %>
         <% end %>
       <% end %>
-       <%= f.govuk_submit t('shared.save_changes') do %>
+      <%= f.govuk_period_field :time_spent, legend: { size: 's', class: 'govuk-!-font-weight-bold' }, width: 'one-third' %>
+      <%= f.govuk_submit t('shared.save_changes') do %>
         <%= link_to t('shared.cancel'), :back, class: 'govuk-link', data: { turbo: 'false' } %>
       <% end %>
     <% end %>
