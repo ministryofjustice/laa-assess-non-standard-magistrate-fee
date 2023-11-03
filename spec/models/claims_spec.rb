@@ -20,14 +20,8 @@ RSpec.describe Claim do
       expect(described_class.unassigned_claims(user)).to eq([])
     end
 
-    it 'includes claims that have an ended assignment' do
-      claim.assignments.create(user: create(:caseworker), end_at:Time.now)
-
-      expect(described_class.unassigned_claims(user)).to eq([claim])
-    end
-
-    it 'does not include claims that have an ended assignment for the user' do
-      claim.assignments.create(user: user, end_at:Time.now)
+    it 'does not include claims the user has been unassigned from' do
+      Event::Unassignment.build(claim:, user:, current_user: user)
 
       expect(described_class.unassigned_claims(user)).to eq([])
     end

@@ -23,15 +23,16 @@ class ClaimsController < ApplicationController
   def destroy
     claim = Claim.find(params[:id])
 
-    Claim.transaction do
-      claim.current_assignments.each do |assignment|
+    assignment = claim.assignments.first
+    if assignment
+      Claim.transaction do
         Event::Unassignment.build(
           claim: claim,
           user: assignment.user,
           current_user: current_user
         )
+        assignment.delete
       end
-      claim.current_assignments.update_all(end_at: Time.now)
     end
 
     redirect_to your_claims_path
