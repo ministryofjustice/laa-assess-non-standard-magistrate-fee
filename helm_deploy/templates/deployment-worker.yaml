@@ -1,0 +1,124 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "helm_deploy.fullname" . }}
+  labels:
+    {{- include "helm_deploy.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "helm_deploy.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "helm_deploy.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ .Values.service_account.name }}
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.workerPort }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: rds-postgresql-instance-output
+                  key: url
+            - name: SECRET_KEY_BASE
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: secret_key_base
+            - name: APP_STORE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: app_store_url
+            - name: APP_STORE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: app_store_username
+            - name: APP_STORE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: app_store_password
+            - name: OMNIAUTH_AZURE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: azure-auth
+                  key: client_id
+            - name: OMNIAUTH_AZURE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: azure-auth
+                  key: client_secret
+            - name: OMNIAUTH_AZURE_REDIRECT_URI
+              valueFrom:
+                secretKeyRef:
+                  name: azure-auth
+                  key: redirect_uri
+            - name: OMNIAUTH_AZURE_TENANT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: azure-auth
+                  key: tenant_id
+            - name: RACK_ENV
+              value: 'production'
+            - name: RAILS_ENV
+              value: 'production'
+            - name: RAILS_LOG_TO_STDOUT
+              value: enabled
+            - name: DEV_AUTH_ENABLED
+              value: {{ .Values.secrets.devAuthEnabled | quote }}
+            - name: ENV_NAME
+              value: development
+            - name: IS_LOCAL_DOCKER_ENV
+              value: 'true'
+            - name: SENTRY_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: sentry-dsn
+                  key: url
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
