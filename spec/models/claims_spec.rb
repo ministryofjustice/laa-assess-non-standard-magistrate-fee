@@ -21,7 +21,7 @@ RSpec.describe Claim do
     end
 
     it 'does not include claims the user has been unassigned from' do
-      Event::Unassignment.build(claim:, user:, current_user: user)
+      Event::Unassignment.build(claim: claim, user: user, current_user: user)
 
       expect(described_class.unassigned_claims(user)).to eq([])
     end
@@ -31,8 +31,8 @@ RSpec.describe Claim do
     let(:user) { create(:caseworker) }
 
     it 'does not allow a claim to have multiple live assignments' do
-      claim.assignments.create!(user: user)
-      assignment = claim.assignments.new(user: user)
+      claim.assignments.create!(user:)
+      assignment = claim.assignments.new(user:)
 
       expect(assignment).not_to be_valid
       expect(assignment.errors.of_kind?(:claim, :taken)).to be(true)

@@ -9,9 +9,8 @@ RSpec.describe ClaimsController do
 
   describe '#new' do
     context 'when a claim is available to assign' do
-
       it 'creates an assignment and event' do
-        claim = create(:claim)
+        create(:claim)
 
         expect do
           expect { get :new }.to change(Assignment, :count).by(1)
@@ -32,7 +31,7 @@ RSpec.describe ClaimsController do
         get :new
 
         expect(response).to redirect_to(your_claims_path)
-        expect(flash[:notice]).to eq("There are no claims waiting to be allocated.")
+        expect(flash[:notice]).to eq('There are no claims waiting to be allocated.')
       end
     end
   end
