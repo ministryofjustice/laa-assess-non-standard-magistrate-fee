@@ -7,6 +7,7 @@ en:
       page_title: Assess a non-standard magistrates’ court payment
       heading: "All claims"
       table_info_item: "claim"
+      unassigned: Unassigned
     claims_table:
       table_heading: "All Claims"
       laa_reference: "LAA reference"

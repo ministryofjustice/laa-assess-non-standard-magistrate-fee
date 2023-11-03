@@ -4,7 +4,7 @@ module V1
     attribute :defendants
     attribute :firm_office
     attribute :created_at, :date
-    attribute :id
+    attribute :claim
 
     def main_defendant_name
       main_defendant = defendants.detect { |defendant| defendant['main'] }
@@ -20,12 +20,12 @@ module V1
     end
 
     def case_worker_name
-      '#Pending#'
+      claim.assignments.first&.display_name || I18n.t('claims.index.unassigned')
     end
 
     def table_fields
       [
-        { laa_reference: laa_reference, claim_id: id },
+        { laa_reference: laa_reference, claim_id: claim.id },
         firm_name,
         main_defendant_name,
         date_created,
