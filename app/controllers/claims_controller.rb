@@ -24,13 +24,11 @@ class ClaimsController < ApplicationController
     claim = Claim.find(params[:id])
 
     assignment = claim.assignments.first
+
     if assignment
       Claim.transaction do
-        Event::Unassignment.build(
-          claim: claim,
-          user: assignment.user,
-          current_user: current_user
-        )
+        Event::Unassignment.build(claim: claim, user: assignment.user, current_user: current_user)
+
         assignment.delete
       end
     end

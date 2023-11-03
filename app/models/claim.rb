@@ -1,6 +1,6 @@
 class Claim < ApplicationRecord
   has_many :events, dependent: :destroy
-  has_many :assignments
+  has_many :assignments, dependent: :destroy
 
   validates :risk, inclusion: { in: %w[low medium high] }
   validates :current_version, numericality: { only_integer: true, greater_than: 0 }

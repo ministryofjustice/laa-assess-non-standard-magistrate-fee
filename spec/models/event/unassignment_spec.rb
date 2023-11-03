@@ -19,10 +19,10 @@ RSpec.describe Event::Unassignment do
     end
   end
 
-  context 'when user is the same as current user' do
+  context 'when user is different to the current user' do
     let(:current_user) { create(:supervisor) }
 
-    it 'can build a new record without a secondary user' do
+    it 'can build a new record with a secondary user' do
       expect(subject).to have_attributes(
         claim_id: claim.id,
         primary_user_id: user.id,
