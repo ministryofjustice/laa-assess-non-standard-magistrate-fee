@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_10_25_145658) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_02_112118) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
+
+  create_table "assignments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "claim_id", null: false
+    t.uuid "user_id", null: false
+    t.datetime "end_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["claim_id"], name: "index_assignments_on_claim_id"
+    t.index ["user_id"], name: "index_assignments_on_user_id"
+  end
 
   create_table "claims", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "state"
@@ -60,6 +70,8 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_25_145658) do
     t.index ["email"], name: "index_users_on_email"
   end
 
+  add_foreign_key "assignments", "claims"
+  add_foreign_key "assignments", "users"
   add_foreign_key "events", "claims"
   add_foreign_key "events", "users", column: "primary_user_id"
   add_foreign_key "events", "users", column: "secondary_user_id"

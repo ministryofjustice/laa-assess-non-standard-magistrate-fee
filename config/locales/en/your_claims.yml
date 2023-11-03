@@ -7,6 +7,7 @@ en:
       table_info_item: "claim"
       next_claim: "Assess next claim"
       all_claims: "Check all claims"
+      no_claims: There are no claims allocated for you to assess.
     your_claims_table:
       table_heading: "Your claims"
       laa_reference: "LAA reference"

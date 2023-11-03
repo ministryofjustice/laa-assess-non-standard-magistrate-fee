@@ -3,11 +3,16 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+    <% if @claims.none? %>
+      <h2 class="govuk-body-l"><%= t('.no_claims') %></h2>
+    <% end %>
     <div class="govuk-button-group">
-      <%= govuk_button_link_to(t('.next_claim'),claim_claim_details_path(@next_claim)) %>
+      <%= govuk_button_link_to(t('.next_claim'), new_claim_path) %>
       <%= govuk_link_to(t('.all_claims'), claims_path, { no_visited_state: true }) %>
     </div>
-    <%= render 'your_claims_table', { claims: @claims } %>
-    <%= render "shared/pagination", { pagy: @pagy, item: t('.table_info_item')} %>
+    <% if @claims.any? %>
+      <%= render 'your_claims_table', { claims: @claims } %>
+      <%= render "shared/pagination", { pagy: @pagy, item: t('.table_info_item')} %>
+    <% end %>
   </div>
 </div>

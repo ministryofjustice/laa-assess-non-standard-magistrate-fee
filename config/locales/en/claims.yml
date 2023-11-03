@@ -1,6 +1,8 @@
 ---
 en:
   claims:
+    new:
+      no_pending_claims: There are no claims waiting to be allocated.
     index:
       page_title: Assess a non-standard magistrates’ court payment
       heading: "All claims"
