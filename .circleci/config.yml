@@ -33,6 +33,7 @@ executors:
     resource_class: small
     docker:
       - image: ministryofjustice/cloud-platform-tools
+      - image: cimg/ruby:3.2.2-browsers
 
 # ------------------
 # REFERENCES
