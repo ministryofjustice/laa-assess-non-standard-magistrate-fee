@@ -42,7 +42,7 @@ RSpec.describe V1::LetterAndCall do
       let(:params) { { uplift: nil } }
 
       it 'returns 0% as the uplift amount' do
-        expect(subject.provider_requested_uplift).to eq(0)
+        expect(subject.provider_requested_uplift).to be_nil
       end
     end
   end

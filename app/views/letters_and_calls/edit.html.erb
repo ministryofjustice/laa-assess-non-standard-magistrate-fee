@@ -15,7 +15,7 @@
       rows = [
         [t('.number', type: item.type_name), item.provider_requested_count.to_s],
         [t('.rate'), item.pricing.to_s],
-        [t('.uplift_requested'), "#{item.provider_requested_uplift}%"],
+        [t('.uplift_requested'), "#{item.provider_requested_uplift.to_i}%"],
         [t('.total_claimed'), NumberTo.pounds(item.provider_requested_amount)]
       ]
       govuk_table(head: '', first_cell_is_header: true, rows:) do |tab|
