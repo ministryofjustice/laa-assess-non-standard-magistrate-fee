@@ -7,7 +7,10 @@
     "data": {
         "id": "f1ba0909-020f-4373-a167-9100923bdcaa",
         "ufn": "111111/111",
-        "plea": "bind_over",
+        "plea": {
+            "value": "bind_over",
+            "en": "Bind Over"
+        },
         "court": "Aldershot Magistrates' Court",
         "gender": null,
         "status": "completed",
@@ -25,17 +28,20 @@
             "reference_number": "jj",
             "contact_full_name": null
         },
-        "claim_type": "non_standard_magistrate",
+        "claim_type": {
+            "value": "non_standard_magistrate",
+            "en": "Non-standard fee - magistrate"
+        },
         "cntp_order": null,
         "conclusion": "",
         "created_at": "2023-08-09T16:44:55.969Z",
         "defendants": [
             {
                 "id": "92b44456-59ae-4305-9650-607c2d306d51",
-                "maat": "sss",
+                "maat": "ZZ1234",
                 "main": true,
                 "position": 1,
-                "full_name": "ss ss"
+                "full_name": "Jim Bob"
             }
         ],
         "disability": null,
@@ -53,7 +59,7 @@
                     "en": "Attendance without counsel",
                     "value": "attendance_without_counsel"
                 },
-                "fee_earner": "aaa",
+                "fee_earner": "James Dean",
                 "time_spent": 72,
                 "completed_on": "2022-01-01"
             },
@@ -65,7 +71,7 @@
                     "en": "Travel",
                     "value": "travel"
                 },
-                "fee_earner": "www",
+                "fee_earner": "James Dean",
                 "time_spent": 284,
                 "completed_on": "2022-01-01"
             },
@@ -77,7 +83,7 @@
                     "en": "Preparation",
                     "value": "preparation"
                 },
-                "fee_earner": "sss",
+                "fee_earner": "Jake Sparrow",
                 "time_spent": 142,
                 "completed_on": "2022-02-02"
             },
@@ -89,21 +95,24 @@
                     "en": "Preparation",
                     "value": "preparation"
                 },
-                "fee_earner": "ddd",
+                "fee_earner": "James Dean",
                 "time_spent": 671,
                 "completed_on": "2023-01-01"
             }
         ],
         "firm_office": {
-            "name": "dd",
-            "town": "hh",
+            "name": "Downtown Law",
+            "town": "Downtown",
             "postcode": "aa1 2bb",
             "previous_id": null,
             "account_number": "hh",
             "address_line_1": "hh",
             "address_line_2": "hh"
         },
-        "matter_type": "3",
+        "matter_type": {
+            "value": "3",
+            "en": "Sexual offences and associated offences against children"
+        },
         "office_code": "1A123B",
         "work_before": "no",
         "youth_count": "no",
@@ -114,7 +123,7 @@
             {
                 "id": "abf97dd9-ef21-4e75-b8f8-6b65cb5cbbb0",
                 "miles": "111.0",
-                "details": "sss",
+                "details": "Driving my car",
                 "pricing": 0.45,
                 "vat_rate": 0.2,
                 "apply_vat": null,
@@ -134,7 +143,7 @@
             {
                 "id": "18032dc2-357c-4a70-a009-0b85e32b6ef8",
                 "miles": null,
-                "details": "222",
+                "details": "Millions of peaches",
                 "pricing": 1.0,
                 "vat_rate": 0.2,
                 "apply_vat": null,
@@ -154,7 +163,7 @@
             {
                 "id": "5c796ff8-a14b-4359-b02c-9ffe5fc669cb",
                 "miles": null,
-                "details": "sss",
+                "details": "What report",
                 "pricing": 1.0,
                 "vat_rate": 0.2,
                 "apply_vat": null,
@@ -176,7 +185,10 @@
         "laa_reference": "LAA-FHaMVK",
         "rep_order_date": "2012-12-12",
         "signatory_name": "dave aa",
-        "hearing_outcome": "CP03",
+        "hearing_outcome": {
+            "value": "CP03",
+            "en": "Representation order withdrawn"
+        },
         "work_after_date": null,
         "agent_instructed": "no",
         "assigned_counsel": "no",

@@ -39,7 +39,7 @@ Rails.application.routes.draw do
 
   resources :application_versions, only: [:update]
   resources :landing, only: [:index]
-  resources :claims, only: [:index] do
+  resources :claims, only: [:new, :index, :destroy] do
     resource :claim_details, only: [:show]
     resource :adjustments, only: [:show]
     resources :work_items, only: [:index]
