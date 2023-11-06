@@ -13,7 +13,7 @@ class LettersAndCallsController < ApplicationController
     item = BaseViewModel.build(:letter_and_call, claim, 'letters_and_calls').detect do |model|
       model.type.value == params[:id]
     end
-    form = form_class.new(claim:, **item.form_attributes)
+    form = form_class.new(claim:, item:, **item.form_attributes)
 
     render locals: { claim:, item:, form: }
   end
