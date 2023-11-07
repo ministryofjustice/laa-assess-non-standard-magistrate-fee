@@ -43,7 +43,7 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /ping
+              path: /
               port: {{ .Values.service.workerPort }}
             initialDelaySeconds: 20
             periodSeconds: 30
