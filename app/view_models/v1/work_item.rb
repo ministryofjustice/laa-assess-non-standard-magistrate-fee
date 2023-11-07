@@ -33,8 +33,8 @@ module V1
     def table_fields
       [
         work_type.to_s,
-        "#{uplift.to_i}%",
-        "#{requested}min",
+        "#{provider_requested_uplift.to_i}%",
+        "#{NumberTo.pounds(provider_requested_amount)}",
         adjustments.any? ? "#{caseworker_uplift}%" : '',
         adjustments.any? ? NumberTo.pounds(caseworker_amount) : '',
       ]
