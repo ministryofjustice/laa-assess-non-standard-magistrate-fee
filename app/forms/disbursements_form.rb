@@ -25,8 +25,6 @@ class DisbursementsForm < BaseAdjustmentForm
     end
 
     true
-  rescue StandardError
-    false
   end
 
   private

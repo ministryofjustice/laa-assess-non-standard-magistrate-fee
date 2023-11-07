@@ -86,7 +86,8 @@ RSpec.describe V1::Disbursement do
     end
 
     it 'returns an array with the correct fields if there are adjustments' do
-      allow(disbursement).to receive_messages(type_name: 'type', provider_requested_total_cost: 100, caseworker_total_cost: 200)
+      allow(disbursement).to receive_messages(type_name: 'type', provider_requested_total_cost: 100,
+                                              caseworker_total_cost: 200)
       disbursement.adjustments = [1]
       expected_fields = ['type', '£100.00', '£200.00']
       expect(disbursement.table_fields).to eq(expected_fields)
