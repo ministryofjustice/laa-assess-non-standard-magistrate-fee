@@ -41,7 +41,8 @@ class WorkItemsController < ApplicationController
     params.require(:work_item_form).permit(
       :work_type,
       :uplift,
-      :time_spent
+      :time_spent,
+      :explanation
     ).merge(
       current_user: current_user,
       id: params[:id]
