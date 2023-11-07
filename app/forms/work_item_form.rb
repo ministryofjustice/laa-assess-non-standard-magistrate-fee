@@ -8,7 +8,9 @@ class WorkItemForm < BaseAdjustmentForm
   # not set to integer so we can catch errors if non-number values are entered
   attribute :time_spent
 
-  validates :type, inclusion: { in: %w[travel waiting advocacy preparation attendance_with_counsel attendance_without_counsel] }
+  validates :type,
+            inclusion: { in: %w[travel waiting advocacy preparation attendance_with_counsel
+                                attendance_without_counsel] }
   validates :uplift, inclusion: { in: [UPLIFT_PROVIDED, UPLIFT_RESET] }, if: -> { item.uplift? }
   validates :time_spent, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
