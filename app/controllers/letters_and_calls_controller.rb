@@ -13,7 +13,7 @@ class LettersAndCallsController < ApplicationController
     item = BaseViewModel.build(:letter_and_call, claim, 'letters_and_calls').detect do |model|
       model.type.value == params[:id]
     end
-    form = LettersCallsForm.new(claim:, **item.form_attributes)
+    form = form_class.new(claim:, **item.form_attributes)
 
     render locals: { claim:, item:, form: }
   end
@@ -23,7 +23,7 @@ class LettersAndCallsController < ApplicationController
     item = BaseViewModel.build(:letter_and_call, claim, 'letters_and_calls').detect do |model|
       model.type.value == params[:id]
     end
-    form = LettersCallsForm.new(claim:, item:, **form_params)
+    form = form_class.new(claim:, item:, **form_params)
 
     if form.save
       redirect_to claim_adjustments_path(claim, anchor: 'letters-and-calls-tab')
@@ -34,8 +34,19 @@ class LettersAndCallsController < ApplicationController
 
   private
 
+  def form_class
+    case params[:id]
+    when 'letters'
+      LettersCallsForm::Letters
+    when 'calls'
+      LettersCallsForm::Calls
+    else
+      raise 'Only letters and calls type excepted'
+    end
+  end
+
   def form_params
-    params.require(:letters_calls_form).permit(
+    params.require(:"letters_calls_form_#{params[:id]}").permit(
       :uplift,
       :count,
       :explanation,

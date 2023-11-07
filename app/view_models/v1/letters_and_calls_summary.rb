@@ -17,7 +17,7 @@ module V1
     end
 
     def uplift?
-      rows.any? { |row| row.uplift.positive? }
+      rows.any? { |row| row.uplift&.positive? }
     end
   end
 end

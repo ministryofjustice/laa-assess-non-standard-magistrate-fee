@@ -42,6 +42,14 @@ RSpec.describe LettersAndCallsController do
       allow(LettersCallsForm).to receive(:new).and_return(form)
     end
 
+    context 'when type is unknown' do
+      it 'raises an error' do
+        expect do
+          get :edit, params: { claim_id: claim_id, id: 'other' }
+        end.to raise_error('Only letters and calls type excepted')
+      end
+    end
+
     context 'when URL is for letters' do
       it 'renders successfully with claims' do
         allow(controller).to receive(:render)
@@ -79,28 +87,57 @@ RSpec.describe LettersAndCallsController do
       allow(Claim).to receive(:find).and_return(claim)
     end
 
-    context 'when form save is successful' do
-      let(:save) { true }
+    context 'for letters' do
+      context 'when form save is successful' do
+        let(:save) { true }
 
-      it 'renders successfully with claims' do
-        allow(controller).to receive(:render)
-        put :update, params: { claim_id: claim_id, id: 'letters', letters_calls_form: { some: :data } }
+        it 'renders successfully with claims' do
+          allow(controller).to receive(:render)
+          put :update, params: { claim_id: claim_id, id: 'letters', letters_calls_form_letters: { some: :data } }
 
-        expect(controller).to redirect_to(claim_adjustments_path(claim, anchor: 'letters-and-calls-tab'))
-        expect(response).to have_http_status(:found)
+          expect(controller).to redirect_to(claim_adjustments_path(claim, anchor: 'letters-and-calls-tab'))
+          expect(response).to have_http_status(:found)
+        end
+      end
+
+      context 'when form save is unsuccessful' do
+        let(:save) { false }
+
+        it 'renders successfully with claims' do
+          allow(controller).to receive(:render)
+          put :update, params: { claim_id: claim_id, id: 'letters', letters_calls_form_letters: { some: :data } }
+
+          expect(controller).to have_received(:render)
+                            .with(:edit, locals: { claim: claim, form: form, item: letters })
+          expect(response).to be_successful
+        end
       end
     end
 
-    context 'when form save is unsuccessful' do
-      let(:save) { false }
+    context 'for calls' do
+      context 'when form save is successful' do
+        let(:save) { true }
 
-      it 'renders successfully with claims' do
-        allow(controller).to receive(:render)
-        put :update, params: { claim_id: claim_id, id: 'calls', letters_calls_form: { some: :data } }
+        it 'renders successfully with claims' do
+          allow(controller).to receive(:render)
+          put :update, params: { claim_id: claim_id, id: 'calls', letters_calls_form_calls: { some: :data } }
 
-        expect(controller).to have_received(:render)
-                          .with(:edit, locals: { claim: claim, form: form, item: calls })
-        expect(response).to be_successful
+          expect(controller).to redirect_to(claim_adjustments_path(claim, anchor: 'letters-and-calls-tab'))
+          expect(response).to have_http_status(:found)
+        end
+      end
+
+      context 'when form save is unsuccessful' do
+        let(:save) { false }
+
+        it 'renders successfully with claims' do
+          allow(controller).to receive(:render)
+          put :update, params: { claim_id: claim_id, id: 'calls', letters_calls_form_calls: { some: :data } }
+
+          expect(controller).to have_received(:render)
+                            .with(:edit, locals: { claim: claim, form: form, item: calls })
+          expect(response).to be_successful
+        end
       end
     end
   end
