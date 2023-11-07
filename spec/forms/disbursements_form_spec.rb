@@ -81,7 +81,7 @@ RSpec.describe DisbursementsForm do
       end
 
       it 'returns false' do
-        expect{form.save}.to raise_error('testing error')
+        expect { form.save }.to raise_error('testing error')
       end
     end
   end
