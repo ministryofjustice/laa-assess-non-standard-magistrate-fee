@@ -10,7 +10,8 @@ class ChangeRisksController < ApplicationController
     risk = ChangeRiskForm.new(risk_params)
 
     if risk.save
-      redirect_to claims_path, flash: { success: t('.success', level: risk.risk_level) }
+      redirect_to claim_claim_details_path(params[:claim_id]),
+                  flash: { success: t('.success', level: risk.risk_level) }
     else
       render :edit, locals: { claim:, risk: }
     end

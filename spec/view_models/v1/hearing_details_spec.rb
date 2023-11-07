@@ -7,7 +7,7 @@ RSpec.describe V1::HearingDetails do
     end
   end
 
-  # rubocop:disable Rspec/ExampleLength
+  # rubocop:disable RSpec/ExampleLength
   describe '#rows' do
     it 'has correct structure' do
       subject = described_class.new(
@@ -32,7 +32,7 @@ RSpec.describe V1::HearingDetails do
       expect(subject.rows).to have_key(:data)
     end
   end
-  # rubocop:enable Rspec/ExampleLength
+  # rubocop:enable RSpec/ExampleLength
 
   describe '#data' do
     subject = described_class.new(

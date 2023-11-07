@@ -2,7 +2,7 @@
 en:
   claims:
     index:
-      page_title: "Review criminal legal aid applications"
+      page_title: Assess a non-standard magistrates’ court payment
       heading: "All claims"
     claim_nav:
       claim_details: Claim details
@@ -26,7 +26,7 @@ en:
 
   claim_details:
     show:
-      page_title: "Review criminal legal aid applications"
+      page_title: Assess a non-standard magistrates’ court payment
     details_of_claim:
       title: Claim summary
       ufn: Unique file number

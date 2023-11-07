@@ -13,7 +13,7 @@ module V1
     end
 
     def provider_requested_uplift
-      @provider_requested_uplift ||= value_from_first_event('uplift') || uplift.to_i
+      @provider_requested_uplift ||= value_from_first_event('uplift') || uplift
     end
 
     def provider_requested_count
@@ -45,14 +45,17 @@ module V1
     end
 
     def form_attributes
-      attributes.slice!('pricing', 'adjustments').merge('type' => type.value)
+      attributes.slice!('pricing', 'adjustments').merge(
+        'type' => type.value,
+        'explanation' => previous_explanation,
+      )
     end
 
     def table_fields
       [
         type.to_s,
         count.to_s,
-        "#{provider_requested_uplift}%",
+        "#{provider_requested_uplift.to_i}%",
         NumberTo.pounds(provider_requested_amount),
         adjustments.any? ? "#{caseworker_uplift}%" : '',
         adjustments.any? ? NumberTo.pounds(caseworker_amount) : '',

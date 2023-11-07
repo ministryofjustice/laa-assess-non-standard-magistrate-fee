@@ -45,6 +45,12 @@ RSpec.describe Type::TranslatedObject do
     it { expect(coerced_value).to eq('') }
   end
 
+  describe 'when value is `Array`' do
+    let(:value) { ['Apple'] }
+
+    it { expect { coerced_value }.to raise_error('Invalid Type for ["Apple"]') }
+  end
+
   describe 'when value is `string`' do
     let(:value) { 'Apple' }
 

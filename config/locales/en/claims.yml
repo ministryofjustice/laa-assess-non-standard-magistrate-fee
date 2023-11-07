@@ -1,10 +1,13 @@
 ---
 en:
   claims:
+    new:
+      no_pending_claims: There are no claims waiting to be allocated.
     index:
-      page_title: "Review criminal legal aid applications"
+      page_title: Assess a non-standard magistrates’ court payment
       heading: "All claims"
       table_info_item: "claim"
+      unassigned: Unassigned
     claims_table:
       table_heading: "All Claims"
       laa_reference: "LAA reference"
@@ -27,14 +30,28 @@ en:
       date_received: "Date received:"
       remove_from_list: Remove from list
     review_and_adjust_nav:
-      page_title: "Review criminal legal aid applications"
+      page_title: Assess a non-standard magistrates’ court payment
       review_and_adjust: Review and adjust
       work_items: Work items
       letters_and_calls: Letters and calls
       disbursements: Disbursements
   claim_details:
     show:
-      page_title: "Review criminal legal aid applications"
+      page_title: Assess a non-standard magistrates’ court payment
+  work_items:
+    index:
+      work_items: Work items
+      core_cost: Core costs
+      remove_uplift_all: Remove uplifts for all items
+      page_title: Assess a non-standard magistrates’ court payment
+      type_of_work: Type of Work
+      uplift_request: Uplift requested
+      requested: Provider requested
+      uplift_allowed: Uplift allowed
+      allowed: Caseworker allowed
+      action: Action
+      change: Change
+      travel_and_waiting: Travel and waiting
   disbursements:
     index:
       disbursements: Disbursements

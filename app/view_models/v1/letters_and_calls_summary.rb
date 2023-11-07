@@ -15,5 +15,9 @@ module V1
     def rows
       @rows ||= BaseViewModel.build(:letter_and_call, claim, 'letters_and_calls')
     end
+
+    def uplift?
+      rows.any? { |row| row.uplift&.positive? }
+    end
   end
 end

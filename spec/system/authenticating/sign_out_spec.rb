@@ -6,7 +6,7 @@ RSpec.describe 'Sign out' do
   before do
     sign_in user
     visit '/'
-    click_button('Sign out')
+    click_link('Sign out')
   end
 
   it 'signs the user out' do

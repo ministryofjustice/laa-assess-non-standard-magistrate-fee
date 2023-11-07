@@ -11,13 +11,12 @@
         row.with_cell(text: t('.firm_name'))
         row.with_cell(text: t('.defendant_name'))
         row.with_cell(html_attributes:{'aria-sort': 'ascending'},text: t('.date_received'))
-        row.with_cell(html_attributes:{'aria-sort': 'ascending'},text: t('.caseworker_name'))
         row.with_cell(html_attributes:{'aria-sort': 'ascending'},text: t('.risk.heading'))
       end
     end
 
     table.with_body do |body|
-      rows.each do |claim, firm, defendant, date_received, case_worker, risk|
+      rows.each do |claim, firm, defendant, date_received, _case_worker, risk|
         body.with_row do |row|
           row.with_cell do
             govuk_link_to(claim[:laa_reference], claim_claim_details_path([claim[:claim_id]]))
@@ -25,7 +24,6 @@
           row.with_cell(text: firm)
           row.with_cell(text: defendant)
           row.with_cell(text: date_received[:text], html_attributes: { 'data-sort-value': date_received[:sort_value] })
-          row.with_cell(text: case_worker, html_attributes: { 'data-sort-value': case_worker })
           row.with_cell(text: t(".risk.#{risk[:text]}"), html_attributes: { 'data-sort-value': risk[:sort_value] })
         end
       end

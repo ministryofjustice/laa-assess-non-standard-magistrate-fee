@@ -146,7 +146,7 @@ RSpec/NestedGroups:
 RSpec/ExampleLength:
   Max: 16
   Exclude:
-    - spec/steps/**/integration_spec.rb
+    - spec/system/*
 
 Lint/MissingSuper:
   Exclude:
