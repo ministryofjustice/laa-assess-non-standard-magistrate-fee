@@ -34,7 +34,6 @@ function init() {
 
     if (upliftAmount) {
       const upliftFactor = (parseFloat(upliftAmount) / 100) + 1;
-      console.log(hoursField.value, minutesField.value, minutes, unitPrice, upliftFactor);
       return (`£${((minutes/60) * unitPrice * upliftFactor).toFixed(2)}`);
     } else {
       console.log(minutes, unitPrice);
