@@ -11,16 +11,19 @@ module V1
     attribute :fee_earner, :string
 
     def provider_requested_amount
-      CostCalculator.cost(:work_item, self)
+      CostCalculator.cost(:work_item, self, :provider_requested)
     end
 
-    def requested
-      # TODO: update once we can calculate adjustments
-      time_spent - 0 # adjustments
+    def provider_requested_uplift
+      @provider_requested_uplift ||= value_from_first_event('uplift') || uplift.to_i
     end
 
-    def adjustments
-      '#pending#'
+    def caseworker_amount
+      @caseworker_amount ||= CostCalculator.cost(:work_item, self, :caseworker)
+    end
+
+    def caseworker_uplift
+      uplift.to_i
     end
 
     def uplift?
@@ -32,8 +35,8 @@ module V1
         work_type.to_s,
         "#{uplift.to_i}%",
         "#{requested}min",
-        '#pending#',
-        '#pending#'
+        adjustments.any? ? "#{caseworker_uplift}%" : '',
+        adjustments.any? ? NumberTo.pounds(caseworker_amount) : '',
       ]
     end
   end
