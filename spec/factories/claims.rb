@@ -28,6 +28,27 @@ FactoryBot.define do
               'uplift' => 20,
               'pricing' => 3.56
           },
+        ],
+        'disbursements' => [
+          {
+            'id' => '1c0f36fd-fd39-498a-823b-0a3837454563',
+            'details' => 'Details',
+            'pricing' => 1.0,
+            'vat_rate' => 0.2,
+            'apply_vat' => 'no',
+            'other_type' => {
+              'en' => 'Apples',
+              'value' => 'Apples'
+            },
+            'vat_amount' => 0.0,
+            'prior_authority' => 'yes',
+            'disbursement_date' => '2022-12-12',
+            'disbursement_type' => {
+              'en' => 'Other',
+              'value' => 'other'
+            },
+            'total_cost_without_vat' => 100.0
+          }
         ]
       }
     end
