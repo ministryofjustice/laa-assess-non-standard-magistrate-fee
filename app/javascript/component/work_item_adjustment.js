@@ -23,7 +23,15 @@ function init() {
   function calculateAdjustedAmount() {
     const unitPrice = calculateChangeButton?.getAttribute('data-unit-price');
     const upliftAmount = calculateChangeButton?.getAttribute('data-uplift-amount');
-    const minutes = (parseFloat(hoursField.value) * 60) + parseFloat(minutesField.value)
+
+    checkMinutesThreshold();
+
+    var minutes = calculateChangeButton?.getAttribute('data-provider-time-spent');
+
+    if(hoursField.value && minutesField.value){
+      minutes = (parseInt(hoursField.value) * 60) + parseInt(minutesField.value);
+    }
+
     if (upliftAmount) {
       const upliftFactor = (parseFloat(upliftAmount) / 100) + 1;
       console.log(hoursField.value, minutesField.value, minutes, unitPrice, upliftFactor);
@@ -31,6 +39,14 @@ function init() {
     } else {
       console.log(minutes, unitPrice);
       return (`£${(hoursField.value, minutesField.value, minutes * unitPrice).toFixed(2)}`);
+    }
+  }
+
+  function checkMinutesThreshold(){
+    if(minutesField){
+      if(parseInt(minutesField.value) >= 60){
+        minutesField.value = 59;
+      }
     }
   }
 }
