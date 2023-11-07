@@ -45,7 +45,10 @@ module V1
     end
 
     def form_attributes
-      attributes.slice!('pricing', 'adjustments').merge('type' => type.value)
+      attributes.slice!('pricing', 'adjustments').merge(
+        'type' => type.value,
+        'explanation' => previous_explanation,
+      )
     end
 
     def table_fields

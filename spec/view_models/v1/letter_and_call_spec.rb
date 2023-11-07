@@ -123,20 +123,41 @@ RSpec.describe V1::LetterAndCall do
   end
 
   describe '#form_attributes' do
+    let(:adjustments) { [] }
     let(:params) do
       {
         type: { 'en' => 'Letters', 'value' => 'll' },
         count: 10,
         uplift: 15,
+        adjustments: adjustments,
       }
     end
 
     it 'extracts data for form initialization' do
       expect(subject.form_attributes).to eq(
-        'type' => 'll',
+        'explanation' => nil,
         'count' => 10,
+        'type' => 'll',
         'uplift' => 15,
       )
+    end
+
+    context 'when adjustments exists' do
+      let(:adjustments) do
+        [
+          double(:first, details: { 'comment' => 'first adjustment' }),
+          double(:second, details: { 'comment' => 'second adjustment' }),
+        ]
+      end
+
+      it 'includes the previous adjustment comment' do
+        expect(subject.form_attributes).to eq(
+          'explanation' => 'second adjustment',
+          'count' => 10,
+          'type' => 'll',
+          'uplift' => 15,
+        )
+      end
     end
   end
 
