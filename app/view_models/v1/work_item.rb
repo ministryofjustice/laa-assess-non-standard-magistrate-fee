@@ -27,7 +27,7 @@ module V1
     end
 
     def uplift?
-      !uplift.to_i.zero?
+      !provider_requested_uplift.to_i.zero?
     end
 
     def table_fields
