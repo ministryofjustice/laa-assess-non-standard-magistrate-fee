@@ -28,7 +28,7 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ .Chart.Name }}-worker
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -41,10 +41,14 @@ spec:
             httpGet:
               path: /ping
               port: {{ .Values.service.workerPort }}
+            initialDelaySeconds: 20
+            periodSeconds: 30
           readinessProbe:
             httpGet:
               path: /ping
               port: {{ .Values.service.workerPort }}
+            initialDelaySeconds: 20
+            periodSeconds: 30
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
