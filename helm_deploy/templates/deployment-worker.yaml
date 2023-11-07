@@ -49,7 +49,7 @@ spec:
             periodSeconds: 30
           readinessProbe:
             httpGet:
-              path: /ping
+              path: /
               port: {{ .Values.service.workerPort }}
             initialDelaySeconds: 20
             periodSeconds: 30
