@@ -26,6 +26,6 @@
       </p>
     </div>
     <div class="govuk-grid-column-one-thirds govuk-!-padding-top-2">
-      <%= button_to(t(".remove_from_list"), '#', class: "govuk-button govuk-button--secondary", data_module: "govuk-button") %>
+      <%= button_to(t(".remove_from_list"), claim_path(claim), method: :delete, class: "govuk-button govuk-button--secondary", data_module: "govuk-button") %>
     </div>
   </div>

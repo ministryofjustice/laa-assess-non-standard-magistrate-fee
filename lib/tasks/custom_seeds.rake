@@ -53,6 +53,7 @@ namespace :custom_seeds do
         claim = Claim.find_by(id: claim_id)
 
         if claim
+          claim.assignments.delete_all
           claim.events.delete_all
           claim.delete
         end

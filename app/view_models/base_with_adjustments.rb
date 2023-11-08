@@ -9,4 +9,11 @@ class BaseWithAdjustments < BaseViewModel
 
     field.details['from']
   end
+
+  def previous_explanation
+    field = adjustments.last
+    return unless field
+
+    field.details['comment']
+  end
 end
