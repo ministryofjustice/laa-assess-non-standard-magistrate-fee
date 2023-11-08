@@ -6,6 +6,7 @@ en:
       heading: Change the risk of the claim
       current_risk: 'Current risk: %{level} risk'
       legend: What do you want to change the risk to?
+      save_changes: Change risk
     update:
       success: You changed the claim risk to %{level}
 

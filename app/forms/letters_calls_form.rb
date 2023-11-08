@@ -1,4 +1,9 @@
 class LettersCallsForm < BaseAdjustmentForm
+  # subclasses required here to give scoping for translations
+  class Letters < LettersCallsForm; end
+  class Calls < LettersCallsForm; end
+
+  LINKED_CLASS = V1::LetterAndCall
   UPLIFT_PROVIDED = 'no'.freeze
   UPLIFT_RESET = 'yes'.freeze
 
@@ -39,14 +44,6 @@ class LettersCallsForm < BaseAdjustmentForm
 
   private
 
-  # TODO: change this have linked_type of 'letters_and_calls' and linked_id of letters or calls
-  # this will better match how work item and disbursements are implemented.
-  def linked
-    {
-      type: selected_record.dig('type', 'value'),
-    }
-  end
-
   def selected_record
     @selected_record ||= claim.data['letters_and_calls'].detect do |row|
       row.dig('type', 'value') == type
@@ -58,7 +55,7 @@ class LettersCallsForm < BaseAdjustmentForm
   end
 
   def data_has_changed?
-    count.to_i != item.count ||
+    count.to_s.strip != item.count.to_s ||
       (item.uplift? && item.uplift.zero? != (uplift == UPLIFT_RESET))
   end
 end

@@ -15,7 +15,7 @@
       rows = [
         [t('.number', type: item.type_name), item.provider_requested_count.to_s],
         [t('.rate'), item.pricing.to_s],
-        [t('.uplift_requested'), "#{item.provider_requested_uplift}%"],
+        [t('.uplift_requested'), "#{item.provider_requested_uplift.to_i}%"],
         [t('.total_claimed'), NumberTo.pounds(item.provider_requested_amount)]
       ]
       govuk_table(head: '', first_cell_is_header: true, rows:) do |tab|
@@ -56,7 +56,7 @@
       </div>
       <%= f.govuk_text_area :explanation, label: { size: 's' }, rows: 5 %>
       <%= f.govuk_submit t('shared.save_changes') do %>
-        <%= link_to t('shared.cancel'), :back, class: 'govuk-link', data: { turbo: 'false' } %>
+        <%= link_to t('shared.cancel'), claim_adjustments_path(claim, anchor: 'letters-and-calls-tab'), class: 'govuk-link', data: { turbo: 'false' } %>
       <% end %>
     <% end %>
   </div>

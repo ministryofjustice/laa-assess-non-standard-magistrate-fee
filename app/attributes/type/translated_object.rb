@@ -1,5 +1,12 @@
 module Type
   class TranslatedObject < ActiveModel::Type::Value
+    attr_reader :array
+
+    def initialize(*args, **kwargs)
+      @array = kwargs.delete(:array)
+      super
+    end
+
     def type
       :translated
     end

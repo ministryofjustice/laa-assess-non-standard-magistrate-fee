@@ -48,6 +48,16 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
+            - name: REDIS_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: nsm-elasticache
+                  key: primary_endpoint_address
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: nsm-elasticache
+                  key: auth_token
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
@@ -100,7 +110,7 @@ spec:
             - name: RAILS_LOG_TO_STDOUT
               value: enabled
             - name: DEV_AUTH_ENABLED
-              value: 'true'
+              value: {{ .Values.secrets.devAuthEnabled | quote }}
             - name: ENV_NAME
               value: development
             - name: IS_LOCAL_DOCKER_ENV

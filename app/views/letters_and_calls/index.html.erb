@@ -2,10 +2,11 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
     <h1 class="govuk-heading-m">
-        <%= t('.heading') %>
+      <%= t('.heading') %>
     </h1>
-
-    <%= button_to(t(".remove_uplift_all"), '#', class: "govuk-button govuk-button--secondary", data_module: "govuk-button") %>
+    <% if letters_and_calls.uplift? %>
+      <%= govuk_button_link_to(t(".remove_uplift_all"), edit_claim_letters_and_calls_uplift_path(claim), { secondary: true, data: { turbo: 'false' } }) %>
+    <% end %>
   </div>
   <div class="govuk-grid-column-full">
     <%=

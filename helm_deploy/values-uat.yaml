@@ -18,6 +18,7 @@ service:
   type: ClusterIP
   port: 80
   internalPort: 3000
+  workerPort: 7433
 
 ingress:
   enabled: true
@@ -62,6 +63,7 @@ autoscaling:
 
 secrets:
   environment: uat
+  devAuthEnabled: false
 
 service_account:
   name: laa-assess-non-standard-magistrate-fee-uat-irsa
