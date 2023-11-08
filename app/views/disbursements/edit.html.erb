@@ -22,7 +22,7 @@
         end,
         [t('.summary_table.details'),table_fields[:details]],
         [t('.summary_table.prior_authority'), table_fields[:prior_authority]],
-        if item.apply_vat == 'yes'
+        if item.apply_vat == 'true'
           [t('.summary_table.vat'), table_fields[:vat]]
         end,
         [t('.summary_table.total'), table_fields[:total]]
