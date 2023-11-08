@@ -41,7 +41,7 @@ RSpec.describe DisbursementsController do
         'details' => 'Details',
         'pricing' => 1.0,
         'vat_rate' => 0.2,
-        'apply_vat' => 'no',
+        'apply_vat' => 'false',
         'other_type' => {
           'en' => 'Apples',
           'value' => 'Apples'
