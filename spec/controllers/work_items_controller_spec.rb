@@ -52,7 +52,7 @@ RSpec.describe WorkItemsController do
     context 'when URL is for Waiting' do
       it 'renders sucessfully with claims' do
         allow(controller).to receive(:render)
-        get :edit, params:  { claim_id: claim_id, id: waiting_id, form: form }
+        get :edit, params: { claim_id: claim_id, id: waiting_id, form: form }
 
         expect(controller).to have_received(:render)
                           .with(locals: { claim: claim, item: waiting, form: form })
@@ -65,7 +65,7 @@ RSpec.describe WorkItemsController do
 
       it 'renders sucessfully with claims' do
         allow(controller).to receive(:render)
-        get :edit, params:  { claim_id: claim_id, id: travel_id, form: form }
+        get :edit, params: { claim_id: claim_id, id: travel_id, form: form }
 
         expect(controller).to have_received(:render)
                           .with(locals: { claim: claim, item: travel, form: form })
