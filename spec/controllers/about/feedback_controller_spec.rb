@@ -49,8 +49,7 @@ RSpec.describe About::FeedbackController do
         end
 
         it 'returns an error' do
-          expect(response).not_to redirect_to(claims_path)
-          expect(response).to match(/Help us improve this service/)
+          expect(response).to render_template('about/feedback/index')
         end
       end
     end
