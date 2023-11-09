@@ -62,8 +62,9 @@ Rails.application.routes.draw do
 
   namespace :about do
     resources :feedback, only: [:index, :create]
+    resources :cookies, only: [:index, :create]
+    get :update_cookies, to: 'cookies#update_cookies'
     get :privacy
-    get :contact
     get :accessibility
   end
 end

@@ -3,10 +3,12 @@
 class ApplicationController < ActionController::Base
   include Pagy::Backend
   include ApplicationHelper
+  include CookieConcern
   default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
 
   before_action :authenticate_user!
   before_action :set_security_headers
+  before_action :set_default_cookies
 
   private
 
