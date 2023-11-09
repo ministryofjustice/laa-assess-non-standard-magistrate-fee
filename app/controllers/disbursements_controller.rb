@@ -13,7 +13,8 @@ class DisbursementsController < ApplicationController
     item = BaseViewModel.build(:disbursement, claim, 'disbursements').detect do |model|
       model.id == params[:id]
     end
-    form = DisbursementsForm.new(claim:, **item.attributes.slice('total_cost_without_vat'))
+
+    form = DisbursementsForm.new(claim:, item:, **item.form_attributes)
     render locals: { claim:, item:, form: }
   end
 

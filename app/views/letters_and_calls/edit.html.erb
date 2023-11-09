@@ -11,6 +11,7 @@
     </h1>
   </div>
   <div class="govuk-grid-column-two-thirds">
+    <%= item.to_json %>
     <%=
       rows = [
         [t('.number', type: item.type_name), item.provider_requested_count.to_s],

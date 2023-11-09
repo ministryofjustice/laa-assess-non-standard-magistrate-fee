@@ -28,6 +28,12 @@ module V1
       total_cost_without_vat.zero? ? 0 : provider_requested_total_cost
     end
 
+    def form_attributes
+      attributes.slice('total_cost_without_vat').merge(
+        'explanation' => previous_explanation
+      )
+    end
+
     def disbursement_table_fields
       table_fields = {
         date: disbursement_date.strftime('%d %b %Y'),
