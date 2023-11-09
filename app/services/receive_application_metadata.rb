@@ -1,5 +1,4 @@
 class ReceiveApplicationMetadata
-  ASSESSIBLE_STATES = %w[submitted].freeze
   attr_reader :claim
 
   delegate :errors, to: :claim
@@ -8,24 +7,15 @@ class ReceiveApplicationMetadata
     @claim = Claim.find_or_initialize_by(id: claim_id)
   end
 
-  def save(params, state)
+  def save(params)
     claim.assign_attributes(params)
     # set default if this is a new record
     claim.received_on ||= Time.zone.today
-    # TODO: think if state should be allow to be updated in the future
-    return unless ASSESSIBLE_STATES.include?(state)
 
-    claim.state = state
-
-    if claim.save
-      if claim.saved_change_to_current_version?
-        # we don't need to invalidate as everything is tied to current_version
-        PullLatestVersionData.perform_later(claim)
-      end
-
-      true
-    else
-      false
+    # as the provider can't resubmit let just do this as simple as possible
+    # and avoid unnessessary pulls
+    if claim.save && claims.version == 1
+      PullLatestVersionData.perform_later(claim)
     end
   end
 end
