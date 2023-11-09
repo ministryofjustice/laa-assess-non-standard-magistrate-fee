@@ -1,8 +1,6 @@
 require 'rails_helper'
-require 'support/disbursement_system_helpers'
 
 RSpec.describe 'Disbursements' do
-  include DisbursementSystemHelpers
   let(:user) { create(:caseworker) }
   let(:claim) { create(:claim) }
   let(:disbursement_form_error_message) { 'activemodel.errors.models.disbursements_form.attributes' }
@@ -11,7 +9,13 @@ RSpec.describe 'Disbursements' do
 
   it 'can refuse disbursement item' do
     visit claim_disbursements_path(claim)
-    verify_disbursement_item
+    within('.govuk-table__row', text: 'Apples') do
+      expect(page).to have_content(
+        'Apples' \
+        '£100.00' \
+        'Change'
+      )
+    end
     click_link 'Change'
     choose 'Yes'
     fill_in 'Explain your decision', with: 'Testing'
@@ -32,7 +36,13 @@ RSpec.describe 'Disbursements' do
 
   it 'shows error if no changes made to an item' do
     visit claim_disbursements_path(claim)
-    verify_disbursement_item
+    within('.govuk-table__row', text: 'Apples') do
+      expect(page).to have_content(
+        'Apples' \
+        '£100.00' \
+        'Change'
+      )
+    end
     click_link 'Change'
     choose 'No'
     click_button 'Save changes'

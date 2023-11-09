@@ -33,8 +33,8 @@ RSpec.describe DisbursementsController do
     let(:claim_id) { SecureRandom.uuid }
     let(:form) { instance_double(DisbursementsForm) }
     let(:disbursement_id) { SecureRandom.uuid }
-    let(:disbursement) { instance_double(V1::Disbursement, id: disbursement_id, attributes: item, form_attributes: {}) }
-    let(:item) do
+    let(:disbursement) { instance_double(V1::Disbursement, id: disbursement_id, attributes: attributes, form_attributes: {}) }
+    let(:attributes) do
       {
         'id' => disbursement_id,
         'miles' => nil,
