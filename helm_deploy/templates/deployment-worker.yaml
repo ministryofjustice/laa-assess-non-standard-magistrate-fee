@@ -128,6 +128,11 @@ spec:
                 secretKeyRef:
                   name: sentry-dsn
                   key: url
+            - name: GOVUK_NOTIFY_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: notify-key
+                  key: notify_key
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

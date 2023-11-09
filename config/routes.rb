@@ -61,9 +61,9 @@ Rails.application.routes.draw do
   resources :assessed_claims, only: [:index]
 
   namespace :about do
+    resources :feedback, only: [:index, :create]
     get :privacy
     get :contact
-    get :feedback
     get :accessibility
   end
 end

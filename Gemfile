@@ -10,6 +10,7 @@ gem 'dartsass-rails', '~> 0.5.0'
 gem 'devise'
 gem 'govuk-components'
 gem 'govuk_design_system_formbuilder'
+gem 'govuk_notify_rails', '~> 2.2.0'
 gem 'httparty'
 gem 'importmap-rails'
 gem 'jbuilder'
@@ -42,6 +43,7 @@ end
 group :test do
   gem 'capybara'
   gem 'factory_bot_rails'
+  gem 'rails-controller-testing'
   gem 'rspec-html-matchers'
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
