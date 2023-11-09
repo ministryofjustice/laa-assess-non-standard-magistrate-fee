@@ -6,14 +6,14 @@ class HttpPuller
     process(:get, "/v1/application/#{claim.id}")
   end
 
-  def get_all_since(last_update)
+  def get_all(last_update)
     process(:get, "/v1/applications?since=#{last_update.to_i}")
   end
 
   private
 
   def process(method, url)
-    response = self.class.public_send(method, "#{host}/#{url}", **options)
+    response = self.class.public_send(method, "#{host}#{url}", **options)
 
     case response.code
     when 200

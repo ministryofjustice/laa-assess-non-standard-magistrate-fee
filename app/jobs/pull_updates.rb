@@ -1,12 +1,12 @@
 class PullUpdates < ApplicationJob
   # queue :default
 
-  def perform(claim)
+  def perform
     last_update = Claim.maximum(:app_store_updated_at)
 
-    json_data = HttpPuller.new.get_all_since(last_update)
+    json_data = HttpPuller.new.get_all(last_update)
 
-    json_data.each do |record|
+    json_data['applications'].each do |record|
       save(record['id'], convert_params(record))
     end
   end
@@ -17,7 +17,7 @@ class PullUpdates < ApplicationJob
     {
       state: record['application_state'],
       risk: record['application_risk'],
-      current_version: record['version',
+      current_version: record['version'],
       app_store_updated_at: record['updated_at'],
     }
   end

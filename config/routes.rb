@@ -37,7 +37,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :application_versions, only: [:update]
   resources :landing, only: [:index]
   resources :claims, only: [:new, :index, :destroy] do
     resource :claim_details, only: [:show]
