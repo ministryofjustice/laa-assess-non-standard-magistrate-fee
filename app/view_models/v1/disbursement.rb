@@ -20,6 +20,10 @@ module V1
       value_from_first_event('total_cost_without_vat') || total_cost_without_vat
     end
 
+    def provider_requested_vat_amount
+      value_from_first_event('vat_amount') || vat_amount
+    end
+
     def provider_requested_total_cost
       @provider_requested_total_cost ||= CostCalculator.cost(:disbursement, self)
     end

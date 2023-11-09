@@ -9,10 +9,12 @@ RSpec.describe DisbursementsForm do
       provider_requested_total_cost_without_vat: provider_requested_total_cost_without_vat,
       total_cost_without_vat: current_total_cost_without_vat,
       vat_amount: 20.0,
+      provider_requested_vat_amount: provider_requested_vat_amount,
     )
   end
   let(:current_total_cost_without_vat) { 100.0 }
   let(:total_cost_without_vat) { 'yes' }
+  let(:provider_requested_vat_amount) { 20.0 }
   let(:provider_requested_total_cost_without_vat) { 100.0 }
   let(:form) { described_class.new(claim:, total_cost_without_vat:, item:, explanation:, current_user:) }
   let(:explanation) { 'change to disbursements' }

@@ -40,7 +40,7 @@ class DisbursementsForm < BaseAdjustmentForm
   end
 
   def new_vat_amount
-    total_cost_without_vat == 'yes' ? 0 : item.vat_amount
+    total_cost_without_vat == 'yes' ? 0 : item.provider_requested_vat_amount
   end
 
   def data_has_changed?

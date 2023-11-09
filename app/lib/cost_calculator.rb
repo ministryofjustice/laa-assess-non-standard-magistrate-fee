@@ -22,7 +22,7 @@ module CostCalculator
     end
 
     def disbursement_cost(object)
-      object.provider_requested_total_cost_without_vat + object.vat_amount
+      object.provider_requested_total_cost_without_vat + object.provider_requested_vat_amount
     end
   end
 end
