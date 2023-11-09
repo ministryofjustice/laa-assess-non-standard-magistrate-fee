@@ -22,11 +22,7 @@ module CostCalculator
     end
 
     def disbursement_cost(object)
-      if object.disbursement_type.value == 'other'
-        object.total_cost_without_vat
-      else
-        object.miles * object.pricing
-      end
+      object.provider_requested_total_cost_without_vat + object.provider_requested_vat_amount
     end
   end
 end
