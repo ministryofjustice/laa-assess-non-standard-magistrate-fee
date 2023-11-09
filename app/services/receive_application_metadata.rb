@@ -14,8 +14,8 @@ class ReceiveApplicationMetadata
 
     # as the provider can't resubmit let just do this as simple as possible
     # and avoid unnessessary pulls
-    if claim.save && claim.current_version == 1
-      PullLatestVersionData.perform_later(claim)
-    end
+    return unless claim.save && claim.current_version == 1
+
+    PullLatestVersionData.perform_later(claim)
   end
 end

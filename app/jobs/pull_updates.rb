@@ -22,8 +22,8 @@ class PullUpdates < ApplicationJob
     }
   end
 
-  def save(id, params)
-    receiver = ReceiveApplicationMetadata.new(id)
+  def save(claim_id, params)
+    receiver = ReceiveApplicationMetadata.new(claim_id)
 
     receiver.save(params)
   end

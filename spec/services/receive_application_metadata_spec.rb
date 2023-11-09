@@ -36,6 +36,7 @@ RSpec.describe ReceiveApplicationMetadata do
     let(:claim_id) { claim.id }
     let(:state) { 're-submitted' }
     let(:current_version) { 2 }
+
     before { claim }
 
     it 'does not create a new claim' do

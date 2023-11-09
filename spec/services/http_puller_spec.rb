@@ -19,7 +19,7 @@ RSpec.describe HttpPuller do
     context 'when APP_STORE_URL is present' do
       before do
         allow(ENV).to receive(:fetch).with('APP_STORE_URL', 'http://localhost:8000')
-                                    .and_return('http://some.url')
+                                     .and_return('http://some.url')
       end
 
       it 'get the claims to the specified URL' do
@@ -42,7 +42,7 @@ RSpec.describe HttpPuller do
 
       before do
         allow(ENV).to receive(:fetch).with('APP_STORE_PASSWORD')
-                                    .and_return('kimbob')
+                                     .and_return('kimbob')
       end
 
       it 'add basic auth creditals' do
@@ -70,15 +70,15 @@ RSpec.describe HttpPuller do
     end
   end
 
-  context '#get_all' do
+  describe '#get_all' do
     context 'when APP_STORE_URL is present' do
       before do
         allow(ENV).to receive(:fetch).with('APP_STORE_URL', 'http://localhost:8000')
-                                    .and_return('http://some.url')
+                                     .and_return('http://some.url')
       end
 
       it 'get the claims to the specified URL' do
-        expect(described_class).to receive(:get).with("http://some.url/v1/applications?since=1")
+        expect(described_class).to receive(:get).with('http://some.url/v1/applications?since=1')
 
         subject.get_all(1)
       end
@@ -86,7 +86,7 @@ RSpec.describe HttpPuller do
 
     context 'when APP_STORE_URL is not present' do
       it 'get the claims to default localhost url' do
-        expect(described_class).to receive(:get).with("http://localhost:8000/v1/applications?since=1")
+        expect(described_class).to receive(:get).with('http://localhost:8000/v1/applications?since=1')
 
         subject.get_all(1)
       end
@@ -97,11 +97,11 @@ RSpec.describe HttpPuller do
 
       before do
         allow(ENV).to receive(:fetch).with('APP_STORE_PASSWORD')
-                                    .and_return('kimbob')
+                                     .and_return('kimbob')
       end
 
       it 'add basic auth creditals' do
-        expect(described_class).to receive(:get).with("http://localhost:8000/v1/applications?since=1",
+        expect(described_class).to receive(:get).with('http://localhost:8000/v1/applications?since=1',
                                                       basic_auth: { username: 'jimbob', password: 'kimbob' },)
 
         subject.get_all(1)
