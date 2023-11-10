@@ -3,17 +3,25 @@ class HttpPuller
   headers 'Content-Type' => 'application/json'
 
   def get(claim)
-    response = self.class.get("#{host}/v1/application/#{claim.id}", **options)
+    process(:get, "/v1/application/#{claim.id}")
+  end
+
+  def get_all(last_update)
+    process(:get, "/v1/applications?since=#{last_update.to_i}")
+  end
+
+  private
+
+  def process(method, url)
+    response = self.class.public_send(method, "#{host}#{url}", **options)
 
     case response.code
     when 200
       JSON.parse(response.body)
     else
-      raise "Unexpected response from AppStore - status #{response.code} for '#{claim.id}'"
+      raise "Unexpected response from AppStore - status #{response.code} for '#{url}'"
     end
   end
-
-  private
 
   def options
     options = {}

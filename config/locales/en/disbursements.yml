@@ -1,0 +1,41 @@
+---
+en:
+  disbursements:
+    edit:
+      page_title: Adjust a disbursement
+      heading: Adjust a disbursement
+      summary_table:
+        caption: Provider submission
+        date: Date
+        type: Disbursement type
+        cost: Disbursement cost
+        details: Details of disbursement
+        prior_authority: Prior authority granted
+        vat: VAT
+        total: Total
+  helpers:
+    legend:
+      disbursements_form:
+        total_cost_without_vat: Do you want to refuse this disbursement?
+    label:
+      disbursements_form:
+        total_cost_without_vat_options:
+          'yes': 'Yes'
+          'no': 'No'
+        explanation: Explain your decision
+    hint:
+      disbursements_form:
+        explanation: |
+          For example, why you are refusing this disbursement and changing the cost to £0.
+          We'll share this explanation with the provider.
+  activemodel:
+    errors:
+      models:
+        disbursements_form:
+          attributes:
+            base:
+              no_change: There are no changes to save. Select cancel if you do not want to make any changes.
+            total_cost_without_vat:
+              inclusion: Select an option
+            explanation:
+              blank: Add an explanation for your decision

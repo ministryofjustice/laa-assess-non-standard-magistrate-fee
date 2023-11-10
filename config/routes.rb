@@ -1,9 +1,10 @@
 # frozen_string_literal: true
+require 'sidekiq/web'
+require 'sidekiq/cron/web'
 
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  mount Sidekiq::Web => "/sidekiq"
 
-  # Defines the root path route ("/")
   root "landing#index"
 
   get :ping, to: 'healthcheck#ping'
@@ -37,7 +38,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :application_versions, only: [:update]
   resources :landing, only: [:index]
   resources :claims, only: [:new, :index, :destroy] do
     resource :claim_details, only: [:show]
@@ -47,7 +47,7 @@ Rails.application.routes.draw do
       resource :uplift, only: [:edit, :update], path_names: { edit: '' }
     end
     resources :letters_and_calls, only: [:index, :edit, :update], path_names: { edit: '' }
-    resources :disbursements, only: [:index]
+    resources :disbursements, only: [:index, :edit, :update], path_names: { edit: '' }
     resource :supporting_evidences, only: [:show]
     resource :history, only: [:show, :create]
     resources :send_back, only: [:index]
