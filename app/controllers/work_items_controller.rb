@@ -29,6 +29,7 @@ class WorkItemsController < ApplicationController
     form = WorkItemForm.new(claim:, item:, **form_params)
 
     if form.save
+      logger.debug "saved"
       redirect_to claim_adjustments_path(claim, anchor: 'work-items-tab')
     else
       render :edit, locals: { claim:, item:, form: }
@@ -39,7 +40,6 @@ class WorkItemsController < ApplicationController
 
   def form_params
     params.require(:work_item_form).permit(
-      :work_type,
       :uplift,
       :time_spent,
       :explanation
