@@ -2,7 +2,7 @@ class PullUpdates < ApplicationJob
   # queue :default
 
   def perform
-    last_update = Claim.maximum(:app_store_updated_at) || Time.new(2023, 1, 1)
+    last_update = Claim.maximum(:app_store_updated_at) || Time.zone.local(2023, 1, 1)
 
     json_data = HttpPuller.new.get_all(last_update)
 

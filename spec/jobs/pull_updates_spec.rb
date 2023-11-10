@@ -6,7 +6,7 @@ RSpec.describe PullUpdates do
   let(:http_response) do
     {
       'applications' => [{
-        'id' => id,
+        'application_id' => id,
         'version' => 2,
         'application_state' => 'submitted',
         'application_risk' => 'high',
