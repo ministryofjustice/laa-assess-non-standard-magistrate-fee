@@ -16,6 +16,7 @@
     },
     "calls": 13,
     "court": "Central London County Court",
+    "answer_equality": null,
     "gender": null,
     "status": "completed",
     "in_area": "no",

@@ -3,7 +3,7 @@ module ClaimDetails
     attr_reader :details_of_claim, :defendant_details,
                 :case_details, :case_disposal, :claim_justification,
                 :hearing_details, :contact_details, :other_info,
-                :claim_details
+                :claim_details, :equality_details
 
     def initialize(claim)
       @details_of_claim = BaseViewModel.build(:details_of_claim, claim)
@@ -11,10 +11,11 @@ module ClaimDetails
       @case_details = BaseViewModel.build(:case_details, claim)
       @case_disposal = BaseViewModel.build(:case_disposal, claim)
       @claim_justification = BaseViewModel.build(:claim_justification, claim)
-      @hearing_details = BaseViewModel.build(:hearing_details, claim)
-      @contact_details = BaseViewModel.build(:contact_details, claim)
-      @other_info = BaseViewModel.build(:other_info, claim)
       @claim_details = BaseViewModel.build(:claim_details, claim)
+      @hearing_details = BaseViewModel.build(:hearing_details, claim)
+      @other_info = BaseViewModel.build(:other_info, claim)
+      @contact_details = BaseViewModel.build(:contact_details, claim)
+      @equality_details = BaseViewModel.build(:equality_details, claim)
     end
 
     def table
@@ -28,6 +29,7 @@ module ClaimDetails
         hearing_details.rows,
         other_info.rows,
         contact_details.rows,
+        equality_details.rows,
       ]
     end
   end

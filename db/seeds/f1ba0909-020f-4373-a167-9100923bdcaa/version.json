@@ -116,6 +116,7 @@
         "office_code": "1A123B",
         "work_before": "no",
         "youth_count": "no",
+        "answer_equality": null,
         "ethnic_group": null,
         "main_offence": "Assault (common)",
         "send_by_post": false,
