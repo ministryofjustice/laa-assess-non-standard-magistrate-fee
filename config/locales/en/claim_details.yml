@@ -18,6 +18,7 @@ en:
       assigned_to: "Assigned to:"
       date_received: "Date received:"
       remove_from_list: Remove from list
+      remove_from_yourlist: Remove from your list
     review_and_adjust_nav:
       review_and_adjust: Review and adjust
       work_items: Work items
