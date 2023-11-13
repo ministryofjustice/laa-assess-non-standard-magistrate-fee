@@ -66,7 +66,7 @@ RSpec.describe V1::ContactDetails do
             { title: 'Firm address', value: '1 Princess Road<br>Stoke Newington<br>NE10 4AB' },
             { title: 'Solicitor full name', value: 'Daniel Treaty' },
             { title: 'Solicitor reference number', value: '1212333' },
-            { title: "Provider email address", :value=>"test@test.com"}
+            { title: 'Provider email address', value: 'test@test.com' }
           ]
         )
       end
@@ -101,7 +101,7 @@ RSpec.describe V1::ContactDetails do
             { title: 'Firm address', value: 'Suite 3<br>5 Princess Road<br>Stoke Newington<br>NE10 4AB' },
             { title: 'Solicitor full name', value: 'Daniel Treaty' },
             { title: 'Solicitor reference number', value: '1212333' },
-            {:title=>"Provider email address", :value=>"test@test.com"}
+            { title: 'Provider email address', value: 'test@test.com' }
           ]
         )
       end
@@ -138,9 +138,9 @@ RSpec.describe V1::ContactDetails do
             { title: 'Firm address', value: 'Suite 3<br>5 Princess Road<br>Stoke Newington<br>NE10 4AB' },
             { title: 'Solicitor full name', value: 'Daniel Treaty' },
             { title: 'Solicitor reference number', value: '1212333' },
-            {:title=>"Alternative contact full name", :value=>"Jim Bob"},
-            {:title=>"Alternative contact email address", :value=>"jim@bob.com"},
-            {:title=>"Provider email address", :value=>"test@test.com"}
+            { title: 'Alternative contact full name', value: 'Jim Bob' },
+            { title: 'Alternative contact email address', value: 'jim@bob.com' },
+            { title: 'Provider email address', value: 'test@test.com' }
           ]
         )
       end

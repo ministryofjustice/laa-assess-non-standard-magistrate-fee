@@ -7,7 +7,6 @@ RSpec.describe V1::EqualityDetails do
     end
   end
 
-  # rubocop:disable RSpec/ExampleLength
   describe '#rows' do
     it 'has correct structure' do
       subject = described_class.new(
@@ -23,7 +22,6 @@ RSpec.describe V1::EqualityDetails do
       expect(subject.rows).to have_key(:data)
     end
   end
-  # rubocop:enable RSpec/ExampleLength
 
   describe '#data' do
     context 'One line in firm address' do
@@ -39,10 +37,10 @@ RSpec.describe V1::EqualityDetails do
       it 'shows correct table data' do
         expect(subject.data).to eq(
           [
-            {:title=>"Equality questions", :value=>"yes"},
-            {:title=>"Defendants ethnic group", :value=>"01_with_british"},
-            {:title=>"Defendant identification", :value=>"m"},
-            {:title=>"Defendant disability", :value=>"n"}
+            { title: 'Equality questions', value: 'yes' },
+            { title: 'Defendants ethnic group', value: '01_with_british' },
+            { title: 'Defendant identification', value: 'm' },
+            { title: 'Defendant disability', value: 'n' }
           ]
         )
       end

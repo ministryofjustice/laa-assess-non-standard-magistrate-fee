@@ -50,7 +50,7 @@ module V1
       submiter['email']
     end
 
-    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     def data
       [
         {
@@ -80,14 +80,14 @@ module V1
         }
       ]
     end
-    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
     def rows
       { title:, data: }
     end
 
     def contact_details
-      return [] unless contact_email.present?
+      return [] if contact_email.blank?
 
       [
         {
