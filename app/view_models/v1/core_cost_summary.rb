@@ -1,6 +1,6 @@
 module V1
   class CoreCostSummary < BaseViewModel
-    include Shared::WorkItemSummary
+    include V1::WorkItemSummary
 
     SKIPPED_TYPES = %w[travel waiting].freeze
 

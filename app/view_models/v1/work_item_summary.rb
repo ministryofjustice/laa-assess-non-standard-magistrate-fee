@@ -1,4 +1,4 @@
-module Shared
+module V1
   module WorkItemSummary
     def work_item_data
       @work_item_data ||=

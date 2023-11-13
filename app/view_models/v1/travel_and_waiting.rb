@@ -1,6 +1,6 @@
 module V1
   class TravelAndWaiting < BaseViewModel
-    include Shared::WorkItemSummary
+    include V1::WorkItemSummary
 
     INCLUDED_TYPES = %w[travel waiting].freeze
 
