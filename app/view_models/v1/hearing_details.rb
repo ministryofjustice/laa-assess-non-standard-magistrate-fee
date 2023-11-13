@@ -41,11 +41,11 @@ module V1
         },
         {
           title: I18n.t(".claim_details.#{key}.hearing_outcome"),
-          value: hearing_outcome.to_s
+          value: "#{hearing_outcome.value} - #{hearing_outcome}"
         },
         {
           title: I18n.t(".claim_details.#{key}.matter_type"),
-          value: matter_type.to_s
+          value: "#{matter_type.value} - #{matter_type}"
         }
       ]
     end
