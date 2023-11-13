@@ -9,7 +9,7 @@ RSpec.describe V1::AssessedClaims, type: :view_model do
   let(:defendants) { [{ 'full_name' => 'John Doe', 'main' => true }, 'main' => false, 'full_name' => 'jimbob'] }
   let(:firm_office) { { 'name' => 'Acme Law Firm' } }
   let(:updated_at) { Time.zone.yesterday }
-  let(:claim) { instance_double(Claim, id: 1, events:) }
+  let(:claim) { instance_double(Claim, id: 1, events: events) }
   let(:events) { double(where: double(order: [instance_double(Event, primary_user:)])) }
   let(:primary_user) { instance_double(User, display_name: 'Jim Bob') }
   let(:state) { 'grant' }
