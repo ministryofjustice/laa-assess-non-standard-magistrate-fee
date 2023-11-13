@@ -1,5 +1,8 @@
 module V1
   class WorkItem < BaseWithAdjustments
+    LINKED_TYPE = 'work_items'.freeze
+    ID_FIELDS = %w[id].freeze
+
     attribute :id, :string
     attribute :work_type, :translated
     # TODO: import time_period code from provider app
@@ -11,7 +14,7 @@ module V1
     attribute :fee_earner, :string
 
     def provider_requested_amount
-      CostCalculator.cost(:work_item, self, :provider_requested)
+      @provider_requested_amount ||= CostCalculator.cost(:work_item, self)
     end
 
     def provider_requested_uplift
@@ -19,7 +22,7 @@ module V1
     end
 
     def caseworker_amount
-      @caseworker_amount ||= CostCalculator.cost(:work_item, self, :caseworker)
+      @caseworker_amount ||= CostCalculator.cost(:work_item, self)
     end
 
     def caseworker_uplift
@@ -28,6 +31,12 @@ module V1
 
     def uplift?
       !provider_requested_uplift.to_i.zero?
+    end
+
+    def form_attributes
+      attributes.slice('time_spent', 'uplift').merge(
+        'explanation' => previous_explanation
+      )
     end
 
     def table_fields
