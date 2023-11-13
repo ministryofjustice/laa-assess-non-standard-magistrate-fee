@@ -38,8 +38,8 @@ RSpec.describe WorkItemsController do
     let(:claim_id) { SecureRandom.uuid }
     let(:waiting_id) { SecureRandom.uuid }
     let(:travel_id) { SecureRandom.uuid }
-    let(:waiting) { instance_double(V1::WorkItem, id: waiting_id, work_type: double(value: 'waiting')) }
-    let(:travel) { instance_double(V1::WorkItem, id: travel_id, work_type: double(value: 'travel')) }
+    let(:waiting) { instance_double(V1::WorkItem, id: waiting_id, work_type: double(value: 'waiting'), form_attributes: {}) }
+    let(:travel) { instance_double(V1::WorkItem, id: travel_id, work_type: double(value: 'travel'), form_attributes: {}) }
     let(:work_items) { [waiting, travel] }
     let(:form) { instance_double(WorkItemForm) }
 
