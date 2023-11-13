@@ -2,14 +2,16 @@ require 'rails_helper'
 
 RSpec.describe V1::AssessedClaims, type: :view_model do
   subject(:assessed_claims) do
-    described_class.new(laa_reference:, defendants:, firm_office:, updated_at:, id:, state:)
+    described_class.new(laa_reference:, defendants:, firm_office:, updated_at:, claim:, state:)
   end
 
   let(:laa_reference) { '1234567890' }
   let(:defendants) { [{ 'full_name' => 'John Doe', 'main' => true }, 'main' => false, 'full_name' => 'jimbob'] }
   let(:firm_office) { { 'name' => 'Acme Law Firm' } }
   let(:updated_at) { Time.zone.yesterday }
-  let(:id) { 1 }
+  let(:claim) { instance_double(Claim, id: 1, events:) }
+  let(:events) { double(where: double(order: [instance_double(Event, primary_user:)])) }
+  let(:primary_user) { instance_double(User, display_name: 'Jim Bob') }
   let(:state) { 'grant' }
 
   describe '#main_defendant_name' do
@@ -36,8 +38,16 @@ RSpec.describe V1::AssessedClaims, type: :view_model do
   end
 
   describe '#case_worker_name' do
-    it 'returns the pending status' do
-      expect(assessed_claims.case_worker_name).to eq('#Pending#')
+    it 'returns user anme from the last Desision Event' do
+      expect(assessed_claims.case_worker_name).to eq('Jim Bob')
+    end
+
+    context 'when no decision event' do
+      let(:events) { double(where: double(order: [])) }
+
+      it 'returns nil' do
+        expect(assessed_claims.case_worker_name).to eq('')
+      end
     end
   end
 
@@ -57,7 +67,7 @@ RSpec.describe V1::AssessedClaims, type: :view_model do
         'Acme Law Firm',
         'John Doe',
         { text: I18n.l(Time.zone.yesterday, format: '%-d %b %Y'), sort_value: Time.zone.yesterday.to_fs(:db) },
-        '#Pending#',
+        'Jim Bob',
         { colour: 'green', sort_value: 1, text: 'grant' }
       ]
       expect(assessed_claims.table_fields).to eq(expected_fields)
