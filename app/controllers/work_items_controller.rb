@@ -15,7 +15,7 @@ class WorkItemsController < ApplicationController
       model.id == params[:id]
     end
 
-    form = WorkItemForm.new(claim:, item:)
+    form = WorkItemForm.new(claim:, item:, **item.form_attributes)
 
     render locals: { claim:, item:, form: }
   end
