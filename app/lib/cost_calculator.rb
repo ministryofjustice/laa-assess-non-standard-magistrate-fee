@@ -3,7 +3,7 @@ module CostCalculator
     def cost(type, object, scope = nil)
       case type
       when :work_item
-        work_item_cost(object)
+        work_item_cost(object, scope)
       when :letter_and_call
         letter_and_call_cost(object, scope)
       when :disbursement
@@ -13,8 +13,8 @@ module CostCalculator
 
     private
 
-    def work_item_cost(object)
-      object.pricing * object.time_spent * (100 + object.uplift.to_i) / 100 / 60
+    def work_item_cost(object, scope)
+      object.pricing * object["#{scope}_time_spent"] * (100 + object["#{scope}_uplift"].to_i) / 100 / 60
     end
 
     def letter_and_call_cost(object, scope)
