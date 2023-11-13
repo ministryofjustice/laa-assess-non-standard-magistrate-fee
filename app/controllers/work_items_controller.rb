@@ -29,7 +29,7 @@ class WorkItemsController < ApplicationController
     form = WorkItemForm.new(claim:, item:, **form_params)
 
     if form.save
-      logger.debug "saved"
+      logger.debug 'saved'
       redirect_to claim_adjustments_path(claim, anchor: 'work-items-tab')
     else
       render :edit, locals: { claim:, item:, form: }

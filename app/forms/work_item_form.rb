@@ -26,9 +26,7 @@ class WorkItemForm < BaseAdjustmentForm
     return false unless valid?
 
     Claim.transaction do
-      if time_spent.present?
-        process_field(value: time_spent.to_i, field: 'time_spent')
-      end
+      process_field(value: time_spent.to_i, field: 'time_spent') if time_spent.present?
       process_field(value: new_uplift, field: 'uplift')
 
       claim.save

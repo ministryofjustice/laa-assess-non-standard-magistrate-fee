@@ -37,7 +37,6 @@ module V1
       uplift.to_i
     end
 
-
     def uplift?
       !provider_requested_uplift.to_i.zero?
     end
