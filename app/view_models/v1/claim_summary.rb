@@ -4,10 +4,15 @@ module V1
     attribute :defendants
     attribute :submitted_total
     attribute :adjusted_total
+    attribute :claim
 
     def main_defendant_name
       main_defendant = defendants.detect { |defendant| defendant['main'] }
       main_defendant ? main_defendant['full_name'] : ''
+    end
+
+    def assigned_to
+      @assigned_to ||= claim.assignments.first
     end
 
     def total
