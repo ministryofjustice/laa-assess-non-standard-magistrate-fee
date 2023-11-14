@@ -58,8 +58,10 @@ en:
       disbursement_total: Disbursement total
       disbursement: Disbursement
       requested: Provider requested
-      adjustment: Adjustment
-      ation: Action
+      vat_applied: VAT applied
+      adjusted: Caseworker allowed
+      action: Action
+      change: Change
   adjustments:
     show:
       check_totals: View core costs

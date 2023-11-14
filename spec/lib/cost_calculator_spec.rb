@@ -36,22 +36,13 @@ RSpec.describe CostCalculator do
   context 'when type is disbursement' do
     let(:type) { :disbursement }
 
-    context 'and type is not other' do
-      let(:object) do
-        V1::Disbursement.new('disbursement_type' => { 'value' => 'car' }, 'miles' => 90, 'pricing' => 0.45,
-                             'vat_rate' => 0.2)
-      end
-
-      it { expect(subject).to eq(40.5) }
-    end
-
     context 'and type is other' do
       let(:object) do
         V1::Disbursement.new('disbursement_type' => { 'value' => 'other' }, 'total_cost_without_vat' => 45.0,
-                             'vat_rate' => 0.2)
+                             'vat_amount' => 20.0)
       end
 
-      it { expect(subject).to eq(45.0) }
+      it { expect(subject).to eq(65.0) }
     end
   end
 

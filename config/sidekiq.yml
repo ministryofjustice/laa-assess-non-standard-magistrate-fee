@@ -2,3 +2,5 @@
 :logfile: ./log/sidekiq.log
 :queues:
   - default
+  - mailers
+  - pooling

@@ -4,8 +4,8 @@ module V1
     attribute :defendants
     attribute :firm_office
     attribute :updated_at, :date
-    attribute :id
     attribute :state
+    attribute :claim
 
     def main_defendant_name
       main_defendant = defendants.detect { |defendant| defendant['main'] }
@@ -21,7 +21,8 @@ module V1
     end
 
     def case_worker_name
-      '#Pending#'
+      event = claim.events.where(event_type: 'Event::Decision').order(created_at: :desc).first
+      event ? event.primary_user.display_name : ''
     end
 
     def status(item)
@@ -39,7 +40,7 @@ module V1
 
     def table_fields
       [
-        { laa_reference: laa_reference, claim_id: id },
+        { laa_reference: laa_reference, claim_id: claim.id },
         firm_name,
         main_defendant_name,
         date_assessed,

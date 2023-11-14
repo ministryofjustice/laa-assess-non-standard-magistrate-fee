@@ -51,6 +51,10 @@ class BaseAdjustmentForm
     errors.add(:base, :no_change)
   end
 
+  def explanation_required?
+    data_has_changed?
+  end
+
   # :nocov:
   def data_has_changed?
     raise 'implement in class'

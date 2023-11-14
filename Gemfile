@@ -10,6 +10,7 @@ gem 'dartsass-rails', '~> 0.5.0'
 gem 'devise'
 gem 'govuk-components'
 gem 'govuk_design_system_formbuilder'
+gem 'govuk_notify_rails', '~> 2.2.0'
 gem 'httparty'
 gem 'importmap-rails'
 gem 'jbuilder'
@@ -20,6 +21,7 @@ gem 'puma', '~> 6.4'
 gem 'rails', '~> 7.1.1'
 gem 'sidekiq', '~> 7.1'
 gem 'sidekiq_alive', '~> 2.3'
+gem 'sidekiq-cron'
 gem 'sprockets-rails'
 gem 'stimulus-rails'
 gem 'turbo-rails'
@@ -42,6 +44,7 @@ end
 group :test do
   gem 'capybara'
   gem 'factory_bot_rails'
+  gem 'rails-controller-testing'
   gem 'rspec-html-matchers'
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false

@@ -47,7 +47,7 @@ RSpec.describe V1::HearingDetails do
           'en' => 'Hearing Done'
         },
         'matter_type' => {
-          'value' => 'a_matter',
+          'value' => '2',
           'en' => 'A Simple Matter'
         }
       }
@@ -61,8 +61,8 @@ RSpec.describe V1::HearingDetails do
           { title: "Magistrates' court", value: 'A Mag Court' },
           { title: 'Court is in designated area of the firm', value: 'Yes' },
           { title: 'Youth court', value: 'No' },
-          { title: 'Hearing outcome', value: 'Hearing Done' },
-          { title: 'Matter type', value: 'A Simple Matter' },
+          { title: 'Hearing outcome', value: 'CP01 - Hearing Done' },
+          { title: 'Matter type', value: '2 - A Simple Matter' },
         ]
       )
     end

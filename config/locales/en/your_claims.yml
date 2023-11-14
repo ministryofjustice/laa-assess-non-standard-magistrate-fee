@@ -13,7 +13,7 @@ en:
       laa_reference: "LAA reference"
       firm_name: "Firm name"
       defendant_name: "Defendant"
-      date_assessed: "Date assessed"
+      date_received: "Date received"
       caseworker_name: "Caseworker"
       status: "Status"
       risk:

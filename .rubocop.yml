@@ -151,3 +151,10 @@ RSpec/ExampleLength:
 Lint/MissingSuper:
   Exclude:
     - 'app/presenters/claim_details/*'
+
+# Causing false positives when implemented in methods
+Rails/ActionControllerFlashBeforeRender:
+  Enabled: false
+
+RSpec/FilePath:
+  Enabled: false

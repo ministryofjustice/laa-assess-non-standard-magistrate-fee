@@ -44,4 +44,16 @@ RSpec.describe V1::ClaimSummary do
       end
     end
   end
+
+  describe '#assiged_to' do
+    it 'returns the first assignment' do
+      assignment1 = double(:one)
+      assignment2 = double(:two)
+      assignments = [assignment1, assignment2]
+      claim = instance_double(Claim, assignments:)
+
+      summary = described_class.new('claim' => claim)
+      expect(summary.assigned_to).to eq(assignment1)
+    end
+  end
 end

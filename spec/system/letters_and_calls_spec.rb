@@ -4,7 +4,11 @@ RSpec.describe 'Letters and Calls' do
   let(:user) { create(:caseworker) }
   let(:claim) { create(:claim) }
 
-  before { sign_in user }
+  before do
+    sign_in user
+    visit '/'
+    click_link 'Accept analytics cookies'
+  end
 
   it 'can adjust a letter record' do
     visit claim_letters_and_calls_path(claim)

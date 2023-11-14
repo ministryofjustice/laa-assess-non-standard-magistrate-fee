@@ -18,7 +18,7 @@
     <div class="govuk-grid-column-two-thirds">
       <p class="govuk-body-l govuk-!-margin-bottom-2">
         <span class="govuk-!-font-weight-bold"><%= t(".assigned_to") %></span>
-        <%= "Ukaleq Christina" %>
+        <%= claim_summary.assigned_to&.display_name %>
       </p>
       <p class="govuk-body-l govuk-!-margin-bottom-2">
         <span class="govuk-!-font-weight-bold"><%= t(".date_received") %></span>
@@ -26,6 +26,15 @@
       </p>
     </div>
     <div class="govuk-grid-column-one-thirds govuk-!-padding-top-2">
-      <%= button_to(t(".remove_from_list"), claim_path(claim), method: :delete, class: "govuk-button govuk-button--secondary", data_module: "govuk-button") %>
+      <% if claim_summary.assigned_to %>
+        <%=
+          button_to(
+            t(claim_summary.assigned_to.user == current_user ? ".remove_from_yourlist" : ".remove_from_list"),
+            claim_path(claim),
+            method: :delete,
+            class: "govuk-button govuk-button--secondary",
+            data_module: "govuk-button")
+        %>
+      <% end%>
     </div>
   </div>

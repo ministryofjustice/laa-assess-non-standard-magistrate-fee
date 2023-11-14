@@ -25,7 +25,7 @@ en:
       assessed_claims: Assessed claims
     phase_banner:
       phase: BETA
-      phase_description_html: This is a new service – your <a>feedback</a> will help us to improve it.
+      phase_description_html: This is a new service – your <a class="govuk-link" href="%{feedback}">feedback</a> will help us to improve it.
 
   shared:
     save_changes: Save changes
