@@ -34,11 +34,13 @@ RSpec.describe V1::WorkItem do
   end
 
   describe 'provider_requested_amount' do
-    let(:params) { {
-      'time_spent' => 171,
+    let(:params) do
+      {
+        'time_spent' => 171,
       'uplift' => 10,
       'pricing' => 24.0
-    }}
+      }
+    end
 
     it 'calculates the correct provider requested amount' do
       expect(subject.provider_requested_amount).to eq(75.24)
@@ -46,14 +48,14 @@ RSpec.describe V1::WorkItem do
   end
 
   describe 'provider_requested_time_spent' do
-    let(:params) {
+    let(:params) do
       {
         'time_spent' => 100,
         'uplift' => 0,
         'pricing' => 24.0,
         'adjustments' => adjustments
       }
-    }
+    end
 
     let(:adjustments) { [build(:event, :edit_work_item_time_spent)] }
 
@@ -63,14 +65,14 @@ RSpec.describe V1::WorkItem do
   end
 
   describe 'caseworker_amount' do
-    let(:params) {
+    let(:params) do
       {
         'time_spent' => 171,
         'uplift' => 0,
         'pricing' => 24.0,
         'adjustments' => adjustments
       }
-    }
+    end
 
     let(:adjustments) { [build(:event, :edit_work_item_uplift)] }
 
@@ -80,14 +82,14 @@ RSpec.describe V1::WorkItem do
   end
 
   describe 'provider_requested_uplift' do
-    let(:params) {
+    let(:params) do
       {
         'time_spent' => 171,
         'uplift' => 0,
         'pricing' => 24.0,
         'adjustments' => adjustments
       }
-    }
+    end
 
     let(:adjustments) { [build(:event, :edit_work_item_uplift)] }
 

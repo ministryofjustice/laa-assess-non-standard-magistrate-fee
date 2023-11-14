@@ -73,7 +73,6 @@ FactoryBot.define do
       end
     end
 
-
     trait :edit_count do
       event_type { Event::Edit.to_s }
       linked_type { 'letters_and_calls' }
