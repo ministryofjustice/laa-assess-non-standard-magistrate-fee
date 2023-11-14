@@ -1,9 +1,11 @@
 function init() {
-  const lettersAndCallsAdjustmentContainer = document.getElementById('letters-and-calls-adjustment-container');
-  const countField = document.getElementById('letters-calls-form-count-field');
   const calculateChangeButton = document.getElementById('calculate_change_button');
+  const page = calculateChangeButton?.getAttribute('data-page');
+  const lettersAndCallsAdjustmentContainer = document.getElementById('letters-and-calls-adjustment-container');
+  const countField = document.getElementById(`letters-calls-form-${page}-count-field`);
   const caseworkerAdjustedValue = document.getElementById('letters_calls_caseworker_allowed_amount');
-  const upliftNoField = document.getElementById('letters-calls-form-uplift-no-field');
+  const upliftNoField = document.getElementById(`letters-calls-form-${page}-uplift-no-field`);
+
   if (lettersAndCallsAdjustmentContainer && countField) {
     updateDomElements();
     calculateChangeButton.addEventListener('click', handleTestButtonClick);
