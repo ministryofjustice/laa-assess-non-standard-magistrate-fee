@@ -82,14 +82,21 @@ RSpec.describe V1::Disbursement do
     it 'returns the fields for the table display if no adjustments' do
       allow(disbursement).to receive_messages(disbursement_type: 'Car')
       disbursement.adjustments = []
-      expect(disbursement.table_fields).to eq(['Car', '£10.00', ''])
+      expect(disbursement.table_fields).to eq(['Car', '£10.00', '0%', ''])
     end
 
     it 'returns an array with the correct fields if there are adjustments' do
       allow(disbursement).to receive_messages(type_name: 'type', provider_requested_total_cost: 100,
                                               caseworker_total_cost: 200)
       disbursement.adjustments = [1]
-      expected_fields = ['type', '£100.00', '£200.00']
+      expected_fields = ['type', '£100.00', '0%', '£200.00']
+      expect(disbursement.table_fields).to eq(expected_fields)
+    end
+
+    it 'returns the formatted vat rate when apply_vat is true' do
+      allow(disbursement).to receive_messages(type_name: 'type', provider_requested_total_cost: 100,
+                                              caseworker_total_cost: 200, apply_vat: 'true', format_vat_rate: '20%')
+      expected_fields = ['type', '£100.00', '20%', '']
       expect(disbursement.table_fields).to eq(expected_fields)
     end
   end

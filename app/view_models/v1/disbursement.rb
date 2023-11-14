@@ -63,6 +63,7 @@ module V1
       [
         type_name,
         NumberTo.pounds(provider_requested_total_cost),
+        apply_vat == 'true' ? format_vat_rate(vat_rate) : '0%',
         adjustments.any? ? NumberTo.pounds(caseworker_total_cost) : '',
       ]
     end

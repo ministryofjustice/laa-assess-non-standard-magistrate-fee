@@ -13,6 +13,7 @@ RSpec.describe 'Disbursements' do
       expect(page).to have_content(
         'Apples' \
         '£100.00' \
+        '0%' \
         'Change'
       )
     end
@@ -27,6 +28,7 @@ RSpec.describe 'Disbursements' do
       expect(page).to have_content(
         'Apples' \
         '£100.00' \
+        '0%' \
         '£0.00' \
         'Change'
       )
@@ -40,6 +42,7 @@ RSpec.describe 'Disbursements' do
       expect(page).to have_content(
         'Apples' \
         '£100.00' \
+        '0%' \
         'Change'
       )
     end

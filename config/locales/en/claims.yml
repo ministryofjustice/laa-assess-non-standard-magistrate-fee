@@ -58,7 +58,8 @@ en:
       disbursement_total: Disbursement total
       disbursement: Disbursement
       requested: Provider requested
-      adjusted: Adjusted
+      vat_applied: VAT applied
+      adjusted: Caseworker allowed
       action: Action
       change: Change
   adjustments:
