@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe V1::EqualityDetails do
+  subject { described_class.new(params) }
+  let(:params) { {} }
+
   describe '#title' do
     it 'shows correct title' do
       expect(subject.title).to eq('Equality monitoring')
@@ -8,39 +11,59 @@ RSpec.describe V1::EqualityDetails do
   end
 
   describe '#rows' do
-    it 'has correct structure' do
-      subject = described_class.new(
-        {
-          'answer_equality' => 'yes',
-          'ethnic_group' => '01_with_british',
-          'gender' => 'm',
-          'disability' => 'n',
-        }
-      )
+    let(:params) {
+      {
+        'answer_equality' => { 'value' => 'yes', 'en' => 'Yes' },
+        'ethnic_group' => { 'value' => '01_white_british', 'en' => 'White british' },
+        'gender' => { 'value' => 'm', 'en' => 'Male' },
+        'disability' => { 'value' => 'n', 'en' => 'No' },
+      }
+    }
 
+    it 'has correct structure' do
       expect(subject.rows).to have_key(:title)
       expect(subject.rows).to have_key(:data)
     end
   end
 
   describe '#data' do
-    context 'One line in firm address' do
-      subject = described_class.new(
-        {
-          'answer_equality' => 'yes',
-          'ethnic_group' => '01_with_british',
-          'gender' => 'm',
-          'disability' => 'n',
-        }
+    let(:params) {
+      {
+        'answer_equality' => { 'value' => 'yes', 'en' => 'Yes' },
+        'ethnic_group' => { 'value' => '01_white_british', 'en' => 'White british' },
+        'gender' => { 'value' => 'm', 'en' => 'Male' },
+        'disability' => { 'value' => 'n', 'en' => 'No' },
+      }
+    }
+
+    it 'shows correct table data' do
+      expect(subject.data).to eq(
+        [
+          { title: 'Equality questions', value: 'Yes' },
+          { title: 'Defendants ethnic group', value: 'White british' },
+          { title: 'Defendant identification', value: 'Male' },
+          { title: 'Defendant disability', value: 'No' }
+        ]
       )
+    end
+
+    context 'when no values entered' do
+      let(:params) {
+        {
+          'answer_equality' => { 'value' => 'no', 'en' => 'No' },
+          'ethnic_group' => nil,
+          'gender' => nil,
+          'disability' => nil,
+        }
+      }
 
       it 'shows correct table data' do
         expect(subject.data).to eq(
           [
-            { title: 'Equality questions', value: 'yes' },
-            { title: 'Defendants ethnic group', value: '01_with_british' },
-            { title: 'Defendant identification', value: 'm' },
-            { title: 'Defendant disability', value: 'n' }
+            { title: 'Equality questions', value: 'No' },
+            { title: 'Defendants ethnic group', value: '' },
+            { title: 'Defendant identification', value: '' },
+            { title: 'Defendant disability', value: '' }
           ]
         )
       end

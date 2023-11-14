@@ -1,9 +1,9 @@
 module V1
   class EqualityDetails < BaseViewModel
-    attribute :answer_equality
-    attribute :ethnic_group
-    attribute :gender
-    attribute :disability
+    attribute :answer_equality, :translated
+    attribute :ethnic_group, :translated
+    attribute :gender, :translated
+    attribute :disability, :translated
 
     def key
       'equality_details'
