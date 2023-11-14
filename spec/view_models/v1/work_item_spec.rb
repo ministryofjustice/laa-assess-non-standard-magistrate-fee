@@ -97,4 +97,63 @@ RSpec.describe V1::WorkItem do
       expect(subject.provider_requested_uplift).to eq(20)
     end
   end
+
+  describe '#uplift?' do
+    context 'when provider supplied uplift is positive' do
+      let(:params) { { uplift: 10 } }
+
+      it { expect(subject).to be_uplift }
+    end
+
+    context 'when uplift is zero' do
+      let(:params) { { uplift: 0, adjustments: adjustments } }
+      let(:adjustments) { [] }
+
+      it { expect(subject).not_to be_uplift }
+
+      context 'but has adjustments' do
+        let(:adjustments) { [build(:event, :edit_work_item_uplift)] }
+
+        it { expect(subject).to be_uplift }
+      end
+    end
+  end
+
+  describe '#form_attributes' do
+    let(:adjustments) { [] }
+    let(:params) do
+      {
+        'work_type' => { 'en' => 'Waiting', 'value' => 'waiting' },
+        'time_spent' => 161,
+        'uplift' => 0,
+        'pricing' => 24.0,
+        'adjustments' => adjustments
+      }
+    end
+
+    it 'extracts data for form initialization' do
+      expect(subject.form_attributes).to eq(
+        'explanation' => nil,
+        'time_spent' => 161,
+        'uplift' => 0
+      )
+    end
+
+    context 'when adjustments exists' do
+      let(:adjustments) do
+        [
+          double(:first, details: { 'comment' => 'first adjustment' }),
+          double(:second, details: { 'comment' => 'second adjustment' }),
+        ]
+      end
+
+      it 'includes the previous adjustment comment' do
+        expect(subject.form_attributes).to eq(
+          'explanation' => 'second adjustment',
+          'time_spent' => 161,
+          'uplift' => 0
+        )
+      end
+    end
+  end
 end
