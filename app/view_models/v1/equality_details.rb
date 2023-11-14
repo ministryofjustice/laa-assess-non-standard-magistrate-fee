@@ -32,7 +32,6 @@ module V1
           title: I18n.t(".claim_details.#{key}.disability"),
           value: disability.to_s
         },
-
       ]
     end
     # rubocop:enable Metrics/MethodLength
