@@ -41,10 +41,6 @@ class BaseAdjustmentForm
     }
   end
 
-  def explanation_required?
-    data_has_changed?
-  end
-
   def data_changed
     return if data_has_changed?
 
