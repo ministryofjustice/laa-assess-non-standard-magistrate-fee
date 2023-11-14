@@ -1,6 +1,7 @@
 require_relative '../lib/govuk_design_system_formbuilder/elements/period'
 
 module FormBuilderHelper
+  # :nocov:
   # rubocop:disable Metrics/ParameterLists
   def govuk_period_field(attribute_name, hint: {}, legend: {}, caption: {}, widths: {}, maxlength_enabled: false,
                          form_group: {}, **, &block)
@@ -10,4 +11,5 @@ module FormBuilderHelper
     ).html
   end
   # rubocop:enable Metrics/ParameterLists
+  # :nocov:
 end
