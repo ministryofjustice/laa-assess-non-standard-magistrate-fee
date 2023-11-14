@@ -29,10 +29,10 @@
       <% if item.uplift? %>
         <%= f.govuk_radio_buttons_fieldset(:uplift, legend: { size: 's' }) do %>
           <%= f.govuk_radio_button :uplift, 'yes' %>
-          <%= f.govuk_radio_button :uplift, 'no' %>
+          <%= f.govuk_radio_button :uplift, 'no', id: 'letters-calls-form-uplift-no-field' %>
         <% end %>
       <% end %>
-      <%= f.govuk_text_field :count, label: { text: t('.count_label', type: item.type_name), size: 's' }, width: 10 %>
+      <%= f.govuk_text_field :count, id: 'letters-calls-form-count-field', label: { text: t('.count_label', type: item.type_name), size: 's' }, width: 10 %>
       <%= govuk_button_link_to(t('.calculate_button_text'), '#', { secondary: true, id:'calculate_change_button', 'data-unit-price': item.pricing, 'data-uplift-amount': item.uplift }) %>
       <div id='claim-cost-table'>
         <%= govuk_table do |table| %>

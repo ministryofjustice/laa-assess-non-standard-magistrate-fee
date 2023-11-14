@@ -3,7 +3,7 @@ function init() {
   const countField = document.getElementById('letters-calls-form-count-field');
   const calculateChangeButton = document.getElementById('calculate_change_button');
   const caseworkerAdjustedValue = document.getElementById('letters_calls_caseworker_allowed_amount');
-
+  const upliftNoField = document.getElementById('letters-calls-form-uplift-no-field');
   if (lettersAndCallsAdjustmentContainer && countField) {
     updateDomElements();
     calculateChangeButton.addEventListener('click', handleTestButtonClick);
@@ -23,7 +23,8 @@ function init() {
     const count = countField?.value;
     const unitPrice = calculateChangeButton?.getAttribute('data-unit-price');
     const upliftAmount = calculateChangeButton?.getAttribute('data-uplift-amount');
-    if (upliftAmount) {
+
+    if (upliftAmount && upliftNoField.checked) {
       const upliftFactor = (parseFloat(upliftAmount) / 100) + 1;
       return (`£${(count * unitPrice * upliftFactor).toFixed(2)}`);
     } else {
