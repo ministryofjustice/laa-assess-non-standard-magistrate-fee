@@ -1,4 +1,4 @@
-require_relative '../lib/govuk_design_system_formbuilder/elements/period'
+require_relative '../../lib/govuk_design_system_formbuilder/elements/period'
 
 module FormBuilderHelper
   # :nocov:
