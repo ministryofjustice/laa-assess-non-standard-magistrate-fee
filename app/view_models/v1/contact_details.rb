@@ -2,6 +2,7 @@ module V1
   class ContactDetails < BaseViewModel
     attribute :firm_office
     attribute :solicitor
+    attribute :submiter
 
     def key
       'contact_details'
@@ -27,6 +28,14 @@ module V1
       solicitor['reference_number']
     end
 
+    def contact_full_name
+      solicitor['contact_full_name']
+    end
+
+    def contact_email
+      solicitor['contact_email']
+    end
+
     def firm_address
       ApplicationController.helpers.sanitize([
         firm_office['address_line_1'],
@@ -37,7 +46,11 @@ module V1
                                              tags: %w[br])
     end
 
-    # rubocop:disable Metrics/MethodLength
+    def provider_email_address
+      submiter['email']
+    end
+
+    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     def data
       [
         {
@@ -59,13 +72,34 @@ module V1
         {
           title: I18n.t(".claim_details.#{key}.solicitor_ref_number"),
           value: solicitor_ref_number
+        },
+        *contact_details,
+        {
+          title: I18n.t(".claim_details.#{key}.provider_email"),
+          value: provider_email_address
         }
       ]
     end
-    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
     def rows
       { title:, data: }
+    end
+
+    def contact_details
+      return [] if contact_email.blank?
+
+      [
+        {
+          title: I18n.t(".claim_details.#{key}.contact_full_name"),
+          value: contact_full_name
+        },
+        {
+          title: I18n.t(".claim_details.#{key}.contact_email"),
+          value: contact_email
+        },
+
+      ]
     end
   end
 end

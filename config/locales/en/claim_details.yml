@@ -75,6 +75,9 @@ en:
       firm_address: Firm address
       solicitor_full_name: Solicitor full name
       solicitor_ref_number: Solicitor reference number
+      contact_full_name: Alternative contact full name
+      contact_email: Alternative contact email address
+      provider_email: Provider email address
     claim_details:
       title: Claim details
       prosecution_evidence: Number of pages of prosecution evidence
@@ -87,3 +90,9 @@ en:
       work_before_date: Date of work before order was granted
       work_after: Work was done after last hearing
       work_after_date: Date of work after last hearing
+    equality_details:
+      title: Equality monitoring
+      questions: Equality questions
+      ethnic_group: Defendants ethnic group
+      identification: Defendant identification
+      disability: Defendant disability
