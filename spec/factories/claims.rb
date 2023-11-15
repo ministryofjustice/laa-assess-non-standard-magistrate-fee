@@ -49,6 +49,20 @@ FactoryBot.define do
             },
             'total_cost_without_vat' => 100.0
           }
+        ],
+        'work_items' => [
+          {
+            'id'=> 'cf5e303e-98dd-4b0f-97ea-3560c4c5f137',
+            'uplift' => 95,
+            'pricing' => 24.0,
+            'work_type' => {
+              'en' => 'Waiting',
+              'value' => 'waiting'
+            },
+            'fee_earner' => 'aaa',
+            'time_spent' => 161,
+            'completed_on' => '2022-12-12'
+          }
         ]
       }
     end
