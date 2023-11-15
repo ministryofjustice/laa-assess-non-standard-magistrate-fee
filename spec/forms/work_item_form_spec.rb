@@ -98,6 +98,45 @@ RSpec.describe WorkItemForm do
       it { expect(subject.save).to be_falsey }
     end
 
+    context 'when only uplift has changed' do
+      let(:uplift) { 'yes' }
+      let(:time_spent) { nil }
+
+      it 'creates a event for the time_spent change' do
+        expect { subject.save }.to change(Event, :count).by(1)
+        expect(Event.last).to have_attributes(
+          claim: claim,
+          claim_version: claim.current_version,
+          event_type: 'Event::Edit',
+          linked_type: 'work_items',
+          linked_id: id,
+          details: {
+            'field' => 'uplift',
+            'from' => 95,
+            'to' => 0,
+            'change' => -95,
+            'comment' => 'change to work items'
+          }
+        )
+      end
+
+      it 'updates the JSON data' do
+        subject.save
+        work_item = claim.reload
+                         .data['work_items']
+                         .detect { |row| row.dig('work_type', 'value') == 'waiting' }
+        expect(work_item).to eq(
+          'id' => 'cf5e303e-98dd-4b0f-97ea-3560c4c5f137',
+          'time_spent' => 161,
+          'pricing' => 24.0,
+          'work_type' => { 'en' => 'Waiting', 'value' => 'waiting' },
+          'uplift' => 0,
+          'fee_earner' => 'aaa',
+          'completed_on' => '2022-12-12'
+        )
+      end
+    end
+
     context 'when only time_spent has changed' do
       let(:uplift) { 'no' }
 
