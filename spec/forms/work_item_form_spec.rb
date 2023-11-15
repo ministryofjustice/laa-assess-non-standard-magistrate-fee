@@ -122,8 +122,8 @@ RSpec.describe WorkItemForm do
       it 'updates the JSON data' do
         subject.save
         work_item = claim.reload
-                       .data['work_items']
-                       .detect{ |row| row.dig('work_type', 'value') == 'waiting' }
+                         .data['work_items']
+                         .detect { |row| row.dig('work_type', 'value') == 'waiting' }
         expect(work_item).to eq(
           'id' => 'cf5e303e-98dd-4b0f-97ea-3560c4c5f137',
           'time_spent' => 95,

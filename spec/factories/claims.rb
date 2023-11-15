@@ -52,7 +52,7 @@ FactoryBot.define do
         ],
         'work_items' => [
           {
-            'id'=> 'cf5e303e-98dd-4b0f-97ea-3560c4c5f137',
+            'id' => 'cf5e303e-98dd-4b0f-97ea-3560c4c5f137',
             'uplift' => 95,
             'pricing' => 24.0,
             'work_type' => {
