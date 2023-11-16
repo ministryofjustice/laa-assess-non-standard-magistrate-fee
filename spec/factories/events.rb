@@ -86,5 +86,17 @@ FactoryBot.define do
         }
       end
     end
+
+    trait :decision do
+      event_type { Event::Decision.to_s }
+      details do
+        {
+          field: 'state',
+          from: 'submitted',
+          to: 'grant',
+          comment: 'grant it'
+        }
+      end
+    end
   end
 end
