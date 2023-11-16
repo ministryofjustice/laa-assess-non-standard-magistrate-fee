@@ -52,10 +52,18 @@ en:
           For example, why you made adjustments to the work type rate, removed an uplift or changed the time spent.
           We'll share this explanation with the provider.
 
-    activemodel:
-      errors:
-        models:
-          work_item_form:
-            attributes:
-              uplift:
-                inclusion: Select to include uplift or not
+  activemodel:
+    errors:
+      models:
+        work_item_form:
+          attributes:
+            base:
+              no_change: The new time cannot be the same as the cost submitted by the provider
+            uplift:
+              inclusion: Select to include uplift or not
+            time_spent:
+              greater_than_or_equal_to: The time spent must be 0 or more
+              not_a_number: The time spent must be a number
+              not_an_integer: The time spent must be a whole number
+            explaination:
+              blank: Add an explanaion for your decision
