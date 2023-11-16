@@ -36,7 +36,11 @@ en:
   activemodel:
     errors:
       models:
-        uplift_form:
+        uplift/work_items_form:
+          attributes:
+            explanation:
+              blank: Add an explanation for your decision
+        uplift/letters_and_calls_form:
           attributes:
             explanation:
               blank: Add an explanation for your decision
