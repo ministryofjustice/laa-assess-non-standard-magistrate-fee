@@ -54,10 +54,12 @@ en:
           For example, why you made adjustments to the work type rate, removed an uplift or changed the time spent.
           We'll share this explanation with the provider.
 
-    activemodel:
-      errors:
-        models:
-          work_item_form:
-            attributes:
-              uplift:
-                inclusion: Select to include uplift or not
+  activemodel:
+    errors:
+      models:
+        work_item_form:
+          attributes:
+            base:
+              no_change: You must change the work item
+            uplift:
+              inclusion: Select to include uplift or not
