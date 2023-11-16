@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
+  include FormBuilderHelper
+
   LONDON_TIMEZONE = 'Europe/London'
 
   def current_application
@@ -56,5 +58,13 @@ module ApplicationHelper
     fields_for(form_object, form_object) do |f|
       f.govuk_error_summary t('errors.error_summary.heading')
     end
+  end
+
+  def accessed_colour(state)
+    {
+      'grant' => 'green',
+      'part-grant' => 'blue',
+      'reject' => 'red'
+    }[state]
   end
 end

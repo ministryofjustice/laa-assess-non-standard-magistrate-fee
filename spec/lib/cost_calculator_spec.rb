@@ -14,6 +14,7 @@ RSpec.describe CostCalculator do
 
   context 'when type is work_item' do
     let(:type) { :work_item }
+    let(:scope) { :provider_requested }
 
     context 'when uplift is present' do
       let(:object) { V1::WorkItem.new('time_spent' => 90, 'pricing' => 24.4, 'uplift' => 25) }

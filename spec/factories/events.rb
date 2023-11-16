@@ -45,6 +45,34 @@ FactoryBot.define do
       end
     end
 
+    trait :edit_work_item_uplift do
+      event_type { Event::Edit.to_s }
+      linked_type { 'work_item' }
+      linked_id { '183ec754-d0fd-490c-b7a4-14e6951e6659' }
+      details do
+        {
+          field: 'uplift',
+          from: 20,
+          to: 0,
+          change: -20
+        }
+      end
+    end
+
+    trait :edit_work_item_time_spent do
+      event_type { Event::Edit.to_s }
+      linked_type { 'work_item' }
+      linked_id { '183ec754-d0fd-490c-b7a4-14e6951e6659' }
+      details do
+        {
+          field: 'time_spent',
+          from: 171,
+          to: 100,
+          change: -71
+        }
+      end
+    end
+
     trait :edit_count do
       event_type { Event::Edit.to_s }
       linked_type { 'letters_and_calls' }
@@ -55,6 +83,18 @@ FactoryBot.define do
           from: 10,
           to: 5,
           change: -5
+        }
+      end
+    end
+
+    trait :decision do
+      event_type { Event::Decision.to_s }
+      details do
+        {
+          field: 'state',
+          from: 'submitted',
+          to: 'grant',
+          comment: 'grant it'
         }
       end
     end
