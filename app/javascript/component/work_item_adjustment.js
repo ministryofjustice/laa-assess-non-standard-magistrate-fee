@@ -33,6 +33,10 @@ function init() {
 
     var minutes = calculateChangeButton?.getAttribute('data-provider-time-spent');
 
+    if(isNaN(Number(hoursField?.value)) || isNaN(Number(minutesField?.value))){
+      return '--';
+    }
+
     if(hoursField?.value && minutesField?.value){
       minutes = (parseInt(hoursField.value) * 60) + parseInt(minutesField.value);
     }
@@ -70,7 +74,7 @@ function init() {
   }
 
   function getProviderUplift(){
-    return calculateChangeButton?.getAttribute('data-uplift-amount')
+    return calculateChangeButton?.getAttribute('data-uplift-amount');
   }
 }
 
