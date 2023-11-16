@@ -33,7 +33,7 @@ function init() {
 
     var minutes = calculateChangeButton?.getAttribute('data-provider-time-spent');
 
-    if(isNaN(Number(hoursField?.value)) || isNaN(Number(minutesField?.value))){
+    if(isNaN(hoursField?.value) || isNaN(minutesField?.value)){
       return '--';
     }
 
