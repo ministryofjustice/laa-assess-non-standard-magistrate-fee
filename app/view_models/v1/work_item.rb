@@ -5,8 +5,7 @@ module V1
 
     attribute :id, :string
     attribute :work_type, :translated
-    # TODO: import time_period code from provider app
-    attribute :time_spent
+    attribute :time_spent, :time_period
     attribute :completed_on, :date
 
     attribute :pricing, :float
