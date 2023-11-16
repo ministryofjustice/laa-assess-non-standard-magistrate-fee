@@ -13,8 +13,8 @@
   <div class="govuk-grid-column-two-thirds">
     <%=
       rows = [
-        [t('.date'), format_in_zone(item.completed_on)],
-        [t('.time_spent'), format_period(item.time_spent)],
+        [{ text: t('.date'), width: 'govuk-!-width-one-half' }, format_in_zone(item.completed_on)],
+        [t('.time_spent'), format_period(item.provider_requested_time_spent)],
         [t('.fee_earner'), item.fee_earner.to_s],
         [t('.uplift_claimed'), "#{item.provider_requested_uplift}%"],
         [t('.total_claimed'), NumberTo.pounds(item.provider_requested_amount)]

@@ -48,9 +48,9 @@ Rails.application.routes.draw do
     namespace :work_items do
       resource :uplift, only: [:edit, :update], path_names: { edit: '' }
     end
-    resources :work_items, only: [:index, :edit, :update], path_names: { edit: '' }
-    resources :letters_and_calls, only: [:index, :edit, :update], path_names: { edit: '' }
-    resources :disbursements, only: [:index, :edit, :update], path_names: { edit: '' }
+    resources :work_items, only: [:index, :show, :edit, :update]
+    resources :letters_and_calls, only: [:index, :show, :edit, :update]
+    resources :disbursements, only: [:index, :show, :edit, :update]
     resource :supporting_evidences, only: [:show]
     resource :history, only: [:show, :create]
     resources :send_back, only: [:index]

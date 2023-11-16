@@ -9,6 +9,15 @@ class WorkItemsController < ApplicationController
     render locals: { claim:, work_items:, travel_and_waiting: }
   end
 
+  def show
+    claim = Claim.find(params[:claim_id])
+    item = BaseViewModel.build(:work_item, claim, 'work_items').detect do |model|
+      model.id == params[:id]
+    end
+
+    render locals: { claim:, item:}
+  end
+
   def edit
     claim = Claim.find(params[:claim_id])
     item = BaseViewModel.build(:work_item, claim, 'work_items').detect do |model|
