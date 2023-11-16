@@ -35,7 +35,6 @@ class TimePeriodValidator < ActiveModel::EachValidator
     add_error(:positive_minutes) unless time_period.minutes.to_i.between?(0, 59)
     add_error(:invalid_hours) unless time_period.hours.is_a? Integer
 
-
     if time_period.is_a?(IntegerTimePeriod)
       add_error(:invalid_period) unless time_period.to_i >= 0
     else
