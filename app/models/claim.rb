@@ -17,4 +17,8 @@ class Claim < ApplicationRecord
          .where.not(id: Event::Unassignment.where(primary_user_id: user.id).select(:claim_id))
          .order(:created_at)
   }
+
+  def editable?
+    MakeDecisionForm::STATES.exclude?(state)
+  end
 end

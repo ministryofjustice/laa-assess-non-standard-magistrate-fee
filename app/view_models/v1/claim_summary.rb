@@ -15,6 +15,10 @@ module V1
       @assigned_to ||= claim.assignments.first
     end
 
+    def assessed_on
+      claim.events.where(event_type: 'Event::Decision').order(created_at: :desc).first&.created_at
+    end
+
     def total
       if adjusted_total.present?
         NumberTo.pounds(adjusted_total)

@@ -57,4 +57,12 @@ module ApplicationHelper
       f.govuk_error_summary t('errors.error_summary.heading')
     end
   end
+
+  def accessed_colour(state)
+    {
+      'grant' => 'green',
+      'part-grant' => 'blue',
+      'reject' => 'red'
+    }[state]
+  end
 end
