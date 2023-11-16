@@ -5,7 +5,6 @@ class WorkItemForm < BaseAdjustmentForm
 
   attribute :id, :string
   attribute :uplift, :string
-  # not set to integer so we can catch errors if non-number values are entered
   attribute :time_spent, :time_period
 
   validates :uplift, inclusion: { in: [UPLIFT_PROVIDED, UPLIFT_RESET] }, if: -> { item.uplift? }
