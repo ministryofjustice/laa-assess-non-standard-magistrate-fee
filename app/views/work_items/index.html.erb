@@ -20,8 +20,9 @@
     <% end %>
   <% end %>
 
-  <%= button_to(t(".remove_uplift_all"), '#', class: "govuk-button govuk-button--secondary", data_module: "govuk-button") %>
-
+  <% if claim.editable? %>
+    <%= button_to(t(".remove_uplift_all"), '#', class: "govuk-button govuk-button--secondary", data_module: "govuk-button") %>
+  <% end %>
 
   <% work_items.each do |completed_on, work_items_for_date| %>
     <%=
