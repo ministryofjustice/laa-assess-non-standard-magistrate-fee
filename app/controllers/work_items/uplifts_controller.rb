@@ -9,7 +9,7 @@ module WorkItems
 
     def update
       claim = Claim.find(params[:claim_id])
-      form = Uplift::WorkItems.new(claim:, **form_params)
+      form = Uplift::WorkItemsForm.new(claim:, **form_params)
 
       if form.save
         redirect_to claim_adjustments_path(claim, anchor: 'work-items-tab'),
