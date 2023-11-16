@@ -58,7 +58,7 @@ RSpec.describe TimePeriodValidator do
 
       it 'not to be valid' do
         expect(subject).not_to be_valid
-        expect(subject.errors.of_kind?(:time_spent, :invalid_hours)).to be(true)
+        expect(subject.errors.of_kind?(:time_spent, :positive_hours)).to be(true)
       end
     end
 
@@ -76,7 +76,7 @@ RSpec.describe TimePeriodValidator do
 
       it 'not to be valid' do
         expect(subject).not_to be_valid
-        expect(subject.errors.of_kind?(:time_spent, :invalid_minutes)).to be(true)
+        expect(subject.errors.of_kind?(:time_spent, :positive_minutes)).to be(true)
       end
     end
   end

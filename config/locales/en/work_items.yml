@@ -60,6 +60,14 @@ en:
         work_item_form:
           attributes:
             base:
-              no_change: You must change the work item
+              no_change: The new time cannot be the same as the cost submitted by the provider
             uplift:
               inclusion: Select to include uplift or not
+            time_spent:
+              blank_minutes: Enter number of minutes
+              blank_hours: Enter number of hours
+              positive_minutes: Number of minutes must be 0 or more
+              positive_hours: Number of hours must be 0 or more
+              invalid: Something went wrong
+            explanation:
+              blank: Add an explanaion for your decision
