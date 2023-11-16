@@ -26,7 +26,7 @@ class TimePeriodValidator < ActiveModel::EachValidator
 
   private
 
-  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def validate_period(time_period)
     add_error(:blank_hours) if time_period.hours.nil? && time_period.minutes.present?
     add_error(:positive_hours) unless time_period.hours.to_i >= 0
@@ -45,7 +45,7 @@ class TimePeriodValidator < ActiveModel::EachValidator
       add_error(:invalid)
     end
   end
-  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   def add_error(error)
     record.errors.add(attribute, error)
