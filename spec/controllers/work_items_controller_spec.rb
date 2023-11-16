@@ -26,7 +26,7 @@ RSpec.describe WorkItemsController do
       get :index, params: { claim_id: }
 
       expect(controller).to have_received(:render).with(
-        locals: { claim: claim, work_items: work_items, travel_and_waiting: travel_and_waiting }
+        locals: { claim:, work_items:, travel_and_waiting: }
       )
       expect(response).to be_successful
     end
