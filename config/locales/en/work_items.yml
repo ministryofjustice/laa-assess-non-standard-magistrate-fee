@@ -66,8 +66,6 @@ en:
               blank_hours: Enter number of hours
               positive_minutes: Number of minutes must be 0 or more
               positive_hours: Number of hours must be 0 or more
-              invalid_minutes: The number of minutes must be a whole number
-              invalid_hours: The number of hours must be a whole number
               invalid: Something went wrong
             explanation:
               blank: Add an explanaion for your decision
