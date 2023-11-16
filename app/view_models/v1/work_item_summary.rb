@@ -1,4 +1,4 @@
-module Shared
+module V1
   module WorkItemSummary
     def work_item_data
       @work_item_data ||=
@@ -9,7 +9,7 @@ module Shared
           # TODO: convert this to a time period to enable easy formating of output
           [
             translated_work_type,
-            work_items_for_type.sum { |work_item| CostCalculator.cost(:work_item, work_item) },
+            work_items_for_type.sum { |work_item| CostCalculator.cost(:work_item, work_item, :caseworker) },
             work_items_for_type.sum(&:time_spent),
           ]
         end

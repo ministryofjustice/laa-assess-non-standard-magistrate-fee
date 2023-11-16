@@ -32,7 +32,7 @@ RSpec.describe V1::TravelAndWaiting do
       it 'calls the CostCalculator' do
         subject.table_fields
 
-        expect(CostCalculator).to have_received(:cost).with(:work_item, work_item)
+        expect(CostCalculator).to have_received(:cost).with(:work_item, work_item, :caseworker)
       end
 
       it { expect(subject).to be_any }

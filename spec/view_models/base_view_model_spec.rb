@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe BaseViewModel do
   let(:implementation_class) { V1::ClaimSummary }
-  let(:claim) { instance_double(Claim, json_schema_version: 1, data: data, attributes: { state: }) }
+  let(:claim) { instance_double(Claim, json_schema_version: 1, data: data, attributes: { state: }, events: event) }
+  let(:event) { Event }
   let(:state) { 'grant' }
 
   describe '#build' do

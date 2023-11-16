@@ -1,5 +1,9 @@
 module V1
-  class WorkItem < BaseViewModel
+  class WorkItem < BaseWithAdjustments
+    LINKED_TYPE = 'work_items'.freeze
+    ID_FIELDS = %w[id].freeze
+
+    attribute :id, :string
     attribute :work_type, :translated
     # TODO: import time_period code from provider app
     attribute :time_spent
@@ -7,18 +11,50 @@ module V1
 
     attribute :pricing, :float
     attribute :uplift, :integer
+    attribute :fee_earner, :string
 
-    def requested
-      # TODO: update once we can calculate adjustments
-      time_spent - 0 # adjustments
+    def provider_requested_amount
+      @provider_requested_amount ||= CostCalculator.cost(:work_item, self, :provider_requested)
     end
 
-    def adjustments
-      '#pending#'
+    def provider_requested_time_spent
+      @provider_requested_time_spent ||= value_from_first_event('time_spent') || time_spent.to_i
+    end
+
+    def provider_requested_uplift
+      @provider_requested_uplift ||= value_from_first_event('uplift') || uplift.to_i
+    end
+
+    def caseworker_amount
+      @caseworker_amount ||= CostCalculator.cost(:work_item, self, :caseworker)
+    end
+
+    def caseworker_time_spent
+      time_spent.to_i
+    end
+
+    def caseworker_uplift
+      uplift.to_i
+    end
+
+    def uplift?
+      !provider_requested_uplift.to_i.zero?
+    end
+
+    def form_attributes
+      attributes.slice('time_spent', 'uplift').merge(
+        'explanation' => previous_explanation
+      )
     end
 
     def table_fields
-      [work_type.to_s, "#{uplift.to_i}%", "#{requested}min", '#pending#', '#pending#']
+      [
+        work_type.to_s,
+        "#{provider_requested_uplift.to_i}%",
+        NumberTo.pounds(provider_requested_amount).to_s,
+        adjustments.any? ? "#{caseworker_uplift}%" : '',
+        adjustments.any? ? NumberTo.pounds(caseworker_amount) : '',
+      ]
     end
   end
 end

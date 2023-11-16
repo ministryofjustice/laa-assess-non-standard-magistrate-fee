@@ -1,0 +1,61 @@
+---
+en:
+  work_items:
+    index:
+      work_items: Work items
+      core_cost: Core costs
+      remove_uplift_all: Remove uplifts for all items
+      page_title: "Review criminal legal aid applications"
+      type_of_work: Type of Work
+      uplift_request: Uplift requested
+      requested: Provider requested
+      uplift_allowed: Uplift allowed
+      allowed: Caseworker allowed
+      action: Action
+      change: Change
+      travel_and_waiting: Travel and waiting
+    edit:
+      page_title: "Your claims"
+      heading: "Adjust a work item"
+      provider_submission: Provider submission
+      date: Date
+      time_spent: Time spent
+      fee_earner: Fee earner initials
+      uplift_claimed: Uplift claimed
+      total_claimed: Claim cost
+      laa_adjustments: LAA Adjustments
+      calculate_button_text: Calculate my changes
+      claim_cost_table:
+        title: "Claim cost"
+        header_one: "Provider requested"
+        header_two: "Caseworker allowed"
+        header_three: "Uplift allowed"
+
+  helpers:
+    legend:
+      work_item_form:
+        uplift: Remove the uplift for this item
+        time_spent: Change time spent (optional)
+    label:
+      work_item_form:
+        uplift_options:
+          'yes': Yes, remove uplift
+          'no': No, do not remove uplift
+        partial_comment: Explain your decision
+        reject_comment: Explain your decision
+        explanation: Explain your decision
+    hint:
+      work_item_form:
+        time_spent: For example, 1 hour and 30 minutes
+        uplift: You must explain your decision
+        explanation: |
+          For example, why you made adjustments to the work type rate, removed an uplift or changed the time spent.
+          We'll share this explanation with the provider.
+
+    activemodel:
+      errors:
+        models:
+          work_item_form:
+            attributes:
+              uplift:
+                inclusion: Select to include uplift or not
