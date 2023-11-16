@@ -19,6 +19,6 @@ class Claim < ApplicationRecord
   }
 
   def editable?
-    ! MakeDecisionForm::STATES.include?(state)
+    MakeDecisionForm::STATES.exclude?(state)
   end
 end
