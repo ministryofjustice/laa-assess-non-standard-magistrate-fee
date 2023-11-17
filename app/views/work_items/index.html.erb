@@ -24,7 +24,7 @@
     <%= govuk_button_link_to(t(".remove_uplift_all"), edit_claim_work_items_uplift_path(claim), { secondary: true, data: { turbo: 'false' } }) %>
   <% end %>
 
-  <% work_items.group_by { |work_item| work_item[:completed_on] }.each do |completed_on, work_items_for_date| %>
+  <% work_items.group_by(&:completed_on).each do |completed_on, work_items_for_date| %>
     <%=
       head = [t('.type_of_work'), t('.uplift_request'), t('.requested'), t('.uplift_allowed'), t('.allowed')]
 
