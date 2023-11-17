@@ -15,7 +15,7 @@ class WorkItemsController < ApplicationController
       model.id == params[:id]
     end
 
-    render locals: { claim:, item:}
+    render locals: { claim:, item: }
   end
 
   def edit

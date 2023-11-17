@@ -49,7 +49,7 @@ Rails.application.routes.draw do
       resource :uplift, only: [:edit, :update], path_names: { edit: '' }
     end
     resources :work_items, only: [:index, :show, :edit, :update]
-    resources :letters_and_calls, only: [:index, :show, :edit, :update]
+    resources :letters_and_calls, only: [:index, :show, :edit, :update], constraints: { id: /(letters|calls)/ }
     resources :disbursements, only: [:index, :show, :edit, :update]
     resource :supporting_evidences, only: [:show]
     resource :history, only: [:show, :create]

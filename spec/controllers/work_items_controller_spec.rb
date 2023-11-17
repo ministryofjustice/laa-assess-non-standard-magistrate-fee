@@ -62,7 +62,6 @@ RSpec.describe WorkItemsController do
     end
   end
 
-
   context 'show' do
     let(:claim) { instance_double(Claim, id: claim_id) }
     let(:claim_id) { SecureRandom.uuid }

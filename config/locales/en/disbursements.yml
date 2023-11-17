@@ -17,6 +17,23 @@ en:
         prior_authority: Prior authority granted
         vat: VAT
         total: Total
+    show:
+      page_title: Adjust a disbursement
+      heading: Adjust a disbursement
+      summary_table:
+        caption: Provider submission
+        date: Date
+        type: Disbursement type
+        cost: Disbursement cost
+        details: Details of disbursement
+        prior_authority: Prior authority granted
+        vat: VAT
+        total: Total
+      refuse: Refuse disbursement
+      explanation: Adjustment reason
+      refuse_status:
+        'true': 'Yes'
+        'false': 'No'
   helpers:
     legend:
       disbursements_form:
