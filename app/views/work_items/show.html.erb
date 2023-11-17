@@ -29,12 +29,18 @@
     <h2 class="govuk-heading-l"><%= t('.laa_adjustments') %></h2>
 
     <%=
+      work_type_row = if item.adjustments.any?
+                        [[t('.work_type'), item.work_type.to_s]]
+                      else
+                        []
+                      end
       rows = [
         [{ text: t('.uplift_allowed'), width: 'govuk-!-width-one-half' }, "#{item.uplift}%"],
-        [t('.work_type'), item.work_type.to_s],
+        *work_type_row,
         [t('.time_spent_changed'), format_period(item.time_spent)],
         [t('.caseworker_allowed'), NumberTo.pounds(item.caseworker_amount)],
       ]
+
       rows << [t('.explanation'), item.previous_explanation.to_s] if item.previous_explanation.present?
       govuk_table(head: '', first_cell_is_header: true, rows:)
     %>
