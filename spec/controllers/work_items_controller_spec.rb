@@ -6,7 +6,6 @@ RSpec.describe WorkItemsController do
     let(:claim_id) { SecureRandom.uuid }
     let(:work_items) { [instance_double(V1::WorkItem, completed_on: Time.zone.today)] }
     let(:travel_and_waiting) { instance_double(V1::TravelAndWaiting) }
-    let(:grouped_work_items) { { Time.zone.today => work_items } }
 
     before do
       allow(Claim).to receive(:find).and_return(claim)
@@ -27,7 +26,7 @@ RSpec.describe WorkItemsController do
       get :index, params: { claim_id: }
 
       expect(controller).to have_received(:render).with(
-        locals: { claim: claim, work_items: grouped_work_items, travel_and_waiting: travel_and_waiting }
+        locals: { claim:, work_items:, travel_and_waiting: }
       )
       expect(response).to be_successful
     end
