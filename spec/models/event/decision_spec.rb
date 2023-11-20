@@ -37,7 +37,7 @@ RSpec.describe Event::Decision do
   end
 
   context 'when rejected' do
-    let(:state) { 'reject' }
+    let(:state) { 'rejected' }
 
     it 'has a valid title' do
       expect(subject.title).to eq('Decision made to reject claim')

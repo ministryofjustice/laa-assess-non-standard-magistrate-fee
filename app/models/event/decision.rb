@@ -18,6 +18,10 @@ class Event
       details['comment']
     end
 
+    def title
+      t("title.#{details['to']}", **title_options)
+    end
+
     private
 
     def title_options
