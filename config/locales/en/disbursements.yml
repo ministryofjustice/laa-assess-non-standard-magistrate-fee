@@ -29,7 +29,10 @@ en:
         total: Total
     show:
       page_title: Adjust a disbursement
-      heading: Adjust a disbursement
+      heading:
+        zero: Disbursement
+        one: Adjusted disbursement
+        other: Adjusted disbursement
       summary_table:
         caption: Provider submission
         date: Date

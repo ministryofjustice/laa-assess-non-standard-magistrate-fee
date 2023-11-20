@@ -33,7 +33,10 @@ en:
         header_three: "Uplift allowed"
     show:
       page_title: "Your claims"
-      heading: "Adjust a work item"
+      heading:
+        zero: 'Work item'
+        one: 'Adjusted work item'
+        other: 'Adjusted work item'
       provider_submission: Provider submission
       date: Date
       time_spent: Time spent

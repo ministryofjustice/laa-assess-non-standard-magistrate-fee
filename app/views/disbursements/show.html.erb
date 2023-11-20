@@ -7,42 +7,35 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
     <h1 class="govuk-heading-xl">
-        <%= t('.heading') %>
+        <%= t('.heading', count: item.adjustments.count) %>
     </h1>
   </div>
   <div class="govuk-grid-column-two-thirds">
     <h2 class="govuk-heading-l"><%= t('.provider_submission') %></h2>
     <div id='disbursement-provider-submission-summary-table'>
       <%=
-      table_fields = item.disbursement_table_fields
-      rows = [
-        [{ text: t('.summary_table.date'), width: 'govuk-!-width-one-half' }, table_fields[:date]],
-        [t('.summary_table.type'),table_fields[:type]],
-        if item.miles.present?
-          [t('.summary_table.miles'), table_fields[:miles]]
-        end,
-        [t('.summary_table.details'),table_fields[:details]],
-        [t('.summary_table.prior_authority'), table_fields[:prior_authority]],
-        if item.apply_vat == 'true'
-          [t('.summary_table.vat'), table_fields[:vat]]
-        end,
-        [t('.summary_table.total'), table_fields[:total]]
-      ]
+      rows = item.disbursement_fields.map do |key, value|
+        [
+          { text: t(".summary_table.#{key}"), width: 'govuk-!-width-one-half' },
+          value,
+        ]
+      end
       govuk_table(head: '', first_cell_is_header: true, rows:)
       %>
     </div>
-    <h2 class="govuk-heading-l"><%= t('.laa_adjustments') %></h2>
-    <div>
+
+    <% if item.adjustments.any? %>
+      <h2 class="govuk-heading-l"><%= t('.laa_adjustments') %></h2>
+
       <%=
-      table_fields = item.disbursement_table_fields
       rows = [
         [{ text: t('.refuse'), width: 'govuk-!-width-one-half' }, t(".refuse_status.#{item.total_cost_without_vat.zero?}")],
+        [t('.explanation'), item.previous_explanation.to_s]
       ]
-      rows << [t('.explanation'), item.previous_explanation.to_s] if item.previous_explanation.present?
       govuk_table(head: '', first_cell_is_header: true, rows:)
       %>
+    <% end %>
 
-      <%= govuk_link_to(t('shared.cancel'), claim_adjustments_path(claim, anchor: 'disbursements-tab'), data: { turbo: 'false' }) %>
-    </div>
+    <%= govuk_link_to(t('shared.cancel'), claim_adjustments_path(claim, anchor: 'disbursements-tab'), data: { turbo: 'false' }) %>
   </div>
 </div>

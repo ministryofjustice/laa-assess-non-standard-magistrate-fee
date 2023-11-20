@@ -35,7 +35,10 @@ en:
       count_label: Change number of %{type}
     show:
       page_title: "Your claims"
-      heading: "Adjust %{type} total"
+      heading:
+        zero: "%{type}"
+        one: "Adjusted %{type} total"
+        other: "Adjusted %{type} total"
       provider_submission: "Provider submission"
       number: "Number of %{type}"
       rate: Item rate
