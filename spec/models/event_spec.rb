@@ -26,7 +26,7 @@ RSpec.describe Event do
         expect(event.as_json).to match(
           'claim_version' => 1,
           'created_at' => an_instance_of(String),
-          'details' => { 'from' => 'submitted', 'to' => 'grant' },
+          'details' => { 'from' => 'submitted', 'to' => 'granted' },
           'linked_id' => nil,
           'linked_type' => nil,
           'primary_user_id' => nil,

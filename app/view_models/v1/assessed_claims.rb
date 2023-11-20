@@ -27,11 +27,11 @@ module V1
 
     def status(item)
       case item
-      when 'grant'
+      when 'granted'
         { colour: 'green', text: item, sort_value: 1 }
       when 'part_grant'
         { colour: 'blue', text: item, sort_value: 2 }
-      when 'reject'
+      when 'rejected'
         { colour: 'red', text: item, sort_value: 3 }
       else
         { colour: 'grey', text: item, sort_value: 4 }
