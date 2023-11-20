@@ -15,7 +15,7 @@ FactoryBot.define do
       details do
         {
           from: 'submitted',
-          to: 'grant'
+          to: 'granted'
         }
       end
     end
@@ -93,7 +93,7 @@ FactoryBot.define do
         {
           field: 'state',
           from: 'submitted',
-          to: 'grant',
+          to: 'granted',
           comment: 'grant it'
         }
       end

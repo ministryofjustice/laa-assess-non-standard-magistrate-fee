@@ -4,16 +4,16 @@ RSpec.describe BaseViewModel do
   let(:implementation_class) { V1::ClaimSummary }
   let(:claim) { instance_double(Claim, json_schema_version: 1, data: data, attributes: { state: }, events: event) }
   let(:event) { Event }
-  let(:state) { 'grant' }
+  let(:state) { 'granted' }
 
   describe '#build' do
     context 'for a single object' do
-      let(:data) { { 'laa_reference' => 'LA111', 'defendants' => [{ 'some' => 'data' }], 'state' => 'grant' } }
+      let(:data) { { 'laa_reference' => 'LA111', 'defendants' => [{ 'some' => 'data' }], 'state' => 'granted' } }
 
       it 'returns an instance with the correct attributes' do
         result = described_class.build(:assessed_claims, claim)
         expect(result).to have_attributes(
-          state: 'grant',
+          state: 'granted',
         )
       end
 

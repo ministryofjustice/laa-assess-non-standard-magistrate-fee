@@ -60,9 +60,9 @@ module ApplicationHelper
 
   def accessed_colour(state)
     {
-      'grant' => 'green',
+      'granted' => 'green',
       'part-grant' => 'blue',
-      'reject' => 'red'
+      'rejected' => 'red'
     }[state]
   end
 end

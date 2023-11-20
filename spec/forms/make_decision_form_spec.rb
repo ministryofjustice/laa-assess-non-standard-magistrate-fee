@@ -24,8 +24,8 @@ RSpec.describe MakeDecisionForm do
       end
     end
 
-    context 'when state is grant' do
-      let(:params) { { id: claim.id, state: 'grant' } }
+    context 'when state is granted' do
+      let(:params) { { id: claim.id, state: 'granted' } }
 
       it { expect(subject).to be_valid }
     end
@@ -47,9 +47,9 @@ RSpec.describe MakeDecisionForm do
       end
     end
 
-    context 'when state is reject' do
+    context 'when state is rejected' do
       context 'when reject_comment is blank' do
-        let(:params) { { id: claim.id, state: 'reject', reject_comment: nil } }
+        let(:params) { { id: claim.id, state: 'rejected', reject_comment: nil } }
 
         it 'is invalid' do
           expect(subject).not_to be_valid
@@ -58,7 +58,7 @@ RSpec.describe MakeDecisionForm do
       end
 
       context 'when reject_comment is set' do
-        let(:params) { { id: claim.id, state: 'reject', reject_comment: 'reject comment' } }
+        let(:params) { { id: claim.id, state: 'rejected', reject_comment: 'reject comment' } }
 
         it { expect(subject).to be_valid }
       end
@@ -126,8 +126,8 @@ RSpec.describe MakeDecisionForm do
   describe '#comment' do
     let(:params) { { state: state, partial_comment: 'part comment', reject_comment: 'reject comment' } }
 
-    context 'when state is grant' do
-      let(:state) { 'grant' }
+    context 'when state is granted' do
+      let(:state) { 'granted' }
 
       it 'ignores all comment fields' do
         expect(subject.comment).to be_nil
@@ -142,8 +142,8 @@ RSpec.describe MakeDecisionForm do
       end
     end
 
-    context 'when state is reject' do
-      let(:state) { 'reject' }
+    context 'when state is rejected' do
+      let(:state) { 'rejected' }
 
       it 'uses the reject_comment field' do
         expect(subject.comment).to eq('reject comment')
