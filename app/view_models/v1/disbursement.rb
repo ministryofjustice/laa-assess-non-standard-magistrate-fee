@@ -38,6 +38,7 @@ module V1
       )
     end
 
+    # rubocop:disable Metrics/AbcSize
     def disbursement_fields
       table_fields = {}
       table_fields[:date] = disbursement_date.strftime('%d %b %Y')
@@ -50,6 +51,7 @@ module V1
 
       table_fields
     end
+    # rubocop:enable Metrics/AbcSize
 
     def format_vat_rate(rate)
       "#{(rate * 100).to_i}%"
