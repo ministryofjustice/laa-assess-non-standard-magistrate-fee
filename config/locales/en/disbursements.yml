@@ -1,6 +1,16 @@
 ---
 en:
   disbursements:
+    index:
+      disbursements: Disbursements
+      disbursement_total: Disbursement total
+      disbursement: Disbursement
+      requested: Provider requested
+      vat_applied: VAT applied
+      adjusted: Caseworker allowed
+      action: Action
+      change: Change
+      view: View
     disbursements_total:
       link_title: View disbursement total
       without_vat: Without VAT
