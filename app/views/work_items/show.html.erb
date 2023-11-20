@@ -29,7 +29,7 @@
     <h2 class="govuk-heading-l"><%= t('.laa_adjustments') %></h2>
 
     <%=
-      work_type_row = if item.adjustments.any?
+      work_type_row = if item.attendance?
                         [[t('.work_type'), item.work_type.to_s]]
                       else
                         []
