@@ -4,7 +4,7 @@ RSpec.describe Event::Decision do
   subject { described_class.build(claim:, previous_state:, comment:, current_user:) }
 
   let(:claim) { create(:claim, state:) }
-  let(:state) { 'grant' }
+  let(:state) { 'granted' }
   let(:current_user) { create(:caseworker) }
   let(:previous_state) { 'submitted' }
   let(:comment) { 'decison was made' }
@@ -18,7 +18,7 @@ RSpec.describe Event::Decision do
       details: {
         'field' => 'state',
         'from' => 'submitted',
-        'to' => 'grant',
+        'to' => 'granted',
         'comment' => 'decison was made'
       }
     )
@@ -37,7 +37,7 @@ RSpec.describe Event::Decision do
   end
 
   context 'when rejected' do
-    let(:state) { 'reject' }
+    let(:state) { 'rejected' }
 
     it 'has a valid title' do
       expect(subject.title).to eq('Decision made to reject claim')

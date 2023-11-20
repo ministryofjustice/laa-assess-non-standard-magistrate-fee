@@ -14,6 +14,6 @@ en:
       caseworker_name: "Caseworker"
       status: "Status"
       status_list:
-        grant: "Granted"
+        granted: "Granted"
         part_grant: "Part granted"
-        reject: "Rejected"
+        rejected: "Rejected"

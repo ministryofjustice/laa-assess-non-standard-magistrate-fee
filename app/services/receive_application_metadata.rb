@@ -12,9 +12,7 @@ class ReceiveApplicationMetadata
     # set default if this is a new record
     claim.received_on ||= Time.zone.today
 
-    # as the provider can't resubmit let just do this as simple as possible
-    # and avoid unnessessary pulls
-    return unless claim.save && claim.current_version == 1
+    return unless claim.save
 
     PullLatestVersionData.perform_later(claim)
   end
