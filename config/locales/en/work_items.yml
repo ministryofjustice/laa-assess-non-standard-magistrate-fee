@@ -30,7 +30,9 @@ en:
         header_one: "Provider requested"
         header_two: "Caseworker allowed"
         header_three: "Uplift allowed"
-
+    uplifts:
+      update:
+        uplift_removed: All uplifts have been removed
   helpers:
     legend:
       work_item_form:
