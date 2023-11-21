@@ -43,10 +43,10 @@ RSpec.describe ReceiveApplicationMetadata do
       expect { subject.save(params) }.not_to change(Claim, :count)
     end
 
-    it 'does not trigger the pull callback' do
+    it 'triggers the pull callback' do
       subject.save(params)
 
-      expect(PullLatestVersionData).not_to have_received(:perform_later)
+      expect(PullLatestVersionData).to have_received(:perform_later).with(Claim.last)
     end
 
     it 'updates the existing claim' do
