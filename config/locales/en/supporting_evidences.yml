@@ -5,6 +5,7 @@ en:
       page_title: "Supporting evidence"
       heading: "Supporting evidence"
     supporting_evidence_table:
+      caption: "Supporting evidence"
       file_name: "File name"
       date_received: "Date received"
     send_by_post:
