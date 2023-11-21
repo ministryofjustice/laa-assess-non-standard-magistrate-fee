@@ -16,7 +16,7 @@ RSpec.describe V1::HearingDetails do
           'number_of_hearing' => 3,
           'court' => 'A Mag Court',
           'in_area' => 'yes',
-          'youth_count' => 'no',
+          'youth_court' => 'no',
           'hearing_outcome' => {
             'value' => 'CP01',
             'en' => 'Hearing Done'
@@ -41,7 +41,7 @@ RSpec.describe V1::HearingDetails do
         'number_of_hearing' => 3,
         'court' => 'A Mag Court',
         'in_area' => 'yes',
-        'youth_count' => 'no',
+        'youth_court' => 'no',
         'hearing_outcome' => {
           'value' => 'CP01',
           'en' => 'Hearing Done'

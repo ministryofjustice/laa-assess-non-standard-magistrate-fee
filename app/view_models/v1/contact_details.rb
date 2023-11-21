@@ -2,7 +2,7 @@ module V1
   class ContactDetails < BaseViewModel
     attribute :firm_office
     attribute :solicitor
-    attribute :submiter
+    attribute :submitter
 
     def key
       'contact_details'
@@ -47,7 +47,7 @@ module V1
     end
 
     def provider_email_address
-      submiter['email']
+      submitter['email']
     end
 
     # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
