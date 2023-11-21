@@ -42,7 +42,16 @@ RSpec.describe 'Supporting Evidence' do
     end
   end
 
-  # context 'There is supporting evidence sent by post' do
+  context 'There is supporting evidence sent by post' do
+    let(:claim) { create(:claim, :sent_by_post_true_without_evidence) }
 
-  # end
+    it 'supporting evidence table not shown' do
+      expect(page).to have_no_selector('.govuk-table__row')
+    end
+
+
+    it 'send by post info is shown' do
+      expect(page).to have_content('The provider has chosen to post the evidence to:')
+    end
+  end
 end
