@@ -41,17 +41,19 @@
   </div>
 </div>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-full govuk-!-padding-right-0">
-    <div class='history-input'>
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-three-quarters govuk-!-padding-right-0">
-          <%= form_with model: claim_note, url: claim_history_path(claim.id) do |f| %>
-            <%= f.govuk_text_area :note, label: { size: 'm' }, rows: 5 %>
-            <%= f.govuk_submit t('.add-note') %>
-          <% end %>
+<% if claim.editable? %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full govuk-!-padding-right-0">
+      <div class='history-input'>
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-three-quarters govuk-!-padding-right-0">
+            <%= form_with model: claim_note, url: claim_history_path(claim.id) do |f| %>
+              <%= f.govuk_text_area :note, label: { size: 'm' }, rows: 5 %>
+              <%= f.govuk_submit t('.add-note') %>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+<% end %>
