@@ -11,10 +11,22 @@ RSpec.describe V1::EqualityDetails do
     it 'has correct structure' do
       subject = described_class.new(
         {
-          'answer_equality' => 'yes',
-          'ethnic_group' => '01_with_british',
-          'gender' => 'm',
-          'disability' => 'n',
+          'answer_equality' => {
+            'en' => 'Yes, answer the equality questions (takes 2 minutes)',
+            'value' => 'yes'
+          },
+          'ethnic_group' => {
+            'en' => 'White British',
+            'value' => '01_white_british'
+          },
+          'gender' => {
+            'en' => 'Male',
+            'value' => 'm'
+          },
+          'disability' => {
+            'en' => 'No',
+            'value' => 'n'
+          }
         }
       )
 
@@ -24,23 +36,47 @@ RSpec.describe V1::EqualityDetails do
   end
 
   describe '#data' do
-    context 'One line in firm address' do
+    context 'Basic accessibility details' do
       subject = described_class.new(
         {
-          'answer_equality' => 'yes',
-          'ethnic_group' => '01_with_british',
-          'gender' => 'm',
-          'disability' => 'n',
+          'answer_equality' => {
+            'en' => 'Yes, answer the equality questions (takes 2 minutes)',
+            'value' => 'yes'
+          },
+          'ethnic_group' => {
+            'en' => 'White British',
+            'value' => '01_white_british'
+          },
+          'gender' => {
+            'en' => 'Male',
+            'value' => 'm'
+          },
+          'disability' => {
+            'en' => 'No',
+            'value' => 'n'
+          }
         }
       )
 
       it 'shows correct table data' do
         expect(subject.data).to eq(
           [
-            { title: 'Equality questions', value: 'yes' },
-            { title: 'Defendants ethnic group', value: '01_with_british' },
-            { title: 'Defendant identification', value: 'm' },
-            { title: 'Defendant disability', value: 'n' }
+            {
+              title: 'Equality questions',
+              value: TranslationObject.new({'value' => 'yes', 'en' => 'Yes, answer the equality questions (takes 2 minutes)'})
+            },
+            {
+              title: 'Defendants ethnic group',
+              value: TranslationObject.new({'value' => '01_white_british', 'en' => 'White British'})
+            },
+            {
+              title: 'Defendant identification',
+              value: TranslationObject.new({'value' => 'm', 'en' => 'Male'})
+            },
+            {
+              title: 'Defendant disability',
+              value: TranslationObject.new({'value' => 'n', 'en' => 'No'})
+            }
           ]
         )
       end
