@@ -132,14 +132,14 @@
                     "en": null,
                     "value": null
                 },
-                "vat_amount": "9.99",
+                "vat_amount": 9.99,
                 "prior_authority": "yes",
                 "disbursement_date": "2022-01-01",
                 "disbursement_type": {
                     "en": "Car",
                     "value": "car"
                 },
-                "total_cost_without_vat": "49.95"
+                "total_cost_without_vat": 49.95
             },
             {
                 "id": "18032dc2-357c-4a70-a009-0b85e32b6ef8",
@@ -152,14 +152,14 @@
                     "en": "apples",
                     "value": "apples"
                 },
-                "vat_amount": "44.4",
+                "vat_amount": 44.4,
                 "prior_authority": "yes",
                 "disbursement_date": "2022-02-02",
                 "disbursement_type": {
                     "en": "Other disbursement type",
                     "value": "other"
                 },
-                "total_cost_without_vat": "222.0"
+                "total_cost_without_vat": 222.0
             },
             {
                 "id": "5c796ff8-a14b-4359-b02c-9ffe5fc669cb",
@@ -172,14 +172,14 @@
                     "en": "Accident \u0026 Emergency Report",
                     "value": "accident_emergency_report"
                 },
-                "vat_amount": "0.0",
+                "vat_amount": 0.0,
                 "prior_authority": "yes",
                 "disbursement_date": "2022-02-02",
                 "disbursement_type": {
                     "en": "Other disbursement type",
                     "value": "other"
                 },
-                "total_cost_without_vat": "1234.0"
+                "total_cost_without_vat": 1234.0
             }
         ],
         "is_other_info": "no",

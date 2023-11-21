@@ -46,7 +46,7 @@ RSpec.describe LettersAndCallsController do
       it 'raises an error' do
         expect do
           get :edit, params: { claim_id: claim_id, id: 'other' }
-        end.to raise_error('Only letters and calls type excepted')
+        end.to raise_error(/No route matches/)
       end
     end
 
@@ -68,6 +68,49 @@ RSpec.describe LettersAndCallsController do
 
         expect(controller).to have_received(:render)
                           .with(locals: { claim: claim, form: form, item: calls })
+        expect(response).to be_successful
+      end
+    end
+  end
+
+  context 'show' do
+    let(:claim) { instance_double(Claim, id: claim_id, risk: 'high') }
+    let(:claim_id) { SecureRandom.uuid }
+    let(:letters_and_calls) { [calls, letters] }
+    let(:calls) { instance_double(V1::LetterAndCall, type: double(value: 'calls'), form_attributes: {}) }
+    let(:letters) { instance_double(V1::LetterAndCall, type: double(value: 'letters'), form_attributes: {}) }
+
+    before do
+      allow(Claim).to receive(:find).and_return(claim)
+      allow(BaseViewModel).to receive(:build).and_return(letters_and_calls)
+    end
+
+    context 'when type is unknown' do
+      it 'raises an error' do
+        expect do
+          get :show, params: { claim_id: claim_id, id: 'other' }
+        end.to raise_error(/No route matches/)
+      end
+    end
+
+    context 'when URL is for letters' do
+      it 'renders successfully with claims' do
+        allow(controller).to receive(:render)
+        get :show, params: { claim_id: claim_id, id: 'letters' }
+
+        expect(controller).to have_received(:render)
+                          .with(locals: { claim: claim, item: letters })
+        expect(response).to be_successful
+      end
+    end
+
+    context 'when URL is for calls' do
+      it 'renders successfully with claims' do
+        allow(controller).to receive(:render)
+        get :show, params: { claim_id: claim_id, id: 'calls' }
+
+        expect(controller).to have_received(:render)
+                          .with(locals: { claim: claim, item: calls })
         expect(response).to be_successful
       end
     end

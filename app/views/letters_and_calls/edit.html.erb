@@ -13,7 +13,7 @@
   <div class="govuk-grid-column-two-thirds">
     <%=
       rows = [
-        [t('.number', type: item.type_name), item.provider_requested_count.to_s],
+        [{ text: t('.number', type: item.type_name), width: 'govuk-!-width-one-half' },item.provider_requested_count.to_s],
         [t('.rate'), item.pricing.to_s],
         [t('.uplift_requested'), "#{item.provider_requested_uplift.to_i}%"],
         [t('.total_claimed'), NumberTo.pounds(item.provider_requested_amount)]

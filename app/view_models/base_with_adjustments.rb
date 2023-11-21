@@ -1,6 +1,13 @@
 class BaseWithAdjustments < BaseViewModel
   attribute :adjustments, default: []
 
+  def previous_explanation
+    field = adjustments.last
+    return unless field
+
+    field.details['comment']
+  end
+
   private
 
   def value_from_first_event(field_name)
@@ -8,12 +15,5 @@ class BaseWithAdjustments < BaseViewModel
     return unless field
 
     field.details['from']
-  end
-
-  def previous_explanation
-    field = adjustments.last
-    return unless field
-
-    field.details['comment']
   end
 end
