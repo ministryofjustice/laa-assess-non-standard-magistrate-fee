@@ -1,5 +1,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
-    <h2 class="govuk-heading-m">Test</h2>
+    <p><%= t('.info') %></p>
+    <br>
+    <%= sanitize(t('.address'), tags: %w[p br]) %>
   </div>
 </div>
