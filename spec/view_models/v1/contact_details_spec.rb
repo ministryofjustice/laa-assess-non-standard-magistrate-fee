@@ -24,7 +24,7 @@ RSpec.describe V1::ContactDetails do
             'full_name' => 'Daniel Treaty',
             'reference_number' => '1212333',
           },
-          'submiter' => {
+          'submitter' => {
             'email' => 'test@test.com'
           }
         }
@@ -52,7 +52,7 @@ RSpec.describe V1::ContactDetails do
             'full_name' => 'Daniel Treaty',
             'reference_number' => '1212333',
           },
-          'submiter' => {
+          'submitter' => {
             'email' => 'test@test.com'
           }
         }
@@ -87,7 +87,7 @@ RSpec.describe V1::ContactDetails do
             'full_name' => 'Daniel Treaty',
             'reference_number' => '1212333',
           },
-          'submiter' => {
+          'submitter' => {
             'email' => 'test@test.com'
           }
         }
@@ -124,7 +124,7 @@ RSpec.describe V1::ContactDetails do
             'contact_full_name' => 'Jim Bob',
             'contact_email' => 'jim@bob.com'
           },
-          'submiter' => {
+          'submitter' => {
             'email' => 'test@test.com'
           }
         }

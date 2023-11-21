@@ -4,7 +4,7 @@ module V1
     attribute :number_of_hearing
     attribute :court
     attribute :in_area
-    attribute :youth_count
+    attribute :youth_court
     attribute :hearing_outcome, :translated
     attribute :matter_type, :translated
 
@@ -37,7 +37,7 @@ module V1
         },
         {
           title: I18n.t(".claim_details.#{key}.youth_court"),
-          value: youth_count.capitalize
+          value: youth_court.capitalize
         },
         {
           title: I18n.t(".claim_details.#{key}.hearing_outcome"),
