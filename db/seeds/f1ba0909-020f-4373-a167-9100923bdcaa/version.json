@@ -15,7 +15,7 @@
         "gender": null,
         "status": "completed",
         "in_area": "no",
-        "submiter": {
+        "submitter": {
             "email": "provider@example.com",
             "description": null
         },
@@ -47,7 +47,7 @@
         "disability": null,
         "other_info": "",
         "time_spent": 110,
-        "evidence_recorded": "yes",
+        "preparation_time": "yes",
         "updated_at": "2023-09-07T10:25:44.724Z",
         "work_after": "no",
         "work_items": [
@@ -115,7 +115,7 @@
         },
         "office_code": "1A123B",
         "work_before": "no",
-        "youth_count": "no",
+        "youth_court": "no",
         "answer_equality": null,
         "ethnic_group": null,
         "main_offence": "Assault (common)",
