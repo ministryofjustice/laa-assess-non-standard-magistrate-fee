@@ -21,7 +21,7 @@
     "status": "completed",
     "in_area": "no",
     "letters": 12,
-    "submiter": {
+    "submitter": {
       "email": "provider@example.com",
       "description": null
     },
@@ -53,7 +53,7 @@
     "disability": null,
     "other_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. \nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
     "time_spent": null,
-    "evidence_recorded": "no",
+    "preparation_time": "no",
     "updated_at": "2023-09-01T13:04:19.096Z",
     "work_after": "yes",
     "work_items": [
@@ -85,7 +85,7 @@
     },
     "office_code": "1A123B",
     "work_before": "yes",
-    "youth_count": "no",
+    "youth_court": "no",
     "calls_uplift": null,
     "ethnic_group": null,
     "main_offence": "Stole an apple",
