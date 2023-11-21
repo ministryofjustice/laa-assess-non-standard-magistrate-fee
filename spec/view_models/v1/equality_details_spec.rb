@@ -63,19 +63,20 @@ RSpec.describe V1::EqualityDetails do
           [
             {
               title: 'Equality questions',
-              value: TranslationObject.new({'value' => 'yes', 'en' => 'Yes, answer the equality questions (takes 2 minutes)'})
+              value: TranslationObject.new({ 'value' => 'yes',
+'en' => 'Yes, answer the equality questions (takes 2 minutes)' })
             },
             {
               title: 'Defendants ethnic group',
-              value: TranslationObject.new({'value' => '01_white_british', 'en' => 'White British'})
+              value: TranslationObject.new({ 'value' => '01_white_british', 'en' => 'White British' })
             },
             {
               title: 'Defendant identification',
-              value: TranslationObject.new({'value' => 'm', 'en' => 'Male'})
+              value: TranslationObject.new({ 'value' => 'm', 'en' => 'Male' })
             },
             {
               title: 'Defendant disability',
-              value: TranslationObject.new({'value' => 'n', 'en' => 'No'})
+              value: TranslationObject.new({ 'value' => 'n', 'en' => 'No' })
             }
           ]
         )
