@@ -7,6 +7,7 @@ RSpec.describe V1::EqualityDetails do
     end
   end
 
+  # rubocop:disable RSpec/ExampleLength
   describe '#rows' do
     it 'has correct structure' do
       subject = described_class.new(
@@ -83,4 +84,5 @@ RSpec.describe V1::EqualityDetails do
       end
     end
   end
+  # rubocop:enable RSpec/ExampleLength
 end
