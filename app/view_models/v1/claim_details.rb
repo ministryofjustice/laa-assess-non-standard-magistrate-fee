@@ -40,7 +40,7 @@ module V1
         },
         {
           title: I18n.t(".claim_details.#{key}.evidence_recorded"),
-          value:  evidence_recorded.capitalize
+          value:  evidence_recorded&.capitalize
         },
         (unless evidence_recorded == 'no'
            {
