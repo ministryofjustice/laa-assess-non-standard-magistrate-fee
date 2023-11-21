@@ -38,18 +38,20 @@ module V1
       )
     end
 
-    def disbursement_table_fields
-      table_fields = {
-        date: disbursement_date.strftime('%d %b %Y'),
-        type: type_name.capitalize,
-        details: details.capitalize,
-        prior_authority: prior_authority.capitalize,
-        vat: format_vat_rate(vat_rate),
-        total: NumberTo.pounds(CostCalculator.cost(:disbursement, self))
-      }
+    # rubocop:disable Metrics/AbcSize
+    def disbursement_fields
+      table_fields = {}
+      table_fields[:date] = disbursement_date.strftime('%d %b %Y')
+      table_fields[:type] = type_name.capitalize
       table_fields[:miles] = miles.to_s if miles.present?
+      table_fields[:details] = details.capitalize
+      table_fields[:prior_authority] = prior_authority.capitalize
+      table_fields[:vat] = format_vat_rate(vat_rate) if apply_vat == 'true'
+      table_fields[:total] = NumberTo.pounds(CostCalculator.cost(:disbursement, self))
+
       table_fields
     end
+    # rubocop:enable Metrics/AbcSize
 
     def format_vat_rate(rate)
       "#{(rate * 100).to_i}%"

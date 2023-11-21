@@ -8,6 +8,15 @@ class DisbursementsController < ApplicationController
     render locals: { claim:, disbursements: }
   end
 
+  def show
+    claim = Claim.find(params[:claim_id])
+    item = BaseViewModel.build(:disbursement, claim, 'disbursements').detect do |model|
+      model.id == params[:id]
+    end
+
+    render locals: { claim:, item: }
+  end
+
   def edit
     claim = Claim.find(params[:claim_id])
     item = BaseViewModel.build(:disbursement, claim, 'disbursements').detect do |model|

@@ -55,5 +55,9 @@ module V1
         adjustments.any? ? NumberTo.pounds(caseworker_amount) : '',
       ]
     end
+
+    def attendance?
+      %w[attendance_with_counsel attendance_without_counsel].include?(work_type.value)
+    end
   end
 end

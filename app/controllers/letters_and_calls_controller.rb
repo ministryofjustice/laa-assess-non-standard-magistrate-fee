@@ -1,11 +1,25 @@
 class LettersAndCallsController < ApplicationController
   layout nil
 
+  FORMS = {
+    'letters' => LettersCallsForm::Letters,
+    'calls' => LettersCallsForm::Calls
+  }.freeze
+
   def index
     claim = Claim.find(params[:claim_id])
     letters_and_calls = BaseViewModel.build(:letters_and_calls_summary, claim)
 
     render locals: { claim:, letters_and_calls: }
+  end
+
+  def show
+    claim = Claim.find(params[:claim_id])
+    item = BaseViewModel.build(:letter_and_call, claim, 'letters_and_calls').detect do |model|
+      model.type.value == params[:id]
+    end
+
+    render locals: { claim:, item: }
   end
 
   def edit
@@ -35,14 +49,7 @@ class LettersAndCallsController < ApplicationController
   private
 
   def form_class
-    case params[:id]
-    when 'letters'
-      LettersCallsForm::Letters
-    when 'calls'
-      LettersCallsForm::Calls
-    else
-      raise 'Only letters and calls type excepted'
-    end
+    FORMS[params[:id]]
   end
 
   def form_params
