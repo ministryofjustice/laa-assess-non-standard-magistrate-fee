@@ -36,10 +36,11 @@ RSpec.describe V1::Disbursement do
     end
   end
 
-  describe '#disbursement_table_fields' do
+  describe '#disbursement_fields' do
     it 'returns a hash with the correct fields if no miles' do
       allow(disbursement).to receive_messages(disbursement_date: Date.new(2022, 1, 1), type_name: 'type',
-                                              details: 'details', prior_authority: 'prior_authority', vat_rate: 0.2)
+                                              details: 'details', prior_authority: 'prior_authority',
+                                              vat_rate: 0.2, apply_vat: 'true')
       allow(CostCalculator).to receive(:cost).with(:disbursement, disbursement).and_return(100)
 
       expected_fields = {
@@ -51,13 +52,13 @@ RSpec.describe V1::Disbursement do
         total: '£100.00'
       }
 
-      expect(disbursement.disbursement_table_fields).to eq(expected_fields)
+      expect(disbursement.disbursement_fields).to eq(expected_fields)
     end
 
     it 'returns a hash with the correct fields if miles present' do
       allow(disbursement).to receive_messages(disbursement_date: Date.new(2022, 1, 1), type_name: 'type',
                                               details: 'details', prior_authority: 'prior_authority',
-                                              vat_rate: 0.2, miles: 10)
+                                              vat_rate: 0.2, miles: 10, apply_vat: 'true')
       allow(CostCalculator).to receive(:cost).with(:disbursement, disbursement).and_return(100)
 
       expected_fields = {
@@ -70,7 +71,24 @@ RSpec.describe V1::Disbursement do
         total: '£100.00'
       }
 
-      expect(disbursement.disbursement_table_fields).to eq(expected_fields)
+      expect(disbursement.disbursement_fields).to eq(expected_fields)
+    end
+
+    it 'returns a hash with the correct fields if apply vat is false' do
+      allow(disbursement).to receive_messages(disbursement_date: Date.new(2022, 1, 1), type_name: 'type',
+                                              details: 'details', prior_authority: 'prior_authority',
+                                              vat_rate: 0.2, apply_vat: 'false')
+      allow(CostCalculator).to receive(:cost).with(:disbursement, disbursement).and_return(100)
+
+      expected_fields = {
+        date: '01 Jan 2022',
+        type: 'Type',
+        details: 'Details',
+        prior_authority: 'Prior_authority',
+        total: '£100.00'
+      }
+
+      expect(disbursement.disbursement_fields).to eq(expected_fields)
     end
   end
 

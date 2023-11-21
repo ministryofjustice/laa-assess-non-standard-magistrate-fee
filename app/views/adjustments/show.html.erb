@@ -49,17 +49,17 @@
       </ul>
 
       <div class="govuk-tabs__panel" id="work-items-tab">
-        <%= turbo_frame_tag 'work_items', src: claim_work_items_path(claim), lazy: true do %>
+        <%= turbo_frame_tag 'work_items', src: claim_work_items_path(claim), loading: :lazy do %>
           Loading
         <% end %>
       </div>
       <div class="govuk-tabs__panel" id="letters-and-calls-tab">
-        <%= turbo_frame_tag 'letters_and_calls', src: claim_letters_and_calls_path(claim), lazy: true do %>
+        <%= turbo_frame_tag 'letters_and_calls', src: claim_letters_and_calls_path(claim), loading: :lazy do %>
           Loading
         <% end %>
       </div>
       <div class="govuk-tabs__panel" id="disbursements-tab">
-        <%= turbo_frame_tag 'disbursements', src: claim_disbursements_path(claim), lazy: true do %>
+        <%= turbo_frame_tag 'disbursements', src: claim_disbursements_path(claim), loading: :lazy do %>
           Loading
         <% end %>
       </div>
