@@ -26,7 +26,7 @@ RSpec.describe V1::ClaimSummary do
     it 'returns the attribute send by post as bool' do
       send_by_post = true
       summary = described_class.new('send_by_post' => send_by_post)
-      expect(summary.send_by_post).to eq(true)
+      expect(summary.send_by_post).to be(true)
     end
   end
 
