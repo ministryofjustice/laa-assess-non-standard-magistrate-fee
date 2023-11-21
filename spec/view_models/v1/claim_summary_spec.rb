@@ -22,6 +22,14 @@ RSpec.describe V1::ClaimSummary do
     end
   end
 
+  describe 'send_by_post' do
+    it 'returns the attribute send by post as bool' do
+      send_by_post = true
+      summary = described_class.new('send_by_post' => send_by_post)
+      expect(summary.send_by_post).to eq(true)
+    end
+  end
+
   describe 'total' do
     context 'there is an adjusted total' do
       it 'returns the correct total' do
