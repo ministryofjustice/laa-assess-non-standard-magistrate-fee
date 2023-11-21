@@ -25,7 +25,7 @@ RSpec.describe 'Supporting Evidence' do
   end
 
   context 'There is supporting evidence and some evidence is sent by post' do
-    let(:claim) { create(:claim, :sent_by_post_true_with_evidence) }
+    let(:claim) { create(:claim, send_by_post: true) }
 
     it 'can view supporting evidence table' do
       within('.govuk-table__row', text: 'Advocacy evidence _ Tom_TC.pdf') do
@@ -42,7 +42,7 @@ RSpec.describe 'Supporting Evidence' do
   end
 
   context 'There is supporting evidence sent by post' do
-    let(:claim) { create(:claim, :sent_by_post_true_without_evidence) }
+    let(:claim) { create(:claim, send_by_post: true, supporting_evidences: []) }
 
     it 'supporting evidence table not shown' do
       expect(page).not_to have_css('.govuk-table__row')
