@@ -68,29 +68,29 @@ FactoryBot.define do
         ],
         'supporting_evidences' => [
           {
-              "id" =>  "650c33373ec7a3f8624fdc46",
-              "file_name" =>  "Advocacy evidence _ Tom_TC.pdf",
-              "content_type" =>  "application/pdf",
-              "file_url" =>  "#",
-              "created_at" =>  "2023-09-18T14:12:50.825Z",
-              "updated_at" =>  "2023-09-18T14:12:50.825Z"
+            'id' =>  '650c33373ec7a3f8624fdc46',
+              'file_name' =>  'Advocacy evidence _ Tom_TC.pdf',
+              'content_type' =>  'application/pdf',
+              'file_url' =>  '#',
+              'created_at' =>  '2023-09-18T14:12:50.825Z',
+              'updated_at' =>  '2023-09-18T14:12:50.825Z'
           },
           {
-              "id" =>  "650c3337e9fe6be2870684e3",
-              "file_name" =>  "Prior Authority_ Psychiatric report_ Tom_TC.png",
-              "content_type" =>  "application/pdf",
-              "file_url" =>  "#",
-              "created_at" =>  "2023-09-18T14:12:50.825Z",
-              "updated_at" =>  "2023-09-18T14:12:50.825Z"
+            'id' =>  '650c3337e9fe6be2870684e3',
+              'file_name' =>  'Prior Authority_ Psychiatric report_ Tom_TC.png',
+              'content_type' =>  'application/pdf',
+              'file_url' =>  '#',
+              'created_at' =>  '2023-09-18T14:12:50.825Z',
+              'updated_at' =>  '2023-09-18T14:12:50.825Z'
           }
         ],
-        "defendants" => [
+        'defendants' => [
           {
-            "id" =>  "40fb1f88-6dea-4b03-9087-590436b62dd8",
-            "maat" =>  "AB12123",
-            "main" =>  true,
-            "position" =>  1,
-            "full_name" =>  "Tracy Linklater"
+            'id' =>  '40fb1f88-6dea-4b03-9087-590436b62dd8',
+            'maat' =>  'AB12123',
+            'main' =>  true,
+            'position' =>  1,
+            'full_name' =>  'Tracy Linklater'
           }
         ],
       }
@@ -158,29 +158,29 @@ FactoryBot.define do
           ],
           'supporting_evidences' => [
             {
-                "id" =>  "650c33373ec7a3f8624fdc46",
-                "file_name" =>  "Advocacy evidence _ Tom_TC.pdf",
-                "content_type" =>  "application/pdf",
-                "file_url" =>  "#",
-                "created_at" =>  "2023-09-18T14:12:50.825Z",
-                "updated_at" =>  "2023-09-18T14:12:50.825Z"
+              'id' =>  '650c33373ec7a3f8624fdc46',
+                'file_name' =>  'Advocacy evidence _ Tom_TC.pdf',
+                'content_type' =>  'application/pdf',
+                'file_url' =>  '#',
+                'created_at' =>  '2023-09-18T14:12:50.825Z',
+                'updated_at' =>  '2023-09-18T14:12:50.825Z'
             },
             {
-                "id" =>  "650c3337e9fe6be2870684e3",
-                "file_name" =>  "Prior Authority_ Psychiatric report_ Tom_TC.png",
-                "content_type" =>  "application/pdf",
-                "file_url" =>  "#",
-                "created_at" =>  "2023-09-18T14:12:50.825Z",
-                "updated_at" =>  "2023-09-18T14:12:50.825Z"
+              'id' =>  '650c3337e9fe6be2870684e3',
+                'file_name' =>  'Prior Authority_ Psychiatric report_ Tom_TC.png',
+                'content_type' =>  'application/pdf',
+                'file_url' =>  '#',
+                'created_at' =>  '2023-09-18T14:12:50.825Z',
+                'updated_at' =>  '2023-09-18T14:12:50.825Z'
             }
           ],
-          "defendants" => [
+          'defendants' => [
             {
-              "id" =>  "40fb1f88-6dea-4b03-9087-590436b62dd8",
-              "maat" =>  "AB12123",
-              "main" =>  true,
-              "position" =>  1,
-              "full_name" =>  "Tracy Linklater"
+              'id' =>  '40fb1f88-6dea-4b03-9087-590436b62dd8',
+              'maat' =>  'AB12123',
+              'main' =>  true,
+              'position' =>  1,
+              'full_name' =>  'Tracy Linklater'
             }
           ],
         }
@@ -248,13 +248,13 @@ FactoryBot.define do
             }
           ],
           'supporting_evidences' => [],
-          "defendants" => [
+          'defendants' => [
             {
-              "id" =>  "40fb1f88-6dea-4b03-9087-590436b62dd8",
-              "maat" =>  "AB12123",
-              "main" =>  true,
-              "position" =>  1,
-              "full_name" =>  "Tracy Linklater"
+              'id' =>  '40fb1f88-6dea-4b03-9087-590436b62dd8',
+              'maat' =>  'AB12123',
+              'main' =>  true,
+              'position' =>  1,
+              'full_name' =>  'Tracy Linklater'
             }
           ],
         }
