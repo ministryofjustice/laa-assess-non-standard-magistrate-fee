@@ -16,8 +16,18 @@
     },
     "calls": 13,
     "court": "Central London County Court",
-    "answer_equality": null,
-    "gender": null,
+    "answer_equality": {
+      "en": "Yes, answer the equality questions (takes 2 minutes)",
+      "value": "yes"
+    },
+    "ethnic_group": {
+      "en": "White British",
+      "value": "01_white_british"
+    },
+    "gender": {
+      "en": "Male",
+      "value": "m"
+    },
     "status": "completed",
     "in_area": "no",
     "letters": 12,
@@ -50,7 +60,10 @@
         "full_name": "Tracy Linklater"
       }
     ],
-    "disability": null,
+    "disability": {
+      "en": "No",
+      "value": "no"
+    },
     "other_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. \nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
     "time_spent": null,
     "preparation_time": "no",
@@ -87,7 +100,6 @@
     "work_before": "yes",
     "youth_court": "no",
     "calls_uplift": null,
-    "ethnic_group": null,
     "main_offence": "Stole an apple",
     "send_by_post": true,
     "disbursements": [

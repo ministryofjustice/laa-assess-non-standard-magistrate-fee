@@ -12,7 +12,10 @@
             "en": "Bind Over"
         },
         "court": "Aldershot Magistrates' Court",
-        "gender": null,
+        "gender": {
+          "en": "Male",
+          "value": "m"
+        },
         "status": "completed",
         "in_area": "no",
         "submitter": {
@@ -44,7 +47,10 @@
                 "full_name": "Jim Bob"
             }
         ],
-        "disability": null,
+        "disability": {
+          "en": "No",
+          "value": "no"
+        },
         "other_info": "",
         "time_spent": 110,
         "preparation_time": "yes",
@@ -116,8 +122,14 @@
         "office_code": "1A123B",
         "work_before": "no",
         "youth_court": "no",
-        "answer_equality": null,
-        "ethnic_group": null,
+        "answer_equality": {
+          "en": "Yes, answer the equality questions (takes 2 minutes)",
+          "value": "yes"
+        },
+        "ethnic_group": {
+          "en": "White British",
+          "value": "01_white_british"
+        },
         "main_offence": "Assault (common)",
         "send_by_post": false,
         "disbursements": [
