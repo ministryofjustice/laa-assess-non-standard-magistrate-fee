@@ -16,6 +16,8 @@
     <% if claim_summary.send_by_post %>
       <%= render 'send_by_post' %>
     <% end %>
-    <%= render "shared/pagination", { pagy: @pagy, item: t('.heading') } %>
+    <% unless @supporting_evidence.empty? %>
+      <%= render "shared/pagination", { pagy: @pagy, item: t('.heading') } %>
+    <% end %>
   </div>
 </div>
