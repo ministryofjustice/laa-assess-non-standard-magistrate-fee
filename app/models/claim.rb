@@ -13,10 +13,10 @@ class Claim < ApplicationRecord
       .where(assignments: { user_id: user.id })
   }
   scope :unassigned_claims, lambda { |user|
-    where.missing(:assignments)
-         .where(state: 'submitted')
-         .where.not(id: Event::Unassignment.where(primary_user_id: user.id).select(:claim_id))
-         .order(:created_at)
+    pending_decision
+      .where.missing(:assignments)
+      .where.not(id: Event::Unassignment.where(primary_user_id: user.id).select(:claim_id))
+      .order(:created_at)
   }
 
   def editable?
