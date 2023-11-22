@@ -15,7 +15,7 @@ class SendBackForm
 
   validates :claim, presence: true
   validates :state, inclusion: { in: STATES }
-  validates :comment, presence: true
+  validates :comment, presence: true, if: -> { state.present? }
 
   def save
     return false unless valid?

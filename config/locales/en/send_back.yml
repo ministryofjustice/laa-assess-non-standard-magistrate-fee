@@ -21,3 +21,14 @@ en:
     hint:
       send_back_form:
         comment: We’ll share this information with the provider
+
+  activemodel:
+    errors:
+      models:
+        send_back_form:
+          attributes:
+            state:
+              blank: Select why you are sending this claim back
+              inclusion: Select why you are sending this claim back
+            comment:
+              blank: Add an explanation for your decision
