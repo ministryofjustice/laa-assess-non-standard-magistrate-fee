@@ -1,6 +1,23 @@
 ---
 en:
-  send_back:
-    index:
+  send_backs:
+    edit:
       page_title: Send back to provider
       heading: Send back %{defendant_name}’s claim
+      submit: Send back to provider
+    update:
+      decision: You send back this claim <a class="govuk-link" href="%{url}">%{ref}</a>
+
+  helpers:
+    legend:
+      send_back_form:
+        state: Why are you sending this claim back?
+    label:
+      send_back_form:
+        comment: Explain your decision
+        state_options:
+          further_info: Further information needed
+          provider_requested: Provider request
+    hint:
+      send_back_form:
+        comment: We’ll share this information with the provider

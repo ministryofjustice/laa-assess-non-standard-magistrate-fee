@@ -9,11 +9,11 @@ class MakeDecisionForm
     REJECTED = 'rejected'.freeze
   ].freeze
 
-  attribute :id
   attribute :state
   attribute :partial_comment
   attribute :reject_comment
   attribute :current_user
+  attribute :claim
 
   validates :claim, presence: true
   validates :state, inclusion: { in: STATES }
@@ -31,8 +31,6 @@ class MakeDecisionForm
     end
 
     true
-  rescue StandardError
-    false
   end
 
   def comment
@@ -42,11 +40,5 @@ class MakeDecisionForm
     when REJECTED
       reject_comment
     end
-  end
-
-  private
-
-  def claim
-    Claim.find_by(id:)
   end
 end

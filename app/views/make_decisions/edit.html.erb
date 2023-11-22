@@ -7,7 +7,7 @@
 </div>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: decision, url: claim_make_decision_path(claim_id: decision.id), method: :put, id: dom_id(decision) do |f| %>
+    <%= form_with model: decision, url: claim_make_decision_path(claim_id: claim.id), method: :put, id: dom_id(decision) do |f| %>
       <%= govuk_error_summary(decision) %>
       <%= f.govuk_radio_buttons_fieldset :state, legend: { size: 's' } do %>
         <%= f.govuk_radio_button :state, MakeDecisionForm::GRANTED %>

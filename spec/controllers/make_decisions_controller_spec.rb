@@ -5,7 +5,6 @@ RSpec.describe MakeDecisionsController do
     let(:claim) { instance_double(Claim, id: claim_id) }
     let(:claim_id) { SecureRandom.uuid }
     let(:decision) { instance_double(MakeDecisionForm) }
-    let(:laa_reference_class) { instance_double(LaaReference, laa_reference: 'AAA111') }
 
     before do
       allow(Claim).to receive(:find).and_return(claim)
@@ -42,7 +41,7 @@ RSpec.describe MakeDecisionsController do
         make_decision_form: { state: 'granted', partial_comment: nil, reject_comment: nil, id: claim.id }
       }
       expect(MakeDecisionForm).to have_received(:new).with(
-        'state' => 'granted', 'partial_comment' => '', 'reject_comment' => '', 'id' => claim.id, 'current_user' => user
+        'state' => 'granted', 'partial_comment' => '', 'reject_comment' => '', :claim => claim, 'current_user' => user
       )
     end
 
