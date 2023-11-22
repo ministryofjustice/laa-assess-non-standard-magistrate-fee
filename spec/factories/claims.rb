@@ -4,7 +4,7 @@ FactoryBot.define do
     risk { 'low' }
     received_on { Date.yesterday }
     current_version { 1 }
-    state { 'submitted' }    
+    state { 'submitted' }
     json_schema_version { 1 }
     data do
       {
@@ -17,7 +17,7 @@ FactoryBot.define do
         'supporting_evidences' => supporting_evidences
       }
     end
-    
+
     transient do
       send_by_post { false }
       supporting_evidences do
