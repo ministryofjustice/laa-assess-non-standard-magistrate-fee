@@ -37,7 +37,7 @@ module V1
     end
 
     def uplift?
-      !provider_requested_uplift.to_i.zero?
+      !provider_requested_uplift.to_i.zero? || !provider_requested_uplift.nil?
     end
 
     def form_attributes
