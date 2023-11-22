@@ -121,14 +121,14 @@
         },
         "office_code": "1A123B",
         "work_before": "no",
-        "youth_court": "no",
+        "youth_count": "no",
         "answer_equality": {
-          "en": "Yes, answer the equality questions (takes 2 minutes)",
-          "value": "yes"
+            "en": "Yes",
+            "value": "yes"
         },
         "ethnic_group": {
-          "en": "White British",
-          "value": "01_white_british"
+            "en": "White British",
+            "value": "01_white_british"
         },
         "main_offence": "Assault (common)",
         "send_by_post": false,
