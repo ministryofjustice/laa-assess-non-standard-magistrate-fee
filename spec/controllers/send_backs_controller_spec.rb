@@ -5,7 +5,7 @@ RSpec.describe SendBacksController do
     let(:claim) { build(:claim, id: claim_id) }
     let(:claim_id) { SecureRandom.uuid }
     let(:send_back) { instance_double(SendBackForm) }
-    let(:defendant_name) { 'Jim Bob' }
+    let(:defendant_name) { 'Tracy Linklater' }
 
     before do
       allow(Claim).to receive(:find).and_return(claim)
@@ -41,7 +41,7 @@ RSpec.describe SendBacksController do
     let(:user) { instance_double(User) }
     let(:claim) { build(:claim, id: SecureRandom.uuid) }
     let(:laa_reference_class) { instance_double(V1::LaaReference, laa_reference: 'AAA111') }
-    let(:defendant_name) { 'Jim Bob' }
+    let(:defendant_name) { 'Tracy Linklater' }
     let(:save) { true }
 
     before do
