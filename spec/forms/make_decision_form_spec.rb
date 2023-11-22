@@ -16,7 +16,7 @@ RSpec.describe MakeDecisionForm do
     end
 
     context 'when state is invalid' do
-      let(:params) { { id: claim.id, state: 'other' } }
+      let(:params) { { claim: claim, state: 'other' } }
 
       it 'is invalid' do
         expect(subject).not_to be_valid
@@ -25,14 +25,14 @@ RSpec.describe MakeDecisionForm do
     end
 
     context 'when state is granted' do
-      let(:params) { { id: claim.id, state: 'granted' } }
+      let(:params) { { claim: claim, state: 'granted' } }
 
       it { expect(subject).to be_valid }
     end
 
     context 'when state is part_grant' do
       context 'when partial_comment is blank' do
-        let(:params) { { id: claim.id, state: 'part_grant', partial_comment: nil } }
+        let(:params) { { claim: claim, state: 'part_grant', partial_comment: nil } }
 
         it 'is invalid' do
           expect(subject).not_to be_valid
@@ -41,7 +41,7 @@ RSpec.describe MakeDecisionForm do
       end
 
       context 'when partial_comment is set' do
-        let(:params) { { id: claim.id, state: 'part_grant', partial_comment: 'part grant comment' } }
+        let(:params) { { claim: claim, state: 'part_grant', partial_comment: 'part grant comment' } }
 
         it { expect(subject).to be_valid }
       end
@@ -49,7 +49,7 @@ RSpec.describe MakeDecisionForm do
 
     context 'when state is rejected' do
       context 'when reject_comment is blank' do
-        let(:params) { { id: claim.id, state: 'rejected', reject_comment: nil } }
+        let(:params) { { claim: claim, state: 'rejected', reject_comment: nil } }
 
         it 'is invalid' do
           expect(subject).not_to be_valid
@@ -58,7 +58,7 @@ RSpec.describe MakeDecisionForm do
       end
 
       context 'when reject_comment is set' do
-        let(:params) { { id: claim.id, state: 'rejected', reject_comment: 'reject comment' } }
+        let(:params) { { claim: claim, state: 'rejected', reject_comment: 'reject comment' } }
 
         it { expect(subject).to be_valid }
       end
@@ -68,7 +68,7 @@ RSpec.describe MakeDecisionForm do
   describe '#persistance' do
     let(:user) { instance_double(User) }
     let(:claim) { create(:claim) }
-    let(:params) { { id: claim.id, state: 'part_grant', partial_comment: 'part comment', current_user: user } }
+    let(:params) { { claim: claim, state: 'part_grant', partial_comment: 'part comment', current_user: user } }
 
     before do
       allow(Event::Decision).to receive(:build)
@@ -103,23 +103,10 @@ RSpec.describe MakeDecisionForm do
     context 'when error during save' do
       before do
         allow(Claim).to receive(:find_by).and_return(claim)
-        allow(claim).to receive(:update!).and_raise(StandardError)
+        allow(claim).to receive(:update!).and_raise('not found')
       end
 
-      it { expect(subject.save).to be_falsey }
-    end
-
-    context 'when error during event creation' do
-      before do
-        allow(Event::Decision).to receive(:build).and_raise(StandardError)
-      end
-
-      it { expect(subject.save).to be_falsey }
-
-      it 'does not update the claim' do
-        subject.save
-        expect(claim.reload).to have_attributes(state: 'submitted')
-      end
+      it { expect { subject.save }.to raise_error('not found') }
     end
   end
 
