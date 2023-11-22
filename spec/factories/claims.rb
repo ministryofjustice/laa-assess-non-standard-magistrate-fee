@@ -1,5 +1,23 @@
 FactoryBot.define do
   factory :claim do
+    id { SecureRandom.uuid }
+    risk { 'low' }
+    received_on { Date.yesterday }
+    current_version { 1 }
+    state { 'submitted' }
+    json_schema_version { 1 }
+    data do
+      {
+        'laa_reference' => 'LAA-FHaMVK',
+        'send_by_post' => send_by_post,
+        'letters_and_calls' => letters_and_calls,
+        'disbursements' => disbursements,
+        'work_items' => work_items,
+        'defendants' => defendants,
+        'supporting_evidences' => supporting_evidences
+      }
+    end
+
     transient do
       send_by_post { false }
       supporting_evidences do
@@ -94,25 +112,6 @@ FactoryBot.define do
           }
         ]
       end
-    end
-
-    id { SecureRandom.uuid }
-    risk { 'low' }
-    received_on { Date.yesterday }
-    current_version { 1 }
-    state { 'submitted' }
-
-    json_schema_version { 1 }
-    data do
-      {
-        'laa_reference' => 'LAA-FHaMVK',
-        'send_by_post' => send_by_post,
-        'letters_and_calls' => letters_and_calls,
-        'disbursements' => disbursements,
-        'work_items' => work_items,
-        'defendants' => defendants,
-        'supporting_evidences' => supporting_evidences
-      }
     end
   end
 end

@@ -2,14 +2,14 @@ require 'rails_helper'
 
 RSpec.describe V1::YourClaims, type: :view_model do
   subject(:your_claims) do
-    described_class.new(laa_reference:, defendants:, firm_office:, created_at:, id:, risk:)
+    described_class.new(laa_reference:, defendants:, firm_office:, created_at:, claim:, risk:)
   end
 
   let(:laa_reference) { '1234567890' }
   let(:defendants) { [{ 'full_name' => 'John Doe', 'main' => true }, 'main' => false, 'full_name' => 'jimbob'] }
   let(:firm_office) { { 'name' => 'Acme Law Firm' } }
   let(:created_at) { Time.zone.yesterday }
-  let(:id) { 1 }
+  let(:claim) { instance_double(Claim, id: 1) }
   let(:risk) { 'low' }
 
   describe '#main_defendant_name' do
@@ -35,57 +35,47 @@ RSpec.describe V1::YourClaims, type: :view_model do
     end
   end
 
-  describe '#case_worker_name' do
-    it 'returns the pending status' do
-      expect(your_claims.case_worker_name).to eq('#Pending#')
-    end
-  end
-
-  describe '#risk_with_sort_value' do
+  describe '#risk_sort' do
     context 'when risk is high' do
       it 'returns a hash with text "high" and sort value 1' do
         subject.risk = 'high'
-        result = subject.risk_with_sort_value
-        expect(result).to eq({ text: 'high', sort_value: 1 })
+        expect(subject.risk_sort).to eq(1)
       end
     end
 
     context 'when risk is medium' do
       it 'returns a hash with text "medium" and sort value 2' do
         subject.risk = 'medium'
-        result = subject.risk_with_sort_value
-        expect(result).to eq({ text: 'medium', sort_value: 2 })
+        expect(subject.risk_sort).to eq(2)
       end
     end
 
     context 'when risk is low' do
       it 'returns a hash with text "low" and sort value 3' do
         subject.risk = 'low'
-        result = subject.risk_with_sort_value
-        expect(result).to eq({ text: 'low', sort_value: 3 })
+        expect(subject.risk_sort).to eq(3)
       end
     end
 
     context 'when risk is invalid' do
       it 'returns nil' do
         subject.risk = nil
-        result = subject.risk_with_sort_value
-        expect(result).to be_nil
+        expect(subject.risk_sort).to be_nil
       end
     end
   end
 
-  describe '#table_fields' do
-    it 'returns an array of table fields' do
-      expected_fields = [
-        { laa_reference: '1234567890', claim_id: 1 },
-        'Acme Law Firm',
-        'John Doe',
-        { text: I18n.l(Time.zone.yesterday, format: '%-d %b %Y'), sort_value: Time.zone.yesterday.to_fs(:db) },
-        '#Pending#',
-        { text: 'low', sort_value: 3 }
-      ]
-      expect(your_claims.table_fields).to eq(expected_fields)
+  describe 'date_created' do
+    before do
+      subject.created_at = DateTime.new(2023, 11, 21, 17, 17, 43)
+    end
+
+    it 'date_created_str -> formats the created_at date' do
+      expect(subject.date_created_str).to eq('21 Nov 2023')
+    end
+
+    it 'date_created_sort -> returns value for sort' do
+      expect(subject.date_created_sort).to eq('2023-11-21')
     end
   end
 end

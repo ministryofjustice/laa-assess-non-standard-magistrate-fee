@@ -21,6 +21,12 @@ en:
       supporting_evidence: Supporting evidence
       claim_history: Claim history
     claim_summary:
+      status_list:
+        granted: "Granted"
+        part_grant: "Part granted"
+        rejected: "Rejected"
+        further_info: Further information requested
+        provider_requested: Provider requested
       risk:
         high: High risk
         medium: Medium risk
