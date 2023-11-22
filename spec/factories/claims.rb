@@ -9,6 +9,12 @@ FactoryBot.define do
     json_schema_version { 1 }
     data do
       {
+        'defendants' => [
+          {
+            'main' => true,
+            'full_name' => 'Jim Bob'
+          }
+        ],
         'letters_and_calls' => [
           {
             'type' => {
