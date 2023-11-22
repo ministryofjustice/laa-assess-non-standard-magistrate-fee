@@ -35,7 +35,11 @@
         <% end %>
       <% end %>
       <%= f.govuk_period_field :time_spent, legend: { size: 's', class: 'govuk-!-font-weight-bold' }, width: 'one-third' %>
-      <%= govuk_button_link_to(t('.calculate_button_text'), '#', { secondary: true , id: 'calculate_change_button', 'data-unit-price': item.pricing, 'data-uplift-amount': item.uplift, 'data-provider-time-spent': item.time_spent }) %>
+      <%= govuk_button_link_to(t('.calculate_button_text'), '#',
+        secondary: true ,
+        id: 'calculate_change_button',
+        data: {'unit-price': item.pricing, 'uplift-amount': item.uplift, 'provider-time-spent': item.time_spent }
+      ) %>
       <div id='claim-cost-table'>
         <%= govuk_table do |table| %>
           <%= table.with_caption(size: 'm', text: t('.claim_cost_table.title')) %>
