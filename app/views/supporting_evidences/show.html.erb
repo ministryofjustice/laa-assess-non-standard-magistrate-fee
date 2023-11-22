@@ -10,7 +10,14 @@
     <h2 class="govuk-heading-m">
       <%= t('.heading') %>
     </h2>
-    <%= render 'supporting_evidence_table', { supporting_evidence: @supporting_evidence } %>
-    <%= render "shared/pagination", { pagy: @pagy, item: t('.heading') } %>
+    <% unless @supporting_evidence.empty? %>
+      <%= render 'supporting_evidence_table', { supporting_evidence: @supporting_evidence } %>
+    <% end %>
+    <% if claim_summary.send_by_post %>
+      <%= render 'send_by_post' %>
+    <% end %>
+    <% unless @supporting_evidence.empty? %>
+      <%= render "shared/pagination", { pagy: @pagy, item: t('.heading') } %>
+    <% end %>
   </div>
 </div>
