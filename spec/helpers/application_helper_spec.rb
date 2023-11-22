@@ -172,7 +172,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(helper.accessed_colour('granted')).to eq('green')
       expect(helper.accessed_colour('part-grant')).to eq('blue')
       expect(helper.accessed_colour('rejected')).to eq('red')
-      expect(helper.accessed_colour('other')).to be_nil
+      expect(helper.accessed_colour('other')).to eq('pink')
     end
   end
 end
