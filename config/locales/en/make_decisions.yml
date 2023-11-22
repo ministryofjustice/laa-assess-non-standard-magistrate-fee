@@ -7,9 +7,9 @@ en:
       submit: Submit decision
     update:
       decision:
-        grant: You granted this claim <a class="govuk-link" href="%{url}">%{ref}</a>
+        granted: You granted this claim <a class="govuk-link" href="%{url}">%{ref}</a>
         part_grant: You part granted this claim <a class="govuk-link" href="%{url}">%{ref}</a>
-        reject: You rejected this claim <a class="govuk-link" href="%{url}">%{ref}</a>
+        rejected: You rejected this claim <a class="govuk-link" href="%{url}">%{ref}</a>
   helpers:
     legend:
       make_decision_form:
@@ -17,9 +17,9 @@ en:
     label:
       make_decision_form:
         state_options:
-          grant: Grant it
+          granted: Grant it
           part_grant: Part grant it
-          reject: Reject it
+          rejected: Reject it
         partial_comment: Explain your decision
         reject_comment: Explain your decision
     hint:

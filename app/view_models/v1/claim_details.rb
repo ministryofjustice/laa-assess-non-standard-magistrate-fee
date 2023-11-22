@@ -8,7 +8,7 @@ module V1
     attribute :work_after
     attribute :work_before_date
     attribute :work_after_date
-    attribute :evidence_recorded
+    attribute :preparation_time
     attribute :time_spent
 
     def key
@@ -39,12 +39,12 @@ module V1
           value:  supplemental_claim.capitalize
         },
         {
-          title: I18n.t(".claim_details.#{key}.evidence_recorded"),
-          value:  evidence_recorded.capitalize
+          title: I18n.t(".claim_details.#{key}.preparation_time"),
+          value:  preparation_time.capitalize
         },
-        (unless evidence_recorded == 'no'
+        (unless preparation_time == 'no'
            {
-             title: I18n.t(".claim_details.#{key}.evidence_recorded"),
+             title: I18n.t(".claim_details.#{key}.preparation_time"),
              value: ApplicationController.helpers.format_period(time_spent)
            }
          end),

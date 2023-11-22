@@ -1,73 +1,88 @@
 require 'rails_helper'
 
 RSpec.describe V1::EqualityDetails do
-  subject { described_class.new(params) }
-
-  let(:params) { {} }
-
   describe '#title' do
     it 'shows correct title' do
       expect(subject.title).to eq('Equality monitoring')
     end
   end
 
+  # rubocop:disable RSpec/ExampleLength
   describe '#rows' do
-    let(:params) do
-      {
-        'answer_equality' => { 'value' => 'yes', 'en' => 'Yes' },
-        'ethnic_group' => { 'value' => '01_white_british', 'en' => 'White british' },
-        'gender' => { 'value' => 'm', 'en' => 'Male' },
-        'disability' => { 'value' => 'n', 'en' => 'No' },
-      }
-    end
-
     it 'has correct structure' do
+      subject = described_class.new(
+        {
+          'answer_equality' => {
+            'en' => 'Yes, answer the equality questions (takes 2 minutes)',
+            'value' => 'yes'
+          },
+          'ethnic_group' => {
+            'en' => 'White British',
+            'value' => '01_white_british'
+          },
+          'gender' => {
+            'en' => 'Male',
+            'value' => 'm'
+          },
+          'disability' => {
+            'en' => 'No',
+            'value' => 'n'
+          }
+        }
+      )
+
       expect(subject.rows).to have_key(:title)
       expect(subject.rows).to have_key(:data)
     end
   end
 
   describe '#data' do
-    let(:params) do
-      {
-        'answer_equality' => { 'value' => 'yes', 'en' => 'Yes' },
-        'ethnic_group' => { 'value' => '01_white_british', 'en' => 'White british' },
-        'gender' => { 'value' => 'm', 'en' => 'Male' },
-        'disability' => { 'value' => 'n', 'en' => 'No' },
-      }
-    end
-
-    it 'shows correct table data' do
-      expect(subject.data).to eq(
-        [
-          { title: 'Equality questions', value: 'Yes' },
-          { title: 'Defendants ethnic group', value: 'White british' },
-          { title: 'Defendant identification', value: 'Male' },
-          { title: 'Defendant disability', value: 'No' }
-        ]
-      )
-    end
-
-    context 'when no values entered' do
-      let(:params) do
+    context 'Basic accessibility details' do
+      subject = described_class.new(
         {
-          'answer_equality' => { 'value' => 'no', 'en' => 'No' },
-          'ethnic_group' => nil,
-          'gender' => nil,
-          'disability' => nil,
+          'answer_equality' => {
+            'en' => 'Yes, answer the equality questions (takes 2 minutes)',
+            'value' => 'yes'
+          },
+          'ethnic_group' => {
+            'en' => 'White British',
+            'value' => '01_white_british'
+          },
+          'gender' => {
+            'en' => 'Male',
+            'value' => 'm'
+          },
+          'disability' => {
+            'en' => 'No',
+            'value' => 'n'
+          }
         }
-      end
+      )
 
       it 'shows correct table data' do
         expect(subject.data).to eq(
           [
-            { title: 'Equality questions', value: 'No' },
-            { title: 'Defendants ethnic group', value: '' },
-            { title: 'Defendant identification', value: '' },
-            { title: 'Defendant disability', value: '' }
+            {
+              title: 'Equality questions',
+              value: TranslationObject.new({ 'value' => 'yes',
+'en' => 'Yes, answer the equality questions (takes 2 minutes)' })
+            },
+            {
+              title: 'Defendants ethnic group',
+              value: TranslationObject.new({ 'value' => '01_white_british', 'en' => 'White British' })
+            },
+            {
+              title: 'Defendant identification',
+              value: TranslationObject.new({ 'value' => 'm', 'en' => 'Male' })
+            },
+            {
+              title: 'Defendant disability',
+              value: TranslationObject.new({ 'value' => 'n', 'en' => 'No' })
+            }
           ]
         )
       end
     end
   end
+  # rubocop:enable RSpec/ExampleLength
 end

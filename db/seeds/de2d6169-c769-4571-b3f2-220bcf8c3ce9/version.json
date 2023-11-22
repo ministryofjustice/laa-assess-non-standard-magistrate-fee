@@ -16,12 +16,22 @@
     },
     "calls": 13,
     "court": "Central London County Court",
-    "answer_equality": null,
-    "gender": null,
+    "answer_equality": {
+      "en": "Yes, answer the equality questions (takes 2 minutes)",
+      "value": "yes"
+    },
+    "ethnic_group": {
+      "en": "White British",
+      "value": "01_white_british"
+    },
+    "gender": {
+      "en": "Male",
+      "value": "m"
+    },
     "status": "completed",
     "in_area": "no",
     "letters": 12,
-    "submiter": {
+    "submitter": {
       "email": "provider@example.com",
       "description": null
     },
@@ -50,10 +60,13 @@
         "full_name": "Tracy Linklater"
       }
     ],
-    "disability": null,
+    "disability": {
+      "en": "No",
+      "value": "no"
+    },
     "other_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. \nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
     "time_spent": null,
-    "evidence_recorded": "no",
+    "preparation_time": "no",
     "updated_at": "2023-09-01T13:04:19.096Z",
     "work_after": "yes",
     "work_items": [
@@ -85,9 +98,8 @@
     },
     "office_code": "1A123B",
     "work_before": "yes",
-    "youth_count": "no",
+    "youth_court": "no",
     "calls_uplift": null,
-    "ethnic_group": null,
     "main_offence": "Stole an apple",
     "send_by_post": true,
     "disbursements": [
@@ -191,168 +203,7 @@
     "remitted_to_magistrate_date": "2022-12-12",
     "reason_for_claim_other_details": "",
     "representation_order_withdrawn_date": null,
-    "supporting_evidences": [
-      {
-        "id": "650c33373ec7a3f8624fdc46",
-        "file_name": "Advocacy evidence _ Tom_TC.pdf",
-        "content_type": "application/pdf",
-        "file_url": "#",
-        "created_at": "2023-09-18T14:12:50.825Z",
-        "updated_at": "2023-09-18T14:12:50.825Z"
-      },
-      {
-        "id": "650c3337e9fe6be2870684e3",
-        "file_name": "Prior Authority_ Psychiatric report_ Tom_TC.png",
-        "content_type": "application/pdf",
-        "file_url": "#",
-        "created_at": "2023-09-18T14:12:50.825Z",
-        "updated_at": "2023-09-18T14:12:50.825Z"
-      },
-      {
-        "id": "650c333782ac0d6cc47bb3fb",
-        "file_name": "Preparation evidence _ Tom_TC.pdf",
-        "content_type": "application/pdf",
-        "file_url": "#",
-        "created_at": "2023-09-18T14:12:50.825Z",
-        "updated_at": "2023-09-18T14:12:50.825Z"
-      },
-      {
-        "id": "650c3337fc021a8a5e06d24f",
-        "file_name": "Advocacy evidence _ Tom_TC.pdf",
-        "content_type": "application/pdf",
-        "file_url": "#",
-        "created_at": "2023-09-18T14:12:50.825Z",
-        "updated_at": "2023-09-18T14:12:50.825Z"
-      },
-      {
-        "id": "650c33377bf64e41d29abbd9",
-        "file_name": "Preparation evidence _ Tom_TC.pdf",
-        "content_type": "application/pdf",
-        "file_url": "#",
-        "created_at": "2023-09-18T14:12:50.825Z",
-        "updated_at": "2023-09-18T14:12:50.825Z"
-      },
-      {
-        "id": "650c3337e027a66df2d4d4ac",
-        "file_name": "Prior Authority_ Psychiatric report_ Tom_TC.png",
-        "content_type": "application/pdf",
-        "file_url": "#",
-        "created_at": "2023-09-18T14:12:50.825Z",
-        "updated_at": "2023-09-18T14:12:50.825Z"
-      },
-      {
-        "id": "650c3337670c0d428643da17",
-        "file_name": "Preparation evidence _ Tom_TC.pdf",
-        "content_type": "application/pdf",
-        "file_url": "#",
-        "created_at": "2023-09-18T14:12:50.825Z",
-        "updated_at": "2023-09-18T14:12:50.825Z"
-      },
-      {
-        "id": "650c3337815365e70547f330",
-        "file_name": "Advocacy evidence _ Tom_TC.pdf",
-        "content_type": "application/pdf",
-        "file_url": "#",
-        "created_at": "2023-09-18T14:12:50.825Z",
-        "updated_at": "2023-09-18T14:12:50.825Z"
-      },
-      {
-        "id": "650c3337db45e633aa891014",
-        "file_name": "Prior Authority_ Psychiatric report_ Tom_TC.png",
-        "content_type": "application/pdf",
-        "file_url": "#",
-        "created_at": "2023-09-18T14:12:50.825Z",
-        "updated_at": "2023-09-18T14:12:50.825Z"
-      },
-      {
-        "id": "650c3337d14675968122d667",
-        "file_name": "Preparation evidence _ Tom_TC.pdf",
-        "content_type": "application/pdf",
-        "file_url": "#",
-        "created_at": "2023-09-18T14:12:50.825Z",
-        "updated_at": "2023-09-18T14:12:50.825Z"
-      },
-      {
-        "id": "650c3337bbb24130283084a7",
-        "file_name": "Prior Authority_ Psychiatric report_ Tom_TC.png",
-        "content_type": "application/pdf",
-        "file_url": "#",
-        "created_at": "2023-09-18T14:12:50.825Z",
-        "updated_at": "2023-09-18T14:12:50.825Z"
-      },
-      {
-        "id": "650c33371a6d97b530de5073",
-        "file_name": "Advocacy evidence _ Tom_TC.pdf",
-        "content_type": "application/pdf",
-        "file_url": "#",
-        "created_at": "2023-09-18T14:12:50.825Z",
-        "updated_at": "2023-09-18T14:12:50.825Z"
-      },
-      {
-        "id": "650c3337dc7596aa991579ab",
-        "file_name": "Prior Authority_ Psychiatric report_ Tom_TC.png",
-        "content_type": "application/pdf",
-        "file_url": "#",
-        "created_at": "2023-09-18T14:12:50.825Z",
-        "updated_at": "2023-09-18T14:12:50.825Z"
-      },
-      {
-        "id": "650c3337071036ddf361a008",
-        "file_name": "Prior Authority_ Psychiatric report_ Tom_TC.png",
-        "content_type": "application/pdf",
-        "file_url": "#",
-        "created_at": "2023-09-18T14:12:50.825Z",
-        "updated_at": "2023-09-18T14:12:50.825Z"
-      },
-      {
-        "id": "650c3337bbb8dfb3a2635534",
-        "file_name": "Prior Authority_ Psychiatric report_ Tom_TC.png",
-        "content_type": "application/pdf",
-        "file_url": "#",
-        "created_at": "2023-09-18T14:12:50.825Z",
-        "updated_at": "2023-09-18T14:12:50.825Z"
-      },
-      {
-        "id": "650c33376146b9645819dee4",
-        "file_name": "Prior Authority_ Psychiatric report_ Tom_TC.png",
-        "content_type": "application/pdf",
-        "file_url": "#",
-        "created_at": "2023-09-18T14:12:50.825Z",
-        "updated_at": "2023-09-18T14:12:50.825Z"
-      },
-      {
-        "id": "650c3337bfa288182219bc32",
-        "file_name": "Advocacy evidence _ Tom_TC.pdf",
-        "content_type": "application/pdf",
-        "file_url": "#",
-        "created_at": "2023-09-18T14:12:50.825Z",
-        "updated_at": "2023-09-18T14:12:50.825Z"
-      },
-      {
-        "id": "650c3337d71196f8406d8123",
-        "file_name": "Preparation evidence _ Tom_TC.pdf",
-        "content_type": "application/pdf",
-        "file_url": "#",
-        "created_at": "2023-09-18T14:12:50.825Z",
-        "updated_at": "2023-09-18T14:12:50.825Z"
-      },
-      {
-        "id": "650c33375905c644f5eadb4c",
-        "file_name": "Prior Authority_ Psychiatric report_ Tom_TC.png",
-        "content_type": "application/pdf",
-        "file_url": "#",
-        "created_at": "2023-09-18T14:12:50.825Z",
-        "updated_at": "2023-09-18T14:12:50.825Z"
-      },
-      {
-        "id": "650c3337227b0f88411f4819",
-        "file_name": "Prior Authority_ Psychiatric report_ Tom_TC.png",
-        "content_type": "application/pdf",
-        "file_url": "#",
-        "created_at": "2023-09-18T14:12:50.825Z",
-        "updated_at": "2023-09-18T14:12:50.825Z"
-      }
-    ]
+    "supporting_evidences": []
   },
   "created_at": "2023-09-18T14:12:50.825Z",
   "updated_at": "2023-09-18T14:12:50.825Z"

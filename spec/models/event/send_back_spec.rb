@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Event::Decision do
+RSpec.describe Event::SendBack do
   subject { described_class.build(claim:, previous_state:, comment:, current_user:) }
 
   let(:claim) { create(:claim, state:) }
@@ -13,7 +13,7 @@ RSpec.describe Event::Decision do
     expect(subject).to have_attributes(
       claim_id: claim.id,
       claim_version: 1,
-      event_type: 'Event::Decision',
+      event_type: 'Event::SendBack',
       primary_user: current_user,
       details: {
         'field' => 'state',

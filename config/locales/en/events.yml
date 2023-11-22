@@ -3,7 +3,15 @@ en:
   event/new_version:
     title: New claim versions received
   event/decision:
-    title: Decision made to %{state} claim
+    title:
+      granted: Decision made to grant claim
+      part_grant: Decision made to part grant claim
+      rejected: Decision made to reject claim
+  event/send_back:
+    title:
+      granted: Decision made to grant claim
+      part_grant: Decision made to part grant claim
+      rejected: Decision made to reject claim
   event/change_risk:
     title: Claim risk changed to %{risk} risk
   event/note:

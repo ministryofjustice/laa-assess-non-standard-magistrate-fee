@@ -5,6 +5,7 @@ module V1
     attribute :submitted_total
     attribute :adjusted_total
     attribute :claim
+    attribute :send_by_post
 
     def main_defendant_name
       main_defendant = defendants.detect { |defendant| defendant['main'] }
