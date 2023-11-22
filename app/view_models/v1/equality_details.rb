@@ -1,9 +1,9 @@
 module V1
   class EqualityDetails < BaseViewModel
-    attribute :answer_equality
-    attribute :ethnic_group
-    attribute :gender
-    attribute :disability
+    attribute :answer_equality, :translated
+    attribute :ethnic_group, :translated
+    attribute :gender, :translated
+    attribute :disability, :translated
 
     def key
       'equality_details'
@@ -18,19 +18,19 @@ module V1
       [
         {
           title: I18n.t(".claim_details.#{key}.questions"),
-          value: answer_equality.to_s
+          value: answer_equality
         },
         {
           title: I18n.t(".claim_details.#{key}.ethnic_group"),
-          value: ethnic_group.to_s
+          value: ethnic_group
         },
         {
           title: I18n.t(".claim_details.#{key}.identification"),
-          value: gender.to_s
+          value: gender
         },
         {
           title: I18n.t(".claim_details.#{key}.disability"),
-          value: disability.to_s
+          value: disability
         },
       ]
     end
