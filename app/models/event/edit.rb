@@ -14,7 +14,7 @@ class Event
     def notify
       FeedbackMailer.notify(
         user_email: 'test@test.com',
-        user_rating: { 5 => 'Very satisfied' },
+        user_rating: 5,
         user_feedback: 'good',
         application_env: application_environment
       ).deliver_later!
