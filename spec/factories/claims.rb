@@ -24,19 +24,19 @@ FactoryBot.define do
         [
           {
             'id' =>  '650c33373ec7a3f8624fdc46',
-              'file_name' =>  'Advocacy evidence _ Tom_TC.pdf',
-              'content_type' =>  'application/pdf',
-              'file_url' =>  '#',
-              'created_at' =>  '2023-09-18T14:12:50.825Z',
-              'updated_at' =>  '2023-09-18T14:12:50.825Z'
+            'file_name' =>  'Advocacy evidence _ Tom_TC.pdf',
+            'content_type' =>  'application/pdf',
+            'file_path' =>  '#',
+            'created_at' =>  '2023-09-18T14:12:50.825Z',
+            'updated_at' =>  '2023-09-18T14:12:50.825Z'
           },
           {
             'id' =>  '650c3337e9fe6be2870684e3',
-              'file_name' =>  'Prior Authority_ Psychiatric report_ Tom_TC.png',
-              'content_type' =>  'application/pdf',
-              'file_url' =>  '#',
-              'created_at' =>  '2023-09-18T14:12:50.825Z',
-              'updated_at' =>  '2023-09-18T14:12:50.825Z'
+            'file_name' =>  'Prior Authority_ Psychiatric report_ Tom_TC.png',
+            'content_type' =>  'application/pdf',
+            'file_path' =>  '#',
+            'created_at' =>  '2023-09-18T14:12:50.825Z',
+            'updated_at' =>  '2023-09-18T14:12:50.825Z'
           }
         ]
       end
