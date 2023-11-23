@@ -51,7 +51,8 @@ module LaaAssessNonStandardMagistrateFee
       ErrorsController.action(:show).call(env)
     }
 
-    config.x.contact.support_email = 'CRM457@digital.justice.gov.uk'
+    #TODO: CHANGE BACK TO CRM457@digital.justice.gov.uk ONCE TESTED
+    config.x.contact.support_email = 'ivan.yohuno@digital.justice.gov.uk'
     config.x.application.name = 'Assess a non-standard magistrates\' court payment'
     config.x.analytics.cookies_consent_name = 'cookies_preferences_set'
     config.x.analytics.cookies_consent_expiration = 1.year
