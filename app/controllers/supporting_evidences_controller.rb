@@ -13,7 +13,7 @@ class SupportingEvidencesController < ApplicationController
   private
 
   def generate_urls(supporting_evidence)
-    supporting_evidence.each do | item |
+    supporting_evidence.each do |item|
       item.download_url = S3_BUCKET
                           .object(item.file_path)
                           .presigned_url(:get, expires_in: 900,
