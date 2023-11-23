@@ -6,10 +6,13 @@ class Event < ApplicationRecord
 
   PUBLIC_EVENTS = ['Event::Decision'].freeze
   HISTORY_EVENTS = [
+    'Event::Assignment',
     'Event::Decision',
     'Event::ChangeRisk',
     'Event::NewVersion',
-    'Event::Note'
+    'Event::Note',
+    'Event::SendBack',
+    'Event::Unassignment',
   ].freeze
   scope :history, -> { where(event_type: HISTORY_EVENTS).order(created_at: :desc) }
 
@@ -31,7 +34,7 @@ class Event < ApplicationRecord
   end
 
   def body
-    nil
+    details['comment']
   end
 
   def as_json(*)

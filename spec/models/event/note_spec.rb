@@ -20,7 +20,7 @@ RSpec.describe Event::Note do
   end
 
   it 'has a valid title' do
-    expect(subject.title).to eq('User note')
+    expect(subject.title).to eq('Caseworker note')
   end
 
   it 'body is set to comment' do
