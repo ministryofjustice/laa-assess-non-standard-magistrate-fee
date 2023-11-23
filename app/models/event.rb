@@ -1,4 +1,5 @@
 class Event < ApplicationRecord
+  after_create :notify
   belongs_to :claim
   belongs_to :primary_user, optional: true, class_name: 'User'
 
@@ -41,6 +42,10 @@ class Event < ApplicationRecord
         public: PUBLIC_EVENTS.include?(event_type),
         event_type: event_type
       )
+  end
+
+  def notify
+    nil
   end
 
   private

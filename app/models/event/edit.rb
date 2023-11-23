@@ -10,5 +10,20 @@ class Event
         details: details,
       )
     end
+
+    def notify
+      FeedbackMailer.notify(
+        user_email: 'test@test.com',
+        user_rating: { 5 => 'Very satisfied' },
+        user_feedback: 'good',
+        application_env: application_environment
+      ).deliver_later!
+    end
+
+    private
+
+    def application_environment
+      ENV.fetch('ENV', Rails.env).to_s
+    end
   end
 end
