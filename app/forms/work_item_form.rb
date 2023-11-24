@@ -43,7 +43,7 @@ class WorkItemForm < BaseAdjustmentForm
   end
 
   def new_uplift
-    uplift == 'yes' ? 0 : item.provider_requested_uplift
+    uplift == 'yes' && !item.provider_requested_uplift.nil? ? 0 : item.provider_requested_uplift
   end
 
   def data_has_changed?
