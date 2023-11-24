@@ -1,4 +1,7 @@
 class SupportingEvidencesController < ApplicationController
+  # 15 min expiry on pre-signed urls to keep evidence download as secure as possible
+  PRESIGNED_EXPIRY = 900
+
   def show
     claim = Claim.find(params[:claim_id])
     claim_summary = BaseViewModel.build(:claim_summary, claim)
@@ -16,7 +19,7 @@ class SupportingEvidencesController < ApplicationController
     supporting_evidence.each do |item|
       item.download_url = S3_BUCKET
                           .object(item.file_path)
-                          .presigned_url(:get, expires_in: 900,
+                          .presigned_url(:get, expires_in: PRESIGNED_EXPIRY,
                                          response_content_disposition: "attachment; filename=#{item.file_name}")
     end
   end
