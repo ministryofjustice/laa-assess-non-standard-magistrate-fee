@@ -19,6 +19,12 @@ RSpec.describe 'Supporting Evidence' do
       end
     end
 
+    it 'has a link to download the file' do
+      within('.govuk-table__row', text: 'Advocacy evidence _ Tom_TC.pdf') do
+        expect(page).to have_link('Advocacy evidence _ Tom_TC.pdf', href: /test.s3.us-stubbed-1.amazonaws.com/)
+      end
+    end
+
     it 'no send by post info shown' do
       expect(page).not_to have_content('The provider has chosen to post the evidence to:')
     end
@@ -33,6 +39,12 @@ RSpec.describe 'Supporting Evidence' do
           'Advocacy evidence _ Tom_TC.pdf' \
           'Monday18 September 2023'
         )
+      end
+    end
+
+    it 'has a link to download the file' do
+      within('.govuk-table__row', text: 'Advocacy evidence _ Tom_TC.pdf') do
+        expect(page).to have_link('Advocacy evidence _ Tom_TC.pdf', href: /test.s3.us-stubbed-1.amazonaws.com/)
       end
     end
 
