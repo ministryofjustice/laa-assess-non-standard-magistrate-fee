@@ -10,8 +10,7 @@ end
 
 if Rails.env.production?
   Aws.config.update({
-                      region: ENV.fetch('AWS_REGION', 'eu-west-2'),
-                      force_path_style: true
+                      region: ENV.fetch('AWS_REGION', 'eu-west-2')
                     })
 
   S3_BUCKET = Aws::S3::Resource.new.bucket(ENV.fetch('S3_BUCKET', 'default'))
