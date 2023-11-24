@@ -74,7 +74,8 @@ function init() {
   }
 
   function getProviderUplift(){
-    return calculateChangeButton?.getAttribute('data-uplift-amount');
+    var uplift = calculateChangeButton?.getAttribute('data-uplift-amount');
+    return uplift ? uplift : 0;
   }
 }
 
