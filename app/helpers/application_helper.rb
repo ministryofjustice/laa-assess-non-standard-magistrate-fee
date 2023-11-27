@@ -63,6 +63,6 @@ module ApplicationHelper
       'granted' => 'green',
       'part-grant' => 'blue',
       'rejected' => 'red'
-    }[state] || 'pink'
+    }[state] || 'yellow'
   end
 end

@@ -10,9 +10,5 @@ class Event
         }
       )
     end
-
-    def body
-      details['comment']
-    end
   end
 end
