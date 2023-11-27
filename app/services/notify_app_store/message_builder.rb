@@ -12,6 +12,7 @@ class NotifyAppStore
       {
         application_id: claim.id,
         json_schema_version: JSON_SCHEMA_VERSION,
+        application_type: claim.application_type,
         application_state: claim.state,
         application: claim.data,
         events: claim.events.map(&:as_json),

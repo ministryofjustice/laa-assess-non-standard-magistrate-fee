@@ -19,6 +19,7 @@ class PullUpdates < ApplicationJob
       risk: record['application_risk'],
       current_version: record['version'],
       app_store_updated_at: record['updated_at'],
+      application_type: record['application_type'],
     }
   end
 
