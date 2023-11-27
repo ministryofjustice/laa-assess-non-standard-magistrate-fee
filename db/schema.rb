@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_09_125941) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_27_112643) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -34,6 +34,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_09_125941) do
     t.integer "json_schema_version"
     t.jsonb "data"
     t.datetime "app_store_updated_at"
+    t.string "application_type"
   end
 
   create_table "events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
