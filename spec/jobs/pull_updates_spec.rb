@@ -10,7 +10,8 @@ RSpec.describe PullUpdates do
         'version' => 2,
         'application_state' => 'submitted',
         'application_risk' => 'high',
-        'updated_at' => 10
+        'updated_at' => 10,
+        'application_type' => 'crm7'
       }]
     }
   end
@@ -41,7 +42,8 @@ RSpec.describe PullUpdates do
         state: 'submitted',
         risk: 'high',
         current_version: 2,
-        app_store_updated_at: 10
+        app_store_updated_at: 10,
+        application_type: 'crm7'
       )
     end
   end

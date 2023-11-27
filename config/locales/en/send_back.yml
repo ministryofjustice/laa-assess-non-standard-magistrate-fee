@@ -16,7 +16,7 @@ en:
       send_back_form:
         comment: Explain your decision
         state_options:
-          further_info: Further information needed
+          further_info: Further information request
           provider_requested: Provider request
     hint:
       send_back_form:

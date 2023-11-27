@@ -130,6 +130,11 @@ spec:
                 secretKeyRef:
                   name: google-analytics
                   key: tracking_key
+            - name: S3_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: s3-policy-arns
+                  key: bucket_name
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
