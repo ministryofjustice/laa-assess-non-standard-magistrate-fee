@@ -17,6 +17,10 @@ RSpec.describe Event::Unassignment do
         event_type: 'Event::Unassignment',
       )
     end
+
+    it 'has a valid title' do
+      expect(subject.title).to eq('Caseworker removed self from claim')
+    end
   end
 
   context 'when user is different to the current user' do
@@ -30,6 +34,10 @@ RSpec.describe Event::Unassignment do
         claim_version: 1,
         event_type: 'Event::Unassignment',
       )
+    end
+
+    it 'has a valid title' do
+      expect(subject.title).to eq('Caseworker removed from claim by super visor')
     end
   end
 end

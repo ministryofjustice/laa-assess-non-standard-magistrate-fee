@@ -14,4 +14,8 @@ RSpec.describe Event::Assignment do
       event_type: 'Event::Assignment',
     )
   end
+
+  it 'has a valid title' do
+    expect(subject.title).to eq('Claim allocated to caseworker')
+  end
 end
