@@ -111,8 +111,8 @@ spec:
               value: enabled
             - name: DEV_AUTH_ENABLED
               value: {{ .Values.secrets.devAuthEnabled | quote }}
-            - name: ENV_NAME
-              value: development
+            - name: ENV
+              value: {{ .Values.secrets.environment}}
             - name: IS_LOCAL_DOCKER_ENV
               value: 'true'
             - name: SENTRY_DSN
