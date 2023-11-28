@@ -45,10 +45,10 @@ describe HostEnv do
     end
   end
 
-  describe 'ENV_NAME variable is set in production envs' do
+  describe 'ENV variable is set in production envs' do
     before do
       allow(Rails).to receive(:env).and_return(ActiveSupport::StringInquirer.new('production'))
-      allow(ENV).to receive(:fetch).with('ENV_NAME').and_return(env_name)
+      allow(ENV).to receive(:fetch).with('ENV').and_return(env_name)
     end
 
     context 'when uat host' do
@@ -76,7 +76,7 @@ describe HostEnv do
     end
   end
 
-  describe 'when is a production env and the ENV_NAME variable is not set' do
+  describe 'when is a production env and the ENV variable is not set' do
     before do
       allow(Rails).to receive(:env).and_return(ActiveSupport::StringInquirer.new('production'))
     end

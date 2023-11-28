@@ -62,7 +62,7 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 secrets:
-  environment: uat
+  environment: production
   devAuthEnabled: false
 
 service_account:

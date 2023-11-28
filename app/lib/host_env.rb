@@ -13,7 +13,7 @@ module HostEnv
     def env_name
       return LOCAL if Rails.env.local?
 
-      ENV.fetch('ENV_NAME')
+      ENV.fetch('ENV')
     end
 
     private
