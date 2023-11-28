@@ -6,8 +6,8 @@ class LandingController < ApplicationController
   before_action :redirect_if_authenticated
 
   def redirect_if_authenticated
-    if user_signed_in?
-      redirect_to claims_path
-    end
+    return unless user_signed_in?
+
+    redirect_to claims_path
   end
 end
