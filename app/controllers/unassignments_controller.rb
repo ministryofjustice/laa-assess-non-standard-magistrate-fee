@@ -8,20 +8,23 @@ class UnassignmentsController < ApplicationController
   def update
     unassignment = UnassignmentForm.new(claim:, **send_back_params)
     if unassignment.save
-      reference = BaseViewModel.build(:laa_reference, claim)
-      success_notice = t(
-        ".unassignment.#{unassignment.unassignment_user}",
-        ref: reference.laa_reference,
-        url: claim_claim_details_path(claim.id),
-        caseworker: unassignment.user.display_name
-      )
-      redirect_to your_claims_path, flash: { success: success_notice }
+      redirect_to your_claims_path, flash: { success: success_notice(unassignment) }
     else
       render :edit, locals: { claim:, unassignment: }
     end
   end
 
   private
+
+  def success_notice(unassignment)
+    reference = BaseViewModel.build(:laa_reference, claim)
+    t(
+      ".unassignment.#{unassignment.unassignment_user}",
+      ref: reference.laa_reference,
+      url: claim_claim_details_path(claim.id),
+      caseworker: unassignment.user.display_name
+    )
+  end
 
   def claim
     @claim ||= Claim.find(params[:claim_id])

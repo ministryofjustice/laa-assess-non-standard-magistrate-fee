@@ -9,7 +9,7 @@ class Event
         secondary_user: user == current_user ? nil : current_user,
         claim_version: claim.current_version,
         details: {
-          comment: comment
+          comment:
         }
       )
     end

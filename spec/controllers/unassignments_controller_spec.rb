@@ -44,7 +44,7 @@ RSpec.describe UnassignmentsController do
         unassignment_form: { comment: 'some commment' }
       }
       expect(UnassignmentForm).to have_received(:new).with(
-        'comment' => 'some commment', claim: claim, 'current_user' => user
+        'comment' => 'some commment', :claim => claim, 'current_user' => user
       )
     end
 
@@ -57,7 +57,8 @@ RSpec.describe UnassignmentsController do
 
         expect(response).to redirect_to(your_claims_path)
         expect(flash[:success]).to eq(
-          %(Claim <a class="govuk-link" href="/claims/#{claim.id}/claim_details">AAA111</a> has been removed from Jim Bob's list)
+          "Claim <a class=\"govuk-link\" href=\"/claims/#{claim.id}/claim_details\">AAA111</a> " \
+          "has been removed from Jim Bob's list"
         )
       end
 

@@ -6,7 +6,7 @@ RSpec.describe UnassignmentForm do
   let(:claim) { create(:claim) }
 
   describe '#unassignment_user' do
-    let(:params) { { claim: claim, current_user: user} }
+    let(:params) { { claim: claim, current_user: user } }
     let(:claim) { create(:claim, :with_assignment) }
 
     context 'when assigned user and current_user are the same' do

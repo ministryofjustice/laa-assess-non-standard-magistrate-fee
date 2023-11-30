@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :assignment do
-    user { build(:caseworker) }
+    user factory: %i[caseworker]
     claim
   end
 end
