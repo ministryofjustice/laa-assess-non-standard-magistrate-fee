@@ -92,7 +92,10 @@ RSpec.describe MakeDecisionForm do
 
     it 'trigger an update to the app store' do
       subject.save
-      expect(NotifyAppStore).to have_received(:process).with(claim:, feedback:)
+      expect(NotifyAppStore).to have_received(:process) do |args|
+        expect(args[:claim]).to eq(claim)
+        expect(args[:email_content].contents).to eq(feedback.contents)
+      end
     end
 
     context 'when not valid' do

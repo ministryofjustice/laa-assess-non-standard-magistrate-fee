@@ -21,23 +21,23 @@ module FeedbackMessages
     protected
 
     def main_defendant
-      @claim.defendants.find { |defendant| defendant.main == true }
+      @claim.data['defendants'].find { |defendant| defendant['main'] == true }
     end
 
     def defendant_name
-      main_defendant.full_name
+      main_defendant['full_name']
     end
 
     def maat_id
-      main_defendant.maat
+      main_defendant['maat']
     end
 
     def case_reference
-      @claim.laa_reference
+      @claim.data['laa_reference']
     end
 
     def ufn
-      @claim.ufn
+      @claim.data['ufn']
     end
 
     def feedback_url
