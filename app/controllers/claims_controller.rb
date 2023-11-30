@@ -19,20 +19,4 @@ class ClaimsController < ApplicationController
       redirect_to your_claims_path, flash: { notice: t('.no_pending_claims') }
     end
   end
-
-  def destroy
-    claim = Claim.find(params[:id])
-
-    assignment = claim.assignments.first
-
-    if assignment
-      Claim.transaction do
-        Event::Unassignment.build(claim: claim, user: assignment.user, current_user: current_user)
-
-        assignment.delete
-      end
-    end
-
-    redirect_to your_claims_path
-  end
 end

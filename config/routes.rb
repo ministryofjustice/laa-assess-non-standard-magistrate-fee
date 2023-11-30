@@ -39,7 +39,7 @@ Rails.application.routes.draw do
   end
 
   resources :landing, only: [:index]
-  resources :claims, only: [:new, :index, :destroy] do
+  resources :claims, only: [:new, :index] do
     resource :claim_details, only: [:show]
     resource :adjustments, only: [:show]
     namespace :letters_and_calls do
@@ -56,6 +56,7 @@ Rails.application.routes.draw do
     resource :change_risk, only: [:edit, :update], path_names: { edit: '' }
     resource :make_decision, only: [:edit, :update], path_names: { edit: '' }
     resource :send_back, only: [:edit, :update], path_names: { edit: '' }
+    resource :unassignment, only: [:edit, :update], path_names: { edit: '' }
   end
 
   get 'claims/:claim', to: redirect('claims/%{claim}/claim_details')

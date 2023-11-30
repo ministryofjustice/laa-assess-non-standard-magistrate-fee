@@ -113,5 +113,11 @@ FactoryBot.define do
         ]
       end
     end
+
+    trait :with_assignment do
+      after(:build) do |claim|
+        claim.assignments << build(:assignment, claim:)
+      end
+    end
   end
 end
