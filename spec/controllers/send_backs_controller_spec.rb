@@ -37,7 +37,7 @@ RSpec.describe SendBacksController do
   end
 
   context 'update' do
-    let(:send_back) { instance_double(MakeDecisionForm, save: save, state: 'further_info') }
+    let(:send_back) { instance_double(SendBackForm, save: save, state: 'further_info') }
     let(:user) { instance_double(User) }
     let(:claim) { build(:claim, id: SecureRandom.uuid) }
     let(:laa_reference_class) { instance_double(V1::LaaReference, laa_reference: 'AAA111') }

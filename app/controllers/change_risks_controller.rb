@@ -19,7 +19,6 @@ class ChangeRisksController < ApplicationController
 
   private
 
-  # TODO: user current_user once merged
   def risk_params
     params.require(:change_risk_form).permit(
       :id, :risk_level, :explanation

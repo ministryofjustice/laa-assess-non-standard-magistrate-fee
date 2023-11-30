@@ -15,7 +15,7 @@
       <%= govuk_error_summary(form) %>
       <%= f.govuk_text_area :explanation, label: { size: 'm' }, rows: 5 %>
       <%= f.govuk_submit t('.remove_uplift') do %>
-        <%= link_to t('shared.cancel'), :back, class: 'govuk-link', data: { turbo: 'false' } %>
+        <%= link_to t('shared.cancel'), claim_adjustments_path(claim, anchor: 'letters-and-calls-tab'), class: 'govuk-link', data: { turbo: 'false' } %>
       <% end %>
     <% end %>
   </div>

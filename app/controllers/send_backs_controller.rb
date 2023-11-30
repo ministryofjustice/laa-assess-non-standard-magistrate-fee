@@ -32,10 +32,9 @@ class SendBacksController < ApplicationController
     main_defendant ? main_defendant['full_name'] : ''
   end
 
-  # TODO: user current_user once merged
   def send_back_params
     params.require(:send_back_form).permit(
-      :state, :comment, :reject_comment
+      :state, :comment,
     ).merge(current_user:)
   end
 end

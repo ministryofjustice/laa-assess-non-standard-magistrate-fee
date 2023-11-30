@@ -26,7 +26,6 @@ class MakeDecisionsController < ApplicationController
     @claim ||= Claim.find(params[:claim_id])
   end
 
-  # TODO: user current_user once merged
   def decision_params
     params.require(:make_decision_form).permit(
       :state, :partial_comment, :reject_comment
