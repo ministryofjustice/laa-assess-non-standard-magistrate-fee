@@ -68,6 +68,7 @@ RSpec.describe MakeDecisionForm do
   describe '#persistance' do
     let(:user) { instance_double(User) }
     let(:claim) { create(:claim) }
+    let(:feedback) { FeedbackMessages::PartGrantedFeedback.new(claim) }
     let(:params) { { claim: claim, state: 'part_grant', partial_comment: 'part comment', current_user: user } }
 
     before do
@@ -91,7 +92,7 @@ RSpec.describe MakeDecisionForm do
 
     it 'trigger an update to the app store' do
       subject.save
-      expect(NotifyAppStore).to have_received(:process).with(claim:)
+      expect(NotifyAppStore).to have_received(:process).with(claim:, feedback:)
     end
 
     context 'when not valid' do

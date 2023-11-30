@@ -61,6 +61,8 @@ RSpec.describe SendBackForm do
   describe '#persistance' do
     let(:user) { instance_double(User) }
     let(:claim) { create(:claim) }
+    let(:feedback) { FeedbackMessages::FurtherInformationRequestFeedback.new(claim) }
+
     let(:params) { { claim: claim, state: 'further_info', comment: 'some comment', current_user: user } }
 
     before do
@@ -84,7 +86,7 @@ RSpec.describe SendBackForm do
 
     it 'trigger an update to the app store' do
       subject.save
-      expect(NotifyAppStore).to have_received(:process).with(claim:)
+      expect(NotifyAppStore).to have_received(:process).with(claim:, feedback:)
     end
 
     context 'when not valid' do

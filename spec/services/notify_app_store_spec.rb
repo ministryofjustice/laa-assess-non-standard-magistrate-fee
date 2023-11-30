@@ -4,6 +4,7 @@ RSpec.describe NotifyAppStore do
   subject { described_class.new }
 
   let(:claim) { instance_double(Claim) }
+  let(:email_content) { FeedbackMessages::GrantedFeedback.new(claim) }
   let(:message_builder) { instance_double(described_class::MessageBuilder, message: { some: 'message' }) }
 
   before do
@@ -23,13 +24,13 @@ RSpec.describe NotifyAppStore do
       let(:http_notifier) { instance_double(described_class::HttpNotifier, put: true) }
 
       it 'does not raise any errors' do
-        expect { described_class.process(claim:) }.not_to raise_error
+        expect { described_class.process(claim:, email_content:) }.not_to raise_error
       end
 
       it 'sends a HTTP message' do
         expect(http_notifier).to receive(:put).with(message_builder.message)
 
-        described_class.process(claim:)
+        described_class.process(claim:, email_content:)
       end
 
       describe 'when error during notify process' do
@@ -40,7 +41,7 @@ RSpec.describe NotifyAppStore do
         it 'sends the error to sentry and ignores it' do
           expect(Sentry).to receive(:capture_exception)
 
-          expect { described_class.process(claim:) }.not_to raise_error
+          expect { described_class.process(claim:, email_content:) }.not_to raise_error
         end
       end
     end
@@ -51,9 +52,9 @@ RSpec.describe NotifyAppStore do
       end
 
       it 'schedules the job' do
-        expect(described_class).to receive(:perform_later).with(claim)
+        expect(described_class).to receive(:perform_later).with(claim, email_content)
 
-        described_class.process(claim:)
+        described_class.process(claim:, email_content:)
       end
     end
   end
@@ -70,7 +71,7 @@ RSpec.describe NotifyAppStore do
       expect(described_class::MessageBuilder).to receive(:new)
         .with(claim:)
 
-      subject.perform(claim)
+      subject.perform(claim, email_content)
     end
   end
 

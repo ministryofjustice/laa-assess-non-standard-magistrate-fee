@@ -3,7 +3,7 @@ class NotifyAppStore < ApplicationJob
 
   def self.process(claim:, email_content:)
     if ENV.key?('REDIS_HOST')
-      perform_later(claim)
+      perform_later(claim, email_content)
     else
       begin
         new.notify(MessageBuilder.new(claim:))
@@ -16,7 +16,7 @@ class NotifyAppStore < ApplicationJob
     end
   end
 
-  def perform(claim)
+  def perform(claim, email_content)
     notify(MessageBuilder.new(claim:))
     ClaimFeedbackMailer.notify(email_content)
   end

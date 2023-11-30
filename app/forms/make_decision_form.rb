@@ -45,11 +45,11 @@ class MakeDecisionForm
   def email_content
     case state
     when GRANTED
-      GrantedFeedback.new(claim)
+      FeedbackMessages::GrantedFeedback.new(claim)
     when PART_GRANT
-      PartGrantedFeedback.new(claim)
+      FeedbackMessages::PartGrantedFeedback.new(claim)
     when REJECTED
-      RejectedFeedback.new(claim)
+      FeedbackMessages::RejectedFeedback.new(claim)
     end
   end
 end
