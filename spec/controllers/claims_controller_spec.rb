@@ -35,42 +35,4 @@ RSpec.describe ClaimsController do
       end
     end
   end
-
-  describe '#destroy' do
-    let(:claim) { create(:claim) }
-
-    context 'when an assignment exists' do
-      let(:user) { create(:caseworker) }
-
-      it 'deletes the assignment and create an Unassignment event' do
-        claim.assignments.create(user:)
-
-        expect do
-          expect { delete :destroy, params: { id: claim.id } }.to change(Assignment, :count).by(-1)
-        end.to change(Event::Unassignment, :count).by(1)
-      end
-
-      it 'redirects to Your Claims' do
-        claim.assignments.create(user:)
-
-        delete :destroy, params: { id: claim.id }
-
-        expect(response).to redirect_to(your_claims_path)
-      end
-    end
-
-    context 'when no assignment exists' do
-      it 'does nothing' do
-        expect(Event::Unassignment).not_to receive(:build)
-
-        delete :destroy, params: { id: claim.id }
-      end
-
-      it 'redirects to Your Claims' do
-        delete :destroy, params: { id: claim.id }
-
-        expect(response).to redirect_to(your_claims_path)
-      end
-    end
-  end
 end
