@@ -27,7 +27,7 @@ class MakeDecisionForm
     Claim.transaction do
       claim.update!(state:)
       Event::Decision.build(claim:, comment:, previous_state:, current_user:)
-      NotifyAppStore.process(claim:)
+      NotifyAppStore.process(claim:, email_content:)
     end
 
     true
@@ -39,6 +39,17 @@ class MakeDecisionForm
       partial_comment
     when REJECTED
       reject_comment
+    end
+  end
+
+  def email_content
+    case state
+    when GRANTED
+      GrantedFeedback.new(claim)
+    when PART_GRANT
+      PartGrantedFeedback.new(claim)
+    when REJECTED
+      RejectedFeedback.new(claim)
     end
   end
 end
