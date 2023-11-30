@@ -10,7 +10,7 @@
       <%= f.govuk_text_area :explanation, label: { size: 'm' }, rows: 5 %>
       <%= f.govuk_submit t('.save_changes') do %>
         <%= f.hidden_field :id %>
-        <%= link_to t('shared.cancel'), :back, class: 'govuk-link' %>
+        <%= link_to t('shared.cancel'), claim_claim_details_path(claim), class: 'govuk-link' %>
       <% end %>
     <% end %>
   </div>
