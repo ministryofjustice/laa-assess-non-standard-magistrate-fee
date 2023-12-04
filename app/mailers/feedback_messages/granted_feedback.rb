@@ -8,8 +8,8 @@ module FeedbackMessages
 
     def contents
       {
-        LAA_case_reference: case_reference,
-        UFN: ufn,
+        laa_case_reference: case_reference,
+        ufn: ufn,
         main_defendant_name: defendant_name,
         maat_id: maat_id,
         claim_total: '',
@@ -19,7 +19,7 @@ module FeedbackMessages
     end
 
     def recipient
-      @claim.submitter.email
+      @claim.data['submitter']['email']
     end
   end
 end

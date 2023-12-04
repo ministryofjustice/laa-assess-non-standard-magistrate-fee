@@ -9,6 +9,8 @@ FactoryBot.define do
     data do
       {
         'laa_reference' => 'LAA-FHaMVK',
+        'ufn' => '123456/001',
+        'submitter' => submitter,
         'send_by_post' => send_by_post,
         'letters_and_calls' => letters_and_calls,
         'disbursements' => disbursements,
@@ -19,6 +21,12 @@ FactoryBot.define do
     end
 
     transient do
+      submitter do
+        {
+          'email' => 'provider@example.com',
+          'description' => nil
+        }
+      end
       send_by_post { false }
       supporting_evidences do
         [
