@@ -2,19 +2,18 @@
 
 require 'rails_helper'
 
-RSpec.describe FeedbackMessages::FurtherInformationRequestFeedback do
+RSpec.describe FeedbackMessages::RejectedFeedback do
   subject(:feedback) { described_class.new(claim) }
 
   let(:claim) { build(:claim) }
-  let(:feedback_template) { '9ecdec30-83d7-468d-bec2-cf770a2c9828' }
+  let(:feedback_template) { '7e807120-b661-452c-95a6-1ae46f411cfe' }
   let(:recipient) { 'provider@example.com' }
   let(:laa_case_reference) { 'LAA-FHaMVK' }
   let(:ufn) { '123456/001' }
   let(:main_defendant_name) { 'Tracy Linklater' }
   let(:maat_id) { 'AB12123' }
   let(:claim_total) { '' }
-  let(:date_to_respond_by) { '' }
-  let(:caseworker_information_requested) { '' }
+  let(:caseworker_decision_explanation) { '' }
   let(:date) { DateTime.now.strftime('%d %B %Y') }
   let(:feedback_url) { 'tbc' }
 
@@ -32,8 +31,7 @@ RSpec.describe FeedbackMessages::FurtherInformationRequestFeedback do
         main_defendant_name:,
         maat_id:,
         claim_total:,
-        date_to_respond_by:,
-        caseworker_information_requested:,
+        caseworker_decision_explanation:,
         date:,
         feedback_url:
       )
