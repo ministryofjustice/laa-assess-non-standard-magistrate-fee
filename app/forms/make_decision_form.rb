@@ -43,12 +43,11 @@ class MakeDecisionForm
   end
 
   def email_content
-    case state
-    when GRANTED
+    if state == GRANTED
       FeedbackMessages::GrantedFeedback.new(claim)
-    when PART_GRANT
+    elsif state == PART_GRANT
       FeedbackMessages::PartGrantedFeedback.new(claim)
-    when REJECTED
+    else
       FeedbackMessages::RejectedFeedback.new(claim)
     end
   end

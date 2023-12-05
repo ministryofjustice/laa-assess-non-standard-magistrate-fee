@@ -84,13 +84,35 @@ RSpec.describe SendBackForm do
       )
     end
 
-    it 'trigger an update to the app store' do
-      subject.save
-      expect(NotifyAppStore).to have_received(:process) do |args|
-        expect(args[:claim]).to eq(claim)
-        expect(args[:email_content].contents).to eq(feedback.contents)
+    context 'trigger an update to the app store' do
+      context 'further information requested' do
+        let(:feedback) { FeedbackMessages::FurtherInformationRequestFeedback.new(claim) }
+        let(:params) { { claim: claim, state: 'further_info', comment: 'some comment', current_user: user } }
+
+        it 'trigger an update to the app store' do
+          subject.save
+          expect(NotifyAppStore).to have_received(:process) do |args|
+            expect(args[:claim]).to eq(claim)
+            expect(args[:email_content].contents).to eq(feedback.contents)
+          end
+        end
+      end
+
+      context 'provider requested' do
+        let(:feedback) { FeedbackMessages::ProviderRequestFeedback.new(claim) }
+        let(:params) { { claim: claim, state: 'provider_requested', comment: 'some comment', current_user: user } }
+
+        it 'trigger an update to the app store' do
+          subject.save
+          expect(NotifyAppStore).to have_received(:process) do |args|
+            expect(args[:claim]).to eq(claim)
+            expect(args[:email_content].contents).to eq(feedback.contents)
+          end
+        end
       end
     end
+
+
 
     context 'when not valid' do
       let(:params) { {} }

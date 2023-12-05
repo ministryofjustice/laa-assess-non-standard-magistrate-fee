@@ -90,11 +90,44 @@ RSpec.describe MakeDecisionForm do
       )
     end
 
-    it 'trigger an update to the app store' do
-      subject.save
-      expect(NotifyAppStore).to have_received(:process) do |args|
-        expect(args[:claim]).to eq(claim)
-        expect(args[:email_content].contents).to eq(feedback.contents)
+    context 'trigger an update to the app store' do
+      context 'granted' do
+        let(:feedback) { FeedbackMessages::GrantedFeedback.new(claim) }
+        let(:params) { { claim: claim, state: 'granted', current_user: user } }
+
+        it 'trigger an update to the app store' do
+          subject.save
+          expect(NotifyAppStore).to have_received(:process) do |args|
+            expect(args[:claim]).to eq(claim)
+            expect(args[:email_content].contents).to eq(feedback.contents)
+          end
+        end
+      end
+
+      context 'part_grant' do
+        let(:feedback) { FeedbackMessages::PartGrantedFeedback.new(claim) }
+        let(:params) { { claim: claim, state: 'part_grant', partial_comment: 'part comment', current_user: user } }
+
+        it 'trigger an update to the app store' do
+          subject.save
+          expect(NotifyAppStore).to have_received(:process) do |args|
+            expect(args[:claim]).to eq(claim)
+            expect(args[:email_content].contents).to eq(feedback.contents)
+          end
+        end
+      end
+
+      context 'rejected' do
+        let(:feedback) { FeedbackMessages::RejectedFeedback.new(claim) }
+        let(:params) { { claim: claim, state: 'rejected', reject_comment: 'reject comment', current_user: user } }
+
+        it 'trigger an update to the app store' do
+          subject.save
+          expect(NotifyAppStore).to have_received(:process) do |args|
+            expect(args[:claim]).to eq(claim)
+            expect(args[:email_content].contents).to eq(feedback.contents)
+          end
+        end
       end
     end
 

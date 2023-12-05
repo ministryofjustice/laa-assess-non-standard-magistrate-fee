@@ -31,10 +31,9 @@ class SendBackForm
   end
 
   def email_content
-    case state
-    when FURTHER_INFO
+    if state == FURTHER_INFO
       FeedbackMessages::FurtherInformationRequestFeedback.new(claim)
-    when PROVIDER_REQUESTED
+    else
       FeedbackMessages::ProviderRequestFeedback.new(claim)
     end
   end
