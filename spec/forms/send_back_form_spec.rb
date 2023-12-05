@@ -112,8 +112,6 @@ RSpec.describe SendBackForm do
       end
     end
 
-
-
     context 'when not valid' do
       let(:params) { {} }
 
