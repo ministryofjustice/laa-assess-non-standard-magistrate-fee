@@ -4,7 +4,7 @@ class NotifyAppStore
     headers 'Content-Type' => 'application/json'
 
     def put(message)
-      Rails.logger.info "APPLICATION UPDATING TO STATE: #{message.application_state}"
+      Rails.logger.info "APPLICATION UPDATING TO STATE: #{message[:application_state]}"
 
       response = self.class.put("#{host}/v1/application/#{message[:application_id]}", **options(message))
 
