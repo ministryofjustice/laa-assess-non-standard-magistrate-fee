@@ -25,16 +25,16 @@ class MakeDecisionForm
 
     previous_state = claim.state
     begin
-      logger.info "BEGINNING TO UPDATE STATE FROM #{previous_state}"
+      Rails.logger.info "BEGINNING TO UPDATE STATE FROM #{previous_state}"
       Claim.transaction do
         claim.update!(state:)
         Event::Decision.build(claim:, comment:, previous_state:, current_user:)
         NotifyAppStore.process(claim:)
       end
-      logger.info "FINISHED UPDATING STATE, STATE: #{claim.state}"
+      Rails.logger.info "FINISHED UPDATING STATE, STATE: #{claim.state}"
     rescue => e
-      logger.error "FAILED TO UPDATE CLAIM"
-      logger.error e.message
+      Rails.logger.error "FAILED TO UPDATE CLAIM"
+      Rails.logger.error e.message
       false
     end
 
