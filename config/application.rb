@@ -57,5 +57,8 @@ module LaaAssessNonStandardMagistrateFee
     config.x.analytics.cookies_consent_expiration = 1.year
     config.x.analytics.analytics_consent_name = 'analytics_preferences_set'
     config.x.analytics.analytics_consent_expiration = 1.year
+
+    #time to wait for requests to be made to app store for db consistency
+    config.x.application.app_store_wait = ENV.fetch('APP_STORE_WAIT_SECS',0).to_i
   end
 end

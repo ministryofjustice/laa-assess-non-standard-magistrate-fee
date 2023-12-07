@@ -135,6 +135,8 @@ spec:
                 secretKeyRef:
                   name: s3-policy-arns
                   key: bucket_name
+            - name: APP_STORE_WAIT_SECS
+              value: '30'
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
