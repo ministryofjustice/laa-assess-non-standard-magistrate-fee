@@ -3,7 +3,7 @@ class NotifyAppStore < ApplicationJob
 
   def self.process(claim:)
     if ENV.key?('REDIS_HOST')
-      perform_later(claim)
+      set(wait: 30.seconds).perform_later(claim)
     else
       begin
         new.notify(MessageBuilder.new(claim:))
