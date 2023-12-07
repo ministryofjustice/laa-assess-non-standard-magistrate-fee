@@ -1,7 +1,7 @@
 module V1
   class CaseDisposal < BaseViewModel
     attribute :plea, :translated
-    attribute :plea_category
+    attribute :plea_category, :translated
 
     def key
       'case_disposal'
