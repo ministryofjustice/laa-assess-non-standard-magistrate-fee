@@ -38,12 +38,18 @@ RSpec.describe V1::EqualityDetails do
 
   describe '#data' do
     context 'Basic accessibility details' do
-      subject = described_class.new(
+
+      subject { described_class.new(data) }
+
+      let(:answer_equality) do
         {
-          'answer_equality' => {
-            'en' => 'Yes, answer the equality questions (takes 2 minutes)',
-            'value' => 'yes'
-          },
+          'en' => 'Yes, answer the equality questions (takes 2 minutes)',
+          'value' => 'yes'
+        }
+      end
+      let(:data) do
+        {
+          'answer_equality' => answer_equality,
           'ethnic_group' => {
             'en' => 'White British',
             'value' => '01_white_british'
@@ -57,7 +63,8 @@ RSpec.describe V1::EqualityDetails do
             'value' => 'n'
           }
         }
-      )
+      end
+
 
       it 'shows correct table data' do
         expect(subject.data).to eq(
@@ -81,6 +88,27 @@ RSpec.describe V1::EqualityDetails do
             }
           ]
         )
+      end
+
+      context 'when answer equality is selected as no' do
+        let(:answer_equality) do
+          {
+            'en' => 'No, skip the equality questions',
+            'value' => 'no'
+          }
+        end
+
+        it 'shows correct table data' do
+          expect(subject.data).to eq(
+            [
+              {
+                title: 'Equality questions',
+                value: TranslationObject.new({ 'value' => 'no', 'en' => 'No, skip the equality questions' })
+              },
+            ]
+          )
+        end
+
       end
     end
   end
