@@ -13,13 +13,21 @@ module V1
       I18n.t(".claim_details.#{key}.title")
     end
 
-    # rubocop:disable Metrics/MethodLength
     def data
       [
         {
           title: I18n.t(".claim_details.#{key}.questions"),
           value: answer_equality
         },
+        *equality_answers
+      ]
+    end
+
+    # rubocop:disable Metrics/MethodLength
+    def equality_answers
+      return [] unless answer_equality.value == 'yes'
+
+      [
         {
           title: I18n.t(".claim_details.#{key}.ethnic_group"),
           value: ethnic_group
@@ -31,7 +39,7 @@ module V1
         {
           title: I18n.t(".claim_details.#{key}.disability"),
           value: disability
-        },
+        }
       ]
     end
     # rubocop:enable Metrics/MethodLength
