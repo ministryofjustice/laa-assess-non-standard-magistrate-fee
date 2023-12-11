@@ -23,6 +23,7 @@ module V1
       ]
     end
 
+    # rubocop:disable Metrics/MethodLength
     def equality_answers
       return [] unless answer_equality.value == 'yes'
 
@@ -41,6 +42,7 @@ module V1
         }
       ]
     end
+    # rubocop:enable Metrics/MethodLength
 
     def rows
       { title:, data: }
