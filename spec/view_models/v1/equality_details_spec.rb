@@ -38,7 +38,6 @@ RSpec.describe V1::EqualityDetails do
 
   describe '#data' do
     context 'Basic accessibility details' do
-
       subject { described_class.new(data) }
 
       let(:answer_equality) do
@@ -64,7 +63,6 @@ RSpec.describe V1::EqualityDetails do
           }
         }
       end
-
 
       it 'shows correct table data' do
         expect(subject.data).to eq(
@@ -108,7 +106,6 @@ RSpec.describe V1::EqualityDetails do
             ]
           )
         end
-
       end
     end
   end

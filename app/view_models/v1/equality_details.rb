@@ -13,7 +13,6 @@ module V1
       I18n.t(".claim_details.#{key}.title")
     end
 
-    # rubocop:disable Metrics/MethodLength
     def data
       [
         {
@@ -23,7 +22,6 @@ module V1
         *equality_answers
       ]
     end
-    # rubocop:enable Metrics/MethodLength
 
     def equality_answers
       return [] unless answer_equality.value == 'yes'
