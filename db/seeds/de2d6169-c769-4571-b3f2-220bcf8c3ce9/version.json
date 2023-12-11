@@ -9,7 +9,10 @@
     "submitted_total": 100,
     "adjusted_total": 40,
     "ufn": "121111/001",
-    "plea_category": "Category 2",
+    "plea_category": {
+      "value": "category_2",
+      "en": "Category 2"
+    },
     "plea": {
       "value": "cracked_trial",
       "en": "Cracked Trial"
