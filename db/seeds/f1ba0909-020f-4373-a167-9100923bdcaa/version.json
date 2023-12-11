@@ -7,6 +7,10 @@
     "data": {
         "id": "f1ba0909-020f-4373-a167-9100923bdcaa",
         "ufn": "111111/111",
+        "plea_category": {
+            "value": "category_1",
+            "en": "Category 1"
+        },
         "plea": {
             "value": "bind_over",
             "en": "Bind Over"
@@ -121,7 +125,7 @@
         },
         "office_code": "1A123B",
         "work_before": "no",
-        "youth_count": "no",
+        "youth_court": "no",
         "answer_equality": {
             "en": "Yes",
             "value": "yes"
