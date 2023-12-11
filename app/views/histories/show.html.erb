@@ -38,12 +38,7 @@
       end %>
     <%= render "shared/pagination",  { pagy: pagy, item: t('.table_info_item') } %>
 
-  </div>
-</div>
-
-<% if claim.editable? %>
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full govuk-!-padding-right-0">
+    <% if claim.editable? %>
       <div class='history-input'>
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-three-quarters govuk-!-padding-right-0">
@@ -54,6 +49,9 @@
           </div>
         </div>
       </div>
-    </div>
+    <% end %>
+
+    <%= render partial: 'shared/claim_button_group', locals: { claim: claim } %>
   </div>
-<% end %>
+</div>
+
