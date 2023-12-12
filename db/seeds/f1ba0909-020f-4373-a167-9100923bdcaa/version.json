@@ -117,7 +117,8 @@
             "previous_id": null,
             "account_number": "hh",
             "address_line_1": "hh",
-            "address_line_2": "hh"
+            "address_line_2": "hh",
+            "vat_registered": "no"
         },
         "matter_type": {
             "value": "3",
