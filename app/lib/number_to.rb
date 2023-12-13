@@ -7,4 +7,8 @@ module NumberTo
 
     number_to_currency(value, unit: '£')
   end
+
+  def self.percentage(value, decimals: 0)
+    "#{(value * 100).round(decimals)}%"
+  end
 end

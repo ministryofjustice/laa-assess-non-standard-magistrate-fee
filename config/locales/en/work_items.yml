@@ -28,8 +28,12 @@ en:
       calculate_button_text: Calculate my changes
       claim_cost_table:
         title: "Claim cost"
-        header_one: "Provider requested"
-        header_two: "Caseworker allowed"
+        header_one:
+          inc_vat: Provider requested (including VAT)
+          exc_vat: "Provider requested"
+        header_two:
+          inc_vat: Caseworker allowed (including VAT)
+          exc_vat: "Caseworker allowed"
         header_three: "Uplift allowed"
     show:
       page_title: "Your claims"

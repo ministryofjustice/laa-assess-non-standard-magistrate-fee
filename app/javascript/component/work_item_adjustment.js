@@ -28,6 +28,7 @@ function init() {
   function calculateAdjustedAmount() {
     const unitPrice = calculateChangeButton?.getAttribute('data-unit-price');
     var upliftAmount = getProviderUplift();
+    const vatMultiplier = calculateChangeButton?.getAttribute('data-vat-multiplier');
 
     checkMinutesThreshold();
 
@@ -47,9 +48,9 @@ function init() {
 
     if (upliftAmount) {
       const upliftFactor = (parseFloat(upliftAmount) / 100) + 1;
-      return (`£${((minutes/60) * unitPrice * upliftFactor).toFixed(2)}`);
+      return (`£${((minutes / 60) * unitPrice * upliftFactor * vatMultiplier).toFixed(2)}`);
     } else {
-      return (`£${( minutes/60 * unitPrice).toFixed(2)}`);
+      return (`£${(minutes / 60 * unitPrice * vatMultiplier).toFixed(2)}`);
     }
   }
 
