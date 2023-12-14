@@ -5,6 +5,32 @@ RSpec.describe V1::WorkItem do
 
   let(:adjustments) { [] }
 
+  describe '#vat_registered?' do
+    let(:params) do
+      {
+        'firm_office' => { 'vat_registered' => vat_registered },
+      }
+    end
+
+    context 'when value is yes' do
+      let(:vat_registered) { 'yes' }
+
+      it { expect(subject).to be_vat_registered }
+    end
+
+    context 'when value is no' do
+      let(:vat_registered) { 'no' }
+
+      it { expect(subject).not_to be_vat_registered }
+    end
+
+    context 'when value is blank' do
+      let(:vat_registered) { '' }
+
+      it { expect(subject).not_to be_vat_registered }
+    end
+  end
+
   describe 'table_fields' do
     let(:params) do
       {
@@ -37,13 +63,41 @@ RSpec.describe V1::WorkItem do
     let(:params) do
       {
         'time_spent' => 171,
-      'uplift' => 10,
-      'pricing' => 24.0
+        'uplift' => 10,
+        'pricing' => 24.0
       }
     end
 
     it 'calculates the correct provider requested amount' do
       expect(subject.provider_requested_amount).to eq(75.24)
+    end
+  end
+
+  describe 'provider_requested_amount_inc_vat' do
+    let(:params) do
+      {
+        'time_spent' => 171,
+        'uplift' => 10,
+        'pricing' => 24.0,
+        'firm_office' => { 'vat_registered' => vat_registered },
+        'vat_rate' => 0.2,
+      }
+    end
+
+    context 'when vat registered' do
+      let(:vat_registered) { 'yes' }
+
+      it 'calculates the correct provider requested amount' do
+        expect(subject.provider_requested_amount_inc_vat).to eq(90.288)
+      end
+    end
+
+    context 'when not vat registered' do
+      let(:vat_registered) { 'no' }
+
+      it 'calculates the correct provider requested amount' do
+        expect(subject.provider_requested_amount_inc_vat).to eq(75.24)
+      end
     end
   end
 
@@ -78,6 +132,37 @@ RSpec.describe V1::WorkItem do
 
     it 'calculates the correct caseworker requested amount' do
       expect(subject.caseworker_amount).to eq(68.4)
+    end
+  end
+
+  describe '#caseworker_amount_inc_vat' do
+    let(:params) do
+      {
+        'time_spent' => 171,
+        'uplift' => 0,
+        'pricing' => 24.0,
+        'firm_office' => { 'vat_registered' => vat_registered },
+        'adjustments' => adjustments,
+        'vat_rate' => 0.2,
+      }
+    end
+
+    let(:adjustments) { [build(:event, :edit_work_item_uplift)] }
+
+    context 'when vat registered' do
+      let(:vat_registered) { 'yes' }
+
+      it 'calculates the correct provider requested amount' do
+        expect(subject.caseworker_amount_inc_vat).to eq(82.08)
+      end
+    end
+
+    context 'when not vat registered' do
+      let(:vat_registered) { 'no' }
+
+      it 'calculates the correct provider requested amount' do
+        expect(subject.caseworker_amount_inc_vat).to eq(68.4)
+      end
     end
   end
 
@@ -181,6 +266,52 @@ RSpec.describe V1::WorkItem do
           'en' => work_type.capitalize
         }
       )
+    end
+  end
+
+  describe '#provider_fields' do
+    let(:params) do
+      {
+        'completed_on' => Time.new(2022, 12, 14, 13, 02).to_s,
+        'time_spent' => 171,
+        'uplift' => 0,
+        'pricing' => 24.0,
+        'firm_office' => { 'vat_registered' => vat_registered },
+        'adjustments' => adjustments,
+        'vat_rate' => 0.2,
+        'fee_earner' => 'JGB'
+      }
+    end
+
+    let(:adjustments) { [build(:event, :edit_work_item_uplift)] }
+
+    context 'when vat registered' do
+      let(:vat_registered) { 'yes' }
+
+      it 'calculates the correct provider requested amount' do
+        expect(subject.provider_fields).to eq(
+          ".date"=>"14 December 2022",
+          ".time_spent"=>"2 Hrs 51 Mins",
+          ".fee_earner"=>"JGB",
+          ".uplift_claimed"=>"20%",
+          ".vat"=>"20%",
+          ".total_claimed_inc_vate"=>"£98.50",
+        )
+      end
+    end
+
+    context 'when not vat registered' do
+      let(:vat_registered) { 'no' }
+
+      it 'calculates the correct provider requested amount' do
+        expect(subject.provider_fields).to eq(
+          ".date"=>"14 December 2022",
+          ".time_spent"=>"2 Hrs 51 Mins",
+          ".fee_earner"=>"JGB",
+          ".uplift_claimed"=>"20%",
+          ".total_claimed"=>"£82.08",
+        )
+      end
     end
   end
 end
