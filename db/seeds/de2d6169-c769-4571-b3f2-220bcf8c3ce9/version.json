@@ -93,7 +93,8 @@
       "previous_id": null,
       "account_number": "121234",
       "address_line_1": "Suite 3",
-      "address_line_2": "5 Princess Road"
+      "address_line_2": "5 Princess Road",
+      "vat_registered": "yes"
     },
     "matter_type": {
       "value": "1",
