@@ -13,8 +13,8 @@ en:
       view: View
     disbursements_total:
       link_title: View disbursement total
-      without_vat: Without VAT
-      with_vat: With VAT
+      provider_total: Requested (including any VAT)
+      caseworker_total: Allowed (including any VAT)
     edit:
       page_title: Adjust a disbursement
       heading: Adjust a disbursement
@@ -26,7 +26,7 @@ en:
         details: Details of disbursement
         prior_authority: Prior authority granted
         vat: VAT
-        total: Total
+        total: Claim cost (including any VAT)
     show:
       page_title: Adjust a disbursement
       heading:
