@@ -28,7 +28,7 @@ function init() {
   function calculateAdjustedAmount() {
     const unitPrice = calculateChangeButton?.getAttribute('data-unit-price');
     var upliftAmount = getProviderUplift();
-    const vatMultiplier = calculateChangeButton?.getAttribute('data-vat-multiplier');
+    const vatMultiplier = parseFloat(calculateChangeButton?.getAttribute('data-vat-multiplier'));
 
     checkMinutesThreshold();
 
@@ -46,11 +46,15 @@ function init() {
       upliftAmount = 0;
     }
 
-    if (upliftAmount) {
-      const upliftFactor = (parseFloat(upliftAmount) / 100) + 1;
+    const upliftFactor = (parseFloat(upliftAmount) / 100) + 1;
+
+    // rounding:
+    // * when VAT exists - round down
+    // * when no VAT exists - round to nearest decimal
+    if (vatMultiplier === 1.0) {
       return (`£${((minutes / 60) * unitPrice * upliftFactor * vatMultiplier).toFixed(2)}`);
     } else {
-      return (`£${(minutes / 60 * unitPrice * vatMultiplier).toFixed(2)}`);
+      return (`£${round((minutes / 60) * unitPrice * upliftFactor * vatMultiplier * 100) / 100}`);
     }
   }
 

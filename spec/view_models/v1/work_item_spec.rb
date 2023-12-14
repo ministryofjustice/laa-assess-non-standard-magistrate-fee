@@ -295,7 +295,7 @@ RSpec.describe V1::WorkItem do
           '.fee_earner' => 'JGB',
           '.uplift_claimed' => '20%',
           '.vat' => '20%',
-          '.total_claimed_inc_vate' => '£98.50',
+          '.total_claimed_inc_vate' => '£98.49',
         )
       end
     end
