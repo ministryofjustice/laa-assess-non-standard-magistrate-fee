@@ -23,7 +23,7 @@
 
       <%= govuk_details(summary_text: t('.check_totals')) do %>
         <%=
-          head = [t('.items'), t('.total_cost'), t('.total_time')]
+          head = [t('.items'), t('.time_requested'), t('.cost_requested'), t('.cost_allowed')]
           rows = core_cost_summary.table_fields
           foot = [t('.total'), *core_cost_summary.summed_fields]
           govuk_table(first_cell_is_header: true, head:, rows:, foot:)

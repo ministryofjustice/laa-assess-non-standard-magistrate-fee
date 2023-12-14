@@ -47,6 +47,7 @@ en:
     show:
       check_totals: View core costs
       items: Items
-      total_time: Time total
-      total_cost: Cost total
+      time_requested: Time requested
+      cost_requested: Cost requested
+      cost_allowed: Cost allowed
       total: Total

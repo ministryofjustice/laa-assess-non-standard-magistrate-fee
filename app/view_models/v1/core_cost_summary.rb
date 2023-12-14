@@ -10,8 +10,9 @@ module V1
       data_by_type.map do |work_type, total_cost, total_time_spent|
         [
           work_type,
-          NumberTo.pounds(total_cost),
           total_time_spent ? "#{total_time_spent}min" : '',
+          'TODO: Requested Amount',
+          NumberTo.pounds(total_cost),
         ]
       end
     end
