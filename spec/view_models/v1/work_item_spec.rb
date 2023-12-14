@@ -272,7 +272,7 @@ RSpec.describe V1::WorkItem do
   describe '#provider_fields' do
     let(:params) do
       {
-        'completed_on' => Time.new(2022, 12, 14, 13, 02).to_s,
+        'completed_on' => Time.zone.local(2022, 12, 14, 13, 0o2).to_s,
         'time_spent' => 171,
         'uplift' => 0,
         'pricing' => 24.0,
@@ -290,12 +290,12 @@ RSpec.describe V1::WorkItem do
 
       it 'calculates the correct provider requested amount' do
         expect(subject.provider_fields).to eq(
-          ".date"=>"14 December 2022",
-          ".time_spent"=>"2 Hrs 51 Mins",
-          ".fee_earner"=>"JGB",
-          ".uplift_claimed"=>"20%",
-          ".vat"=>"20%",
-          ".total_claimed_inc_vate"=>"£98.50",
+          '.date' => '14 December 2022',
+          '.time_spent' => '2 Hrs 51 Mins',
+          '.fee_earner' => 'JGB',
+          '.uplift_claimed' => '20%',
+          '.vat' => '20%',
+          '.total_claimed_inc_vate' => '£98.50',
         )
       end
     end
@@ -305,11 +305,11 @@ RSpec.describe V1::WorkItem do
 
       it 'calculates the correct provider requested amount' do
         expect(subject.provider_fields).to eq(
-          ".date"=>"14 December 2022",
-          ".time_spent"=>"2 Hrs 51 Mins",
-          ".fee_earner"=>"JGB",
-          ".uplift_claimed"=>"20%",
-          ".total_claimed"=>"£82.08",
+          '.date' => '14 December 2022',
+          '.time_spent' => '2 Hrs 51 Mins',
+          '.fee_earner' => 'JGB',
+          '.uplift_claimed' => '20%',
+          '.total_claimed' => '£82.08',
         )
       end
     end

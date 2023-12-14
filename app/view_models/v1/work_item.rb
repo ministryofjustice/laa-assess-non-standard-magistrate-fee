@@ -54,7 +54,6 @@ module V1
       uplift.to_i
     end
 
-
     def uplift?
       !provider_requested_uplift.to_i.zero?
     end
@@ -79,6 +78,7 @@ module V1
       %w[attendance_with_counsel attendance_without_counsel].include?(work_type.value)
     end
 
+    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     def provider_fields
       rows = {
         '.date' => ApplicationController.helpers.format_in_zone(completed_on),
@@ -95,5 +95,6 @@ module V1
 
       rows
     end
+    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
   end
 end
