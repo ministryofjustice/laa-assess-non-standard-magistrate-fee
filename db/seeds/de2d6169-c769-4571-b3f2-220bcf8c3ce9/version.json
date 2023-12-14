@@ -6,8 +6,6 @@
   "state": "submitted",
   "data": {
     "id": "de2d6169-c769-4571-b3f2-220bcf8c3ce9",
-    "submitted_total": 100,
-    "adjusted_total": 40,
     "ufn": "121111/001",
     "plea_category": {
       "value": "category_2",
@@ -207,7 +205,12 @@
     "remitted_to_magistrate_date": "2022-12-12",
     "reason_for_claim_other_details": "",
     "representation_order_withdrawn_date": null,
-    "supporting_evidences": []
+    "supporting_evidences": [],
+    "submitted_total": 1000.0,
+    "submitted_total_inc_vat": 1200.0,
+    "adjusted_total": 1000.0,
+    "adjusted_total_inc_vat": 1200.0,
+    "vat_rate": 0.2
   },
   "created_at": "2023-09-18T14:12:50.825Z",
   "updated_at": "2023-09-18T14:12:50.825Z"
