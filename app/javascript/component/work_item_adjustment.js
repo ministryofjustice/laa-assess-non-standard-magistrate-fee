@@ -54,7 +54,7 @@ function init() {
     if (vatMultiplier === 1.0) {
       return (`£${((minutes / 60) * unitPrice * upliftFactor * vatMultiplier).toFixed(2)}`);
     } else {
-      return (`£${round((minutes / 60) * unitPrice * upliftFactor * vatMultiplier * 100) / 100}`);
+      return (`£${Math.floor((minutes / 60) * unitPrice * upliftFactor * vatMultiplier * 100) / 100}`);
     }
   }
 
