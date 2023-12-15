@@ -9,10 +9,7 @@ module V1
           # TODO: convert this to a time period to enable easy formating of output
           [
             translated_work_type,
-            work_items_for_type.sum(&:provider_requested_amount_inc_vat),
-            work_items_for_type.sum(&:provider_requested_time_spent),
-            work_items_for_type.sum(&:caseworker_amount_inc_vat),
-            work_items_for_type.sum(&:time_spent),
+            *summed_values(work_items_for_type)
           ]
         end
     end
@@ -22,6 +19,15 @@ module V1
     def grouped_work_items
       BaseViewModel.build(:work_item, claim, 'work_items')
                    .group_by { |work_item| work_item.work_type.to_s }
+    end
+
+    def summed_values(work_items)
+      [
+        work_items.sum(&:provider_requested_amount_inc_vat),
+        work_items.sum(&:provider_requested_time_spent),
+        work_items.sum(&:caseworker_amount_inc_vat),
+        work_items.sum(&:time_spent),
+      ]
     end
 
     # overwrite if you need custom filtering

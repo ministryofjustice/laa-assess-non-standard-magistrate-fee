@@ -15,6 +15,7 @@ RSpec.describe V1::CoreCostSummary do
     ]
   end
   let(:work_items) { [{ data: 1 }] }
+
   before do
     allow(BaseViewModel).to receive(:build).and_call_original
     allow(BaseViewModel).to receive(:build).with(:work_item, anything, anything).and_return(v1_work_items)
@@ -29,7 +30,6 @@ RSpec.describe V1::CoreCostSummary do
           firm_office: { 'vat_registered' => 'no' })
         ]
       end
-
 
       it 'includes the letters and calls rows' do
         expect(subject.table_fields).to include(['Letters', '£40.00', ''], ['Calls', '£20.00', ''])
@@ -133,7 +133,6 @@ RSpec.describe V1::CoreCostSummary do
         ]
       end
 
-
       it 'builds a WorkType record to use in the calculations' do
         subject.summed_fields
         expect(BaseViewModel).to have_received(:build).with(
@@ -157,7 +156,6 @@ RSpec.describe V1::CoreCostSummary do
           firm_office: { 'vat_registered' => 'no' })
         ]
       end
-
 
       it 'returns the summed cost' do
         expect(subject.summed_fields).to eq(['£140.00', ''])

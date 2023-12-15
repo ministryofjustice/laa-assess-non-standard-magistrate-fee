@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe V1::TravelAndWaiting do
   subject { described_class.new(params) }
 
-  let(:claim) { build(:claim).tap { |claim| claim.data.merge!('work_items' => work_items) } }
+  let(:claim) { build(:claim, firm_office: { 'vat_registered' => vat_registered }).tap { |claim| claim.data.merge!('work_items' => work_items) } }
   let(:params) do
     {
       'claim' => claim,
