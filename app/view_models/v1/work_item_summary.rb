@@ -9,9 +9,9 @@ module V1
           # TODO: convert this to a time period to enable easy formating of output
           [
             translated_work_type,
-            work_items_for_type.sum { |work_item| CostCalculator.cost(:work_item, work_item, :provider_requested) },
+            work_items_for_type.sum(&:provider_requested_amount_inc_vat),
             work_items_for_type.sum(&:provider_requested_time_spent),
-            work_items_for_type.sum { |work_item| CostCalculator.cost(:work_item, work_item, :caseworker) },
+            work_items_for_type.sum(&:caseworker_amount_inc_vat),
             work_items_for_type.sum(&:time_spent),
           ]
         end
