@@ -7,7 +7,7 @@ module V1
           next if skip_work_item?(work_items_for_type.first)
 
           # TODO: convert this to a time period to enable easy formating of output
-          result = [
+          [
             translated_work_type,
             work_items_for_type.sum { |work_item| CostCalculator.cost(:work_item, work_item, :provider_requested) },
             work_items_for_type.sum(&:provider_requested_time_spent),
