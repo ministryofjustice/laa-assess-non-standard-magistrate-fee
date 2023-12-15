@@ -13,13 +13,9 @@
   <div class="govuk-grid-column-two-thirds">
     <h2 class="govuk-heading-l"><%= t('.provider_submission') %></h2>
     <%=
-      rows = [
-        [{ text: t('.date'), width: 'govuk-!-width-one-half' }, format_in_zone(item.completed_on)],
-        [t('.time_spent'), format_period(item.provider_requested_time_spent)],
-        [t('.fee_earner'), item.fee_earner.to_s],
-        [t('.uplift_claimed'), "#{item.provider_requested_uplift}%"],
-        [t('.total_claimed'), NumberTo.pounds(item.provider_requested_amount)]
-      ]
+      rows = item.provider_fields.map do |key, value|
+        [{ text: t(key), width: 'govuk-!-width-one-half' }, value]
+      end
       govuk_table(head: '', first_cell_is_header: true, rows:) do |tab|
         tab.with_caption(text: item.work_type.to_s, size: 'm')
       end
@@ -38,22 +34,27 @@
       <%= govuk_button_link_to(t('.calculate_button_text'), '#',
         secondary: true ,
         id: 'calculate_change_button',
-        data: {'unit-price': item.pricing, 'uplift-amount': item.uplift, 'provider-time-spent': item.time_spent }
+        data: {
+          'unit-price': item.pricing,
+          'uplift-amount': item.uplift,
+          'provider-time-spent': item.time_spent,
+          'vat-multiplier': item.vat_registered? ? (1.0 + item.vat_rate) : 1.0,
+        }
       ) %>
       <div id='claim-cost-table'>
         <%= govuk_table do |table| %>
           <%= table.with_caption(size: 'm', text: t('.claim_cost_table.title')) %>
           <%= table.with_head do |head| %>
             <%= head.with_row do |row| %>
-              <%= row.with_cell(text: t('.claim_cost_table.header_one')) %>
-              <%= row.with_cell(text: t('.claim_cost_table.header_two')) %>
+              <%= row.with_cell(text: t(".claim_cost_table.header_one.#{item.vat_registered? ? 'inc_vat' : 'exc_vat'}")) %>
+              <%= row.with_cell(text: t(".claim_cost_table.header_two.#{item.vat_registered? ? 'inc_vat' : 'exc_vat'}")) %>
               <%= row.with_cell(text: t('.claim_cost_table.header_three')) %>
             <% end %>
           <% end %>
 
           <%= table.with_body do |body| %>
             <%= body.with_row do |row| %>
-              <%= row.with_cell(text: NumberTo.pounds(item.provider_requested_amount),html_attributes: { id: 'work_item_provider_requested_amount' }) %>
+              <%= row.with_cell(text: NumberTo.pounds_inc_vat(item.provider_requested_amount_inc_vat), html_attributes: { id: 'work_item_provider_requested_amount' }) %>
               <%= row.with_cell(text: '--',html_attributes: { id: 'work_item_caseworker_allowed_amount' }) %>
               <%= row.with_cell(text: "#{item.uplift? ? item.uplift : '0' }%",html_attributes: { id: 'work_item_uplift_allowed_amount' }) %>
             <% end %>

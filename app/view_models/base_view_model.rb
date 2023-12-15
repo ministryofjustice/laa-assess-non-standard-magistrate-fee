@@ -36,6 +36,7 @@ class BaseViewModel
 
     def params(attributes)
       claim.attributes
+           .merge(claim.data)
            .merge(attributes, 'claim' => claim)
            .slice(*klass.attribute_names)
     end
