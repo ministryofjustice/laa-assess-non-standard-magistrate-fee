@@ -4,8 +4,16 @@ en:
     back_link: Back
     time_period:
       hours:
-        one: '%{count} Hr '
-        other: '%{count} Hrs '
+        short:
+          one: '%{count} Hr '
+          other: '%{count} Hrs '
+        long_html:
+          one: '%{count} Hour<br>'
+          other: '%{count} Hours<br>'
       minutes:
-        one: '%{count} Min'
-        other: '%{count} Mins'
+        short:
+          one: '%{count} Min'
+          other: '%{count} Mins'
+        long_html:
+          one: '%{count} Minute'
+          other: '%{count} Minutes'
