@@ -3,7 +3,11 @@ require 'rails_helper'
 RSpec.describe V1::TravelAndWaiting do
   subject { described_class.new(params) }
 
-  let(:claim) { build(:claim, firm_office: { 'vat_registered' => vat_registered }).tap { |claim| claim.data.merge!('work_items' => work_items) } }
+  let(:claim) do
+    build(:claim, firm_office: { 'vat_registered' => vat_registered }).tap do |claim|
+      claim.data.merge!('work_items' => work_items)
+    end
+  end
   let(:params) do
     {
       'claim' => claim,
@@ -38,7 +42,9 @@ RSpec.describe V1::TravelAndWaiting do
 
   describe '#table_fields' do
     context 'when a single work item exists' do
-      let(:work_items) { [{ 'work_type' => { 'en' => 'Travel', 'value' => 'travel' }, 'time_spent' => 20, 'vat_rate' => 0.2 }] }
+      let(:work_items) do
+        [{ 'work_type' => { 'en' => 'Travel', 'value' => 'travel' }, 'time_spent' => 20, 'vat_rate' => 0.2 }]
+      end
 
       it 'includes the summed table field row' do
         expect(subject.table_fields).to include(
@@ -53,7 +59,7 @@ RSpec.describe V1::TravelAndWaiting do
 
     context 'when multiple work item of diffent types exists' do
       let(:work_items) do
-        [{ 'work_type' => { 'en' => 'Travel', 'value' => 'travel' }, 'time_spent' => 20, 'vat_rate' => 0.2  },
+        [{ 'work_type' => { 'en' => 'Travel', 'value' => 'travel' }, 'time_spent' => 20, 'vat_rate' => 0.2 },
          { 'work_type' => { 'en' => 'Waiting', 'value' => 'waiting' }, 'time_spent' => 30, 'vat_rate' => 0.2 }]
       end
 
@@ -71,7 +77,7 @@ RSpec.describe V1::TravelAndWaiting do
 
     context 'when waiting and travel work items do not exist' do
       let(:work_items) do
-        [{ 'work_type' => { 'en' => 'preparation', 'value' => 'preparation' }, 'time_spent' => 30, 'vat_rate' => 0.2  }]
+        [{ 'work_type' => { 'en' => 'preparation', 'value' => 'preparation' }, 'time_spent' => 30, 'vat_rate' => 0.2 }]
       end
 
       it 'nothing is returned' do
