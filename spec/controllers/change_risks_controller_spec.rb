@@ -40,10 +40,12 @@ RSpec.describe ChangeRisksController, type: :controller do
         claim_id: claim.id,
         change_risk_form: { risk_level: 'low', explanation: nil, id: claim.id }
       }
-      # expect(risk).to have_received(:risk_level)
-      expect(ChangeRiskForm).to have_received(:new).with(
-        'risk_level' => 'low', 'explanation' => '', 'id' => claim.id, 'current_user' => user
-      )
+
+      expected_params = ActionController::Parameters.new(risk_level: 'low',
+                                                         explanation: '',
+                                                         id: claim.id,
+                                                         current_user: user).permit!
+      expect(ChangeRiskForm).to have_received(:new).with(expected_params)
     end
 
     context 'when decision has an erorr being updated' do
