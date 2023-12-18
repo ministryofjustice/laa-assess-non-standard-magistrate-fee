@@ -19,6 +19,16 @@ The instructions assume you have [Homebrew](https://brew.sh) installed in your m
 
 **2. Configuration**
 
+* Copy `.env.development` to `.env.development.local` and modify with suitable values for your local machine
+* Copy `.env.test` to `.env.test.local` and modify with suitable values for your local machine
+
+```
+# amend database url to use your local superuser role, typically your personal user
+DATABASE_URL=postgresql://postgres@localhost/laa-claim-non-standard-magistrate-fee-dev
+=>
+DATABASE_URL=postgresql://john.smith@localhost/laa-claim-non-standard-magistrate-fee-dev
+```
+
 After you've defined your DB configuration in the above files, run the following:
 
 * `bin/rails db:prepare` (for the development database)
@@ -26,7 +36,8 @@ After you've defined your DB configuration in the above files, run the following
 
 **3. GOV.UK Frontend (styles, javascript and other assets)**
 
-* `yarn`
+* `yarn install --frozen-lockfile`
+* `rails assets:precompile` [require on first occassion at least]
 
 **4. Database preparation**
 
@@ -39,7 +50,7 @@ the system, or export data that has been generated via the Provide/App Store rou
 ### Loading data
 
 ```
-rake custom_seeds:load
+rails custom_seeds:load
 ```
 
 This reads the folders in db/seeds and loads the claim and the latest version data.
@@ -54,17 +65,20 @@ By default all folders are processed during the load.
 rake custom_seeds:store[<claim_id>]
 ```
 
-Records are stored based of the claim ID and need to be processed one at a time.
-It is expected that records will be generated in teh Provider app and sent across
-as apposed to being menually generated to avoid creating invalid data records.
+Records are stored based off of the claim ID and need to be processed one at a time.
+It is expected that records will be generated in the Provider app and sent across
+as opposed to being manually generated to avoid creating invalid data records.
 
 ### Adding users
 
 ```
-rake user:add['{email}', '{first_name}', '{last_name}', '{role}']
+rake user:add["first_name.last_name@wherever.com","first_name","last_name","my_role"]
 ```
 
 To add a user into the database that can be authenticated into the app, use the command above.
+
+On UAT the email must be an MoJ AzureAD email address (i.e. ending @justice.gov.uk) as
+omniauthentication is handed off to AzureAD.
 
 **5. Run app locally**
 
