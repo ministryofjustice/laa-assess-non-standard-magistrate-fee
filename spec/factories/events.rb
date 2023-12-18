@@ -6,7 +6,6 @@ end
 
 FactoryBot.define do
   factory :event, class: 'EventCreatable' do
-    id { SecureRandom.uuid }
     claim
     claim_version { claim.current_version }
 
@@ -15,7 +14,7 @@ FactoryBot.define do
       details do
         {
           from: 'submitted',
-          to: 'grant'
+          to: 'granted'
         }
       end
     end
@@ -93,7 +92,7 @@ FactoryBot.define do
         {
           field: 'state',
           from: 'submitted',
-          to: 'grant',
+          to: 'granted',
           comment: 'grant it'
         }
       end

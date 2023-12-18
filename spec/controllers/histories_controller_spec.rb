@@ -45,9 +45,8 @@ RSpec.describe HistoriesController do
         claim_note_form: { note: 'new note', id: claim.id }
       }
 
-      expect(ClaimNoteForm).to have_received(:new).with(
-        'note' => 'new note', 'id' => claim.id, 'current_user' => user
-      )
+      expected_params = ActionController::Parameters.new(note: 'new note', id: claim.id, current_user: user).permit!
+      expect(ClaimNoteForm).to have_received(:new).with(expected_params)
     end
 
     context 'when decision has an erorr being updated' do

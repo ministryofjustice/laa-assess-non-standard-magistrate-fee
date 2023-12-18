@@ -62,7 +62,7 @@ COPY . .
 # the assets pipeline run, but doesn't matter their value.
 RUN SECRET_KEY_BASE=needed-for-assets-to-compile \
   RAILS_ENV=production \
-  ENV_NAME=production \
+  ENV=production \
   rails assets:precompile --trace
 
 # non-root user should own these directories
@@ -95,8 +95,6 @@ USER $APPUID
 
 ENV PORT 3000
 EXPOSE $PORT
-
-ENV OMNIAUTH_TEST_MODE true
 
 ENTRYPOINT ["./run.sh"]
 #CMD tail -f /dev/null\

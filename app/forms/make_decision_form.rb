@@ -4,21 +4,21 @@ class MakeDecisionForm
   include ActiveRecord::AttributeAssignment
 
   STATES = [
-    GRANT = 'grant'.freeze,
+    GRANTED = 'granted'.freeze,
     PART_GRANT = 'part_grant'.freeze,
-    REJECT = 'reject'.freeze
+    REJECTED = 'rejected'.freeze
   ].freeze
 
-  attribute :id
   attribute :state
   attribute :partial_comment
   attribute :reject_comment
   attribute :current_user
+  attribute :claim
 
   validates :claim, presence: true
   validates :state, inclusion: { in: STATES }
   validates :partial_comment, presence: true, if: -> { state == PART_GRANT }
-  validates :reject_comment, presence: true, if: -> { state == REJECT }
+  validates :reject_comment, presence: true, if: -> { state == REJECTED }
 
   def save
     return false unless valid?
@@ -31,22 +31,14 @@ class MakeDecisionForm
     end
 
     true
-  rescue StandardError
-    false
   end
 
   def comment
     case state
     when PART_GRANT
       partial_comment
-    when REJECT
+    when REJECTED
       reject_comment
     end
-  end
-
-  private
-
-  def claim
-    Claim.find_by(id:)
   end
 end

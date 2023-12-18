@@ -169,10 +169,10 @@ RSpec.describe ApplicationHelper, type: :helper do
 
   describe '#accessed_colour' do
     it 'returns the case based on the state' do
-      expect(helper.accessed_colour('grant')).to eq('green')
+      expect(helper.accessed_colour('granted')).to eq('green')
       expect(helper.accessed_colour('part-grant')).to eq('blue')
-      expect(helper.accessed_colour('reject')).to eq('red')
-      expect(helper.accessed_colour('other')).to be_nil
+      expect(helper.accessed_colour('rejected')).to eq('red')
+      expect(helper.accessed_colour('other')).to eq('yellow')
     end
   end
 end

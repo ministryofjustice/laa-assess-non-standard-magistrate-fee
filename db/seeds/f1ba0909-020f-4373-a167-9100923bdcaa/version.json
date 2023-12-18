@@ -7,15 +7,22 @@
     "data": {
         "id": "f1ba0909-020f-4373-a167-9100923bdcaa",
         "ufn": "111111/111",
+        "plea_category": {
+            "value": "category_1",
+            "en": "Category 1"
+        },
         "plea": {
             "value": "bind_over",
             "en": "Bind Over"
         },
         "court": "Aldershot Magistrates' Court",
-        "gender": null,
+        "gender": {
+          "en": "Male",
+          "value": "m"
+        },
         "status": "completed",
         "in_area": "no",
-        "submiter": {
+        "submitter": {
             "email": "provider@example.com",
             "description": null
         },
@@ -44,10 +51,13 @@
                 "full_name": "Jim Bob"
             }
         ],
-        "disability": null,
+        "disability": {
+          "en": "No",
+          "value": "no"
+        },
         "other_info": "",
         "time_spent": 110,
-        "evidence_recorded": "yes",
+        "preparation_time": "yes",
         "updated_at": "2023-09-07T10:25:44.724Z",
         "work_after": "no",
         "work_items": [
@@ -107,7 +117,8 @@
             "previous_id": null,
             "account_number": "hh",
             "address_line_1": "hh",
-            "address_line_2": "hh"
+            "address_line_2": "hh",
+            "vat_registered": "no"
         },
         "matter_type": {
             "value": "3",
@@ -115,9 +126,15 @@
         },
         "office_code": "1A123B",
         "work_before": "no",
-        "youth_count": "no",
-        "answer_equality": null,
-        "ethnic_group": null,
+        "youth_court": "no",
+        "answer_equality": {
+            "en": "Yes",
+            "value": "yes"
+        },
+        "ethnic_group": {
+            "en": "White British",
+            "value": "01_white_british"
+        },
         "main_offence": "Assault (common)",
         "send_by_post": false,
         "disbursements": [
@@ -132,14 +149,14 @@
                     "en": null,
                     "value": null
                 },
-                "vat_amount": "9.99",
+                "vat_amount": 9.99,
                 "prior_authority": "yes",
                 "disbursement_date": "2022-01-01",
                 "disbursement_type": {
                     "en": "Car",
                     "value": "car"
                 },
-                "total_cost_without_vat": "49.95"
+                "total_cost_without_vat": 49.95
             },
             {
                 "id": "18032dc2-357c-4a70-a009-0b85e32b6ef8",
@@ -152,14 +169,14 @@
                     "en": "apples",
                     "value": "apples"
                 },
-                "vat_amount": "44.4",
+                "vat_amount": 44.4,
                 "prior_authority": "yes",
                 "disbursement_date": "2022-02-02",
                 "disbursement_type": {
                     "en": "Other disbursement type",
                     "value": "other"
                 },
-                "total_cost_without_vat": "222.0"
+                "total_cost_without_vat": 222.0
             },
             {
                 "id": "5c796ff8-a14b-4359-b02c-9ffe5fc669cb",
@@ -172,14 +189,14 @@
                     "en": "Accident \u0026 Emergency Report",
                     "value": "accident_emergency_report"
                 },
-                "vat_amount": "0.0",
+                "vat_amount": 0.0,
                 "prior_authority": "yes",
                 "disbursement_date": "2022-02-02",
                 "disbursement_type": {
                     "en": "Other disbursement type",
                     "value": "other"
                 },
-                "total_cost_without_vat": "1234.0"
+                "total_cost_without_vat": 1234.0
             }
         ],
         "is_other_info": "no",
@@ -404,5 +421,10 @@
         ]
     },
     "created_at": "2023-09-18T14:13:29.025Z",
-    "updated_at": "2023-09-18T14:13:29.025Z"
+    "updated_at": "2023-09-18T14:13:29.025Z",
+    "submitted_total": 1000.0,
+    "submitted_total_inc_vat": 1050.0,
+    "adjusted_total": 1000.0,
+    "adjusted_total_inc_vat": 1050.0,
+    "vat_rate": 0.0
 }

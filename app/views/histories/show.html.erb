@@ -30,7 +30,7 @@
               row.with_cell do
     %>
                 <p class="govuk-!-font-weight-bold"><%= event.title %></p>
-                <%= event.body %>
+                <p class="govuk-!-margin-bottom-0"><%= event.body %></p>
               <% end
             end
           end
@@ -38,20 +38,20 @@
       end %>
     <%= render "shared/pagination",  { pagy: pagy, item: t('.table_info_item') } %>
 
+    <% if claim.editable? %>
+      <div class='history-input'>
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-three-quarters govuk-!-padding-right-0">
+            <%= form_with model: claim_note, url: claim_history_path(claim.id) do |f| %>
+              <%= f.govuk_text_area :note, label: { size: 'm' }, rows: 5 %>
+              <%= f.govuk_submit t('.add-note') %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <%= render partial: 'shared/claim_button_group', locals: { claim: claim } %>
   </div>
 </div>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-full govuk-!-padding-right-0">
-    <div class='history-input'>
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-three-quarters govuk-!-padding-right-0">
-          <%= form_with model: claim_note, url: claim_history_path(claim.id) do |f| %>
-            <%= f.govuk_text_area :note, label: { size: 'm' }, rows: 5 %>
-            <%= f.govuk_submit t('.add-note') %>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>

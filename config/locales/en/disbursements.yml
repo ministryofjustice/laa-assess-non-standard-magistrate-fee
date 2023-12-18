@@ -1,10 +1,20 @@
 ---
 en:
   disbursements:
+    index:
+      disbursements: Disbursements
+      disbursement_total: Disbursement total
+      disbursement: Disbursement
+      requested: Provider requested
+      vat_applied: VAT applied
+      adjusted: Caseworker allowed
+      action: Action
+      change: Change
+      view: View
     disbursements_total:
       link_title: View disbursement total
-      without_vat: Without VAT
-      with_vat: With VAT
+      provider_total: Requested (including any VAT)
+      caseworker_total: Allowed (including any VAT)
     edit:
       page_title: Adjust a disbursement
       heading: Adjust a disbursement
@@ -16,7 +26,27 @@ en:
         details: Details of disbursement
         prior_authority: Prior authority granted
         vat: VAT
+        total: Claim cost (including any VAT)
+    show:
+      page_title: Adjust a disbursement
+      heading:
+        zero: Disbursement
+        one: Adjusted disbursement
+        other: Adjusted disbursement
+      summary_table:
+        caption: Provider submission
+        date: Date
+        type: Disbursement type
+        cost: Disbursement cost
+        details: Details of disbursement
+        prior_authority: Prior authority granted
+        vat: VAT
         total: Total
+      refuse: Refuse disbursement
+      explanation: Adjustment reason
+      refuse_status:
+        'true': 'Yes'
+        'false': 'No'
   helpers:
     legend:
       disbursements_form:

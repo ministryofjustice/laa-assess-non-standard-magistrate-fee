@@ -14,6 +14,6 @@ RSpec.describe Event::NewVersion do
   end
 
   it 'has a valid title' do
-    expect(subject.title).to eq('New claim versions received')
+    expect(subject.title).to eq('New claim received')
   end
 end

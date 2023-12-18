@@ -24,7 +24,7 @@ RSpec.describe V1::ContactDetails do
             'full_name' => 'Daniel Treaty',
             'reference_number' => '1212333',
           },
-          'submiter' => {
+          'submitter' => {
             'email' => 'test@test.com'
           }
         }
@@ -52,7 +52,7 @@ RSpec.describe V1::ContactDetails do
             'full_name' => 'Daniel Treaty',
             'reference_number' => '1212333',
           },
-          'submiter' => {
+          'submitter' => {
             'email' => 'test@test.com'
           }
         }
@@ -66,6 +66,7 @@ RSpec.describe V1::ContactDetails do
             { title: 'Firm address', value: '1 Princess Road<br>Stoke Newington<br>NE10 4AB' },
             { title: 'Solicitor full name', value: 'Daniel Treaty' },
             { title: 'Solicitor reference number', value: '1212333' },
+            { title: 'Alternative contact details', value: 'Not provided' },
             { title: 'Provider email address', value: 'test@test.com' }
           ]
         )
@@ -87,7 +88,7 @@ RSpec.describe V1::ContactDetails do
             'full_name' => 'Daniel Treaty',
             'reference_number' => '1212333',
           },
-          'submiter' => {
+          'submitter' => {
             'email' => 'test@test.com'
           }
         }
@@ -101,6 +102,7 @@ RSpec.describe V1::ContactDetails do
             { title: 'Firm address', value: 'Suite 3<br>5 Princess Road<br>Stoke Newington<br>NE10 4AB' },
             { title: 'Solicitor full name', value: 'Daniel Treaty' },
             { title: 'Solicitor reference number', value: '1212333' },
+            { title: 'Alternative contact details', value: 'Not provided' },
             { title: 'Provider email address', value: 'test@test.com' }
           ]
         )
@@ -124,7 +126,7 @@ RSpec.describe V1::ContactDetails do
             'contact_full_name' => 'Jim Bob',
             'contact_email' => 'jim@bob.com'
           },
-          'submiter' => {
+          'submitter' => {
             'email' => 'test@test.com'
           }
         }

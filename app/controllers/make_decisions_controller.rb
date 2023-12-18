@@ -1,12 +1,12 @@
 class MakeDecisionsController < ApplicationController
   def edit
-    decision = MakeDecisionForm.new(id: params[:claim_id])
+    decision = MakeDecisionForm.new(claim:)
     render locals: { claim:, decision: }
   end
 
   # TODO: put some sort of permissions here for non supervisors?
   def update
-    decision = MakeDecisionForm.new(decision_params)
+    decision = MakeDecisionForm.new(claim:, **decision_params)
     if decision.save
       reference = BaseViewModel.build(:laa_reference, claim)
       success_notice = t(
@@ -26,10 +26,9 @@ class MakeDecisionsController < ApplicationController
     @claim ||= Claim.find(params[:claim_id])
   end
 
-  # TODO: user current_user once merged
   def decision_params
     params.require(:make_decision_form).permit(
-      :state, :partial_comment, :reject_comment, :id
+      :state, :partial_comment, :reject_comment
     ).merge(current_user:)
   end
 end

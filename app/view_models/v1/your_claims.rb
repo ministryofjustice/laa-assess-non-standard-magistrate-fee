@@ -4,7 +4,7 @@ module V1
     attribute :defendants
     attribute :firm_office
     attribute :created_at, :date
-    attribute :id
+    attribute :claim
     attribute :risk
 
     def main_defendant_name
@@ -16,34 +16,20 @@ module V1
       firm_office['name']
     end
 
-    def date_created
-      { text: I18n.l(created_at, format: '%-d %b %Y'), sort_value: created_at.to_fs(:db) }
+    def date_created_str
+      I18n.l(created_at, format: '%-d %b %Y')
     end
 
-    def case_worker_name
-      '#Pending#'
+    def date_created_sort
+      created_at.to_fs(:db)
     end
 
-    def risk_with_sort_value
-      case risk
-      when 'high'
-        { text: risk, sort_value: 1 }
-      when 'medium'
-        {  text: risk, sort_value: 2 }
-      when 'low'
-        { text: risk, sort_value: 3 }
-      end
-    end
-
-    def table_fields
-      [
-        { laa_reference: laa_reference, claim_id: id },
-        firm_name,
-        main_defendant_name,
-        date_created,
-        case_worker_name,
-        risk_with_sort_value
-      ]
+    def risk_sort
+      {
+        'high' => 1,
+        'medium' => 2,
+        'low' => 3,
+      }[risk]
     end
   end
 end

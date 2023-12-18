@@ -13,20 +13,12 @@
   <div class="govuk-grid-column-two-thirds">
     <div id='disbursement-provider-submission-summary-table'>
       <%=
-      table_fields = item.disbursement_table_fields
-      rows = [
-        [t('.summary_table.date'), table_fields[:date]],
-        [t('.summary_table.type'),table_fields[:type]],
-        if item.miles.present?
-          [t('.summary_table.miles'), table_fields[:miles]]
-        end,
-        [t('.summary_table.details'),table_fields[:details]],
-        [t('.summary_table.prior_authority'), table_fields[:prior_authority]],
-        if item.apply_vat == 'true'
-          [t('.summary_table.vat'), table_fields[:vat]]
-        end,
-        [t('.summary_table.total'), table_fields[:total]]
-      ]
+      rows = item.disbursement_fields.map do |key, value|
+        [
+          { text: t(".summary_table.#{key}"), width: 'govuk-!-width-one-half' },
+          value,
+        ]
+      end
       govuk_table(head: '', first_cell_is_header: true, rows:) do |tab|
         tab.with_caption(text: t('.summary_table.caption'), size: 'l')
       end

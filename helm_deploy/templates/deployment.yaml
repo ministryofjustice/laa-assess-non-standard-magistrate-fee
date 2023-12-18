@@ -111,8 +111,8 @@ spec:
               value: enabled
             - name: DEV_AUTH_ENABLED
               value: {{ .Values.secrets.devAuthEnabled | quote }}
-            - name: ENV_NAME
-              value: development
+            - name: ENV
+              value: {{ .Values.secrets.environment}}
             - name: IS_LOCAL_DOCKER_ENV
               value: 'true'
             - name: SENTRY_DSN
@@ -130,6 +130,13 @@ spec:
                 secretKeyRef:
                   name: google-analytics
                   key: tracking_key
+            - name: S3_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: s3-policy-arns
+                  key: bucket_name
+            - name: APP_STORE_WAIT_SECS
+              value: '30'
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

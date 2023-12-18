@@ -2,7 +2,7 @@ module V1
   class ContactDetails < BaseViewModel
     attribute :firm_office
     attribute :solicitor
-    attribute :submiter
+    attribute :submitter
 
     def key
       'contact_details'
@@ -47,7 +47,7 @@ module V1
     end
 
     def provider_email_address
-      submiter['email']
+      submitter['email']
     end
 
     # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
@@ -86,20 +86,28 @@ module V1
       { title:, data: }
     end
 
+    # rubocop:disable Metrics/MethodLength
     def contact_details
-      return [] if contact_email.blank?
-
-      [
-        {
-          title: I18n.t(".claim_details.#{key}.contact_full_name"),
-          value: contact_full_name
-        },
-        {
-          title: I18n.t(".claim_details.#{key}.contact_email"),
-          value: contact_email
-        },
-
-      ]
+      if contact_email.blank?
+        [
+          {
+            title: I18n.t(".claim_details.#{key}.contact_details.title"),
+            value: I18n.t(".claim_details.#{key}.contact_details.value")
+          },
+        ]
+      else
+        [
+          {
+            title: I18n.t(".claim_details.#{key}.contact_full_name"),
+            value: contact_full_name
+          },
+          {
+            title: I18n.t(".claim_details.#{key}.contact_email"),
+            value: contact_email
+          },
+        ]
+      end
     end
+    # rubocop:enable Metrics/MethodLength
   end
 end

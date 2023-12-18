@@ -1,5 +1,5 @@
 <%= govuk_table do |table|
-      table.with_caption(html_attributes: { class: "govuk-visually-hidden" }, text: t("admin.feedback.show.heading_1"))
+      table.with_caption(html_attributes: { class: "govuk-visually-hidden" }, text: t(".caption"))
 
       table.with_head do |head|
         head.with_row do |row|
@@ -12,7 +12,7 @@
         supporting_evidence.each do |item|
           body.with_row do |row|
             row.with_cell do
-                    govuk_link_to(item.file_name, item.file_url)
+                    govuk_link_to(item.file_name, item.download_url)
                   end
             row.with_cell(text: format_in_zone(item.updated_at, format: '%A<br>%-d %B %Y').html_safe)
           end

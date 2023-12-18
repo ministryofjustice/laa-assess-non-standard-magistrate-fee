@@ -1,8 +1,8 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <% unless claim.editable? %>
+      <% if claim.display_state?  %>
         <p class="govuk-!-margin-bottom-2">
-          <%= govuk_tag(text: claim.state, colour: accessed_colour(claim.state)) %>
+          <%= govuk_tag(text: t(".status_list.#{claim.state}"), colour: accessed_colour(claim.state)) %>
         </p>
       <% end %>
       <p class="govuk-body-l govuk-!-margin-bottom-2">
@@ -41,12 +41,12 @@
     <div class="govuk-grid-column-one-thirds govuk-!-padding-top-2">
       <% if claim.editable? && claim_summary.assigned_to %>
         <%=
-          button_to(
+          govuk_link_to(
             t(claim_summary.assigned_to.user == current_user ? ".remove_from_yourlist" : ".remove_from_list"),
-            claim_path(claim),
-            method: :delete,
+            claim_unassignment_path(claim),
             class: "govuk-button govuk-button--secondary",
-            data_module: "govuk-button")
+            data_module: "govuk-button"
+          )
         %>
       <% end%>
     </div>

@@ -15,9 +15,17 @@ en:
       defendant_name: "Defendant"
       date_received: "Date received"
       caseworker_name: "Caseworker"
-      status: "Status"
       risk:
         heading: "Risk"
         low: "Low"
         medium: "Medium"
         high: "High"
+      status:
+        heading: Status
+        further_info: |
+          Further
+          information
+          requested
+        provider_requested: |
+          Provider
+          requested

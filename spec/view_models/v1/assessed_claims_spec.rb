@@ -12,7 +12,7 @@ RSpec.describe V1::AssessedClaims, type: :view_model do
   let(:claim) { instance_double(Claim, id: 1, events: events) }
   let(:events) { double(where: double(order: [instance_double(Event, primary_user:)])) }
   let(:primary_user) { instance_double(User, display_name: 'Jim Bob') }
-  let(:state) { 'grant' }
+  let(:state) { 'granted' }
 
   describe '#main_defendant_name' do
     it 'returns the name of the main defendant' do
@@ -53,9 +53,9 @@ RSpec.describe V1::AssessedClaims, type: :view_model do
 
   describe '#status' do
     it 'returns the correct color for the given item' do
-      expect(subject.status('grant')).to eq({ colour: 'green', sort_value: 1, text: 'grant' })
+      expect(subject.status('granted')).to eq({ colour: 'green', sort_value: 1, text: 'granted' })
       expect(subject.status('part_grant')).to eq({ colour: 'blue', text: 'part_grant', sort_value: 2 })
-      expect(subject.status('reject')).to eq({ colour: 'red', text: 'reject', sort_value: 3 })
+      expect(subject.status('rejected')).to eq({ colour: 'red', text: 'rejected', sort_value: 3 })
       expect(subject.status('invalid')).to eq({ colour: 'grey', text: 'invalid', sort_value: 4 })
     end
   end
@@ -68,7 +68,7 @@ RSpec.describe V1::AssessedClaims, type: :view_model do
         'John Doe',
         { text: I18n.l(Time.zone.yesterday, format: '%-d %b %Y'), sort_value: Time.zone.yesterday.to_fs(:db) },
         'Jim Bob',
-        { colour: 'green', sort_value: 1, text: 'grant' }
+        { colour: 'green', sort_value: 1, text: 'granted' }
       ]
       expect(assessed_claims.table_fields).to eq(expected_fields)
     end

@@ -1,10 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Event::Unassignment do
-  subject { described_class.build(claim:, user:, current_user:) }
+  subject { described_class.build(claim:, user:, current_user:, comment:) }
 
   let(:claim) { create(:claim) }
   let(:user) { create(:caseworker) }
+  let(:comment) { 'test comment' }
 
   context 'when user is the same as current user' do
     let(:current_user) { user }
@@ -15,7 +16,12 @@ RSpec.describe Event::Unassignment do
         primary_user_id: user.id,
         claim_version: 1,
         event_type: 'Event::Unassignment',
+        details: { 'comment' => 'test comment' }
       )
+    end
+
+    it 'has a valid title' do
+      expect(subject.title).to eq('Caseworker removed self from claim')
     end
   end
 
@@ -29,7 +35,12 @@ RSpec.describe Event::Unassignment do
         secondary_user_id: current_user.id,
         claim_version: 1,
         event_type: 'Event::Unassignment',
+        details: { 'comment' => 'test comment' }
       )
+    end
+
+    it 'has a valid title' do
+      expect(subject.title).to eq('Caseworker removed from claim by super visor')
     end
   end
 end
