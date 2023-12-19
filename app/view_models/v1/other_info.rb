@@ -23,7 +23,7 @@ module V1
         (unless is_other_info == 'no'
            {
              title: I18n.t(".claim_details.#{key}.other_info"),
-           value: ApplicationController.helpers.multiline_text(other_info)
+           value: multiline_text(other_info)
            }
          end),
         {
@@ -33,7 +33,7 @@ module V1
         (unless concluded == 'no'
            {
              title: I18n.t(".claim_details.#{key}.conclusion"),
-           value: ApplicationController.helpers.multiline_text(conclusion)
+           value: multiline_text(conclusion)
            }
          end)
       ].compact

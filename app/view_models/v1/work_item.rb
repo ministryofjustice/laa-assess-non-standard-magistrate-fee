@@ -81,8 +81,8 @@ module V1
     # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     def provider_fields
       rows = {
-        '.date' => ApplicationController.helpers.format_in_zone(completed_on),
-        '.time_spent' => ApplicationController.helpers.format_period(provider_requested_time_spent),
+        '.date' => format_in_zone(completed_on),
+        '.time_spent' => format_period(provider_requested_time_spent),
         '.fee_earner' => fee_earner.to_s,
         '.uplift_claimed' => "#{provider_requested_uplift}%",
       }

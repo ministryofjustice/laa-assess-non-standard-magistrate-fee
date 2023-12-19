@@ -44,7 +44,7 @@ module ApplicationHelper
   end
 
   def multiline_text(string)
-    ApplicationController.helpers.sanitize(string.gsub("\n", '<br>'), tags: %w[br])
+    sanitize(string.gsub("\n", '<br>'), tags: %w[br])
   end
 
   def govuk_error_summary(form_object)

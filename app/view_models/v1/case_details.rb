@@ -25,7 +25,7 @@ module V1
         },
         {
           title: I18n.t(".claim_details.#{key}.main_offence_date"),
-          value: ApplicationController.helpers.format_in_zone(main_offence_date)
+          value: format_in_zone(main_offence_date)
         },
         {
           title: I18n.t(".claim_details.#{key}.assigned_counsel"),
@@ -46,7 +46,7 @@ module V1
         (unless remitted_to_magistrate == 'no'
            {
              title: I18n.t(".claim_details.#{key}.remitted_to_magistrate_date"),
-             value: ApplicationController.helpers.format_in_zone(remitted_to_magistrate_date)
+             value: format_in_zone(remitted_to_magistrate_date)
            }
          end)
       ].compact

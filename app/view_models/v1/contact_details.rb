@@ -37,7 +37,7 @@ module V1
     end
 
     def firm_address
-      ApplicationController.helpers.sanitize([
+      sanitize([
         firm_office['address_line_1'],
         firm_office['address_line_2'],
         firm_office['town'],
