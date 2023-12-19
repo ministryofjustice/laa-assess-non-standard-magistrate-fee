@@ -6,7 +6,6 @@ end
 
 FactoryBot.define do
   factory :event, class: 'EventCreatable' do
-    id { SecureRandom.uuid }
     claim
     claim_version { claim.current_version }
 
