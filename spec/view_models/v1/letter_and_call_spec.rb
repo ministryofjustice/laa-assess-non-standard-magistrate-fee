@@ -50,9 +50,9 @@ RSpec.describe V1::LetterAndCall do
   describe 'provider_requested_amount_inc_vat' do
     let(:params) do
       {
-        count: 1,
-        uplift: 5,
-        pricing: 10.0,
+        :count => 1,
+        :uplift => 5,
+        :pricing => 10.0,
         'firm_office' => { 'vat_registered' => vat_registered },
         'vat_rate' => 0.2,
       }
@@ -125,13 +125,12 @@ RSpec.describe V1::LetterAndCall do
     end
   end
 
-
   describe 'caseworker_amount_inc_vat' do
     let(:params) do
       {
-        count: 1,
-        uplift: 5,
-        pricing: 10.0,
+        :count => 1,
+        :uplift => 5,
+        :pricing => 10.0,
         'firm_office' => { 'vat_registered' => vat_registered },
         'vat_rate' => 0.2,
       }
@@ -314,9 +313,9 @@ RSpec.describe V1::LetterAndCall do
 
       it 'calculates the correct provider requested amount' do
         expect(subject.provider_fields).to eq(
-          ".number" => "12",
-          ".rate" => "£3.56",
-       ".uplift_requested" => "20%",
+          '.number' => '12',
+          '.rate' => '£3.56',
+          '.uplift_requested' => '20%',
           '.vat' => '20%',
           '.total_claimed_inc_vate' => '£61.51',
         )
@@ -328,10 +327,10 @@ RSpec.describe V1::LetterAndCall do
 
       it 'calculates the correct provider requested amount' do
         expect(subject.provider_fields).to eq(
-          ".number" => "12",
-          ".rate" => "£3.56",
-       ".uplift_requested" => "20%",
-       ".total_claimed" => "£51.26",
+          '.number' => '12',
+          '.rate' => '£3.56',
+          '.uplift_requested' => '20%',
+          '.total_claimed' => '£51.26',
         )
       end
     end

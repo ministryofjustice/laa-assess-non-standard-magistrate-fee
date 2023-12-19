@@ -80,7 +80,6 @@ module V1
       ]
     end
 
-    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     def provider_fields
       rows = {
         '.number' => provider_requested_count.to_s,
@@ -97,7 +96,6 @@ module V1
 
       rows
     end
-    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
     def uplift?
       !provider_requested_uplift.to_i.zero?
