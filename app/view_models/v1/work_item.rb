@@ -68,9 +68,9 @@ module V1
       [
         work_type.to_s,
         "#{provider_requested_uplift.to_i}%",
-        NumberTo.pounds(provider_requested_amount).to_s,
+        ApplicationController.helpers.format_period(provider_requested_time_spent, style: :long),
         adjustments.any? ? "#{caseworker_uplift}%" : '',
-        adjustments.any? ? NumberTo.pounds(caseworker_amount) : '',
+        adjustments.any? ? ApplicationController.helpers.format_period(caseworker_time_spent, style: :long) : ''
       ]
     end
 
