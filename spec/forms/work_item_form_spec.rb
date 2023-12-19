@@ -13,11 +13,12 @@ RSpec.describe WorkItemForm do
       V1::WorkItem,
       id: id,
       time_spent: 161,
-      uplift: 95,
+      uplift: uplift_provided ? 95 : nil,
       provider_requested_uplift: provider_requested_uplift,
-      uplift?: true
+      uplift?: uplift_provided
     )
   end
+  let(:uplift_provided) { !provider_requested_uplift.nil? }
   let(:provider_requested_uplift) { 95 }
   let(:explanation) { 'change to work items' }
   let(:current_user) { instance_double(User) }
@@ -172,6 +173,14 @@ RSpec.describe WorkItemForm do
           'fee_earner' => 'aaa',
           'completed_on' => '2022-12-12'
         )
+      end
+
+      context 'when uplift is not populated from provider' do
+        let(:provider_requested_uplift) { nil }
+
+        it 'saves without error' do
+          expect { subject.save }.to change(Event, :count).by(1)
+        end
       end
     end
   end

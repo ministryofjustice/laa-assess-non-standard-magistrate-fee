@@ -3,10 +3,6 @@ require 'rails_helper'
 RSpec.describe V1::CoreCostSummary do
   subject { described_class.new(claim:) }
 
-  before do
-    allow(CostCalculator).to receive(:cost).and_return(100.0)
-  end
-
   let(:claim) do
     build(:claim).tap do |claim|
       claim.data.merge!('letters_and_calls' => letters_and_calls, 'work_items' => work_items)
@@ -14,23 +10,29 @@ RSpec.describe V1::CoreCostSummary do
   end
   let(:letters_and_calls) do
     [
-      { 'type' => { 'en' => 'Letters' }, 'count' => 10, 'pricing' => 4.04 },
-      { 'type' => { 'en' => 'Calls' }, 'count' => 5, 'pricing' => 4.04 }
+      { 'type' => { 'en' => 'Letters' }, 'count' => 10, 'pricing' => 4.0 },
+      { 'type' => { 'en' => 'Calls' }, 'count' => 5, 'pricing' => 4.0 }
     ]
+  end
+  let(:work_items) { [{ data: 1 }] }
+
+  before do
+    allow(BaseViewModel).to receive(:build).and_call_original
+    allow(BaseViewModel).to receive(:build).with(:work_item, anything, anything).and_return(v1_work_items)
   end
 
   describe '#table_fields' do
     context 'when a single work item exists' do
-      let(:work_items) { [{ 'work_type' => { 'en' => 'advocacy', 'value' => 'advocacy' }, 'time_spent' => 20 }] }
-      let(:work_item) { instance_double(V1::WorkItem, work_type: mock_translated('advocacy'), time_spent: 20) }
-
-      before do
-        allow(BaseViewModel).to receive(:build).and_call_original
-        allow(BaseViewModel).to receive(:build).with(:work_item, anything, anything).and_return([work_item])
+      let(:v1_work_items) do
+        [
+          instance_double(V1::WorkItem, work_type: mock_translated('advocacy'), time_spent: 20,
+          provider_requested_time_spent: 20, provider_requested_amount_inc_vat: 100.0, caseworker_amount_inc_vat: 80.00,
+          firm_office: { 'vat_registered' => 'no' })
+        ]
       end
 
       it 'includes the letters and calls rows' do
-        expect(subject.table_fields).to include(['Letters', '£100.00', ''], ['Calls', '£100.00', ''])
+        expect(subject.table_fields).to include(['Letters', '£40.00', ''], ['Calls', '£20.00', ''])
       end
 
       context 'when letters and calls proposed costs are zero' do
@@ -42,7 +44,7 @@ RSpec.describe V1::CoreCostSummary do
         end
 
         it 'does not include them' do
-          expect(subject.table_fields).to eq([['Advocacy', '£100.00', '20min']])
+          expect(subject.table_fields).to eq([['Advocacy', '£80.00', '20min']])
         end
       end
 
@@ -54,59 +56,81 @@ RSpec.describe V1::CoreCostSummary do
       end
 
       it 'includes the summed table field row' do
-        expect(subject.table_fields).to include(['Advocacy', '£100.00', '20min'])
-      end
-
-      it 'calls the CostCalculator' do
-        subject.table_fields
-
-        expect(CostCalculator).to have_received(:cost).with(:work_item, work_item, :caseworker)
+        expect(subject.table_fields).to include(['Advocacy', '£80.00', '20min'])
       end
     end
 
     context 'when multiple work item of diffent types exists' do
-      let(:work_items) do
-        [{ 'work_type' => { 'en' => 'advocacy', 'value' => 'advocacy' }, 'time_spent' => 20 },
-         { 'work_type' => { 'en' => 'preparation', 'value' => 'preparation' }, 'time_spent' => 30 }]
+      let(:v1_work_items) do
+        [
+          instance_double(V1::WorkItem, work_type: mock_translated('advocacy'), time_spent: 20,
+          provider_requested_time_spent: 20, provider_requested_amount_inc_vat: 100.0, caseworker_amount_inc_vat: 80.00,
+          firm_office: { 'vat_registered' => 'no' }),
+          instance_double(V1::WorkItem, work_type: mock_translated('preparation'), time_spent: 30,
+          provider_requested_time_spent: 20, provider_requested_amount_inc_vat: 110.0, caseworker_amount_inc_vat: 90.00,
+          firm_office: { 'vat_registered' => 'no' })
+        ]
       end
 
       it 'returns a single table field row' do
-        expect(subject.table_fields).to include(['advocacy', '£100.00', '20min'], ['preparation', '£100.00', '30min'])
+        expect(subject.table_fields).to include(
+          ['Advocacy', '£80.00', '20min'],
+          ['Preparation', '£90.00', '30min']
+        )
       end
     end
 
     context 'when waiting and travel work items exist' do
-      let(:work_items) do
-        [{ 'work_type' => { 'en' => 'travel', 'value' => 'travel' }, 'time_spent' => 20 },
-         { 'work_type' => { 'en' => 'waiting', 'value' => 'waiting' }, 'time_spent' => 20 },
-         { 'work_type' => { 'en' => 'preparation', 'value' => 'preparation' }, 'time_spent' => 30 }]
+      let(:v1_work_items) do
+        [
+          instance_double(V1::WorkItem, work_type: mock_translated('travel'), time_spent: 20,
+          provider_requested_time_spent: 20, provider_requested_amount_inc_vat: 100.0, caseworker_amount_inc_vat: 80.00,
+          firm_office: { 'vat_registered' => 'no' }),
+          instance_double(V1::WorkItem, work_type: mock_translated('waiting'), time_spent: 20,
+          provider_requested_time_spent: 20, provider_requested_amount_inc_vat: 100.0, caseworker_amount_inc_vat: 80.00,
+          firm_office: { 'vat_registered' => 'no' }),
+          instance_double(V1::WorkItem, work_type: mock_translated('preparation'), time_spent: 30,
+          provider_requested_time_spent: 20, provider_requested_amount_inc_vat: 110.0, caseworker_amount_inc_vat: 90.00,
+          firm_office: { 'vat_registered' => 'no' })
+        ]
       end
 
       it 'they are not returned' do
-        expect(subject.table_fields.map(&:first)).to eq(%w[preparation Letters Calls])
+        expect(subject.table_fields.map(&:first)).to eq(%w[Preparation Letters Calls])
       end
     end
 
     context 'when multiple work item of the same types exists' do
-      let(:work_items) do
-        [{ 'work_type' => { 'en' => 'advocacy', 'value' => 'advocacy' }, 'time_spent' => 20 },
-         { 'work_type' => { 'en' => 'advocacy', 'value' => 'advocacy' }, 'time_spent' => 30 }]
+      let(:v1_work_items) do
+        [
+          instance_double(V1::WorkItem, work_type: mock_translated('advocacy'), time_spent: 20,
+          provider_requested_time_spent: 20, provider_requested_amount_inc_vat: 100.0, caseworker_amount_inc_vat: 80.00,
+          firm_office: { 'vat_registered' => 'no' }),
+          instance_double(V1::WorkItem, work_type: mock_translated('advocacy'), time_spent: 30,
+          provider_requested_time_spent: 20, provider_requested_amount_inc_vat: 110.0, caseworker_amount_inc_vat: 90.00,
+          firm_office: { 'vat_registered' => 'no' })
+        ]
       end
 
       it 'includes a summed table field row' do
-        expect(subject.table_fields).to include(['advocacy', '£200.00', '50min'])
+        expect(subject.table_fields).to include(['Advocacy', '£170.00', '50min'])
       end
     end
   end
 
   describe '#summed_fields' do
-    context 'when a single work item exists' do
-      let(:work_items) { [{ 'work_type' => { 'en' => 'advocacy', 'value' => 'advocacy' }, 'time_spent' => 20 }] }
-      let(:work_item) { instance_double(V1::WorkItem, work_type: mock_translated('advocacy'), time_spent: 20) }
+    before do
+      allow(BaseViewModel).to receive(:build).and_call_original
+      allow(BaseViewModel).to receive(:build).with(:work_item, anything, anything).and_return(v1_work_items)
+    end
 
-      before do
-        allow(BaseViewModel).to receive(:build).and_call_original
-        allow(BaseViewModel).to receive(:build).with(:work_item, anything, anything).and_return([work_item])
+    context 'when a single work item exists' do
+      let(:v1_work_items) do
+        [
+          instance_double(V1::WorkItem, work_type: mock_translated('advocacy'), time_spent: 20,
+       provider_requested_time_spent: 20, provider_requested_amount_inc_vat: 100.0, caseworker_amount_inc_vat: 80.00,
+       firm_office: { 'vat_registered' => 'no' })
+        ]
       end
 
       it 'builds a WorkType record to use in the calculations' do
@@ -117,35 +141,41 @@ RSpec.describe V1::CoreCostSummary do
       end
 
       it 'returns the summed time and cost' do
-        expect(subject.summed_fields).to eq(['£300.00', ''])
-      end
-
-      it 'calls the CostCalculator' do
-        subject.table_fields
-
-        expect(CostCalculator).to have_received(:cost).with(:work_item, work_item, :caseworker)
+        expect(subject.summed_fields).to eq(['£140.00', ''])
       end
     end
 
     context 'when multiple work item of diffent types exists' do
-      let(:work_items) do
-        [{ 'work_type' => { 'en' => 'advocacy', 'value' => 'advocacy' }, 'time_spent' => 20 },
-         { 'work_type' => { 'en' => 'travel', 'value' => 'travel' }, 'time_spent' => 30 }]
+      let(:v1_work_items) do
+        [
+          instance_double(V1::WorkItem, work_type: mock_translated('advocacy'), time_spent: 20,
+          provider_requested_time_spent: 20, provider_requested_amount_inc_vat: 100.0, caseworker_amount_inc_vat: 80.00,
+          firm_office: { 'vat_registered' => 'no' }),
+          instance_double(V1::WorkItem, work_type: mock_translated('travel'), time_spent: 30,
+          provider_requested_time_spent: 30, provider_requested_amount_inc_vat: 100.0, caseworker_amount_inc_vat: 80.00,
+          firm_office: { 'vat_registered' => 'no' })
+        ]
       end
 
       it 'returns the summed cost' do
-        expect(subject.summed_fields).to eq(['£300.00', ''])
+        expect(subject.summed_fields).to eq(['£140.00', ''])
       end
     end
 
     context 'when multiple work item of the same types exists' do
-      let(:work_items) do
-        [{ 'work_type' => { 'en' => 'advocacy', 'value' => 'advocacy' }, 'time_spent' => 20 },
-         { 'work_type' => { 'en' => 'advocacy', 'value' => 'advocacy' }, 'time_spent' => 30 }]
+      let(:v1_work_items) do
+        [
+          instance_double(V1::WorkItem, work_type: mock_translated('advocacy'), time_spent: 20,
+          provider_requested_time_spent: 20, provider_requested_amount_inc_vat: 100.0, caseworker_amount_inc_vat: 80.00,
+          firm_office: { 'vat_registered' => 'no' }),
+          instance_double(V1::WorkItem, work_type: mock_translated('advocacy'), time_spent: 30,
+          provider_requested_time_spent: 30, provider_requested_amount_inc_vat: 100.0, caseworker_amount_inc_vat: 80.00,
+          firm_office: { 'vat_registered' => 'no' })
+        ]
       end
 
       it 'returns the summed cost' do
-        expect(subject.summed_fields).to eq(['£400.00', ''])
+        expect(subject.summed_fields).to eq(['£220.00', ''])
       end
     end
   end

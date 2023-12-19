@@ -26,7 +26,7 @@ class WorkItemForm < BaseAdjustmentForm
 
     Claim.transaction do
       process_field(value: time_spent.to_i, field: 'time_spent') if time_spent.present?
-      process_field(value: new_uplift, field: 'uplift')
+      process_field(value: new_uplift, field: 'uplift') if item.uplift?
 
       claim.save
     end

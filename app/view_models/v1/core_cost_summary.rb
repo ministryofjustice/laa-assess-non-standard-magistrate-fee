@@ -7,17 +7,17 @@ module V1
     attribute :claim
 
     def table_fields
-      data_by_type.map do |work_type, total_cost, total_time_spent|
+      data_by_type.map do |work_type, _, _, allowed_cost, allowed_time|
         [
           work_type,
-          NumberTo.pounds(total_cost),
-          total_time_spent ? "#{total_time_spent}min" : '',
+          NumberTo.pounds(allowed_cost),
+          allowed_time ? "#{allowed_time}min" : '',
         ]
       end
     end
 
     def summed_fields
-      total_cost = data_by_type.sum { |_, cost, _| cost }
+      total_cost = data_by_type.sum { |_, _, _, cost, _| cost }
       [
         NumberTo.pounds(total_cost),
         ''
@@ -41,6 +41,8 @@ module V1
 
         [
           letter_or_call.type.to_s,
+          letter_or_call.provider_requested_amount,
+          nil,
           letter_or_call.allowed_amount,
           nil
         ]

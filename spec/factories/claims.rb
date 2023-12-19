@@ -8,6 +8,7 @@ FactoryBot.define do
     data do
       {
         'laa_reference' => 'LAA-FHaMVK',
+        'firm_office' => firm_office,
         'send_by_post' => send_by_post,
         'letters_and_calls' => letters_and_calls,
         'disbursements' => disbursements,
@@ -19,6 +20,11 @@ FactoryBot.define do
 
     transient do
       send_by_post { false }
+      firm_office do
+        {
+          'vat_registered' => 'no'
+        }
+      end
       supporting_evidences do
         [
           {
