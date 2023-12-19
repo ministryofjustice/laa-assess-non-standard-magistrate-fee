@@ -17,7 +17,7 @@ RSpec.describe 'Work items' do
       expect(page).to have_content(
         'Waiting' \
         '95%' \
-        '£125.58' \
+        '2 Hours41 Minutes' \
         'Change'
       )
       click_link 'Change'
@@ -37,9 +37,9 @@ RSpec.describe 'Work items' do
       expect(page).to have_content(
         'Waiting' \
         '95%' \
-        '£125.58' \
+        '2 Hours41 Minutes' \
         '0%' \
-        '£263.60' \
+        '10 Hours59 Minutes' \
         'Change'
       )
     end
@@ -61,9 +61,9 @@ RSpec.describe 'Work items' do
       expect(page).to have_content(
         'Waiting' \
         '95%' \
-        '£125.58' \
+        '2 Hours41 Minutes' \
         '0%' \
-        '£64.40' \
+        '2 Hours41 Minutes' \
         'Change'
       )
     end
