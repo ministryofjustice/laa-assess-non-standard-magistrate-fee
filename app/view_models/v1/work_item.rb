@@ -78,7 +78,7 @@ module V1
       %w[attendance_with_counsel attendance_without_counsel].include?(work_type.value)
     end
 
-    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    # rubocop:disable Metrics/MethodLength
     def provider_fields
       rows = {
         '.date' => format_in_zone(completed_on),
@@ -95,6 +95,6 @@ module V1
 
       rows
     end
-    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+    # rubocop:enable Metrics/MethodLength
   end
 end

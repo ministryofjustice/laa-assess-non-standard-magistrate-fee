@@ -72,7 +72,7 @@ class BaseViewModel
   private
 
   delegate :sanitize, :format_in_zone, :format_period, :multiline_text,
-    to: :helpers
+           to: :helpers
 
   def helpers
     ApplicationController.helpers

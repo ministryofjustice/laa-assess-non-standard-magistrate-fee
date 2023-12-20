@@ -43,7 +43,7 @@ module V1
         firm_office['town'],
         firm_office['postcode']
       ].compact.join('<br>'),
-                                             tags: %w[br])
+               tags: %w[br])
     end
 
     def provider_email_address
