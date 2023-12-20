@@ -33,6 +33,8 @@ en:
       fee_earner: Fee earner initials
       uplift_claimed: Uplift claimed
       total_claimed: Claim cost
+      vat: VAT
+      total_claimed_inc_vate: Claim cost (including VAT)
       laa_adjustments: LAA Adjustments
       calculate_button_text: Calculate my changes
       claim_cost_table:
@@ -56,6 +58,8 @@ en:
       fee_earner: Fee earner initials
       uplift_claimed: Uplift claimed
       total_claimed: Claim cost
+      vat: VAT
+      total_claimed_inc_vate: Claim cost (including VAT)
       laa_adjustments: LAA Adjustments
       uplift_allowed: Uplift allowed
       work_type: Work type

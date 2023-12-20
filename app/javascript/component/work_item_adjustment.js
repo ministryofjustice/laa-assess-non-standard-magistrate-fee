@@ -52,7 +52,7 @@ function init() {
     // * when VAT exists - round down
     // * when no VAT exists - round to nearest decimal
     if (vatMultiplier === 1.0) {
-      return (`£${((minutes / 60) * unitPrice * upliftFactor * vatMultiplier).toFixed(2)}`);
+      return (`£${((minutes / 60) * unitPrice * upliftFactor).toFixed(2)}`);
     } else {
       return (`£${Math.floor((minutes / 60) * unitPrice * upliftFactor * vatMultiplier * 100) / 100}`);
     }

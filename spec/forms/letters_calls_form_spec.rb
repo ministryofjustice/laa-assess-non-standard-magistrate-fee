@@ -12,11 +12,12 @@ RSpec.describe LettersCallsForm do
     instance_double(
       V1::LetterAndCall,
       count: 12,
-      uplift: 95,
+      uplift: uplift_provided ? 95 : nil,
       provider_requested_uplift: provider_requested_uplift,
-      uplift?: true
+      uplift?: uplift_provided
     )
   end
+  let(:uplift_provided) { !provider_requested_uplift.nil? }
   let(:provider_requested_uplift) { 95 }
   let(:explanation) { 'change to letters' }
   let(:current_user) { instance_double(User) }
@@ -213,6 +214,14 @@ RSpec.describe LettersCallsForm do
       end
 
       it { expect(subject.save).to be_falsey }
+    end
+
+    context 'when uplift is not populated from provider' do
+      let(:provider_requested_uplift) { nil }
+
+      it 'saves without error' do
+        expect { subject.save }.to change(Event, :count).by(1)
+      end
     end
   end
 end
