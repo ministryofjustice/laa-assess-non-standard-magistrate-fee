@@ -149,8 +149,8 @@ RSpec.describe V1::CoreCostSummary do
       let(:v1_work_items) do
         [
           instance_double(V1::WorkItem, work_type: mock_translated('advocacy'), time_spent: 20,
-       provider_requested_time_spent: 20, provider_requested_amount_inc_vat: 100.0, caseworker_amount_inc_vat: 80.00,
-       firm_office: { 'vat_registered' => 'no' })
+            provider_requested_time_spent: 20, provider_requested_amount_inc_vat: 100.0,
+            caseworker_amount_inc_vat: 80.00, firm_office: { 'vat_registered' => 'no' })
         ]
       end
 
@@ -162,11 +162,11 @@ RSpec.describe V1::CoreCostSummary do
       end
 
       it 'returns the summed time and cost' do
-        expect(subject.summed_fields).to eq(['£140.00', ''])
+        expect(subject.summed_fields).to eq(['', '£160.00', '£140.00'])
       end
     end
 
-    context 'when multiple work item of diffent types exists' do
+    context 'when multiple work item of diffent types exists - and one is travel' do
       let(:v1_work_items) do
         [
           instance_double(V1::WorkItem, work_type: mock_translated('advocacy'), time_spent: 20,
@@ -179,7 +179,7 @@ RSpec.describe V1::CoreCostSummary do
       end
 
       it 'returns the summed cost' do
-        expect(subject.summed_fields).to eq(['£140.00', ''])
+        expect(subject.summed_fields).to eq(['', '£160.00', '£140.00'])
       end
     end
 
@@ -196,7 +196,7 @@ RSpec.describe V1::CoreCostSummary do
       end
 
       it 'returns the summed cost' do
-        expect(subject.summed_fields).to eq(['£220.00', ''])
+        expect(subject.summed_fields).to eq(['', '£260.00', '£220.00'])
       end
     end
   end

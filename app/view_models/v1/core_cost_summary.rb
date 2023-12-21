@@ -23,10 +23,12 @@ module V1
     end
 
     def summed_fields
-      total_cost = data_by_type.sum { |_, _, _, cost, _| cost }
+      allowed_cost = data_by_type.sum { |_, _, _, cost, _| cost }
+      requested_cost = data_by_type.sum { |_, cost, _, _, _| cost }
       [
-        NumberTo.pounds(total_cost),
-        ''
+        '',
+        NumberTo.pounds(requested_cost),
+        NumberTo.pounds(allowed_cost),
       ]
     end
 
