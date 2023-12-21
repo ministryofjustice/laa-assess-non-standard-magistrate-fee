@@ -311,6 +311,16 @@ jobs:
           environment: dev
           registry: ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
 
+  deploy-dev-crm4:
+    executor: cloud-platform-executor
+    steps:
+      - aws-cli/setup:
+          role_arn: $ECR_ROLE_TO_ASSUME
+          region: $ECR_REGION
+      - deploy-to-environment:
+          environment: dev-crm4
+          registry: ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
+
   deploy-uat:
     executor: cloud-platform-executor
     steps:
@@ -368,6 +378,14 @@ workflows:
           context: laa-assess-non-standard-magistrates-fee-dev
           requires:
             - hold-dev
+      - hold-dev-crm4:
+          type: approval
+          requires:
+            - build-to-ecr
+      - deploy-dev-crm4:
+          context: laa-assess-non-standard-magistrates-fee-dev-crm4
+          requires:
+            - hold-dev-crm4
       - hold-uat:
           type: approval
           requires:
