@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe NotifyAppStore::HttpNotifier do
+RSpec.describe NotifyAppStore::HttpNotifier, :stub_oauth_token do
   let(:application_id) { SecureRandom.uuid }
   let(:message) { { application_id: } }
   let(:response) { double(:response, code:) }

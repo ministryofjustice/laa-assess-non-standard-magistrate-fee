@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe HttpPuller do
+RSpec.describe HttpPuller, :stub_oauth_token do
   let(:response) { double(:response, code:, body:) }
   let(:code) { 200 }
   let(:body) { { some: :data }.to_json }
