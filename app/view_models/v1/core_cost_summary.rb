@@ -12,7 +12,7 @@ module V1
     end
 
     def table_fields
-      data_by_type.map do |work_type, requested_cost, requested_time, allowed_cost, allowed_time|
+      data_by_type.map do |work_type, requested_cost, requested_time, allowed_cost, _allowed_time|
         [
           work_type,
           requested_time ? "#{requested_time}min" : '',

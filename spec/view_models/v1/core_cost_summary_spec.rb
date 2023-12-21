@@ -23,8 +23,8 @@ RSpec.describe V1::CoreCostSummary do
       let(:v1_work_items) do
         [
           instance_double(V1::WorkItem, work_type: mock_translated('advocacy'), time_spent: 20,
-          provider_requested_time_spent: 20, provider_requested_amount_inc_vat: 100.0051, caseworker_amount_inc_vat: 80.0051,
-          firm_office: { 'vat_registered' => 'no' })
+          provider_requested_time_spent: 20, provider_requested_amount_inc_vat: 100.0051,
+          caseworker_amount_inc_vat: 80.0051, firm_office: { 'vat_registered' => 'no' })
         ]
       end
 
@@ -68,8 +68,8 @@ RSpec.describe V1::CoreCostSummary do
         let(:v1_work_items) do
           [
             instance_double(V1::WorkItem, work_type: mock_translated('advocacy'), time_spent: 20,
-            provider_requested_time_spent: 20, provider_requested_amount_inc_vat: 80.0051, caseworker_amount_inc_vat: 70.0051,
-            firm_office: { 'vat_registered' => 'no' })
+            provider_requested_time_spent: 20, provider_requested_amount_inc_vat: 80.0051,
+            caseworker_amount_inc_vat: 70.0051, firm_office: { 'vat_registered' => 'no' })
           ]
         end
 
