@@ -50,3 +50,11 @@ en:
       total_time: Time total
       total_cost: Cost total
       total: Total
+      items: Items
+      requested_time: Time requested
+      requested_cost:
+        inc_vat_html: Cost requested<br>(including VAT)
+        exc_vat: Cost requested
+      allowed_cost:
+        inc_vat_html: Cost allowed<br>(including VAT)
+        exc_vat: Cost allowed

@@ -56,7 +56,7 @@
 
           <%= table.with_body do |body| %>
             <%= body.with_row do |row| %>
-              <%= row.with_cell(text: NumberTo.pounds_inc_vat(item.provider_requested_amount_inc_vat),html_attributes: { id: 'letters_calls_provider_requested_amount' }) %>
+              <%= row.with_cell(text: NumberTo.pounds(item.provider_requested_amount_inc_vat, round_mode: item.vat_registered? ? :down : :half_up), html_attributes: { id: 'letters_calls_provider_requested_amount' }) %>
               <%= row.with_cell(text: '--',html_attributes: { id: 'letters_calls_caseworker_allowed_amount' }) %>
               <%= row.with_cell(text: "#{item.uplift ? item.uplift : '0' }%",html_attributes: { id: 'letters_calls_uplift_allowed_amount' }) %>
             <% end %>

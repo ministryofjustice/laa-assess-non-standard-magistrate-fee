@@ -5,13 +5,19 @@ module V1
     SKIPPED_TYPES = %w[travel waiting].freeze
 
     attribute :claim
+    attribute :firm_office
+
+    def vat_registered?
+      firm_office['vat_registered'] == 'yes'
+    end
 
     def table_fields
-      data_by_type.map do |work_type, _, _, allowed_cost, allowed_time|
+      data_by_type.map do |work_type, requested_cost, requested_time, allowed_cost, allowed_time|
         [
           work_type,
-          NumberTo.pounds(allowed_cost),
-          allowed_time ? "#{allowed_time}min" : '',
+          requested_time ? "#{requested_time}min" : '',
+          NumberTo.pounds(requested_cost, round_mode: vat_registered? ? :down : :half_up),
+          NumberTo.pounds(allowed_cost, round_mode: vat_registered? ? :down : :half_up),
         ]
       end
     end
@@ -41,9 +47,9 @@ module V1
 
         [
           letter_or_call.type.to_s,
-          letter_or_call.provider_requested_amount,
+          letter_or_call.provider_requested_amount_inc_vat,
           nil,
-          letter_or_call.allowed_amount,
+          letter_or_call.caseworker_amount_inc_vat,
           nil
         ]
       end

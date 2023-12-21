@@ -23,7 +23,12 @@
 
       <%= govuk_details(summary_text: t('.check_totals')) do %>
         <%=
-          head = [t('.items'), t('.total_cost'), t('.total_time')]
+          head = [
+            t('.items'),
+            t('.requested_time'),
+            t(".requested_cost.#{core_cost_summary.vat_registered? ? 'inc' : 'exc'}_vat_html"),
+            t(".allowed_cost.#{core_cost_summary.vat_registered? ? 'inc' : 'exc'}_vat_html")
+          ]
           rows = core_cost_summary.table_fields
           foot = [t('.total'), *core_cost_summary.summed_fields]
           govuk_table(first_cell_is_header: true, head:, rows:, foot:)

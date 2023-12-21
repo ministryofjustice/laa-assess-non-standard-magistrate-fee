@@ -1,13 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe V1::CoreCostSummary do
-  subject { described_class.new(claim:) }
+  subject { described_class.new(claim: claim, firm_office: claim.data['firm_office']) }
 
-  let(:claim) do
-    build(:claim).tap do |claim|
-      claim.data.merge!('letters_and_calls' => letters_and_calls, 'work_items' => work_items)
-    end
-  end
+  let(:claim) { build(:claim, letters_and_calls:, work_items:, vat_registered:) }
   let(:letters_and_calls) do
     [
       { 'type' => { 'en' => 'Letters' }, 'count' => 10, 'pricing' => 4.0 },
@@ -15,6 +11,7 @@ RSpec.describe V1::CoreCostSummary do
     ]
   end
   let(:work_items) { [{ data: 1 }] }
+  let(:vat_registered) { 'no' }
 
   before do
     allow(BaseViewModel).to receive(:build).and_call_original
@@ -26,13 +23,16 @@ RSpec.describe V1::CoreCostSummary do
       let(:v1_work_items) do
         [
           instance_double(V1::WorkItem, work_type: mock_translated('advocacy'), time_spent: 20,
-          provider_requested_time_spent: 20, provider_requested_amount_inc_vat: 100.0, caseworker_amount_inc_vat: 80.00,
+          provider_requested_time_spent: 20, provider_requested_amount_inc_vat: 100.0051, caseworker_amount_inc_vat: 80.0051,
           firm_office: { 'vat_registered' => 'no' })
         ]
       end
 
       it 'includes the letters and calls rows' do
-        expect(subject.table_fields).to include(['Letters', '£40.00', ''], ['Calls', '£20.00', ''])
+        expect(subject.table_fields).to include(
+          ['Letters', '', '£40.00', '£40.00'],
+          ['Calls', '', '£20.00', '£20.00'],
+        )
       end
 
       context 'when letters and calls proposed costs are zero' do
@@ -44,7 +44,9 @@ RSpec.describe V1::CoreCostSummary do
         end
 
         it 'does not include them' do
-          expect(subject.table_fields).to eq([['Advocacy', '£80.00', '20min']])
+          expect(subject.table_fields).to eq(
+            [['Advocacy', '20min', '£100.01', '£80.01']],
+          )
         end
       end
 
@@ -56,7 +58,26 @@ RSpec.describe V1::CoreCostSummary do
       end
 
       it 'includes the summed table field row' do
-        expect(subject.table_fields).to include(['Advocacy', '£80.00', '20min'])
+        expect(subject.table_fields).to include(
+          ['Advocacy', '20min', '£100.01', '£80.01'],
+        )
+      end
+
+      context 'when not VAT registered' do
+        let(:vat_registered) { 'yes' }
+        let(:v1_work_items) do
+          [
+            instance_double(V1::WorkItem, work_type: mock_translated('advocacy'), time_spent: 20,
+            provider_requested_time_spent: 20, provider_requested_amount_inc_vat: 80.0051, caseworker_amount_inc_vat: 70.0051,
+            firm_office: { 'vat_registered' => 'no' })
+          ]
+        end
+
+        it 'rounds amounts to the closest pence' do
+          expect(subject.table_fields).to include(
+            ['Advocacy', '20min', '£80.00', '£70.00'],
+          )
+        end
       end
     end
 
@@ -74,8 +95,8 @@ RSpec.describe V1::CoreCostSummary do
 
       it 'returns a single table field row' do
         expect(subject.table_fields).to include(
-          ['Advocacy', '£80.00', '20min'],
-          ['Preparation', '£90.00', '30min']
+          ['Advocacy', '20min', '£100.00', '£80.00'],
+          ['Preparation', '20min', '£110.00', '£90.00'],
         )
       end
     end
@@ -113,7 +134,7 @@ RSpec.describe V1::CoreCostSummary do
       end
 
       it 'includes a summed table field row' do
-        expect(subject.table_fields).to include(['Advocacy', '£170.00', '50min'])
+        expect(subject.table_fields).to include(['Advocacy', '40min', '£210.00', '£170.00'])
       end
     end
   end
