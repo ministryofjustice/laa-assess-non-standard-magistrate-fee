@@ -47,14 +47,14 @@ RSpec.describe V1::WorkItem do
     end
 
     it 'returns the fields for the table display' do
-      expect(subject.table_fields).to eq(['Waiting', '0%', '£10.00', '', ''])
+      expect(subject.table_fields).to eq(['Waiting', '0%', '2 Hours<br>41 Minutes', '', ''])
     end
 
     context 'when adjustments exists' do
       let(:adjustments) { [build(:event, :edit_work_item_uplift)] }
 
       it 'also renders caseworker values' do
-        expect(subject.table_fields).to eq(['Waiting', '20%', '£10.00', '0%', '£10.00'])
+        expect(subject.table_fields).to eq(['Waiting', '20%', '2 Hours<br>41 Minutes', '0%', '2 Hours<br>41 Minutes'])
       end
     end
   end

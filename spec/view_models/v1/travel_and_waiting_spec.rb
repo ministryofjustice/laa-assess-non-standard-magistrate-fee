@@ -1,65 +1,83 @@
 require 'rails_helper'
 
 RSpec.describe V1::TravelAndWaiting do
-  subject { described_class.new(claim:) }
+  subject { described_class.new(params) }
 
-  let(:claim) { build(:claim).tap { |claim| claim.data.merge!('work_items' => work_items) } }
+  let(:claim) do
+    build(:claim, firm_office: { 'vat_registered' => vat_registered }).tap do |claim|
+      claim.data.merge!('work_items' => work_items)
+    end
+  end
+  let(:params) do
+    {
+      'claim' => claim,
+      'firm_office' => { 'vat_registered' => vat_registered },
+    }
+  end
+  let(:vat_registered) { 'yes' }
 
   before do
     allow(CostCalculator).to receive(:cost).and_return(100.0)
   end
 
+  describe '#vat_registered?' do
+    let(:work_items) { [] }
+
+    context 'when value is yes' do
+      it { expect(subject).to be_vat_registered }
+    end
+
+    context 'when value is no' do
+      let(:vat_registered) { 'no' }
+
+      it { expect(subject).not_to be_vat_registered }
+    end
+
+    context 'when value is blank' do
+      let(:vat_registered) { '' }
+
+      it { expect(subject).not_to be_vat_registered }
+    end
+  end
+
   describe '#table_fields' do
     context 'when a single work item exists' do
-      let(:work_items) { [{ 'work_type' => { 'en' => 'travel', 'value' => 'travel' }, 'time_spent' => 20 }] }
-      let(:work_item) { instance_double(V1::WorkItem, work_type: mock_translated('travel'), time_spent: 20) }
-
-      before do
-        allow(BaseViewModel).to receive(:build).and_return([work_item])
-      end
-
-      it 'builds the view model' do
-        subject.table_fields
-        expect(BaseViewModel).to have_received(:build).with(
-          :work_item, claim, 'work_items'
-        )
+      let(:work_items) do
+        [{ 'work_type' => { 'en' => 'Travel', 'value' => 'travel' }, 'time_spent' => 20, 'vat_rate' => 0.2 }]
       end
 
       it 'includes the summed table field row' do
-        expect(subject.table_fields).to include(['Travel', '£100.00', '20min'])
+        expect(subject.table_fields).to include(
+          ['Travel', '0 Hours<br>20 Minutes', '£120.00', '0 Hours<br>20 Minutes', '£120.00'],
+        )
       end
-
-      it 'calls the CostCalculator' do
-        subject.table_fields
-
-        expect(CostCalculator).to have_received(:cost).with(:work_item, work_item, :caseworker)
-      end
-
-      it { expect(subject).to be_any }
 
       it 'calculates the total_cost' do
-        expect(subject.total_cost).to eq('£100.00')
+        expect(subject.total_cost).to eq('£120.00')
       end
     end
 
     context 'when multiple work item of diffent types exists' do
       let(:work_items) do
-        [{ 'work_type' => { 'en' => 'travel', 'value' => 'travel' }, 'time_spent' => 20 },
-         { 'work_type' => { 'en' => 'waiting', 'value' => 'waiting' }, 'time_spent' => 30 }]
+        [{ 'work_type' => { 'en' => 'Travel', 'value' => 'travel' }, 'time_spent' => 20, 'vat_rate' => 0.2 },
+         { 'work_type' => { 'en' => 'Waiting', 'value' => 'waiting' }, 'time_spent' => 30, 'vat_rate' => 0.2 }]
       end
 
       it 'returns a single table field row' do
-        expect(subject.table_fields).to include(['travel', '£100.00', '20min'], ['waiting', '£100.00', '30min'])
+        expect(subject.table_fields).to include(
+          ['Travel', '0 Hours<br>20 Minutes', '£120.00', '0 Hours<br>20 Minutes', '£120.00'],
+          ['Waiting', '0 Hours<br>30 Minutes', '£120.00', '0 Hours<br>30 Minutes', '£120.00']
+        )
       end
 
       it 'calculates the total_cost' do
-        expect(subject.total_cost).to eq('£200.00')
+        expect(subject.total_cost).to eq('£240.00')
       end
     end
 
     context 'when waiting and travel work items do not exist' do
       let(:work_items) do
-        [{ 'work_type' => { 'en' => 'preparation', 'value' => 'preparation' }, 'time_spent' => 30 }]
+        [{ 'work_type' => { 'en' => 'preparation', 'value' => 'preparation' }, 'time_spent' => 30, 'vat_rate' => 0.2 }]
       end
 
       it 'nothing is returned' do
@@ -71,12 +89,14 @@ RSpec.describe V1::TravelAndWaiting do
 
     context 'when multiple work item of the same types exists' do
       let(:work_items) do
-        [{ 'work_type' => { 'en' => 'travel', 'value' => 'travel' }, 'time_spent' => 20 },
-         { 'work_type' => { 'en' => 'travel', 'value' => 'travel' }, 'time_spent' => 30 }]
+        [{ 'work_type' => { 'en' => 'Travel', 'value' => 'travel' }, 'time_spent' => 20, 'vat_rate' => 0.2  },
+         { 'work_type' => { 'en' => 'Travel', 'value' => 'travel' }, 'time_spent' => 30, 'vat_rate' => 0.2  }]
       end
 
       it 'includes a summed table field row' do
-        expect(subject.table_fields).to include(['travel', '£200.00', '50min'])
+        expect(subject.table_fields).to include(
+          ['Travel', '0 Hours<br>50 Minutes', '£240.00', '0 Hours<br>50 Minutes', '£240.00']
+        )
       end
     end
   end

@@ -13,7 +13,9 @@ FactoryBot.define do
         'disbursements' => disbursements,
         'work_items' => work_items,
         'defendants' => defendants,
-        'supporting_evidences' => supporting_evidences
+        'supporting_evidences' => supporting_evidences,
+        'vat_rate' => vat_rate,
+        'firm_office' => firm_office
       }
     end
 
@@ -110,6 +112,20 @@ FactoryBot.define do
             'full_name' =>  'Tracy Linklater'
           }
         ]
+      end
+      vat_rate { 0.2 }
+      vat_registered { 'no' }
+      firm_office do
+        {
+          'name' => 'Blundon Solicitor Firm',
+          'town' => 'Stoke Newington',
+          'postcode' => 'NE10 4AB',
+          'previous_id' => nil,
+          'account_number' => '121234',
+          'address_line_1' => 'Suite 3',
+          'address_line_2' => '5 Princess Road',
+          'vat_registered' => vat_registered
+        }
       end
     end
 

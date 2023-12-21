@@ -29,11 +29,13 @@ module ApplicationHelper
     "app-environment-#{ENV.fetch('ENV', 'local')}"
   end
 
-  def format_period(period)
+  def format_period(period, style: :short)
     return if period.nil?
 
-    t('helpers.time_period.hours', count: period / 60) +
-      t('helpers.time_period.minutes', count: period % 60)
+    style = "#{style}_html" if style.to_sym == :long
+
+    t("helpers.time_period.hours.#{style}", count: period / 60) +
+      t("helpers.time_period.minutes.#{style}", count: period % 60)
   end
 
   def format_in_zone(time_or_string, format: '%d %B %Y')

@@ -5,6 +5,32 @@ RSpec.describe V1::LetterAndCall do
 
   let(:adjustments) { [] }
 
+  describe '#vat_registered?' do
+    let(:params) do
+      {
+        'firm_office' => { 'vat_registered' => vat_registered },
+      }
+    end
+
+    context 'when value is yes' do
+      let(:vat_registered) { 'yes' }
+
+      it { expect(subject).to be_vat_registered }
+    end
+
+    context 'when value is no' do
+      let(:vat_registered) { 'no' }
+
+      it { expect(subject).not_to be_vat_registered }
+    end
+
+    context 'when value is blank' do
+      let(:vat_registered) { '' }
+
+      it { expect(subject).not_to be_vat_registered }
+    end
+  end
+
   describe '#provider_requested_amount' do
     let(:params) { { count: 1, uplift: 5, pricing: 10.0, adjustments: adjustments } }
 
@@ -17,6 +43,34 @@ RSpec.describe V1::LetterAndCall do
 
       it 'calulates the initial uplift' do
         expect(subject.provider_requested_amount).to eq(10.0 * 10.0 * 1.95)
+      end
+    end
+  end
+
+  describe 'provider_requested_amount_inc_vat' do
+    let(:params) do
+      {
+        :count => 1,
+        :uplift => 5,
+        :pricing => 10.0,
+        'firm_office' => { 'vat_registered' => vat_registered },
+        'vat_rate' => 0.2,
+      }
+    end
+
+    context 'when vat registered' do
+      let(:vat_registered) { 'yes' }
+
+      it 'calculates the correct provider requested amount' do
+        expect(subject.provider_requested_amount_inc_vat).to eq(12.6)
+      end
+    end
+
+    context 'when not vat registered' do
+      let(:vat_registered) { 'no' }
+
+      it 'calculates the correct provider requested amount' do
+        expect(subject.provider_requested_amount_inc_vat).to eq(10.5)
       end
     end
   end
@@ -68,6 +122,34 @@ RSpec.describe V1::LetterAndCall do
 
     it 'calculates the correct caseworker amount' do
       expect(subject.caseworker_amount).to eq(10.5)
+    end
+  end
+
+  describe 'caseworker_amount_inc_vat' do
+    let(:params) do
+      {
+        :count => 1,
+        :uplift => 5,
+        :pricing => 10.0,
+        'firm_office' => { 'vat_registered' => vat_registered },
+        'vat_rate' => 0.2,
+      }
+    end
+
+    context 'when vat registered' do
+      let(:vat_registered) { 'yes' }
+
+      it 'calculates the correct provider requested amount' do
+        expect(subject.caseworker_amount_inc_vat).to eq(12.6)
+      end
+    end
+
+    context 'when not vat registered' do
+      let(:vat_registered) { 'no' }
+
+      it 'calculates the correct provider requested amount' do
+        expect(subject.caseworker_amount_inc_vat).to eq(10.5)
+      end
     end
   end
 
@@ -207,6 +289,49 @@ RSpec.describe V1::LetterAndCall do
         let(:adjustments) { [build(:event, :edit_uplift)] }
 
         it { expect(subject).to be_uplift }
+      end
+    end
+  end
+
+  describe '#provider_fields' do
+    let(:params) do
+      {
+        'type' => { 'en' => 'Letters', 'value' => 'letters' },
+        'count' => 12,
+        'uplift' => 0,
+        'pricing' => 3.56,
+        'firm_office' => { 'vat_registered' => vat_registered },
+        'adjustments' => adjustments,
+        'vat_rate' => 0.2,
+      }
+    end
+
+    let(:adjustments) { [build(:event, :edit_work_item_uplift)] }
+
+    context 'when vat registered' do
+      let(:vat_registered) { 'yes' }
+
+      it 'calculates the correct provider requested amount' do
+        expect(subject.provider_fields).to eq(
+          '.number' => '12',
+          '.rate' => '£3.56',
+          '.uplift_requested' => '20%',
+          '.vat' => '20%',
+          '.total_claimed_inc_vate' => '£61.51',
+        )
+      end
+    end
+
+    context 'when not vat registered' do
+      let(:vat_registered) { 'no' }
+
+      it 'calculates the correct provider requested amount' do
+        expect(subject.provider_fields).to eq(
+          '.number' => '12',
+          '.rate' => '£3.56',
+          '.uplift_requested' => '20%',
+          '.total_claimed' => '£51.26',
+        )
       end
     end
   end

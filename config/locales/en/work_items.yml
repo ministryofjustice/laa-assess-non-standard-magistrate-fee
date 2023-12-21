@@ -15,6 +15,15 @@ en:
       change: Change
       view: View
       travel_and_waiting: Travel and waiting
+      items: Items
+      requested_time: Time requested
+      requested_cost:
+        inc_vat_html: Cost requested<br>(including VAT)
+        exc_vat: Cost requested
+      allowed_time: Time allowed
+      allowed_cost:
+        inc_vat_html: Cost allowed<br>(including VAT)
+        exc_vat: Cost allowed
     edit:
       page_title: "Your claims"
       heading: "Adjust a work item"
@@ -24,6 +33,8 @@ en:
       fee_earner: Fee earner initials
       uplift_claimed: Uplift claimed
       total_claimed: Claim cost
+      vat: VAT
+      total_claimed_inc_vate: Claim cost (including VAT)
       laa_adjustments: LAA Adjustments
       calculate_button_text: Calculate my changes
       claim_cost_table:
@@ -47,6 +58,8 @@ en:
       fee_earner: Fee earner initials
       uplift_claimed: Uplift claimed
       total_claimed: Claim cost
+      vat: VAT
+      total_claimed_inc_vate: Claim cost (including VAT)
       laa_adjustments: LAA Adjustments
       uplift_allowed: Uplift allowed
       work_type: Work type
