@@ -4,7 +4,7 @@ RSpec.describe NotifyAppStore do
   subject { described_class.new }
 
   let(:claim) { instance_double(Claim) }
-  let(:email_content) { FeedbackMessages::GrantedFeedback.new(claim) }
+  let(:email_content) { FeedbackMessages::GrantedFeedback }
   let(:message_builder) { instance_double(described_class::MessageBuilder, message: { some: 'message' }) }
 
   before do

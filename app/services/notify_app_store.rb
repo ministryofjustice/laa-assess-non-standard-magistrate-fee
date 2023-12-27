@@ -7,7 +7,7 @@ class NotifyAppStore < ApplicationJob
     else
       begin
         new.notify(MessageBuilder.new(claim:))
-        ClaimFeedbackMailer.notify(email_content)
+        ClaimFeedbackMailer.notify(email_content.new(claim))
       rescue StandardError => e
         # we only get errors here when processing inline, which we don't want
         # to be visible to the end user, so swallow errors
@@ -18,7 +18,7 @@ class NotifyAppStore < ApplicationJob
 
   def perform(claim, email_content)
     notify(MessageBuilder.new(claim:))
-    ClaimFeedbackMailer.notify(email_content)
+    ClaimFeedbackMailer.notify(email_content.new(claim))
   end
 
   def notify(message_builder)
