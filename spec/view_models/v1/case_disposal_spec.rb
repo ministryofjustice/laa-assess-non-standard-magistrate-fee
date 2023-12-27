@@ -15,7 +15,10 @@ RSpec.describe V1::CaseDisposal do
             'value' => 'cracked_trial',
             'en' => 'Cracked Trial'
           },
-          'plea_category' => 'Category 2'
+          'plea_category' => {
+            'value' => 'cracked_trial',
+            'en' => 'Category 2'
+          }
         }
       )
 
@@ -31,7 +34,10 @@ RSpec.describe V1::CaseDisposal do
           'value' => 'cracked_trial',
           'en' => 'Cracked Trial'
         },
-        'plea_category' => 'Category 2'
+        'plea_category' => {
+          'value' => 'cracked_trial',
+          'en' => 'Category 2'
+        }
       }
     )
 

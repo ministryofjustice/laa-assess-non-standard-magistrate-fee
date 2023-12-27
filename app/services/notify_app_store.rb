@@ -3,7 +3,7 @@ class NotifyAppStore < ApplicationJob
 
   def self.process(claim:, email_content:)
     if ENV.key?('REDIS_HOST')
-      perform_later(claim, email_content)
+      set(wait: Rails.application.config.x.application.app_store_wait.seconds).perform_later(claim)
     else
       begin
         new.notify(MessageBuilder.new(claim:))

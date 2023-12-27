@@ -52,6 +52,9 @@ en:
       solicitor_ref_number: Solicitor reference number
       contact_full_name: Alternative contact full name
       contact_email: Alternative contact email address
+      contact_details:
+        title: Alternative contact details
+        value: Not provided
       provider_email: Provider email address
     claim_details:
       title: Claim details

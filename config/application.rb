@@ -59,5 +59,7 @@ module LaaAssessNonStandardMagistrateFee
     config.x.analytics.analytics_consent_expiration = 1.year
 
     config.x.contact.feedback_url = 'tbc'
+    #time to wait for requests to be made to app store for db consistency
+    config.x.application.app_store_wait = ENV.fetch('APP_STORE_WAIT_SECS',0).to_i
   end
 end

@@ -24,13 +24,22 @@ function init() {
   function calculateAdjustedAmount() {
     const count = countField?.value;
     const unitPrice = calculateChangeButton?.getAttribute('data-unit-price');
-    const upliftAmount = calculateChangeButton?.getAttribute('data-uplift-amount');
+    let upliftAmount = calculateChangeButton?.getAttribute('data-uplift-amount');
+    const vatMultiplier = parseFloat(calculateChangeButton?.getAttribute('data-vat-multiplier'));
 
-    if (upliftAmount && upliftNoField.checked) {
-      const upliftFactor = (parseFloat(upliftAmount) / 100) + 1;
+    if (!(upliftAmount && upliftNoField.checked)) {
+      upliftAmount = 0
+    }
+
+    const upliftFactor = (parseFloat(upliftAmount) / 100) + 1;
+
+    // rounding:
+    // * when VAT exists - round down
+    // * when no VAT exists - round to nearest decimal
+    if (vatMultiplier === 1.0) {
       return (`£${(count * unitPrice * upliftFactor).toFixed(2)}`);
     } else {
-      return (`£${(count * unitPrice).toFixed(2)}`);
+      return (`£${Math.floor(count * unitPrice * upliftFactor * vatMultiplier * 100) / 100}`);
     }
   }
 }

@@ -52,7 +52,7 @@ RSpec.describe NotifyAppStore do
       end
 
       it 'schedules the job' do
-        expect(described_class).to receive(:perform_later).with(claim, email_content)
+        expect(described_class).to receive_message_chain(:set, :perform_later).with(claim)
 
         described_class.process(claim:, email_content:)
       end

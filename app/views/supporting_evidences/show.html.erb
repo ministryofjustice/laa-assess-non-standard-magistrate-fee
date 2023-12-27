@@ -19,5 +19,6 @@
     <% unless @supporting_evidence.empty? %>
       <%= render "shared/pagination", { pagy: @pagy, item: t('.heading') } %>
     <% end %>
+    <%= render partial: 'shared/claim_button_group', locals: { claim: claim } %>
   </div>
 </div>
