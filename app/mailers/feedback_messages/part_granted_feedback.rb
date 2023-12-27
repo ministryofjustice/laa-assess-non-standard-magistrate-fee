@@ -12,9 +12,9 @@ module FeedbackMessages
         ufn: ufn,
         main_defendant_name: defendant_name,
         maat_id: maat_id,
-        claim_total: '',
-        part_grant_total: '',
-        caseworker_decision_explanation: '',
+        claim_total: claim_total,
+        part_grant_total: adjusted_total,
+        caseworker_decision_explanation: @comment,
         date: DateTime.now.strftime('%d %B %Y'),
         feedback_url: feedback_url
       }
@@ -22,6 +22,10 @@ module FeedbackMessages
 
     def recipient
       @claim.data['submitter']['email']
+    end
+
+    def adjusted_total
+      @claim.data['adjusted_total_inc_vat'] || @claim.data['adjusted_total']
     end
   end
 end

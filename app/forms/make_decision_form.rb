@@ -27,7 +27,7 @@ class MakeDecisionForm
     Claim.transaction do
       claim.update!(state:)
       Event::Decision.build(claim:, comment:, previous_state:, current_user:)
-      NotifyAppStore.process(claim:, email_content:)
+      NotifyAppStore.process(claim:, email_content:, comment:)
     end
 
     true

@@ -12,7 +12,7 @@ module FeedbackMessages
         ufn: ufn,
         main_defendant_name: defendant_name,
         maat_id: maat_id,
-        claim_total: '',
+        claim_total: claim_total,
         date: DateTime.now.strftime('%d %B %Y'),
         feedback_url: feedback_url
       }

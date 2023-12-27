@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe FeedbackMessages::FurtherInformationRequestFeedback do
-  subject(:feedback) { described_class.new(claim) }
+  subject(:feedback) { described_class.new(claim, caseworker_information_requested) }
 
   let(:claim) { build(:claim) }
   let(:feedback_template) { '9ecdec30-83d7-468d-bec2-cf770a2c9828' }
@@ -12,9 +12,9 @@ RSpec.describe FeedbackMessages::FurtherInformationRequestFeedback do
   let(:ufn) { '123456/001' }
   let(:main_defendant_name) { 'Tracy Linklater' }
   let(:maat_id) { 'AB12123' }
-  let(:claim_total) { '' }
-  let(:date_to_respond_by) { '' }
-  let(:caseworker_information_requested) { '' }
+  let(:claim_total) { nil }
+  let(:date_to_respond_by) { 7.days.from_now.strftime('%d %B %Y') }
+  let(:caseworker_information_requested) { 'Test Request' }
   let(:date) { DateTime.now.strftime('%d %B %Y') }
   let(:feedback_url) { 'tbc' }
 

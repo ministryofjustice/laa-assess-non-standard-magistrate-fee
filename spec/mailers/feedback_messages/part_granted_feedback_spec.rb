@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe FeedbackMessages::PartGrantedFeedback do
-  subject(:feedback) { described_class.new(claim) }
+  subject(:feedback) { described_class.new(claim, caseworker_decision_explanation) }
 
   let(:claim) { build(:claim) }
   let(:feedback_template) { '9df38f19-f76b-42f9-a4e1-da36a65d6aca' }
@@ -12,9 +12,9 @@ RSpec.describe FeedbackMessages::PartGrantedFeedback do
   let(:ufn) { '123456/001' }
   let(:main_defendant_name) { 'Tracy Linklater' }
   let(:maat_id) { 'AB12123' }
-  let(:claim_total) { '' }
-  let(:part_grant_total) { '' }
-  let(:caseworker_decision_explanation) { '' }
+  let(:claim_total) { nil }
+  let(:part_grant_total) { nil }
+  let(:caseworker_decision_explanation) { 'Test Explanation' }
   let(:date) { DateTime.now.strftime('%d %B %Y') }
   let(:feedback_url) { 'tbc' }
 

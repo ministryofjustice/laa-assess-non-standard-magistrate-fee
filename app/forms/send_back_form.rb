@@ -24,7 +24,7 @@ class SendBackForm
     Claim.transaction do
       claim.update!(state:)
       Event::SendBack.build(claim:, comment:, previous_state:, current_user:)
-      NotifyAppStore.process(claim:, email_content:)
+      NotifyAppStore.process(claim:, email_content:, comment:)
     end
 
     true

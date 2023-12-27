@@ -2,8 +2,9 @@
 
 module FeedbackMessages
   class FeedbackBase
-    def initialize(claim)
+    def initialize(claim, comment = nil)
       @claim = claim
+      @comment = comment
     end
 
     def template
@@ -38,6 +39,10 @@ module FeedbackMessages
 
     def ufn
       @claim.data['ufn']
+    end
+
+    def claim_total
+      @claim.data['submitted_total_inc_vat'] || @claim.data['submitted_total']
     end
 
     def feedback_url
