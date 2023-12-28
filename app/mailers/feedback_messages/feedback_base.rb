@@ -2,7 +2,7 @@
 
 module FeedbackMessages
   class FeedbackBase
-    def initialize(claim, comment = nil)
+    def initialize(claim, comment = '')
       @claim = claim
       @comment = comment
     end
@@ -42,7 +42,7 @@ module FeedbackMessages
     end
 
     def claim_total
-      @claim.data['submitted_total_inc_vat'] || @claim.data['submitted_total']
+      @claim.data['submitted_total_inc_vat'] || @claim.data['submitted_total'] || 0
     end
 
     def feedback_url

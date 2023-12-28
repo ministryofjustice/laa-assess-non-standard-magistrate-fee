@@ -61,7 +61,6 @@ RSpec.describe SendBackForm do
   describe '#persistance' do
     let(:user) { instance_double(User) }
     let(:claim) { create(:claim) }
-
     let(:params) { { claim: claim, state: 'further_info', comment: 'some comment', current_user: user } }
 
     before do
