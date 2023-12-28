@@ -68,7 +68,6 @@ RSpec.describe MakeDecisionForm do
   describe '#persistance' do
     let(:user) { instance_double(User) }
     let(:claim) { create(:claim) }
-    let(:feedback) { FeedbackMessages::PartGrantedFeedback }
     let(:params) { { claim: claim, state: 'part_grant', partial_comment: 'part comment', current_user: user } }
 
     before do
@@ -90,45 +89,9 @@ RSpec.describe MakeDecisionForm do
       )
     end
 
-    context 'trigger an update to the app store' do
-      context 'granted' do
-        let(:feedback) { FeedbackMessages::GrantedFeedback }
-        let(:params) { { claim: claim, state: 'granted', current_user: user } }
-
-        it 'trigger an update to the app store' do
-          subject.save
-          expect(NotifyAppStore).to have_received(:process) do |args|
-            expect(args[:claim]).to eq(claim)
-            expect(args[:email_content]).to eq(feedback)
-          end
-        end
-      end
-
-      context 'part_grant' do
-        let(:feedback) { FeedbackMessages::PartGrantedFeedback }
-        let(:params) { { claim: claim, state: 'part_grant', partial_comment: 'part comment', current_user: user } }
-
-        it 'trigger an update to the app store' do
-          subject.save
-          expect(NotifyAppStore).to have_received(:process) do |args|
-            expect(args[:claim]).to eq(claim)
-            expect(args[:email_content]).to eq(feedback)
-          end
-        end
-      end
-
-      context 'rejected' do
-        let(:feedback) { FeedbackMessages::RejectedFeedback }
-        let(:params) { { claim: claim, state: 'rejected', reject_comment: 'reject comment', current_user: user } }
-
-        it 'trigger an update to the app store' do
-          subject.save
-          expect(NotifyAppStore).to have_received(:process) do |args|
-            expect(args[:claim]).to eq(claim)
-            expect(args[:email_content]).to eq(feedback)
-          end
-        end
-      end
+    it 'trigger an update to the app store' do
+      subject.save
+      expect(NotifyAppStore).to have_received(:process).with(claim:)
     end
 
     context 'when not valid' do

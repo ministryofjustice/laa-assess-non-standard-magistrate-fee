@@ -61,7 +61,6 @@ RSpec.describe SendBackForm do
   describe '#persistance' do
     let(:user) { instance_double(User) }
     let(:claim) { create(:claim) }
-    let(:feedback) { FeedbackMessages::FurtherInformationRequestFeedback.new(claim) }
 
     let(:params) { { claim: claim, state: 'further_info', comment: 'some comment', current_user: user } }
 
@@ -84,32 +83,9 @@ RSpec.describe SendBackForm do
       )
     end
 
-    context 'trigger an update to the app store' do
-      context 'further information requested' do
-        let(:feedback) { FeedbackMessages::FurtherInformationRequestFeedback }
-        let(:params) { { claim: claim, state: 'further_info', comment: 'some comment', current_user: user } }
-
-        it 'trigger an update to the app store' do
-          subject.save
-          expect(NotifyAppStore).to have_received(:process) do |args|
-            expect(args[:claim]).to eq(claim)
-            expect(args[:email_content]).to eq(feedback)
-          end
-        end
-      end
-
-      context 'provider requested' do
-        let(:feedback) { FeedbackMessages::ProviderRequestFeedback }
-        let(:params) { { claim: claim, state: 'provider_requested', comment: 'some comment', current_user: user } }
-
-        it 'trigger an update to the app store' do
-          subject.save
-          expect(NotifyAppStore).to have_received(:process) do |args|
-            expect(args[:claim]).to eq(claim)
-            expect(args[:email_content]).to eq(feedback)
-          end
-        end
-      end
+    it 'trigger an update to the app store' do
+      subject.save
+      expect(NotifyAppStore).to have_received(:process).with(claim:)
     end
 
     context 'when not valid' do
