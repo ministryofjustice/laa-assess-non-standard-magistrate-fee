@@ -9,7 +9,7 @@ RSpec.describe ClaimFeedbackMailer, type: :mailer do
   let(:ufn) { '123456/001' }
   let(:main_defendant_name) { 'Tracy Linklater' }
   let(:maat_id) { 'AB12123' }
-  let(:claim_total) { nil }
+  let(:claim_total) { 0 }
   let(:date) { DateTime.now.strftime('%d %B %Y') }
   let(:feedback_url) { 'tbc' }
 
@@ -26,8 +26,8 @@ RSpec.describe ClaimFeedbackMailer, type: :mailer do
   describe 'part granted' do
     let(:claim) { build(:claim, state: 'part_grant') }
     let(:feedback_template) { '9df38f19-f76b-42f9-a4e1-da36a65d6aca' }
-    let(:part_grant_total) { nil }
-    let(:caseworker_decision_explanation) { nil }
+    let(:part_grant_total) { 0 }
+    let(:caseworker_decision_explanation) { '' }
     let(:personalisation) do
       [laa_case_reference:, ufn:, main_defendant_name:,
        maat_id:, claim_total:, part_grant_total:, caseworker_decision_explanation:,
@@ -40,7 +40,7 @@ RSpec.describe ClaimFeedbackMailer, type: :mailer do
   describe 'rejected' do
     let(:claim) { build(:claim, state: 'rejected') }
     let(:feedback_template) { '7e807120-b661-452c-95a6-1ae46f411cfe' }
-    let(:caseworker_decision_explanation) { nil }
+    let(:caseworker_decision_explanation) { '' }
     let(:personalisation) do
       [laa_case_reference:, ufn:, main_defendant_name:, maat_id:, claim_total:,
        caseworker_decision_explanation:, date:, feedback_url:]
@@ -53,7 +53,7 @@ RSpec.describe ClaimFeedbackMailer, type: :mailer do
     let(:claim) { build(:claim, state: 'further_information') }
     let(:feedback_template) { '9ecdec30-83d7-468d-bec2-cf770a2c9828' }
     let(:date_to_respond_by) { 7.days.from_now.strftime('%d %B %Y') }
-    let(:caseworker_information_requested) { nil }
+    let(:caseworker_information_requested) { '' }
     let(:personalisation) do
       [laa_case_reference:, ufn:, main_defendant_name:,
        maat_id:, claim_total:, date_to_respond_by:,
@@ -77,7 +77,7 @@ RSpec.describe ClaimFeedbackMailer, type: :mailer do
     let(:claim) { build(:claim, state: 'fake') }
     let(:feedback_template) { '9ecdec30-83d7-468d-bec2-cf770a2c9828' }
     let(:date_to_respond_by) { 7.days.from_now.strftime('%d %B %Y') }
-    let(:caseworker_information_requested) { nil }
+    let(:caseworker_information_requested) { '' }
     let(:personalisation) do
       [laa_case_reference:, ufn:, main_defendant_name:, maat_id:,
        claim_total:, date_to_respond_by:, caseworker_information_requested:,

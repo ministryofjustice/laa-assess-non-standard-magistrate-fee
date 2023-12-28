@@ -12,7 +12,7 @@ RSpec.describe FeedbackMessages::FurtherInformationRequestFeedback do
   let(:ufn) { '123456/001' }
   let(:main_defendant_name) { 'Tracy Linklater' }
   let(:maat_id) { 'AB12123' }
-  let(:claim_total) { nil }
+  let(:claim_total) { 0 }
   let(:date_to_respond_by) { 7.days.from_now.strftime('%d %B %Y') }
   let(:caseworker_information_requested) { 'Test Request' }
   let(:date) { DateTime.now.strftime('%d %B %Y') }
