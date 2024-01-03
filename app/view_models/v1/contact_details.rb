@@ -37,13 +37,13 @@ module V1
     end
 
     def firm_address
-      ApplicationController.helpers.sanitize([
+      sanitize([
         firm_office['address_line_1'],
         firm_office['address_line_2'],
         firm_office['town'],
         firm_office['postcode']
       ].compact.join('<br>'),
-                                             tags: %w[br])
+               tags: %w[br])
     end
 
     def provider_email_address

@@ -45,7 +45,7 @@ module V1
         (unless preparation_time == 'no'
            {
              title: I18n.t(".claim_details.#{key}.preparation_time"),
-             value: ApplicationController.helpers.format_period(time_spent)
+             value: format_period(time_spent)
            }
          end),
         {
@@ -55,7 +55,7 @@ module V1
         (unless work_before == 'no'
            {
              title: I18n.t(".claim_details.#{key}.work_before_date"),
-             value: ApplicationController.helpers.format_in_zone(work_before_date)
+             value: format_in_zone(work_before_date)
            }
          end),
         {
@@ -65,7 +65,7 @@ module V1
         (unless work_after == 'no'
            {
              title: I18n.t(".claim_details.#{key}.work_after_date"),
-             value: ApplicationController.helpers.format_in_zone(work_after_date)
+             value: format_in_zone(work_after_date)
            }
          end),
       ].compact

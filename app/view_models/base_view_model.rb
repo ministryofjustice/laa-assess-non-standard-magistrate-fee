@@ -68,4 +68,13 @@ class BaseViewModel
   def [](val)
     public_send(val)
   end
+
+  private
+
+  delegate :sanitize, :format_in_zone, :format_period, :multiline_text,
+           to: :helpers
+
+  def helpers
+    ApplicationController.helpers
+  end
 end
