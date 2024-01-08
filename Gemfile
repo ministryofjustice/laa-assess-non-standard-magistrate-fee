@@ -36,7 +36,7 @@ gem 'sentry-rails'
 gem 'sentry-ruby'
 
 group :development, :test do
-  gem 'debug'
+  gem 'debug', platforms: %i[mri windows]
   gem 'dotenv-rails'
   gem 'erb_lint', require: false
   gem 'pry'

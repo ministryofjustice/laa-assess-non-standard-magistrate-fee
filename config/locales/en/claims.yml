@@ -46,7 +46,12 @@ en:
   adjustments:
     show:
       check_totals: View core costs
+      core_cost: Core costs
+      disbursements: Disbursements
       items: Items
+      letters_and_calls: Letters and calls
+      review_and_adjust: Adjustments
       total_time: Time total
       total_cost: Cost total
       total: Total
+      work_items: Work items

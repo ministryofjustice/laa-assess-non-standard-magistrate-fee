@@ -92,7 +92,7 @@ RSpec.describe 'Authenticating with the DevAuth strategy' do
     it 'raises an error' do
       visit '/dev_auth'
 
-      expect(page).to have_http_status(:internal_server_error)
+      expect(page).to have_http_status(:not_found)
     end
   end
 end
