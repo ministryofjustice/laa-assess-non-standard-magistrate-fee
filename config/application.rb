@@ -28,7 +28,11 @@ module LaaAssessNonStandardMagistrateFee
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
-    config.autoload_lib(ignore: %w(assets tasks))
+    #
+    # NOTE: govuk_design_system_formbuilder monkey patch in lib folder is not
+    # autoloaded because it the gem itself uses a non-standard/convention filename
+    # to classname pattern.
+    config.autoload_lib(ignore: %w(assets tasks govuk_design_system_formbuilder))
 
     # Configuration for the application, engines, and railties goes here.
     #
