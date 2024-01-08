@@ -4,7 +4,7 @@
 # Activates the user by setting the "auth_subject_id" and "first_auth_at"
 # if the user is "pending_activation?".
 
-require 'warden_hooks/auth_updateable'
+require Rails.root.join('app/lib/warden_hooks/auth_updateable')
 
 module AuthUpdateable
   extend ActiveSupport::Concern

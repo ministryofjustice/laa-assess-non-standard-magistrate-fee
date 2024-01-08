@@ -2,7 +2,7 @@
 # authentications regardless of user activity.
 #
 
-require 'warden_hooks/reauthable'
+require Rails.root.join('app/lib/warden_hooks/reauthable')
 
 module Reauthable
   extend ActiveSupport::Concern
