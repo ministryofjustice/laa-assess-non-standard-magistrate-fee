@@ -28,9 +28,11 @@ Rails.application.configure do
   # Compress CSS using a preprocessor.
   # config.assets.css_compressor = :sass
 
-  # Whether to fallback to assets pipeline if a precompiled asset is missed. This
-  # should be false in production
-  config.assets.compile = false
+  # Do not fallback to assets pipeline if a precompiled asset is missed.
+  # NOTE: this should be set to false. Relying on the fallback implies some assets are
+  # not being compiled until the first request to the server. The Dockerfiles'
+  # `rails assets:precompile` command should compile all assets.
+  config.assets.compile = true
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.asset_host = "http://assets.example.com"
