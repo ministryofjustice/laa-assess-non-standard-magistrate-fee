@@ -85,18 +85,20 @@ RSpec.describe ApplicationHelper, type: :helper do
   end
 
   describe '#format_in_zone' do
+    let(:format) { '%A<br>%d %b %Y<br>%I:%M%P' }
+
     context 'when date is a string' do
       let(:time) { '2023/10/18 13:08 +0000' }
 
-      context 'when format is passed in' do
+      context 'with format' do
         it 'converts string to a DateTime and renders format' do
-          expect(helper.format_in_zone(time, format: '%A<br>%d %b %Y<br>%I:%M%P')).to eq(
+          expect(helper.format_in_zone(time, format:)).to eq(
             'Wednesday<br>18 Oct 2023<br>02:08pm'
           )
         end
       end
 
-      context 'when format is not passed in' do
+      context 'without format' do
         it 'converts string to a DateTime and renders as date' do
           expect(helper.format_in_zone(time)).to eq('18 October 2023')
         end
@@ -106,18 +108,30 @@ RSpec.describe ApplicationHelper, type: :helper do
     context 'when date is a time' do
       let(:time) { DateTime.parse('2023/10/17 13:08 +0000') }
 
-      context 'when format is passed in' do
+      context 'with format' do
         it 'converts string to a DateTime and renders format' do
-          expect(helper.format_in_zone(time, format: '%A<br>%d %b %Y<br>%I:%M%P')).to eq(
+          expect(helper.format_in_zone(time, format:)).to eq(
             'Tuesday<br>17 Oct 2023<br>02:08pm'
           )
         end
       end
 
-      context 'when format is not passed in' do
+      context 'without format' do
         it 'converts string to a DateTime and renders as date' do
           expect(helper.format_in_zone(time)).to eq('17 October 2023')
         end
+      end
+    end
+
+    context 'when date is nil' do
+      let(:time) { nil }
+
+      context 'with format' do
+        it { expect(helper.format_in_zone(time, format:)).to be_nil }
+      end
+
+      context 'without format' do
+        it { expect(helper.format_in_zone(time)).to be_nil }
       end
     end
   end

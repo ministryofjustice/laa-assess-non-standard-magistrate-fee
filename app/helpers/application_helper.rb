@@ -39,6 +39,8 @@ module ApplicationHelper
   end
 
   def format_in_zone(time_or_string, format: '%d %B %Y')
+    return unless time_or_string
+
     time_or_string = DateTime.parse(time_or_string) if time_or_string.is_a?(String)
     l(time_or_string.in_time_zone(LONDON_TIMEZONE), format:)
   end
