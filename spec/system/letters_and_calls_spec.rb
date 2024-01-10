@@ -7,7 +7,7 @@ RSpec.describe 'Letters and Calls' do
   before do
     sign_in user
     visit '/'
-    click_link 'Accept analytics cookies'
+    click_on 'Accept analytics cookies'
   end
 
   it 'can adjust a letter record' do
@@ -21,14 +21,14 @@ RSpec.describe 'Letters and Calls' do
         '£83.30' \
         'Change'
       )
-      click_link 'Change'
+      click_on 'Change'
     end
 
     choose 'Yes, remove uplift'
     fill_in 'Change number of letters', with: '22'
     fill_in 'Explain your decision', with: 'Testing'
 
-    click_button 'Save changes'
+    click_on 'Save changes'
 
     # need to access page directly as not JS enabled
     visit claim_letters_and_calls_path(claim)
@@ -57,14 +57,14 @@ RSpec.describe 'Letters and Calls' do
         '£17.09' \
         'Change'
       )
-      click_link 'Change'
+      click_on 'Change'
     end
 
     choose 'Yes, remove uplift'
     fill_in 'Change number of calls', with: '22'
     fill_in 'Explain your decision', with: 'Testing'
 
-    click_button 'Save changes'
+    click_on 'Save changes'
 
     # need to access page directly as not JS enabled
     visit claim_letters_and_calls_path(claim)
@@ -85,11 +85,11 @@ RSpec.describe 'Letters and Calls' do
   it 'can remove all uplift' do
     visit claim_letters_and_calls_path(claim)
 
-    click_link 'Remove uplifts for all items'
+    click_on 'Remove uplifts for all items'
 
     fill_in 'Explain your decision', with: 'Testing'
 
-    click_button 'Yes, remove all uplift'
+    click_on 'Yes, remove all uplift'
 
     # need to access page directly as not JS enabled
     visit claim_letters_and_calls_path(claim)
@@ -117,6 +117,6 @@ RSpec.describe 'Letters and Calls' do
       )
     end
 
-    expect(page).not_to have_content('Remove uplifts for all items')
+    expect(page).to have_no_content('Remove uplifts for all items')
   end
 end

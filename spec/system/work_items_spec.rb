@@ -7,7 +7,7 @@ RSpec.describe 'Work items' do
   before do
     sign_in user
     visit '/'
-    click_link 'Accept analytics cookies'
+    click_on 'Accept analytics cookies'
   end
 
   it 'can adjust a work item record' do
@@ -20,7 +20,7 @@ RSpec.describe 'Work items' do
         '2 Hours41 Minutes' \
         'Change'
       )
-      click_link 'Change'
+      click_on 'Change'
     end
 
     choose 'Yes, remove uplift'
@@ -28,7 +28,7 @@ RSpec.describe 'Work items' do
     fill_in 'Minutes', with: '59'
     fill_in 'Explain your decision', with: 'Testing'
 
-    click_button 'Save changes'
+    click_on 'Save changes'
 
     # need to access page directly as not JS enabled
     visit claim_work_items_path(claim)
@@ -48,11 +48,11 @@ RSpec.describe 'Work items' do
   it 'can remove all uplift' do
     visit claim_work_items_path(claim)
 
-    click_link 'Remove uplifts for all items'
+    click_on 'Remove uplifts for all items'
 
     fill_in 'Explain your decision', with: 'Testing'
 
-    click_button 'Yes, remove all uplift'
+    click_on 'Yes, remove all uplift'
 
     # need to access page directly as not JS enabled
     visit claim_work_items_path(claim)
@@ -68,6 +68,6 @@ RSpec.describe 'Work items' do
       )
     end
 
-    expect(page).not_to have_content('Remove uplifts for all items')
+    expect(page).to have_no_content('Remove uplifts for all items')
   end
 end

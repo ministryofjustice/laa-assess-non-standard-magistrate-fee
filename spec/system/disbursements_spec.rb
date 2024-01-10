@@ -17,10 +17,10 @@ RSpec.describe 'Disbursements' do
         'Change'
       )
     end
-    click_link 'Change'
+    click_on 'Change'
     choose 'Yes'
     fill_in 'Explain your decision', with: 'Testing'
-    click_button 'Save changes'
+    click_on 'Save changes'
 
     visit claim_disbursements_path(claim)
 
@@ -46,9 +46,9 @@ RSpec.describe 'Disbursements' do
         'Change'
       )
     end
-    click_link 'Change'
+    click_on 'Change'
     choose 'No'
-    click_button 'Save changes'
+    click_on 'Save changes'
     expect(page).to have_css('.govuk-error-summary__body',
                              text: I18n.t("#{disbursement_form_error_message}.base.no_change"))
   end

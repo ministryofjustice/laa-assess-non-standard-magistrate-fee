@@ -8,7 +8,7 @@ RSpec.describe 'Authenticating with the DevAuth strategy' do
   describe 'clicking the "Sign in" button' do
     before do
       visit '/'
-      click_button 'Start now'
+      click_on 'Start now'
     end
 
     it 'shows the dev auth page' do
@@ -19,7 +19,7 @@ RSpec.describe 'Authenticating with the DevAuth strategy' do
     context 'when the "Not Authorised" user is chosen' do
       before do
         select OmniAuth::Strategies::DevAuth::NO_AUTH_EMAIL
-        click_button 'Sign in'
+        click_on 'Sign in'
       end
 
       it 'redirects to the forbidden page' do
@@ -28,7 +28,7 @@ RSpec.describe 'Authenticating with the DevAuth strategy' do
 
       it 'shows the forbidden page' do
         expect(page).to have_content 'Access to this service is restricted'
-        expect(page).not_to have_css('nav.moj-primary-navigation')
+        expect(page).to have_no_css('nav.moj-primary-navigation')
       end
     end
 
@@ -39,7 +39,7 @@ RSpec.describe 'Authenticating with the DevAuth strategy' do
 
       before do
         select user.email
-        click_button 'Sign in'
+        click_on 'Sign in'
       end
 
       it 'signs in the user' do
@@ -70,7 +70,7 @@ RSpec.describe 'Authenticating with the DevAuth strategy' do
 
       before do
         select user.email
-        click_button 'Sign in'
+        click_on 'Sign in'
       end
 
       it 'signs in as the user' do

@@ -6,7 +6,7 @@ RSpec.describe 'History events' do
   before do
     sign_in caseworker
     visit '/'
-    click_link 'Accept analytics cookies'
+    click_on 'Accept analytics cookies'
   end
 
   it 'shows all (visible) events in the history' do
