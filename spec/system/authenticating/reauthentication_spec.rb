@@ -25,7 +25,7 @@ RSpec.describe 'Reauthentication' do
     let(:last_auth_at) { (reauthenticate_in + 1.second).ago }
 
     it 'signs the user out' do
-      expect(page).not_to have_content 'Your claims'
+      expect(page).to have_no_content 'Your claims'
     end
 
     it 'shows the notification banner' do
@@ -37,7 +37,7 @@ RSpec.describe 'Reauthentication' do
       let(:sign_out_all_scopes) { false }
 
       it 'signs the user out' do
-        expect(page).not_to have_content 'Your claims'
+        expect(page).to have_no_content 'Your claims'
       end
 
       it 'shows the notification banner' do

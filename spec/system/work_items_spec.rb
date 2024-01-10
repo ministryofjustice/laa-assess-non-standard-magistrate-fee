@@ -68,6 +68,6 @@ RSpec.describe 'Work items' do
       )
     end
 
-    expect(page).not_to have_content('Remove uplifts for all items')
+    expect(page).to have_no_content('Remove uplifts for all items')
   end
 end
