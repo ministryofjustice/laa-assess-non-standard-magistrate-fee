@@ -12,7 +12,7 @@ RSpec.describe NotifyAppStore::MessageBuilder do
     [instance_double(Event, as_json: { 'event' => 1 }), instance_double(Event, as_json: { 'event' => 2 })]
   end
 
-  it 'generates and send the data message for a claim' do
+  it 'generates and sends the data message for a claim' do
     tester.process(subject.message)
 
     expect(tester).to have_received(:process).with(
