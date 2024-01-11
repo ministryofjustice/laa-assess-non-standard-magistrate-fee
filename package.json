@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "dependencies": {
     "jquery": "^3.6.0",
-    "@ministryofjustice/frontend": "^1.8.1",
+    "@ministryofjustice/frontend": "^2.0.0",
     "govuk-frontend": "^4.7.0"
   },
   "scripts": {
