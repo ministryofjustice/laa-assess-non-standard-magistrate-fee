@@ -10,13 +10,13 @@ module V1
     end
 
     def title
-      I18n.t(".claim_details.#{key}.title")
+      I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.title")
     end
 
     def data
       [
         {
-          title: I18n.t(".claim_details.#{key}.questions"),
+          title: I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.questions"),
           value: answer_equality
         },
         *equality_answers
@@ -29,15 +29,15 @@ module V1
 
       [
         {
-          title: I18n.t(".claim_details.#{key}.ethnic_group"),
+          title: I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.ethnic_group"),
           value: ethnic_group
         },
         {
-          title: I18n.t(".claim_details.#{key}.identification"),
+          title: I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.identification"),
           value: gender
         },
         {
-          title: I18n.t(".claim_details.#{key}.disability"),
+          title: I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.disability"),
           value: disability
         }
       ]

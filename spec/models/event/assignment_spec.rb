@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Event::Assignment do
-  subject { described_class.build(crime_application: claim, current_user:) }
+  subject { described_class.build(crime_application: claim, current_user: current_user) }
 
   let(:claim) { create(:claim) }
   let(:current_user) { create(:caseworker) }

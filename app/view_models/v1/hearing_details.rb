@@ -13,38 +13,38 @@ module V1
     end
 
     def title
-      I18n.t(".claim_details.#{key}.title")
+      I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.title")
     end
 
     # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     def data
       [
         {
-          title: I18n.t(".claim_details.#{key}.first_hearing_date"),
+          title: I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.first_hearing_date"),
           value: format_in_zone(first_hearing_date)
         },
         {
-          title: I18n.t('.claim_details.hearing_details.number_of_hearing'),
+          title: I18n.t('.non_standard_magistrates_payment.claim_details.hearing_details.number_of_hearing'),
           value: number_of_hearing
         },
         {
-          title: I18n.t(".claim_details.#{key}.court"),
+          title: I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.court"),
           value: court
         },
         {
-          title: I18n.t(".claim_details.#{key}.in_area"),
+          title: I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.in_area"),
           value: in_area.capitalize
         },
         {
-          title: I18n.t(".claim_details.#{key}.youth_court"),
+          title: I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.youth_court"),
           value: youth_court.capitalize
         },
         {
-          title: I18n.t(".claim_details.#{key}.hearing_outcome"),
+          title: I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.hearing_outcome"),
           value: "#{hearing_outcome.value} - #{hearing_outcome}"
         },
         {
-          title: I18n.t(".claim_details.#{key}.matter_type"),
+          title: I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.matter_type"),
           value: "#{matter_type.value} - #{matter_type}"
         }
       ]

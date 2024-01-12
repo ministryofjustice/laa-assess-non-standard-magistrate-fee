@@ -9,7 +9,7 @@ module V1
     end
 
     def title
-      I18n.t(".claim_details.#{key}.title")
+      I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.title")
     end
 
     def firm_name
@@ -54,28 +54,28 @@ module V1
     def data
       [
         {
-          title: I18n.t(".claim_details.#{key}.firm_name"),
+          title: I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.firm_name"),
           value: firm_name
         },
         {
-          title: I18n.t(".claim_details.#{key}.firm_account_number"),
+          title: I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.firm_account_number"),
           value: firm_account_number
         },
         {
-          title: I18n.t(".claim_details.#{key}.firm_address"),
+          title: I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.firm_address"),
           value: firm_address
         },
         {
-          title: I18n.t(".claim_details.#{key}.solicitor_full_name"),
+          title: I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.solicitor_full_name"),
           value: solicitor_full_name
         },
         {
-          title: I18n.t(".claim_details.#{key}.solicitor_ref_number"),
+          title: I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.solicitor_ref_number"),
           value: solicitor_ref_number
         },
         *contact_details,
         {
-          title: I18n.t(".claim_details.#{key}.provider_email"),
+          title: I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.provider_email"),
           value: provider_email_address
         }
       ]
@@ -91,18 +91,18 @@ module V1
       if contact_email.blank?
         [
           {
-            title: I18n.t(".claim_details.#{key}.contact_details.title"),
-            value: I18n.t(".claim_details.#{key}.contact_details.value")
+            title: I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.contact_details.title"),
+            value: I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.contact_details.value")
           },
         ]
       else
         [
           {
-            title: I18n.t(".claim_details.#{key}.contact_full_name"),
+            title: I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.contact_full_name"),
             value: contact_full_name
           },
           {
-            title: I18n.t(".claim_details.#{key}.contact_email"),
+            title: I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.contact_email"),
             value: contact_email
           },
         ]

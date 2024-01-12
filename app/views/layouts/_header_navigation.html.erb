@@ -11,7 +11,7 @@
 
       <% if current_user.supervisor? %>
         <li class="govuk-header__navigation-item govuk-!-static-margin-left-3">
-          <%= link_to t('.manage_users'), claims_path, class: 'govuk-header__link' %>
+          <%= link_to t('.manage_users'), non_standard_magistrates_payment_claims_path, class: 'govuk-header__link' %>
         </li>
         |
       <% end %>

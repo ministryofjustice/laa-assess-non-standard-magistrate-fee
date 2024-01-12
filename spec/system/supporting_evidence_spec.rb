@@ -6,7 +6,7 @@ RSpec.describe 'Supporting Evidence' do
 
   before do
     sign_in user
-    visit claim_supporting_evidences_path(claim)
+    visit non_standard_magistrates_payment_claim_supporting_evidences_path(claim)
   end
 
   context 'There is supporting evidence and nothing is sent by post' do

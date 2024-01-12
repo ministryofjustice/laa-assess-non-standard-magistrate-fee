@@ -11,7 +11,7 @@ RSpec.describe 'Letters and Calls' do
   end
 
   it 'can adjust a letter record' do
-    visit claim_letters_and_calls_path(claim)
+    visit non_standard_magistrates_payment_claim_letters_and_calls_path(claim)
 
     within('.govuk-table__row', text: 'Letters') do
       expect(page).to have_content(
@@ -31,7 +31,7 @@ RSpec.describe 'Letters and Calls' do
     click_on 'Save changes'
 
     # need to access page directly as not JS enabled
-    visit claim_letters_and_calls_path(claim)
+    visit non_standard_magistrates_payment_claim_letters_and_calls_path(claim)
 
     within('.govuk-table__row', text: 'Letters') do
       expect(page).to have_content(
@@ -47,7 +47,7 @@ RSpec.describe 'Letters and Calls' do
   end
 
   it 'can adjust a call record' do
-    visit claim_letters_and_calls_path(claim)
+    visit non_standard_magistrates_payment_claim_letters_and_calls_path(claim)
 
     within('.govuk-table__row', text: 'Calls') do
       expect(page).to have_content(
@@ -67,7 +67,7 @@ RSpec.describe 'Letters and Calls' do
     click_on 'Save changes'
 
     # need to access page directly as not JS enabled
-    visit claim_letters_and_calls_path(claim)
+    visit non_standard_magistrates_payment_claim_letters_and_calls_path(claim)
 
     within('.govuk-table__row', text: 'Calls') do
       expect(page).to have_content(
@@ -83,7 +83,7 @@ RSpec.describe 'Letters and Calls' do
   end
 
   it 'can remove all uplift' do
-    visit claim_letters_and_calls_path(claim)
+    visit non_standard_magistrates_payment_claim_letters_and_calls_path(claim)
 
     click_on 'Remove uplifts for all items'
 
@@ -92,7 +92,7 @@ RSpec.describe 'Letters and Calls' do
     click_on 'Yes, remove all uplift'
 
     # need to access page directly as not JS enabled
-    visit claim_letters_and_calls_path(claim)
+    visit non_standard_magistrates_payment_claim_letters_and_calls_path(claim)
 
     within('.govuk-table__row', text: 'Letters') do
       expect(page).to have_content(

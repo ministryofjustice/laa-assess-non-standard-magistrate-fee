@@ -11,7 +11,7 @@ RSpec.describe 'Work items' do
   end
 
   it 'can adjust a work item record' do
-    visit claim_work_items_path(claim)
+    visit non_standard_magistrates_payment_claim_work_items_path(claim)
 
     within('.govuk-table__row', text: 'Waiting') do
       expect(page).to have_content(
@@ -31,7 +31,7 @@ RSpec.describe 'Work items' do
     click_on 'Save changes'
 
     # need to access page directly as not JS enabled
-    visit claim_work_items_path(claim)
+    visit non_standard_magistrates_payment_claim_work_items_path(claim)
 
     within('.govuk-table__row', text: 'Waiting') do
       expect(page).to have_content(
@@ -46,7 +46,7 @@ RSpec.describe 'Work items' do
   end
 
   it 'can remove all uplift' do
-    visit claim_work_items_path(claim)
+    visit non_standard_magistrates_payment_claim_work_items_path(claim)
 
     click_on 'Remove uplifts for all items'
 
@@ -55,7 +55,7 @@ RSpec.describe 'Work items' do
     click_on 'Yes, remove all uplift'
 
     # need to access page directly as not JS enabled
-    visit claim_work_items_path(claim)
+    visit non_standard_magistrates_payment_claim_work_items_path(claim)
 
     within('.govuk-table__row', text: 'Waiting') do
       expect(page).to have_content(

@@ -15,7 +15,8 @@ RSpec.describe 'History events' do
 
     Event::NewVersion.build(crime_application: claim)
     Event::Assignment.build(crime_application: claim, current_user: caseworker)
-    Event::Unassignment.build(crime_application: claim, user: caseworker, current_user: caseworker, comment: 'unassignment 1')
+    Event::Unassignment.build(crime_application: claim, user: caseworker, current_user: caseworker,
+                              comment: 'unassignment 1')
     Event::Assignment.build(crime_application: claim, current_user: caseworker)
     Event::ChangeRisk.build(crime_application: claim, explanation: 'Risk change test', previous_risk_level: 'high',
                             current_user: caseworker)
@@ -26,9 +27,10 @@ RSpec.describe 'History events' do
     claim.state = 'granted'
     Event::Decision.build(crime_application: claim, current_user: caseworker, previous_state: 'further_info',
                           comment: 'Decision test')
-    Event::Unassignment.build(crime_application: claim, user: caseworker, current_user: supervisor, comment: 'unassignment 2')
+    Event::Unassignment.build(crime_application: claim, user: caseworker, current_user: supervisor,
+                              comment: 'unassignment 2')
 
-    visit claim_history_path(claim)
+    visit non_standard_magistrates_payment_claim_history_path(claim)
 
     doc = Nokogiri::HTML(page.html)
     history = doc.css(

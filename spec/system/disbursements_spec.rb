@@ -8,7 +8,7 @@ RSpec.describe 'Disbursements' do
   before { sign_in user }
 
   it 'can refuse disbursement item' do
-    visit claim_disbursements_path(claim)
+    visit non_standard_magistrates_payment_claim_disbursements_path(claim)
     within('.govuk-table__row', text: 'Apples') do
       expect(page).to have_content(
         'Apples' \
@@ -22,7 +22,7 @@ RSpec.describe 'Disbursements' do
     fill_in 'Explain your decision', with: 'Testing'
     click_on 'Save changes'
 
-    visit claim_disbursements_path(claim)
+    visit non_standard_magistrates_payment_claim_disbursements_path(claim)
 
     within('.govuk-table__row', text: 'Apples') do
       expect(page).to have_content(
@@ -37,7 +37,7 @@ RSpec.describe 'Disbursements' do
   end
 
   it 'shows error if no changes made to an item' do
-    visit claim_disbursements_path(claim)
+    visit non_standard_magistrates_payment_claim_disbursements_path(claim)
     within('.govuk-table__row', text: 'Apples') do
       expect(page).to have_content(
         'Apples' \

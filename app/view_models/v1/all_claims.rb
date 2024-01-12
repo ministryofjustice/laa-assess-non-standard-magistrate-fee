@@ -20,7 +20,7 @@ module V1
     end
 
     def case_worker_name
-      claim.assignments.first&.display_name || I18n.t('claims.index.unassigned')
+      claim.assignments.first&.display_name || I18n.t('non_standard_magistrates_payment.claims.index.unassigned')
     end
 
     def table_fields

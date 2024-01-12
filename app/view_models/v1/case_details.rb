@@ -13,39 +13,39 @@ module V1
     end
 
     def title
-      I18n.t(".claim_details.#{key}.title")
+      I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.title")
     end
 
     # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     def data
       [
         {
-          title: I18n.t(".claim_details.#{key}.main_offence"),
+          title: I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.main_offence"),
           value: main_offence
         },
         {
-          title: I18n.t(".claim_details.#{key}.main_offence_date"),
+          title: I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.main_offence_date"),
           value: format_in_zone(main_offence_date)
         },
         {
-          title: I18n.t(".claim_details.#{key}.assigned_counsel"),
+          title: I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.assigned_counsel"),
           value: assigned_counsel.capitalize
         },
         {
-          title: I18n.t(".claim_details.#{key}.unassigned_counsel"),
+          title: I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.unassigned_counsel"),
           value: unassigned_counsel.capitalize
         },
         {
-          title: I18n.t(".claim_details.#{key}.agent_instructed"),
+          title: I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.agent_instructed"),
           value: agent_instructed.capitalize
         },
         {
-          title: I18n.t(".claim_details.#{key}.remitted_to_magistrate"),
+          title: I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.remitted_to_magistrate"),
           value: remitted_to_magistrate.capitalize
         },
         (unless remitted_to_magistrate == 'no'
            {
-             title: I18n.t(".claim_details.#{key}.remitted_to_magistrate_date"),
+             title: I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.remitted_to_magistrate_date"),
              value: format_in_zone(remitted_to_magistrate_date)
            }
          end)

@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   end
   mount Sidekiq::Web => "/sidekiq"
 
-  root "landing#index"
+  root "non_standard_magistrates_payment/landing#index"
 
   get :ping, to: 'healthcheck#ping'
 
@@ -46,31 +46,33 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :landing, only: [:index]
-  resources :claims, only: [:new, :index] do
-    resource :claim_details, only: [:show]
-    resource :adjustments, only: [:show]
-    namespace :letters_and_calls do
-      resource :uplift, only: [:edit, :update], path_names: { edit: '' }
+  namespace :non_standard_magistrates_payment do
+    resources :landing, only: [:index]
+    resources :claims, only: [:new, :index] do
+      resource :claim_details, only: [:show]
+      resource :adjustments, only: [:show]
+      namespace :letters_and_calls do
+        resource :uplift, only: [:edit, :update], path_names: { edit: '' }
+      end
+      namespace :work_items do
+        resource :uplift, only: [:edit, :update], path_names: { edit: '' }
+      end
+      resources :work_items, only: [:index, :show, :edit, :update]
+      resources :letters_and_calls, only: [:index, :show, :edit, :update], constraints: { id: /(letters|calls)/ }
+      resources :disbursements, only: [:index, :show, :edit, :update]
+      resource :supporting_evidences, only: [:show]
+      resource :history, only: [:show, :create]
+      resource :change_risk, only: [:edit, :update], path_names: { edit: '' }
+      resource :make_decision, only: [:edit, :update], path_names: { edit: '' }
+      resource :send_back, only: [:edit, :update], path_names: { edit: '' }
+      resource :unassignment, only: [:edit, :update], path_names: { edit: '' }
     end
-    namespace :work_items do
-      resource :uplift, only: [:edit, :update], path_names: { edit: '' }
-    end
-    resources :work_items, only: [:index, :show, :edit, :update]
-    resources :letters_and_calls, only: [:index, :show, :edit, :update], constraints: { id: /(letters|calls)/ }
-    resources :disbursements, only: [:index, :show, :edit, :update]
-    resource :supporting_evidences, only: [:show]
-    resource :history, only: [:show, :create]
-    resource :change_risk, only: [:edit, :update], path_names: { edit: '' }
-    resource :make_decision, only: [:edit, :update], path_names: { edit: '' }
-    resource :send_back, only: [:edit, :update], path_names: { edit: '' }
-    resource :unassignment, only: [:edit, :update], path_names: { edit: '' }
+
+    get 'claims/:claim', to: redirect('claims/%{claim}/claim_details')
+
+    resources :your_claims, only: [:index]
+    resources :assessed_claims, only: [:index]
   end
-
-  get 'claims/:claim', to: redirect('claims/%{claim}/claim_details')
-
-  resources :your_claims, only: [:index]
-  resources :assessed_claims, only: [:index]
 
   namespace :about do
     resources :feedback, only: [:index, :create]

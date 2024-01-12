@@ -8,7 +8,7 @@ module V1
     end
 
     def title
-      I18n.t(".claim_details.#{key}.title")
+      I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.title")
     end
 
     def data

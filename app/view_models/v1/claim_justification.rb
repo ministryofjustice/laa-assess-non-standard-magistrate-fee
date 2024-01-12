@@ -7,7 +7,7 @@ module V1
     end
 
     def title
-      I18n.t(".claim_details.#{key}.title")
+      I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.title")
     end
 
     def reasons_for_claim_list
@@ -18,7 +18,7 @@ module V1
     def data
       [
         {
-          title: I18n.t(".claim_details.#{key}.reasons_for_claim"),
+          title: I18n.t(".non_standard_magistrates_payment.claim_details.#{key}.reasons_for_claim"),
           value: reasons_for_claim_list
         }
       ]
