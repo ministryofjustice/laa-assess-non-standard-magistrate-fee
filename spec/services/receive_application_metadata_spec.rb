@@ -3,7 +3,10 @@ require 'rails_helper'
 RSpec.describe ReceiveApplicationMetadata do
   subject { described_class.new(claim_id) }
 
-  let(:params) { { id: claim_id, risk: 'high', current_version: current_version, state: state } }
+  let(:params) do
+    { id: claim_id, risk: 'high', current_version: current_version, state: state, application_type: 'crm7' }
+  end
+
   let(:state) { 'submitted' }
   let(:current_version) { 1 }
 

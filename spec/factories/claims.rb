@@ -5,6 +5,7 @@ FactoryBot.define do
     current_version { 1 }
     state { 'submitted' }
     json_schema_version { 1 }
+    application_type { 'crm7' }
     data do
       {
         'laa_reference' => 'LAA-FHaMVK',

@@ -1,12 +1,12 @@
 class ClaimsController < ApplicationController
   def index
-    claims = Claim.pending_decision
+    claims = Claim.non_standard_mags.pending_decision
     claims = claims.map { |claim| BaseViewModel.build(:all_claims, claim) }
     @pagy, @claims = pagy_array(claims)
   end
 
   def new
-    claim = Claim.unassigned_claims(current_user).order(created_at: :desc).first
+    claim = Claim.non_standard_mags.unassigned_claims(current_user).order(created_at: :desc).first
 
     if claim
       Claim.transaction do
