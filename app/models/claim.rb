@@ -2,7 +2,7 @@ class Claim < ApplicationRecord
   APPLICATION_TYPES = {
     non_standard_mags: 'crm7',
     prior_authority: 'crm4',
-}.freeze
+  }.freeze
 
   has_many :events, dependent: :destroy
   has_many :assignments, dependent: :destroy
