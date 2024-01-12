@@ -60,7 +60,7 @@ RSpec.describe UnassignmentForm do
       assigned_user = claim.assignments.first.user
       subject.save
       expect(Event::Unassignment).to have_received(:build).with(
-        claim: claim, comment: 'some comment', current_user: user, user: assigned_user
+        crime_application: claim, comment: 'some comment', current_user: user, user: assigned_user
       )
     end
 

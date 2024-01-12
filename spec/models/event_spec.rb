@@ -5,7 +5,7 @@ RSpec.describe Event do
     it 'generates the desired JSON' do
       event = create(:event, :new_version)
       expect(event.as_json).to match(
-        'claim_version' => 1,
+        'crime_application_version' => 1,
         'created_at' => an_instance_of(String),
         'details' => {},
         'linked_id' => nil,
@@ -24,7 +24,7 @@ RSpec.describe Event do
         event = create(:event, :decision)
 
         expect(event.as_json).to match(
-          'claim_version' => 1,
+          'crime_application_version' => 1,
           'created_at' => an_instance_of(String),
           'details' => { 'from' => 'submitted', 'to' => 'granted' },
           'linked_id' => nil,

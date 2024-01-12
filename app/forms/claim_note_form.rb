@@ -13,7 +13,7 @@ class ClaimNoteForm
   def save
     return false unless valid?
 
-    Event::Note.build(claim:, note:, current_user:)
+    Event::Note.build(crime_application: claim, note: note, current_user: current_user)
     true
   rescue StandardError
     false

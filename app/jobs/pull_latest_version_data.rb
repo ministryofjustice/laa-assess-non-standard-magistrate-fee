@@ -31,6 +31,6 @@ class PullLatestVersionData < ApplicationJob
     json_data['events']&.each do |event|
       claim.events.rehydrate!(event)
     end
-    Event::NewVersion.build(claim:)
+    Event::NewVersion.build(crime_application: claim)
   end
 end

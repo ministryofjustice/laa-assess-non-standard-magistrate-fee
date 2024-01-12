@@ -85,7 +85,7 @@ RSpec.describe MakeDecisionForm do
     it 'creates a Decision event' do
       subject.save
       expect(Event::Decision).to have_received(:build).with(
-        claim: claim, comment: 'part comment', previous_state: 'submitted', current_user: user
+        crime_application: claim, comment: 'part comment', previous_state: 'submitted', current_user: user
       )
     end
 

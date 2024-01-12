@@ -98,7 +98,7 @@ RSpec.describe ChangeRiskForm, type: :model do
     it 'creates a ChangeRisk event' do
       subject.save
       expect(Event::ChangeRisk).to have_received(:build).with(
-        claim: claim, explanation: 'Test', previous_risk_level: 'low', current_user: user
+        crime_application: claim, explanation: 'Test', previous_risk_level: 'low', current_user: user
       )
     end
 

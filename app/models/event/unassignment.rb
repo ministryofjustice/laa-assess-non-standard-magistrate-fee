@@ -2,12 +2,12 @@ class Event
   class Unassignment < Event
     belongs_to :secondary_user, optional: true, class_name: 'User'
 
-    def self.build(claim:, user:, current_user:, comment:)
+    def self.build(crime_application:, user:, current_user:, comment:)
       create(
-        claim: claim,
+        crime_application: crime_application,
         primary_user: user,
         secondary_user: user == current_user ? nil : current_user,
-        claim_version: claim.current_version,
+        crime_application_version: crime_application.current_version,
         details: {
           comment:
         }

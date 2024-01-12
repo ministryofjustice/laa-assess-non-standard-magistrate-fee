@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Event::Edit do
-  subject { described_class.build(claim:, details:, linked:, current_user:) }
+  subject { described_class.build(crime_application:, details:, linked:, current_user:) }
 
-  let(:claim) { create(:claim) }
+  let(:crime_application) { create(:claim) }
   let(:current_user) { create(:caseworker) }
   let(:details) do
     {
@@ -18,8 +18,8 @@ RSpec.describe Event::Edit do
 
   it 'can build a new record' do
     expect(subject).to have_attributes(
-      claim_id: claim.id,
-      claim_version: 1,
+      crime_application_id: crime_application.id,
+      crime_application_version: 1,
       event_type: 'Event::Edit',
       primary_user: current_user,
       linked_type: 'letters',

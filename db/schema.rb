@@ -10,21 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_27_112643) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_12_150835) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
 
   create_table "assignments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "claim_id", null: false
+    t.uuid "crime_application_id", null: false
     t.uuid "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["claim_id"], name: "index_assignments_on_claim_id", unique: true
+    t.index ["crime_application_id"], name: "index_assignments_on_crime_application_id", unique: true
     t.index ["user_id"], name: "index_assignments_on_user_id"
   end
 
-  create_table "claims", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "crime_applications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "state"
     t.string "risk"
     t.integer "current_version"
@@ -38,8 +38,8 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_27_112643) do
   end
 
   create_table "events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "claim_id", null: false
-    t.integer "claim_version"
+    t.uuid "crime_application_id", null: false
+    t.integer "crime_application_version"
     t.string "event_type"
     t.uuid "primary_user_id"
     t.uuid "secondary_user_id"
@@ -48,7 +48,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_27_112643) do
     t.jsonb "details", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["claim_id"], name: "index_events_on_claim_id"
+    t.index ["crime_application_id"], name: "index_events_on_crime_application_id"
     t.index ["linked_type", "linked_id"], name: "index_events_on_linked_type_and_linked_id"
     t.index ["primary_user_id"], name: "index_events_on_primary_user_id"
     t.index ["secondary_user_id"], name: "index_events_on_secondary_user_id"
@@ -71,9 +71,9 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_27_112643) do
     t.index ["email"], name: "index_users_on_email"
   end
 
-  add_foreign_key "assignments", "claims"
+  add_foreign_key "assignments", "crime_applications"
   add_foreign_key "assignments", "users"
-  add_foreign_key "events", "claims"
+  add_foreign_key "events", "crime_applications"
   add_foreign_key "events", "users", column: "primary_user_id"
   add_foreign_key "events", "users", column: "secondary_user_id"
 end

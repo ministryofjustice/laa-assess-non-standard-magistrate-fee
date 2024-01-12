@@ -13,20 +13,20 @@ RSpec.describe 'History events' do
     claim = create(:claim)
     supervisor = create(:supervisor)
 
-    Event::NewVersion.build(claim:)
-    Event::Assignment.build(claim: claim, current_user: caseworker)
-    Event::Unassignment.build(claim: claim, user: caseworker, current_user: caseworker, comment: 'unassignment 1')
-    Event::Assignment.build(claim: claim, current_user: caseworker)
-    Event::ChangeRisk.build(claim: claim, explanation: 'Risk change test', previous_risk_level: 'high',
+    Event::NewVersion.build(crime_application: claim)
+    Event::Assignment.build(crime_application: claim, current_user: caseworker)
+    Event::Unassignment.build(crime_application: claim, user: caseworker, current_user: caseworker, comment: 'unassignment 1')
+    Event::Assignment.build(crime_application: claim, current_user: caseworker)
+    Event::ChangeRisk.build(crime_application: claim, explanation: 'Risk change test', previous_risk_level: 'high',
                             current_user: caseworker)
-    Event::Note.build(claim: claim, current_user: caseworker, note: 'User test note')
+    Event::Note.build(crime_application: claim, current_user: caseworker, note: 'User test note')
     claim.state = 'further_info'
-    Event::SendBack.build(claim: claim, current_user: caseworker, previous_state: 'submitted',
+    Event::SendBack.build(crime_application: claim, current_user: caseworker, previous_state: 'submitted',
                           comment: 'Send Back test')
     claim.state = 'granted'
-    Event::Decision.build(claim: claim, current_user: caseworker, previous_state: 'further_info',
+    Event::Decision.build(crime_application: claim, current_user: caseworker, previous_state: 'further_info',
                           comment: 'Decision test')
-    Event::Unassignment.build(claim: claim, user: caseworker, current_user: supervisor, comment: 'unassignment 2')
+    Event::Unassignment.build(crime_application: claim, user: caseworker, current_user: supervisor, comment: 'unassignment 2')
 
     visit claim_history_path(claim)
 

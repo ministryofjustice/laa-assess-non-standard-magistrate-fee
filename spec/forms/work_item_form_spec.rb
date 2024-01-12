@@ -106,8 +106,8 @@ RSpec.describe WorkItemForm do
       it 'creates a event for the time_spent change' do
         expect { subject.save }.to change(Event, :count).by(1)
         expect(Event.last).to have_attributes(
-          claim: claim,
-          claim_version: claim.current_version,
+          crime_application: claim.becomes(CrimeApplication),
+          crime_application_version: claim.current_version,
           event_type: 'Event::Edit',
           linked_type: 'work_items',
           linked_id: id,
@@ -144,8 +144,8 @@ RSpec.describe WorkItemForm do
       it 'creates a event for the time_spent change' do
         expect { subject.save }.to change(Event, :count).by(1)
         expect(Event.last).to have_attributes(
-          claim: claim,
-          claim_version: claim.current_version,
+          crime_application: claim.becomes(CrimeApplication),
+          crime_application_version: claim.current_version,
           event_type: 'Event::Edit',
           linked_type: 'work_items',
           linked_id: id,

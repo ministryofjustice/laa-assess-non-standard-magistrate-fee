@@ -21,7 +21,7 @@ RSpec.describe Claim do
     end
 
     it 'does not include claims the user has been unassigned from' do
-      Event::Unassignment.build(claim: claim, user: user, current_user: user, comment: 'test')
+      Event::Unassignment.build(crime_application: claim, user: user, current_user: user, comment: 'test')
 
       expect(described_class.unassigned_claims(user)).to eq([])
     end
@@ -35,7 +35,7 @@ RSpec.describe Claim do
       assignment = claim.assignments.new(user:)
 
       expect(assignment).not_to be_valid
-      expect(assignment.errors.of_kind?(:claim, :taken)).to be(true)
+      expect(assignment.errors.of_kind?(:crime_application, :taken)).to be(true)
     end
   end
 end

@@ -1,5 +1,5 @@
 class Event < ApplicationRecord
-  belongs_to :claim
+  belongs_to :crime_application
   belongs_to :primary_user, optional: true, class_name: 'User'
 
   self.inheritance_column = :event_type
@@ -39,7 +39,7 @@ class Event < ApplicationRecord
 
   def as_json(*)
     super
-      .slice!('id', 'claim_id')
+      .slice!('id', 'crime_application_id')
       .merge(
         public: PUBLIC_EVENTS.include?(event_type),
         event_type: event_type

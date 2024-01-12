@@ -23,7 +23,10 @@ class UnassignmentForm
 
     if assignment
       Claim.transaction do
-        Event::Unassignment.build(claim:, user:, current_user:, comment:)
+        Event::Unassignment.build(crime_application: claim,
+                                  user: user,
+                                  current_user: current_user,
+                                  comment: comment)
 
         assignment.delete
       end

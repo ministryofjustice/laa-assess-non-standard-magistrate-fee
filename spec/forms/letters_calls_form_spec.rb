@@ -125,8 +125,8 @@ RSpec.describe LettersCallsForm do
       it 'creates a event for the count change' do
         expect { subject.save }.to change(Event, :count).by(1)
         expect(Event.last).to have_attributes(
-          claim: claim,
-          claim_version: claim.current_version,
+          crime_application: claim.becomes(CrimeApplication),
+          crime_application_version: claim.current_version,
           event_type: 'Event::Edit',
           linked_type: 'letters_and_calls',
           linked_id: 'letters',
@@ -160,8 +160,8 @@ RSpec.describe LettersCallsForm do
       it 'creates a event for the uplift change' do
         expect { subject.save }.to change(Event, :count).by(1)
         expect(Event.last).to have_attributes(
-          claim: claim,
-          claim_version: claim.current_version,
+          crime_application: claim.becomes(CrimeApplication),
+          crime_application_version: claim.current_version,
           event_type: 'Event::Edit',
           linked_type: 'letters_and_calls',
           linked_id: 'letters',

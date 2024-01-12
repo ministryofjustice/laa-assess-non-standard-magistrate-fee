@@ -1,14 +1,14 @@
 class Event
   class ChangeRisk < Event
-    def self.build(claim:, explanation:, previous_risk_level:, current_user:)
+    def self.build(crime_application:, explanation:, previous_risk_level:, current_user:)
       create(
-        claim: claim,
-        claim_version: claim.current_version,
+        crime_application: crime_application,
+        crime_application_version: crime_application.current_version,
         primary_user: current_user,
         details: {
           field: 'risk',
           from: previous_risk_level,
-          to: claim.risk,
+          to: crime_application.risk,
           comment: explanation
         }
       )

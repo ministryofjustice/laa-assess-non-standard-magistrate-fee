@@ -31,7 +31,7 @@ class BaseAdjustmentForm
     details[:change] = value - selected_record[field]
 
     selected_record[field] = value
-    Event::Edit.build(claim:, details:, linked:, current_user:)
+    Event::Edit.build(crime_application: claim, details: details, linked: linked, current_user: current_user)
   end
 
   def linked
