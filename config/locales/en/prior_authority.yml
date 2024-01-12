@@ -1,0 +1,20 @@
+en:
+  prior_authority:
+    service_name: 'Assess prior authority to incur disbursements'
+    your_applications: Your applications
+    open_applications: Open applications
+    assessed_applications: Assessed applications
+    static_pages:
+      landing:
+        page_title: Assess prior authority to incur disbursements
+        content_line_1: Use this service to assess applications for prior authority to incur disbursements in criminal cases in relation to magistrates, crown and prison law work.
+        content_line_2: Only caseworkers who have received an email invitation will have access.
+        content_line_3_html: If you do not have access, you should continue using %{link}.
+        eforms: eForms
+        start: Start now
+    applications:
+      your:
+        table_info_item: 'application'
+        page_title: 'Your applications'
+        no_applications: 'You have no applications assigned to you for assessment'
+        next_application: 'Assess next application'

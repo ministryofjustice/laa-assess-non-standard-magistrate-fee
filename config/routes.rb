@@ -79,4 +79,15 @@ Rails.application.routes.draw do
     get :privacy
     get :accessibility
   end
+
+  namespace :prior_authority do
+    root to: 'static_pages#landing'
+    resources :applications, only: [:new, :show] do
+      collection do
+        get :your
+        get :open
+        get :assessed
+      end
+    end
+  end
 end
