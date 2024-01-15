@@ -5,13 +5,13 @@ RSpec.describe NonStandardMagistratesPayment::HistoriesController do
   let(:claim_id) { SecureRandom.uuid }
   let(:events) { [build(:event, :note)] }
   let(:claim_summary) { instance_double(V1::ClaimSummary) }
-  let(:claim_note) { instance_double(ClaimNoteForm, save: save, id: claim_id) }
+  let(:claim_note) { instance_double(NonStandardMagistratesPayment::ClaimNoteForm, save: save, id: claim_id) }
   let(:save) { true }
 
   before do
     allow(Claim).to receive(:find).and_return(claim)
     allow(BaseViewModel).to receive_messages(build: claim_summary)
-    allow(ClaimNoteForm).to receive(:new).and_return(claim_note)
+    allow(NonStandardMagistratesPayment::ClaimNoteForm).to receive(:new).and_return(claim_note)
   end
 
   context 'show' do
@@ -42,11 +42,11 @@ RSpec.describe NonStandardMagistratesPayment::HistoriesController do
     it 'builds a note object' do
       post :create, params: {
         claim_id: claim.id,
-        claim_note_form: { note: 'new note', id: claim.id }
+        non_standard_magistrates_payment_claim_note_form: { note: 'new note', id: claim.id }
       }
 
       expected_params = ActionController::Parameters.new(note: 'new note', id: claim.id, current_user: user).permit!
-      expect(ClaimNoteForm).to have_received(:new).with(expected_params)
+      expect(NonStandardMagistratesPayment::ClaimNoteForm).to have_received(:new).with(expected_params)
     end
 
     context 'when decision has an erorr being updated' do
@@ -56,7 +56,7 @@ RSpec.describe NonStandardMagistratesPayment::HistoriesController do
         allow(controller).to receive(:render)
         post :create, params: {
           claim_id: claim.id,
-          claim_note_form: { note: 'new note', id: claim.id }
+          non_standard_magistrates_payment_claim_note_form: { note: 'new note', id: claim.id }
         }
 
         expect(controller).to have_received(:render).with(

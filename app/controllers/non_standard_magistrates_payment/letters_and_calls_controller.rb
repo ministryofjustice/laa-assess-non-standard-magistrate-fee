@@ -54,7 +54,7 @@ module NonStandardMagistratesPayment
     end
 
     def form_params
-      params.require(:"letters_calls_form_#{params[:id]}").permit(
+      params.require(:"non_standard_magistrates_payment_letters_calls_form_#{params[:id]}").permit(
         :uplift,
         :count,
         :explanation,

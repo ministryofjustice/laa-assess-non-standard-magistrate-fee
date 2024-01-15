@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe UnassignmentForm do
+RSpec.describe NonStandardMagistratesPayment::UnassignmentForm do
   subject { described_class.new(params) }
 
   let(:claim) { create(:claim) }

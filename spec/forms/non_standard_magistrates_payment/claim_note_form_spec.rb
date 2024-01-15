@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ClaimNoteForm do
+RSpec.describe NonStandardMagistratesPayment::ClaimNoteForm do
   subject { described_class.new(params) }
 
   let(:claim) { create(:claim) }

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Claim do
   let(:claim) { create(:claim) }
 
-  describe '#unassigned_claims' do
+  describe '#unassigned' do
     let(:user) { create(:caseworker) }
 
     it 'returns claims oldest to youngest' do
@@ -11,19 +11,19 @@ RSpec.describe Claim do
       claim2 = create(:claim)
       claim3 = create(:claim)
 
-      expect(described_class.unassigned_claims(user)).to eq([claim1, claim2, claim3])
+      expect(described_class.unassigned(user)).to eq([claim1, claim2, claim3])
     end
 
     it 'does not include claims which have already been assigned' do
       claim.assignments.create(user: create(:caseworker))
 
-      expect(described_class.unassigned_claims(user)).to eq([])
+      expect(described_class.unassigned(user)).to eq([])
     end
 
     it 'does not include claims the user has been unassigned from' do
       Event::Unassignment.build(crime_application: claim, user: user, current_user: user, comment: 'test')
 
-      expect(described_class.unassigned_claims(user)).to eq([])
+      expect(described_class.unassigned(user)).to eq([])
     end
   end
 

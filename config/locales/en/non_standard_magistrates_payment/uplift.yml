@@ -24,24 +24,24 @@ en:
 
   helpers:
     label:
-      uplift_letters_and_calls_form:
+      non_standard_magistrates_payment_uplift_letters_and_calls_form:
         explanation: Explain your decision
-      uplift_work_items_form:
+      non_standard_magistrates_payment_uplift_work_items_form:
         explanation: Explain your decision
     hint:
-      uplift_letters_and_calls_form:
+      non_standard_magistrates_payment_uplift_letters_and_calls_form:
         explanation: This information will be shared with the provider.
-      uplift_work_items_form:
+      non_standard_magistrates_payment_uplift_work_items_form:
         explanation: This information will be shared with the provider.
 
   activemodel:
     errors:
       models:
-        uplift/work_items_form:
+        non_standard_magistrates_payment/uplift/work_items_form:
           attributes:
             explanation:
               blank: Add an explanation for your decision
-        uplift/letters_and_calls_form:
+        non_standard_magistrates_payment/uplift/letters_and_calls_form:
           attributes:
             explanation:
               blank: Add an explanation for your decision

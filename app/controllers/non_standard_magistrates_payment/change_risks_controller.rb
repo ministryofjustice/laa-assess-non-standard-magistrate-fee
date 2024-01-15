@@ -21,7 +21,7 @@ module NonStandardMagistratesPayment
     private
 
     def risk_params
-      params.require(:change_risk_form).permit(
+      params.require(:non_standard_magistrates_payment_change_risk_form).permit(
         :id, :risk_level, :explanation
       ).merge(current_user:)
     end

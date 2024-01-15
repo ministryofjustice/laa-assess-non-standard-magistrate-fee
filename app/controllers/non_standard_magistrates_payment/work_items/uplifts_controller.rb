@@ -23,7 +23,7 @@ module NonStandardMagistratesPayment
       private
 
       def form_params
-        params.require(:uplift_work_items_form)
+        params.require(:non_standard_magistrates_payment_uplift_work_items_form)
               .permit(:explanation)
               .merge(current_user:)
       end

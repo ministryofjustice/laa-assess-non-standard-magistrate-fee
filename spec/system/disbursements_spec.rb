@@ -3,7 +3,9 @@ require 'rails_helper'
 RSpec.describe 'Disbursements' do
   let(:user) { create(:caseworker) }
   let(:claim) { create(:claim) }
-  let(:disbursement_form_error_message) { 'activemodel.errors.models.disbursements_form.attributes' }
+  let(:disbursement_form_error_message) do
+    'activemodel.errors.models.non_standard_magistrates_payment/disbursements_form.attributes'
+  end
 
   before { sign_in user }
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ChangeRiskForm, type: :model do
+RSpec.describe NonStandardMagistratesPayment::ChangeRiskForm, type: :model do
   let(:user) { instance_double(User) }
   let(:claim) { create(:claim) }
 

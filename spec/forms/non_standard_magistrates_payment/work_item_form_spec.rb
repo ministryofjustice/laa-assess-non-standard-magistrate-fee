@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe WorkItemForm do
+RSpec.describe NonStandardMagistratesPayment::WorkItemForm do
   subject { described_class.new(params) }
 
   let(:claim) { create(:claim) }

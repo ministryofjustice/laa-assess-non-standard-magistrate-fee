@@ -13,16 +13,16 @@ en:
 
   helpers:
     label:
-      change_risk_form:
+      non_standard_magistrates_payment_change_risk_form:
         explanation: Explain your decision
     hint:
-      change_risk_form:
+      non_standard_magistrates_payment_change_risk_form:
         explanation: This information is for LAA only. It will not be shared with the provider.
 
   activemodel:
     errors:
       models:
-        change_risk_form:
+        non_standard_magistrates_payment/change_risk_form:
           attributes:
             risk_level:
               blank: Select what you want to change the risk to

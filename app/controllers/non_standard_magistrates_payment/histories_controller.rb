@@ -26,7 +26,7 @@ module NonStandardMagistratesPayment
     private
 
     def claim_note_params
-      params.require(:claim_note_form).permit(
+      params.require(:non_standard_magistrates_payment_claim_note_form).permit(
         :note
       ).merge(current_user: current_user, id: params[:claim_id])
     end

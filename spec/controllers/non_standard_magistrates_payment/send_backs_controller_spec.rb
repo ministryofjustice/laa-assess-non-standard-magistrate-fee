@@ -4,12 +4,12 @@ RSpec.describe NonStandardMagistratesPayment::SendBacksController do
   context 'edit' do
     let(:claim) { build(:claim, id: claim_id) }
     let(:claim_id) { SecureRandom.uuid }
-    let(:send_back) { instance_double(SendBackForm) }
+    let(:send_back) { instance_double(NonStandardMagistratesPayment::SendBackForm) }
     let(:defendant_name) { 'Tracy Linklater' }
 
     before do
       allow(Claim).to receive(:find).and_return(claim)
-      allow(SendBackForm).to receive(:new).and_return(send_back)
+      allow(NonStandardMagistratesPayment::SendBackForm).to receive(:new).and_return(send_back)
     end
 
     it 'renders successfully with claims' do
@@ -37,7 +37,7 @@ RSpec.describe NonStandardMagistratesPayment::SendBacksController do
   end
 
   context 'update' do
-    let(:send_back) { instance_double(SendBackForm, save: save, state: 'further_info') }
+    let(:send_back) { instance_double(NonStandardMagistratesPayment::SendBackForm, save: save, state: 'further_info') }
     let(:user) { instance_double(User) }
     let(:claim) { build(:claim, id: SecureRandom.uuid) }
     let(:laa_reference_class) { instance_double(V1::LaaReference, laa_reference: 'AAA111') }
@@ -46,7 +46,7 @@ RSpec.describe NonStandardMagistratesPayment::SendBacksController do
 
     before do
       allow(User).to receive(:first_or_create).and_return(user)
-      allow(SendBackForm).to receive(:new).and_return(send_back)
+      allow(NonStandardMagistratesPayment::SendBackForm).to receive(:new).and_return(send_back)
       allow(BaseViewModel).to receive(:build).and_return(laa_reference_class)
       allow(Claim).to receive(:find).and_return(claim)
     end
@@ -54,9 +54,9 @@ RSpec.describe NonStandardMagistratesPayment::SendBacksController do
     it 'builds a decision object' do
       put :update, params: {
         claim_id: claim.id,
-        send_back_form: { state: 'further_info', comment: 'some commment' }
+        non_standard_magistrates_payment_send_back_form: { state: 'further_info', comment: 'some commment' }
       }
-      expect(SendBackForm).to have_received(:new).with(
+      expect(NonStandardMagistratesPayment::SendBackForm).to have_received(:new).with(
         'state' => 'further_info', 'comment' => 'some commment', :claim => claim, 'current_user' => user
       )
     end
@@ -65,7 +65,7 @@ RSpec.describe NonStandardMagistratesPayment::SendBacksController do
       it 'redirects to claim page' do
         put :update, params: {
           claim_id: claim.id,
-          send_back_form: { state: 'further_info', comment: nil, id: claim.id }
+          non_standard_magistrates_payment_send_back_form: { state: 'further_info', comment: nil, id: claim.id }
         }
 
         expect(response).to redirect_to(non_standard_magistrates_payment_your_claims_path)
@@ -83,7 +83,7 @@ RSpec.describe NonStandardMagistratesPayment::SendBacksController do
         allow(controller).to receive(:render)
         put :update, params: {
           claim_id: claim.id,
-          send_back_form: { state: 'further_info', comment: nil, id: claim.id }
+          non_standard_magistrates_payment_send_back_form: { state: 'further_info', comment: nil, id: claim.id }
         }
 
         expect(controller).to have_received(:render)

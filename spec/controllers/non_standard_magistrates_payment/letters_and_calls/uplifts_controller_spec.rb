@@ -4,11 +4,11 @@ RSpec.describe NonStandardMagistratesPayment::LettersAndCalls::UpliftsController
   context 'edit' do
     let(:claim) { instance_double(Claim, id: claim_id, risk: 'high') }
     let(:claim_id) { SecureRandom.uuid }
-    let(:form) { instance_double(Uplift::LettersAndCallsForm) }
+    let(:form) { instance_double(NonStandardMagistratesPayment::Uplift::LettersAndCallsForm) }
 
     before do
       allow(Claim).to receive(:find).and_return(claim)
-      allow(Uplift::LettersAndCallsForm).to receive(:new).and_return(form)
+      allow(NonStandardMagistratesPayment::Uplift::LettersAndCallsForm).to receive(:new).and_return(form)
     end
 
     it 'renders successfully with claims' do
@@ -24,10 +24,10 @@ RSpec.describe NonStandardMagistratesPayment::LettersAndCalls::UpliftsController
   context 'update' do
     let(:claim) { instance_double(Claim, id: claim_id, risk: 'high') }
     let(:claim_id) { SecureRandom.uuid }
-    let(:form) { instance_double(Uplift::LettersAndCallsForm, save:) }
+    let(:form) { instance_double(NonStandardMagistratesPayment::Uplift::LettersAndCallsForm, save:) }
 
     before do
-      allow(Uplift::LettersAndCallsForm).to receive(:new).and_return(form)
+      allow(NonStandardMagistratesPayment::Uplift::LettersAndCallsForm).to receive(:new).and_return(form)
       allow(Claim).to receive(:find).and_return(claim)
     end
 
@@ -36,7 +36,9 @@ RSpec.describe NonStandardMagistratesPayment::LettersAndCalls::UpliftsController
 
       it 'renders successfully with claims' do
         allow(controller).to receive(:render)
-        put :update, params: { claim_id: claim_id, uplift_letters_and_calls_form: { some: :data } }
+        put :update,
+            params: { claim_id: claim_id,
+non_standard_magistrates_payment_uplift_letters_and_calls_form: { some: :data } }
 
         expect(controller).to redirect_to(
           non_standard_magistrates_payment_claim_adjustments_path(claim,
@@ -51,7 +53,9 @@ RSpec.describe NonStandardMagistratesPayment::LettersAndCalls::UpliftsController
 
       it 'renders successfully with claims' do
         allow(controller).to receive(:render)
-        put :update, params: { claim_id: claim_id, uplift_letters_and_calls_form: { some: :data } }
+        put :update,
+            params: { claim_id: claim_id,
+non_standard_magistrates_payment_uplift_letters_and_calls_form: { some: :data } }
 
         expect(controller).to have_received(:render)
                           .with(:edit, locals: { claim:, form: })

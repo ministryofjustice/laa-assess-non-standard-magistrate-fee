@@ -1,7 +1,10 @@
 module PriorAuthority
   class ApplicationsController < PriorAuthority::BaseController
     def your
-      applications = PriorAuthorityApplication.your_claims(current_user).map { PriorAuthority::Application.new(_1) }
+      applications = PriorAuthorityApplication.pending_and_assigned_to(current_user).map do |application|
+        PriorAuthority::Application.new(application)
+      end
+
       @pagy, @applications = pagy_array(applications)
     end
 

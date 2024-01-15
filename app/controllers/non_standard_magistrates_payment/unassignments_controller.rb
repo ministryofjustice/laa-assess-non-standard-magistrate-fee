@@ -32,7 +32,7 @@ module NonStandardMagistratesPayment
     end
 
     def send_back_params
-      params.require(:unassignment_form).permit(
+      params.require(:non_standard_magistrates_payment_unassignment_form).permit(
         :comment
       ).merge(current_user:)
     end

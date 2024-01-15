@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SendBackForm do
+RSpec.describe NonStandardMagistratesPayment::SendBackForm do
   subject { described_class.new(params) }
 
   let(:claim) { create(:claim) }

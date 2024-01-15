@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe Uplift::RemoverForm do
+RSpec.describe NonStandardMagistratesPayment::Uplift::RemoverForm do
   subject { implementation_class.new(claim:, current_user:, explanation:, selected_record:) }
 
-  let(:implementation_class) { Uplift::LettersAndCallsForm::Remover }
+  let(:implementation_class) { NonStandardMagistratesPayment::Uplift::LettersAndCallsForm::Remover }
   let(:claim) { build(:claim) }
   let(:current_user) { instance_double(User) }
   let(:explanation) { 'some reason' }

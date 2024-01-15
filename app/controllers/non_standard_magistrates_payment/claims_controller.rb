@@ -7,7 +7,7 @@ module NonStandardMagistratesPayment
     end
 
     def new
-      claim = Claim.unassigned_claims(current_user).order(created_at: :desc).first
+      claim = Claim.unassigned(current_user).order(created_at: :desc).first
 
       if claim
         Claim.transaction do

@@ -4,11 +4,11 @@ RSpec.describe NonStandardMagistratesPayment::ChangeRisksController, type: :cont
   context 'edit' do
     let(:claim) { instance_double(Claim, id: claim_id, risk: 'high') }
     let(:claim_id) { SecureRandom.uuid }
-    let(:risk) { instance_double(ChangeRiskForm) }
+    let(:risk) { instance_double(NonStandardMagistratesPayment::ChangeRiskForm) }
 
     before do
       allow(Claim).to receive(:find).and_return(claim)
-      allow(ChangeRiskForm).to receive(:new).and_return(risk)
+      allow(NonStandardMagistratesPayment::ChangeRiskForm).to receive(:new).and_return(risk)
     end
 
     it 'renders successfully with claims' do
@@ -24,28 +24,28 @@ RSpec.describe NonStandardMagistratesPayment::ChangeRisksController, type: :cont
   context 'update' do
     let(:claim) { instance_double(Claim, id: claim_id) }
     let(:claim_id) { SecureRandom.uuid }
-    let(:risk) { instance_double(ChangeRiskForm, save:, risk_level:) }
+    let(:risk) { instance_double(NonStandardMagistratesPayment::ChangeRiskForm, save:, risk_level:) }
     let(:user) { instance_double(User) }
     let(:risk_level) { 'high' }
     let(:save) { true }
 
     before do
       allow(User).to receive(:first_or_create).and_return(user)
-      allow(ChangeRiskForm).to receive(:new).and_return(risk)
+      allow(NonStandardMagistratesPayment::ChangeRiskForm).to receive(:new).and_return(risk)
       allow(Claim).to receive(:find).and_return(claim)
     end
 
     it 'builds a risk object' do
       put :update, params: {
         claim_id: claim.id,
-        change_risk_form: { risk_level: 'low', explanation: nil, id: claim.id }
+        non_standard_magistrates_payment_change_risk_form: { risk_level: 'low', explanation: nil, id: claim.id }
       }
 
       expected_params = ActionController::Parameters.new(risk_level: 'low',
                                                          explanation: '',
                                                          id: claim.id,
                                                          current_user: user).permit!
-      expect(ChangeRiskForm).to have_received(:new).with(expected_params)
+      expect(NonStandardMagistratesPayment::ChangeRiskForm).to have_received(:new).with(expected_params)
     end
 
     context 'when decision has an erorr being updated' do
@@ -55,7 +55,7 @@ RSpec.describe NonStandardMagistratesPayment::ChangeRisksController, type: :cont
         allow(controller).to receive(:render)
         put :update, params: {
           claim_id: claim.id,
-        change_risk_form: { risk_level: 'low', explanation: nil, id: claim.id }
+          non_standard_magistrates_payment_change_risk_form: { risk_level: 'low', explanation: nil, id: claim.id }
         }
 
         expect(controller).to have_received(:render)

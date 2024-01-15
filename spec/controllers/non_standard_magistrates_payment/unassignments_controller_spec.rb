@@ -4,12 +4,12 @@ RSpec.describe NonStandardMagistratesPayment::UnassignmentsController do
   context 'edit' do
     let(:claim) { build(:claim, id: claim_id) }
     let(:claim_id) { SecureRandom.uuid }
-    let(:unassignment) { instance_double(UnassignmentForm) }
+    let(:unassignment) { instance_double(NonStandardMagistratesPayment::UnassignmentForm) }
     let(:defendant_name) { 'Tracy Linklater' }
 
     before do
       allow(Claim).to receive(:find).and_return(claim)
-      allow(UnassignmentForm).to receive(:new).and_return(unassignment)
+      allow(NonStandardMagistratesPayment::UnassignmentForm).to receive(:new).and_return(unassignment)
     end
 
     it 'renders successfully with claims' do
@@ -23,7 +23,9 @@ RSpec.describe NonStandardMagistratesPayment::UnassignmentsController do
   end
 
   context 'update' do
-    let(:unassignment) { instance_double(UnassignmentForm, save:, unassignment_user:, user:) }
+    let(:unassignment) do
+      instance_double(NonStandardMagistratesPayment::UnassignmentForm, save:, unassignment_user:, user:)
+    end
     let(:unassignment_user) { 'other' }
     let(:user) { instance_double(User, display_name: 'Jim Bob') }
     let(:claim) { create(:claim, :with_assignment) }
@@ -33,7 +35,7 @@ RSpec.describe NonStandardMagistratesPayment::UnassignmentsController do
 
     before do
       allow(User).to receive(:first_or_create).and_return(user)
-      allow(UnassignmentForm).to receive(:new).and_return(unassignment)
+      allow(NonStandardMagistratesPayment::UnassignmentForm).to receive(:new).and_return(unassignment)
       allow(BaseViewModel).to receive(:build).and_return(laa_reference_class)
       allow(Claim).to receive(:find).and_return(claim)
     end
@@ -41,9 +43,9 @@ RSpec.describe NonStandardMagistratesPayment::UnassignmentsController do
     it 'builds a decision object' do
       put :update, params: {
         claim_id: claim.id,
-        unassignment_form: { comment: 'some commment' }
+        non_standard_magistrates_payment_unassignment_form: { comment: 'some commment' }
       }
-      expect(UnassignmentForm).to have_received(:new).with(
+      expect(NonStandardMagistratesPayment::UnassignmentForm).to have_received(:new).with(
         'comment' => 'some commment', :claim => claim, 'current_user' => user
       )
     end
@@ -52,7 +54,7 @@ RSpec.describe NonStandardMagistratesPayment::UnassignmentsController do
       it 'redirects to claim page' do
         put :update, params: {
           claim_id: claim.id,
-          unassignment_form: { comment: nil, id: claim.id }
+          non_standard_magistrates_payment_unassignment_form: { comment: nil, id: claim.id }
         }
 
         expect(response).to redirect_to(non_standard_magistrates_payment_your_claims_path)
@@ -69,7 +71,7 @@ RSpec.describe NonStandardMagistratesPayment::UnassignmentsController do
         it 'redirects to claim page' do
           put :update, params: {
             claim_id: claim.id,
-            unassignment_form: { state: 'further_info', comment: nil, id: claim.id }
+            non_standard_magistrates_payment_unassignment_form: { state: 'further_info', comment: nil, id: claim.id }
           }
 
           expect(response).to redirect_to(non_standard_magistrates_payment_your_claims_path)
@@ -89,7 +91,7 @@ RSpec.describe NonStandardMagistratesPayment::UnassignmentsController do
         allow(controller).to receive(:render)
         put :update, params: {
           claim_id: claim.id,
-          unassignment_form: { comment: nil, id: claim.id }
+          non_standard_magistrates_payment_unassignment_form: { comment: nil, id: claim.id }
         }
 
         expect(controller).to have_received(:render)

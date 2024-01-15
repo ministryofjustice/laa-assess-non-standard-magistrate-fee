@@ -1,7 +1,7 @@
 module NonStandardMagistratesPayment
   class YourClaimsController < ApplicationController
     def index
-      claims = Claim.your_claims(current_user)
+      claims = Claim.pending_and_assigned_to(current_user)
       pagy, filtered_claims = pagy_array(claims)
       your_claims = filtered_claims.map { |claim| BaseViewModel.build(:your_claims, claim) }
 

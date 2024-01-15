@@ -44,7 +44,7 @@ module NonStandardMagistratesPayment
     private
 
     def form_params
-      params.require(:disbursements_form).permit(
+      params.require(:non_standard_magistrates_payment_disbursements_form).permit(
         :total_cost_without_vat,
         :explanation,
       ).merge(

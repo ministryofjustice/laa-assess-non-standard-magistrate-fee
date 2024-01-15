@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe MakeDecisionForm do
+RSpec.describe NonStandardMagistratesPayment::MakeDecisionForm do
   subject { described_class.new(params) }
 
   let(:claim) { create(:claim) }

@@ -73,11 +73,11 @@ en:
           uplift_removed: All uplifts have been removed
   helpers:
     legend:
-      work_item_form:
+      non_standard_magistrates_payment_work_item_form:
         uplift: Remove the uplift for this item
         time_spent: Change time spent (optional)
     label:
-      work_item_form:
+      non_standard_magistrates_payment_work_item_form:
         uplift_options:
           'yes': Yes, remove uplift
           'no': No, do not remove uplift
@@ -85,7 +85,7 @@ en:
         reject_comment: Explain your decision
         explanation: Explain your decision
     hint:
-      work_item_form:
+      non_standard_magistrates_payment_work_item_form:
         time_spent: For example, 1 hour and 30 minutes
         uplift: You must explain your decision
         explanation: |
@@ -95,7 +95,7 @@ en:
   activemodel:
     errors:
       models:
-        work_item_form:
+        non_standard_magistrates_payment/work_item_form:
           attributes:
             base:
               no_change: The new time cannot be the same as the cost submitted by the provider

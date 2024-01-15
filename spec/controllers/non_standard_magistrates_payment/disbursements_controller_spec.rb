@@ -78,7 +78,7 @@ RSpec.describe NonStandardMagistratesPayment::DisbursementsController do
   context 'edit' do
     let(:claim) { instance_double(Claim, id: claim_id) }
     let(:claim_id) { SecureRandom.uuid }
-    let(:form) { instance_double(DisbursementsForm) }
+    let(:form) { instance_double(NonStandardMagistratesPayment::DisbursementsForm) }
     let(:disbursement_id) { SecureRandom.uuid }
     let(:disbursement) do
       instance_double(V1::Disbursement, id: disbursement_id, attributes: attributes, form_attributes: {})
@@ -109,7 +109,7 @@ RSpec.describe NonStandardMagistratesPayment::DisbursementsController do
     before do
       allow(Claim).to receive(:find).and_return(claim)
       allow(BaseViewModel).to receive(:build).and_return([disbursement])
-      allow(DisbursementsForm).to receive(:new).and_return(form)
+      allow(NonStandardMagistratesPayment::DisbursementsForm).to receive(:new).and_return(form)
     end
 
     context 'when URL is for disburement' do
@@ -127,7 +127,7 @@ RSpec.describe NonStandardMagistratesPayment::DisbursementsController do
   context 'update' do
     let(:claim) { instance_double(Claim, id: claim_id) }
     let(:claim_id) { SecureRandom.uuid }
-    let(:form) { instance_double(DisbursementsForm, save:) }
+    let(:form) { instance_double(NonStandardMagistratesPayment::DisbursementsForm, save:) }
     let(:disbursement_id) { '1c0f36fd-fd39-498a-823b-0a3837454563' }
     let(:disbursement) { instance_double(V1::Disbursement, id: disbursement_id, attributes: item) }
     let(:item) do
@@ -146,7 +146,7 @@ RSpec.describe NonStandardMagistratesPayment::DisbursementsController do
     before do
       allow(Claim).to receive(:find).and_return(claim)
       allow(BaseViewModel).to receive(:build).and_return([disbursement])
-      allow(DisbursementsForm).to receive(:new).and_return(form)
+      allow(NonStandardMagistratesPayment::DisbursementsForm).to receive(:new).and_return(form)
     end
 
     context 'when form save is successful' do
@@ -154,7 +154,9 @@ RSpec.describe NonStandardMagistratesPayment::DisbursementsController do
 
       it 'renders successfully with claims' do
         allow(controller).to receive(:render)
-        put :update, params: { claim_id: claim_id, id: disbursement_id, disbursements_form: { some: :data } }
+        put :update,
+            params: { claim_id: claim_id, id: disbursement_id,
+non_standard_magistrates_payment_disbursements_form: { some: :data } }
 
         expect(controller).to redirect_to(
           non_standard_magistrates_payment_claim_adjustments_path(claim,
@@ -169,7 +171,9 @@ RSpec.describe NonStandardMagistratesPayment::DisbursementsController do
 
       it 'renders successfully with claims' do
         allow(controller).to receive(:render)
-        put :update, params: { claim_id: claim_id, id: disbursement_id, disbursements_form: { some: :data } }
+        put :update,
+            params: { claim_id: claim_id, id: disbursement_id,
+non_standard_magistrates_payment_disbursements_form: { some: :data } }
 
         expect(controller).to have_received(:render)
                           .with(:edit, locals: { claim: claim, item: disbursement, form: form })

@@ -10,25 +10,19 @@ class CrimeApplication < ApplicationRecord
   validates :current_version, numericality: { only_integer: true, greater_than: 0 }
   validates :application_type, inclusion: { in: APPLICATION_TYPES.values }
 
-  scope :pending_decision, -> { where.not(state: MakeDecisionForm::STATES) }
-  scope :decision_made, -> { where(state: MakeDecisionForm::STATES) }
-  scope :your_claims, lambda { |user|
+  # TODO: When prior authority states are defined, stop referring to specifically NSM states here
+  scope :pending_decision, -> { where.not(state: NonStandardMagistratesPayment::MakeDecisionForm::STATES) }
+  scope :decision_made, -> { where(state: NonStandardMagistratesPayment::MakeDecisionForm::STATES) }
+
+  scope :pending_and_assigned_to, lambda { |user|
     pending_decision
       .joins(:assignments)
       .where(assignments: { user_id: user.id })
   }
-  scope :unassigned_claims, lambda { |user|
+  scope :unassigned, lambda { |user|
     pending_decision
       .where.missing(:assignments)
       .where.not(id: Event::Unassignment.where(primary_user_id: user.id).select(:crime_application_id))
       .order(:created_at)
   }
-
-  def editable?
-    MakeDecisionForm::STATES.exclude?(state)
-  end
-
-  def display_state?
-    SendBackForm::STATES.include?(state) || !editable?
-  end
 end

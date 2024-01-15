@@ -61,7 +61,7 @@ namespace :custom_seeds do
         claim = Claim.create(
           claim_hash.merge(version_hash.slice('json_schema_version', 'data'))
         )
-        Event::NewVersion.build(claim:)
+        Event::NewVersion.build(crime_application: claim)
 
         # TODO: add an assignment event
       rescue => e

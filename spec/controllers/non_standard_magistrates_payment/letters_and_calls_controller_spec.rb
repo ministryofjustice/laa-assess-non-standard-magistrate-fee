@@ -31,7 +31,7 @@ RSpec.describe NonStandardMagistratesPayment::LettersAndCallsController do
   context 'edit' do
     let(:claim) { instance_double(Claim, id: claim_id, risk: 'high') }
     let(:claim_id) { SecureRandom.uuid }
-    let(:form) { instance_double(LettersCallsForm) }
+    let(:form) { instance_double(NonStandardMagistratesPayment::LettersCallsForm) }
     let(:letters_and_calls) { [calls, letters] }
     let(:calls) { instance_double(V1::LetterAndCall, type: double(value: 'calls'), form_attributes: {}) }
     let(:letters) { instance_double(V1::LetterAndCall, type: double(value: 'letters'), form_attributes: {}) }
@@ -39,7 +39,7 @@ RSpec.describe NonStandardMagistratesPayment::LettersAndCallsController do
     before do
       allow(Claim).to receive(:find).and_return(claim)
       allow(BaseViewModel).to receive(:build).and_return(letters_and_calls)
-      allow(LettersCallsForm).to receive(:new).and_return(form)
+      allow(NonStandardMagistratesPayment::LettersCallsForm).to receive(:new).and_return(form)
     end
 
     context 'when type is unknown' do
@@ -119,14 +119,14 @@ RSpec.describe NonStandardMagistratesPayment::LettersAndCallsController do
   context 'update' do
     let(:claim) { instance_double(Claim, id: claim_id, risk: 'high') }
     let(:claim_id) { SecureRandom.uuid }
-    let(:form) { instance_double(LettersCallsForm, save:) }
+    let(:form) { instance_double(NonStandardMagistratesPayment::LettersCallsForm, save:) }
     let(:letters_and_calls) { [calls, letters] }
     let(:calls) { instance_double(V1::LetterAndCall, type: double(value: 'calls'), form_attributes: {}) }
     let(:letters) { instance_double(V1::LetterAndCall, type: double(value: 'letters'), form_attributes: {}) }
 
     before do
       allow(BaseViewModel).to receive(:build).and_return(letters_and_calls)
-      allow(LettersCallsForm).to receive(:new).and_return(form)
+      allow(NonStandardMagistratesPayment::LettersCallsForm).to receive(:new).and_return(form)
       allow(Claim).to receive(:find).and_return(claim)
     end
 
@@ -136,7 +136,9 @@ RSpec.describe NonStandardMagistratesPayment::LettersAndCallsController do
 
         it 'renders successfully with claims' do
           allow(controller).to receive(:render)
-          put :update, params: { claim_id: claim_id, id: 'letters', letters_calls_form_letters: { some: :data } }
+          put :update,
+              params: { claim_id: claim_id, id: 'letters',
+non_standard_magistrates_payment_letters_calls_form_letters: { some: :data } }
 
           expect(controller).to redirect_to(
             non_standard_magistrates_payment_claim_adjustments_path(claim,
@@ -151,7 +153,9 @@ RSpec.describe NonStandardMagistratesPayment::LettersAndCallsController do
 
         it 'renders successfully with claims' do
           allow(controller).to receive(:render)
-          put :update, params: { claim_id: claim_id, id: 'letters', letters_calls_form_letters: { some: :data } }
+          put :update,
+              params: { claim_id: claim_id, id: 'letters',
+non_standard_magistrates_payment_letters_calls_form_letters: { some: :data } }
 
           expect(controller).to have_received(:render)
                             .with(:edit, locals: { claim: claim, form: form, item: letters })
@@ -166,7 +170,9 @@ RSpec.describe NonStandardMagistratesPayment::LettersAndCallsController do
 
         it 'renders successfully with claims' do
           allow(controller).to receive(:render)
-          put :update, params: { claim_id: claim_id, id: 'calls', letters_calls_form_calls: { some: :data } }
+          put :update,
+              params: { claim_id: claim_id, id: 'calls',
+non_standard_magistrates_payment_letters_calls_form_calls: { some: :data } }
 
           expect(controller).to redirect_to(
             non_standard_magistrates_payment_claim_adjustments_path(claim,
@@ -181,7 +187,9 @@ RSpec.describe NonStandardMagistratesPayment::LettersAndCallsController do
 
         it 'renders successfully with claims' do
           allow(controller).to receive(:render)
-          put :update, params: { claim_id: claim_id, id: 'calls', letters_calls_form_calls: { some: :data } }
+          put :update,
+              params: { claim_id: claim_id, id: 'calls',
+non_standard_magistrates_payment_letters_calls_form_calls: { some: :data } }
 
           expect(controller).to have_received(:render)
                             .with(:edit, locals: { claim: claim, form: form, item: calls })

@@ -11,22 +11,22 @@ en:
 
   helpers:
     legend:
-      send_back_form:
+      non_standard_magistrates_payment_send_back_form:
         state: Why are you sending this claim back?
     label:
-      send_back_form:
+      non_standard_magistrates_payment_send_back_form:
         comment: Explain your decision
         state_options:
           further_info: Further information request
           provider_requested: Provider request
     hint:
-      send_back_form:
+      non_standard_magistrates_payment_send_back_form:
         comment: We’ll share this information with the provider
 
   activemodel:
     errors:
       models:
-        send_back_form:
+        non_standard_magistrates_payment/send_back_form:
           attributes:
             state:
               blank: Select why you are sending this claim back

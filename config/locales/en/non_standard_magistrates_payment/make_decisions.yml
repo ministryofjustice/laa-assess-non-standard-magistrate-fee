@@ -13,10 +13,10 @@ en:
           rejected: You rejected this claim <a class="govuk-link" href="%{url}">%{ref}</a>
   helpers:
     legend:
-      make_decision_form:
+      non_standard_magistrates_payment_make_decision_form:
         state: What do you want to do with this claim?
     label:
-      make_decision_form:
+      non_standard_magistrates_payment_make_decision_form:
         state_options:
           granted: Grant it
           part_grant: Part grant it
@@ -24,14 +24,14 @@ en:
         partial_comment: Explain your decision
         reject_comment: Explain your decision
     hint:
-      make_decision_form:
+      non_standard_magistrates_payment_make_decision_form:
         partial_comment: We’ll share this information with the provider
         reject_comment: We’ll share this information with the provider
 
   activemodel:
     errors:
       models:
-        make_decision_form:
+        non_standard_magistrates_payment/make_decision_form:
           attributes:
             state:
               blank: Select what you want to do with this claim

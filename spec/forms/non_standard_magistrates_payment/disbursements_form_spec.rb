@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe DisbursementsForm do
+RSpec.describe NonStandardMagistratesPayment::DisbursementsForm do
   let(:claim) { create(:claim) }
   let(:item) do
     instance_double(

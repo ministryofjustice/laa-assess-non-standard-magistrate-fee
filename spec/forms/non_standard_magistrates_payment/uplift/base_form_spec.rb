@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe Uplift::BaseForm do
+RSpec.describe NonStandardMagistratesPayment::Uplift::BaseForm do
   subject { implementation_class.new(claim:, current_user:, explanation:) }
 
-  let(:implementation_class) { Uplift::LettersAndCallsForm }
+  let(:implementation_class) { NonStandardMagistratesPayment::Uplift::LettersAndCallsForm }
   let(:claim) { build(:claim) }
   let(:current_user) { instance_double(User) }
   let(:explanation) { 'some reason' }

@@ -72,19 +72,19 @@ en:
 
   helpers:
     legend:
-      letters_calls_form_letters:
+      non_standard_magistrates_payment_letters_calls_form_letters:
         uplift: Remove the uplift for this item
-      letters_calls_form_calls:
+      non_standard_magistrates_payment_letters_calls_form_calls:
         uplift: Remove the uplift for this item
     label:
-      letters_calls_form_letters:
+      non_standard_magistrates_payment_letters_calls_form_letters:
         uplift_options:
           'yes': Yes, remove uplift
           'no': No, do not remove uplift
         partial_comment: Explain your decision
         reject_comment: Explain your decision
         explanation: Explain your decision
-      letters_calls_form_calls:
+      non_standard_magistrates_payment_letters_calls_form_calls:
         uplift_options:
           'yes': Yes, remove uplift
           'no': No, do not remove uplift
@@ -92,12 +92,12 @@ en:
         reject_comment: Explain your decision
         explanation: Explain your decision
     hint:
-      letters_calls_form_letters:
+      non_standard_magistrates_payment_letters_calls_form_letters:
         uplift: You must explain your decision
         explanation: |
           For example, why you made adjustments to the number of calls and removed an uplift.
           We'll share this explanation with the provider.
-      letters_calls_form_calls:
+      non_standard_magistrates_payment_letters_calls_form_calls:
         uplift: You must explain your decision
         explanation: |
           For example, why you made adjustments to the number of calls and removed an uplift.
@@ -106,13 +106,13 @@ en:
   activemodel:
     errors:
       models:
-        letters_calls_form:
+        non_standard_magistrates_payment/letters_calls_form:
           attributes:
             uplift:
               inclusion: Select to include uplift or not
             explanation:
               blank: Add an explanation for your decision
-        letters_calls_form/letters:
+        non_standard_magistrates_payment/letters_calls_form/letters:
           attributes:
             base:
               no_change: The new number of letters cannot be the same as the number submitted by the provider
@@ -121,7 +121,7 @@ en:
               greater_than_or_equal_to: The number of letters must be 0 or more
               not_a_number: The number of letters must be a number
               not_an_integer: The number of letters must be a whole number
-        letters_calls_form/calls:
+        non_standard_magistrates_payment/letters_calls_form/calls:
           attributes:
             base:
               no_change: The new number of calls cannot be the same as the number submitted by the provider

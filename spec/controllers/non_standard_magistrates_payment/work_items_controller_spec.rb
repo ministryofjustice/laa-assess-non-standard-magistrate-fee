@@ -44,12 +44,12 @@ RSpec.describe NonStandardMagistratesPayment::WorkItemsController do
       instance_double(V1::WorkItem, id: travel_id, work_type: double(value: 'travel'), form_attributes: {})
     end
     let(:work_items) { [waiting, travel] }
-    let(:form) { instance_double(WorkItemForm) }
+    let(:form) { instance_double(NonStandardMagistratesPayment::WorkItemForm) }
 
     before do
       allow(Claim).to receive(:find).and_return(claim)
       allow(BaseViewModel).to receive(:build).and_return(work_items)
-      allow(WorkItemForm).to receive(:new).and_return(form)
+      allow(NonStandardMagistratesPayment::WorkItemForm).to receive(:new).and_return(form)
     end
 
     it 'renders sucessfully with claims' do
@@ -102,12 +102,12 @@ RSpec.describe NonStandardMagistratesPayment::WorkItemsController do
       instance_double(V1::WorkItem, id: travel_id, work_type: double(value: 'travel'), form_attributes: {})
     end
     let(:work_items) { [waiting, travel] }
-    let(:form) { instance_double(WorkItemForm, save:) }
+    let(:form) { instance_double(NonStandardMagistratesPayment::WorkItemForm, save:) }
 
     before do
       allow(Claim).to receive(:find).and_return(claim)
       allow(BaseViewModel).to receive(:build).and_return(work_items)
-      allow(WorkItemForm).to receive(:new).and_return(form)
+      allow(NonStandardMagistratesPayment::WorkItemForm).to receive(:new).and_return(form)
     end
 
     context 'when form save is successful' do
@@ -115,7 +115,9 @@ RSpec.describe NonStandardMagistratesPayment::WorkItemsController do
 
       it 'renders sucessfully with claims' do
         allow(controller).to receive(:render)
-        get :update, params: { claim_id: claim_id, id: waiting_id, work_item_form: { some: :data } }
+        get :update,
+            params: { claim_id: claim_id, id: waiting_id,
+non_standard_magistrates_payment_work_item_form: { some: :data } }
 
         expect(controller).to redirect_to(
           non_standard_magistrates_payment_claim_adjustments_path(claim,
@@ -130,7 +132,9 @@ RSpec.describe NonStandardMagistratesPayment::WorkItemsController do
 
       it 'renders successfully with claims' do
         allow(controller).to receive(:render)
-        put :update, params: { claim_id: claim_id, id: waiting_id, work_item_form: { some: :data } }
+        put :update,
+            params: { claim_id: claim_id, id: waiting_id,
+non_standard_magistrates_payment_work_item_form: { some: :data } }
 
         expect(controller).to have_received(:render)
                           .with(:edit, locals: { claim: claim, form: form, item: waiting })

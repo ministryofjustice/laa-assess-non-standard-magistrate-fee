@@ -34,7 +34,7 @@ module NonStandardMagistratesPayment
     end
 
     def send_back_params
-      params.require(:send_back_form).permit(
+      params.require(:non_standard_magistrates_payment_send_back_form).permit(
         :state, :comment,
       ).merge(current_user:)
     end

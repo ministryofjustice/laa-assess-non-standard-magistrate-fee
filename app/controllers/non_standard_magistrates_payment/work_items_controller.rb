@@ -48,7 +48,7 @@ module NonStandardMagistratesPayment
     private
 
     def form_params
-      params.require(:work_item_form).permit(
+      params.require(:non_standard_magistrates_payment_work_item_form).permit(
         :uplift,
         :time_spent,
         :explanation

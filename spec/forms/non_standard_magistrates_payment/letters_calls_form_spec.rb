@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe LettersCallsForm do
+RSpec.describe NonStandardMagistratesPayment::LettersCallsForm do
   subject { described_class.new(params) }
 
   let(:claim) { create(:claim) }

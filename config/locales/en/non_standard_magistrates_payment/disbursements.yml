@@ -50,23 +50,23 @@ en:
           'false': 'No'
   helpers:
     legend:
-      disbursements_form:
+      non_standard_magistrates_payment_disbursements_form:
         total_cost_without_vat: Do you want to refuse this disbursement?
     label:
-      disbursements_form:
+      non_standard_magistrates_payment_disbursements_form:
         total_cost_without_vat_options:
           'yes': 'Yes'
           'no': 'No'
         explanation: Explain your decision
     hint:
-      disbursements_form:
+      non_standard_magistrates_payment_disbursements_form:
         explanation: |
           For example, why you are refusing this disbursement and changing the cost to £0.
           We'll share this explanation with the provider.
   activemodel:
     errors:
       models:
-        disbursements_form:
+        non_standard_magistrates_payment/disbursements_form:
           attributes:
             base:
               no_change: There are no changes to save. Select cancel if you do not want to make any changes.

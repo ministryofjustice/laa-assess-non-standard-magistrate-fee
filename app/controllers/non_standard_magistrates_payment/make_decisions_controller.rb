@@ -28,7 +28,7 @@ module NonStandardMagistratesPayment
     end
 
     def decision_params
-      params.require(:make_decision_form).permit(
+      params.require(:non_standard_magistrates_payment_make_decision_form).permit(
         :state, :partial_comment, :reject_comment
       ).merge(current_user:)
     end
