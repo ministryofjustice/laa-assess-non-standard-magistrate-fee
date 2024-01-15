@@ -25,7 +25,9 @@ RSpec.describe NonStandardMagistratesPayment::MakeDecisionsController do
     let(:decision) { instance_double(NonStandardMagistratesPayment::MakeDecisionForm, save: save, state: 'granted') }
     let(:user) { instance_double(User) }
     let(:claim) { instance_double(Claim, id: SecureRandom.uuid) }
-    let(:laa_reference_class) { instance_double(V1::LaaReference, laa_reference: 'AAA111') }
+    let(:laa_reference_class) do
+      instance_double(NonStandardMagistratesPayment::V1::LaaReference, laa_reference: 'AAA111')
+    end
     let(:save) { true }
 
     before do

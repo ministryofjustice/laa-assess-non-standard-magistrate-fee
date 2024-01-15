@@ -8,7 +8,8 @@ class BaseViewModel
     attr_reader :klass, :claim, :rows, :return_array
 
     def initialize(class_type, claim, *nesting)
-      @klass = "V#{claim.json_schema_version}::#{class_type.to_s.camelcase}".constantize
+      # TODO: Add mechanism to determine namespace dynamically
+      @klass = "NonStandardMagistratesPayment::V#{claim.json_schema_version}::#{class_type.to_s.camelcase}".constantize
       @claim = claim
       if nesting.any?
         @rows = claim.data.dig(*nesting)

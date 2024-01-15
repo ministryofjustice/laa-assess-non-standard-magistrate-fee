@@ -4,7 +4,7 @@ RSpec.describe NonStandardMagistratesPayment::ClaimDetailsController do
   context 'show' do
     let(:claim) { instance_double(Claim, id: claim_id) }
     let(:claim_id) { SecureRandom.uuid }
-    let(:claim_summary) { instance_double(V1::ClaimSummary) }
+    let(:claim_summary) { instance_double(NonStandardMagistratesPayment::V1::ClaimSummary) }
     let(:claim_details) { instance_double(ClaimDetails::Table) }
 
     before do

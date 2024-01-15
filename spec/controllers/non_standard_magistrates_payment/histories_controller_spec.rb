@@ -4,7 +4,7 @@ RSpec.describe NonStandardMagistratesPayment::HistoriesController do
   let(:claim) { create(:claim, id: claim_id, events: events) }
   let(:claim_id) { SecureRandom.uuid }
   let(:events) { [build(:event, :note)] }
-  let(:claim_summary) { instance_double(V1::ClaimSummary) }
+  let(:claim_summary) { instance_double(NonStandardMagistratesPayment::V1::ClaimSummary) }
   let(:claim_note) { instance_double(NonStandardMagistratesPayment::ClaimNoteForm, save: save, id: claim_id) }
   let(:save) { true }
 

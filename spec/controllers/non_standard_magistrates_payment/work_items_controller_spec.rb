@@ -4,8 +4,8 @@ RSpec.describe NonStandardMagistratesPayment::WorkItemsController do
   context 'index' do
     let(:claim) { instance_double(Claim, id: claim_id) }
     let(:claim_id) { SecureRandom.uuid }
-    let(:work_items) { [instance_double(V1::WorkItem, completed_on: Time.zone.today)] }
-    let(:travel_and_waiting) { instance_double(V1::TravelAndWaiting) }
+    let(:work_items) { [instance_double(NonStandardMagistratesPayment::V1::WorkItem, completed_on: Time.zone.today)] }
+    let(:travel_and_waiting) { instance_double(NonStandardMagistratesPayment::V1::TravelAndWaiting) }
 
     before do
       allow(Claim).to receive(:find).and_return(claim)
@@ -38,10 +38,12 @@ RSpec.describe NonStandardMagistratesPayment::WorkItemsController do
     let(:travel_id) { SecureRandom.uuid }
     let(:waiting_id) { SecureRandom.uuid }
     let(:waiting) do
-      instance_double(V1::WorkItem, id: waiting_id, work_type: double(value: 'waiting'), form_attributes: {})
+      instance_double(NonStandardMagistratesPayment::V1::WorkItem, id: waiting_id, work_type: double(value: 'waiting'),
+form_attributes: {})
     end
     let(:travel) do
-      instance_double(V1::WorkItem, id: travel_id, work_type: double(value: 'travel'), form_attributes: {})
+      instance_double(NonStandardMagistratesPayment::V1::WorkItem, id: travel_id, work_type: double(value: 'travel'),
+form_attributes: {})
     end
     let(:work_items) { [waiting, travel] }
     let(:form) { instance_double(NonStandardMagistratesPayment::WorkItemForm) }
@@ -68,10 +70,12 @@ RSpec.describe NonStandardMagistratesPayment::WorkItemsController do
     let(:travel_id) { SecureRandom.uuid }
     let(:waiting_id) { SecureRandom.uuid }
     let(:waiting) do
-      instance_double(V1::WorkItem, id: waiting_id, work_type: double(value: 'waiting'), form_attributes: {})
+      instance_double(NonStandardMagistratesPayment::V1::WorkItem, id: waiting_id, work_type: double(value: 'waiting'),
+form_attributes: {})
     end
     let(:travel) do
-      instance_double(V1::WorkItem, id: travel_id, work_type: double(value: 'travel'), form_attributes: {})
+      instance_double(NonStandardMagistratesPayment::V1::WorkItem, id: travel_id, work_type: double(value: 'travel'),
+form_attributes: {})
     end
     let(:work_items) { [waiting, travel] }
 
@@ -96,10 +100,12 @@ RSpec.describe NonStandardMagistratesPayment::WorkItemsController do
     let(:waiting_id) { SecureRandom.uuid }
     let(:travel_id) { SecureRandom.uuid }
     let(:waiting) do
-      instance_double(V1::WorkItem, id: waiting_id, work_type: double(value: 'waiting'), form_attributes: {})
+      instance_double(NonStandardMagistratesPayment::V1::WorkItem, id: waiting_id, work_type: double(value: 'waiting'),
+form_attributes: {})
     end
     let(:travel) do
-      instance_double(V1::WorkItem, id: travel_id, work_type: double(value: 'travel'), form_attributes: {})
+      instance_double(NonStandardMagistratesPayment::V1::WorkItem, id: travel_id, work_type: double(value: 'travel'),
+form_attributes: {})
     end
     let(:work_items) { [waiting, travel] }
     let(:form) { instance_double(NonStandardMagistratesPayment::WorkItemForm, save:) }

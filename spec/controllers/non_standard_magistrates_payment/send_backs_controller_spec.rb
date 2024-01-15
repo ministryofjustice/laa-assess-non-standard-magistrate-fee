@@ -40,7 +40,9 @@ RSpec.describe NonStandardMagistratesPayment::SendBacksController do
     let(:send_back) { instance_double(NonStandardMagistratesPayment::SendBackForm, save: save, state: 'further_info') }
     let(:user) { instance_double(User) }
     let(:claim) { build(:claim, id: SecureRandom.uuid) }
-    let(:laa_reference_class) { instance_double(V1::LaaReference, laa_reference: 'AAA111') }
+    let(:laa_reference_class) do
+      instance_double(NonStandardMagistratesPayment::V1::LaaReference, laa_reference: 'AAA111')
+    end
     let(:defendant_name) { 'Tracy Linklater' }
     let(:save) { true }
 

@@ -4,7 +4,7 @@ RSpec.describe NonStandardMagistratesPayment::DisbursementsForm do
   let(:claim) { create(:claim) }
   let(:item) do
     instance_double(
-      V1::Disbursement,
+      NonStandardMagistratesPayment::V1::Disbursement,
       id: '1c0f36fd-fd39-498a-823b-0a3837454563', # Getting from the factory
       provider_requested_total_cost_without_vat: provider_requested_total_cost_without_vat,
       total_cost_without_vat: current_total_cost_without_vat,

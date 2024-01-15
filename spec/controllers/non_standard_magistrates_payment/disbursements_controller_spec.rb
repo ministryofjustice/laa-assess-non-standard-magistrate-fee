@@ -4,7 +4,9 @@ RSpec.describe NonStandardMagistratesPayment::DisbursementsController do
   context 'index' do
     let(:claim) { instance_double(Claim, id: claim_id) }
     let(:claim_id) { SecureRandom.uuid }
-    let(:disbursements) { [instance_double(V1::Disbursement, disbursement_date: Time.zone.today)] }
+    let(:disbursements) do
+      [instance_double(NonStandardMagistratesPayment::V1::Disbursement, disbursement_date: Time.zone.today)]
+    end
     let(:grouped_disbursements) { { Time.zone.today => disbursements } }
 
     before do
@@ -33,7 +35,8 @@ RSpec.describe NonStandardMagistratesPayment::DisbursementsController do
     let(:claim_id) { SecureRandom.uuid }
     let(:disbursement_id) { SecureRandom.uuid }
     let(:disbursement) do
-      instance_double(V1::Disbursement, id: disbursement_id, attributes: attributes, form_attributes: {})
+      instance_double(NonStandardMagistratesPayment::V1::Disbursement, id: disbursement_id, attributes: attributes,
+form_attributes: {})
     end
     let(:attributes) do
       {
@@ -81,7 +84,8 @@ RSpec.describe NonStandardMagistratesPayment::DisbursementsController do
     let(:form) { instance_double(NonStandardMagistratesPayment::DisbursementsForm) }
     let(:disbursement_id) { SecureRandom.uuid }
     let(:disbursement) do
-      instance_double(V1::Disbursement, id: disbursement_id, attributes: attributes, form_attributes: {})
+      instance_double(NonStandardMagistratesPayment::V1::Disbursement, id: disbursement_id, attributes: attributes,
+form_attributes: {})
     end
     let(:attributes) do
       {
@@ -129,10 +133,12 @@ RSpec.describe NonStandardMagistratesPayment::DisbursementsController do
     let(:claim_id) { SecureRandom.uuid }
     let(:form) { instance_double(NonStandardMagistratesPayment::DisbursementsForm, save:) }
     let(:disbursement_id) { '1c0f36fd-fd39-498a-823b-0a3837454563' }
-    let(:disbursement) { instance_double(V1::Disbursement, id: disbursement_id, attributes: item) }
+    let(:disbursement) do
+      instance_double(NonStandardMagistratesPayment::V1::Disbursement, id: disbursement_id, attributes: item)
+    end
     let(:item) do
       instance_double(
-        V1::Disbursement,
+        NonStandardMagistratesPayment::V1::Disbursement,
         id: '1c0f36fd-fd39-498a-823b-0a3837454563', # Getting from the factory
         provider_requested_total_cost_without_vat: provider_requested_total_cost_without_vat,
         total_cost_without_vat: current_total_cost_without_vat,

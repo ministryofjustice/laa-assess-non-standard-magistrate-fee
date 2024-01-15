@@ -4,7 +4,7 @@ RSpec.describe NonStandardMagistratesPayment::LettersAndCallsController do
   describe '#index' do
     let(:claim) { instance_double(Claim, id: claim_id) }
     let(:claim_id) { SecureRandom.uuid }
-    let(:letters_and_calls) { instance_double(V1::LettersAndCallsSummary) }
+    let(:letters_and_calls) { instance_double(NonStandardMagistratesPayment::V1::LettersAndCallsSummary) }
 
     before do
       allow(Claim).to receive(:find).and_return(claim)
@@ -33,8 +33,14 @@ RSpec.describe NonStandardMagistratesPayment::LettersAndCallsController do
     let(:claim_id) { SecureRandom.uuid }
     let(:form) { instance_double(NonStandardMagistratesPayment::LettersCallsForm) }
     let(:letters_and_calls) { [calls, letters] }
-    let(:calls) { instance_double(V1::LetterAndCall, type: double(value: 'calls'), form_attributes: {}) }
-    let(:letters) { instance_double(V1::LetterAndCall, type: double(value: 'letters'), form_attributes: {}) }
+    let(:calls) do
+      instance_double(NonStandardMagistratesPayment::V1::LetterAndCall, type: double(value: 'calls'),
+form_attributes: {})
+    end
+    let(:letters) do
+      instance_double(NonStandardMagistratesPayment::V1::LetterAndCall, type: double(value: 'letters'),
+     form_attributes: {})
+    end
 
     before do
       allow(Claim).to receive(:find).and_return(claim)
@@ -77,8 +83,14 @@ RSpec.describe NonStandardMagistratesPayment::LettersAndCallsController do
     let(:claim) { instance_double(Claim, id: claim_id, risk: 'high') }
     let(:claim_id) { SecureRandom.uuid }
     let(:letters_and_calls) { [calls, letters] }
-    let(:calls) { instance_double(V1::LetterAndCall, type: double(value: 'calls'), form_attributes: {}) }
-    let(:letters) { instance_double(V1::LetterAndCall, type: double(value: 'letters'), form_attributes: {}) }
+    let(:calls) do
+      instance_double(NonStandardMagistratesPayment::V1::LetterAndCall, type: double(value: 'calls'),
+form_attributes: {})
+    end
+    let(:letters) do
+      instance_double(NonStandardMagistratesPayment::V1::LetterAndCall, type: double(value: 'letters'),
+     form_attributes: {})
+    end
 
     before do
       allow(Claim).to receive(:find).and_return(claim)
@@ -121,8 +133,14 @@ RSpec.describe NonStandardMagistratesPayment::LettersAndCallsController do
     let(:claim_id) { SecureRandom.uuid }
     let(:form) { instance_double(NonStandardMagistratesPayment::LettersCallsForm, save:) }
     let(:letters_and_calls) { [calls, letters] }
-    let(:calls) { instance_double(V1::LetterAndCall, type: double(value: 'calls'), form_attributes: {}) }
-    let(:letters) { instance_double(V1::LetterAndCall, type: double(value: 'letters'), form_attributes: {}) }
+    let(:calls) do
+      instance_double(NonStandardMagistratesPayment::V1::LetterAndCall, type: double(value: 'calls'),
+form_attributes: {})
+    end
+    let(:letters) do
+      instance_double(NonStandardMagistratesPayment::V1::LetterAndCall, type: double(value: 'letters'),
+     form_attributes: {})
+    end
 
     before do
       allow(BaseViewModel).to receive(:build).and_return(letters_and_calls)

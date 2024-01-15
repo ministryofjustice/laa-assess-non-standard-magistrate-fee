@@ -4,9 +4,10 @@ RSpec.describe NonStandardMagistratesPayment::SupportingEvidencesController do
   context 'show' do
     let(:claim) { instance_double(Claim, id: claim_id) }
     let(:claim_id) { SecureRandom.uuid }
-    let(:claim_summary) { instance_double(V1::ClaimSummary) }
+    let(:claim_summary) { instance_double(NonStandardMagistratesPayment::V1::ClaimSummary) }
     let(:supporting_evidence) do
-      [instance_double(V1::SupportingEvidence, :file_path => '#', :file_name => 'test', :download_url= => '')]
+      [instance_double(NonStandardMagistratesPayment::V1::SupportingEvidence, :file_path => '#', :file_name => 'test',
+:download_url= => '')]
     end
 
     before do

@@ -10,7 +10,7 @@ RSpec.describe NonStandardMagistratesPayment::WorkItemForm do
   let(:uplift) { 'yes' }
   let(:item) do
     instance_double(
-      V1::WorkItem,
+      NonStandardMagistratesPayment::V1::WorkItem,
       id: id,
       time_spent: 161,
       uplift: uplift_provided ? 95 : nil,

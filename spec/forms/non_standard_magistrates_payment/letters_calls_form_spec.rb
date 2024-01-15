@@ -10,7 +10,7 @@ RSpec.describe NonStandardMagistratesPayment::LettersCallsForm do
   let(:uplift) { 'yes' }
   let(:item) do
     instance_double(
-      V1::LetterAndCall,
+      NonStandardMagistratesPayment::V1::LetterAndCall,
       count: 12,
       uplift: uplift_provided ? 95 : nil,
       provider_requested_uplift: provider_requested_uplift,

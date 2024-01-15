@@ -29,7 +29,9 @@ RSpec.describe NonStandardMagistratesPayment::UnassignmentsController do
     let(:unassignment_user) { 'other' }
     let(:user) { instance_double(User, display_name: 'Jim Bob') }
     let(:claim) { create(:claim, :with_assignment) }
-    let(:laa_reference_class) { instance_double(V1::LaaReference, laa_reference: 'AAA111') }
+    let(:laa_reference_class) do
+      instance_double(NonStandardMagistratesPayment::V1::LaaReference, laa_reference: 'AAA111')
+    end
     let(:defendant_name) { 'Tracy Linklater' }
     let(:save) { true }
 
