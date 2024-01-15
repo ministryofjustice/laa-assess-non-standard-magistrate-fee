@@ -90,6 +90,9 @@ Rails.application.routes.draw do
         get :open
         get :assessed
       end
+
+      resources :adjustments, only: :index
+      resources :additional_costs, only: [:edit, :update]
     end
   end
 end

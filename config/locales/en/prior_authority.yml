@@ -4,6 +4,14 @@ en:
     your_applications: Your applications
     open_applications: Open applications
     assessed_applications: Assessed applications
+    shared:
+      summary:
+        date_received: 'Date received:'
+      sub_navigation:
+        overview: Overview
+        adjust_quote: Adjust quote
+        related_applications: Related applications
+        application_history: Application history
     static_pages:
       landing:
         page_title: Assess prior authority to incur disbursements
@@ -23,3 +31,14 @@ en:
         date_received: Date received
         no_applications: 'You have no applications assigned to you for assessment'
         next_application: 'Assess next application'
+    adjustments:
+      index:
+        page_title: Adjustments
+        additional_cost: Additional cost %{n}
+        cost_description: "Cost description: \"%{description}\""
+        details: Details
+        requested: Requested
+        time: Time
+        cost: Cost
+        total: Total
+        adjust_additional_cost: Adjust additional cost

@@ -13,5 +13,14 @@ FactoryBot.define do
     laa_reference { 'LAA-123456' }
     firm_name { 'LegalCo' }
     client_name { 'Jane Doe' }
+    additional_costs { [] }
+  end
+
+  factory :additional_cost, class: Hash do
+    initialize_with { attributes }
+    id { SecureRandom.uuid }
+    time_spent { 60 }
+    cost_per_hour { 32 }
+    description { 'Translation services' }
   end
 end

@@ -10,7 +10,7 @@ RSpec.describe 'View applications' do
     visit prior_authority_root_path
   end
 
-  it 'shows all (visible) events in the history' do
+  it 'shows the application overview' do
     application = create(:prior_authority_application,
                          data: build(:prior_authority_data, laa_reference: 'LAA-1234'))
     create(:assignment,

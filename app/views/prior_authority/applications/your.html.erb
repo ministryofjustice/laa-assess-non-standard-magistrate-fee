@@ -30,10 +30,10 @@
             @applications.each do |application|
               body.with_row do |row|
                 row.with_cell do
-                  govuk_link_to(application.data.laa_reference, prior_authority_application_path(application.id))
+                  govuk_link_to(application.laa_reference, prior_authority_application_path(application.application.id))
                 end
-                row.with_cell(text: application.data.firm_name)
-                row.with_cell(text: application.data.client_name)
+                row.with_cell(text: application.firm_name)
+                row.with_cell(text: application.client_name)
                 row.with_cell(text: application.date_created_str)
               end
             end

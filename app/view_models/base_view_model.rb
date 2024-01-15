@@ -5,17 +5,17 @@ class BaseViewModel
   ID_FIELDS = ['id'].freeze
 
   class Builder
-    attr_reader :klass, :claim, :rows, :return_array
+    attr_reader :klass, :crime_application, :rows, :return_array
 
-    def initialize(class_type, claim, *nesting)
-      # TODO: Add mechanism to determine namespace dynamically
-      @klass = "NonStandardMagistratesPayment::V#{claim.json_schema_version}::#{class_type.to_s.camelcase}".constantize
-      @claim = claim
+    def initialize(class_type, crime_application, *nesting)
+      namespace = crime_application.is_a?(Claim) ? 'NonStandardMagistratesPayment' : 'PriorAuthority'
+      @klass = "#{namespace}::V#{crime_application.json_schema_version}::#{class_type.to_s.camelcase}".constantize
+      @crime_application = crime_application
       if nesting.any?
-        @rows = claim.data.dig(*nesting)
+        @rows = crime_application.data.dig(*nesting)
         @return_array = true
       else
-        @rows = [claim.data]
+        @rows = [crime_application.data]
         @return_array = false
       end
     end
@@ -36,10 +36,11 @@ class BaseViewModel
     private
 
     def params(attributes)
-      claim.attributes
-           .merge(claim.data)
-           .merge(attributes, 'claim' => claim)
-           .slice(*klass.attribute_names)
+      key = crime_application.is_a?(Claim) ? 'claim' : 'application'
+      crime_application.attributes
+                       .merge(crime_application.data)
+                       .merge(attributes, key => crime_application)
+                       .slice(*klass.attribute_names)
     end
 
     def process(&block)
@@ -49,10 +50,10 @@ class BaseViewModel
 
     def all_adjustments
       @all_adjustments ||=
-        claim.events
-             .where(linked_type: klass::LINKED_TYPE)
-             .order(:created_at)
-             .group_by { |event| [event.linked_type, event.linked_id] }
+        crime_application.events
+                         .where(linked_type: klass::LINKED_TYPE)
+                         .order(:created_at)
+                         .group_by { |event| [event.linked_type, event.linked_id] }
     end
 
     def adjustments?
@@ -61,8 +62,8 @@ class BaseViewModel
   end
 
   class << self
-    def build(class_type, claim, *)
-      Builder.new(class_type, claim, *).build
+    def build(class_type, crime_application, *)
+      Builder.new(class_type, crime_application, *).build
     end
   end
 

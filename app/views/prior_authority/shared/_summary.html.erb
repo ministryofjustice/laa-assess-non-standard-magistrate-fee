@@ -1,0 +1,19 @@
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <p class="govuk-body-l govuk-!-margin-bottom-2">
+        <%= application_summary.firm_name %>
+      </p>
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">
+        <%= application_summary.laa_reference %>
+      </h1>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row govuk-!-margin-bottom-6">
+    <div class="govuk-grid-column-two-thirds">
+      <p class="govuk-body-l govuk-!-margin-bottom-2">
+        <span class="govuk-!-font-weight-bold"><%= t(".date_received") %></span>
+        <%= format_in_zone(application.received_on, format:'%d %b %Y') %>
+      </p>
+    </div>
+  </div>
