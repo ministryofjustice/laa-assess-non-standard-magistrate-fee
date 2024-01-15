@@ -12,6 +12,10 @@ module PriorAuthority
       def total_cost
         ((time_spent.hours * cost_per_hour) + ((time_spent.minutes / 60.0) * cost_per_hour)).round(2)
       end
+
+      def form_attributes
+        attributes.slice('id', 'time_spent', 'cost_per_hour')
+      end
     end
   end
 end
