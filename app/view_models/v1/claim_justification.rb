@@ -12,7 +12,7 @@ module V1
 
     def reasons_for_claim_list
       reasons = reasons_for_claim.map { |row| row[I18n.locale.to_s] || row['value'] }
-      ApplicationController.helpers.sanitize(reasons.join('<br>'), tags: %w[br])
+      sanitize(reasons.join('<br>'), tags: %w[br])
     end
 
     def data

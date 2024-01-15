@@ -15,9 +15,9 @@ module V1
       work_item_data.map do |work_type, requested_cost, requested_time, allowed_cost, allowed_time|
         [
           work_type,
-          ApplicationController.helpers.format_period(requested_time, style: :long),
+          format_period(requested_time, style: :long),
           NumberTo.pounds(requested_cost),
-          ApplicationController.helpers.format_period(allowed_time, style: :long),
+          format_period(allowed_time, style: :long),
           NumberTo.pounds(allowed_cost),
         ]
       end

@@ -1,4 +1,4 @@
-require_relative '../../app/helpers/form_builder_helper'
+require Rails.root.join('app/helpers/form_builder_helper')
 
 ActionView::Base.default_form_builder = GOVUKDesignSystemFormBuilder::FormBuilder
 

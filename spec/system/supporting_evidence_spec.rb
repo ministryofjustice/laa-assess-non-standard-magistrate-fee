@@ -26,7 +26,7 @@ RSpec.describe 'Supporting Evidence' do
     end
 
     it 'no send by post info shown' do
-      expect(page).not_to have_content('The provider has chosen to post the evidence to:')
+      expect(page).to have_no_content('The provider has chosen to post the evidence to:')
     end
   end
 
@@ -57,7 +57,7 @@ RSpec.describe 'Supporting Evidence' do
     let(:claim) { create(:claim, send_by_post: true, supporting_evidences: []) }
 
     it 'supporting evidence table not shown' do
-      expect(page).not_to have_css('.govuk-table__row')
+      expect(page).to have_no_css('.govuk-table__row')
     end
 
     it 'send by post info is shown' do

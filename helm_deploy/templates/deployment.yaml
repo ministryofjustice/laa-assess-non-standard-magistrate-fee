@@ -47,6 +47,10 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          lifecycle:
+            preStop:
+              exec:
+                command: ["sh", "-c", "sleep 30"] # Workaround for occasional lost requests - see https://github.com/puma/puma/blob/master/docs/kubernetes.md#running-puma-in-kubernetes
           env:
             - name: REDIS_HOST
               valueFrom:
@@ -103,6 +107,21 @@ spec:
                 secretKeyRef:
                   name: azure-auth
                   key: tenant_id
+            - name: APP_STORE_TENANT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: azure-secret
+                  key: tenant_id
+            - name: APP_STORE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: azure-secret
+                  key: app_client_id
+            - name: APP_STORE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: azure-secret
+                  key: app_client_secret
             - name: RACK_ENV
               value: 'production'
             - name: RAILS_ENV

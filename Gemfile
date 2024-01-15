@@ -5,7 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby File.read('.ruby-version').strip
 
-gem 'aws-sdk-s3', '~> 1.141'
+gem 'aws-sdk-s3', '~> 1.142'
 gem 'bootsnap', require: false
 gem 'dartsass-rails', '~> 0.5.0'
 gem 'devise'
@@ -15,11 +15,13 @@ gem 'govuk_notify_rails', '~> 2.2.0'
 gem 'httparty'
 gem 'importmap-rails'
 gem 'jbuilder'
+gem 'logstasher', '~> 2.1'
+gem 'oauth2', '~> 2.0'
 gem 'omniauth_openid_connect', '0.7.1'
 gem 'omniauth-rails_csrf_protection'
 gem 'pg'
 gem 'puma', '~> 6.4'
-gem 'rails', '~> 7.1.1'
+gem 'rails', '~> 7.1.2'
 gem 'sidekiq', '~> 7.1'
 gem 'sidekiq_alive', '~> 2.3'
 gem 'sidekiq-cron'
@@ -34,7 +36,7 @@ gem 'sentry-rails'
 gem 'sentry-ruby'
 
 group :development, :test do
-  gem 'debug'
+  gem 'debug', platforms: %i[mri windows]
   gem 'dotenv-rails'
   gem 'erb_lint', require: false
   gem 'pry'
@@ -56,4 +58,5 @@ group :test do
   gem 'simplecov-lcov'
   gem 'simplecov-rcov'
   gem 'super_diff'
+  gem 'webmock', '~> 3.19'
 end

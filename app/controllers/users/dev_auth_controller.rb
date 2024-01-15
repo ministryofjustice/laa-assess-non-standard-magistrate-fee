@@ -3,7 +3,7 @@ module Users
     layout 'external'
 
     def new
-      raise ActionController::RoutingError unless FeatureFlags.dev_auth.enabled?
+      raise ActionController::RoutingError, 'dev authentication not available' unless FeatureFlags.dev_auth.enabled?
 
       @emails = User.order(last_auth_at: :desc).pluck(:email) << OmniAuth::Strategies::DevAuth::NO_AUTH_EMAIL
     end
