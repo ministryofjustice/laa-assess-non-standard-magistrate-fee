@@ -11,7 +11,7 @@ module FeedbackMessages
         laa_case_reference: case_reference,
         ufn: ufn,
         main_defendant_name: defendant_name,
-        maat_id: maat_id,
+        defendant_id: defendant_id_string,
         claim_total: claim_total,
         date_to_respond_by: 7.days.from_now.strftime('%d %B %Y'),
         caseworker_information_requested: @comment,

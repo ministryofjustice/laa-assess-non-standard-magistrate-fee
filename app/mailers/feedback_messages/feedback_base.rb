@@ -33,6 +33,19 @@ module FeedbackMessages
       main_defendant['maat']
     end
 
+    def cntp_order
+      @claim.data['cntp_order']
+    end
+
+    # Markdown conditionals do not allow to format the string nicely so formatting here.
+    def defendant_id_string
+      if maat_id.nil?
+        "Client's CNTP number: #{cntp_order}"
+      else
+        "MAAT ID: #{maat_id}"
+      end
+    end
+
     def case_reference
       @claim.data['laa_reference']
     end

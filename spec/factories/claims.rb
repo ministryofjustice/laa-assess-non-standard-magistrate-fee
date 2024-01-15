@@ -9,6 +9,8 @@ FactoryBot.define do
       {
         'laa_reference' => 'LAA-FHaMVK',
         'ufn' => '123456/001',
+        'cntp_order' => nil,
+        'cntp_date' => nil,
         'submitter' => submitter,
         'send_by_post' => send_by_post,
         'letters_and_calls' => letters_and_calls,
