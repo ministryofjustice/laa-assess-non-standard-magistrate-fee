@@ -16,5 +16,10 @@ en:
       your:
         table_info_item: 'application'
         page_title: 'Your applications'
+        table_heading: 'Your applications'
+        laa_reference: LAA reference
+        firm_name: Firm name
+        client_name: Client name
+        date_received: Date received
         no_applications: 'You have no applications assigned to you for assessment'
         next_application: 'Assess next application'

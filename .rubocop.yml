@@ -146,7 +146,7 @@ RSpec/NestedGroups:
 RSpec/ExampleLength:
   Max: 16
   Exclude:
-    - spec/system/*
+    - spec/system/**/*
 
 Lint/MissingSuper:
   Exclude:

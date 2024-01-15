@@ -10,8 +10,8 @@
     <%= form_with model: send_back, url: non_standard_magistrates_payment_claim_send_back_path(claim_id: claim.id), method: :put do |f| %>
       <%= govuk_error_summary(send_back) %>
       <%= f.govuk_radio_buttons_fieldset :state, legend: { size: 's' } do %>
-        <%= f.govuk_radio_button :state, SendBackForm::FURTHER_INFO %>
-        <%= f.govuk_radio_button :state, SendBackForm::PROVIDER_REQUESTED %>
+        <%= f.govuk_radio_button :state, NonStandardMagistratesPayment::SendBackForm::FURTHER_INFO %>
+        <%= f.govuk_radio_button :state, NonStandardMagistratesPayment::SendBackForm::PROVIDER_REQUESTED %>
       <% end %>
       <%= f.govuk_text_area :comment, width: 'one-third', autocomplete: 'off', label: { size: 'm' } %>
 

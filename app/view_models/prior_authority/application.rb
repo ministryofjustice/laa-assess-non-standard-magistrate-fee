@@ -1,4 +1,5 @@
 module PriorAuthority
+  # TODO: Use the base view model system instead
   class Application
     attr_reader :local_record, :data
 
@@ -17,8 +18,6 @@ module PriorAuthority
 
     def structify(object)
       case object
-      when Array
-        object.map { structify(_1) }
       when Hash
         klass = Struct.new(*object.keys.map(&:to_sym))
         klass.new(*object.values.map { structify(_1) })
