@@ -22,7 +22,7 @@ module FeedbackMessages
     protected
 
     def main_defendant
-      @claim.data['defendants'].find { |defendant| defendant['main'] == true }
+      @claim.data['defendants'].find { _1['main'] }
     end
 
     def defendant_name
