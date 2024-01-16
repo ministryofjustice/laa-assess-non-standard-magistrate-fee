@@ -156,6 +156,16 @@ spec:
                   key: bucket_name
             - name: APP_STORE_WAIT_SECS
               value: '30'
+            - name: SIDEKIQ_WEB_UI_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: sidekiq-auth
+                  key: username
+            - name: SIDEKIQ_WEB_UI_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sidekiq-auth
+                  key: password
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
