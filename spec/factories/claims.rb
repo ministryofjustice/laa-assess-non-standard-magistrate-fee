@@ -8,6 +8,10 @@ FactoryBot.define do
     data do
       {
         'laa_reference' => 'LAA-FHaMVK',
+        'ufn' => '123456/001',
+        'cntp_order' => nil,
+        'cntp_date' => nil,
+        'submitter' => submitter,
         'send_by_post' => send_by_post,
         'letters_and_calls' => letters_and_calls,
         'disbursements' => disbursements,
@@ -15,11 +19,55 @@ FactoryBot.define do
         'defendants' => defendants,
         'supporting_evidences' => supporting_evidences,
         'vat_rate' => vat_rate,
-        'firm_office' => firm_office
+        'firm_office' => firm_office,
+        'assigned_counsel' => 'no',
+        'unassigned_counsel' => 'yes',
+        'agent_instructed' => 'no',
+        'remitted_to_magistrate' => 'no',
+        'reasons_for_claim' => [
+          {
+            'value' => 'councel_or_agent_assigned',
+            'en' => 'Councel or agent assigned'
+          }
+        ],
+        'supplemental_claim' => 'no',
+        'preparation_time' => 'no',
+        'work_before' => 'no',
+        'work_after' => 'no',
+        'has_disbursements' => 'no',
+        'is_other_info' => 'no',
+        'in_area' => 'yes',
+        'youth_court' => 'no',
+        'hearing_outcome' => {
+          'value' => 'CP05',
+          'en' => 'CP01 - Arrest warrant issued/adjourned indefinitely'
+        },
+        'matter_type' => {
+          'value' => '10',
+          'en' => '1 - Offences against the person'
+        },
+        'concluded' => 'no',
+        'solicitor' => {
+          'full_name' => 'Barry Scott',
+          'reference_number' => '2P314B',
+          'contact_full_name' => nil,
+          'contact_email' => nil,
+          'previous_id' => nil
+        },
+        'answer_equality' => {
+          'value' => 'no',
+          'en' => 'No, skip the equality questions'
+        },
       }
     end
 
     transient do
+      submitter do
+        {
+          'email' => 'provider@example.com',
+          'description' => nil
+        }
+      end
       send_by_post { false }
       supporting_evidences do
         [

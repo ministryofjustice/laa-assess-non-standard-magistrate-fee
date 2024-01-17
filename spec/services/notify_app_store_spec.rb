@@ -64,6 +64,7 @@ RSpec.describe NotifyAppStore do
     before do
       allow(described_class::HttpNotifier).to receive(:new)
         .and_return(http_notifier)
+      allow(ClaimFeedbackMailer).to receive_message_chain(:notify, :deliver_later!)
     end
 
     it 'creates a new MessageBuilder' do
