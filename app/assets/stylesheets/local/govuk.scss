@@ -2,6 +2,6 @@
 //
 $govuk-new-link-styles: true;
 $govuk-global-styles: true;
-$govuk-assets-path: 'govuk-frontend/dist/govuk/assets/';
+$govuk-assets-path: 'govuk-frontend/govuk/assets/';
 
-@import "govuk-frontend/dist/govuk/all";
+@import "govuk-frontend/govuk/all";

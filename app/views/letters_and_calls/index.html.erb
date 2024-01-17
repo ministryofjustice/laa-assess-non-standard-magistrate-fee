@@ -5,7 +5,7 @@
       <%= t('.heading') %>
     </h1>
     <% if claim.editable? && letters_and_calls.uplift? %>
-      <%= govuk_button_link_to(t(".remove_uplift_all"), edit_claim_letters_and_calls_uplift_path(claim), secondary: true, data: { turbo: 'false' }) %>
+      <%= govuk_button_link_to(t(".remove_uplift_all"), edit_claim_letters_and_calls_uplift_path(claim), { secondary: true, data: { turbo: 'false' } }) %>
     <% end %>
   </div>
   <div class="govuk-grid-column-full">
