@@ -89,3 +89,20 @@ Once all the above is done, you should be able to run the application as follows
 You can also compile assets manually with `rails assets:precompile` at any time, and just run the rails server, without foreman.
 
 If you ever feel something is not right with the CSS or JS, run `rails assets:clobber` to purge the local cache.
+
+**6. Sidekiq Auth**
+
+We currently protect the sidekiq UI on production servers (Dev, UAT, Prod, Dev-CRM4) with basic auth.
+
+In order to extract the password from the k8 files run the following commands:
+
+> NOTE: this requires your kubectl to be setup and [authenticated](https://user-guide.cloud-platform.service.justice.gov.uk/documentation/getting-started/kubectl-config.html#authenticating-with-the-cloud-platform-39-s-kubernetes-cluster) as well as having [`jq`](https://jqlang.github.io/jq/download/) installed.
+```bash
+NAMESPACE=laa-claim-non-standard-magistrate-fee-dev
+
+kubectl config use-context live.cloud-platform.service.justice.gov.uk
+# username
+kubectl get secret sidekiq-auth -o jsonpath='{.data}' --namespace=$NAMESPACE | jq -r '.username' | base64 --decode && echo " "
+# password
+kubectl get secret sidekiq-auth -o jsonpath='{.data}' --namespace=$NAMESPACE | jq -r '.password' | base64 --decode && echo " "
+``````
