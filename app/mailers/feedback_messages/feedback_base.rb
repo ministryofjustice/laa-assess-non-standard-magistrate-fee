@@ -38,7 +38,7 @@ module FeedbackMessages
     end
 
     # Markdown conditionals do not allow to format the string nicely so formatting here.
-    def defendant_id_string
+    def defendant_reference_string
       if maat_id.nil?
         "Client's CNTP number: #{cntp_order}"
       else

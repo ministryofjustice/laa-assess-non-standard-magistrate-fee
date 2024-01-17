@@ -11,7 +11,7 @@ module FeedbackMessages
         laa_case_reference: case_reference,
         ufn: ufn,
         main_defendant_name: defendant_name,
-        defendant_id: defendant_id_string,
+        defendant_reference: defendant_reference_string,
         claim_total: claim_total,
         date: DateTime.now.strftime('%d %B %Y'),
         feedback_url: feedback_url

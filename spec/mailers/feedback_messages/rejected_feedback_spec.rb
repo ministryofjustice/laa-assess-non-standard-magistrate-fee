@@ -11,7 +11,7 @@ RSpec.describe FeedbackMessages::RejectedFeedback do
   let(:laa_case_reference) { 'LAA-FHaMVK' }
   let(:ufn) { '123456/001' }
   let(:main_defendant_name) { 'Tracy Linklater' }
-  let(:defendant_id) { 'MAAT ID: AB12123' }
+  let(:defendant_reference) { 'MAAT ID: AB12123' }
   let(:claim_total) { 0 }
   let(:caseworker_decision_explanation) { 'Test Explanation' }
   let(:date) { DateTime.now.strftime('%d %B %Y') }
@@ -29,7 +29,7 @@ RSpec.describe FeedbackMessages::RejectedFeedback do
         laa_case_reference:,
         ufn:,
         main_defendant_name:,
-        defendant_id:,
+        defendant_reference:,
         claim_total:,
         caseworker_decision_explanation:,
         date:,

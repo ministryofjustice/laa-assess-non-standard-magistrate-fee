@@ -11,7 +11,7 @@ RSpec.describe FeedbackMessages::PartGrantedFeedback do
   let(:laa_case_reference) { 'LAA-FHaMVK' }
   let(:ufn) { '123456/001' }
   let(:main_defendant_name) { 'Tracy Linklater' }
-  let(:defendant_id) { 'MAAT ID: AB12123' }
+  let(:defendant_reference) { 'MAAT ID: AB12123' }
   let(:claim_total) { 0 }
   let(:part_grant_total) { 0 }
   let(:caseworker_decision_explanation) { 'Test Explanation' }
@@ -30,7 +30,7 @@ RSpec.describe FeedbackMessages::PartGrantedFeedback do
         laa_case_reference:,
         ufn:,
         main_defendant_name:,
-        defendant_id:,
+        defendant_reference:,
         claim_total:,
         part_grant_total:,
         caseworker_decision_explanation:,
