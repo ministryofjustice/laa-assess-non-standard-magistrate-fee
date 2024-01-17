@@ -18,4 +18,11 @@ RSpec.configure do |config|
         headers: { 'Content-Type' => 'application/json; charset=utf-8' }
       )
   end
+
+  config.before(:each, :stub_update_claim) do
+    stub_request(:put, %r{http.*/v1/application/.*})
+      .to_return(
+        status: 201
+      )
+  end
 end
