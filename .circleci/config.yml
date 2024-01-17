@@ -143,23 +143,36 @@ commands:
   rspec:
     steps:
       - db-setup
+      - save_cache:
+          key: nsmf-assess-repo-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ~/repo
       - run:
           name: Run rspec tests
           command: |
-            mkdir /tmp/test-results
             tmp/cc-test-reporter before-build
-            TESTFILES=$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+            TESTFILES=$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings --timings-type=filename)
             RUBYOPT=-W:no-deprecated \
             bundle exec rspec \
-             --format progress \
-             --out /tmp/test-results/rspec.xml \
-              $TESTFILES
+              --format progress \
+              --format RspecJunitFormatter \
+              --out /tmp/test-results/rspec/rspec.xml \
+              -- ${TESTFILES}
+
             tmp/cc-test-reporter format-coverage -t simplecov -o "tmp/coverage/codeclimate.$CIRCLE_NODE_INDEX.json"
       - store_test_results:
-          path: /tmp/test-results
+          path: /tmp/test-results/rspec
+      - restore_cache:
+          key: nsmf-assess-repo-{{ .Environment.CIRCLE_SHA1 }}
       - store_artifacts:
-          path: /tmp/test-results
-          destination: test-results
+          path: ~/repo/coverage
+          destination: coverage
+      - persist_to_workspace:
+          root: tmp
+          paths:
+            - coverage/codeclimate.*.json
+      - store_artifacts:
+          path: tmp/coverage
 
   upload-coverage:
       steps:
@@ -248,12 +261,6 @@ jobs:
       - *attach-tmp-workspace
       - browser-tools/install-browser-tools
       - rspec
-      - persist_to_workspace:
-          root: tmp
-          paths:
-            - coverage/codeclimate.*.json
-      - store_artifacts:
-          path: tmp/coverage
 
   upload-test-coverage:
     executor: test-executor

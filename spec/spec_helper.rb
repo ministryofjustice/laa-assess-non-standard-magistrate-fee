@@ -35,6 +35,10 @@ unless ENV['NOCOVERAGE']
     add_filter 'app/controllers/concerns/error_handling.rb'
     add_filter 'lib/govuk_design_system_formbuilder/elements/period.rb'
 
+    add_group 'Forms', '/app/forms'
+    add_group 'Services', '/app/services'
+    add_group 'View models', '/app/view_models'
+
     enable_coverage :branch
     primary_coverage :branch
     minimum_coverage branch: 100, line: 100
