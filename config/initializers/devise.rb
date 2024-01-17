@@ -5,6 +5,9 @@ require Rails.root.join('app/lib/omni_auth/strategies/dev_auth')
 Devise.setup do |config|
   require 'devise/orm/active_record'
 
+  # Explicitly set this here to avoid deprecation warning in Rails 7.1. See https://github.com/heartcombo/devise/issues/5644
+  config.secret_key = Rails.application.secret_key_base
+
   # Configure which authentication keys should be case-insensitive.
   # These keys will be downcased upon creating or modifying a user and when used
   # to authenticate or find a user. Default is :email.
