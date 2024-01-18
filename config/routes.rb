@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   end
   mount Sidekiq::Web => "/sidekiq"
 
-  root "non_standard_magistrates_payment/landing#index"
+  root "nsm/landing#index"
 
   get :ping, to: 'healthcheck#ping'
 
@@ -46,7 +46,7 @@ Rails.application.routes.draw do
     end
   end
 
-  namespace :non_standard_magistrates_payment do
+  namespace :nsm do
     resources :landing, only: [:index]
     resources :claims, only: [:new, :index] do
       resource :claim_details, only: [:show]

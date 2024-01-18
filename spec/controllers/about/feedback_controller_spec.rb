@@ -30,7 +30,7 @@ RSpec.describe About::FeedbackController do
         end
 
         it 'redirects to root' do
-          expect(response).to redirect_to(non_standard_magistrates_payment_claims_path)
+          expect(response).to redirect_to(nsm_claims_path)
         end
 
         it 'flashes notice' do

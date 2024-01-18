@@ -8,7 +8,7 @@ class BaseViewModel
     attr_reader :klass, :crime_application, :rows, :return_array
 
     def initialize(class_type, crime_application, *nesting)
-      namespace = crime_application.is_a?(Claim) ? 'NonStandardMagistratesPayment' : 'PriorAuthority'
+      namespace = crime_application.is_a?(Claim) ? 'Nsm' : 'PriorAuthority'
       @klass = "#{namespace}::V#{crime_application.json_schema_version}::#{class_type.to_s.camelcase}".constantize
       @crime_application = crime_application
       if nesting.any?

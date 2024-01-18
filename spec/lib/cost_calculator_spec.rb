@@ -18,7 +18,7 @@ RSpec.describe CostCalculator do
 
     context 'when uplift is present' do
       let(:object) do
-        NonStandardMagistratesPayment::V1::WorkItem.new('time_spent' => 90, 'pricing' => 24.4, 'uplift' => 25)
+        Nsm::V1::WorkItem.new('time_spent' => 90, 'pricing' => 24.4, 'uplift' => 25)
       end
 
       it 'calculates the time * price * uplift' do
@@ -28,7 +28,7 @@ RSpec.describe CostCalculator do
 
     context 'when uplift is not set' do
       let(:object) do
-        NonStandardMagistratesPayment::V1::WorkItem.new('time_spent' => 90, 'pricing' => 24.4, 'uplift' => nil)
+        Nsm::V1::WorkItem.new('time_spent' => 90, 'pricing' => 24.4, 'uplift' => nil)
       end
 
       it 'calculates the time * price' do
@@ -42,9 +42,9 @@ RSpec.describe CostCalculator do
 
     context 'and type is other' do
       let(:object) do
-        NonStandardMagistratesPayment::V1::Disbursement.new('disbursement_type' => { 'value' => 'other' },
-                                                            'total_cost_without_vat' => 45.0,
-                                                            'vat_amount' => 20.0)
+        Nsm::V1::Disbursement.new('disbursement_type' => { 'value' => 'other' },
+                                  'total_cost_without_vat' => 45.0,
+                                  'vat_amount' => 20.0)
       end
 
       it { expect(subject).to eq(65.0) }
@@ -54,8 +54,8 @@ RSpec.describe CostCalculator do
   context 'when type is letters and calls' do
     let(:type) { :letter_and_call }
     let(:object) do
-      NonStandardMagistratesPayment::V1::LetterAndCall.new('type' => { 'en' => 'Letters', 'value' => 'letters' },
-                                                           'count' => 12, 'uplift' => 0, 'pricing' => 3.56)
+      Nsm::V1::LetterAndCall.new('type' => { 'en' => 'Letters', 'value' => 'letters' },
+                                 'count' => 12, 'uplift' => 0, 'pricing' => 3.56)
     end
     let(:scope) { :provider_requested }
 

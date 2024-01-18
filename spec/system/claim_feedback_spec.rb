@@ -12,7 +12,7 @@ Rails.describe 'Claim Feedback', :stub_oauth_token, :stub_update_claim do
 
   context 'granted' do
     it 'sends a granted email' do
-      visit non_standard_magistrates_payment_claim_claim_details_path(claim)
+      visit nsm_claim_claim_details_path(claim)
       click_link_or_button 'Make a decision'
       choose 'Grant it'
 
@@ -24,10 +24,10 @@ Rails.describe 'Claim Feedback', :stub_oauth_token, :stub_update_claim do
 
   context 'part-granted' do
     it 'sends a part granted email' do
-      visit non_standard_magistrates_payment_claim_claim_details_path(claim)
+      visit nsm_claim_claim_details_path(claim)
       click_link_or_button 'Make a decision'
       choose 'Part grant it'
-      fill_in 'non-standard-magistrates-payment-make-decision-form-partial-comment-field', with: 'Test Data'
+      fill_in 'nsm-make-decision-form-partial-comment-field', with: 'Test Data'
 
       expect do
         click_link_or_button 'Submit decision'
@@ -37,10 +37,10 @@ Rails.describe 'Claim Feedback', :stub_oauth_token, :stub_update_claim do
 
   context 'rejected' do
     it 'sends a rejected email' do
-      visit non_standard_magistrates_payment_claim_claim_details_path(claim)
+      visit nsm_claim_claim_details_path(claim)
       click_link_or_button 'Make a decision'
       choose 'Reject it'
-      fill_in 'non-standard-magistrates-payment-make-decision-form-reject-comment-field', with: 'Test Data'
+      fill_in 'nsm-make-decision-form-reject-comment-field', with: 'Test Data'
 
       expect do
         click_link_or_button 'Submit decision'
@@ -50,7 +50,7 @@ Rails.describe 'Claim Feedback', :stub_oauth_token, :stub_update_claim do
 
   context 'provider requested' do
     it 'sends a granted email' do
-      visit non_standard_magistrates_payment_claim_claim_details_path(claim)
+      visit nsm_claim_claim_details_path(claim)
       click_link_or_button 'Send back to provider'
       choose 'Provider request'
       fill_in 'Explain your decision', with: 'Test Data'
@@ -63,7 +63,7 @@ Rails.describe 'Claim Feedback', :stub_oauth_token, :stub_update_claim do
 
   context 'further information required' do
     it 'sends a granted email' do
-      visit non_standard_magistrates_payment_claim_claim_details_path(claim)
+      visit nsm_claim_claim_details_path(claim)
       click_link_or_button 'Send back to provider'
       choose 'Further information request'
       fill_in 'Explain your decision', with: 'Test Data'

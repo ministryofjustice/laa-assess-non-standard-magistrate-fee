@@ -1,6 +1,6 @@
 class CrimeApplication < ApplicationRecord
   APPLICATION_TYPES = {
-    non_standard_magistrates_payment: 'crm7',
+    nsm: 'crm7',
     prior_authority: 'crm4',
   }.freeze
 
@@ -11,8 +11,8 @@ class CrimeApplication < ApplicationRecord
   validates :application_type, inclusion: { in: APPLICATION_TYPES.values }
 
   # TODO: When prior authority states are defined, stop referring to specifically NSM states here
-  scope :pending_decision, -> { where.not(state: NonStandardMagistratesPayment::MakeDecisionForm::STATES) }
-  scope :decision_made, -> { where(state: NonStandardMagistratesPayment::MakeDecisionForm::STATES) }
+  scope :pending_decision, -> { where.not(state: Nsm::MakeDecisionForm::STATES) }
+  scope :decision_made, -> { where(state: Nsm::MakeDecisionForm::STATES) }
 
   scope :pending_and_assigned_to, lambda { |user|
     pending_decision
