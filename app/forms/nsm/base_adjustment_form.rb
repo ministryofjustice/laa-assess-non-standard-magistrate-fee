@@ -1,10 +1,10 @@
 module Nsm
   class BaseAdjustmentForm < ::BaseAdjustmentForm
     attribute :claim
-    validates :crime_application, presence: true
+    validates :submission, presence: true
 
     # Used by the superclass
-    def crime_application
+    def submission
       claim
     end
   end

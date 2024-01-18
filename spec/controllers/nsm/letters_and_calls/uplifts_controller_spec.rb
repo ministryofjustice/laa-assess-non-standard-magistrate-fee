@@ -42,7 +42,7 @@ nsm_uplift_letters_and_calls_form: { some: :data } }
 
         expect(controller).to redirect_to(
           nsm_claim_adjustments_path(claim,
-                                                                  anchor: 'letters-and-calls-tab')
+                                     anchor: 'letters-and-calls-tab')
         )
         expect(response).to have_http_status(:found)
       end

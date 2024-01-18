@@ -5,17 +5,17 @@ class BaseViewModel
   ID_FIELDS = ['id'].freeze
 
   class Builder
-    attr_reader :klass, :crime_application, :rows, :return_array
+    attr_reader :klass, :submission, :rows, :return_array
 
-    def initialize(class_type, crime_application, *nesting)
-      namespace = crime_application.is_a?(Claim) ? 'Nsm' : 'PriorAuthority'
-      @klass = "#{namespace}::V#{crime_application.json_schema_version}::#{class_type.to_s.camelcase}".constantize
-      @crime_application = crime_application
+    def initialize(class_type, submission, *nesting)
+      namespace = submission.is_a?(Claim) ? 'Nsm' : 'PriorAuthority'
+      @klass = "#{namespace}::V#{submission.json_schema_version}::#{class_type.to_s.camelcase}".constantize
+      @submission = submission
       if nesting.any?
-        @rows = crime_application.data.dig(*nesting)
+        @rows = submission.data.dig(*nesting)
         @return_array = true
       else
-        @rows = [crime_application.data]
+        @rows = [submission.data]
         @return_array = false
       end
     end
@@ -36,11 +36,11 @@ class BaseViewModel
     private
 
     def params(attributes)
-      key = crime_application.is_a?(Claim) ? 'claim' : 'application'
-      crime_application.attributes
-                       .merge(crime_application.data)
-                       .merge(attributes, key => crime_application)
-                       .slice(*klass.attribute_names)
+      key = submission.is_a?(Claim) ? 'claim' : 'application'
+      submission.attributes
+                .merge(submission.data)
+                .merge(attributes, key => submission)
+                .slice(*klass.attribute_names)
     end
 
     def process(&block)
@@ -50,10 +50,10 @@ class BaseViewModel
 
     def all_adjustments
       @all_adjustments ||=
-        crime_application.events
-                         .where(linked_type: klass::LINKED_TYPE)
-                         .order(:created_at)
-                         .group_by { |event| [event.linked_type, event.linked_id] }
+        submission.events
+                  .where(linked_type: klass::LINKED_TYPE)
+                  .order(:created_at)
+                  .group_by { |event| [event.linked_type, event.linked_id] }
     end
 
     def adjustments?
@@ -62,8 +62,8 @@ class BaseViewModel
   end
 
   class << self
-    def build(class_type, crime_application, *)
-      Builder.new(class_type, crime_application, *).build
+    def build(class_type, submission, *)
+      Builder.new(class_type, submission, *).build
     end
   end
 

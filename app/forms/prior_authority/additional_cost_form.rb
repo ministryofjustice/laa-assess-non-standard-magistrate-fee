@@ -14,7 +14,7 @@ module PriorAuthority
       PriorAuthorityApplication.transaction do
         process_field(value: time_spent.to_i, field: 'time_spent')
 
-        crime_application.save
+        submission.save
       end
 
       true
@@ -23,7 +23,7 @@ module PriorAuthority
     private
 
     def selected_record
-      @selected_record ||= crime_application.data['additional_costs'].detect do |row|
+      @selected_record ||= submission.data['additional_costs'].detect do |row|
         row.fetch('id') == item.id
       end
     end

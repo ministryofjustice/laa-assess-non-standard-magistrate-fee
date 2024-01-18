@@ -166,7 +166,7 @@ nsm_disbursements_form: { some: :data } }
 
         expect(controller).to redirect_to(
           nsm_claim_adjustments_path(claim,
-                                                                  anchor: 'disbursements-tab')
+                                     anchor: 'disbursements-tab')
         )
         expect(response).to have_http_status(:found)
       end

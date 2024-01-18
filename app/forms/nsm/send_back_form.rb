@@ -24,7 +24,7 @@ module Nsm
       previous_state = claim.state
       Claim.transaction do
         claim.update!(state:)
-        Event::SendBack.build(crime_application: claim, comment: comment, previous_state: previous_state,
+        Event::SendBack.build(submission: claim, comment: comment, previous_state: previous_state,
                               current_user: current_user)
         NotifyAppStore.process(claim:)
       end

@@ -1,16 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe Event::Note do
-  subject { described_class.build(crime_application:, note:, current_user:) }
+  subject { described_class.build(submission:, note:, current_user:) }
 
-  let(:crime_application) { create(:claim) }
+  let(:submission) { create(:claim) }
   let(:current_user) { create(:caseworker) }
   let(:note) { 'new note' }
 
   it 'can build a new record' do
     expect(subject).to have_attributes(
-      crime_application_id: crime_application.id,
-      crime_application_version: 1,
+      submission_id: submission.id,
+      submission_version: 1,
       event_type: 'Event::Note',
       primary_user: current_user,
       details: {

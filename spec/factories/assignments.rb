@@ -4,6 +4,6 @@ FactoryBot.define do
     transient do
       claim { nil }
     end
-    crime_application { claim || create(:claim) }
+    submission { claim || create(:claim) }
   end
 end

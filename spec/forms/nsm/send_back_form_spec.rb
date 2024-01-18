@@ -78,7 +78,7 @@ RSpec.describe Nsm::SendBackForm do
     it 'creates a Decision event' do
       subject.save
       expect(Event::SendBack).to have_received(:build).with(
-        crime_application: claim, comment: 'some comment', previous_state: 'submitted', current_user: user
+        submission: claim, comment: 'some comment', previous_state: 'submitted', current_user: user
       )
     end
 

@@ -9,8 +9,8 @@ FactoryBot.define do
     transient do
       claim { nil }
     end
-    crime_application { claim || create(:claim) }
-    crime_application_version { crime_application.current_version }
+    submission { claim || create(:claim) }
+    submission_version { submission.current_version }
 
     trait :decision do
       event_type { Event::Decision.to_s }

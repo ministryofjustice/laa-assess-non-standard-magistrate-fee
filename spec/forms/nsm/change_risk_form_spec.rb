@@ -98,7 +98,7 @@ RSpec.describe Nsm::ChangeRiskForm, type: :model do
     it 'creates a ChangeRisk event' do
       subject.save
       expect(Event::ChangeRisk).to have_received(:build).with(
-        crime_application: claim, explanation: 'Test', previous_risk_level: 'low', current_user: user
+        submission: claim, explanation: 'Test', previous_risk_level: 'low', current_user: user
       )
     end
 

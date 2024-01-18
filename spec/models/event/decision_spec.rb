@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Event::Decision do
-  subject { described_class.build(crime_application:, previous_state:, comment:, current_user:) }
+  subject { described_class.build(submission:, previous_state:, comment:, current_user:) }
 
-  let(:crime_application) { create(:claim, state:) }
+  let(:submission) { create(:claim, state:) }
   let(:state) { 'granted' }
   let(:current_user) { create(:caseworker) }
   let(:previous_state) { 'submitted' }
@@ -11,8 +11,8 @@ RSpec.describe Event::Decision do
 
   it 'can build a new record' do
     expect(subject).to have_attributes(
-      crime_application_id: crime_application.id,
-      crime_application_version: 1,
+      submission_id: submission.id,
+      submission_version: 1,
       event_type: 'Event::Decision',
       primary_user: current_user,
       details: {

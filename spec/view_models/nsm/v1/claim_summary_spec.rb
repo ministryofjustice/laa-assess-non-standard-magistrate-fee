@@ -70,7 +70,7 @@ RSpec.describe Nsm::V1::ClaimSummary do
       it 'returns the date from the last Decision event' do
         decision = create(:event, :decision)
 
-        summary = described_class.new('claim' => decision.crime_application)
+        summary = described_class.new('claim' => decision.submission)
         expect(summary.assessed_on).to eq(decision.created_at)
       end
     end

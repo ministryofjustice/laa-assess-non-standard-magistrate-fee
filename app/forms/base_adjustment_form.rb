@@ -3,7 +3,7 @@ class BaseAdjustmentForm
   include ActiveModel::Attributes
   include ActiveRecord::AttributeAssignment
 
-  attribute :crime_application
+  attribute :submission
   attribute :explanation, :string
   attribute :current_user
   attribute :item # used to detect changes in data
@@ -30,7 +30,7 @@ class BaseAdjustmentForm
     details[:change] = value - selected_record[field]
 
     selected_record[field] = value
-    Event::Edit.build(crime_application:, details:, linked:, current_user:)
+    Event::Edit.build(submission:, details:, linked:, current_user:)
   end
 
   def linked

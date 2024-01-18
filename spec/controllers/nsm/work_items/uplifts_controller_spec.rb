@@ -41,7 +41,7 @@ RSpec.describe Nsm::WorkItems::UpliftsController do
 
         expect(controller).to redirect_to(
           nsm_claim_adjustments_path(claim,
-                                                                  anchor: 'work-items-tab')
+                                     anchor: 'work-items-tab')
         )
         expect(response).to have_http_status(:found)
       end

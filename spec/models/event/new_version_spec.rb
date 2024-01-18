@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe Event::NewVersion do
-  subject { described_class.build(crime_application:) }
+  subject { described_class.build(submission:) }
 
-  let(:crime_application) { create(:claim) }
+  let(:submission) { create(:claim) }
 
   it 'can build a new record' do
     expect(subject).to have_attributes(
-      crime_application_id: crime_application.id,
-      crime_application_version: 1,
+      submission_id: submission.id,
+      submission_version: 1,
       event_type: 'Event::NewVersion',
     )
   end

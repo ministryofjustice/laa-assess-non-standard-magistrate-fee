@@ -15,7 +15,7 @@ RSpec.describe 'View applications' do
                          data: build(:prior_authority_data, laa_reference: 'LAA-1234'))
     create(:assignment,
            user: caseworker,
-           crime_application: application)
+           submission: application)
     visit prior_authority_root_path
     click_on 'Start now'
     expect(page).to have_content 'LAA-1234'

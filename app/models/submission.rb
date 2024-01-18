@@ -1,4 +1,4 @@
-class CrimeApplication < ApplicationRecord
+class Submission < ApplicationRecord
   APPLICATION_TYPES = {
     nsm: 'crm7',
     prior_authority: 'crm4',
@@ -22,7 +22,7 @@ class CrimeApplication < ApplicationRecord
   scope :unassigned, lambda { |user|
     pending_decision
       .where.missing(:assignments)
-      .where.not(id: Event::Unassignment.where(primary_user_id: user.id).select(:crime_application_id))
+      .where.not(id: Event::Unassignment.where(primary_user_id: user.id).select(:submission_id))
       .order(:created_at)
   }
 end

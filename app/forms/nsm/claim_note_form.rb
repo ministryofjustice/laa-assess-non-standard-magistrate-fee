@@ -14,7 +14,7 @@ module Nsm
     def save
       return false unless valid?
 
-      Event::Note.build(crime_application: claim, note: note, current_user: current_user)
+      Event::Note.build(submission: claim, note: note, current_user: current_user)
       true
     rescue StandardError
       false

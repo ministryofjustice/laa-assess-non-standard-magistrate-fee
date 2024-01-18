@@ -30,7 +30,7 @@ RSpec.describe Nsm::ClaimNoteForm do
     it 'creates a Note event' do
       subject.save
       expect(Event::Note).to have_received(:build).with(
-        crime_application: claim, note: 'this is a note', current_user: user
+        submission: claim, note: 'this is a note', current_user: user
       )
     end
 
