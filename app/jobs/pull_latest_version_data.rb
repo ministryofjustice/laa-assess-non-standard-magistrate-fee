@@ -1,21 +1,21 @@
 class PullLatestVersionData < ApplicationJob
   # queue :default
 
-  def perform(claim)
+  def perform(submission)
     # data for required version is already here
-    return if claim.data.present?
+    return if submission.data.present?
 
-    json_data = HttpPuller.new.get(claim)
+    json_data = HttpPuller.new.get(submission)
 
-    if json_data['version'] == claim.current_version
-      save(claim, json_data)
-    elsif json_data['version'] > claim.current_version
+    if json_data['version'] == submission.current_version
+      save(submission, json_data)
+    elsif json_data['version'] > submission.current_version
       # ignore this data as we will see a new metadata update for this
       # we could handle it here but that complicates the flow
       # NOTE: this should never happen
     else
-      raise "Correct version not found on AppStore: #{claim.id} - " \
-            "#{claim.current_version} only found #{json_data['version']}"
+      raise "Correct version not found on AppStore: #{submission.id} - " \
+            "#{submission.current_version} only found #{json_data['version']}"
     end
 
     # reset any data confirmations where data has changed
@@ -23,14 +23,14 @@ class PullLatestVersionData < ApplicationJob
 
   private
 
-  def save(claim, json_data)
-    claim.update!(
+  def save(submission, json_data)
+    submission.update!(
       json_schema_version: json_data['json_schema_version'],
       data: json_data['application']
     )
     json_data['events']&.each do |event|
-      claim.events.rehydrate!(event)
+      submission.events.rehydrate!(event)
     end
-    Event::NewVersion.build(submission: claim)
+    Event::NewVersion.build(submission:)
   end
 end

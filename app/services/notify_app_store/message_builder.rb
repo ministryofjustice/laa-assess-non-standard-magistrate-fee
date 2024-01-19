@@ -2,21 +2,21 @@ class NotifyAppStore
   class MessageBuilder
     JSON_SCHEMA_VERSION = 1
 
-    attr_reader :claim, :scorer
+    attr_reader :submission, :scorer
 
-    def initialize(claim:)
-      @claim = claim
+    def initialize(submission:)
+      @submission = submission
     end
 
     def message
       {
-        application_id: claim.id,
+        application_id: submission.id,
         json_schema_version: JSON_SCHEMA_VERSION,
-        application_type: claim.application_type,
-        application_state: claim.state,
-        application: claim.data,
-        events: claim.events.map(&:as_json),
-        application_risk: claim.risk,
+        application_type: submission.application_type,
+        application_state: submission.state,
+        application: submission.data,
+        events: submission.events.map(&:as_json),
+        application_risk: submission.risk,
       }
     end
   end

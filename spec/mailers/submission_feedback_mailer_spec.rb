@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 # rubocop:disable RSpec/MultipleMemoizedHelpers
-RSpec.describe ClaimFeedbackMailer, type: :mailer do
+RSpec.describe SubmissionFeedbackMailer, type: :mailer do
   let(:recipient) { 'provider@example.com' }
   let(:laa_case_reference) { 'LAA-FHaMVK' }
   let(:ufn) { '123456/001' }

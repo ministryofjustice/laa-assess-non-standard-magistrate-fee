@@ -2,8 +2,8 @@
 
 module FeedbackMessages
   class FeedbackBase
-    def initialize(claim, comment = '')
-      @claim = claim
+    def initialize(submission, comment = '')
+      @submission = submission
       @comment = comment
     end
 
@@ -16,13 +16,13 @@ module FeedbackMessages
     end
 
     def recipient
-      raise NotImplementedError, "#{self.class} has not implemented method '#{__method__}'"
+      @submission.data['submitter']['email']
     end
 
     protected
 
     def main_defendant
-      @claim.data['defendants'].find { _1['main'] }
+      @submission.data['defendants'].find { _1['main'] }
     end
 
     def defendant_name
@@ -34,7 +34,7 @@ module FeedbackMessages
     end
 
     def cntp_order
-      @claim.data['cntp_order']
+      @submission.data['cntp_order']
     end
 
     # Markdown conditionals do not allow to format the string nicely so formatting here.
@@ -47,15 +47,15 @@ module FeedbackMessages
     end
 
     def case_reference
-      @claim.data['laa_reference']
+      @submission.data['laa_reference']
     end
 
     def ufn
-      @claim.data['ufn']
+      @submission.data['ufn']
     end
 
     def claim_total
-      @claim.data['submitted_total_inc_vat'] || @claim.data['submitted_total'] || 0
+      @submission.data['submitted_total_inc_vat'] || @submission.data['submitted_total'] || 0
     end
 
     def feedback_url

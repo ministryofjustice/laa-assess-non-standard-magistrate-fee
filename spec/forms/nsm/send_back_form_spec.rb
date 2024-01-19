@@ -84,7 +84,7 @@ RSpec.describe Nsm::SendBackForm do
 
     it 'trigger an update to the app store' do
       subject.save
-      expect(NotifyAppStore).to have_received(:process).with(claim:)
+      expect(NotifyAppStore).to have_received(:process).with(submission: claim)
     end
 
     context 'when not valid' do

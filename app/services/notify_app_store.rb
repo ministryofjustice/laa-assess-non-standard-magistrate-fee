@@ -1,14 +1,14 @@
 class NotifyAppStore < ApplicationJob
   queue_as :default
 
-  def self.process(claim:)
+  def self.process(submission:)
     if ENV.key?('REDIS_HOST')
       set(wait: Rails.application.config.x.application.app_store_wait.seconds)
-        .perform_later(claim)
+        .perform_later(submission)
     else
       begin
-        new.notify(MessageBuilder.new(claim:))
-        ClaimFeedbackMailer.notify(claim).deliver_later!
+        new.notify(MessageBuilder.new(submission:))
+        SubmissionFeedbackMailer.notify(submission).deliver_later!
       rescue StandardError => e
         # we only get errors here when processing inline, which we don't want
         # to be visible to the end user, so swallow errors
@@ -17,9 +17,9 @@ class NotifyAppStore < ApplicationJob
     end
   end
 
-  def perform(claim)
-    notify(MessageBuilder.new(claim:))
-    ClaimFeedbackMailer.notify(claim).deliver_later!
+  def perform(submission)
+    notify(MessageBuilder.new(submission:))
+    SubmissionFeedbackMailer.notify(submission).deliver_later!
   end
 
   def notify(message_builder)

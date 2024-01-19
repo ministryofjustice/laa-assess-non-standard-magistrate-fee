@@ -2,8 +2,8 @@ class HttpPuller
   include HTTParty
   headers 'Content-Type' => 'application/json'
 
-  def get(claim)
-    process(:get, "/v1/application/#{claim.id}")
+  def get(submission)
+    process(:get, "/v1/application/#{submission.id}")
   end
 
   def get_all(last_update)

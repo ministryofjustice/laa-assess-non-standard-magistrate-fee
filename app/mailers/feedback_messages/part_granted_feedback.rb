@@ -20,12 +20,8 @@ module FeedbackMessages
       }
     end
 
-    def recipient
-      @claim.data['submitter']['email']
-    end
-
     def adjusted_total
-      @claim.data['adjusted_total_inc_vat'] || @claim.data['adjusted_total'] || 0
+      @submission.data['adjusted_total_inc_vat'] || @submission.data['adjusted_total'] || 0
     end
   end
 end
