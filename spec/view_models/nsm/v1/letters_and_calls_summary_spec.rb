@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Nsm::V1::LettersAndCallsSummary, type: :model do
-  subject { described_class.new(claim:) }
+  subject { described_class.new(submission:) }
 
   before do
     allow(CostCalculator).to receive(:cost).and_return(10.50)
@@ -11,7 +11,7 @@ RSpec.describe Nsm::V1::LettersAndCallsSummary, type: :model do
     [{ 'type' => { 'en' => 'Letters', 'value' => 'letters' }, 'count' => 12, 'uplift' => uplift, 'pricing' => 3.56 }]
   end
   let(:uplift) { 0 }
-  let(:claim) { build(:claim).tap { |claim| claim.data.merge!('letters_and_calls' => letters_and_calls) } }
+  let(:submission) { build(:claim).tap { |claim| claim.data.merge!('letters_and_calls' => letters_and_calls) } }
 
   describe '#summary_row' do
     it 'returns an array of summary row fields' do

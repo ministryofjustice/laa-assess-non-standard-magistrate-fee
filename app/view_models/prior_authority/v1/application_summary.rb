@@ -5,10 +5,10 @@ module PriorAuthority
       attribute :firm_name
       attribute :submitted_total
       attribute :client_name
-      attribute :application
+      attribute :submission
 
       def date_created_str
-        I18n.l(application.created_at, format: '%-d %b %Y')
+        I18n.l(submission.created_at, format: '%-d %b %Y')
       end
     end
   end

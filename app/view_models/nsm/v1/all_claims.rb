@@ -5,7 +5,7 @@ module Nsm
       attribute :defendants
       attribute :firm_office
       attribute :created_at, :date
-      attribute :claim
+      attribute :submission
 
       def main_defendant_name
         main_defendant = defendants.detect { |defendant| defendant['main'] }
@@ -21,12 +21,12 @@ module Nsm
       end
 
       def case_worker_name
-        claim.assignments.first&.display_name || I18n.t('nsm.claims.index.unassigned')
+        submission.assignments.first&.display_name || I18n.t('nsm.claims.index.unassigned')
       end
 
       def table_fields
         [
-          { laa_reference: laa_reference, claim_id: claim.id },
+          { laa_reference: laa_reference, claim_id: submission.id },
           firm_name,
           main_defendant_name,
           date_created,

@@ -5,7 +5,7 @@ module Nsm
       attribute :defendants
       attribute :submitted_total
       attribute :adjusted_total
-      attribute :claim
+      attribute :submission
       attribute :send_by_post
 
       def main_defendant_name
@@ -14,11 +14,11 @@ module Nsm
       end
 
       def assigned_to
-        @assigned_to ||= claim.assignments.first
+        @assigned_to ||= submission.assignments.first
       end
 
       def assessed_on
-        claim.events.where(event_type: 'Event::Decision').order(created_at: :desc).first&.created_at
+        submission.events.where(event_type: 'Event::Decision').order(created_at: :desc).first&.created_at
       end
 
       def total

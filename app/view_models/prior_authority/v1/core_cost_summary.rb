@@ -1,10 +1,10 @@
 module PriorAuthority
   module V1
     class CoreCostSummary < BaseViewModel
-      attribute :application
+      attribute :submission
 
       def additional_costs
-        BaseViewModel.build(:additional_cost, application, 'additional_costs')
+        BaseViewModel.build(:additional_cost, submission, 'additional_costs')
       end
     end
   end

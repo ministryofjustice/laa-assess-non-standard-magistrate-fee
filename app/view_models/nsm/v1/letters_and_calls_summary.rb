@@ -1,7 +1,7 @@
 module Nsm
   module V1
     class LettersAndCallsSummary < BaseViewModel
-      attribute :claim
+      attribute :submission
 
       def summary_row
         [
@@ -14,7 +14,7 @@ module Nsm
       end
 
       def rows
-        @rows ||= BaseViewModel.build(:letter_and_call, claim, 'letters_and_calls')
+        @rows ||= BaseViewModel.build(:letter_and_call, submission, 'letters_and_calls')
       end
 
       def uplift?

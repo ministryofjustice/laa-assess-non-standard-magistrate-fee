@@ -5,7 +5,7 @@ module Nsm
 
       INCLUDED_TYPES = %w[travel waiting].freeze
 
-      attribute :claim
+      attribute :submission
       attribute :firm_office
 
       def vat_registered?

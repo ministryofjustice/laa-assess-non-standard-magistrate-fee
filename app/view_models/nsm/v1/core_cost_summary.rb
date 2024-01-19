@@ -5,7 +5,7 @@ module Nsm
 
       SKIPPED_TYPES = %w[travel waiting].freeze
 
-      attribute :claim
+      attribute :submission
 
       def table_fields
         data_by_type.map do |work_type, _, _, allowed_cost, allowed_time|
@@ -36,7 +36,7 @@ module Nsm
       end
 
       def letter_and_call_data
-        rows = LettersAndCallsSummary.new('claim' => claim).rows
+        rows = LettersAndCallsSummary.new('submission' => submission).rows
         rows.filter_map do |letter_or_call|
           next if letter_or_call.provider_requested_count.zero?
 

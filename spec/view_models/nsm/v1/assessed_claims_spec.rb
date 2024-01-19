@@ -2,14 +2,14 @@ require 'rails_helper'
 
 RSpec.describe Nsm::V1::AssessedClaims, type: :view_model do
   subject(:assessed_claims) do
-    described_class.new(laa_reference:, defendants:, firm_office:, updated_at:, claim:, state:)
+    described_class.new(laa_reference:, defendants:, firm_office:, updated_at:, submission:, state:)
   end
 
   let(:laa_reference) { '1234567890' }
   let(:defendants) { [{ 'full_name' => 'John Doe', 'main' => true }, 'main' => false, 'full_name' => 'jimbob'] }
   let(:firm_office) { { 'name' => 'Acme Law Firm' } }
   let(:updated_at) { Time.zone.yesterday }
-  let(:claim) { instance_double(Claim, id: 1, events: events) }
+  let(:submission) { instance_double(Claim, id: 1, events: events) }
   let(:events) { double(where: double(order: [instance_double(Event, primary_user:)])) }
   let(:primary_user) { instance_double(User, display_name: 'Jim Bob') }
   let(:state) { 'granted' }

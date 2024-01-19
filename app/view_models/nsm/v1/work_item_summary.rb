@@ -18,7 +18,7 @@ module Nsm
       private
 
       def grouped_work_items
-        BaseViewModel.build(:work_item, claim, 'work_items')
+        BaseViewModel.build(:work_item, submission, 'work_items')
                      .group_by { |work_item| work_item.work_type.to_s }
       end
 

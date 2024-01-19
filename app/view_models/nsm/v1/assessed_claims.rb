@@ -6,7 +6,7 @@ module Nsm
       attribute :firm_office
       attribute :updated_at, :date
       attribute :state
-      attribute :claim
+      attribute :submission
 
       def main_defendant_name
         main_defendant = defendants.detect { |defendant| defendant['main'] }
@@ -22,7 +22,7 @@ module Nsm
       end
 
       def case_worker_name
-        event = claim.events.where(event_type: 'Event::Decision').order(created_at: :desc).first
+        event = submission.events.where(event_type: 'Event::Decision').order(created_at: :desc).first
         event ? event.primary_user.display_name : ''
       end
 
@@ -41,7 +41,7 @@ module Nsm
 
       def table_fields
         [
-          { laa_reference: laa_reference, claim_id: claim.id },
+          { laa_reference: laa_reference, claim_id: submission.id },
           firm_name,
           main_defendant_name,
           date_assessed,

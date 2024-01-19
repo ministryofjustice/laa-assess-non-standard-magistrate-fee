@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Nsm::V1::CoreCostSummary do
-  subject { described_class.new(claim:) }
+  subject { described_class.new(submission:) }
 
-  let(:claim) do
+  let(:submission) do
     build(:claim).tap do |claim|
       claim.data.merge!('letters_and_calls' => letters_and_calls, 'work_items' => work_items)
     end
@@ -55,7 +55,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
       it 'builds the view model' do
         subject.summed_fields
         expect(BaseViewModel).to have_received(:build).with(
-          :work_item, claim, 'work_items'
+          :work_item, submission, 'work_items'
         )
       end
 
@@ -156,7 +156,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
       it 'builds a WorkType record to use in the calculations' do
         subject.summed_fields
         expect(BaseViewModel).to have_received(:build).with(
-          :work_item, claim, 'work_items'
+          :work_item, submission, 'work_items'
         )
       end
 

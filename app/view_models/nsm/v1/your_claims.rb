@@ -5,7 +5,7 @@ module Nsm
       attribute :defendants
       attribute :firm_office
       attribute :created_at, :date
-      attribute :claim
+      attribute :submission
       attribute :risk
 
       def main_defendant_name

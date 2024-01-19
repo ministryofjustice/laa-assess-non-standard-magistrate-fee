@@ -25,4 +25,8 @@ class Submission < ApplicationRecord
       .where.not(id: Event::Unassignment.where(primary_user_id: user.id).select(:submission_id))
       .order(:created_at)
   }
+
+  def namespace
+    Submission::APPLICATION_TYPES.invert[application_type].to_s.camelcase.constantize
+  end
 end

@@ -2,14 +2,14 @@ require 'rails_helper'
 
 RSpec.describe Nsm::V1::AllClaims, type: :view_model do
   subject(:all_claims) do
-    described_class.new(laa_reference:, defendants:, firm_office:, created_at:, claim:)
+    described_class.new(laa_reference:, defendants:, firm_office:, created_at:, submission:)
   end
 
   let(:laa_reference) { '1234567890' }
   let(:defendants) { [{ 'full_name' => 'John Doe', 'main' => true }, 'main' => false, 'full_name' => 'jimbob'] }
   let(:firm_office) { { 'name' => 'Acme Law Firm' } }
   let(:created_at) { Time.zone.today }
-  let(:claim) { build(:claim, id: SecureRandom.uuid) }
+  let(:submission) { build(:claim, id: SecureRandom.uuid) }
 
   describe '#main_defendant_name' do
     it 'returns the name of the main defendant' do
@@ -44,7 +44,7 @@ RSpec.describe Nsm::V1::AllClaims, type: :view_model do
     context 'when assigned' do
       it 'returns the caseworkers name' do
         assignment = instance_double(Assignment, display_name: 'John Wick')
-        allow(claim).to receive(:assignments).and_return([assignment])
+        allow(submission).to receive(:assignments).and_return([assignment])
 
         expect(all_claims.case_worker_name).to eq('John Wick')
       end
@@ -54,7 +54,7 @@ RSpec.describe Nsm::V1::AllClaims, type: :view_model do
   describe '#table_fields' do
     it 'returns an array of table fields' do
       expected_fields = [
-        { laa_reference: '1234567890', claim_id: claim.id },
+        { laa_reference: '1234567890', claim_id: submission.id },
         'Acme Law Firm',
         'John Doe',
         { text: I18n.l(Time.zone.today, format: '%-d %b %Y'), sort_value: Time.zone.today.to_fs(:db) },

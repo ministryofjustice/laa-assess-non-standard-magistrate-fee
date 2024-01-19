@@ -180,7 +180,7 @@ FactoryBot.define do
 
     trait :with_assignment do
       after(:build) do |claim|
-        claim.assignments << build(:assignment, claim:)
+        claim.assignments << build(:assignment, submission: claim)
       end
     end
   end

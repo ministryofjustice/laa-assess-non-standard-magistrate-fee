@@ -8,8 +8,7 @@ class BaseViewModel
     attr_reader :klass, :submission, :rows, :return_array
 
     def initialize(class_type, submission, *nesting)
-      namespace = submission.is_a?(Claim) ? 'Nsm' : 'PriorAuthority'
-      @klass = "#{namespace}::V#{submission.json_schema_version}::#{class_type.to_s.camelcase}".constantize
+      @klass = "#{submission.namespace}::V#{submission.json_schema_version}::#{class_type.to_s.camelcase}".constantize
       @submission = submission
       if nesting.any?
         @rows = submission.data.dig(*nesting)
@@ -36,10 +35,9 @@ class BaseViewModel
     private
 
     def params(attributes)
-      key = submission.is_a?(Claim) ? 'claim' : 'application'
       submission.attributes
                 .merge(submission.data)
-                .merge(attributes, key => submission)
+                .merge(attributes, 'submission' => submission)
                 .slice(*klass.attribute_names)
     end
 

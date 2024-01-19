@@ -10,7 +10,7 @@ RSpec.describe Nsm::V1::TravelAndWaiting do
   end
   let(:params) do
     {
-      'claim' => claim,
+      'submission' => claim,
       'firm_office' => { 'vat_registered' => vat_registered },
     }
   end
