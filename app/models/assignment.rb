@@ -1,8 +1,8 @@
 class Assignment < ApplicationRecord
-  belongs_to :claim
+  belongs_to :submission
   belongs_to :user
 
-  validates :claim, uniqueness: true
+  validates :submission, uniqueness: true
 
   delegate :display_name, to: :user
 end

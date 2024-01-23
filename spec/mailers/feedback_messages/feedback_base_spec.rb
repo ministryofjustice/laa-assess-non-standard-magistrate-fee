@@ -18,10 +18,4 @@ RSpec.describe FeedbackMessages::FeedbackBase do
       expect { subject.contents }.to raise_error(NotImplementedError)
     end
   end
-
-  describe '#recipient' do
-    it 'throws a not implemented exception' do
-      expect { subject.recipient }.to raise_error(NotImplementedError)
-    end
-  end
 end

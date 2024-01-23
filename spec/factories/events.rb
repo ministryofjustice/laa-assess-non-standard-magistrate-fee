@@ -6,8 +6,11 @@ end
 
 FactoryBot.define do
   factory :event, class: 'EventCreatable' do
-    claim
-    claim_version { claim.current_version }
+    transient do
+      claim { nil }
+    end
+    submission { claim || create(:claim) }
+    submission_version { submission.current_version }
 
     trait :decision do
       event_type { Event::Decision.to_s }

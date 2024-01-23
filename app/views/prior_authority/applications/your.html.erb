@@ -1,0 +1,47 @@
+<% content_for(:primary_navigation) do %>
+  <% render partial: 'layouts/prior_authority/primary_navigation', current: :your %>
+<% end %>
+<% title t('.page_title') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl"><%= t('.page_title') %></h1>
+    <% if @applications.none? %>
+      <h2 class="govuk-body-l"><%= t('.no_applications') %></h2>
+    <% end %>
+    <div class="govuk-button-group">
+      <%= govuk_button_link_to(t('.next_application'), new_prior_authority_application_path) %>
+    </div>
+    <% if @applications.any? %>
+      <%=
+        govuk_table(html_attributes: {'data-module': 'moj-sortable-table'}) do |table|
+          table.with_caption(html_attributes: { class: "govuk-visually-hidden" }, text: t(".table_heading"))
+
+          table.with_head do |head|
+            head.with_row do |row|
+              row.with_cell(text: t('.laa_reference'))
+              row.with_cell(text: t('.firm_name'))
+              row.with_cell(text: t('.client_name'))
+              row.with_cell(text: t('.date_received'))
+            end
+          end
+
+          table.with_body do |body|
+            @applications.each do |application|
+              body.with_row do |row|
+                row.with_cell do
+                  govuk_link_to(application.laa_reference, prior_authority_application_path(application.submission.id))
+                end
+                row.with_cell(text: application.firm_name)
+                row.with_cell(text: application.client_name)
+                row.with_cell(text: application.date_created_str)
+              end
+            end
+          end
+        end
+      %>
+
+      <%= render "shared/pagination", { pagy: @pagy, item: t('.table_info_item')} %>
+    <% end %>
+  </div>
+</div>

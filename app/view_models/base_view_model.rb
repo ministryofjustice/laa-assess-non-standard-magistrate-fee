@@ -5,16 +5,16 @@ class BaseViewModel
   ID_FIELDS = ['id'].freeze
 
   class Builder
-    attr_reader :klass, :claim, :rows, :return_array
+    attr_reader :klass, :submission, :rows, :return_array
 
-    def initialize(class_type, claim, *nesting)
-      @klass = "V#{claim.json_schema_version}::#{class_type.to_s.camelcase}".constantize
-      @claim = claim
+    def initialize(class_type, submission, *nesting)
+      @klass = "#{submission.namespace}::V#{submission.json_schema_version}::#{class_type.to_s.camelcase}".constantize
+      @submission = submission
       if nesting.any?
-        @rows = claim.data.dig(*nesting)
+        @rows = submission.data.dig(*nesting)
         @return_array = true
       else
-        @rows = [claim.data]
+        @rows = [submission.data]
         @return_array = false
       end
     end
@@ -35,10 +35,10 @@ class BaseViewModel
     private
 
     def params(attributes)
-      claim.attributes
-           .merge(claim.data)
-           .merge(attributes, 'claim' => claim)
-           .slice(*klass.attribute_names)
+      submission.attributes
+                .merge(submission.data)
+                .merge(attributes, 'submission' => submission)
+                .slice(*klass.attribute_names)
     end
 
     def process(&block)
@@ -48,10 +48,10 @@ class BaseViewModel
 
     def all_adjustments
       @all_adjustments ||=
-        claim.events
-             .where(linked_type: klass::LINKED_TYPE)
-             .order(:created_at)
-             .group_by { |event| [event.linked_type, event.linked_id] }
+        submission.events
+                  .where(linked_type: klass::LINKED_TYPE)
+                  .order(:created_at)
+                  .group_by { |event| [event.linked_type, event.linked_id] }
     end
 
     def adjustments?
@@ -60,8 +60,8 @@ class BaseViewModel
   end
 
   class << self
-    def build(class_type, claim, *)
-      Builder.new(class_type, claim, *).build
+    def build(class_type, submission, *)
+      Builder.new(class_type, submission, *).build
     end
   end
 

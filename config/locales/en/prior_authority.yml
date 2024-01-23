@@ -1,0 +1,64 @@
+en:
+  prior_authority:
+    service_name: 'Assess prior authority to incur disbursements'
+    your_applications: Your applications
+    open_applications: Open applications
+    assessed_applications: Assessed applications
+    shared:
+      summary:
+        date_received: 'Date received:'
+      sub_navigation:
+        overview: Overview
+        adjust_quote: Adjust quote
+        related_applications: Related applications
+        application_history: Application history
+    static_pages:
+      landing:
+        page_title: Assess prior authority to incur disbursements
+        content_line_1: Use this service to assess applications for prior authority to incur disbursements in criminal cases in relation to magistrates, crown and prison law work.
+        content_line_2: Only caseworkers who have received an email invitation will have access.
+        content_line_3_html: If you do not have access, you should continue using %{link}.
+        eforms: eForms
+        start: Start now
+    applications:
+      your:
+        table_info_item: 'application'
+        page_title: 'Your applications'
+        table_heading: 'Your applications'
+        laa_reference: LAA reference
+        firm_name: Firm name
+        client_name: Client name
+        date_received: Date received
+        no_applications: 'You have no applications assigned to you for assessment'
+        next_application: 'Assess next application'
+    adjustments:
+      index:
+        page_title: Adjustments
+        additional_cost: Additional cost %{n}
+        cost_description: "Cost description: \"%{description}\""
+        details: Details
+        requested: Requested
+        time: Time
+        cost: Cost
+        total: Total
+        adjust_additional_cost: Adjust additional cost
+    additional_costs:
+      edit:
+        page_title: Adjust additional cost %{n}
+  helpers:
+    legend:
+      prior_authority_additional_cost_form:
+        time_spent: Change time spent (optional)
+  activemodel:
+    errors:
+      models:
+        prior_authority/additional_cost_form:
+          attributes:
+            time_spent:
+              blank_minutes: Enter number of minutes
+              blank_hours: Enter number of hours
+              positive_minutes: Number of minutes must be 0 or more
+              positive_hours: Number of hours must be 0 or more
+              invalid: Something went wrong
+            explanation:
+              blank: Add an explanation for your decision

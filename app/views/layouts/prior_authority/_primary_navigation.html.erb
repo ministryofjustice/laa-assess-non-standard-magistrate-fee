@@ -1,0 +1,20 @@
+<% current ||= :your %>
+<div class="moj-primary-navigation">
+  <div class="moj-primary-navigation__container">
+    <div class="moj-primary-navigation__nav">
+        <nav class="moj-primary-navigation" aria-label="Primary navigation">
+          <ul class="moj-primary-navigation__list">
+              <li class="moj-primary-navigation__item">
+                <%= link_to t('prior_authority.your_applications'), your_prior_authority_applications_path, class: 'moj-primary-navigation__link', 'aria-current': (current == :your ? 'page' : nil) %>
+              </li>
+              <li class="moj-primary-navigation__item">
+                <%= link_to t('prior_authority.open_applications'), open_prior_authority_applications_path, class: 'moj-primary-navigation__link', 'aria-current': (current == :open ? 'page' : nil) %>
+              </li>
+              <li class="moj-primary-navigation__item">
+                <%= link_to t('prior_authority.assessed_applications'), assessed_prior_authority_applications_path, class: 'moj-primary-navigation__link', 'aria-current': (current == :assessed ? 'page' : nil) %>
+              </li>
+          </ul>
+        </nav>
+    </div>
+  </div>
+</div>

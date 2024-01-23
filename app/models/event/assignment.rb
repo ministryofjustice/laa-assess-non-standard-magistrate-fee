@@ -1,10 +1,10 @@
 class Event
   class Assignment < Event
-    def self.build(claim:, current_user:)
+    def self.build(submission:, current_user:)
       create(
-        claim: claim,
+        submission: submission,
         primary_user: current_user,
-        claim_version: claim.current_version
+        submission_version: submission.current_version
       )
     end
   end

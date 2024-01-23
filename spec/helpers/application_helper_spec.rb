@@ -146,7 +146,7 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
 
     context 'when a form object without errors is given' do
-      let(:form_object) { MakeDecisionForm.new }
+      let(:form_object) { Nsm::MakeDecisionForm.new }
 
       it 'returns nil' do
         expect(helper.govuk_error_summary(form_object)).to be_nil
@@ -154,7 +154,7 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
 
     context 'when a form object with errors is given' do
-      let(:form_object) { MakeDecisionForm.new }
+      let(:form_object) { Nsm::MakeDecisionForm.new }
       let(:title) { helper.content_for(:page_title) }
 
       before do
@@ -169,7 +169,8 @@ RSpec.describe ApplicationHelper, type: :helper do
           '<div class="govuk-error-summary" data-module="govuk-error-summary"><div role="alert">' \
           '<h2 class="govuk-error-summary__title">There is a problem on this page</h2>' \
           '<div class="govuk-error-summary__body"><ul class="govuk-list govuk-error-summary__list">' \
-          '<li><a data-turbo="false" href="#make-decision-form-base-field-error">can&#39;t be blank</a></li>' \
+          '<li><a data-turbo="false" href="#nsm-make-decision-form-base-field-error">' \
+          'can&#39;t be blank</a></li>' \
           '</ul></div></div></div>'
         )
       end

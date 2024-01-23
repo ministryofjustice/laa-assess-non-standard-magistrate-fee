@@ -3,12 +3,11 @@ class BaseAdjustmentForm
   include ActiveModel::Attributes
   include ActiveRecord::AttributeAssignment
 
-  attribute :claim
+  attribute :submission
   attribute :explanation, :string
   attribute :current_user
   attribute :item # used to detect changes in data
 
-  validates :claim, presence: true
   validates :explanation, presence: true, if: :explanation_required?
   validate :data_changed
 
@@ -31,7 +30,7 @@ class BaseAdjustmentForm
     details[:change] = value - selected_record[field]
 
     selected_record[field] = value
-    Event::Edit.build(claim:, details:, linked:, current_user:)
+    Event::Edit.build(submission:, details:, linked:, current_user:)
   end
 
   def linked

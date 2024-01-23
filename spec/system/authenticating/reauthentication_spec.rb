@@ -8,7 +8,7 @@ RSpec.describe 'Reauthentication' do
   before do
     allow(Devise).to receive(:sign_out_all_scopes).and_return(sign_out_all_scopes)
     sign_in user
-    visit '/claims'
+    visit '/nsm/claims'
     user.update(last_auth_at:)
     visit current_path
   end

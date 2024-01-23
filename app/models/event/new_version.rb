@@ -1,7 +1,7 @@
 class Event
   class NewVersion < Event
-    def self.build(claim:)
-      create(claim: claim, claim_version: claim.current_version)
+    def self.build(submission:)
+      create(submission: submission, submission_version: submission.current_version)
     end
   end
 end

@@ -1,14 +1,14 @@
 class Event
   class Decision < Event
-    def self.build(claim:, previous_state:, comment:, current_user:)
+    def self.build(submission:, previous_state:, comment:, current_user:)
       create(
-        claim: claim,
-        claim_version: claim.current_version,
+        submission: submission,
+        submission_version: submission.current_version,
         primary_user: current_user,
         details: {
           field: 'state',
           from: previous_state,
-          to: claim.state,
+          to: submission.state,
           comment: comment
         }
       )

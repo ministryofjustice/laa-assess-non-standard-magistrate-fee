@@ -2,7 +2,7 @@ class PullUpdates < ApplicationJob
   # queue :default
 
   def perform
-    last_update = Claim.maximum(:app_store_updated_at) || Time.zone.local(2023, 1, 1)
+    last_update = Submission.maximum(:app_store_updated_at) || Time.zone.local(2023, 1, 1)
 
     json_data = HttpPuller.new.get_all(last_update)
 
@@ -23,8 +23,8 @@ class PullUpdates < ApplicationJob
     }
   end
 
-  def save(claim_id, params)
-    receiver = ReceiveApplicationMetadata.new(claim_id)
+  def save(submission_id, params)
+    receiver = ReceiveApplicationMetadata.new(submission_id)
 
     receiver.save(params)
   end

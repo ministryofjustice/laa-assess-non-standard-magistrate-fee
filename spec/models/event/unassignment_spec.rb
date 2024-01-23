@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Event::Unassignment do
-  subject { described_class.build(claim:, user:, current_user:, comment:) }
+  subject { described_class.build(submission:, user:, current_user:, comment:) }
 
-  let(:claim) { create(:claim) }
+  let(:submission) { create(:claim) }
   let(:user) { create(:caseworker) }
   let(:comment) { 'test comment' }
 
@@ -12,9 +12,9 @@ RSpec.describe Event::Unassignment do
 
     it 'can build a new record without a secondary user' do
       expect(subject).to have_attributes(
-        claim_id: claim.id,
+        submission_id: submission.id,
         primary_user_id: user.id,
-        claim_version: 1,
+        submission_version: 1,
         event_type: 'Event::Unassignment',
         details: { 'comment' => 'test comment' }
       )
@@ -30,10 +30,10 @@ RSpec.describe Event::Unassignment do
 
     it 'can build a new record with a secondary user' do
       expect(subject).to have_attributes(
-        claim_id: claim.id,
+        submission_id: submission.id,
         primary_user_id: user.id,
         secondary_user_id: current_user.id,
-        claim_version: 1,
+        submission_version: 1,
         event_type: 'Event::Unassignment',
         details: { 'comment' => 'test comment' }
       )

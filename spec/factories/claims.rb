@@ -5,6 +5,7 @@ FactoryBot.define do
     current_version { 1 }
     state { 'submitted' }
     json_schema_version { 1 }
+    application_type { 'crm7' }
     data do
       {
         'laa_reference' => 'LAA-FHaMVK',
@@ -179,7 +180,7 @@ FactoryBot.define do
 
     trait :with_assignment do
       after(:build) do |claim|
-        claim.assignments << build(:assignment, claim:)
+        claim.assignments << build(:assignment, submission: claim)
       end
     end
   end

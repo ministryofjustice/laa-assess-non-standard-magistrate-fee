@@ -1,0 +1,49 @@
+<% content_for(:primary_navigation) do %>
+  <% render partial: 'layouts/prior_authority/primary_navigation', current: :your %>
+<% end %>
+<% title t('.page_title') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters govuk-!-padding-right-0">
+
+    <%= render partial: 'prior_authority/shared/summary', locals: { application:, application_summary: } %>
+    <%= render partial: 'prior_authority/shared/sub_navigation', locals: { application: application, current_page: 'adjust_quote' } %>
+
+    <% core_cost_summary.additional_costs.each_with_index do |additional_cost, index| %>
+
+      <h2 class="govuk-heading-l"><%= t('.additional_cost', n: index + 1) %></h2>
+
+      <p class="govuk-text"><%= t(".cost_description", description: additional_cost.description) %></p>
+
+      <%= govuk_table do |table|
+            table.with_head do |head|
+              head.with_row do |row|
+                row.with_cell(text: t('.details'))
+                row.with_cell(text: t('.requested'))
+
+              end
+            end
+
+            table.with_body do |body|
+              body.with_row do |row|
+                row.with_cell(text: t('.time'))
+                row.with_cell(text: format_period(additional_cost.time_spent))
+              end
+
+              body.with_row do |row|
+                row.with_cell(text: t('.cost'))
+                row.with_cell(text: NumberTo.pounds(additional_cost.cost_per_hour))
+              end
+
+              body.with_row do |row|
+                row.with_cell(text: t('.total'))
+                row.with_cell(text: NumberTo.pounds(additional_cost.total_cost))
+              end
+            end
+          end %>
+      <%= link_to t(".adjust_additional_cost"),
+                  edit_prior_authority_application_additional_cost_path(application, additional_cost.id),
+                  class: 'govuk-button govuk-button--secondary' %>
+    <% end %>
+  </div>
+</div>

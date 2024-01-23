@@ -17,9 +17,5 @@ module FeedbackMessages
         feedback_url: feedback_url
       }
     end
-
-    def recipient
-      @claim.data['submitter']['email']
-    end
   end
 end

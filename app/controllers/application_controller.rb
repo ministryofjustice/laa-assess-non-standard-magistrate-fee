@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   private
 
   def after_sign_in_path_for(_user)
-    claims_path
+    nsm_claims_path
   end
 
   def set_security_headers

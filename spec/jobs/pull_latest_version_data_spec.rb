@@ -43,7 +43,7 @@ RSpec.describe PullLatestVersionData do
       let(:user) { create(:supervisor) }
       let(:events_data) do
         [{
-          'claim_version' => 1,
+          'submission_version' => 1,
           'primary_user_id' => user.id,
           'secondary_user_id' => nil,
           'linked_type' => nil,
@@ -59,8 +59,8 @@ RSpec.describe PullLatestVersionData do
         subject.perform(claim)
         expect(Event.count).to eq(1)
         expect(Event.last).to have_attributes(
-          claim_id: claim.id,
-          claim_version: 1,
+          submission_id: claim.id,
+          submission_version: 1,
           primary_user_id: user.id,
           secondary_user_id: nil,
           linked_type: nil,
@@ -85,7 +85,7 @@ RSpec.describe PullLatestVersionData do
       it 'creates a new version event' do
         subject.perform(claim)
 
-        expect(Event::NewVersion).to have_received(:build).with(claim:)
+        expect(Event::NewVersion).to have_received(:build).with(submission: claim)
       end
     end
 
