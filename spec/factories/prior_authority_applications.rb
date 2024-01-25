@@ -5,7 +5,7 @@ FactoryBot.define do
     state { 'submitted' }
     json_schema_version { 1 }
     application_type { 'crm4' }
-    data factory: :prior_authority_data
+    data factory: :prior_authority_data, strategy: :build
   end
 
   factory :prior_authority_data, class: Hash do
@@ -14,6 +14,8 @@ FactoryBot.define do
     firm_name { 'LegalCo' }
     client_name { 'Jane Doe' }
     additional_costs { [] }
+    service_type { 'other' }
+    court_type { 'other' }
   end
 
   factory :additional_cost, class: Hash do

@@ -1,7 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe PullLatestVersionData do
-  let(:claim) { instance_double(Claim, id: id, current_version: current_version, update!: true, data: data) }
+  let(:claim) do
+    instance_double(Claim,
+                    id: id,
+                    current_version: current_version,
+                    assign_attributes: true,
+                    save!: true,
+                    data: data,
+                    namespace: Nsm)
+  end
   let(:data) { {} }
   let(:id) { SecureRandom.uuid }
   let(:current_version) { 2 }
@@ -76,10 +84,11 @@ RSpec.describe PullLatestVersionData do
       it 'creates the new version' do
         subject.perform(claim)
 
-        expect(claim).to have_received(:update!).with(
+        expect(claim).to have_received(:assign_attributes).with(
           json_schema_version: 1,
           data: { 'same' => 'data' }
         )
+        expect(claim).to have_received(:save!)
       end
 
       it 'creates a new version event' do
@@ -95,7 +104,7 @@ RSpec.describe PullLatestVersionData do
       it 'do nothing' do
         subject.perform(claim)
 
-        expect(claim).not_to have_received(:update!)
+        expect(claim).not_to have_received(:assign_attributes)
       end
     end
 
@@ -105,6 +114,51 @@ RSpec.describe PullLatestVersionData do
       it 'raise an error' do
         expect { subject.perform(claim) }.to raise_error(
           "Correct version not found on AppStore: #{claim.id} - 3 only found 2"
+        )
+      end
+    end
+  end
+
+  context 'when pulling prior authority data' do
+    let(:http_response) do
+      {
+        'version' => 1,
+        'json_schema_version' => 1,
+        'application_state' => 'submitted',
+        'application_type' => 'crm4',
+        'application' => data,
+        'events' => []
+      }
+    end
+
+    let(:application) { create(:prior_authority_application, current_version: 1, data: nil) }
+
+    context 'when data is valid' do
+      let(:data) { build(:prior_authority_data) }
+
+      it 'updates the data' do
+        subject.perform(application)
+        expect(application.data).to eq data.with_indifferent_access
+      end
+    end
+
+    context 'when base data is invalid' do
+      let(:data) { build(:prior_authority_data, court_type: 'invalid') }
+
+      it 'raises an error' do
+        expect { subject.perform(application) }.to raise_error(
+          "Received submission data that does not adhere to our assumptions: \nCourt type is not included in the list"
+        )
+      end
+    end
+
+    context 'when additional cost data is invalid' do
+      let(:data) { build(:prior_authority_data, additional_costs: [build(:additional_cost, description: nil)]) }
+
+      it 'raises an error' do
+        expect { subject.perform(application) }.to raise_error(
+          'Received submission data that does not adhere to our assumptions: ' \
+          "\nAdditional costs Description can't be blank"
         )
       end
     end

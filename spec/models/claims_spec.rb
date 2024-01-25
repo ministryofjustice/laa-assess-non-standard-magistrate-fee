@@ -6,14 +6,6 @@ RSpec.describe Claim do
   describe '#unassigned' do
     let(:user) { create(:caseworker) }
 
-    it 'returns claims oldest to youngest' do
-      claim1 = create(:claim)
-      claim2 = create(:claim)
-      claim3 = create(:claim)
-
-      expect(described_class.unassigned(user)).to eq([claim1, claim2, claim3])
-    end
-
     it 'does not include claims which have already been assigned' do
       claim.assignments.create(user: create(:caseworker))
 

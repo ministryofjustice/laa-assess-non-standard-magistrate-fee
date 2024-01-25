@@ -94,5 +94,6 @@ Rails.application.routes.draw do
       resources :adjustments, only: :index
       resources :additional_costs, only: [:edit, :update]
     end
+    resources :assignments, only: [:create]
   end
 end
