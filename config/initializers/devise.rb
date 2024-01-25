@@ -39,7 +39,7 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   #
-  # Uses the DevAuth strategy if local/docker env and ENV["DEV_AUTH_ENABLED"] is true
+  # Uses the DevAuth strategy if local/docker env and feature flag for dev_auth is true
 
   unless HostEnv.local? || ENV.key?('IS_LOCAL_DOCKER_ENV')
     raise "The DevAuth strategy must not be used in this environment" if FeatureFlags.dev_auth.enabled?

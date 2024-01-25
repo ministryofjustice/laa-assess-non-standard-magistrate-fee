@@ -63,6 +63,6 @@ autoscaling:
 
 secrets:
   environment: development
-  devAuthEnabled: true
+
 service_account:
   name: laa-assess-non-standard-magistrate-fee-dev-crm4-irsa
