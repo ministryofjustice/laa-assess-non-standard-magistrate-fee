@@ -128,8 +128,6 @@ spec:
               value: 'production'
             - name: RAILS_LOG_TO_STDOUT
               value: enabled
-            - name: DEV_AUTH_ENABLED
-              value: {{ .Values.secrets.devAuthEnabled | quote }}
             - name: ENV
               value: {{ .Values.secrets.environment}}
             - name: IS_LOCAL_DOCKER_ENV

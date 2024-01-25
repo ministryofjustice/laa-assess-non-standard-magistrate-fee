@@ -28,7 +28,7 @@ class FeatureFlags
     @env_name = HostEnv.env_name
 
     @config = YAML.load(
-      ERB.new(settings_file).result
+      ERB.new(config_file).result
     ).fetch('feature_flags', {}).with_indifferent_access.freeze
   end
 
@@ -50,7 +50,7 @@ class FeatureFlags
 
   private
 
-  def settings_file
-    Rails.root.join('config/settings.yml').read
+  def config_file
+    Rails.root.join('config/feature_flags.yml').read
   end
 end
