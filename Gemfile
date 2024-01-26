@@ -39,6 +39,7 @@ group :development, :test do
   gem 'debug', platforms: %i[mri windows]
   gem 'dotenv-rails'
   gem 'erb_lint', require: false
+  gem 'overcommit'
   gem 'pry'
   gem 'rspec-expectations'
   gem 'rspec_junit_formatter'
