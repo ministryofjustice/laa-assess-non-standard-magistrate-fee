@@ -45,6 +45,9 @@ en:
     additional_costs:
       edit:
         page_title: Adjust additional cost %{n}
+    assignments:
+      create:
+        no_unassigned_applications: There are no applications waiting to be allocated
   helpers:
     legend:
       prior_authority_additional_cost_form:
@@ -62,3 +65,7 @@ en:
               invalid: Something went wrong
             explanation:
               blank: Add an explanation for your decision
+        prior_authority/application_assumption_checker:
+          format: "%{attribute} %{message}"
+        prior_authority/additional_cost_assumption_checker:
+          format: "%{attribute} %{message}"

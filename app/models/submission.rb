@@ -23,7 +23,6 @@ class Submission < ApplicationRecord
     pending_decision
       .where.missing(:assignments)
       .where.not(id: Event::Unassignment.where(primary_user_id: user.id).select(:submission_id))
-      .order(:created_at)
   }
 
   def namespace

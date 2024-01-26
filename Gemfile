@@ -34,6 +34,7 @@ gem 'pagy'
 # Exception monitoring
 gem 'sentry-rails'
 gem 'sentry-ruby'
+gem 'with_advisory_lock'
 
 group :development, :test do
   gem 'debug', platforms: %i[mri windows]
