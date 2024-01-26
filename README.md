@@ -69,6 +69,16 @@ Records are stored based off of the claim ID and need to be processed one at a t
 It is expected that records will be generated in the Provider app and sent across
 as opposed to being manually generated to avoid creating invalid data records.
 
+
+### Overcommit
+
+[Overcommit](https://github.com/sds/overcommit) is a gem which adds git pre-commit hooks to your project. Pre-commit hooks run various
+lint checks before making a commit. Checks are configured on a project-wide basis in .overcommit.yml.
+
+To install the git hooks locally, run `overcommit --install`. If you don't want the git hooks installed, just don't run this command.
+
+Once the hooks are installed, if you need to you can skip them with the `-n` flag: `git commit -n`
+
 ### Adding users
 
 ```
