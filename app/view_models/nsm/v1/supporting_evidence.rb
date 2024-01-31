@@ -7,7 +7,6 @@ module Nsm
       attribute :file_path
       attribute :created_at, :date
       attribute :updated_at, :date
-      attribute :download_url
     end
   end
 end

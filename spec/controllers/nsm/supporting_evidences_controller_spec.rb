@@ -6,8 +6,7 @@ RSpec.describe Nsm::SupportingEvidencesController do
     let(:claim_id) { SecureRandom.uuid }
     let(:claim_summary) { instance_double(Nsm::V1::ClaimSummary) }
     let(:supporting_evidence) do
-      [instance_double(Nsm::V1::SupportingEvidence, :file_path => '#', :file_name => 'test',
-:download_url= => '')]
+      [instance_double(Nsm::V1::SupportingEvidence, file_path: '#', file_name: 'test')]
     end
 
     before do

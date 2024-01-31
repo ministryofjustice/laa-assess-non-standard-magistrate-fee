@@ -12,7 +12,7 @@
         supporting_evidence.each do |item|
           body.with_row do |row|
             row.with_cell do
-                    govuk_link_to(item.file_name, item.download_url)
+                    govuk_link_to(item.file_name, nsm_claim_supporting_evidences_download_path(claim.id, item.id))
                   end
             row.with_cell(text: format_in_zone(item.updated_at, format: '%A<br>%-d %B %Y').html_safe)
           end

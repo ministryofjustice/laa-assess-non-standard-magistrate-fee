@@ -60,7 +60,9 @@ Rails.application.routes.draw do
       resources :work_items, only: [:index, :show, :edit, :update]
       resources :letters_and_calls, only: [:index, :show, :edit, :update], constraints: { id: /(letters|calls)/ }
       resources :disbursements, only: [:index, :show, :edit, :update]
-      resource :supporting_evidences, only: [:show]
+      resource :supporting_evidences, only: [:show] do
+        resources :downloads, only: :show
+      end
       resource :history, only: [:show, :create]
       resource :change_risk, only: [:edit, :update], path_names: { edit: '' }
       resource :make_decision, only: [:edit, :update], path_names: { edit: '' }

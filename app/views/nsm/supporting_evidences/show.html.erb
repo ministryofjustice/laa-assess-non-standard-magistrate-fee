@@ -11,7 +11,7 @@
       <%= t('.heading') %>
     </h2>
     <% unless @supporting_evidence.empty? %>
-      <%= render 'supporting_evidence_table', { supporting_evidence: @supporting_evidence } %>
+      <%= render 'supporting_evidence_table', { claim: claim, supporting_evidence: @supporting_evidence } %>
     <% end %>
     <% if claim_summary.send_by_post %>
       <%= render 'send_by_post' %>
