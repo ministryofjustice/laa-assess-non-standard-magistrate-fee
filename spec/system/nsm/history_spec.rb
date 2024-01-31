@@ -2,15 +2,17 @@ require 'rails_helper'
 
 RSpec.describe 'History events' do
   let(:caseworker) { create(:caseworker) }
+  let(:claim) { create(:claim) }
+  let(:fixed_arbitrary_date) { Time.zone.local(2023, 2, 1, 9, 0) }
 
   before do
+    claim
     sign_in caseworker
     visit '/'
     click_on 'Accept analytics cookies'
   end
 
   it 'shows all (visible) events in the history' do
-    claim = create(:claim)
     supervisor = create(:supervisor)
 
     Event::NewVersion.build(submission: claim)
@@ -52,5 +54,19 @@ RSpec.describe 'History events' do
         '', 'New claim received', ''
       ]
     )
+  end
+
+  it 'lets me add a note' do
+    travel_to fixed_arbitrary_date
+    visit nsm_claim_history_path(claim)
+    fill_in 'Add a note to the claim history (optional)', with: 'Here is a note'
+    click_on 'Add to claim history'
+    expect(page).to have_content "Wednesday01 Feb 202309:00amcase worker\nCaseworker note\nHere is a note"
+  end
+
+  it 'rejects blank content' do
+    visit nsm_claim_history_path(claim)
+    click_on 'Add to claim history'
+    expect(page).to have_content 'You cannot add an empty note to the claim history'
   end
 end

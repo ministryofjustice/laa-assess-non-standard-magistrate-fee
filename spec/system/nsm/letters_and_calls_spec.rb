@@ -119,4 +119,22 @@ RSpec.describe 'Letters and Calls' do
 
     expect(page).to have_no_content('Remove uplifts for all items')
   end
+
+  context 'when claim has been assessed' do
+    let(:claim) { create(:claim, state: 'granted') }
+
+    it 'lets me view details instead of changing them' do
+      visit nsm_claim_letters_and_calls_path(claim)
+      expect(page).to have_no_content 'Change'
+      within('.govuk-table__body .govuk-table__row', match: :first) do
+        click_on 'View'
+      end
+      expect(page).to have_content(
+        'Number of letters12' \
+        'Item rate3.56' \
+        'Uplift requested95%' \
+        'Total claimed£83.30'
+      )
+    end
+  end
 end

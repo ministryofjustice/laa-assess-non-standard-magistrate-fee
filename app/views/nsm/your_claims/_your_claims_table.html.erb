@@ -17,15 +17,15 @@
       your_claims.each do |your_claim|
         body.with_row do |row|
           row.with_cell do
-            govuk_link_to(your_claim.laa_reference, nsm_claim_claim_details_path(your_claim.claim.id))
+            govuk_link_to(your_claim.laa_reference, nsm_claim_claim_details_path(your_claim.submission.id))
           end
           row.with_cell(text: your_claim.firm_name)
           row.with_cell(text: your_claim.main_defendant_name)
           row.with_cell(text: your_claim.date_created_str, html_attributes: { 'data-sort-value': your_claim.date_created_sort })
           row.with_cell(text: t(".risk.#{your_claim.risk}"), html_attributes: { 'data-sort-value': your_claim.risk_sort })
           row.with_cell do
-            if your_claim.claim.display_state?
-              govuk_tag(text: t(".status.#{your_claim.claim.state}"), html_attributes: { class: 'govuk-pre-line', }, colour: 'yellow')
+            if your_claim.submission.display_state?
+              govuk_tag(text: t(".status.#{your_claim.submission.state}"), html_attributes: { class: 'govuk-pre-line', }, colour: 'yellow')
             else
               ''
             end

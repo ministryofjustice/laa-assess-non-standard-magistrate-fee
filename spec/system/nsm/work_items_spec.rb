@@ -70,4 +70,22 @@ RSpec.describe 'Work items' do
 
     expect(page).to have_no_content('Remove uplifts for all items')
   end
+
+  context 'when claim has been assessed' do
+    let(:claim) { create(:claim, state: 'granted') }
+
+    it 'lets me view details instead of changing them' do
+      visit nsm_claim_work_items_path(claim)
+      expect(page).to have_no_content 'Change'
+      click_on 'View'
+      expect(page).to have_content(
+        'Waiting' \
+        'Date12 December 2022' \
+        'Time spent2 Hrs 41 Mins' \
+        'Fee earner initialsaaa' \
+        'Uplift claimed95%' \
+        'Claim cost£125.58'
+      )
+    end
+  end
 end
