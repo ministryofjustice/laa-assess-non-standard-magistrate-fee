@@ -30,9 +30,7 @@
   document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');
 </script>
 
-<a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">
-  <%= content_for?(:skip_link_message) ? yield(:skip_link_message) : 'Skip to main content' %>
-</a>
+<%= govuk_skip_link %>
 
 <header class="govuk-header" role="banner" data-module="govuk-header">
   <div class="govuk-header__container govuk-width-container">
@@ -63,7 +61,9 @@
 <div class="govuk-width-container">
   <%= yield(:phase_banner) %>
   <%= yield(:primary_navigation) %>
-  <%= yield(:back_link) %>
+  <div role="navigation">
+    <%= yield(:back_link) %>
+  </div>
 
   <main class="govuk-main-wrapper" id="main-content" role="main">
     <div class="govuk-grid-row">

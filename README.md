@@ -115,4 +115,12 @@ kubectl config use-context live.cloud-platform.service.justice.gov.uk
 kubectl get secret sidekiq-auth -o jsonpath='{.data}' --namespace=$NAMESPACE | jq -r '.username' | base64 --decode && echo " "
 # password
 kubectl get secret sidekiq-auth -o jsonpath='{.data}' --namespace=$NAMESPACE | jq -r '.password' | base64 --decode && echo " "
-``````
+```
+
+**7. Tests**
+
+To run the test suite, run `bundle exec rspec`.
+This will run everything except for the accessibility tests, which are slow, and by default only run on CI.
+To run those, run `INCLUDE_ACCESSIBILITY_SPECS=1 bundle exec rspec`.
+Our test suite will report as failing if line and branch coverage is not at 100%.
+We expect every feature's happy path to have a system test, and every screen to have an accessibility test.
