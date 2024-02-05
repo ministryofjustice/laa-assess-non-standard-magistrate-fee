@@ -48,7 +48,9 @@ group :development, :test do
 end
 
 group :test do
+  gem 'axe-core-rspec'
   gem 'capybara'
+  gem 'capybara-selenium'
   gem 'factory_bot_rails'
   gem 'rails-controller-testing'
   gem 'rspec-html-matchers'
@@ -56,6 +58,7 @@ group :test do
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
+  gem 'selenium-webdriver'
   gem 'simplecov'
   gem 'simplecov_json_formatter', '~> 0.1.4'
   gem 'simplecov-lcov'

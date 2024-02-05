@@ -153,6 +153,7 @@ commands:
             tmp/cc-test-reporter before-build
             TESTFILES=$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings --timings-type=filename)
             RUBYOPT=-W:no-deprecated \
+            INCLUDE_ACCESSIBILITY_SPECS=1 \
             bundle exec rspec \
               --format progress \
               --format RspecJunitFormatter \

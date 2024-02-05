@@ -5,6 +5,7 @@ require_relative '../config/environment'
 # Prevent database truncation if the environment is production
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
+require 'axe-rspec'
 # Add additional requires below this line. Rails is not loaded until this point!
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -29,6 +30,13 @@ begin
 rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
+
+Capybara.register_driver :headless_chrome do |app|
+  options = Selenium::WebDriver::Chrome::Options.new
+  options.add_argument('--headless=new')
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+end
+
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.include Devise::Test::ControllerHelpers, type: :controller
@@ -56,4 +64,6 @@ RSpec.configure do |config|
     # Or a very large value, if you do want to truncate at some point
     c.max_formatted_output_length = nil
   end
+
+  config.filter_run_excluding :accessibility unless ENV['INCLUDE_ACCESSIBILITY_SPECS']
 end
