@@ -30,6 +30,7 @@ en:
           total: Claim cost (including any VAT)
       show:
         page_title: Adjust a disbursement
+        provider_submission: Provider submission
         heading:
           zero: Disbursement
           one: Adjusted disbursement

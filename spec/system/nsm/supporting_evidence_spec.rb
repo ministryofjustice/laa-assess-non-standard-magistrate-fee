@@ -21,7 +21,8 @@ RSpec.describe 'Supporting Evidence' do
 
     it 'has a link to download the file' do
       within('.govuk-table__row', text: 'Advocacy evidence _ Tom_TC.pdf') do
-        expect(page).to have_link('Advocacy evidence _ Tom_TC.pdf', href: /test.s3.us-stubbed-1.amazonaws.com/)
+        click_on('Advocacy evidence _ Tom_TC.pdf')
+        expect(current_url).to match(/test.s3.us-stubbed-1.amazonaws.com/)
       end
     end
 
@@ -44,7 +45,8 @@ RSpec.describe 'Supporting Evidence' do
 
     it 'has a link to download the file' do
       within('.govuk-table__row', text: 'Advocacy evidence _ Tom_TC.pdf') do
-        expect(page).to have_link('Advocacy evidence _ Tom_TC.pdf', href: /test.s3.us-stubbed-1.amazonaws.com/)
+        click_on('Advocacy evidence _ Tom_TC.pdf')
+        expect(current_url).to match(/test.s3.us-stubbed-1.amazonaws.com/)
       end
     end
 

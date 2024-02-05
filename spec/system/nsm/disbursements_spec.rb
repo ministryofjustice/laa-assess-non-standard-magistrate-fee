@@ -54,4 +54,21 @@ RSpec.describe 'Disbursements' do
     expect(page).to have_css('.govuk-error-summary__body',
                              text: I18n.t("#{disbursement_form_error_message}.base.no_change"))
   end
+
+  context 'when claim has been assessed' do
+    let(:claim) { create(:claim, state: 'granted') }
+
+    it 'lets me view details instead of changing them' do
+      visit nsm_claim_disbursements_path(claim)
+      expect(page).to have_no_content 'Change'
+      click_on 'View'
+      expect(page).to have_content(
+        'Date12 Dec 2022' \
+        'Disbursement typeApples' \
+        'Details of disbursementDetails' \
+        'Prior authority grantedYes' \
+        'Total£100.00'
+      )
+    end
+  end
 end

@@ -19,12 +19,10 @@ module About
     private
 
     def submit_feedback
-      FeedbackMailer.notify(
-        user_email: feedback_params[:user_email],
-        user_rating: feedback_params[:user_rating],
-        user_feedback: feedback_params[:user_feedback],
-        application_env: application_environment
-      ).deliver_later!
+      FeedbackMailer.notify(**feedback_params.to_h
+                                             .symbolize_keys
+                                             .merge(application_env: application_environment))
+                    .deliver_later!
     end
 
     def feedback_params

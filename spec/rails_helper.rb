@@ -34,6 +34,7 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::IntegrationHelpers, type: :system
   config.include AuthenticationHelpers, type: :controller
+  config.include ActiveSupport::Testing::TimeHelpers
 
   # As a default, we assume a user is signed in all controllers.
   # For specific scenarios, the user can be "signed off".
