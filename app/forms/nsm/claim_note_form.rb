@@ -14,6 +14,7 @@ module Nsm
     def save
       return false unless valid?
 
+      # TODO: Create event
       Event::Note.build(submission: claim, note: note, current_user: current_user)
       true
     rescue StandardError
@@ -21,7 +22,7 @@ module Nsm
     end
 
     def claim
-      Claim.find_by(id:)
+      AppStoreService.get(id)
     end
   end
 end

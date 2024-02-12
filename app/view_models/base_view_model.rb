@@ -49,8 +49,8 @@ class BaseViewModel
     def all_adjustments
       @all_adjustments ||=
         submission.events
-                  .where(linked_type: klass::LINKED_TYPE)
-                  .order(:created_at)
+                  .select { _1.linked_type == klass::LINKED_TYPE }
+                  .sort_by(&:created_at)
                   .group_by { |event| [event.linked_type, event.linked_id] }
     end
 

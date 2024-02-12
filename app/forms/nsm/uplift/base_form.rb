@@ -19,16 +19,14 @@ module Nsm
       def save
         return false unless valid?
 
-        Claim.transaction do
-          claim.data[self.class::SCOPE].each do |selected_record|
-            row = self.class::Remover.new(claim:, explanation:, current_user:, selected_record:)
-            next unless row.valid?
+        claim.data[self.class::SCOPE].each do |selected_record|
+          row = self.class::Remover.new(claim:, explanation:, current_user:, selected_record:)
+          next unless row.valid?
 
-            row.save
-          end
-
-          claim.save
+          row.save
         end
+
+        AppStoreService.update(claim)
 
         true
       rescue StandardError

@@ -14,11 +14,11 @@ module Nsm
       end
 
       def assigned_to
-        @assigned_to ||= submission.assignments.first
+        @assigned_to ||= submission.assigned_user
       end
 
       def assessed_on
-        submission.events.where(event_type: 'Event::Decision').order(created_at: :desc).first&.created_at
+        submission.events.select { _1.event_type == 'Event::Decision' }.max(&:created_at)
       end
 
       def total

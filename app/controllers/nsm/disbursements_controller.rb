@@ -3,14 +3,14 @@ module Nsm
     layout nil
 
     def index
-      claim = Claim.find(params[:claim_id])
+      claim = AppStoreService.get(params[:claim_id])
       disbursements = BaseViewModel.build(:disbursement, claim, 'disbursements').group_by(&:disbursement_date)
 
       render locals: { claim:, disbursements: }
     end
 
     def show
-      claim = Claim.find(params[:claim_id])
+      claim = AppStoreService.get(params[:claim_id])
       item = BaseViewModel.build(:disbursement, claim, 'disbursements').detect do |model|
         model.id == params[:id]
       end
@@ -19,7 +19,7 @@ module Nsm
     end
 
     def edit
-      claim = Claim.find(params[:claim_id])
+      claim = AppStoreService.get(params[:claim_id])
       item = BaseViewModel.build(:disbursement, claim, 'disbursements').detect do |model|
         model.id == params[:id]
       end
@@ -29,7 +29,7 @@ module Nsm
     end
 
     def update
-      claim = Claim.find(params[:claim_id])
+      claim = AppStoreService.get(params[:claim_id])
       item = BaseViewModel.build(:disbursement, claim, 'disbursements').detect do |model|
         model.id == params[:id]
       end

@@ -46,6 +46,8 @@ module ApplicationHelper
   end
 
   def multiline_text(string)
+    return unless string
+
     sanitize(string.gsub("\n", '<br>'), tags: %w[br])
   end
 

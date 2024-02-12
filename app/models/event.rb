@@ -1,8 +1,33 @@
-class Event < ApplicationRecord
-  belongs_to :submission
-  belongs_to :primary_user, optional: true, class_name: 'User'
+class Event
+  include ActiveModel::Model
+  include ActiveModel::Attributes
 
-  self.inheritance_column = :event_type
+  def self.hydrate(json)
+    klass = json['event_type'].contantize
+    klass.new(json)
+  end
+
+  attribute :primary_user_id, :string
+  attribute :submission_version, :integer
+  attribute :event_type, :string
+  attribute :secondary_user, :string
+  attribute :linked_type, :string
+  attribute :linked_id, :string
+  attribute :details
+  attribute :created_at, :datetime
+  attribute :updated_at, :datetime
+
+  def primary_user
+    @primary_user ||= User.find(primary_user_id)
+  end
+
+  def secondary_user
+    @secondary_user ||= User.find(secondary_user_id)
+  end
+
+  def historical?
+    event_type.in?(HISTORY_EVENTS)
+  end
 
   PUBLIC_EVENTS = ['Event::Decision'].freeze
   HISTORY_EVENTS = [
@@ -14,20 +39,6 @@ class Event < ApplicationRecord
     'Event::SendBack',
     'Event::Unassignment',
   ].freeze
-  scope :history, -> { where(event_type: HISTORY_EVENTS).order(created_at: :desc) }
-
-  # simplifies the rehydrate process
-  attribute :public
-
-  # Make these methods private to ensure tehy are created via the various `build` methods`
-  class << self
-    private :new
-    private :create
-
-    def rehydrate!(params)
-      new(params).save!
-    end
-  end
 
   def title
     t('title', **title_options)

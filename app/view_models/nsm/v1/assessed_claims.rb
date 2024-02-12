@@ -22,7 +22,7 @@ module Nsm
       end
 
       def case_worker_name
-        event = submission.events.where(event_type: 'Event::Decision').order(created_at: :desc).first
+        event = submission.events.select { _1.event_type == 'Event::Decision' }.max_by(&:created_at)
         event ? event.primary_user.display_name : ''
       end
 

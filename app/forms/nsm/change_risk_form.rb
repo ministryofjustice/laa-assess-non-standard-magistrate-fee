@@ -24,13 +24,12 @@ module Nsm
       return false unless valid?
 
       previous_risk_level = claim.risk
-      Claim.transaction do
-        claim.update!(risk: risk_level)
-        Event::ChangeRisk.build(submission: claim,
-                                explanation: explanation,
-                                previous_risk_level: previous_risk_level,
-                                current_user: current_user)
-      end
+      claim.risk = risk_level
+      AppStoreService.update(claim)
+      Event::ChangeRisk.build(submission: claim,
+                              explanation: explanation,
+                              previous_risk_level: previous_risk_level,
+                              current_user: current_user)
 
       true
     rescue StandardError
@@ -38,7 +37,7 @@ module Nsm
     end
 
     def claim
-      Claim.find_by(id:)
+      AppStoreService.get(params[:claim_id])
     end
 
     def available_risks

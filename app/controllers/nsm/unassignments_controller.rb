@@ -28,7 +28,7 @@ module Nsm
     end
 
     def claim
-      @claim ||= Claim.find(params[:claim_id])
+      @claim ||= AppStoreService.get(params[:claim_id])
     end
 
     def send_back_params

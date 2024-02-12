@@ -3,7 +3,7 @@ module Nsm
     layout nil
 
     def index
-      claim = Claim.find(params[:claim_id])
+      claim = AppStoreService.get(params[:claim_id])
       work_items = BaseViewModel.build(:work_item, claim, 'work_items')
       travel_and_waiting = BaseViewModel.build(:travel_and_waiting, claim)
 
@@ -11,7 +11,7 @@ module Nsm
     end
 
     def show
-      claim = Claim.find(params[:claim_id])
+      claim = AppStoreService.get(params[:claim_id])
       item = BaseViewModel.build(:work_item, claim, 'work_items').detect do |model|
         model.id == params[:id]
       end
@@ -20,7 +20,7 @@ module Nsm
     end
 
     def edit
-      claim = Claim.find(params[:claim_id])
+      claim = AppStoreService.get(params[:claim_id])
       item = BaseViewModel.build(:work_item, claim, 'work_items').detect do |model|
         model.id == params[:id]
       end
@@ -31,7 +31,7 @@ module Nsm
     end
 
     def update
-      claim = Claim.find(params[:claim_id])
+      claim = AppStoreService.get(params[:claim_id])
       item = BaseViewModel.build(:work_item, claim, 'work_items').detect do |model|
         model.id == params[:id]
       end

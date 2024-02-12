@@ -1,13 +1,13 @@
 module Nsm
   class ChangeRisksController < ApplicationController
     def edit
-      claim = Claim.find(params[:claim_id])
+      claim = AppStoreService.get(params[:claim_id])
       risk = ChangeRiskForm.new(id: params[:claim_id], risk_level: claim.risk)
       render locals: { claim:, risk: }
     end
 
     def update
-      claim = Claim.find(params[:claim_id])
+      claim = AppStoreService.get(params[:claim_id])
       risk = ChangeRiskForm.new(risk_params)
 
       if risk.save

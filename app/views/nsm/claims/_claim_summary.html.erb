@@ -29,7 +29,7 @@
       </p>
       <p class="govuk-body-l govuk-!-margin-bottom-2">
         <span class="govuk-!-font-weight-bold"><%= t(".date_received") %></span>
-        <%= format_in_zone(claim.received_on, format:'%d %b %Y') %>
+        <%= format_in_zone(claim.created_at, format:'%d %b %Y') %>
       </p>
       <% unless claim.editable? %>
         <p class="govuk-body-l govuk-!-margin-bottom-2">
@@ -42,12 +42,12 @@
       <% if claim.editable? && claim_summary.assigned_to %>
         <%=
           govuk_link_to(
-            t(claim_summary.assigned_to.user == current_user ? ".remove_from_yourlist" : ".remove_from_list"),
+            t(claim_summary.assigned_to == current_user ? ".remove_from_yourlist" : ".remove_from_list"),
             nsm_claim_unassignment_path(claim),
             class: "govuk-button govuk-button--secondary",
             data_module: "govuk-button"
           )
         %>
-      <% end%>
+      <% end %>
     </div>
   </div>

@@ -19,11 +19,9 @@ module Nsm
     def save
       return false unless valid?
 
-      Claim.transaction do
-        process_field(value: new_total_cost_without_vat, field: 'total_cost_without_vat')
-        process_field(value: new_vat_amount, field: 'vat_amount')
-        claim.save
-      end
+      process_field(value: new_total_cost_without_vat, field: 'total_cost_without_vat')
+      process_field(value: new_vat_amount, field: 'vat_amount')
+      AppStoreService.update(claim)
 
       true
     end

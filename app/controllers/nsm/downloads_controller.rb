@@ -4,7 +4,7 @@ module Nsm
     PRESIGNED_EXPIRY = 60
 
     def show
-      claim = Claim.find(params[:claim_id])
+      claim = AppStoreService.get(params[:claim_id])
       supporting_evidence = BaseViewModel.build(:supporting_evidence, claim, 'supporting_evidences')
       item = supporting_evidence.detect { _1.id == params[:id] }
       download_url = S3_BUCKET.object(item.file_path)

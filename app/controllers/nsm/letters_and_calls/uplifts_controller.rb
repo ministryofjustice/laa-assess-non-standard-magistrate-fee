@@ -2,14 +2,14 @@ module Nsm
   module LettersAndCalls
     class UpliftsController < ApplicationController
       def edit
-        claim = Claim.find(params[:claim_id])
+        claim = AppStoreService.get(params[:claim_id])
         form = Uplift::LettersAndCallsForm.new(claim:)
 
         render locals: { claim:, form: }
       end
 
       def update
-        claim = Claim.find(params[:claim_id])
+        claim = AppStoreService.get(params[:claim_id])
         form = Uplift::LettersAndCallsForm.new(claim:, **form_params)
 
         if form.save

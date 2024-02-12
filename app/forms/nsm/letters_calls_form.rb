@@ -31,16 +31,12 @@ module Nsm
     def save
       return false unless valid?
 
-      Claim.transaction do
-        process_field(value: count.to_i, field: 'count')
-        process_field(value: new_uplift, field: 'uplift') if item.uplift?
+      process_field(value: count.to_i, field: 'count')
+      process_field(value: new_uplift, field: 'uplift') if item.uplift?
 
-        claim.save
-      end
+      AppStoreService.update(claim)
 
       true
-    rescue StandardError
-      false
     end
 
     private

@@ -8,14 +8,14 @@ module Nsm
     }.freeze
 
     def index
-      claim = Claim.find(params[:claim_id])
+      claim = AppStoreService.get(params[:claim_id])
       letters_and_calls = BaseViewModel.build(:letters_and_calls_summary, claim)
 
       render locals: { claim:, letters_and_calls: }
     end
 
     def show
-      claim = Claim.find(params[:claim_id])
+      claim = AppStoreService.get(params[:claim_id])
       item = BaseViewModel.build(:letter_and_call, claim, 'letters_and_calls').detect do |model|
         model.type.value == params[:id]
       end
@@ -24,7 +24,7 @@ module Nsm
     end
 
     def edit
-      claim = Claim.find(params[:claim_id])
+      claim = AppStoreService.get(params[:claim_id])
       item = BaseViewModel.build(:letter_and_call, claim, 'letters_and_calls').detect do |model|
         model.type.value == params[:id]
       end
@@ -34,7 +34,7 @@ module Nsm
     end
 
     def update
-      claim = Claim.find(params[:claim_id])
+      claim = AppStoreService.get(params[:claim_id])
       item = BaseViewModel.build(:letter_and_call, claim, 'letters_and_calls').detect do |model|
         model.type.value == params[:id]
       end

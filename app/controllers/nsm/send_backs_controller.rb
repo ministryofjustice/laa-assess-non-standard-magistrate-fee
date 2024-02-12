@@ -24,7 +24,7 @@ module Nsm
     private
 
     def claim
-      @claim ||= Claim.find(params[:claim_id])
+      @claim ||= AppStoreService.get(params[:claim_id])
     end
 
     def defendant_name

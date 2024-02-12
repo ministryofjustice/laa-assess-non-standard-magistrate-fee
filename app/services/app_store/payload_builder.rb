@@ -1,5 +1,5 @@
-class NotifyAppStore
-  class MessageBuilder
+module AppStore
+  class PayloadBuilder
     JSON_SCHEMA_VERSION = 1
 
     attr_reader :submission, :scorer
@@ -8,7 +8,7 @@ class NotifyAppStore
       @submission = submission
     end
 
-    def message
+    def as_json(*)
       {
         application_id: submission.id,
         json_schema_version: JSON_SCHEMA_VERSION,

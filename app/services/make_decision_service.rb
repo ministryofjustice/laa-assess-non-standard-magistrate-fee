@@ -1,4 +1,4 @@
-class NotifyAppStore < ApplicationJob
+class MakeDecisionService < ApplicationJob
   queue_as :default
 
   def self.process(submission:)
@@ -7,7 +7,7 @@ class NotifyAppStore < ApplicationJob
         .perform_later(submission)
     else
       begin
-        new.notify(MessageBuilder.new(submission:))
+        AppStoreService.update(submission)
         SubmissionFeedbackMailer.notify(submission).deliver_later!
       rescue StandardError => e
         # we only get errors here when processing inline, which we don't want
@@ -18,19 +18,7 @@ class NotifyAppStore < ApplicationJob
   end
 
   def perform(submission)
-    notify(MessageBuilder.new(submission:))
+    AppStoreService.update(submission)
     SubmissionFeedbackMailer.notify(submission).deliver_later!
-  end
-
-  def notify(message_builder)
-    raise 'SNS notification is not yet enabled' if ENV.key?('SNS_URL')
-
-    # implement and call SNS notification
-
-    # TODO: we only do post requests here as the system is not currently
-    # able to support re-sending/submitting an appplication so we can ignore
-    # put requests
-    post_manager = HttpNotifier.new
-    post_manager.put(message_builder.message)
   end
 end
