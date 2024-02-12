@@ -11,11 +11,9 @@ module PriorAuthority
     def save
       return false unless valid?
 
-      PriorAuthorityApplication.transaction do
-        process_field(value: time_spent.to_i, field: 'time_spent')
+      process_field(value: time_spent.to_i, field: 'time_spent')
 
-        submission.save
-      end
+      AppStoreService.update(submission)
 
       true
     end

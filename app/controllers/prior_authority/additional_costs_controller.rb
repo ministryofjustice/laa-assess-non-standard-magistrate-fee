@@ -1,7 +1,7 @@
 module PriorAuthority
   class AdditionalCostsController < PriorAuthority::BaseController
     def edit
-      submission = PriorAuthorityApplication.find(params[:application_id])
+      submission = AppStoreService.get(params[:application_id])
       all_costs = BaseViewModel.build(:additional_cost, submission, 'additional_costs')
       index = all_costs.index do |model|
         model.id == params[:id]
@@ -14,7 +14,7 @@ module PriorAuthority
     end
 
     def update
-      submission = PriorAuthorityApplication.find(params[:application_id])
+      submission = AppStoreService.get(params[:application_id])
       all_costs = BaseViewModel.build(:additional_cost, submission, 'additional_costs')
       index = all_costs.index do |model|
         model.id == params[:id]

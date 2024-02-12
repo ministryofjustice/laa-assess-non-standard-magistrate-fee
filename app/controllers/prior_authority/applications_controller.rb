@@ -1,11 +1,14 @@
 module PriorAuthority
   class ApplicationsController < PriorAuthority::BaseController
     def your
-      applications = PriorAuthorityApplication.pending_and_assigned_to(current_user).map do |application|
-        BaseViewModel.build(:application_summary, application)
-      end
+      applications, total = AppStoreService.list(application_type: 'crm4',
+                                                 assessed: false,
+                                                 assigned_user_id: current_user.id,
+                                                 page: params.fetch(:page, 1),
+                                                 count: 10)
 
-      @pagy, @applications = pagy_array(applications)
+      @applications = applications.map { BaseViewModel.build(:application_summary, _1) }
+      @pagy = Pagy.new(count: total, page: params.fetch(:page, 1), size: 10)
     end
   end
 end
