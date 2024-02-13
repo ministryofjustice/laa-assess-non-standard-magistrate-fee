@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Nsm::HistoriesController do
-  let(:claim) { create(:claim, id: claim_id, events: events) }
+  let(:claim) { build(:claim, id: claim_id, events: events) }
   let(:claim_id) { SecureRandom.uuid }
   let(:events) { [build(:event, :note)] }
   let(:claim_summary) { instance_double(Nsm::V1::ClaimSummary) }
@@ -9,7 +9,7 @@ RSpec.describe Nsm::HistoriesController do
   let(:save) { true }
 
   before do
-    allow(Claim).to receive(:find).and_return(claim)
+    allow(AppStoreService).to receive(:get).and_return(claim)
     allow(BaseViewModel).to receive_messages(build: claim_summary)
     allow(Nsm::ClaimNoteForm).to receive(:new).and_return(claim_note)
   end
@@ -27,7 +27,7 @@ RSpec.describe Nsm::HistoriesController do
 
       expect(controller).to have_received(:render).with(
         locals: {
-          claim: claim, claim_summary: claim_summary, history_events: claim.events.history,
+          claim: claim, claim_summary: claim_summary, history_events: claim.history_events,
           claim_note: claim_note, pagy: anything
         }
       )
@@ -61,7 +61,7 @@ RSpec.describe Nsm::HistoriesController do
 
         expect(controller).to have_received(:render).with(
           :show, locals: {
-            claim: claim, claim_summary: claim_summary, history_events: claim.events.history,
+            claim: claim, claim_summary: claim_summary, history_events: claim.history_events,
             claim_note: claim_note, pagy: anything
           }
         )

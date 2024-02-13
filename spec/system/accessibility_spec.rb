@@ -5,13 +5,36 @@ RSpec.describe 'Accessibility', :accessibility do
   subject { page }
 
   before do
+    allow(AppStoreService).to receive(:get) do |id|
+      if id == claim.id
+        claim
+      else
+        application
+      end
+    end
+
+    allow(AppStoreService).to receive(:list) do |params|
+      submission = if params[:application_type] == 'crm7'
+                     claim
+                   else
+                     application
+                   end
+
+      ret = if params[:assessed]
+              submission.dup.tap { _1.state = 'granted' }
+            else
+              submission
+            end
+
+      [[ret], 1]
+    end
     driven_by(:headless_chrome)
     sign_in caseworker
   end
 
   let(:caseworker) { create(:caseworker) }
-  let(:application) { create(:prior_authority_application) }
-  let(:claim) { create(:claim) }
+  let(:application) { build(:prior_authority_application) }
+  let(:claim) { build(:claim) }
   let(:be_axe_clean_with_caveats) do
     # Ignoring known false positive around skip links, see: https://design-system.service.gov.uk/components/skip-link/#when-to-use-this-component
     # Ignoring known false positive around aria-expanded attributes on conditional reveal radios, see: https://github.com/alphagov/govuk-frontend/issues/979
@@ -35,7 +58,7 @@ RSpec.describe 'Accessibility', :accessibility do
        edit_nsm_claim_work_items_uplift].each do |path|
       describe "#{path} screen" do
         before do
-          claim.assignments.create user: caseworker
+          claim.assigned_user = caseworker
           visit send(:"#{path}_path", claim)
         end
 

@@ -6,6 +6,7 @@ RSpec.describe 'Reauthentication' do
   let(:sign_out_all_scopes) { true }
 
   before do
+    allow(AppStoreService).to receive(:list).and_return([[], 0])
     allow(Devise).to receive(:sign_out_all_scopes).and_return(sign_out_all_scopes)
     sign_in user
     visit '/nsm/claims'

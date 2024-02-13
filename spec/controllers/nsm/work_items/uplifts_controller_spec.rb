@@ -7,7 +7,7 @@ RSpec.describe Nsm::WorkItems::UpliftsController do
     let(:form) { instance_double(Nsm::Uplift::WorkItemsForm) }
 
     before do
-      allow(Claim).to receive(:find).and_return(claim)
+      allow(AppStoreService).to receive(:get).and_return(claim)
       allow(Nsm::Uplift::WorkItemsForm).to receive(:new).and_return(form)
     end
 
@@ -28,7 +28,7 @@ RSpec.describe Nsm::WorkItems::UpliftsController do
 
     before do
       allow(Nsm::Uplift::WorkItemsForm).to receive(:new).and_return(form)
-      allow(Claim).to receive(:find).and_return(claim)
+      allow(AppStoreService).to receive(:get).and_return(claim)
     end
 
     context 'when form save is successful' do

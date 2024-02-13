@@ -3,58 +3,41 @@ class Event
   include ActiveModel::Attributes
 
   def self.hydrate(json)
-    klass = json['event_type'].contantize
+    klass = "Event::#{json['event_type'].camelize}".constantize
     klass.new(json)
   end
 
   attribute :primary_user_id, :string
   attribute :submission_version, :integer
   attribute :event_type, :string
-  attribute :secondary_user, :string
+  attribute :secondary_user_id, :string
   attribute :linked_type, :string
   attribute :linked_id, :string
   attribute :details
   attribute :created_at, :datetime
   attribute :updated_at, :datetime
+  attribute :public, :boolean
 
   def primary_user
-    @primary_user ||= User.find(primary_user_id)
+    @primary_user ||= User.find(primary_user_id) if primary_user_id
   end
 
   def secondary_user
-    @secondary_user ||= User.find(secondary_user_id)
+    @secondary_user ||= User.find(secondary_user_id) if secondary_user_id
   end
 
   def historical?
-    event_type.in?(HISTORY_EVENTS)
+    true
   end
-
-  PUBLIC_EVENTS = ['Event::Decision'].freeze
-  HISTORY_EVENTS = [
-    'Event::Assignment',
-    'Event::Decision',
-    'Event::ChangeRisk',
-    'Event::NewVersion',
-    'Event::Note',
-    'Event::SendBack',
-    'Event::Unassignment',
-  ].freeze
 
   def title
     t('title', **title_options)
   end
 
   def body
-    details['comment']
-  end
+    return nil unless details
 
-  def as_json(*)
-    super
-      .slice!('id', 'submission_id')
-      .merge(
-        public: PUBLIC_EVENTS.include?(event_type),
-        event_type: event_type
-      )
+    details['comment']
   end
 
   private

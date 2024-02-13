@@ -2,9 +2,21 @@ require 'rails_helper'
 
 Rails.describe 'Claim Feedback', :stub_oauth_token, :stub_update_claim do
   let(:user) { create(:caseworker) }
-  let(:claim) { create(:claim) }
+  let(:claim) { build(:claim) }
 
   before do
+    allow(AppStoreService).to receive(:list) do |params|
+      if params[:assessed]
+        [[claim.dup.tap { _1.state = 'granted' }], 1]
+      else
+        [[claim], 1]
+      end
+    end
+
+    allow(AppStoreService).to receive_messages(
+      get: claim,
+      change_state: nil
+    )
     sign_in user
     visit '/'
     click_on 'Accept analytics cookies'

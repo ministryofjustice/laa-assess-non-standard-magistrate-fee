@@ -7,7 +7,7 @@ RSpec.describe Nsm::MakeDecisionsController do
     let(:decision) { instance_double(Nsm::MakeDecisionForm) }
 
     before do
-      allow(Claim).to receive(:find).and_return(claim)
+      allow(AppStoreService).to receive(:get).and_return(claim)
       allow(Nsm::MakeDecisionForm).to receive(:new).and_return(decision)
     end
 
@@ -33,7 +33,7 @@ RSpec.describe Nsm::MakeDecisionsController do
     before do
       allow(User).to receive(:first_or_create).and_return(user)
       allow(Nsm::MakeDecisionForm).to receive(:new).and_return(decision)
-      allow(Claim).to receive(:find).and_return(claim)
+      allow(AppStoreService).to receive(:get).and_return(claim)
       allow(BaseViewModel).to receive(:build).and_return(laa_reference_class)
     end
 

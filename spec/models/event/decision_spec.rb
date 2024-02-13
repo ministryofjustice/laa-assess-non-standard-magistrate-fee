@@ -1,28 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Event::Decision do
-  subject { described_class.build(submission:, previous_state:, comment:, current_user:) }
+  subject { described_class.new(details: { 'to' => state, 'comment' => 'decision was made' }) }
 
-  let(:submission) { create(:claim, state:) }
   let(:state) { 'granted' }
-  let(:current_user) { create(:caseworker) }
-  let(:previous_state) { 'submitted' }
-  let(:comment) { 'decison was made' }
-
-  it 'can build a new record' do
-    expect(subject).to have_attributes(
-      submission_id: submission.id,
-      submission_version: 1,
-      event_type: 'Event::Decision',
-      primary_user: current_user,
-      details: {
-        'field' => 'state',
-        'from' => 'submitted',
-        'to' => 'granted',
-        'comment' => 'decison was made'
-      }
-    )
-  end
 
   it 'has a valid title' do
     expect(subject.title).to eq('Decision made to grant claim')
@@ -45,6 +26,6 @@ RSpec.describe Event::Decision do
   end
 
   it 'body is set to comment' do
-    expect(subject.body).to eq('decison was made')
+    expect(subject.body).to eq('decision was made')
   end
 end

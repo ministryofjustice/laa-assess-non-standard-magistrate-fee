@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Nsm::LettersCallsForm do
   subject { described_class.new(params) }
 
-  let(:claim) { create(:claim) }
+  let(:claim) { build(:claim) }
   let(:params) { { claim:, type:, count:, uplift:, item:, explanation:, current_user: } }
   let(:type) { 'letters' }
   let(:count) { 2 }
@@ -21,6 +21,11 @@ RSpec.describe Nsm::LettersCallsForm do
   let(:provider_requested_uplift) { 95 }
   let(:explanation) { 'change to letters' }
   let(:current_user) { instance_double(User) }
+
+  before do
+    allow(AppStoreService).to receive(:get).with(claim.id).and_return(claim)
+    allow(AppStoreService).to receive(:adjust)
+  end
 
   describe '#validations' do
     describe '#type' do
@@ -122,34 +127,18 @@ RSpec.describe Nsm::LettersCallsForm do
     context 'when only count has changed' do
       let(:uplift) { 'no' }
 
-      it 'creates a event for the count change' do
-        expect { subject.save }.to change(Event, :count).by(1)
-        expect(Event.last).to have_attributes(
-          submission: claim.becomes(Submission),
-          submission_version: claim.current_version,
-          event_type: 'Event::Edit',
-          linked_type: 'letters_and_calls',
-          linked_id: 'letters',
-          details: {
-            'field' => 'count',
-            'from' => 12,
-            'to' => 2,
-            'change' => -10,
-            'comment' => 'change to letters'
-          }
-        )
-      end
-
-      it 'updates the JSON data' do
+      it 'updates the claim' do
         subject.save
-        letters = claim.reload
-                       .data['letters_and_calls']
-                       .detect { |row| row.dig('type', 'value') == 'letters' }
-        expect(letters).to eq(
-          'count' => 2,
-          'pricing' => 3.56,
-          'type' => { 'en' => 'Letters', 'value' => 'letters' },
-          'uplift' => 95,
+        expect(AppStoreService).to have_received(:adjust).with(
+          claim,
+          { change_detail_sets: [{ change: -10,
+                                   comment: 'change to letters',
+                                   field: 'count',
+                                   from: 12,
+                                   to: 2 }],
+            linked_id: 'letters',
+            linked_type: 'letters_and_calls',
+            user_id: current_user.id }
         )
       end
     end
@@ -157,70 +146,58 @@ RSpec.describe Nsm::LettersCallsForm do
     context 'when only uplift has changed' do
       let(:count) { 12 }
 
-      it 'creates a event for the uplift change' do
-        expect { subject.save }.to change(Event, :count).by(1)
-        expect(Event.last).to have_attributes(
-          submission: claim.becomes(Submission),
-          submission_version: claim.current_version,
-          event_type: 'Event::Edit',
-          linked_type: 'letters_and_calls',
-          linked_id: 'letters',
-          details: {
-            'field' => 'uplift',
-            'from' => 95,
-            'to' => 0,
-            'change' => -95,
-            'comment' => 'change to letters'
-          }
-        )
-      end
-
       it 'updates the JSON data' do
         subject.save
-        letters = claim.reload
-                       .data['letters_and_calls']
-                       .detect { |row| row.dig('type', 'value') == 'letters' }
-        expect(letters).to eq(
-          'count' => 12,
-          'pricing' => 3.56,
-          'type' => { 'en' => 'Letters', 'value' => 'letters' },
-          'uplift' => 0.0,
+        expect(AppStoreService).to have_received(:adjust).with(
+          claim,
+          { change_detail_sets: [{ change: -95,
+                                   comment: 'change to letters',
+                                   field: 'uplift',
+                                   from: 95,
+                                   to: 0 }],
+            linked_id: 'letters',
+            linked_type: 'letters_and_calls',
+            user_id: current_user.id }
         )
       end
     end
 
     context 'when uplift and count have changed' do
-      it 'creates an event for each field changed' do
-        expect { subject.save }.to change(Event, :count).by(2)
-      end
-
       it 'updates the JSON data' do
         subject.save
-        letters = claim.reload
-                       .data['letters_and_calls']
-                       .detect { |row| row.dig('type', 'value') == 'letters' }
-        expect(letters).to eq(
-          'count' => 2,
-          'pricing' => 3.56,
-          'type' => { 'en' => 'Letters', 'value' => 'letters' },
-          'uplift' => 0,
-        )
+        expect(AppStoreService).to have_received(:adjust).with(claim,
+                                                               { change_detail_sets: [{ change: -10,
+                                                                                        comment: 'change to letters',
+                                                                                        field: 'count',
+                                                                                        from: 12,
+                                                                                        to: 2 },
+                                                                                      { change: -95,
+                                                                                       comment: 'change to letters',
+                                                                                       field: 'uplift',
+                                                                                       from: 95,
+                                                                                       to: 0 }],
+                                                                 linked_id: 'letters',
+                                                                 linked_type: 'letters_and_calls',
+                                                                 user_id: current_user.id })
       end
-    end
-
-    context 'when error during save' do
-      before do
-        allow(Event::Edit).to receive(:build).and_raise(StandardError)
-      end
-
-      it { expect(subject.save).to be_falsey }
     end
 
     context 'when uplift is not populated from provider' do
       let(:provider_requested_uplift) { nil }
 
       it 'saves without error' do
-        expect { subject.save }.to change(Event, :count).by(1)
+        subject.save
+        expect(AppStoreService).to have_received(:adjust).with(
+          claim,
+          { change_detail_sets: [{ change: -10,
+                                   comment: 'change to letters',
+                                   field: 'count',
+                                   from: 12,
+                                   to: 2 }],
+            linked_id: 'letters',
+            linked_type: 'letters_and_calls',
+            user_id: current_user.id }
+        )
       end
     end
   end

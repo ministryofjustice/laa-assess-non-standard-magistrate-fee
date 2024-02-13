@@ -2,9 +2,10 @@ require 'rails_helper'
 
 RSpec.describe 'Supporting Evidence' do
   let(:user) { create(:caseworker) }
-  let(:claim) { create(:claim) }
+  let(:claim) { build(:claim) }
 
   before do
+    allow(AppStoreService).to receive_messages(list: [[claim], 1], get: claim)
     sign_in user
     visit nsm_claim_supporting_evidences_path(claim)
   end
@@ -32,7 +33,7 @@ RSpec.describe 'Supporting Evidence' do
   end
 
   context 'There is supporting evidence and some evidence is sent by post' do
-    let(:claim) { create(:claim, send_by_post: true) }
+    let(:claim) { build(:claim, send_by_post: true) }
 
     it 'can view supporting evidence table' do
       within('.govuk-table__row', text: 'Advocacy evidence _ Tom_TC.pdf') do
@@ -56,7 +57,7 @@ RSpec.describe 'Supporting Evidence' do
   end
 
   context 'There is supporting evidence sent by post' do
-    let(:claim) { create(:claim, send_by_post: true, supporting_evidences: []) }
+    let(:claim) { build(:claim, send_by_post: true, supporting_evidences: []) }
 
     it 'supporting evidence table not shown' do
       expect(page).to have_no_css('.govuk-table__row')

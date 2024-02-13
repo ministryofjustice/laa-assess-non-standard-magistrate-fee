@@ -26,8 +26,6 @@ module Nsm
           row.save
         end
 
-        AppStoreService.update(claim)
-
         true
       rescue StandardError
         false

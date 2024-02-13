@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Nsm::DisbursementsForm do
-  let(:claim) { create(:claim) }
+  let(:claim) { build(:claim) }
   let(:item) do
     instance_double(
       Nsm::V1::Disbursement,
@@ -18,7 +18,11 @@ RSpec.describe Nsm::DisbursementsForm do
   let(:provider_requested_total_cost_without_vat) { 100.0 }
   let(:form) { described_class.new(claim:, total_cost_without_vat:, item:, explanation:, current_user:) }
   let(:explanation) { 'change to disbursements' }
-  let(:current_user) { instance_double(User) }
+  let(:current_user) { instance_double(User, id: 'user-id') }
+
+  before do
+    allow(AppStoreService).to receive(:get).with(claim.id).and_return(claim)
+  end
 
   describe '#total_cost_without_vat=' do
     context 'when value is a string' do
@@ -57,7 +61,17 @@ RSpec.describe Nsm::DisbursementsForm do
       let(:current_user) { create(:caseworker) }
 
       it 'processes the fields and saves the claim' do
-        expect(claim).to receive(:save)
+        expect(AppStoreService).to receive(:adjust).with(
+          claim,
+          { change_detail_sets:           [{ change: -100.0,
+            comment: 'change to disbursements',
+            field: 'total_cost_without_vat',
+            from: 100.0,
+            to: 0 }],
+         linked_id: '1c0f36fd-fd39-498a-823b-0a3837454563',
+         linked_type: 'disbursements',
+         user_id: current_user.id }
+        )
         expect(form.save).to be(true)
       end
     end
@@ -69,21 +83,9 @@ RSpec.describe Nsm::DisbursementsForm do
 
       it 'does not process the fields or save the claim' do
         expect(form).not_to receive(:process_field)
-        expect(claim).not_to receive(:save)
+        expect(AppStoreService).not_to receive(:adjust)
 
         expect(form.save).to be(false)
-      end
-    end
-
-    context 'when an error occurs' do
-      let(:current_user) { create(:caseworker) }
-
-      before do
-        allow(claim).to receive(:save).and_raise('testing error')
-      end
-
-      it 'returns false' do
-        expect { form.save }.to raise_error('testing error')
       end
     end
   end

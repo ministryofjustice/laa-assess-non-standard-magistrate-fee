@@ -2,7 +2,11 @@
 
 RSpec.shared_examples 'creates a feedback mailer' do
   describe '#notify' do
-    subject(:mail) { described_class.notify(claim) }
+    subject(:mail) { described_class.notify(claim.id, claim.state) }
+
+    before do
+      allow(AppStoreService).to receive(:get).with(claim.id).and_return(claim)
+    end
 
     it 'is a govuk_notify delivery' do
       expect(mail.delivery_method).to be_a(GovukNotifyRails::Delivery)

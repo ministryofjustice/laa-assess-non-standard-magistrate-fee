@@ -1,7 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe 'Authenticating with the DevAuth strategy' do
-  before { user }
+  before do
+    user
+    allow(AppStoreService).to receive(:list).and_return([[], 0])
+  end
 
   let(:user) { nil }
 

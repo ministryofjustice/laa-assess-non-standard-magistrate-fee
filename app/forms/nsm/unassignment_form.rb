@@ -22,7 +22,7 @@ module Nsm
     def save
       return false unless valid?
 
-      AppStoreService.unassign(claim, comment) if user
+      AppStoreService.unassign(claim, comment, current_user)
 
       true
     end

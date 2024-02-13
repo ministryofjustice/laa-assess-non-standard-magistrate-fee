@@ -7,7 +7,7 @@ module AuthenticationHelpers
       if defined? user
         user
       else
-        create(:caseworker)
+        build(:caseworker)
         # instance_double(Provider, id: SecureRandom.uuid, selected_office_code: 'AAA')
       end
     end

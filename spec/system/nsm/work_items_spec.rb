@@ -2,9 +2,10 @@ require 'rails_helper'
 
 RSpec.describe 'Work items' do
   let(:user) { create(:caseworker) }
-  let(:claim) { create(:claim) }
+  let(:claim) { build(:claim) }
 
   before do
+    allow(AppStoreService).to receive_messages(list: [[claim], 1], get: claim, adjust: nil)
     sign_in user
     visit '/'
     click_on 'Accept analytics cookies'
@@ -30,19 +31,18 @@ RSpec.describe 'Work items' do
 
     click_on 'Save changes'
 
-    # need to access page directly as not JS enabled
-    visit nsm_claim_work_items_path(claim)
-
-    within('.govuk-table__row', text: 'Waiting') do
-      expect(page).to have_content(
-        'Waiting' \
-        '95%' \
-        '2 Hours41 Minutes' \
-        '0%' \
-        '10 Hours59 Minutes' \
-        'Change'
-      )
-    end
+    expect(AppStoreService).to have_received(:adjust).with(
+      claim,
+      { change_detail_sets:         [{ change: 498,
+          comment: 'Testing',
+          field: 'time_spent',
+          from: 161,
+          to: 659 },
+                                     { change: -95, comment: 'Testing', field: 'uplift', from: 95, to: 0 }],
+       linked_id: 'cf5e303e-98dd-4b0f-97ea-3560c4c5f137',
+       linked_type: 'work_items',
+       user_id: user.id }
+    )
   end
 
   it 'can remove all uplift' do
@@ -54,25 +54,11 @@ RSpec.describe 'Work items' do
 
     click_on 'Yes, remove all uplift'
 
-    # need to access page directly as not JS enabled
-    visit nsm_claim_work_items_path(claim)
-
-    within('.govuk-table__row', text: 'Waiting') do
-      expect(page).to have_content(
-        'Waiting' \
-        '95%' \
-        '2 Hours41 Minutes' \
-        '0%' \
-        '2 Hours41 Minutes' \
-        'Change'
-      )
-    end
-
-    expect(page).to have_no_content('Remove uplifts for all items')
+    expect(AppStoreService).to have_received(:adjust).exactly(1).time
   end
 
   context 'when claim has been assessed' do
-    let(:claim) { create(:claim, state: 'granted') }
+    let(:claim) { build(:claim, state: 'granted') }
 
     it 'lets me view details instead of changing them' do
       visit nsm_claim_work_items_path(claim)

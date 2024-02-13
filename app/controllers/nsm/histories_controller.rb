@@ -3,9 +3,8 @@ module Nsm
     def show
       claim = AppStoreService.get(params[:claim_id])
       claim_summary = BaseViewModel.build(:claim_summary, claim)
-      pagy, history_events = pagy_array(claim.events.select(&:historical?).sort_by(&:created_at))
+      pagy, history_events = pagy_array(claim.history_events)
       claim_note = ClaimNoteForm.new(id: claim.id)
-
       render locals: { claim:, claim_summary:, history_events:, claim_note:, pagy: }
     end
 
@@ -17,7 +16,7 @@ module Nsm
       else
         claim = AppStoreService.get(params[:claim_id])
         claim_summary = BaseViewModel.build(:claim_summary, claim)
-        pagy, history_events = pagy_array(claim.events.select(&:historical?).sort_by(&:created_at))
+        pagy, history_events = pagy_array(claim.history_events)
 
         render :show, locals: { claim:, claim_summary:, history_events:, claim_note:, pagy: }
       end

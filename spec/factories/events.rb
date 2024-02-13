@@ -1,40 +1,28 @@
-class EventCreatable < Event
-  class << self
-    public :new
-  end
-end
-
 FactoryBot.define do
-  factory :event, class: 'EventCreatable' do
-    transient do
-      claim { nil }
-    end
-    submission { claim || create(:claim) }
-    submission_version { submission.current_version }
-
+  factory :event do
     trait :decision do
-      event_type { Event::Decision.to_s }
+      event_type { 'decision' }
       details do
         {
           from: 'submitted',
           to: 'granted'
-        }
+        }.with_indifferent_access
       end
     end
 
     trait :new_version do
-      event_type { Event::NewVersion.to_s }
+      event_type { 'new_version' }
     end
 
     trait :note do
-      event_type { Event::Note.to_s }
+      event_type { 'note' }
       sequence(:details) do |i|
         { comment: "This is note: #{i}" }
       end
     end
 
     trait :edit_uplift do
-      event_type { Event::Edit.to_s }
+      event_type { 'edit' }
       linked_type { 'letters_and_calls' }
       linked_id { 'letters' }
       details do
@@ -43,12 +31,12 @@ FactoryBot.define do
           from: 95,
           to: 0,
           change: -95
-        }
+        }.with_indifferent_access
       end
     end
 
     trait :edit_work_item_uplift do
-      event_type { Event::Edit.to_s }
+      event_type { 'edit' }
       linked_type { 'work_item' }
       linked_id { '183ec754-d0fd-490c-b7a4-14e6951e6659' }
       details do
@@ -57,12 +45,12 @@ FactoryBot.define do
           from: 20,
           to: 0,
           change: -20
-        }
+        }.with_indifferent_access
       end
     end
 
     trait :edit_work_item_time_spent do
-      event_type { Event::Edit.to_s }
+      event_type { 'edit' }
       linked_type { 'work_item' }
       linked_id { '183ec754-d0fd-490c-b7a4-14e6951e6659' }
       details do
@@ -71,12 +59,12 @@ FactoryBot.define do
           from: 171,
           to: 100,
           change: -71
-        }
+        }.with_indifferent_access
       end
     end
 
     trait :edit_count do
-      event_type { Event::Edit.to_s }
+      event_type { 'edit' }
       linked_type { 'letters_and_calls' }
       linked_id { 'letters' }
       details do
@@ -85,19 +73,19 @@ FactoryBot.define do
           from: 10,
           to: 5,
           change: -5
-        }
+        }.with_indifferent_access
       end
     end
 
     trait :decision do
-      event_type { Event::Decision.to_s }
+      event_type { 'decision' }
       details do
         {
           field: 'state',
           from: 'submitted',
           to: 'granted',
           comment: 'grant it'
-        }
+        }.with_indifferent_access
       end
     end
   end

@@ -2,12 +2,15 @@ require 'rails_helper'
 
 RSpec.describe 'Disbursements' do
   let(:user) { create(:caseworker) }
-  let(:claim) { create(:claim) }
+  let(:claim) { build(:claim) }
   let(:disbursement_form_error_message) do
     'activemodel.errors.models.nsm/disbursements_form.attributes'
   end
 
-  before { sign_in user }
+  before do
+    allow(AppStoreService).to receive_messages(list: [[claim], 1], get: claim, adjust: nil)
+    sign_in user
+  end
 
   it 'can refuse disbursement item' do
     visit nsm_claim_disbursements_path(claim)
@@ -23,19 +26,17 @@ RSpec.describe 'Disbursements' do
     choose 'Yes'
     fill_in 'Explain your decision', with: 'Testing'
     click_on 'Save changes'
-
-    visit nsm_claim_disbursements_path(claim)
-
-    within('.govuk-table__row', text: 'Apples') do
-      expect(page).to have_content(
-        'Apples' \
-        '£100.00' \
-        '0%' \
-        '£0.00' \
-        'Change'
-      )
-    end
-    expect(page).to have_css('.govuk-heading-l', text: '£0.00')
+    expect(AppStoreService).to have_received(:adjust).with(
+      claim,
+      { change_detail_sets:          [{ change: -100.0,
+           comment: 'Testing',
+           field: 'total_cost_without_vat',
+           from: 100.0,
+           to: 0 }],
+        linked_id: '1c0f36fd-fd39-498a-823b-0a3837454563',
+        linked_type: 'disbursements',
+        user_id: user.id }
+    )
   end
 
   it 'shows error if no changes made to an item' do
@@ -56,7 +57,7 @@ RSpec.describe 'Disbursements' do
   end
 
   context 'when claim has been assessed' do
-    let(:claim) { create(:claim, state: 'granted') }
+    let(:claim) { build(:claim, state: 'granted') }
 
     it 'lets me view details instead of changing them' do
       visit nsm_claim_disbursements_path(claim)

@@ -54,24 +54,21 @@ RSpec.describe Nsm::V1::ClaimSummary do
   end
 
   describe '#assiged_to' do
-    it 'returns the first assignment' do
-      assignment1 = double(:one)
-      assignment2 = double(:two)
-      assignments = [assignment1, assignment2]
-      claim = instance_double(Claim, assignments:)
+    it 'returns the assigned user' do
+      assigned_user = instance_double(User)
+      claim = instance_double(Claim, assigned_user:)
 
       summary = described_class.new('submission' => claim)
-      expect(summary.assigned_to).to eq(assignment1)
+      expect(summary.assigned_to).to eq(assigned_user)
     end
   end
 
   describe '#accessed_on' do
     context 'when a decision has been made' do
       it 'returns the date from the last Decision event' do
-        decision = create(:event, :decision)
-
-        summary = described_class.new('submission' => decision.submission)
-        expect(summary.assessed_on).to eq(decision.created_at)
+        claim = build(:claim, events: [Event::Decision.new(created_at: 1.hour.ago)])
+        summary = described_class.new('submission' => claim)
+        expect(summary.assessed_on).to eq(claim.events.first.created_at)
       end
     end
 

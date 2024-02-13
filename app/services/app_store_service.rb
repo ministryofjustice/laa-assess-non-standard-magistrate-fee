@@ -1,27 +1,39 @@
 class AppStoreService
   class << self
     def list(params)
-      data = AppStore::HttpClient.new.list_submissions(params)
+      data = AppStore::HttpClient.list_submissions(params)
       [data['applications'].map { build_submission(_1) }, data['total']]
     end
 
     def get(submission_id)
-      data = AppStore::HttpClient.new.get_submission(submission_id)
+      data = AppStore::HttpClient.get_submission(submission_id)
       build_submission(data)
     end
 
     def assign(user_id, application_type)
-      data = AppStore::HttpClient.new.assign_submission(user_id:, application_type:)
+      data = AppStore::HttpClient.assign_submission(user_id:, application_type:)
       build_submission(data) if data
     end
 
-    def update(submission)
-      AppStore::HttpClient.new.update_submission(submission.id,
-                                                 AppStore::PayloadBuilder.new(submission:))
+    def adjust(submission, metadata = {})
+      AppStore::HttpClient.adjust_submission(submission.id,
+                                             AppStore::PayloadBuilder.new(submission:, metadata:))
     end
 
-    def unassign(submission, comment)
-      AppStore::HttpClient.new.unassign_submission(submission.id, comment:)
+    def unassign(submission, comment, user)
+      AppStore::HttpClient.unassign_submission(submission.id, comment: comment, user_id: user.id)
+    end
+
+    def change_risk(submission, comment:, user_id:, application_risk:)
+      AppStore::HttpClient.change_risk(submission.id, comment:, user_id:, application_risk:)
+    end
+
+    def create_note(submission, note:, user_id:)
+      AppStore::HttpClient.create_note(submission.id, note:, user_id:)
+    end
+
+    def change_state(submission, comment:, user_id:, application_state:)
+      AppStore::HttpClient.change_state(submission.id, comment:, user_id:, application_state:)
     end
 
     private

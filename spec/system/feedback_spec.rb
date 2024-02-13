@@ -2,12 +2,14 @@ require 'rails_helper'
 
 RSpec.describe 'Feedback' do
   before do
+    allow(AppStoreService).to receive(:list).and_return([[], 0])
     sign_in create(:caseworker)
     visit root_path
     click_on 'Feedback'
   end
 
   it 'lets me submit feedback' do
+    page.text
     fill_in 'What is your email address?', with: 'foo@example.com'
     fill_in 'Tell us about your experience of using this service today.', with: 'I was not satisfied'
     choose 'Dissatisfied'

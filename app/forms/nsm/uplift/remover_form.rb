@@ -8,6 +8,7 @@ module Nsm
 
       def save
         process_field(value: 0, field: 'uplift')
+        AppStoreService.adjust(claim, metadata)
       end
 
       private

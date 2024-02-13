@@ -4,6 +4,7 @@ RSpec.describe 'Sign out' do
   let(:user) { create(:caseworker) }
 
   before do
+    allow(AppStoreService).to receive(:list).and_return([[], 0])
     sign_in user
     visit '/'
     click_on('Sign out')

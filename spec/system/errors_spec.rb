@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Error pages' do
-  let(:user) { create(:caseworker) }
+  let(:user) { build(:caseworker) }
 
   context 'when authenticated' do
     before { sign_in user }

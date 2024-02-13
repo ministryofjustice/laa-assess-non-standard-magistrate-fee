@@ -21,7 +21,7 @@ module Nsm
 
       process_field(value: new_total_cost_without_vat, field: 'total_cost_without_vat')
       process_field(value: new_vat_amount, field: 'vat_amount')
-      AppStoreService.update(claim)
+      AppStoreService.adjust(claim, metadata)
 
       true
     end

@@ -24,13 +24,10 @@ module Nsm
     def save
       return false unless valid?
 
-      previous_state = claim.state
-      claim.state = state
-      Event::Decision.build(submission: claim,
-                            comment: comment,
-                            previous_state: previous_state,
-                            current_user: current_user)
-      MakeDecisionService.process(submission: claim)
+      MakeDecisionService.process(submission: claim,
+                                  comment: comment,
+                                  user_id: current_user.id,
+                                  application_state: state)
 
       true
     end

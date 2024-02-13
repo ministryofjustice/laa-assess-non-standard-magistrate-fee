@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe AppStoreTokenProvider do
+RSpec.describe AppStore::TokenProvider do
   subject(:client) { described_class.instance }
 
   it { is_expected.to respond_to :oauth_client, :access_token, :bearer_token }

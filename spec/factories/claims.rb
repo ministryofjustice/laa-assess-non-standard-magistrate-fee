@@ -1,11 +1,13 @@
 FactoryBot.define do
   factory :claim do
     risk { 'low' }
-    received_on { Date.yesterday }
     current_version { 1 }
     state { 'submitted' }
     json_schema_version { 1 }
     application_type { 'crm7' }
+    created_at { 1.day.ago }
+    updated_at { 1.hour.ago }
+    id { SecureRandom.uuid }
     data do
       {
         'laa_reference' => 'LAA-FHaMVK',
@@ -175,12 +177,6 @@ FactoryBot.define do
           'address_line_2' => '5 Princess Road',
           'vat_registered' => vat_registered
         }
-      end
-    end
-
-    trait :with_assignment do
-      after(:build) do |claim|
-        claim.assignments << build(:assignment, submission: claim)
       end
     end
   end

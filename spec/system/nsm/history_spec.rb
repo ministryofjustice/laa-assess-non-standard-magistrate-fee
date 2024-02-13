@@ -2,36 +2,62 @@ require 'rails_helper'
 
 RSpec.describe 'History events' do
   let(:caseworker) { create(:caseworker) }
-  let(:claim) { create(:claim) }
+  let(:supervisor) { create(:supervisor) }
+  let(:claim) { build(:claim, events:) }
   let(:fixed_arbitrary_date) { Time.zone.local(2023, 2, 1, 9, 0) }
+  let(:events) do
+    [Event::NewVersion.new(event_type: 'new_version',
+                           created_at: 10.seconds.ago),
+     Event::Assignment.new(primary_user_id: caseworker.id,
+                           event_type: 'assignment',
+                           created_at: 11.seconds.ago),
+     Event::Unassignment.new(primary_user_id: caseworker.id,
+                             details: { comment: 'unassignment 1' }.with_indifferent_access,
+                             event_type: 'unassignment',
+                             created_at: 12.seconds.ago),
+     Event::Assignment.new(primary_user_id: caseworker.id,
+                           event_type: 'assignment',
+                           created_at: 13.seconds.ago),
+     Event::ChangeRisk.new(details: { field: 'risk',
+                                      comment: 'Risk change test',
+                                      from: 'high',
+                                      to: 'low' }.with_indifferent_access,
+                           primary_user_id: caseworker.id,
+                           event_type: 'change_risk',
+                           created_at: 14.seconds.ago),
+     Event::Note.new(primary_user_id: caseworker.id,
+                     details: { comment: 'User test note' }.with_indifferent_access,
+                     event_type: 'note',
+                     created_at: 15.seconds.ago),
+     Event::SendBack.new(primary_user_id: caseworker.id,
+                         details: { field: 'state',
+                                    from: 'submitted',
+                                    to: 'further_info',
+                                    comment: 'Send Back test' }.with_indifferent_access,
+                         event_type: 'send_back',
+                         created_at: 16.seconds.ago),
+     Event::Decision.new(primary_user_id: caseworker.id,
+                         details: { field: 'state',
+                                    from: 'further_info',
+                                    to: 'granted',
+                                    comment: 'Decision test' }.with_indifferent_access,
+                         event_type: 'decision',
+                         created_at: 17.seconds.ago),
+     Event::Unassignment.new(primary_user_id: caseworker.id,
+                             secondary_user_id: supervisor.id,
+                             details: { comment: 'unassignment 2' }.with_indifferent_access,
+                             event_type: 'unassignment',
+                             created_at: 18.seconds.ago)]
+  end
 
   before do
-    claim
+    allow(AppStoreService).to receive_messages(list: [[], 0], get: claim, create_note: nil)
     sign_in caseworker
     visit '/'
     click_on 'Accept analytics cookies'
   end
 
   it 'shows all (visible) events in the history' do
-    supervisor = create(:supervisor)
-
-    Event::NewVersion.build(submission: claim)
-    Event::Assignment.build(submission: claim, current_user: caseworker)
-    Event::Unassignment.build(submission: claim, user: caseworker, current_user: caseworker,
-                              comment: 'unassignment 1')
-    Event::Assignment.build(submission: claim, current_user: caseworker)
-    Event::ChangeRisk.build(submission: claim, explanation: 'Risk change test', previous_risk_level: 'high',
-                            current_user: caseworker)
-    Event::Note.build(submission: claim, current_user: caseworker, note: 'User test note')
-    claim.state = 'further_info'
-    Event::SendBack.build(submission: claim, current_user: caseworker, previous_state: 'submitted',
-                          comment: 'Send Back test')
-    claim.state = 'granted'
-    Event::Decision.build(submission: claim, current_user: caseworker, previous_state: 'further_info',
-                          comment: 'Decision test')
-    Event::Unassignment.build(submission: claim, user: caseworker, current_user: supervisor,
-                              comment: 'unassignment 2')
-
     visit nsm_claim_history_path(claim)
 
     doc = Nokogiri::HTML(page.html)
@@ -61,7 +87,8 @@ RSpec.describe 'History events' do
     visit nsm_claim_history_path(claim)
     fill_in 'Add a note to the claim history (optional)', with: 'Here is a note'
     click_on 'Add to claim history'
-    expect(page).to have_content "Wednesday01 Feb 202309:00amcase worker\nCaseworker note\nHere is a note"
+    expect(AppStoreService).to have_received(:create_note).with(claim,
+                                                                { note: 'Here is a note', user_id: caseworker.id })
   end
 
   it 'rejects blank content' do

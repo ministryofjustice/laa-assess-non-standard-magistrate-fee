@@ -34,7 +34,7 @@ module Nsm
       process_field(value: count.to_i, field: 'count')
       process_field(value: new_uplift, field: 'uplift') if item.uplift?
 
-      AppStoreService.update(claim)
+      AppStoreService.adjust(claim, metadata)
 
       true
     end

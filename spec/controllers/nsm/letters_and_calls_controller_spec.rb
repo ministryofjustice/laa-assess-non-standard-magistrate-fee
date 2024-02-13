@@ -7,14 +7,14 @@ RSpec.describe Nsm::LettersAndCallsController do
     let(:letters_and_calls) { instance_double(Nsm::V1::LettersAndCallsSummary) }
 
     before do
-      allow(Claim).to receive(:find).and_return(claim)
+      allow(AppStoreService).to receive(:get).and_return(claim)
       allow(BaseViewModel).to receive_messages(build: letters_and_calls)
     end
 
     it 'find and builds the required object' do
       get :index, params: { claim_id: }
 
-      expect(Claim).to have_received(:find).with(claim_id)
+      expect(AppStoreService).to have_received(:get).with(claim_id)
       expect(BaseViewModel).to have_received(:build).with(:letters_and_calls_summary, claim)
     end
 
@@ -43,7 +43,7 @@ form_attributes: {})
     end
 
     before do
-      allow(Claim).to receive(:find).and_return(claim)
+      allow(AppStoreService).to receive(:get).and_return(claim)
       allow(BaseViewModel).to receive(:build).and_return(letters_and_calls)
       allow(Nsm::LettersCallsForm).to receive(:new).and_return(form)
     end
@@ -93,7 +93,7 @@ form_attributes: {})
     end
 
     before do
-      allow(Claim).to receive(:find).and_return(claim)
+      allow(AppStoreService).to receive(:get).and_return(claim)
       allow(BaseViewModel).to receive(:build).and_return(letters_and_calls)
     end
 
@@ -145,7 +145,7 @@ form_attributes: {})
     before do
       allow(BaseViewModel).to receive(:build).and_return(letters_and_calls)
       allow(Nsm::LettersCallsForm).to receive(:new).and_return(form)
-      allow(Claim).to receive(:find).and_return(claim)
+      allow(AppStoreService).to receive(:get).and_return(claim)
     end
 
     context 'for letters' do

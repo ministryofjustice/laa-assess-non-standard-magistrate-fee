@@ -8,7 +8,7 @@ RSpec.describe Nsm::SendBacksController do
     let(:defendant_name) { 'Tracy Linklater' }
 
     before do
-      allow(Claim).to receive(:find).and_return(claim)
+      allow(AppStoreService).to receive(:get).and_return(claim)
       allow(Nsm::SendBackForm).to receive(:new).and_return(send_back)
     end
 
@@ -50,7 +50,7 @@ RSpec.describe Nsm::SendBacksController do
       allow(User).to receive(:first_or_create).and_return(user)
       allow(Nsm::SendBackForm).to receive(:new).and_return(send_back)
       allow(BaseViewModel).to receive(:build).and_return(laa_reference_class)
-      allow(Claim).to receive(:find).and_return(claim)
+      allow(AppStoreService).to receive(:get).and_return(claim)
     end
 
     it 'builds a decision object' do

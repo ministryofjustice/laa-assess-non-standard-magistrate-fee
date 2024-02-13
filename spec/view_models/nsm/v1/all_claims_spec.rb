@@ -42,10 +42,11 @@ RSpec.describe Nsm::V1::AllClaims, type: :view_model do
     end
 
     context 'when assigned' do
-      it 'returns the caseworkers name' do
-        assignment = instance_double(Assignment, display_name: 'John Wick')
-        allow(submission).to receive(:assignments).and_return([assignment])
+      before do
+        submission.assigned_user = instance_double(User, display_name: 'John Wick')
+      end
 
+      it 'returns the caseworkers name' do
         expect(all_claims.case_worker_name).to eq('John Wick')
       end
     end

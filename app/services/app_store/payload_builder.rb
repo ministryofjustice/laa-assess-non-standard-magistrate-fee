@@ -2,10 +2,11 @@ module AppStore
   class PayloadBuilder
     JSON_SCHEMA_VERSION = 1
 
-    attr_reader :submission, :scorer
+    attr_reader :submission, :metadata
 
-    def initialize(submission:)
+    def initialize(submission:, metadata:)
       @submission = submission
+      @metadata = metadata
     end
 
     def as_json(*)
@@ -17,7 +18,7 @@ module AppStore
         application: submission.data,
         events: submission.events.map(&:as_json),
         application_risk: submission.risk,
-      }
+      }.merge(metadata)
     end
   end
 end

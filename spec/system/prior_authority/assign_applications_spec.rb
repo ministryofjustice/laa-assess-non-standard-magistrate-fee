@@ -4,6 +4,7 @@ RSpec.describe 'Assign applications' do
   let(:caseworker) { create(:caseworker) }
 
   before do
+    allow(AppStoreService).to receive_messages(list: [[], 0], assign: application)
     sign_in caseworker
     visit '/'
     click_on 'Accept analytics cookies'
@@ -14,12 +15,10 @@ RSpec.describe 'Assign applications' do
   end
 
   context 'when there is an application' do
-    let(:application) { create(:prior_authority_application) }
+    let(:application) { build(:prior_authority_application) }
 
-    it 'lets me assign theapplication to myself' do
-      # As the UI has not yet been built, the most we can do is demonstrate that an assignment has been made
-      expect(application.reload.assignments.first.user).to eq caseworker
-      expect(application.events.first).to be_an Event::Assignment
+    it 'lets me assign the application to myself' do
+      expect(page).to have_current_path(prior_authority_application_path(application))
     end
   end
 

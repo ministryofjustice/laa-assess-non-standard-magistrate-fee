@@ -30,13 +30,23 @@ class BaseAdjustmentForm
     details[:change] = value - selected_record[field]
 
     selected_record[field] = value
-    Event::Edit.build(submission:, details:, linked:, current_user:)
+    @detail_sets ||= []
+    @detail_sets << details
   end
 
   def linked
     {
       type: self.class::LINKED_CLASS::LINKED_TYPE,
       id: selected_record.dig(*self.class::LINKED_CLASS::ID_FIELDS),
+    }
+  end
+
+  def metadata
+    {
+      user_id: current_user.id,
+      change_detail_sets: @detail_sets || [],
+      linked_type: linked[:type],
+      linked_id: linked[:id],
     }
   end
 

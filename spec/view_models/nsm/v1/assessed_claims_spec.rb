@@ -10,8 +10,10 @@ RSpec.describe Nsm::V1::AssessedClaims, type: :view_model do
   let(:firm_office) { { 'name' => 'Acme Law Firm' } }
   let(:updated_at) { Time.zone.yesterday }
   let(:submission) { instance_double(Claim, id: 1, events: events) }
-  let(:events) { double(where: double(order: [instance_double(Event, primary_user:)])) }
-  let(:primary_user) { instance_double(User, display_name: 'Jim Bob') }
+  let(:events) do
+    [Event::Decision.new(primary_user_id: primary_user.id, event_type: 'decision', created_at: 1.hour.ago)]
+  end
+  let(:primary_user) { create(:caseworker, first_name: 'Jim', last_name: 'Bob') }
   let(:state) { 'granted' }
 
   describe '#main_defendant_name' do
@@ -43,7 +45,7 @@ RSpec.describe Nsm::V1::AssessedClaims, type: :view_model do
     end
 
     context 'when no decision event' do
-      let(:events) { double(where: double(order: [])) }
+      let(:events) { [] }
 
       it 'returns nil' do
         expect(assessed_claims.case_worker_name).to eq('')

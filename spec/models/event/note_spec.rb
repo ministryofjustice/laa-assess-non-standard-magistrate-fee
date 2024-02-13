@@ -1,23 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Event::Note do
-  subject { described_class.build(submission:, note:, current_user:) }
-
-  let(:submission) { create(:claim) }
-  let(:current_user) { create(:caseworker) }
-  let(:note) { 'new note' }
-
-  it 'can build a new record' do
-    expect(subject).to have_attributes(
-      submission_id: submission.id,
-      submission_version: 1,
-      event_type: 'Event::Note',
-      primary_user: current_user,
-      details: {
-        'comment' => 'new note'
-      }
-    )
-  end
+  subject { described_class.new(details: { 'comment' => 'new note' }) }
 
   it 'has a valid title' do
     expect(subject.title).to eq('Caseworker note')

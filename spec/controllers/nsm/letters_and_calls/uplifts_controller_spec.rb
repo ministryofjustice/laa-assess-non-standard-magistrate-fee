@@ -7,7 +7,7 @@ RSpec.describe Nsm::LettersAndCalls::UpliftsController do
     let(:form) { instance_double(Nsm::Uplift::LettersAndCallsForm) }
 
     before do
-      allow(Claim).to receive(:find).and_return(claim)
+      allow(AppStoreService).to receive(:get).and_return(claim)
       allow(Nsm::Uplift::LettersAndCallsForm).to receive(:new).and_return(form)
     end
 
@@ -28,7 +28,7 @@ RSpec.describe Nsm::LettersAndCalls::UpliftsController do
 
     before do
       allow(Nsm::Uplift::LettersAndCallsForm).to receive(:new).and_return(form)
-      allow(Claim).to receive(:find).and_return(claim)
+      allow(AppStoreService).to receive(:get).and_return(claim)
     end
 
     context 'when form save is successful' do

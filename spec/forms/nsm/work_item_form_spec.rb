@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Nsm::WorkItemForm do
   subject { described_class.new(params) }
 
-  let(:claim) { create(:claim) }
+  let(:claim) { build(:claim) }
   let(:params) { { claim:, id:, time_spent:, uplift:, item:, explanation:, current_user: } }
   let(:id) { 'cf5e303e-98dd-4b0f-97ea-3560c4c5f137' }
   let(:time_spent) { 95 }
@@ -91,7 +91,11 @@ RSpec.describe Nsm::WorkItemForm do
   end
 
   describe '#save' do
-    let(:current_user) { create(:caseworker) }
+    let(:current_user) { build(:caseworker) }
+
+    before do
+      allow(AppStoreService).to receive(:adjust)
+    end
 
     context 'when record is invalid' do
       let(:uplift) { nil }
@@ -103,83 +107,56 @@ RSpec.describe Nsm::WorkItemForm do
       let(:uplift) { 'yes' }
       let(:time_spent) { nil }
 
-      it 'creates a event for the time_spent change' do
-        expect { subject.save }.to change(Event, :count).by(1)
-        expect(Event.last).to have_attributes(
-          submission: claim.becomes(Submission),
-          submission_version: claim.current_version,
-          event_type: 'Event::Edit',
-          linked_type: 'work_items',
-          linked_id: id,
-          details: {
-            'field' => 'uplift',
-            'from' => 95,
-            'to' => 0,
-            'change' => -95,
-            'comment' => 'change to work items'
-          }
-        )
-      end
-
-      it 'updates the JSON data' do
+      it 'requests an adjustment' do
         subject.save
-        work_item = claim.reload
-                         .data['work_items']
-                         .detect { |row| row.dig('work_type', 'value') == 'waiting' }
-        expect(work_item).to eq(
-          'id' => 'cf5e303e-98dd-4b0f-97ea-3560c4c5f137',
-          'time_spent' => 161,
-          'pricing' => 24.0,
-          'work_type' => { 'en' => 'Waiting', 'value' => 'waiting' },
-          'uplift' => 0,
-          'fee_earner' => 'aaa',
-          'completed_on' => '2022-12-12'
-        )
+        expect(AppStoreService).to have_received(:adjust).with(claim,
+                                                               { change_detail_sets: [
+                                                                   { change: -95,
+                                                                    comment: 'change to work items',
+                                                                    field: 'uplift',
+                                                                    from: 95,
+                                                                    to: 0 }
+                                                                 ],
+                                                                linked_id: 'cf5e303e-98dd-4b0f-97ea-3560c4c5f137',
+                                                                linked_type: 'work_items',
+                                                                user_id: nil })
       end
     end
 
     context 'when only time_spent has changed' do
       let(:uplift) { 'no' }
 
-      it 'creates a event for the time_spent change' do
-        expect { subject.save }.to change(Event, :count).by(1)
-        expect(Event.last).to have_attributes(
-          submission: claim.becomes(Submission),
-          submission_version: claim.current_version,
-          event_type: 'Event::Edit',
-          linked_type: 'work_items',
-          linked_id: id,
-          details: {
-            'field' => 'time_spent',
-            'from' => 161,
-            'to' => 95,
-            'change' => -66,
-            'comment' => 'change to work items'
-          }
-        )
-      end
-
-      it 'updates the JSON data' do
+      it 'requests an adjustment' do
         subject.save
-        work_item = claim.reload
-                         .data['work_items']
-                         .detect { |row| row.dig('work_type', 'value') == 'waiting' }
-        expect(work_item).to eq(
-          'id' => 'cf5e303e-98dd-4b0f-97ea-3560c4c5f137',
-          'time_spent' => 95,
-          'pricing' => 24.0,
-          'work_type' => { 'en' => 'Waiting', 'value' => 'waiting' },
-          'uplift' => 95,
-          'fee_earner' => 'aaa',
-          'completed_on' => '2022-12-12'
-        )
+        expect(AppStoreService).to have_received(:adjust).with(claim,
+                                                               { change_detail_sets: [
+                                                                   { change: -66,
+                                                                    comment: 'change to work items',
+                                                                    field: 'time_spent',
+                                                                    from: 161,
+                                                                    to: 95 }
+                                                                 ],
+                                                                linked_id: 'cf5e303e-98dd-4b0f-97ea-3560c4c5f137',
+                                                                linked_type: 'work_items',
+                                                                user_id: nil })
       end
 
       context 'when uplift is not populated from provider' do
         let(:provider_requested_uplift) { nil }
 
         it 'saves without error' do
-          expect { subject.save }.to change(Event, :count).by(1)
+          subject.save
+          expect(AppStoreService).to have_received(:adjust).with(claim,
+                                                                 { change_detail_sets: [
+                                                                     { change: -66,
+                                                                     comment: 'change to work items',
+                                                                     field: 'time_spent',
+                                                                     from: 161,
+                                                                     to: 95 }
+                                                                   ],
+                                                                  linked_id: 'cf5e303e-98dd-4b0f-97ea-3560c4c5f137',
+                                                                  linked_type: 'work_items',
+                                                                  user_id: nil })
         end
       end
     end

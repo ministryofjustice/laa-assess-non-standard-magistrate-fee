@@ -1,8 +1,7 @@
-# frozen_string_literal: true
-
 class SubmissionFeedbackMailer < GovukNotifyRails::Mailer
-  def notify(submission)
-    feedback_template = feedback_message(submission)
+  def notify(submission_id, new_state)
+    submission = AppStoreService.get(submission_id)
+    feedback_template = feedback_message(submission, new_state)
     set_template(feedback_template.template)
     set_personalisation(**feedback_template.contents)
     mail(to: feedback_template.recipient)
@@ -10,8 +9,8 @@ class SubmissionFeedbackMailer < GovukNotifyRails::Mailer
 
   private
 
-  def feedback_message(submission)
-    case submission.state
+  def feedback_message(submission, state)
+    case state
     when 'granted'
       FeedbackMessages::GrantedFeedback.new(submission)
     when 'part_grant'

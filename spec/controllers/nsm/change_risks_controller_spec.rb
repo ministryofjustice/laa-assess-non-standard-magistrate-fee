@@ -7,7 +7,7 @@ RSpec.describe Nsm::ChangeRisksController, type: :controller do
     let(:risk) { instance_double(Nsm::ChangeRiskForm) }
 
     before do
-      allow(Claim).to receive(:find).and_return(claim)
+      allow(AppStoreService).to receive(:get).and_return(claim)
       allow(Nsm::ChangeRiskForm).to receive(:new).and_return(risk)
     end
 
@@ -32,7 +32,7 @@ RSpec.describe Nsm::ChangeRisksController, type: :controller do
     before do
       allow(User).to receive(:first_or_create).and_return(user)
       allow(Nsm::ChangeRiskForm).to receive(:new).and_return(risk)
-      allow(Claim).to receive(:find).and_return(claim)
+      allow(AppStoreService).to receive(:get).and_return(claim)
     end
 
     it 'builds a risk object' do

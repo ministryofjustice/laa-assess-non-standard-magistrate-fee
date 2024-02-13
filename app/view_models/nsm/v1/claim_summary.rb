@@ -18,7 +18,7 @@ module Nsm
       end
 
       def assessed_on
-        submission.events.select { _1.event_type == 'Event::Decision' }.max(&:created_at)
+        submission.events.select { _1.is_a?(Event::Decision) }.max(&:created_at)&.created_at
       end
 
       def total

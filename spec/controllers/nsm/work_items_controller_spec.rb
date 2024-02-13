@@ -8,7 +8,7 @@ RSpec.describe Nsm::WorkItemsController do
     let(:travel_and_waiting) { instance_double(Nsm::V1::TravelAndWaiting) }
 
     before do
-      allow(Claim).to receive(:find).and_return(claim)
+      allow(AppStoreService).to receive(:get).and_return(claim)
       allow(BaseViewModel).to receive(:build).with(:work_item, anything, anything).and_return(work_items)
       allow(BaseViewModel).to receive(:build).with(:travel_and_waiting, anything).and_return(travel_and_waiting)
     end
@@ -16,7 +16,7 @@ RSpec.describe Nsm::WorkItemsController do
     it 'find and builds the required object' do
       get :index, params: { claim_id: }
 
-      expect(Claim).to have_received(:find).with(claim_id)
+      expect(AppStoreService).to have_received(:get).with(claim_id)
       expect(BaseViewModel).to have_received(:build).with(:work_item, claim, 'work_items')
       expect(BaseViewModel).to have_received(:build).with(:travel_and_waiting, claim)
     end
@@ -49,7 +49,7 @@ form_attributes: {})
     let(:form) { instance_double(Nsm::WorkItemForm) }
 
     before do
-      allow(Claim).to receive(:find).and_return(claim)
+      allow(AppStoreService).to receive(:get).and_return(claim)
       allow(BaseViewModel).to receive(:build).and_return(work_items)
       allow(Nsm::WorkItemForm).to receive(:new).and_return(form)
     end
@@ -80,7 +80,7 @@ form_attributes: {})
     let(:work_items) { [waiting, travel] }
 
     before do
-      allow(Claim).to receive(:find).and_return(claim)
+      allow(AppStoreService).to receive(:get).and_return(claim)
       allow(BaseViewModel).to receive(:build).and_return(work_items)
     end
 
@@ -111,7 +111,7 @@ form_attributes: {})
     let(:form) { instance_double(Nsm::WorkItemForm, save:) }
 
     before do
-      allow(Claim).to receive(:find).and_return(claim)
+      allow(AppStoreService).to receive(:get).and_return(claim)
       allow(BaseViewModel).to receive(:build).and_return(work_items)
       allow(Nsm::WorkItemForm).to receive(:new).and_return(form)
     end

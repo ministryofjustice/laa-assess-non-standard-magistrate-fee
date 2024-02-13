@@ -14,15 +14,12 @@ module Nsm
     def save
       return false unless valid?
 
-      # TODO: Create event
-      Event::Note.build(submission: claim, note: note, current_user: current_user)
+      AppStoreService.create_note(claim, note: note, user_id: current_user.id)
       true
-    rescue StandardError
-      false
     end
 
     def claim
-      AppStoreService.get(id)
+      @claim ||= AppStoreService.get(id)
     end
   end
 end

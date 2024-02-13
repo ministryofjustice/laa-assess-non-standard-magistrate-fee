@@ -13,7 +13,7 @@ module PriorAuthority
 
       process_field(value: time_spent.to_i, field: 'time_spent')
 
-      AppStoreService.update(submission)
+      AppStoreService.adjust(submission, metadata)
 
       true
     end

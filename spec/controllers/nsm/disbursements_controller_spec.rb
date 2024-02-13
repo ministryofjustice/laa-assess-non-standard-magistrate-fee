@@ -10,14 +10,14 @@ RSpec.describe Nsm::DisbursementsController do
     let(:grouped_disbursements) { { Time.zone.today => disbursements } }
 
     before do
-      allow(Claim).to receive(:find).and_return(claim)
+      allow(AppStoreService).to receive(:get).and_return(claim)
       allow(BaseViewModel).to receive_messages(build: disbursements)
     end
 
     it 'find and builds the required object' do
       get :index, params: { claim_id: }
 
-      expect(Claim).to have_received(:find).with(claim_id)
+      expect(AppStoreService).to have_received(:get).with(claim_id)
       expect(BaseViewModel).to have_received(:build).with(:disbursement, claim, 'disbursements')
     end
 
@@ -62,7 +62,7 @@ form_attributes: {})
     end
 
     before do
-      allow(Claim).to receive(:find).and_return(claim)
+      allow(AppStoreService).to receive(:get).and_return(claim)
       allow(BaseViewModel).to receive(:build).and_return([disbursement])
     end
 
@@ -111,7 +111,7 @@ form_attributes: {})
     end
 
     before do
-      allow(Claim).to receive(:find).and_return(claim)
+      allow(AppStoreService).to receive(:get).and_return(claim)
       allow(BaseViewModel).to receive(:build).and_return([disbursement])
       allow(Nsm::DisbursementsForm).to receive(:new).and_return(form)
     end
@@ -150,7 +150,7 @@ form_attributes: {})
     let(:provider_requested_total_cost_without_vat) { 100.0 }
 
     before do
-      allow(Claim).to receive(:find).and_return(claim)
+      allow(AppStoreService).to receive(:get).and_return(claim)
       allow(BaseViewModel).to receive(:build).and_return([disbursement])
       allow(Nsm::DisbursementsForm).to receive(:new).and_return(form)
     end

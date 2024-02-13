@@ -28,7 +28,7 @@ module Nsm
       process_field(value: time_spent.to_i, field: 'time_spent') if time_spent.present?
       process_field(value: new_uplift, field: 'uplift') if item.uplift?
 
-      AppStoreService.update(claim)
+      AppStoreService.adjust(claim, metadata)
 
       true
     end

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Nsm::MakeDecisionForm do
   subject { described_class.new(params) }
 
-  let(:claim) { create(:claim) }
+  let(:claim) { build(:claim) }
 
   describe '#validations' do
     context 'when state is not set' do
@@ -66,47 +66,30 @@ RSpec.describe Nsm::MakeDecisionForm do
   end
 
   describe '#persistance' do
-    let(:user) { instance_double(User) }
-    let(:claim) { create(:claim) }
+    let(:user) { instance_double(User, id: 'user-id') }
+    let(:claim) { build(:claim) }
     let(:params) { { claim: claim, state: 'part_grant', partial_comment: 'part comment', current_user: user } }
 
     before do
-      allow(Event::Decision).to receive(:build)
-      allow(NotifyAppStore).to receive(:process)
+      allow(MakeDecisionService).to receive(:process)
     end
 
     it { expect(subject.save).to be_truthy }
 
-    it 'updates the claim' do
-      subject.save
-      expect(claim.reload).to have_attributes(state: 'part_grant')
-    end
-
-    it 'creates a Decision event' do
-      subject.save
-      expect(Event::Decision).to have_received(:build).with(
-        submission: claim, comment: 'part comment', previous_state: 'submitted', current_user: user
-      )
-    end
-
     it 'trigger an update to the app store' do
       subject.save
-      expect(NotifyAppStore).to have_received(:process).with(submission: claim)
+      expect(MakeDecisionService).to have_received(:process).with(
+        submission: claim,
+        comment: 'part comment',
+        user_id: user.id,
+        application_state: 'part_grant'
+      )
     end
 
     context 'when not valid' do
       let(:params) { {} }
 
       it { expect(subject.save).to be_falsey }
-    end
-
-    context 'when error during save' do
-      before do
-        allow(Claim).to receive(:find_by).and_return(claim)
-        allow(claim).to receive(:update!).and_raise('not found')
-      end
-
-      it { expect { subject.save }.to raise_error('not found') }
     end
   end
 

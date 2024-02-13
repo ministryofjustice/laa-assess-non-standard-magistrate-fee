@@ -8,12 +8,11 @@ RSpec.describe BaseViewModel do
       json_schema_version: 1,
       data: data,
       attributes: { state: },
-      events: event,
+      events: [],
       is_a?: true,
       namespace: Nsm
     )
   end
-  let(:event) { Event }
   let(:state) { 'granted' }
 
   describe '#build' do
@@ -50,9 +49,7 @@ RSpec.describe BaseViewModel do
 
       context 'when adjustments exist' do
         let(:claim) do
-          create(:claim).tap do |claim|
-            create(:event, :edit_count, claim:)
-          end
+          build(:claim, events: [build(:event, :edit_count)])
         end
 
         it 'correctly applies adjustments' do

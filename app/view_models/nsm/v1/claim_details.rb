@@ -20,7 +20,7 @@ module Nsm
         I18n.t(".nsm.claim_details.#{key}.title")
       end
 
-      # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
+      # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       def data
         [
           {
@@ -37,11 +37,11 @@ module Nsm
           },
           {
             title: I18n.t(".nsm.claim_details.#{key}.supplemental_claim"),
-            value:  supplemental_claim&.capitalize
+            value:  supplemental_claim.capitalize
           },
           {
             title: I18n.t(".nsm.claim_details.#{key}.preparation_time"),
-            value:  preparation_time&.capitalize
+            value:  preparation_time.capitalize
           },
           (unless preparation_time == 'no'
              {
@@ -51,7 +51,7 @@ module Nsm
            end),
           {
             title: I18n.t(".nsm.claim_details.#{key}.work_before"),
-            value:  work_before&.capitalize
+            value:  work_before.capitalize
           },
           (unless work_before == 'no'
              {
@@ -61,7 +61,7 @@ module Nsm
            end),
           {
             title: I18n.t(".nsm.claim_details.#{key}.work_after"),
-            value:  work_after&.capitalize
+            value:  work_after.capitalize
           },
           (unless work_after == 'no'
              {
@@ -71,7 +71,7 @@ module Nsm
            end),
         ].compact
       end
-      # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
+      # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
       def rows
         { title:, data: }
