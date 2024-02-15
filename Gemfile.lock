@@ -208,6 +208,7 @@ GEM
     govuk_notify_rails (2.2.0)
       notifications-ruby-client (~> 5.1)
       rails (>= 4.1.0)
+    gserver (0.0.1)
     hashdiff (1.1.0)
     hashie (5.0.0)
     html-attributes-utils (1.0.2)
@@ -383,7 +384,7 @@ GEM
     rake (13.1.0)
     rdoc (6.6.2)
       psych (>= 4.0.0)
-    redis-client (0.19.1)
+    redis-client (0.20.0)
       connection_pool
     regexp_parser (2.9.0)
     reline (0.4.2)
@@ -474,10 +475,9 @@ GEM
       fugit (~> 1.8)
       globalid (>= 1.0.1)
       sidekiq (>= 6)
-    sidekiq_alive (2.3.1)
-      rack (< 3)
+    sidekiq_alive (2.4.0)
+      gserver (~> 0.0.1)
       sidekiq (>= 5, < 8)
-      webrick (>= 1, < 2)
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -602,7 +602,7 @@ DEPENDENCIES
   sentry-ruby
   sidekiq (~> 7.2)
   sidekiq-cron
-  sidekiq_alive (~> 2.3)
+  sidekiq_alive (~> 2.4)
   simplecov
   simplecov-lcov
   simplecov-rcov
