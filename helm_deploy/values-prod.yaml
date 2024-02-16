@@ -66,3 +66,7 @@ secrets:
 
 service_account:
   name: laa-assess-non-standard-magistrate-fee-prod-irsa
+
+# Instead of a temporary postgres pod we use RDS
+postgresql:
+  enabled: false
