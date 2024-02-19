@@ -358,10 +358,6 @@ workflows:
           context: laa-assess-non-standard-magistrates-fee-dev
           requires:
             - build-to-ecr
-          filters:
-            branches:
-              ignore:
-                - main
       - hold-uat:
           type: approval
           requires:
