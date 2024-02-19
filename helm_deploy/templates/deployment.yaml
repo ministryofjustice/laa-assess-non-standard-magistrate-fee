@@ -63,6 +63,8 @@ spec:
                   name: nsm-elasticache
                   key: auth_token
           {{ if .Values.postgresql.enabled }}
+            - name: DEBUG_POSTGRES
+              value: it_is_enabled
             - name: POSTGRES_USER
               value: {{ .Values.postgresql.postgresqlUsername }}
             - name: POSTGRES_PASSWORD
@@ -72,6 +74,8 @@ spec:
             - name: POSTGRES_DATABASE
               value: {{ .Values.postgresql.auth.database }}
           {{ else }}
+            - name: DEBUG_POSTGRES
+              value: it_is_not_enabled
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
