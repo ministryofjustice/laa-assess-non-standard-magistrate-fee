@@ -70,3 +70,7 @@ service_account:
 # Instead of a temporary postgres pod we use RDS
 postgresql:
   enabled: false
+
+# Instead of a temporary redis pod we use Elasticache
+redis:
+  enabled: false
