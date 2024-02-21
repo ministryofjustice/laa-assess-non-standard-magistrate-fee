@@ -292,14 +292,14 @@ jobs:
             --username AWS --password-stdin \
             ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
       - run:
-          name: Set ECR_TAG environment variable for use in next step
+          name: Set ECR_TAGS environment variable for use in next step
           command: |
-            [[ "$CIRCLE_BRANCH" == "main" ]] && ECR_TAG="main-$CIRCLE_SHA1" || ECR_TAG="branch-$CIRCLE_SHA1"
-            echo "export ECR_TAG=$ECR_TAG" >> "$BASH_ENV"
+            [[ "$CIRCLE_BRANCH" == "main" ]] && ECR_TAGS="main-$CIRCLE_SHA1,latest" || ECR_TAGS="branch-$CIRCLE_SHA1"
+            echo "export ECR_TAGS=$ECR_TAGS" >> "$BASH_ENV"
             source "$BASH_ENV"
       - aws-ecr/build-image:
           push-image: true
-          tag: $ECR_TAG
+          tag: $ECR_TAGS
           region: $ECR_REGION
           repo: $ECR_REPOSITORY
           extra-build-args: |
