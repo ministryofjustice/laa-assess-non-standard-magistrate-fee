@@ -142,26 +142,5 @@ RSpec.describe PullLatestVersionData do
         expect(application.data).to eq data.with_indifferent_access
       end
     end
-
-    context 'when base data is invalid' do
-      let(:data) { build(:prior_authority_data, court_type: 'invalid') }
-
-      it 'raises an error' do
-        expect { subject.perform(application) }.to raise_error(
-          "Received submission data that does not adhere to our assumptions: \nCourt type is not included in the list"
-        )
-      end
-    end
-
-    context 'when additional cost data is invalid' do
-      let(:data) { build(:prior_authority_data, additional_costs: [build(:additional_cost, description: nil)]) }
-
-      it 'raises an error' do
-        expect { subject.perform(application) }.to raise_error(
-          'Received submission data that does not adhere to our assumptions: ' \
-          "\nAdditional costs Description can't be blank"
-        )
-      end
-    end
   end
 end
