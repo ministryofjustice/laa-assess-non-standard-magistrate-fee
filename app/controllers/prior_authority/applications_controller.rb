@@ -7,5 +7,10 @@ module PriorAuthority
 
       @pagy, @applications = pagy_array(applications)
     end
+
+    def show
+      application = PriorAuthorityApplication.find(params[:id])
+      @summary = BaseViewModel.build(:application_summary, application)
+    end
   end
 end

@@ -6,8 +6,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters govuk-!-padding-right-0">
 
-    <%= render partial: 'prior_authority/shared/summary', locals: { application:, application_summary: } %>
-    <%= render partial: 'prior_authority/shared/sub_navigation', locals: { application: application, current_page: 'adjust_quote' } %>
+    <%= render 'prior_authority/shared/application_nav', application_summary:, current_page: 'adjust_quote' %>
 
     <% core_cost_summary.additional_costs.each_with_index do |additional_cost, index| %>
 
@@ -27,7 +26,7 @@
             table.with_body do |body|
               body.with_row do |row|
                 row.with_cell(text: t('.time'))
-                row.with_cell(text: format_period(additional_cost.time_spent))
+                row.with_cell(text: format_period(additional_cost.period))
               end
 
               body.with_row do |row|

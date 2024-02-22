@@ -3,16 +3,16 @@ module PriorAuthority
     LINKED_CLASS = V1::AdditionalCost
 
     attribute :id, :string
-    attribute :time_spent, :time_period
+    attribute :period, :time_period
     attribute :cost_per_hour, :float
 
-    validates :time_spent, allow_nil: true, time_period: true
+    validates :period, allow_nil: true, time_period: true
 
     def save
       return false unless valid?
 
       PriorAuthorityApplication.transaction do
-        process_field(value: time_spent.to_i, field: 'time_spent')
+        process_field(value: period.to_i, field: 'period')
 
         submission.save
       end
@@ -29,7 +29,7 @@ module PriorAuthority
     end
 
     def data_has_changed?
-      time_spent != item.time_spent || cost_per_hour != item.cost_per_hour
+      period != item.period || cost_per_hour != item.cost_per_hour
     end
   end
 end
