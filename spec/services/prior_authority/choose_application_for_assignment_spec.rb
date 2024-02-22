@@ -42,7 +42,7 @@ RSpec.describe PriorAuthority::ChooseApplicationForAssignment do
     let(:pathology_application) do
       create(:prior_authority_application,
              created_at: 1.day.ago,
-                    data: build(:prior_authority_data, service_type: 'pathologist'))
+                    data: build(:prior_authority_data, service_type: 'pathologist_report'))
     end
 
     let(:non_pathology_application) do
@@ -64,7 +64,7 @@ RSpec.describe PriorAuthority::ChooseApplicationForAssignment do
     let(:pathology_application) do
       create(:prior_authority_application,
              created_at: 1.day.ago,
-                    data: build(:prior_authority_data, service_type: 'pathologist'))
+                    data: build(:prior_authority_data, service_type: 'pathologist_report'))
     end
 
     let(:central_court_application) do
