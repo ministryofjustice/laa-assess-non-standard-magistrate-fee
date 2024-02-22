@@ -21,7 +21,7 @@ class Event < ApplicationRecord
 
   # Make these methods private to ensure tehy are created via the various `build` methods`
   class << self
-    private :new
+    protected :new
     private :create
 
     def rehydrate!(params)

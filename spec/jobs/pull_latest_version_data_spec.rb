@@ -59,14 +59,15 @@ RSpec.describe PullLatestVersionData do
           'details' => { 'to' => 'granted', 'from' => 'submitted', 'field' => 'state', 'comment' => nil },
           'created_at' => '2023-10-02T14:41:45.136Z',
           'updated_at' => '2023-10-02T14:41:45.136Z',
-          'public' => true
+          'public' => true,
+          'event_type' => 'Event::Edit'
         }]
       end
 
       it 'rehydrates the events' do
         subject.perform(claim)
         expect(Event.count).to eq(1)
-        expect(Event.last).to have_attributes(
+        expect(Event::Edit.last).to have_attributes(
           submission_id: claim.id,
           submission_version: 1,
           primary_user_id: user.id,
