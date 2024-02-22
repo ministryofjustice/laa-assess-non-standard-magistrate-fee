@@ -3,10 +3,13 @@ module PriorAuthority
     class << self
       def call(user)
         criminal_court = "CASE WHEN data->>'court_type' = 'central_criminal_court' THEN 0 ELSE 1 END as criminal_court"
-        pathologist = "CASE WHEN data->>'service_type' = 'pathologist' THEN 0 ELSE 1 END as pathologist"
+        pathologist_report = <<~SQL.squish
+          CASE WHEN data->>'service_type' = 'pathologist_report' THEN 0 ELSE 1 END as pathologist_report
+        SQL
+
         PriorAuthorityApplication.unassigned(user)
-                                 .select('submissions.*', criminal_court, pathologist)
-                                 .order(criminal_court: :asc, pathologist: :asc, created_at: :asc)
+                                 .select('submissions.*', criminal_court, pathologist_report)
+                                 .order(criminal_court: :asc, pathologist_report: :asc, created_at: :asc)
                                  .first
       end
     end

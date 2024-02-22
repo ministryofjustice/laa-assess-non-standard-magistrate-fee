@@ -4,7 +4,7 @@ module PriorAuthority
     include ActiveModel::Attributes
 
     COURT_TYPES = %w[central_criminal_court other].freeze
-    SERVICE_TYPES = %w[pathologist other].freeze
+    SERVICE_TYPES = %w[pathologist_report other].freeze
 
     attribute :laa_reference, :string
     attribute :firm_name, :string
