@@ -1,20 +1,28 @@
 module PriorAuthority
   module V1
     class AdditionalCost < BaseWithAdjustments
-      LINKED_TYPE = 'work_items'.freeze
+      LINKED_TYPE = 'additional_costs'.freeze
       ID_FIELDS = %w[id].freeze
 
       attribute :id, :string
-      attribute :time_spent, :time_period
-      attribute :cost_per_hour, :float
+      attribute :name, :string
       attribute :description, :string
+      attribute :unit_type, :string
+      attribute :items, :integer
+      attribute :cost_per_item, :decimal, precision: 10, scale: 2
+      attribute :period, :time_period
+      attribute :cost_per_hour, :decimal, precision: 10, scale: 2
 
       def total_cost
-        ((time_spent.hours * cost_per_hour) + ((time_spent.minutes / 60.0) * cost_per_hour)).round(2)
+        if unit_type == 'per_item'
+          items * cost_per_item
+        else
+          ((period.hours * cost_per_hour) + ((period.minutes / 60.0) * cost_per_hour)).round(2)
+        end
       end
 
       def form_attributes
-        attributes.slice('id', 'time_spent', 'cost_per_hour')
+        attributes.slice('id', 'period', 'cost_per_hour')
       end
     end
   end

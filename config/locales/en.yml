@@ -30,6 +30,8 @@ en:
   shared:
     save_changes: Save changes
     cancel: Cancel
+    true: 'Yes'
+    false: 'No'
     claim_button_group:
       make_decision: Make a decision
       send_back: Send back to provider

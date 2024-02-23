@@ -1,0 +1,40 @@
+<span class="govuk-caption-xl"><%= application_summary.firm_name %></span>
+<h1 class="govuk-heading-xl"><%= application_summary.laa_reference %></h1>
+<p>
+  <span class="govuk-body-l">
+    <strong><%= t('.requested') %></strong>
+    <%= application_summary.formatted_total_cost %><br>
+  </span>
+</p>
+<p class="govuk-body-m">
+  <strong><%= t('.service') %> </strong>
+  <%= application_summary.service_name %>
+  <% if application_summary.rep_order_date %>
+    <br>
+    <strong><%= t('.rep_order_date') %></strong>
+    <%= application_summary.rep_order_date_str %>
+  <% end %>
+</p>
+<p>
+  <span class="govuk-body-m">
+    <strong><%= t('.date_received') %>
+    </strong> <%= application_summary.date_created_str %>
+  </span>
+</p>
+<%= govuk_button_link_to t('.remove_from_list'), '#', secondary: true %>
+<nav class="moj-sub-navigation" aria-label="Sub navigation" id="application_nav">
+  <ul class="moj-sub-navigation__list">
+    <li class="moj-sub-navigation__item">
+      <%= link_to t('.overview'), prior_authority_application_path(application_summary.id), class: 'moj-sub-navigation__link', 'aria-current': (current_page == 'overview' ? "page" : nil) %>
+    </li>
+    <li class="moj-sub-navigation__item">
+      <%= link_to t('.adjust_quote'), '#', class: 'moj-sub-navigation__link', 'aria-current': (current_page == 'adjust_quote' ? "page" : nil) %>
+    </li>
+    <li class="moj-sub-navigation__item">
+      <%= link_to t('.related_applications'), '#', class: 'moj-sub-navigation__link', 'aria-current': (current_page == 'related_applications' ? "page" : nil) %>
+    </li>
+    <li class="moj-sub-navigation__item">
+      <%= link_to t('.application_history'), '#', class: 'moj-sub-navigation__link', 'aria-current': (current_page == 'application_history' ? "page" : nil) %>
+    </li>
+  </ul>
+</nav>

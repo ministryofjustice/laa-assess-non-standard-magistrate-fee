@@ -5,7 +5,7 @@
 <h1 class="govuk-heading-xl"><%= t('.page_title', n: index + 1) %></h1>
 <%= form_with model: form, url: prior_authority_application_additional_cost_path(submission.id, item.id), method: :patch do |f| %>
   <%= govuk_error_summary(form) %>
-  <%= f.govuk_period_field :time_spent, legend: { size: 's', class: 'govuk-!-font-weight-bold' }, width: 'one-third' %>
+  <%= f.govuk_period_field :period, legend: { size: 's', class: 'govuk-!-font-weight-bold' }, width: 'one-third' %>
    <%= f.govuk_text_area :explanation, label: { size: 's' }, rows: 5 %>
   <%= f.govuk_submit t('shared.save_changes') do %>
     <%= link_to t('shared.cancel'), prior_authority_application_adjustments_path(submission), class: 'govuk-link', data: { turbo: 'false' } %>
