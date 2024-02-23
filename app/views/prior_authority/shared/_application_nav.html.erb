@@ -6,15 +6,14 @@
     <%= application_summary.formatted_total_cost %><br>
   </span>
 </p>
-<p>
-  <span class="govuk-body-m">
-    <strong><%= t('.service') %> </strong>
-    <% if application_summary.service_type == 'custom' %>
-      <%= application_summary.custom_service_name %>
-    <% else %>
-      <%= t("prior_authority.service_types.#{application_summary.service_type}") %>
-    <% end %>
-  </span>
+<p class="govuk-body-m">
+  <strong><%= t('.service') %> </strong>
+  <%= application_summary.service_name %>
+  <% if application_summary.rep_order_date %>
+    <br>
+    <strong><%= t('.rep_order_date') %></strong>
+    <%= application_summary.rep_order_date_str %>
+  <% end %>
 </p>
 <p>
   <span class="govuk-body-m">
@@ -22,6 +21,7 @@
     </strong> <%= application_summary.date_created_str %>
   </span>
 </p>
+<%= govuk_button_link_to t('.remove_from_list'), '#', secondary: true %>
 <nav class="moj-sub-navigation" aria-label="Sub navigation" id="application_nav">
   <ul class="moj-sub-navigation__list">
     <li class="moj-sub-navigation__item">

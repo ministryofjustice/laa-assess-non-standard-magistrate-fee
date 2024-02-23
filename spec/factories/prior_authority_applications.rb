@@ -22,7 +22,8 @@ FactoryBot.define do
     end
     additional_costs { [] }
     service_type { 'pathologist_report' }
-    court_type { 'other' }
+    court_type { 'crown_court' }
+    rep_order_date { '2023-01-02' }
     quotes { [build(:primary_quote)] }
   end
 
