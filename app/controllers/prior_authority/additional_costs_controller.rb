@@ -35,7 +35,7 @@ module PriorAuthority
 
     def form_params
       params.require(:prior_authority_additional_cost_form).permit(
-        :time_spent,
+        :period,
         :explanation,
       ).merge(
         current_user: current_user,

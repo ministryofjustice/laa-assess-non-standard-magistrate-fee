@@ -5,9 +5,12 @@ en:
     open_applications: Open applications
     assessed_applications: Assessed applications
     shared:
-      summary:
+      application_nav:
+        requested: 'Requested:'
+        service: 'Service:'
+        rep_order_date: 'Representation order date:'
         date_received: 'Date received:'
-      sub_navigation:
+        remove_from_list: Remove from list
         overview: Overview
         adjust_quote: Adjust quote
         related_applications: Related applications
@@ -20,17 +23,6 @@ en:
         content_line_3_html: If you do not have access, you should continue using %{link}.
         eforms: eForms
         start: Start now
-    applications:
-      your:
-        table_info_item: 'application'
-        page_title: 'Your applications'
-        table_heading: 'Your applications'
-        laa_reference: LAA reference
-        firm_name: Firm name
-        client_name: Client name
-        date_received: Date received
-        no_applications: 'You have no applications assigned to you for assessment'
-        next_application: 'Assess next application'
     adjustments:
       index:
         page_title: Adjustments
@@ -51,13 +43,13 @@ en:
   helpers:
     legend:
       prior_authority_additional_cost_form:
-        time_spent: Change time spent (optional)
+        period: Change time spent (optional)
   activemodel:
     errors:
       models:
         prior_authority/additional_cost_form:
           attributes:
-            time_spent:
+            period:
               blank_minutes: Enter number of minutes
               blank_hours: Enter number of hours
               positive_minutes: Number of minutes must be 0 or more

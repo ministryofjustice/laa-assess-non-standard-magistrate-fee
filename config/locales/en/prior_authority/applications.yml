@@ -1,0 +1,23 @@
+en:
+  prior_authority:
+    applications:
+      your:
+        table_info_item: 'application'
+        page_title: 'Your applications'
+        table_heading: 'Your applications'
+        laa_reference: LAA reference
+        firm_name: Firm name
+        client_name: Client name
+        date_received: Date received
+        no_applications: 'You have no applications assigned to you for assessment'
+        next_application: 'Assess next application'
+      show:
+        page_title: Application details
+        overview: Overview
+        application_details: Application details
+        about_the_request: About the request
+        primary_quote: Primary quote
+    application_details:
+      laa_reference: LAA reference
+      ufn: Unique file number
+      prison_law_string: Prison Law
