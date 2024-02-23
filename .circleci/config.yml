@@ -278,7 +278,7 @@ jobs:
           docker-image-name: app
           target-file: ./Dockerfile
           organization: 'legal-aid-agency'
-          project: ministryofjustice/laa-assess-non-magistrate-fee
+          project: ministryofjustice/laa-assess-crime-forms
           severity-threshold: "high"
           fail-on-issues: true
 
@@ -357,9 +357,9 @@ workflows:
   build-push-branch:
     jobs:
       - build-to-ecr:
-          context: laa-assess-non-standard-magistrates-fee-dev
+          context: laa-assess-crime-forms-dev
       - deploy-dev:
-          context: laa-assess-non-standard-magistrates-fee-dev
+          context: laa-assess-crime-forms-dev
           requires:
             - build-to-ecr
       - hold-uat:
@@ -371,7 +371,7 @@ workflows:
               only:
                 - main
       - deploy-uat:
-          context: laa-assess-non-standard-magistrates-fee-uat
+          context: laa-assess-crime-forms-uat
           requires:
             - hold-uat
       - hold-prod:
@@ -383,6 +383,6 @@ workflows:
               only:
                 - main
       - deploy-prod:
-          context: laa-assess-non-standard-magistrates-fee-prod
+          context: laa-assess-crime-forms-prod
           requires:
             - hold-prod
