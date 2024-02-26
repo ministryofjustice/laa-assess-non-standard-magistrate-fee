@@ -11,6 +11,8 @@ FactoryBot.define do
   factory :prior_authority_data, class: Hash do
     initialize_with { attributes }
     laa_reference { 'LAA-123456' }
+    item_type { 'item' }
+    prison_law { false }
     firm_office do
       { 'name' => 'LegalCo' }
     end
@@ -18,12 +20,20 @@ FactoryBot.define do
       {
         'first_name' => 'Joe',
         'last_name' => 'Bloggs',
+        'date_of_birth' => '1950-01-01'
       }
     end
     additional_costs { [] }
+    solicitor do
+      {
+        'contact_full_name' => 'Jane Doe',
+        'contact_email' => 'jane@doe.com'
+      }
+    end
     service_type { 'pathologist_report' }
     court_type { 'crown_court' }
     rep_order_date { '2023-01-02' }
+    next_hearing_date { '2025-01-01' }
     quotes { [build(:primary_quote)] }
   end
 
@@ -56,6 +66,33 @@ FactoryBot.define do
     organisation { 'ABC' }
     postcode { 'SW1 1AA' }
     primary { true }
+    ordered_by_court { nil }
+    related_to_post_mortem { nil }
+    document do
+      {
+        'file_name' => 'test.pdf',
+        'file_path' => 'https://www.example.com/test.pdf'
+      }
+    end
+  end
+
+  factory :alternative_quote, class: Hash do
+    initialize_with { attributes }
+    id { SecureRandom.uuid }
+    cost_type { 'per_hour' }
+    cost_per_hour { '3.5' }
+    cost_per_item { nil }
+    items { nil }
+    period { 180 }
+    travel_time { 180 }
+    travel_cost_per_hour { '100.0' }
+    travel_cost_reason { nil }
+    additional_cost_list { "Foo\nBar" }
+    additional_cost_total { 100.0 }
+    contact_full_name { 'ABC DEF' }
+    organisation { 'ABC' }
+    postcode { 'SW1 1AA' }
+    primary { false }
     ordered_by_court { nil }
     related_to_post_mortem { nil }
     document { nil }

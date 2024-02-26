@@ -8,8 +8,9 @@ module PriorAuthority
       attribute :defendant
       attribute :service_type, :string
       attribute :custom_service_name, :string
-      attribute :submission
       attribute :rep_order_date, :date
+      attribute :item_type, :string
+      attribute :submission
 
       delegate :id, to: :submission
 
@@ -38,7 +39,10 @@ module PriorAuthority
       end
 
       def primary_quote
-        @primary_quote ||= Quote.new(quotes.find { _1['primary'] }.merge(additional_cost_json: additional_costs))
+        @primary_quote ||= Quote.new(quotes.find { _1['primary'] }.merge(
+                                       additional_cost_json: additional_costs,
+                                       item_type: item_type
+                                     ))
       end
 
       def formatted_total_cost

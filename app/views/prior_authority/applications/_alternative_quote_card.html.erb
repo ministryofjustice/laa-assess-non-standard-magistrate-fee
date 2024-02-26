@@ -1,0 +1,5 @@
+<%= govuk_summary_card(title: t('.alternative_quote_with_n', n:)) do |card| %>
+  <%= govuk_summary_list(rows: model.card_rows, classes: 'govuk-!-margin-bottom-6') %>
+  <%= govuk_table(head: [t('.cost_type'), t('.alternative_quote'), t('.primary_quote')],
+                  rows: model.table_rows) %>
+<% end %>

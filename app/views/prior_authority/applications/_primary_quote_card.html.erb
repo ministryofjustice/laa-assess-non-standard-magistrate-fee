@@ -1,0 +1,9 @@
+<%= govuk_summary_card(title: t('.primary_quote')) do |card| %>
+  <%= govuk_summary_list(rows: model.card_rows, classes: 'govuk-!-margin-bottom-6') %>
+  <%= govuk_table(head: [t('.cost_type'), t('.amount'), t('.requested'), t('.total')],
+                  rows: model.table_rows,) %>
+
+  <p>
+    <%= link_to t('.adjust'), '#TODO: CRM457-1115' %>
+  </p>
+<% end %>

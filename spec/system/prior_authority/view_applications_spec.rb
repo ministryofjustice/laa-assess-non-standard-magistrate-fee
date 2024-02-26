@@ -23,15 +23,17 @@ RSpec.describe 'View applications' do
           items: 2,
           cost_per_item: '35.0'
         ),
-        quotes: build_list(
-          :primary_quote,
-          1,
-          cost_type: 'per_hour',
-          period: 180,
-          cost_per_hour: '3.50',
-          travel_time: nil,
-          travel_cost_per_hour: nil
-        )
+        quotes: [
+          build(
+            :primary_quote,
+            cost_type: 'per_hour',
+            period: 180,
+            cost_per_hour: '3.50',
+            travel_time: nil,
+            travel_cost_per_hour: nil
+          ),
+          build(:alternative_quote)
+        ]
       )
     )
     create(:assignment,
