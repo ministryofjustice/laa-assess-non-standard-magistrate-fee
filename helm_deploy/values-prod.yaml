@@ -67,6 +67,14 @@ secrets:
 service_account:
   name: laa-assess-non-standard-magistrate-fee-prod-irsa
 
+securityContext:
+  runAsNonRoot: true
+  allowPrivilegeEscalation: false
+  seccompProfile:
+    type: RuntimeDefault
+  capabilities:
+    drop: [ "ALL" ]
+
 # Instead of a temporary postgres pod we use RDS
 postgresql:
   enabled: false
