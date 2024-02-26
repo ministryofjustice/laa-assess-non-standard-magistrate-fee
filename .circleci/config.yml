@@ -182,7 +182,7 @@ commands:
             command: |
               tmp/cc-test-reporter sum-coverage --output - tmp/coverage/codeclimate.*.json | tmp/cc-test-reporter upload-coverage --input -
 
-  build-docker-image:
+  build-docker-image-for-scan:
       steps:
         - run:
             name: Build docker image for app
@@ -272,7 +272,7 @@ jobs:
       - checkout
       - setup_remote_docker:
           docker_layer_caching: true
-      - build-docker-image
+      - build-docker-image-for-scan
       - snyk/scan:
           token-variable: SNYK_TOKEN
           docker-image-name: app
@@ -334,7 +334,8 @@ jobs:
 # WORKFLOWS
 # ------------------
 workflows:
-  test:
+  version: 2
+  test-opened-pr:
     jobs:
       - build-test-container:
           filters:
@@ -354,10 +355,40 @@ workflows:
           requires:
             - upload-test-coverage
 
-  build-push-branch:
+  build-opened-pr:
     jobs:
       - build-to-ecr:
           context: laa-assess-crime-forms-dev
+          filters:
+            branches:
+              ignore:
+                - main
+      - deploy-dev:
+          context: laa-assess-crime-forms-dev
+          requires:
+            - build-to-ecr
+
+  test-build-deploy-merged-pr:
+    jobs:
+      - build-test-container:
+          filters:
+            branches:
+              only:
+                - main
+      - linter-tests:
+          requires:
+            - build-test-container
+      - rspec-tests:
+          requires:
+            - build-test-container
+      - upload-test-coverage:
+          requires:
+            - rspec-tests
+      - build-to-ecr:
+          context: laa-assess-crime-forms-dev
+          requires:
+            - linter-tests
+            - rspec-tests
       - deploy-dev:
           context: laa-assess-crime-forms-dev
           requires:
