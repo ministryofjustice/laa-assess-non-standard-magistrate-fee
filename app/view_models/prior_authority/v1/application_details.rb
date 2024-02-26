@@ -30,12 +30,8 @@ module PriorAuthority
         ReasonWhyCard.new(self)
       end
 
-      def alternative_quotes
-        quotes.reject { _1['primary'] }.map { Quote.new(_1.merge(item_type:)) }
-      end
-
-      def alternative_quote_card(alternative_quote)
-        AlternativeQuoteCard.new(self, alternative_quote)
+      def alternative_quote_cards
+        quotes.reject { _1['primary'] }.map { AlternativeQuoteCard.new(self, Quote.new(_1.merge(item_type:))) }
       end
 
       def client_details_card

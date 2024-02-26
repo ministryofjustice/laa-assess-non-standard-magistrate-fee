@@ -14,8 +14,8 @@
     <h2 class="govuk-heading-m"><%= t('.about_the_request') %></h2>
     <%= render 'primary_quote_card', model: @details.primary_quote_card %>
     <%= render 'reason_why_card', model: @details.reason_why_card %>
-    <% @details.alternative_quotes.each_with_index do |alternative_quote, index| %>
-      <%= render 'alternative_quote_card', model: @details.alternative_quote_card(alternative_quote), n: index + 1 %>
+    <% @details.alternative_quote_cards.each_with_index do |alternative_quote_card, index| %>
+      <%= render 'alternative_quote_card', model: alternative_quote_card, n: index + 1 %>
     <% end %>
 
     <h2 class="govuk-heading-m"><%= t('.about_the_case') %></h2>

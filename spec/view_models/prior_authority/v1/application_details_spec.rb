@@ -77,15 +77,14 @@ RSpec.describe PriorAuthority::V1::ApplicationDetails do
       {
         service_type: 'accident_reconstruction',
         prior_authority_granted: true,
-        quotes: [primary_quote.with_indifferent_access],
+        quotes: [primary_quote.with_indifferent_access, alternative_quote.with_indifferent_access],
         additional_costs: primary_quote_additional_costs,
       }
     end
     let(:primary_quote_additional_costs) { build_list(:additional_cost, 1).map(&:with_indifferent_access) }
     let(:primary_quote) { build(:primary_quote) }
     let(:additional_cost_list) { "Foo\nBar" }
-    let(:quote) { PriorAuthority::V1::Quote.new(alternative_quote_payload) }
-    let(:alternative_quote_payload) do
+    let(:alternative_quote) do
       build(:alternative_quote, additional_cost_list:).merge(item_type: 'item')
     end
     let(:expected_rows) do
@@ -97,25 +96,25 @@ RSpec.describe PriorAuthority::V1::ApplicationDetails do
     end
     let(:additional_cost_description) { 'Foo<br>Bar<br>' }
 
-    it { expect(subject.alternative_quote_card(quote).card_rows).to eq(expected_rows) }
+    it { expect(subject.alternative_quote_cards.first.card_rows).to eq(expected_rows) }
 
     context 'when there are no additional costs' do
       let(:additional_cost_list) { nil }
       let(:additional_cost_description) { 'None' }
 
-      it { expect(subject.alternative_quote_card(quote).card_rows).to eq(expected_rows) }
+      it { expect(subject.alternative_quote_cards.first.card_rows).to eq(expected_rows) }
     end
 
     describe '#table_rows' do
       let(:primary_quote) { build(:primary_quote, travel_cost_per_hour: 0) }
-      let(:alternative_quote_payload) { build(:alternative_quote, travel_cost_per_hour: 0, additional_cost_total: 0) }
+      let(:alternative_quote) { build(:alternative_quote, travel_cost_per_hour: 0, additional_cost_total: 0) }
       let(:primary_quote_additional_costs) { [] }
       let(:expected_table_rows) do
         [['Service', '£10.50', '£24.50'],
          ['<strong>Total cost</strong>', '<strong>£10.50</strong>', '<strong>£24.50</strong>']]
       end
 
-      it { expect(subject.alternative_quote_card(quote).table_rows).to eq(expected_table_rows) }
+      it { expect(subject.alternative_quote_cards.first.table_rows).to eq(expected_table_rows) }
     end
   end
 
