@@ -45,5 +45,7 @@ RSpec.describe 'View applications' do
     click_on 'LAA-1234'
     expect(page).to have_current_path prior_authority_application_path(application)
     expect(page).to have_content 'Requested: £80.50'
+    click_on 'test.pdf'
+    expect(page).to have_current_path(%r{/123123123\?response-content-disposition=attachment%3B%20filename%3Dtest\.pdf})
   end
 end

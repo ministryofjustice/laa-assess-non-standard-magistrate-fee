@@ -32,7 +32,7 @@ RSpec.describe PriorAuthority::V1::ApplicationDetails do
        { key: { text: 'Service details' },
         value: { text: 'ABC DEF<br>ABC, SW1 1AA' } },
        { key: { text: 'Quote upload' },
-        value:          { text: '<a href="https://www.example.com/test.pdf">test.pdf</a>' } },
+        value:          { text: '<a href="/prior_authority/downloads/123123123?file_name=test.pdf">test.pdf</a>' } },
        { key: { text: 'Existing prior authority granted' }, value: { text: 'Yes' } }]
     end
 
@@ -48,7 +48,7 @@ RSpec.describe PriorAuthority::V1::ApplicationDetails do
          { key: { text: 'Service details' },
            value: { text: 'ABC DEF<br>ABC, SW1 1AA' } },
          { key: { text: 'Quote upload' },
-           value:          { text: '<a href="https://www.example.com/test.pdf">test.pdf</a>' } },
+           value:          { text: '<a href="/prior_authority/downloads/123123123?file_name=test.pdf">test.pdf</a>' } },
          { key: { text: 'Ordered by court' }, value: { text: 'Yes' } },
          { key: { text: 'Post-mortem' }, value: { text: 'No' } },
          { key: { text: 'Existing prior authority granted' }, value: { text: 'Yes' } }]
@@ -66,7 +66,7 @@ RSpec.describe PriorAuthority::V1::ApplicationDetails do
       [{ key: { text: 'Why prior authority is required' },
          value: { text: 'because' } },
        { key: { text: 'Supporting documents' },
-        value: { text: '<a href="B">A</a><br>' } }]
+        value: { text: '<a href="/prior_authority/downloads/B?file_name=A">A</a><br>' } }]
     end
 
     it { expect(subject.reason_why_card.card_rows).to eq(expected_rows) }

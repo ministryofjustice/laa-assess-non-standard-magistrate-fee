@@ -55,7 +55,9 @@ module PriorAuthority
         def quote_upload
           return I18n.t('prior_authority.application_details.none') if quote.uploaded_document.file_path.blank?
 
-          link_to(quote.uploaded_document.file_name, quote.uploaded_document.file_path)
+          link_to(quote.uploaded_document.file_name,
+                  url_helpers.prior_authority_download_path(quote.uploaded_document.file_path,
+                                                            file_name: quote.uploaded_document.file_name))
         end
 
         def ordered_by_court

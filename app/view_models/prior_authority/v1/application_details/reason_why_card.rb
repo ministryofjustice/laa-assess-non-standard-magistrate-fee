@@ -17,7 +17,8 @@ module PriorAuthority
         def document_link(supporting_document_json)
           link_to(
             supporting_document_json['file_name'],
-            supporting_document_json['file_path']
+            url_helpers.prior_authority_download_path(supporting_document_json['file_path'],
+                                                      file_name: supporting_document_json['file_name'])
           )
         end
       end

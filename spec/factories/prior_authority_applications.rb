@@ -71,7 +71,7 @@ FactoryBot.define do
     document do
       {
         'file_name' => 'test.pdf',
-        'file_path' => 'https://www.example.com/test.pdf'
+        'file_path' => '123123123'
       }
     end
   end

@@ -36,6 +36,8 @@ en:
         cost_type: Cost type
         alternative_quote: Alternative quote
         primary_quote: Primary quote
+      no_alternative_quotes_card:
+        alternative_quotes: Alternative quotes
       client_details_card:
         client_details: Client details
       case_details_card:
@@ -95,4 +97,5 @@ en:
       youth_court_string: Youth court matter
       case_contact: Case contact
       firm_details: Firm details
+      no_alternative_quote_reason: Reason for no alternative quotes
 

@@ -17,6 +17,7 @@ module PriorAuthority
       attribute :psychiatric_liaison, :boolean
       attribute :psychiatric_liaison_reason_not, :string
       attribute :youth_court, :boolean
+      attribute :no_alternative_quote_reason, :string
 
       def overview_card
         OverviewCard.new(self)
@@ -31,7 +32,12 @@ module PriorAuthority
       end
 
       def alternative_quote_cards
-        quotes.reject { _1['primary'] }.map { AlternativeQuoteCard.new(self, Quote.new(_1)) }
+        alternatives = quotes.reject { _1['primary'] }
+        if alternatives.any?
+          alternatives.map { AlternativeQuoteCard.new(self, Quote.new(_1)) }
+        else
+          [NoAlternativeQuotesCard.new(self)]
+        end
       end
 
       def client_details_card
