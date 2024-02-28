@@ -62,6 +62,8 @@ module LaaAssessNonStandardMagistrateFee
 
     config.active_model.i18n_customize_full_message = true
 
+    config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets")
+
     config.x.contact.support_email = 'CRM457@digital.justice.gov.uk'
     config.x.application.name = 'Assess a non-standard magistrates\' court payment'
     config.x.analytics.cookies_consent_name = 'cookies_preferences_set'

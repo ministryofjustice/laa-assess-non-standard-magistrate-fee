@@ -1,6 +1,5 @@
-// Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
 import "@hotwired/turbo-rails"
-import "controllers"
+import "./controllers"
 import "./component/sortable_table"
 import "./component/letters_calls_adjustment"
 import "./component/work_item_adjustment"
