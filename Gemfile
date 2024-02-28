@@ -52,6 +52,7 @@ group :test do
   gem 'capybara'
   gem 'capybara-selenium'
   gem 'factory_bot_rails'
+  gem 'launchy'
   gem 'rails-controller-testing'
   gem 'rspec-html-matchers'
   gem 'rubocop', require: false
