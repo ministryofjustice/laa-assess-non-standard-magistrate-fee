@@ -26,14 +26,8 @@ en:
     adjustments:
       index:
         page_title: Adjustments
-        additional_cost: Additional cost %{n}
-        cost_description: "Cost description: \"%{description}\""
-        details: Details
-        requested: Requested
-        time: Time
-        cost: Cost
-        total: Total
-        adjust_additional_cost: Adjust additional cost
+        make_a_decision: Make a decision
+        save_and_exit: Save and exit
     additional_costs:
       edit:
         page_title: Adjust additional cost %{n}

@@ -1,0 +1,41 @@
+<h2 class="govuk-heading-m"><%= t('.travel_cost') %></h2>
+
+<% quote = application_summary.primary_quote %>
+
+<% if quote.travel_cost_reason %>
+  <p class="govuk-text"><%= t(".cost_description", description: quote.travel_cost_reason) %></p>
+<% end %>
+
+<%= govuk_table do |table|
+      table.with_head do |head|
+        head.with_row do |row|
+          row.with_cell(text: t('.details'))
+          row.with_cell(text: t('.requested'))
+          row.with_cell(text: t('.adjusted'))
+        end
+      end
+
+      table.with_body do |body|
+        body.with_row do |row|
+          row.with_cell(text: t('.time'))
+          row.with_cell(text: quote.travel_units)
+          row.with_cell(text: '') # TODO: CRM457-1114
+        end
+
+        body.with_row do |row|
+          row.with_cell(text: t('.cost'))
+          row.with_cell(text: quote.formatted_travel_cost_per_unit)
+          row.with_cell(text: '') # TODO: CRM457-1114
+        end
+
+        body.with_row do |row|
+          row.with_cell(text: t('.total'))
+          row.with_cell(text: quote.formatted_travel_cost)
+          row.with_cell(text: '') # TODO: CRM457-1114
+        end
+      end
+    end %>
+<%= link_to t(".adjust_travel_cost"),
+            '#', # TODO: edit_prior_authority_application_service_cost_path(application, quote.id),
+            class: 'govuk-button govuk-button--secondary' %>
+

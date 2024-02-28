@@ -29,6 +29,10 @@ module PriorAuthority
         attributes.slice('id', 'period', 'cost_per_hour')
       end
 
+      def unit_label
+        I18n.t(unit_type, scope: 'prior_authority.application_details.items.unit_description')
+      end
+
       def unit_description
         if unit_type == 'per_item'
           "#{items} #{I18n.t('prior_authority.application_details.items.item').pluralize(items)}"
@@ -37,8 +41,12 @@ module PriorAuthority
         end
       end
 
-      def cost_per_unit_description
+      def cost_per_unit
         NumberTo.pounds(unit_type == 'per_item' ? cost_per_item : cost_per_hour)
+      end
+
+      def formatted_cost_per_unit
+        I18n.t(unit_type, gbp: cost_per_unit, scope: 'prior_authority.application_details.items.per_unit_descriptions')
       end
     end
   end
