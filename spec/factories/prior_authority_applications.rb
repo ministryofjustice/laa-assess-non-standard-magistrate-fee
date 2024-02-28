@@ -11,7 +11,6 @@ FactoryBot.define do
   factory :prior_authority_data, class: Hash do
     initialize_with { attributes }
     laa_reference { 'LAA-123456' }
-    item_type { 'item' }
     prison_law { false }
     firm_office do
       { 'name' => 'LegalCo' }
@@ -56,6 +55,7 @@ FactoryBot.define do
     cost_per_hour { nil }
     cost_per_item { '3.5' }
     items { 7 }
+    item_type { 'page' }
     period { nil }
     travel_time { 180 }
     travel_cost_per_hour { '100.0' }

@@ -31,7 +31,7 @@ module PriorAuthority
       end
 
       def alternative_quote_cards
-        quotes.reject { _1['primary'] }.map { AlternativeQuoteCard.new(self, Quote.new(_1.merge(item_type:))) }
+        quotes.reject { _1['primary'] }.map { AlternativeQuoteCard.new(self, Quote.new(_1)) }
       end
 
       def client_details_card

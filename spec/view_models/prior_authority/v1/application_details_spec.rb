@@ -84,9 +84,7 @@ RSpec.describe PriorAuthority::V1::ApplicationDetails do
     let(:primary_quote_additional_costs) { build_list(:additional_cost, 1).map(&:with_indifferent_access) }
     let(:primary_quote) { build(:primary_quote) }
     let(:additional_cost_list) { "Foo\nBar" }
-    let(:alternative_quote) do
-      build(:alternative_quote, additional_cost_list:).merge(item_type: 'item')
-    end
+    let(:alternative_quote) { build(:alternative_quote, additional_cost_list:) }
     let(:expected_rows) do
       [{ key: { text: 'Service details' },
         value: { text: 'ABC DEF<br>ABC, SW1 1AA' } },
