@@ -124,3 +124,8 @@ This will run everything except for the accessibility tests, which are slow, and
 To run those, run `INCLUDE_ACCESSIBILITY_SPECS=1 bundle exec rspec`.
 Our test suite will report as failing if line and branch coverage is not at 100%.
 We expect every feature's happy path to have a system test, and every screen to have an accessibility test.
+
+
+**8. Development end-to-end setup**
+
+see [Development e2e setup](https://github.com/ministryofjustice/laa-submit-crime-forms/blob/main/docs/development-e2e-setup.md)
