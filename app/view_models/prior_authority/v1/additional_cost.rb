@@ -21,8 +21,24 @@ module PriorAuthority
         end
       end
 
+      def formatted_total_cost
+        NumberTo.pounds(total_cost)
+      end
+
       def form_attributes
         attributes.slice('id', 'period', 'cost_per_hour')
+      end
+
+      def unit_description
+        if unit_type == 'per_item'
+          "#{items} #{I18n.t('prior_authority.application_details.items.item').pluralize(items)}"
+        else
+          format_period(period)
+        end
+      end
+
+      def cost_per_unit_description
+        NumberTo.pounds(unit_type == 'per_item' ? cost_per_item : cost_per_hour)
       end
     end
   end

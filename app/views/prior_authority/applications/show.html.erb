@@ -8,13 +8,33 @@
     <%= render 'prior_authority/shared/application_nav', application_summary: @summary, current_page: 'overview' %>
   </div>
   <div class="govuk-grid-column-two-thirds">
-
     <h2 class="govuk-heading-m"><%= t('.overview') %></h2>
-    <%= govuk_summary_card(title: t('.application_details')) { _1.with_summary_list(rows: @details.overview) } %>
+    <%= render 'overview_card', model: @details.overview_card %>
 
     <h2 class="govuk-heading-m"><%= t('.about_the_request') %></h2>
-    <%= govuk_summary_card(title: t('.primary_quote')) do |card| %>
-      <%= govuk_summary_list(rows: @details.primary_quote_rows) %>
+    <%= render 'primary_quote_card', model: @details.primary_quote_card %>
+    <%= render 'reason_why_card', model: @details.reason_why_card %>
+    <% @details.alternative_quote_cards.each_with_index do |alternative_quote_card, index| %>
+      <%= render alternative_quote_card.class.name.split('::').last.underscore, model: alternative_quote_card, n: index + 1 %>
     <% end %>
+
+    <h2 class="govuk-heading-m"><%= t('.about_the_case') %></h2>
+    <%= render 'client_details_card', model: @details.client_details_card %>
+    <% if @details.prison_law %>
+      <%= render 'next_hearing_card', model: @details.next_hearing_card %>
+    <% else %>
+      <%= render 'case_details_card', model: @details.case_details_card %>
+      <%= render 'hearing_details_card', model: @details.hearing_details_card %>
+    <% end %>
+
+    <h2 class="govuk-heading-m"><%= t('.contact_details') %></h2>
+    <%= render 'case_contact_card', model: @details.case_contact_card %>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible govuk-!-margin-top-9">
+    <div class="govuk-button-group">
+      <%= govuk_button_link_to(t('.make_a_decision'), '#') %>
+      <%= govuk_button_link_to(t('.send_back'), '#', secondary: true) %>
+      <%= govuk_button_link_to(t('.come_back_later'), your_prior_authority_applications_path, secondary: true) %>
+    </div>
   </div>
 </div>

@@ -14,10 +14,88 @@ en:
       show:
         page_title: Application details
         overview: Overview
-        application_details: Application details
         about_the_request: About the request
+        about_the_case: About the case
+        contact_details: Contact details
+        make_a_decision: Make a decision
+        send_back: Send back to provider
+        come_back_later: Save and come back later
+      overview_card:
+        application_details: Application details
+      primary_quote_card:
         primary_quote: Primary quote
+        cost_type: Cost type
+        amount: Amount
+        requested: Requested
+        total: Total
+        adjust: Adjust quote figures
+      reason_why_card:
+        reason_for_prior_authority: Reason for prior authority
+      alternative_quote_card:
+        alternative_quote_with_n: Alternative quote %{n}
+        cost_type: Cost type
+        alternative_quote: Alternative quote
+        primary_quote: Primary quote
+      no_alternative_quotes_card:
+        alternative_quotes: Alternative quotes
+      client_details_card:
+        client_details: Client details
+      case_details_card:
+        case_details: Case details
+      hearing_details_card:
+        hearing_details: Hearing details
+      next_hearing_card:
+        next_hearing: Next hearing
+      case_contact_card:
+        case_contact: Case contact
     application_details:
       laa_reference: LAA reference
       ufn: Unique file number
       prison_law_string: Prison Law
+      service_name: Service required
+      service_details: Service details
+      quote_upload: Quote upload
+      ordered_by_court: Ordered by court
+      related_to_post_mortem: Post-mortem
+      existing_prior_authority_granted: Existing prior authority granted
+      travel_cost_reason: Why travel costs are required
+      service: Service
+      items:
+        item: item
+        page: page
+        minute: minute
+        word: word
+      travel: Travel
+      reason_why: Why prior authority is required
+      supporting_document_string: Supporting documents
+      none: None
+      additional: Additional
+      additional_items: Additional items
+      total_cost: Total cost
+      client_name: Client name
+      date_of_birth: Date of birth
+      next_hearing_string: Date of next hearing
+      not_known: Not known
+      main_offence: Main offence
+      rep_order_date_string: Date of representation order
+      maat: MAAT number
+      client_detained_string: Client detained
+      subject_to_poca_string: Subject to POCA
+      plea_string: Likely or actual plea
+      pleas:
+        guilty: Guilty
+        not_guilty: Not guilty
+        mixed: Mixed plea
+        unknown: Unknown
+      court_type_string: Court type
+      court_types:
+        magistrates_court: Magistrates' court
+        central_criminal_court: Central Criminal Court
+        crown_court: Crown Court (excluding Central Criminal Court)
+      psychiatric_liaison_string: Psychiatric liaison service accessed
+      psychiatric_liaison_reason_not: Why not?
+      youth_court_string: Youth court matter
+      case_contact: Case contact
+      firm_details: Firm details
+      no_alternative_quote_reason: Reason for no alternative quotes
+

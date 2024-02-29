@@ -23,15 +23,17 @@ RSpec.describe 'View applications' do
           items: 2,
           cost_per_item: '35.0'
         ),
-        quotes: build_list(
-          :primary_quote,
-          1,
-          cost_type: 'per_hour',
-          period: 180,
-          cost_per_hour: '3.50',
-          travel_time: nil,
-          travel_cost_per_hour: nil
-        )
+        quotes: [
+          build(
+            :primary_quote,
+            cost_type: 'per_hour',
+            period: 180,
+            cost_per_hour: '3.50',
+            travel_time: nil,
+            travel_cost_per_hour: nil
+          ),
+          build(:alternative_quote)
+        ]
       )
     )
     create(:assignment,
@@ -43,5 +45,7 @@ RSpec.describe 'View applications' do
     click_on 'LAA-1234'
     expect(page).to have_current_path prior_authority_application_path(application)
     expect(page).to have_content 'Requested: £80.50'
+    click_on 'test.pdf'
+    expect(page).to have_current_path(%r{/123123123\?response-content-disposition=attachment%3B%20filename%3Dtest\.pdf})
   end
 end

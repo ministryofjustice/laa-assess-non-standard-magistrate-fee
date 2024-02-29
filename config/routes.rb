@@ -97,5 +97,6 @@ Rails.application.routes.draw do
       resources :additional_costs, only: [:edit, :update]
     end
     resources :assignments, only: [:create]
+    resources :downloads, only: :show
   end
 end
