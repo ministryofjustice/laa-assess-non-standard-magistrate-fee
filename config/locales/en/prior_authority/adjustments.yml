@@ -1,0 +1,35 @@
+en:
+  prior_authority:
+    adjustments:
+      index:
+        adjust_quote: Adjust quote
+      key_information_card:
+        key_information: Key information
+      additional_costs:
+        additional_cost: Additional cost %{n}
+        adjust_additional_cost: Adjust additional cost
+        adjusted: Caseworker adjusted
+        cost: Cost
+        cost_description: "Cost description: \"%{name} - %{description}\""
+        details: Details
+        requested: Requested
+        time: Time
+        total: Total
+      service_costs:
+        adjusted: Caseworker adjusted
+        adjust_service_cost: Adjust service costs
+        cost: Cost
+        details: Details
+        requested: Requested
+        amount: Amount
+        total: Total
+      travel_costs:
+        adjusted: Caseworker adjusted
+        adjust_travel_cost: Adjust travel costs
+        cost: Cost
+        cost_description: "Reason for travel cost: \"%{description}\""
+        details: Details
+        requested: Requested
+        time: Time
+        total: Total
+        travel_cost: Travel cost
