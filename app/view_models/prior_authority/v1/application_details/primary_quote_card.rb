@@ -27,7 +27,7 @@ module PriorAuthority
         def additional_cost_row(additional_cost)
           [additional_cost.name,
            additional_cost.unit_description,
-           additional_cost.cost_per_unit_description,
+           additional_cost.cost_per_unit,
            additional_cost.formatted_total_cost]
         end
 

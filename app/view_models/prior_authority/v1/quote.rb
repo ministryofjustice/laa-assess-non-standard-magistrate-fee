@@ -53,8 +53,24 @@ module PriorAuthority
         NumberTo.pounds(travel_cost_per_hour)
       end
 
+      def formatted_travel_cost_per_unit
+        I18n.t(
+          'per_hour',
+          gbp: travel_cost_per_unit,
+          scope: 'prior_authority.application_details.items.per_unit_descriptions'
+        )
+      end
+
       def base_cost_per_unit
         NumberTo.pounds(cost_type == 'per_item' ? cost_per_item : cost_per_hour)
+      end
+
+      def formatted_base_cost_per_unit
+        I18n.t(
+          cost_type,
+          gbp: base_cost_per_unit,
+          scope: 'prior_authority.application_details.items.per_unit_descriptions'
+        )
       end
 
       def formatted_base_cost

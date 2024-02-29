@@ -237,6 +237,8 @@ GEM
       faraday-follow_redirects
     jwt (2.7.1)
     language_server-protocol (3.17.0.3)
+    launchy (2.5.2)
+      addressable (~> 2.8)
     logstasher (2.1.5)
       activesupport (>= 5.2)
       request_store
@@ -569,6 +571,7 @@ DEPENDENCIES
   httparty
   jbuilder
   jsbundling-rails
+  launchy
   logstasher (~> 2.1)
   oauth2 (~> 2.0)
   omniauth-rails_csrf_protection

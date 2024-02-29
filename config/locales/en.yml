@@ -37,6 +37,9 @@ en:
       send_back: Send back to provider
       save_and_come_back: Save and comeback later
 
+  generic:
+    cost: cost
+
   calls_to_action:
     sign_in: Sign in
 
