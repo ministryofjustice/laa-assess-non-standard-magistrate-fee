@@ -35,6 +35,6 @@ RSpec.describe 'View applications' do
     fill_in 'Minutes', with: '17'
     fill_in 'Explanation', with: 'typoe'
     click_on 'Save changes'
-    expect(page).to have_content '3 Hrs 17 Mins'
+    expect(page).to have_content '3 hours 17 minutes'
   end
 end

@@ -48,7 +48,7 @@ RSpec.describe Nsm::V1::TravelAndWaiting do
 
       it 'includes the summed table field row' do
         expect(subject.table_fields).to include(
-          ['Travel', '0 Hours<br>20 Minutes', '£120.00', '0 Hours<br>20 Minutes', '£120.00'],
+          ['Travel', '0 hours<br>20 minutes', '£120.00', '0 hours<br>20 minutes', '£120.00'],
         )
       end
 
@@ -65,8 +65,8 @@ RSpec.describe Nsm::V1::TravelAndWaiting do
 
       it 'returns a single table field row' do
         expect(subject.table_fields).to include(
-          ['Travel', '0 Hours<br>20 Minutes', '£120.00', '0 Hours<br>20 Minutes', '£120.00'],
-          ['Waiting', '0 Hours<br>30 Minutes', '£120.00', '0 Hours<br>30 Minutes', '£120.00']
+          ['Travel', '0 hours<br>20 minutes', '£120.00', '0 hours<br>20 minutes', '£120.00'],
+          ['Waiting', '0 hours<br>30 minutes', '£120.00', '0 hours<br>30 minutes', '£120.00']
         )
       end
 
@@ -95,7 +95,7 @@ RSpec.describe Nsm::V1::TravelAndWaiting do
 
       it 'includes a summed table field row' do
         expect(subject.table_fields).to include(
-          ['Travel', '0 Hours<br>50 Minutes', '£240.00', '0 Hours<br>50 Minutes', '£240.00']
+          ['Travel', '0 hours<br>50 minutes', '£240.00', '0 hours<br>50 minutes', '£240.00']
         )
       end
     end

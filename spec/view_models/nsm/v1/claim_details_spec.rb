@@ -53,7 +53,7 @@ RSpec.describe Nsm::V1::ClaimDetails do
                                      { title: 'Number of witnesses', value: 2 },
                                      { title: 'Supplemental claim', value: 'No' },
                                      { title: 'Recorded evidence', value: 'Yes' },
-                                     { title: 'Recorded evidence', value: '1 Hr 50 Mins' },
+                                     { title: 'Recorded evidence', value: '1 hour 50 minutes' },
                                      { title: 'Work done before order was granted', value: 'Yes' },
                                      { title: 'Date of work before order was granted', value: '20 January 2023' },
                                      { title: 'Work was done after last hearing', value: 'Yes' },

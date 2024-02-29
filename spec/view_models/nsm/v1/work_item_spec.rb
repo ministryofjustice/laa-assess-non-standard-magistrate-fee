@@ -47,14 +47,14 @@ RSpec.describe Nsm::V1::WorkItem do
     end
 
     it 'returns the fields for the table display' do
-      expect(subject.table_fields).to eq(['Waiting', '0%', '2 Hours<br>41 Minutes', '', ''])
+      expect(subject.table_fields).to eq(['Waiting', '0%', '2 hours<br>41 minutes', '', ''])
     end
 
     context 'when adjustments exists' do
       let(:adjustments) { [build(:event, :edit_work_item_uplift)] }
 
       it 'also renders caseworker values' do
-        expect(subject.table_fields).to eq(['Waiting', '20%', '2 Hours<br>41 Minutes', '0%', '2 Hours<br>41 Minutes'])
+        expect(subject.table_fields).to eq(['Waiting', '20%', '2 hours<br>41 minutes', '0%', '2 hours<br>41 minutes'])
       end
     end
   end
@@ -291,7 +291,7 @@ RSpec.describe Nsm::V1::WorkItem do
       it 'calculates the correct provider requested amount' do
         expect(subject.provider_fields).to eq(
           '.date' => '14 December 2022',
-          '.time_spent' => '2 Hrs 51 Mins',
+          '.time_spent' => '2 hours 51 minutes',
           '.fee_earner' => 'JGB',
           '.uplift_claimed' => '20%',
           '.vat' => '20%',
@@ -306,7 +306,7 @@ RSpec.describe Nsm::V1::WorkItem do
       it 'calculates the correct provider requested amount' do
         expect(subject.provider_fields).to eq(
           '.date' => '14 December 2022',
-          '.time_spent' => '2 Hrs 51 Mins',
+          '.time_spent' => '2 hours 51 minutes',
           '.fee_earner' => 'JGB',
           '.uplift_claimed' => '20%',
           '.total_claimed' => '£82.08',
