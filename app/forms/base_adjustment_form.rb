@@ -29,8 +29,15 @@ class BaseAdjustmentForm
     # details[:change] = value - selected_record[field] if value.methods.include?(:'-')
     details[:change] = value - selected_record[field]
 
+    ensure_original_field_value_set(field)
+
     selected_record[field] = value
+
     Event::Edit.build(submission:, details:, linked:, current_user:)
+  end
+
+  def ensure_original_field_value_set(field)
+    selected_record["#{field}_original"] = selected_record[field] if selected_record["#{field}_original"].nil?
   end
 
   def linked

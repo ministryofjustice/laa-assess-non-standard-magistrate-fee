@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Nsm::V1::LetterAndCall do
   subject { described_class.new(params) }
 
-  let(:adjustments) { [] }
+  let(:adjustment_events) { [] }
 
   describe '#vat_registered?' do
     let(:params) do
@@ -32,14 +32,14 @@ RSpec.describe Nsm::V1::LetterAndCall do
   end
 
   describe '#provider_requested_amount' do
-    let(:params) { { count: 1, uplift: 5, pricing: 10.0, adjustments: adjustments } }
+    let(:params) { { count: 1, uplift: 5, pricing: 10.0, adjustment_events: adjustment_events } }
 
     it 'calculates the correct provider requested amount' do
       expect(subject.provider_requested_amount).to eq(10.5)
     end
 
-    context 'when adjustments are present' do
-      let(:adjustments) { [build(:event, :edit_uplift), build(:event, :edit_count)] }
+    context 'when adjustment_events are present' do
+      let(:adjustment_events) { [build(:event, :edit_uplift), build(:event, :edit_count)] }
 
       it 'calulates the initial uplift' do
         expect(subject.provider_requested_amount).to eq(10.0 * 10.0 * 1.95)
@@ -77,14 +77,14 @@ RSpec.describe Nsm::V1::LetterAndCall do
 
   describe '#provider_requested_uplift' do
     context 'when uplift has a value' do
-      let(:params) { { uplift: 5, adjustments: adjustments } }
+      let(:params) { { uplift: 5, adjustment_events: adjustment_events } }
 
       it 'returns the uplift amount as a percentage' do
         expect(subject.provider_requested_uplift).to eq(5)
       end
 
-      context 'when adjustments are present' do
-        let(:adjustments) { [build(:event, :edit_uplift)] }
+      context 'when adjustment_events are present' do
+        let(:adjustment_events) { [build(:event, :edit_uplift)] }
 
         it 'calulates the initial uplift' do
           expect(subject.provider_requested_uplift).to eq(95)
@@ -102,14 +102,14 @@ RSpec.describe Nsm::V1::LetterAndCall do
   end
 
   describe '#provider_requested_count' do
-    let(:params) { { count: 5, adjustments: adjustments } }
+    let(:params) { { count: 5, adjustment_events: adjustment_events } }
 
     it 'returns the uplift amount as a percentage' do
       expect(subject.provider_requested_count).to eq(5)
     end
 
-    context 'when adjustments are present' do
-      let(:adjustments) { [build(:event, :edit_count)] }
+    context 'when adjustment_events are present' do
+      let(:adjustment_events) { [build(:event, :edit_count)] }
 
       it 'calulates the initial count' do
         expect(subject.provider_requested_count).to eq(10)
@@ -170,7 +170,7 @@ RSpec.describe Nsm::V1::LetterAndCall do
   end
 
   describe '#allowed_amount' do
-    let(:params) { { count: 1, uplift: 5, pricing: 10.0, adjustments: adjustments } }
+    let(:params) { { count: 1, uplift: 5, pricing: 10.0, adjustment_events: adjustment_events } }
 
     before do
       allow(CostCalculator).to receive(:cost).with(:letter_and_call, anything, :provider_requested)
@@ -179,16 +179,16 @@ RSpec.describe Nsm::V1::LetterAndCall do
                                              .and_return(20.0)
     end
 
-    context 'when adjustments exists' do
-      let(:adjustments) { [{ this: :thing }] }
+    context 'when adjustment_events exists' do
+      let(:adjustment_events) { [{ this: :thing }] }
 
       it 'returns the caseworker amount' do
         expect(subject.allowed_amount).to eq(20.0)
       end
     end
 
-    context 'when adjustments do not exists' do
-      let(:adjustments) { [] }
+    context 'when adjustment_events do not exists' do
+      let(:adjustment_events) { [] }
 
       it 'returns the provider supplied amount' do
         expect(subject.allowed_amount).to eq(10.0)
@@ -205,13 +205,13 @@ RSpec.describe Nsm::V1::LetterAndCall do
   end
 
   describe '#form_attributes' do
-    let(:adjustments) { [] }
+    let(:adjustment_events) { [] }
     let(:params) do
       {
         type: { 'en' => 'Letters', 'value' => 'll' },
         count: 10,
         uplift: 15,
-        adjustments: adjustments,
+        adjustment_events: adjustment_events,
       }
     end
 
@@ -224,8 +224,8 @@ RSpec.describe Nsm::V1::LetterAndCall do
       )
     end
 
-    context 'when adjustments exists' do
-      let(:adjustments) do
+    context 'when adjustment_events exists' do
+      let(:adjustment_events) do
         [
           double(:first, details: { 'comment' => 'first adjustment' }),
           double(:second, details: { 'comment' => 'second adjustment' }),
@@ -250,10 +250,10 @@ RSpec.describe Nsm::V1::LetterAndCall do
         'count' => 12,
         'uplift' => 0,
         'pricing' => 3.56,
-        'adjustments' => adjustments,
+        'adjustment_events' => adjustment_events,
       }
     end
-    let(:adjustments) { [] }
+    let(:adjustment_events) { [] }
 
     before do
       allow(CostCalculator).to receive(:cost).and_return(10.0)
@@ -263,8 +263,8 @@ RSpec.describe Nsm::V1::LetterAndCall do
       expect(subject.table_fields).to eq(['Letters', '12', '0%', '£10.00', '', ''])
     end
 
-    context 'when adjustments exist' do
-      let(:adjustments) { [build(:event, :edit_uplift)] }
+    context 'when adjustment_events exist' do
+      let(:adjustment_events) { [build(:event, :edit_uplift)] }
 
       it 'also renders caseworker values' do
         expect(subject.table_fields).to eq(['Letters', '12', '95%', '£10.00', '0%', '£10.00'])
@@ -280,13 +280,13 @@ RSpec.describe Nsm::V1::LetterAndCall do
     end
 
     context 'when uplift is zero' do
-      let(:params) { { uplift: 0, adjustments: adjustments } }
-      let(:adjustments) { [] }
+      let(:params) { { uplift: 0, adjustment_events: adjustment_events } }
+      let(:adjustment_events) { [] }
 
       it { expect(subject).not_to be_uplift }
 
-      context 'but has adjustments' do
-        let(:adjustments) { [build(:event, :edit_uplift)] }
+      context 'but has adjustment_events' do
+        let(:adjustment_events) { [build(:event, :edit_uplift)] }
 
         it { expect(subject).to be_uplift }
       end
@@ -301,12 +301,12 @@ RSpec.describe Nsm::V1::LetterAndCall do
         'uplift' => 0,
         'pricing' => 3.56,
         'firm_office' => { 'vat_registered' => vat_registered },
-        'adjustments' => adjustments,
+        'adjustment_events' => adjustment_events,
         'vat_rate' => 0.2,
       }
     end
 
-    let(:adjustments) { [build(:event, :edit_work_item_uplift)] }
+    let(:adjustment_events) { [build(:event, :edit_work_item_uplift)] }
 
     context 'when vat registered' do
       let(:vat_registered) { 'yes' }

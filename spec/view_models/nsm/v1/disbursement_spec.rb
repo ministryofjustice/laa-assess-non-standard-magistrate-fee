@@ -1,18 +1,24 @@
 require 'rails_helper'
 
 RSpec.describe Nsm::V1::Disbursement do
-  let(:disbursement) { described_class.new({}) }
+  let(:disbursement) { described_class.new(args) }
+  let(:args) { {} }
 
   describe '#provider_requested_total_cost_without_vat' do
-    it 'returns the value from the first event if present' do
-      allow(disbursement).to receive(:value_from_first_event).with('total_cost_without_vat').and_return(100)
-      expect(disbursement.provider_requested_total_cost_without_vat).to eq(100)
+    context 'when original value is present' do
+      let(:args) { { 'total_cost_without_vat_original' => 100 } }
+
+      it 'returns the explicit original value' do
+        expect(disbursement.provider_requested_total_cost_without_vat).to eq(100)
+      end
     end
 
-    it 'returns the total_cost_without_vat if no value from the first event' do
-      allow(disbursement).to receive(:value_from_first_event).with('total_cost_without_vat').and_return(nil)
-      disbursement.total_cost_without_vat = 200
-      expect(disbursement.provider_requested_total_cost_without_vat).to eq(200)
+    context 'when original value is not present' do
+      let(:args) { { 'total_cost_without_vat' => 100 } }
+
+      it 'returns the current value' do
+        expect(disbursement.provider_requested_total_cost_without_vat).to eq(100)
+      end
     end
   end
 
@@ -99,16 +105,18 @@ RSpec.describe Nsm::V1::Disbursement do
 
     it 'returns the fields for the table display if no adjustments' do
       allow(disbursement).to receive_messages(disbursement_type: 'Car')
-      disbursement.adjustments = []
       expect(disbursement.table_fields).to eq(['Car', '£10.00', '0%', ''])
     end
 
-    it 'returns an array with the correct fields if there are adjustments' do
-      allow(disbursement).to receive_messages(type_name: 'type', provider_requested_total_cost: 100,
-                                              caseworker_total_cost: 200)
-      disbursement.adjustments = [1]
-      expected_fields = ['type', '£100.00', '0%', '£200.00']
-      expect(disbursement.table_fields).to eq(expected_fields)
+    context 'when there are adjustments' do
+      let(:args) { { 'total_cost_without_vat_original' => 100 } }
+
+      it 'returns an array with the correct fields' do
+        allow(disbursement).to receive_messages(type_name: 'type', provider_requested_total_cost: 100,
+                                                caseworker_total_cost: 200)
+        expected_fields = ['type', '£100.00', '0%', '£200.00']
+        expect(disbursement.table_fields).to eq(expected_fields)
+      end
     end
 
     it 'returns the formatted vat rate when apply_vat is true' do

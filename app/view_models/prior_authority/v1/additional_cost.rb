@@ -10,14 +10,15 @@ module PriorAuthority
       attribute :unit_type, :string
       attribute :items, :integer
       attribute :cost_per_item, :decimal, precision: 10, scale: 2
-      attribute :period, :time_period
+      adjustable_attribute :period, :time_period
       attribute :cost_per_hour, :decimal, precision: 10, scale: 2
 
-      def total_cost
+      def total_cost(original: false)
         if unit_type == 'per_item'
           items * cost_per_item
         else
-          ((period.hours * cost_per_hour) + ((period.minutes / 60.0) * cost_per_hour)).round(2)
+          period_to_consider = original ? original_period : period
+          ((period_to_consider.hours * cost_per_hour) + ((period_to_consider.minutes / 60.0) * cost_per_hour)).round(2)
         end
       end
 

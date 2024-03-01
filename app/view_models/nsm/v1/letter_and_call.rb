@@ -5,8 +5,8 @@ module Nsm
       ID_FIELDS = %w[type value].freeze
 
       attribute :type, :translated
-      attribute :count, :integer
-      attribute :uplift, :integer
+      adjustable_attribute :count, :integer
+      adjustable_attribute :uplift, :integer
       attribute :pricing, :float
       attribute :vat_rate
       attribute :firm_office
@@ -26,11 +26,11 @@ module Nsm
       end
 
       def provider_requested_uplift
-        @provider_requested_uplift ||= value_from_first_event('uplift') || uplift
+        @provider_requested_uplift ||= original_uplift
       end
 
       def provider_requested_count
-        value_from_first_event('count') || count
+        original_count
       end
 
       def caseworker_amount
@@ -52,7 +52,7 @@ module Nsm
       end
 
       def allowed_amount
-        adjustments.any? ? caseworker_amount : provider_requested_amount
+        any_adjustments? ? caseworker_amount : provider_requested_amount
       end
 
       def type_name
@@ -64,7 +64,7 @@ module Nsm
       end
 
       def form_attributes
-        attributes.slice!('pricing', 'adjustments', 'vat_rate', 'firm_office').merge(
+        attributes.slice!('pricing', 'adjustment_events', 'vat_rate', 'firm_office', 'count_original', 'uplift_original').merge(
           'type' => type.value,
           'explanation' => previous_explanation,
         )
@@ -76,8 +76,8 @@ module Nsm
           count.to_s,
           "#{provider_requested_uplift.to_i}%",
           NumberTo.pounds(provider_requested_amount),
-          adjustments.any? ? "#{caseworker_uplift}%" : '',
-          adjustments.any? ? NumberTo.pounds(caseworker_amount) : '',
+          any_adjustments? ? "#{caseworker_uplift}%" : '',
+          any_adjustments? ? NumberTo.pounds(caseworker_amount) : '',
         ]
       end
 

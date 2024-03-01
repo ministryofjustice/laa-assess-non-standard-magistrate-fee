@@ -147,6 +147,7 @@ RSpec.describe Nsm::LettersCallsForm do
                        .detect { |row| row.dig('type', 'value') == 'letters' }
         expect(letters).to eq(
           'count' => 2,
+          'count_original' => 12,
           'pricing' => 3.56,
           'type' => { 'en' => 'Letters', 'value' => 'letters' },
           'uplift' => 95,
@@ -185,6 +186,7 @@ RSpec.describe Nsm::LettersCallsForm do
           'pricing' => 3.56,
           'type' => { 'en' => 'Letters', 'value' => 'letters' },
           'uplift' => 0.0,
+          'uplift_original' => 95
         )
       end
     end
@@ -201,9 +203,11 @@ RSpec.describe Nsm::LettersCallsForm do
                        .detect { |row| row.dig('type', 'value') == 'letters' }
         expect(letters).to eq(
           'count' => 2,
+          'count_original' => 12,
           'pricing' => 3.56,
           'type' => { 'en' => 'Letters', 'value' => 'letters' },
           'uplift' => 0,
+          'uplift_original' => 95,
         )
       end
     end

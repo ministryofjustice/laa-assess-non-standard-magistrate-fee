@@ -6,11 +6,11 @@ module Nsm
 
       attribute :id, :string
       attribute :work_type, :translated
-      attribute :time_spent, :time_period
+      adjustable_attribute :time_spent, :time_period
       attribute :completed_on, :date
 
       attribute :pricing, :float
-      attribute :uplift, :integer
+      adjustable_attribute :uplift, :integer
       attribute :fee_earner, :string
       attribute :vat_rate, :float
       attribute :firm_office
@@ -30,11 +30,11 @@ module Nsm
       end
 
       def provider_requested_time_spent
-        @provider_requested_time_spent ||= value_from_first_event('time_spent') || time_spent.to_i
+        @provider_requested_time_spent ||= original_time_spent.to_i
       end
 
       def provider_requested_uplift
-        @provider_requested_uplift ||= value_from_first_event('uplift') || uplift.to_i
+        @provider_requested_uplift ||= original_uplift.to_i
       end
 
       def caseworker_amount
@@ -70,8 +70,8 @@ module Nsm
           work_type.to_s,
           "#{provider_requested_uplift.to_i}%",
           ApplicationController.helpers.format_period(provider_requested_time_spent, style: :long),
-          adjustments.any? ? "#{caseworker_uplift}%" : '',
-          adjustments.any? ? ApplicationController.helpers.format_period(caseworker_time_spent, style: :long) : ''
+          any_adjustments? ? "#{caseworker_uplift}%" : '',
+          any_adjustments? ? ApplicationController.helpers.format_period(caseworker_time_spent, style: :long) : ''
         ]
       end
 

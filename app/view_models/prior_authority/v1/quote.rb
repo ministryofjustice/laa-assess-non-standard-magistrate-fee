@@ -1,13 +1,13 @@
 module PriorAuthority
   module V1
-    class Quote < BaseViewModel
+    class Quote < BaseWithAdjustments
       attribute :id, :string
       attribute :cost_type, :string
       attribute :cost_per_hour, :decimal, precision: 10, scale: 2
       attribute :cost_per_item, :decimal, precision: 10, scale: 2
       attribute :items, :integer
       attribute :item_type, :string, default: 'item'
-      attribute :period, :time_period
+      adjustable_attribute :period, :time_period
 
       attribute :travel_time, :time_period
       attribute :travel_cost_per_hour, :decimal, precision: 10, scale: 2
@@ -29,11 +29,16 @@ module PriorAuthority
         base_cost + travel_costs + total_additional_costs
       end
 
-      def base_cost
+      def original_total_cost
+        base_cost(original: true) + travel_costs + total_additional_costs(original: true)
+      end
+
+      def base_cost(original: false)
         if cost_type == 'per_item'
           items * cost_per_item
         else
-          ((period.hours * cost_per_hour) + ((period.minutes / 60.0) * cost_per_hour)).round(2)
+          period_to_consider = original ? original_period : period
+          ((period_to_consider.hours * cost_per_hour) + ((period_to_consider.minutes / 60.0) * cost_per_hour)).round(2)
         end
       end
 
@@ -95,9 +100,9 @@ module PriorAuthority
         ((travel_time.hours * travel_cost_per_hour) + ((travel_time.minutes / 60.0) * travel_cost_per_hour)).round(2)
       end
 
-      def total_additional_costs
+      def total_additional_costs(original: false)
         if additional_costs.present?
-          additional_costs.sum(&:total_cost)
+          additional_costs.sum { _1.total_cost(original: ) }
         elsif additional_cost_total.to_i.positive?
           additional_cost_total
         else

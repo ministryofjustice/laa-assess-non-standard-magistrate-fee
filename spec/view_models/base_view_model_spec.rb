@@ -57,8 +57,8 @@ RSpec.describe BaseViewModel do
 
         it 'correctly applies adjustments' do
           letters, calls = *described_class.build(:letter_and_call, claim, 'letters_and_calls')
-          expect(letters.adjustments).to eq(claim.events)
-          expect(calls.adjustments).to eq([])
+          expect(letters.adjustment_events).to eq(claim.events)
+          expect(calls.adjustment_events).to eq([])
         end
       end
     end

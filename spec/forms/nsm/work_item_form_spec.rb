@@ -132,6 +132,7 @@ RSpec.describe Nsm::WorkItemForm do
           'pricing' => 24.0,
           'work_type' => { 'en' => 'Waiting', 'value' => 'waiting' },
           'uplift' => 0,
+          'uplift_original' => 95,
           'fee_earner' => 'aaa',
           'completed_on' => '2022-12-12'
         )
@@ -167,6 +168,7 @@ RSpec.describe Nsm::WorkItemForm do
         expect(work_item).to eq(
           'id' => 'cf5e303e-98dd-4b0f-97ea-3560c4c5f137',
           'time_spent' => 95,
+          'time_spent_original' => 161,
           'pricing' => 24.0,
           'work_type' => { 'en' => 'Waiting', 'value' => 'waiting' },
           'uplift' => 95,

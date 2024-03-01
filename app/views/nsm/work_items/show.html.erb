@@ -7,7 +7,7 @@
 <div class="govuk-grid-row" id="work-items-adjustment-container">
   <div class="govuk-grid-column-three-quarters">
     <h1 class="govuk-heading-xl">
-        <%= t('.heading', count: item.adjustments.count) %>
+        <%= t('.heading', count: item.adjustment_events.count) %>
     </h1>
   </div>
   <div class="govuk-grid-column-two-thirds">
@@ -22,7 +22,7 @@
       end
     %>
 
-    <% if item.adjustments.any? %>
+    <% if item.any_adjustments? %>
       <h2 class="govuk-heading-l"><%= t('.laa_adjustments') %></h2>
 
       <%=
