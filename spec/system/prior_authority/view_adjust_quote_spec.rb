@@ -74,7 +74,7 @@ RSpec.describe 'View Adjust quote tab' do
 
     within('.govuk-table#service_costs') do
       expect(page)
-        .to have_content('Amount3 Hrs 0 Mins')
+        .to have_content('Amount3 hours 0 minutes')
         .and have_content('Cost£3.50 per hour')
         .and have_content('Total£10.50')
     end
@@ -88,7 +88,7 @@ RSpec.describe 'View Adjust quote tab' do
 
     within('.govuk-table#travel_costs') do
       expect(page)
-        .to have_content('Time1 Hr 35 Mins')
+        .to have_content('Time1 hour 35 minutes')
         .and have_content('Cost£10.50 per hour')
         .and have_content('Total£16.63')
     end
@@ -114,7 +114,7 @@ RSpec.describe 'View Adjust quote tab' do
 
     within('.govuk-table#additional_cost_2') do
       expect(page)
-        .to have_content('Time4 Hrs 0 Mins')
+        .to have_content('Time4 hours 0 minutes')
         .and have_content('Cost£50.00 per hour')
         .and have_content('Total£200.00')
     end

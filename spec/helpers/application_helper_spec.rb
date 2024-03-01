@@ -76,10 +76,19 @@ RSpec.describe ApplicationHelper, type: :helper do
       it { expect(helper.format_period(nil)).to be_nil }
     end
 
-    context 'when period is not nil' do
+    context 'when period is not nil and short style specified' do
       it 'formats the value in hours and minutes' do
-        expect(helper.format_period(62)).to eq('1 Hr 2 Mins')
-        expect(helper.format_period(1)).to eq('0 Hrs 1 Min')
+        expect(helper.format_period(62)).to eq('1 hour 2 minutes')
+        expect(helper.format_period(1)).to eq('0 hours 1 minute')
+        expect(helper.format_period(120)).to eq('2 hours 0 minutes')
+      end
+    end
+
+    context 'when period is not nil and long style specified' do
+      it 'formats the value in hours and minutes' do
+        expect(helper.format_period(62, style: :long)).to eq('1 hour<br>2 minutes')
+        expect(helper.format_period(1, style: :long)).to eq('0 hours<br>1 minute')
+        expect(helper.format_period(120, style: :long)).to eq('2 hours<br>0 minutes')
       end
     end
   end

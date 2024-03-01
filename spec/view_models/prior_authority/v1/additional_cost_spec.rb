@@ -4,7 +4,7 @@ RSpec.describe PriorAuthority::V1::AdditionalCost do
   describe '#unit_description' do
     it 'translates a period into something sensible' do
       cost = described_class.new(unit_type: 'per_hour', period: 180)
-      expect(cost.unit_description).to eq('3 Hrs 0 Mins')
+      expect(cost.unit_description).to eq('3 hours 0 minutes')
     end
 
     it 'translates an item into something sensible' do
