@@ -17,7 +17,7 @@ en:
           per_item: Item
           per_hour: Time
         per_unit_descriptions:
-          per_item: "%{gbp} per item"
+          per_item: "%{gbp} per %{item}"
           per_hour: "%{gbp} per hour"
         item: item
         page: page
@@ -38,6 +38,7 @@ en:
       rep_order_date_string: Date of representation order
       maat: MAAT number
       client_detained_string: Client detained
+      prison: Where client is detained
       subject_to_poca_string: Subject to POCA
       plea_string: Likely or actual plea
       pleas:

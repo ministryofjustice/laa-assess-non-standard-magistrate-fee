@@ -9,8 +9,9 @@ module PriorAuthority
       attribute :next_hearing, :boolean
       attribute :next_hearing_date, :date
       attribute :client_detained, :boolean
+      attribute :prison_id, :string
+      attribute :custom_prison_name, :string
       attribute :subject_to_poca, :boolean
-      attribute :main_offence, :string
       attribute :solicitor
       attribute :plea, :string
       attribute :court_type, :string
