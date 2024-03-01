@@ -11,8 +11,8 @@ image:
   tag: ""
 
 imagePullSecrets: []
-nameOverride: "laa-assess-non-standard-magistrate-fee-app"
-fullnameOverride: "laa-assess-non-standard-magistrate-fee-app"
+nameOverride: "laa-assess-crime-forms-app"
+fullnameOverride: "laa-assess-crime-forms-app"
 
 service:
   type: ClusterIP
@@ -22,7 +22,7 @@ service:
 
 ingress:
   enabled: true
-  namespace: laa-assess-non-standard-magistrate-fee-uat
+  namespace: laa-assess-crime-forms-uat
   className: modsec
   annotations:
       nginx.ingress.kubernetes.io/enable-modsecurity: "true"
@@ -30,7 +30,7 @@ ingress:
         SecRuleEngine On
         SecAction "id:900200,phase:1,nolog,pass,t:none,setvar:tx.allowed_methods=GET HEAD POST OPTIONS PUT PATCH DELETE"
         SecAction "id:900110,phase:1,nolog,pass,t:none,setvar:tx.inbound_anomaly_score_threshold=6"
-      external-dns.alpha.kubernetes.io/set-identifier: laa-assess-non-standard-magistrate-fee-app-laa-assess-non-standard-magistrate-fee-uat-green
+      external-dns.alpha.kubernetes.io/set-identifier: laa-assess-crime-forms-app-laa-assess-crime-forms-green
       external-dns.alpha.kubernetes.io/aws-weight: "100"
   hosts:
     - host: nsmassessuat.apps.live.cloud-platform.service.justice.gov.uk
@@ -39,7 +39,7 @@ ingress:
           pathType: ImplementationSpecific
           backend:
           service:
-            name: laa-assess-non-standard-magistrate-fee-uat
+            name: laa-assess-crime-forms-uat
             port:
               number: 3000
   tls:
@@ -65,7 +65,7 @@ secrets:
   environment: uat
 
 service_account:
-  name: laa-assess-non-standard-magistrate-fee-uat-irsa
+  name: laa-assess-crime-forms-uat-irsa
 
 securityContext:
   runAsNonRoot: true
