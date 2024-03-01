@@ -25,7 +25,8 @@ RSpec.describe 'View applications' do
     click_on 'Adjust additional cost'
     fill_in 'Hours', with: '3'
     click_on 'Save changes'
-    expect(page).to have_content 'Add an explanation for your decision'
+
+    expect(page).to have_content 'Explain your decision for adjusting the costs'
   end
 
   it 'lets me adjust an additional cost' do
@@ -33,7 +34,7 @@ RSpec.describe 'View applications' do
     click_on 'Adjust additional cost'
     fill_in 'Hours', with: '3'
     fill_in 'Minutes', with: '17'
-    fill_in 'Explanation', with: 'typoe'
+    fill_in 'Explain your decision', with: 'typoe'
     click_on 'Save changes'
     expect(page).to have_content '3 hours 17 minutes'
   end

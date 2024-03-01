@@ -2,7 +2,6 @@ module PriorAuthority
   module V1
     class AdditionalCost < BaseWithAdjustments
       LINKED_TYPE = 'additional_costs'.freeze
-      ID_FIELDS = %w[id].freeze
 
       attribute :id, :string
       attribute :name, :string

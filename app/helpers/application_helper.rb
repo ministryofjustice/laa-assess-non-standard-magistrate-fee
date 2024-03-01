@@ -69,4 +69,10 @@ module ApplicationHelper
       'rejected' => 'red'
     }[state] || 'yellow'
   end
+
+  def gbp_field_value(value)
+    return value if value.is_a?(String)
+
+    number_with_precision(value, precision: 2, delimiter: ',')
+  end
 end

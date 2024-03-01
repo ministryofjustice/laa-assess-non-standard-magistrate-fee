@@ -1,12 +1,19 @@
 module PriorAuthority
   module V1
     class Quote < BaseWithAdjustments
+      LINKED_TYPE = 'quotes'.freeze
+
+      # include ServiceCostsWithAdjustments
+      # include TravelCostsWithAdjustments
+      # # TODO: include AdditionalCostsWithAdjustments
+
       attribute :id, :string
       attribute :cost_type, :string
+      attribute :item_type, :string, default: 'item'
+
       adjustable_attribute :cost_per_hour, :decimal, precision: 10, scale: 2
       adjustable_attribute :cost_per_item, :decimal, precision: 10, scale: 2
       adjustable_attribute :items, :integer
-      attribute :item_type, :string, default: 'item'
       adjustable_attribute :period, :time_period
 
       adjustable_attribute :travel_time, :time_period
@@ -24,6 +31,10 @@ module PriorAuthority
       attribute :ordered_by_court, :boolean
       attribute :related_to_post_mortem, :boolean
       attribute :document
+
+      def form_attributes
+        attributes.slice('id', 'period', 'cost_per_hour')
+      end
 
       def total_cost
         base_cost + travel_costs + total_additional_costs

@@ -2,7 +2,7 @@ class BaseViewModel
   include ActiveModel::Model
   include ActiveModel::Attributes
 
-  ID_FIELDS = ['id'].freeze
+  ID_FIELDS = %w[id].freeze
 
   class Builder
     attr_reader :klass, :submission, :rows, :return_array

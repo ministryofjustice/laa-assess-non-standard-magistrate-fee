@@ -1,6 +1,6 @@
 <h2 class="govuk-heading-m"><%= "#{application_summary.service_name} #{t('generic.cost')}"%></h2>
 
-<% service_cost = application_summary.primary_quote %>
+<% service_cost = application_summary.service_cost %>
 
 <%= govuk_table(id: 'service_costs') do |table|
       table.with_head do |head|
@@ -14,24 +14,24 @@
       table.with_body do |body|
         body.with_row do |row|
           row.with_cell(text: t('.amount'))
-          row.with_cell(text: service_cost.base_units)
-          row.with_cell(text: '') # TODO: CRM457-1114
+          row.with_cell(text: service_cost.requested_humanized_units)
+          row.with_cell(text: service_cost.adjusted_humanized_units)
         end
 
         body.with_row do |row|
           row.with_cell(text: t('.cost'))
-          row.with_cell(text: service_cost.formatted_base_cost_per_unit)
-          row.with_cell(text: '') # TODO: CRM457-1114
+          row.with_cell(text: service_cost.requested_humanized_cost_per_unit)
+          row.with_cell(text: service_cost.adjusted_humanized_cost_per_unit)
         end
 
         body.with_row do |row|
           row.with_cell(text: t('.total'))
-          row.with_cell(text: service_cost.formatted_base_cost)
-          row.with_cell(text: '') # TODO: CRM457-1114
+          row.with_cell(text: service_cost.requested_formatted_service_cost_total)
+          row.with_cell(text: service_cost.adjusted_formatted_service_cost_total)
         end
       end
     end %>
 <%= link_to t(".adjust_service_cost"),
-            '#', # TODO: edit_prior_authority_application_service_cost_path(application, service_cost.id),
+            edit_prior_authority_application_service_cost_path(application, service_cost.id),
             class: 'govuk-button govuk-button--secondary' %>
 

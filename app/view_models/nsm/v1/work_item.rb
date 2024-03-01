@@ -2,7 +2,6 @@ module Nsm
   module V1
     class WorkItem < BaseWithAdjustments
       LINKED_TYPE = 'work_items'.freeze
-      ID_FIELDS = %w[id].freeze
 
       attribute :id, :string
       attribute :work_type, :translated

@@ -1,33 +1,31 @@
 <% content_for(:primary_navigation) do %>
   <% render partial: 'layouts/prior_authority/primary_navigation', current: :your %>
 <% end %>
-<% title t('.page_title', n: index + 1) %>
+
+<% title t('.page_title') %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds" id="additional-cost-adjustment-container">
-    <h1 class="govuk-heading-xl"><%= t('.page_title', n: index + 1) %></h1>
-    <p class="govuk-body"><%= t('.adjustment_blurb', service_type: t(submission.data['service_type'], scope: 'prior_authority.service_types')) %></h1>
+    <h1 class="govuk-heading-xl"><%= t('.page_title') %></h1>
+    <p class="govuk-body"><%= t('.adjustment_blurb', service_type: t(submission.data['service_type'], scope: 'prior_authority.service_types')) %></p>
 
-    <%= form_with model: form, url: prior_authority_application_additional_cost_path(submission.id, item.id), method: :patch do |f| %>
+    <%= form_with model: form, url: prior_authority_application_travel_cost_path(submission.id, item.id), method: :patch do |f| %>
       <%= govuk_error_summary(form) %>
-      <%= f.hidden_field(:unit_type, value: item.unit_type) %>
+      <%= f.govuk_period_field :travel_time, legend: { text: t('.travel_time'), size: 's', class: 'govuk-!-font-weight-bold' }, width: 'one-third' %>
 
-      <%= f.govuk_period_field :period, legend: { text: t('.period'), size: 's', class: 'govuk-!-font-weight-bold' }, width: 'one-third' %>
-
-      <%= f.govuk_text_field  :cost_per_hour,
+      <%= f.govuk_text_field  :travel_cost_per_hour,
                               width: 5,
                               prefix_text: "&pound;".html_safe,
                               inputmode: "decimal",
                               label: { text: t('.hourly_cost'), size: 's' } %>
-
 
       <%= govuk_button_link_to(
             t('.calculate_button_text'), '#',
             secondary: true,
             id:'calculate_change_button',
             data: {
-              'unit-amount': item.period || item.items,
-              'unit-price': item.cost_per_hour || item.cost_per_item,
+              'unit-price': item.travel_cost_per_hour,
+              'unit-amount': item.travel_time,
               # page: item.type.value,
               # 'vat-multiplier': item.vat_registered? ? (1.0 + item.vat_rate) : 1.0,
             }
@@ -39,10 +37,10 @@
         <span id="adjusted-cost">0.00</span>
       </h2>
 
-        <%= f.govuk_text_area :explanation,
-                              label: { size: 's', text: t('.explanation.label') },
-                              hint: { size: 's', text: t('.explanation.hint') },
-                              rows: 5 %>
+      <%= f.govuk_text_area :explanation,
+                            label: { size: 's', text: t('.explanation.label') },
+                            hint: { size: 's', text: t('.explanation.hint') },
+                            rows: 5 %>
 
       <%= f.govuk_submit t('shared.save_changes') do %>
         <%= link_to t('shared.cancel'), prior_authority_application_adjustments_path(submission), class: 'govuk-link', data: { turbo: 'false' } %>

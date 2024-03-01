@@ -47,10 +47,26 @@ module PriorAuthority
         rep_order_date.to_fs(:stamp)
       end
 
+      def all_quotes
+        @all_quotes ||= Quote.build(:quote, submission, 'quotes')
+      end
+
+      def service_cost
+        @service_cost ||= all_quotes.find { |q| q.primary == true }
+      end
+
+      def travel_cost
+        @travel_cost ||= all_quotes.find { |q| q.primary == true }
+      end
+
       def primary_quote
-        @primary_quote ||= Quote.new(quotes.find { _1['primary'] }.merge(
-                                       additional_cost_json: additional_costs,
-                                     ))
+        @primary_quote ||=
+          Quote.new(
+            quotes.find { _1['primary'] }
+                  .merge(
+                    additional_cost_json: additional_costs,
+                  )
+          )
       end
 
       def formatted_total_cost
