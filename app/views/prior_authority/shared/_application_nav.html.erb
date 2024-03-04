@@ -1,18 +1,13 @@
 <span class="govuk-caption-xl"><%= application_summary.firm_name %></span>
 <h1 class="govuk-heading-xl"><%= application_summary.laa_reference %></h1>
-<p>
-  <span class="govuk-body-l">
-    <strong><%= t('.requested') %></strong>
-    <%= application_summary.formatted_original_total_cost %><br>
-  </span>
+<p class="govuk-body-l">
+  <strong><%= t('.requested') %></strong>
+  <%= application_summary.formatted_original_total_cost %><br>
   <% if application_summary.adjustments_made? %>
-    <br>
-    <span class="govuk-body-l">
-      <strong><%= t('.allowed') %></strong>
-      <%= application_summary.formatted_total_cost %><br>
-    </span>
+    <strong><%= t('.allowed') %></strong>
+    <%= application_summary.formatted_total_cost %><br>
   <% end %>
-  </p>
+</p>
 <p class="govuk-body-m">
   <strong><%= t('.service') %> </strong>
   <%= application_summary.service_name %>
