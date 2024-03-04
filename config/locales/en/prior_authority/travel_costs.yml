@@ -8,5 +8,5 @@ en:
           hint: For example, why you made adjustments to the cost or time. We'll share this explanation with the provider.
           label: Explain your decision
         hourly_cost: Hourly cost
-        page_title: Adjust travel cost
+        page_title: Adjust travel costs
         travel_time: Time

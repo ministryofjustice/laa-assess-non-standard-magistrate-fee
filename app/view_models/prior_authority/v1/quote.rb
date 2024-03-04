@@ -32,10 +32,6 @@ module PriorAuthority
       attribute :related_to_post_mortem, :boolean
       attribute :document
 
-      def form_attributes
-        attributes.slice('id', 'period', 'cost_per_hour')
-      end
-
       def total_cost
         base_cost + travel_costs + total_additional_costs
       end
