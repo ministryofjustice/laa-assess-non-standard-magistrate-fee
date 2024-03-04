@@ -28,7 +28,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
           instance_double(Nsm::V1::WorkItem,
                           work_type: mock_translated('advocacy'),
                           time_spent: 20,
-           provider_requested_time_spent: 20,
+           original_time_spent: 20,
            provider_requested_amount_inc_vat: 100.0,
            caseworker_amount_inc_vat: 80.00,
            firm_office: { 'vat_registered' => 'no' })
@@ -69,12 +69,12 @@ RSpec.describe Nsm::V1::CoreCostSummary do
         [
           instance_double(Nsm::V1::WorkItem,
                           work_type: mock_translated('advocacy'), time_spent: 20,
-                          provider_requested_time_spent: 20,
+                          original_time_spent: 20,
                           provider_requested_amount_inc_vat: 100.0, caseworker_amount_inc_vat: 80.00,
                           firm_office: { 'vat_registered' => 'no' }),
           instance_double(Nsm::V1::WorkItem,
                           work_type: mock_translated('preparation'), time_spent: 30,
-                          provider_requested_time_spent: 20,
+                          original_time_spent: 20,
                           provider_requested_amount_inc_vat: 110.0, caseworker_amount_inc_vat: 90.00,
                           firm_office: { 'vat_registered' => 'no' })
         ]
@@ -93,17 +93,17 @@ RSpec.describe Nsm::V1::CoreCostSummary do
         [
           instance_double(Nsm::V1::WorkItem,
                           work_type: mock_translated('travel'), time_spent: 20,
-                          provider_requested_time_spent: 20,
+                          original_time_spent: 20,
                           provider_requested_amount_inc_vat: 100.0, caseworker_amount_inc_vat: 80.00,
                           firm_office: { 'vat_registered' => 'no' }),
           instance_double(Nsm::V1::WorkItem,
                           work_type: mock_translated('waiting'), time_spent: 20,
-                          provider_requested_time_spent: 20,
+                          original_time_spent: 20,
                           provider_requested_amount_inc_vat: 100.0, caseworker_amount_inc_vat: 80.00,
                           firm_office: { 'vat_registered' => 'no' }),
           instance_double(Nsm::V1::WorkItem,
                           work_type: mock_translated('preparation'), time_spent: 30,
-                          provider_requested_time_spent: 20,
+                          original_time_spent: 20,
                         provider_requested_amount_inc_vat: 110.0, caseworker_amount_inc_vat: 90.00,
                           firm_office: { 'vat_registered' => 'no' })
         ]
@@ -119,12 +119,12 @@ RSpec.describe Nsm::V1::CoreCostSummary do
         [
           instance_double(Nsm::V1::WorkItem,
                           work_type: mock_translated('advocacy'), time_spent: 20,
-                          provider_requested_time_spent: 20,
+                          original_time_spent: 20,
                           provider_requested_amount_inc_vat: 100.0, caseworker_amount_inc_vat: 80.00,
                           firm_office: { 'vat_registered' => 'no' }),
           instance_double(Nsm::V1::WorkItem,
                           work_type: mock_translated('advocacy'), time_spent: 30,
-                          provider_requested_time_spent: 20,
+                          original_time_spent: 20,
                           provider_requested_amount_inc_vat: 110.0, caseworker_amount_inc_vat: 90.00,
                           firm_office: { 'vat_registered' => 'no' })
         ]
@@ -147,7 +147,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
         [
           instance_double(Nsm::V1::WorkItem,
                           work_type: mock_translated('advocacy'), time_spent: 20,
-                       provider_requested_time_spent: 20,
+                       original_time_spent: 20,
                        provider_requested_amount_inc_vat: 100.0, caseworker_amount_inc_vat: 80.00,
                        firm_office: { 'vat_registered' => 'no' })
         ]
@@ -170,12 +170,12 @@ RSpec.describe Nsm::V1::CoreCostSummary do
         [
           instance_double(Nsm::V1::WorkItem,
                           work_type: mock_translated('advocacy'), time_spent: 20,
-                         provider_requested_time_spent: 20,
+                         original_time_spent: 20,
                          provider_requested_amount_inc_vat: 100.0, caseworker_amount_inc_vat: 80.00,
                          firm_office: { 'vat_registered' => 'no' }),
           instance_double(Nsm::V1::WorkItem,
                           work_type: mock_translated('travel'), time_spent: 30,
-                          provider_requested_time_spent: 30,
+                          original_time_spent: 30,
                           provider_requested_amount_inc_vat: 100.0, caseworker_amount_inc_vat: 80.00,
                           firm_office: { 'vat_registered' => 'no' })
         ]
@@ -191,12 +191,12 @@ RSpec.describe Nsm::V1::CoreCostSummary do
         [
           instance_double(Nsm::V1::WorkItem,
                           work_type: mock_translated('advocacy'), time_spent: 20,
-                          provider_requested_time_spent: 20,
+                          original_time_spent: 20,
                           provider_requested_amount_inc_vat: 100.0, caseworker_amount_inc_vat: 80.00,
                           firm_office: { 'vat_registered' => 'no' }),
           instance_double(Nsm::V1::WorkItem,
                           work_type: mock_translated('advocacy'), time_spent: 30,
-                          provider_requested_time_spent: 30,
+                          original_time_spent: 30,
                            provider_requested_amount_inc_vat: 100.0, caseworker_amount_inc_vat: 80.00,
                           firm_office: { 'vat_registered' => 'no' })
         ]

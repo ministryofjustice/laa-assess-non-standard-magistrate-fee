@@ -14,12 +14,12 @@ RSpec.describe Nsm::WorkItemForm do
       id: id,
       time_spent: 161,
       uplift: uplift_provided ? 95 : nil,
-      provider_requested_uplift: provider_requested_uplift,
+      original_uplift: original_uplift,
       uplift?: uplift_provided
     )
   end
-  let(:uplift_provided) { !provider_requested_uplift.nil? }
-  let(:provider_requested_uplift) { 95 }
+  let(:uplift_provided) { !original_uplift.nil? }
+  let(:original_uplift) { 95 }
   let(:explanation) { 'change to work items' }
   let(:current_user) { instance_double(User) }
 
@@ -134,7 +134,8 @@ RSpec.describe Nsm::WorkItemForm do
           'uplift' => 0,
           'uplift_original' => 95,
           'fee_earner' => 'aaa',
-          'completed_on' => '2022-12-12'
+          'completed_on' => '2022-12-12',
+          'adjustment_comment' => 'change to work items',
         )
       end
     end
@@ -173,12 +174,13 @@ RSpec.describe Nsm::WorkItemForm do
           'work_type' => { 'en' => 'Waiting', 'value' => 'waiting' },
           'uplift' => 95,
           'fee_earner' => 'aaa',
-          'completed_on' => '2022-12-12'
+          'completed_on' => '2022-12-12',
+          'adjustment_comment' => 'change to work items',
         )
       end
 
       context 'when uplift is not populated from provider' do
-        let(:provider_requested_uplift) { nil }
+        let(:original_uplift) { nil }
 
         it 'saves without error' do
           expect { subject.save }.to change(Event, :count).by(1)

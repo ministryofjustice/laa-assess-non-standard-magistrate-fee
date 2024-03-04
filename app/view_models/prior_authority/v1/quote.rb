@@ -3,19 +3,19 @@ module PriorAuthority
     class Quote < BaseWithAdjustments
       attribute :id, :string
       attribute :cost_type, :string
-      attribute :cost_per_hour, :decimal, precision: 10, scale: 2
-      attribute :cost_per_item, :decimal, precision: 10, scale: 2
-      attribute :items, :integer
+      adjustable_attribute :cost_per_hour, :decimal, precision: 10, scale: 2
+      adjustable_attribute :cost_per_item, :decimal, precision: 10, scale: 2
+      adjustable_attribute :items, :integer
       attribute :item_type, :string, default: 'item'
       adjustable_attribute :period, :time_period
 
-      attribute :travel_time, :time_period
-      attribute :travel_cost_per_hour, :decimal, precision: 10, scale: 2
+      adjustable_attribute :travel_time, :time_period
+      adjustable_attribute :travel_cost_per_hour, :decimal, precision: 10, scale: 2
       attribute :travel_cost_reason, :string
 
       attribute :additional_cost_json
       attribute :additional_cost_list, :string
-      attribute :additional_cost_total, :decimal, precision: 10, scale: 2
+      adjustable_attribute :additional_cost_total, :decimal, precision: 10, scale: 2
 
       attribute :contact_full_name, :string
       attribute :organisation, :string
@@ -30,16 +30,25 @@ module PriorAuthority
       end
 
       def original_total_cost
-        base_cost(original: true) + travel_costs + total_additional_costs(original: true)
+        base_cost(original: true) + travel_costs(original: true) + total_additional_costs(original: true)
       end
 
       def base_cost(original: false)
         if cost_type == 'per_item'
-          items * cost_per_item
+          original ? original_total_item_cost : total_item_cost
         else
           period_to_consider = original ? original_period : period
-          ((period_to_consider.hours * cost_per_hour) + ((period_to_consider.minutes / 60.0) * cost_per_hour)).round(2)
+          hourly_cost = original ? original_cost_per_hour : cost_per_hour
+          ((period_to_consider.hours * hourly_cost) + ((period_to_consider.minutes / 60.0) * hourly_cost)).round(2)
         end
+      end
+
+      def total_item_cost
+        items * cost_per_item
+      end
+
+      def original_total_item_cost
+        original_items * original_cost_per_item
       end
 
       def base_units
@@ -59,11 +68,9 @@ module PriorAuthority
       end
 
       def formatted_travel_cost_per_unit
-        I18n.t(
-          'per_hour',
-          gbp: travel_cost_per_unit,
-          scope: 'prior_authority.application_details.items.per_unit_descriptions'
-        )
+        I18n.t('per_hour',
+               gbp: travel_cost_per_unit,
+               scope: 'prior_authority.application_details.items.per_unit_descriptions')
       end
 
       def base_cost_per_unit
@@ -71,11 +78,9 @@ module PriorAuthority
       end
 
       def formatted_base_cost_per_unit
-        I18n.t(
-          cost_type,
-          gbp: base_cost_per_unit,
-          scope: 'prior_authority.application_details.items.per_unit_descriptions'
-        )
+        I18n.t(cost_type,
+               gbp: base_cost_per_unit,
+               scope: 'prior_authority.application_details.items.per_unit_descriptions')
       end
 
       def formatted_base_cost
@@ -94,19 +99,19 @@ module PriorAuthority
         NumberTo.pounds(total_cost)
       end
 
-      def travel_costs
-        return 0 unless travel_time.to_i.positive? && travel_cost_per_hour.to_f.positive?
+      def travel_costs(original: false)
+        time = original ? original_travel_time : travel_time
+        hourly_cost = original ? original_travel_cost_per_hour : travel_cost_per_hour
+        return 0 unless time.to_i.positive? && hourly_cost.to_f.positive?
 
-        ((travel_time.hours * travel_cost_per_hour) + ((travel_time.minutes / 60.0) * travel_cost_per_hour)).round(2)
+        ((time.hours * hourly_cost) + ((time.minutes / 60.0) * hourly_cost)).round(2)
       end
 
       def total_additional_costs(original: false)
         if additional_costs.present?
-          additional_costs.sum { _1.total_cost(original: ) }
-        elsif additional_cost_total.to_i.positive?
-          additional_cost_total
+          additional_costs.sum { _1.total_cost(original:) }
         else
-          0
+          (original ? original_additional_cost_total : additional_cost_total).to_i
         end
       end
 

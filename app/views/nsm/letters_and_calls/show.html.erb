@@ -7,7 +7,7 @@
 <div class="govuk-grid-row" id="letters-and-calls-adjustment-container">
   <div class="govuk-grid-column-three-quarters">
     <h1 class="govuk-heading-xl govuk-heading-capitalize">
-        <%= t('.heading', type: item.type_name, count: item.adjustment_events.count) %>
+        <%= t('.heading', type: item.type_name, count: item.any_adjustments? ? 1 : 0) %>
     </h1>
   </div>
   <div class="govuk-grid-column-two-thirds">
@@ -15,9 +15,9 @@
 
     <%=
       rows = [
-        [{ text: t('.number', type: item.type_name), width: 'govuk-!-width-one-half' }, item.provider_requested_count.to_s],
+        [{ text: t('.number', type: item.type_name), width: 'govuk-!-width-one-half' }, item.original_count.to_s],
         [t('.rate'), item.pricing.to_s],
-        [t('.uplift_requested'), "#{item.provider_requested_uplift.to_i}%"],
+        [t('.uplift_requested'), "#{item.original_uplift.to_i}%"],
         [t('.total_claimed'), NumberTo.pounds(item.provider_requested_amount)]
       ]
       govuk_table(head: '', first_cell_is_header: true, rows:) do |tab|
@@ -33,7 +33,7 @@
           [{ text: t('.uplift_allowed'), width: 'govuk-!-width-one-half' }, "#{item.uplift}%"],
           [t('.number_allowed', type: item.type_name), item.count.to_s],
           [t('.casewoker_allowed'), NumberTo.pounds(item.caseworker_amount)],
-          [t('.explanation'), item.previous_explanation.to_s],
+          [t('.explanation'), item.adjustment_comment],
         ]
         govuk_table(head: '', first_cell_is_header: true, rows:)
       %>

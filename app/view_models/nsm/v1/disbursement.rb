@@ -17,25 +17,19 @@ module Nsm
       attribute :apply_vat, :string
       adjustable_attribute :vat_amount, :decimal, precision: 10, scale: 2
 
-      def provider_requested_total_cost_without_vat
-        original_total_cost_without_vat
-      end
-
-      def provider_requested_vat_amount
-        original_vat_amount
-      end
-
       def provider_requested_total_cost
-        @provider_requested_total_cost ||= CostCalculator.cost(:disbursement, self)
+        original_total_cost_without_vat + original_vat_amount
       end
 
       def caseworker_total_cost
-        total_cost_without_vat.zero? ? 0 : provider_requested_total_cost
+        return 0 if total_cost_without_vat.to_i.zero?
+
+        provider_requested_total_cost
       end
 
       def form_attributes
         attributes.slice('total_cost_without_vat').merge(
-          'explanation' => previous_explanation
+          'explanation' => adjustment_comment
         )
       end
 
@@ -48,7 +42,7 @@ module Nsm
         table_fields[:details] = details.capitalize
         table_fields[:prior_authority] = prior_authority.capitalize
         table_fields[:vat] = format_vat_rate(vat_rate) if apply_vat == 'true'
-        table_fields[:total] = NumberTo.pounds(CostCalculator.cost(:disbursement, self))
+        table_fields[:total] = NumberTo.pounds(provider_requested_total_cost)
 
         table_fields
       end

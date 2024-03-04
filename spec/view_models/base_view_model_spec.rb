@@ -47,20 +47,6 @@ RSpec.describe BaseViewModel do
         expect(work_items[0]).to have_attributes(work_type: TranslationObject.new('value' => 'first'))
         expect(work_items[1]).to have_attributes(work_type: TranslationObject.new('value' => 'second'))
       end
-
-      context 'when adjustments exist' do
-        let(:claim) do
-          create(:claim).tap do |claim|
-            create(:event, :edit_count, claim:)
-          end
-        end
-
-        it 'correctly applies adjustments' do
-          letters, calls = *described_class.build(:letter_and_call, claim, 'letters_and_calls')
-          expect(letters.adjustment_events).to eq(claim.events)
-          expect(calls.adjustment_events).to eq([])
-        end
-      end
     end
   end
 end

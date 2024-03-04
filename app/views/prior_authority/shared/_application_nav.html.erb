@@ -5,15 +5,14 @@
     <strong><%= t('.requested') %></strong>
     <%= application_summary.formatted_original_total_cost %><br>
   </span>
-</p>
-<% if application_summary.adjustments_made? %>
-  <p>
+  <% if application_summary.adjustments_made? %>
+    <br>
     <span class="govuk-body-l">
       <strong><%= t('.allowed') %></strong>
       <%= application_summary.formatted_total_cost %><br>
     </span>
+  <% end %>
   </p>
-<% end %>
 <p class="govuk-body-m">
   <strong><%= t('.service') %> </strong>
   <%= application_summary.service_name %>

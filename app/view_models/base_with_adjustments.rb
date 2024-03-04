@@ -1,5 +1,5 @@
 class BaseWithAdjustments < BaseViewModel
-  attribute :adjustment_events, default: []
+  attribute :adjustment_comment
 
   def self.adjustable_attribute(attribute_name, type, options = {})
     attribute attribute_name, type, **options
@@ -11,12 +11,5 @@ class BaseWithAdjustments < BaseViewModel
 
   def any_adjustments?
     attributes.any? { |name, value| name.end_with?('_original') && value.present? }
-  end
-
-  def previous_explanation
-    field = adjustment_events.last
-    return unless field
-
-    field.details['comment']
   end
 end

@@ -4,12 +4,12 @@ RSpec.describe Nsm::V1::Disbursement do
   let(:disbursement) { described_class.new(args) }
   let(:args) { {} }
 
-  describe '#provider_requested_total_cost_without_vat' do
+  describe '#original_total_cost_without_vat' do
     context 'when original value is present' do
       let(:args) { { 'total_cost_without_vat_original' => 100 } }
 
       it 'returns the explicit original value' do
-        expect(disbursement.provider_requested_total_cost_without_vat).to eq(100)
+        expect(disbursement.original_total_cost_without_vat).to eq(100)
       end
     end
 
@@ -17,38 +17,44 @@ RSpec.describe Nsm::V1::Disbursement do
       let(:args) { { 'total_cost_without_vat' => 100 } }
 
       it 'returns the current value' do
-        expect(disbursement.provider_requested_total_cost_without_vat).to eq(100)
+        expect(disbursement.original_total_cost_without_vat).to eq(100)
       end
     end
   end
 
   describe '#provider_requested_total_cost' do
-    it 'returns the cost calculated by the CostCalculator' do
-      allow(CostCalculator).to receive(:cost).with(:disbursement, disbursement).and_return(300)
+    let(:args) { { 'total_cost_without_vat_original' => 240, 'vat_amount_original' => 60 } }
+
+    it 'calculates the cost' do
       expect(disbursement.provider_requested_total_cost).to eq(300)
     end
   end
 
   describe '#caseworker_total_cost' do
-    it 'returns 0 if total_cost_without_vat is zero' do
-      disbursement.total_cost_without_vat = 0
-      expect(disbursement.caseworker_total_cost).to eq(0)
+    context 'when amount without vat is zero' do
+      let(:args) { { 'total_cost_without_vat' => 0, 'vat_amount' => 60 } }
+
+      it 'returns 0' do
+        expect(disbursement.caseworker_total_cost).to eq(0)
+      end
     end
 
-    it 'returns the provider_requested_total_cost if total_cost_without_vat is not zero' do
-      disbursement.total_cost_without_vat = 100
-      allow(disbursement).to receive(:provider_requested_total_cost).and_return(400)
-      expect(disbursement.caseworker_total_cost).to eq(400)
+    context 'when amount without vat is not zero' do
+      let(:args) { { 'total_cost_without_vat' => 120, 'vat_amount' => 60 } }
+
+      it 'returns the calculated cost' do
+        expect(disbursement.caseworker_total_cost).to eq(180)
+      end
     end
   end
 
   describe '#disbursement_fields' do
+    let(:args) {  { 'total_cost_without_vat' => 83, 'vat_amount' => 17 } }
+
     it 'returns a hash with the correct fields if no miles' do
       allow(disbursement).to receive_messages(disbursement_date: Date.new(2022, 1, 1), type_name: 'type',
                                               details: 'details', prior_authority: 'prior_authority',
                                               vat_rate: 0.2, apply_vat: 'true')
-      allow(CostCalculator).to receive(:cost).with(:disbursement, disbursement).and_return(100)
-
       expected_fields = {
         date: '01 Jan 2022',
         type: 'Type',
@@ -65,8 +71,6 @@ RSpec.describe Nsm::V1::Disbursement do
       allow(disbursement).to receive_messages(disbursement_date: Date.new(2022, 1, 1), type_name: 'type',
                                               details: 'details', prior_authority: 'prior_authority',
                                               vat_rate: 0.2, miles: 10, apply_vat: 'true')
-      allow(CostCalculator).to receive(:cost).with(:disbursement, disbursement).and_return(100)
-
       expected_fields = {
         date: '01 Jan 2022',
         type: 'Type',
@@ -84,8 +88,6 @@ RSpec.describe Nsm::V1::Disbursement do
       allow(disbursement).to receive_messages(disbursement_date: Date.new(2022, 1, 1), type_name: 'type',
                                               details: 'details', prior_authority: 'prior_authority',
                                               vat_rate: 0.2, apply_vat: 'false')
-      allow(CostCalculator).to receive(:cost).with(:disbursement, disbursement).and_return(100)
-
       expected_fields = {
         date: '01 Jan 2022',
         type: 'Type',
@@ -99,9 +101,7 @@ RSpec.describe Nsm::V1::Disbursement do
   end
 
   describe 'table_fields' do
-    before do
-      allow(CostCalculator).to receive(:cost).and_return(10.0)
-    end
+    let(:args) { { 'total_cost_without_vat' => 10, 'vat_amount' => 0 } }
 
     it 'returns the fields for the table display if no adjustments' do
       allow(disbursement).to receive_messages(disbursement_type: 'Car')
