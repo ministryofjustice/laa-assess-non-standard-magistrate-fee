@@ -140,14 +140,14 @@ form_attributes: {})
       instance_double(
         Nsm::V1::Disbursement,
         id: '1c0f36fd-fd39-498a-823b-0a3837454563', # Getting from the factory
-        provider_requested_total_cost_without_vat: provider_requested_total_cost_without_vat,
+        original_total_cost_without_vat: original_total_cost_without_vat,
         total_cost_without_vat: current_total_cost_without_vat,
         vat_amount: 20.0,
       )
     end
     let(:current_total_cost_without_vat) { 100.0 }
     let(:total_cost_without_vat) { 'yes' }
-    let(:provider_requested_total_cost_without_vat) { 100.0 }
+    let(:original_total_cost_without_vat) { 100.0 }
 
     before do
       allow(Claim).to receive(:find).and_return(claim)

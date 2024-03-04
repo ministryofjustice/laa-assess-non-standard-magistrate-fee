@@ -9,7 +9,7 @@ module Nsm
           '-',
           NumberTo.pounds(rows.sum(&:provider_requested_amount)),
           '-',
-          NumberTo.pounds(rows.sum(&:allowed_amount))
+          NumberTo.pounds(rows.sum(&:caseworker_amount))
         ]
       end
 

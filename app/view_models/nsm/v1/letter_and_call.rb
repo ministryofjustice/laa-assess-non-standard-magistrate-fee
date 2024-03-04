@@ -5,8 +5,8 @@ module Nsm
       ID_FIELDS = %w[type value].freeze
 
       attribute :type, :translated
-      attribute :count, :integer
-      attribute :uplift, :integer
+      adjustable_attribute :count, :integer
+      adjustable_attribute :uplift, :integer
       attribute :pricing, :float
       attribute :vat_rate
       attribute :firm_office
@@ -16,7 +16,7 @@ module Nsm
       end
 
       def provider_requested_amount
-        CostCalculator.cost(:letter_and_call, self, :provider_requested)
+        calculate_cost(original: true)
       end
 
       def provider_requested_amount_inc_vat
@@ -25,34 +25,14 @@ module Nsm
         provider_requested_amount * (1 + vat_rate)
       end
 
-      def provider_requested_uplift
-        @provider_requested_uplift ||= value_from_first_event('uplift') || uplift
-      end
-
-      def provider_requested_count
-        value_from_first_event('count') || count
-      end
-
       def caseworker_amount
-        @caseworker_amount ||= CostCalculator.cost(:letter_and_call, self, :caseworker)
+        @caseworker_amount ||= calculate_cost
       end
 
       def caseworker_amount_inc_vat
         return caseworker_amount unless vat_registered?
 
         caseworker_amount * (1 + vat_rate)
-      end
-
-      def caseworker_uplift
-        uplift.to_i
-      end
-
-      def caseworker_count
-        count
-      end
-
-      def allowed_amount
-        adjustments.any? ? caseworker_amount : provider_requested_amount
       end
 
       def type_name
@@ -64,9 +44,11 @@ module Nsm
       end
 
       def form_attributes
-        attributes.slice!('pricing', 'adjustments', 'vat_rate', 'firm_office').merge(
+        attributes.except(
+          'pricing', 'adjustment_comment', 'vat_rate', 'firm_office', 'count_original', 'uplift_original'
+        ).merge(
           'type' => type.value,
-          'explanation' => previous_explanation,
+          'explanation' => adjustment_comment,
         )
       end
 
@@ -74,18 +56,18 @@ module Nsm
         [
           type.to_s,
           count.to_s,
-          "#{provider_requested_uplift.to_i}%",
+          "#{original_uplift.to_i}%",
           NumberTo.pounds(provider_requested_amount),
-          adjustments.any? ? "#{caseworker_uplift}%" : '',
-          adjustments.any? ? NumberTo.pounds(caseworker_amount) : '',
+          any_adjustments? ? "#{uplift}%" : '',
+          any_adjustments? ? NumberTo.pounds(caseworker_amount) : '',
         ]
       end
 
       def provider_fields
         rows = {
-          '.number' => provider_requested_count.to_s,
+          '.number' => original_count.to_s,
           '.rate' => NumberTo.pounds(pricing),
-          '.uplift_requested' => "#{provider_requested_uplift.to_i}%",
+          '.uplift_requested' => "#{original_uplift.to_i}%",
         }
 
         if vat_registered?
@@ -99,7 +81,14 @@ module Nsm
       end
 
       def uplift?
-        !provider_requested_uplift.to_i.zero?
+        !original_uplift.to_i.zero?
+      end
+
+      private
+
+      def calculate_cost(original: false)
+        scoped_count, scoped_uplift = original ? [original_count, original_uplift] : [count, uplift]
+        pricing * scoped_count * (100 + scoped_uplift.to_i) / 100
       end
     end
   end

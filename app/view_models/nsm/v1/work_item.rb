@@ -6,11 +6,11 @@ module Nsm
 
       attribute :id, :string
       attribute :work_type, :translated
-      attribute :time_spent, :time_period
+      adjustable_attribute :time_spent, :time_period
       attribute :completed_on, :date
 
       attribute :pricing, :float
-      attribute :uplift, :integer
+      adjustable_attribute :uplift, :integer
       attribute :fee_earner, :string
       attribute :vat_rate, :float
       attribute :firm_office
@@ -20,7 +20,7 @@ module Nsm
       end
 
       def provider_requested_amount
-        @provider_requested_amount ||= CostCalculator.cost(:work_item, self, :provider_requested)
+        @provider_requested_amount ||= calculate_cost(original: true)
       end
 
       def provider_requested_amount_inc_vat
@@ -29,16 +29,8 @@ module Nsm
         provider_requested_amount * (1 + vat_rate)
       end
 
-      def provider_requested_time_spent
-        @provider_requested_time_spent ||= value_from_first_event('time_spent') || time_spent.to_i
-      end
-
-      def provider_requested_uplift
-        @provider_requested_uplift ||= value_from_first_event('uplift') || uplift.to_i
-      end
-
       def caseworker_amount
-        @caseworker_amount ||= CostCalculator.cost(:work_item, self, :caseworker)
+        @caseworker_amount ||= calculate_cost
       end
 
       def caseworker_amount_inc_vat
@@ -47,31 +39,23 @@ module Nsm
         caseworker_amount * (1 + vat_rate)
       end
 
-      def caseworker_time_spent
-        time_spent.to_i
-      end
-
-      def caseworker_uplift
-        uplift.to_i
-      end
-
       def uplift?
-        !provider_requested_uplift.to_i.zero?
+        !original_uplift.to_i.zero?
       end
 
       def form_attributes
         attributes.slice('time_spent', 'uplift').merge(
-          'explanation' => previous_explanation
+          'explanation' => adjustment_comment
         )
       end
 
       def table_fields
         [
           work_type.to_s,
-          "#{provider_requested_uplift.to_i}%",
-          ApplicationController.helpers.format_period(provider_requested_time_spent, style: :long),
-          adjustments.any? ? "#{caseworker_uplift}%" : '',
-          adjustments.any? ? ApplicationController.helpers.format_period(caseworker_time_spent, style: :long) : ''
+          "#{original_uplift.to_i}%",
+          ApplicationController.helpers.format_period(original_time_spent, style: :long),
+          any_adjustments? ? "#{uplift.to_i}%" : '',
+          any_adjustments? ? ApplicationController.helpers.format_period(time_spent.to_i, style: :long) : ''
         ]
       end
 
@@ -83,9 +67,9 @@ module Nsm
       def provider_fields
         rows = {
           '.date' => format_in_zone(completed_on),
-          '.time_spent' => format_period(provider_requested_time_spent),
+          '.time_spent' => format_period(original_time_spent),
           '.fee_earner' => fee_earner.to_s,
-          '.uplift_claimed' => "#{provider_requested_uplift}%",
+          '.uplift_claimed' => "#{original_uplift}%",
         }
         if vat_registered?
           rows['.vat'] = NumberTo.percentage(vat_rate)
@@ -97,6 +81,13 @@ module Nsm
         rows
       end
       # rubocop:enable Metrics/MethodLength
+
+      private
+
+      def calculate_cost(original: false)
+        scoped_uplift, scoped_time_spent = original ? [original_uplift, original_time_spent] : [uplift, time_spent]
+        pricing * scoped_time_spent * (100 + scoped_uplift.to_i) / 100 / 60
+      end
     end
   end
 end

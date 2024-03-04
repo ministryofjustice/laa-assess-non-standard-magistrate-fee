@@ -37,11 +37,11 @@ module Nsm
     end
 
     def new_total_cost_without_vat
-      total_cost_without_vat == 'yes' ? 0 : item.provider_requested_total_cost_without_vat
+      total_cost_without_vat == 'yes' ? 0 : item.original_total_cost_without_vat
     end
 
     def new_vat_amount
-      total_cost_without_vat == 'yes' ? 0 : item.provider_requested_vat_amount
+      total_cost_without_vat == 'yes' ? 0 : item.original_vat_amount
     end
 
     def data_has_changed?
