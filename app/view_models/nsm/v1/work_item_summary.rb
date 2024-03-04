@@ -25,7 +25,7 @@ module Nsm
       def summed_values(work_items)
         [
           work_items.sum(&:provider_requested_amount_inc_vat),
-          work_items.sum(&:provider_requested_time_spent),
+          work_items.sum(&:original_time_spent),
           work_items.sum(&:caseworker_amount_inc_vat),
           work_items.sum(&:time_spent),
         ]

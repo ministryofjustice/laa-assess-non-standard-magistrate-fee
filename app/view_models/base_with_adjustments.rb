@@ -1,19 +1,15 @@
 class BaseWithAdjustments < BaseViewModel
-  attribute :adjustments, default: []
+  attribute :adjustment_comment
 
-  def previous_explanation
-    field = adjustments.last
-    return unless field
-
-    field.details['comment']
+  def self.adjustable_attribute(attribute_name, type, options = {})
+    attribute attribute_name, type, **options
+    attribute :"#{attribute_name}_original", type, **options
+    define_method :"original_#{attribute_name}" do
+      attributes["#{attribute_name}_original"] || attributes[attribute_name.to_s]
+    end
   end
 
-  private
-
-  def value_from_first_event(field_name)
-    field = adjustments.find { |adj| adj.details['field'] == field_name }
-    return unless field
-
-    field.details['from']
+  def any_adjustments?
+    adjustment_comment.present?
   end
 end

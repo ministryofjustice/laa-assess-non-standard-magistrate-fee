@@ -6,16 +6,16 @@ RSpec.describe Nsm::DisbursementsForm do
     instance_double(
       Nsm::V1::Disbursement,
       id: '1c0f36fd-fd39-498a-823b-0a3837454563', # Getting from the factory
-      provider_requested_total_cost_without_vat: provider_requested_total_cost_without_vat,
+      original_total_cost_without_vat: original_total_cost_without_vat,
       total_cost_without_vat: current_total_cost_without_vat,
       vat_amount: 20.0,
-      provider_requested_vat_amount: provider_requested_vat_amount,
+      original_vat_amount: original_vat_amount,
     )
   end
   let(:current_total_cost_without_vat) { 100.0 }
   let(:total_cost_without_vat) { 'yes' }
-  let(:provider_requested_vat_amount) { 20.0 }
-  let(:provider_requested_total_cost_without_vat) { 100.0 }
+  let(:original_vat_amount) { 20.0 }
+  let(:original_total_cost_without_vat) { 100.0 }
   let(:form) { described_class.new(claim:, total_cost_without_vat:, item:, explanation:, current_user:) }
   let(:explanation) { 'change to disbursements' }
   let(:current_user) { instance_double(User) }
@@ -100,8 +100,8 @@ RSpec.describe Nsm::DisbursementsForm do
     context 'when total_cost_without_vat is not "yes"' do
       let(:total_cost_without_vat) { 'no' }
 
-      it 'returns the provider_requested_total_cost_without_vat of the item' do
-        expect(form.send(:new_total_cost_without_vat)).to eq(item.provider_requested_total_cost_without_vat)
+      it 'returns the original_total_cost_without_vat of the item' do
+        expect(form.send(:new_total_cost_without_vat)).to eq(item.original_total_cost_without_vat)
       end
     end
   end

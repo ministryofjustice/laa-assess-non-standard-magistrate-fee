@@ -3,10 +3,6 @@ require 'rails_helper'
 RSpec.describe Nsm::V1::LettersAndCallsSummary, type: :model do
   subject { described_class.new(submission:) }
 
-  before do
-    allow(CostCalculator).to receive(:cost).and_return(10.50)
-  end
-
   let(:letters_and_calls) do
     [{ 'type' => { 'en' => 'Letters', 'value' => 'letters' }, 'count' => 12, 'uplift' => uplift, 'pricing' => 3.56 }]
   end
@@ -15,7 +11,7 @@ RSpec.describe Nsm::V1::LettersAndCallsSummary, type: :model do
 
   describe '#summary_row' do
     it 'returns an array of summary row fields' do
-      expect(subject.summary_row).to eq(['12', '-', '£10.50', '-', '£10.50'])
+      expect(subject.summary_row).to eq(['12', '-', '£42.72', '-', '£42.72'])
     end
   end
 
