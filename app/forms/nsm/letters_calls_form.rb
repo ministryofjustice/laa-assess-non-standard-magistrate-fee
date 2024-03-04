@@ -52,7 +52,7 @@ module Nsm
     end
 
     def new_uplift
-      uplift == 'yes' ? 0 : item.provider_requested_uplift
+      uplift == 'yes' ? 0 : item.original_uplift
     end
 
     def data_has_changed?

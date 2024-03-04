@@ -7,7 +7,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
     <h1 class="govuk-heading-xl">
-        <%= t('.heading', count: item.adjustments.count) %>
+        <%= t('.heading', count: item.any_adjustments? ? 1 : 0) %>
     </h1>
   </div>
   <div class="govuk-grid-column-two-thirds">
@@ -24,13 +24,13 @@
       %>
     </div>
 
-    <% if item.adjustments.any? %>
+    <% if item.any_adjustments? %>
       <h2 class="govuk-heading-l"><%= t('.laa_adjustments') %></h2>
 
       <%=
       rows = [
         [{ text: t('.refuse'), width: 'govuk-!-width-one-half' }, t(".refuse_status.#{item.total_cost_without_vat.zero?}")],
-        [t('.explanation'), item.previous_explanation.to_s]
+        [t('.explanation'), item.adjustment_comment]
       ]
       govuk_table(head: '', first_cell_is_header: true, rows:)
       %>
