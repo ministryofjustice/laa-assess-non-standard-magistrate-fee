@@ -51,6 +51,7 @@ RSpec.describe Nsm::V1::WorkItem do
           'uplift' => 0,
           'uplift_original' => 20,
           'pricing' => 24.0,
+          'adjustment_comment' => 'something'
         }
       end
 

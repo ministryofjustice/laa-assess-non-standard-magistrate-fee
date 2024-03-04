@@ -109,7 +109,7 @@ RSpec.describe Nsm::V1::Disbursement do
     end
 
     context 'when there are adjustments' do
-      let(:args) { { 'total_cost_without_vat_original' => 100 } }
+      let(:args) { { 'adjustment_comment' => 'something' } }
 
       it 'returns an array with the correct fields' do
         allow(disbursement).to receive_messages(type_name: 'type', provider_requested_total_cost: 100,

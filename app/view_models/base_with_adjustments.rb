@@ -10,6 +10,6 @@ class BaseWithAdjustments < BaseViewModel
   end
 
   def any_adjustments?
-    attributes.any? { |name, value| name.end_with?('_original') && value.present? }
+    adjustment_comment.present?
   end
 end

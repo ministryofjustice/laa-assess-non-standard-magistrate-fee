@@ -36,7 +36,7 @@ class BaseAdjustmentForm
   end
 
   def ensure_original_field_value_set(field)
-    selected_record["#{field}_original"] = selected_record[field] if selected_record["#{field}_original"].nil?
+    selected_record["#{field}_original"] ||= selected_record[field]
   end
 
   def assign_new_attributes(field, value)

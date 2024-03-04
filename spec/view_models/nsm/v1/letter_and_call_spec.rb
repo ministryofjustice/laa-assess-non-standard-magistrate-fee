@@ -212,6 +212,7 @@ RSpec.describe Nsm::V1::LetterAndCall do
           'pricing' => 3.56,
           'count_original' => 15,
           'uplift_original' => 95,
+          'adjustment_comment' => 'something'
         }
       end
 
