@@ -23,6 +23,8 @@ class NotifyAppStore
     def options(message)
       options = { body: message.to_json }
 
+      return options unless AppStoreTokenProvider.instance.authentication_configured?
+
       token = AppStoreTokenProvider.instance.bearer_token
 
       options.merge(
