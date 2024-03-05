@@ -4,6 +4,6 @@
                   rows: model.table_rows,) %>
 
   <p>
-    <%= link_to t('.adjust'), '#TODO: CRM457-1115' %>
+    <%= link_to t('.adjust'), prior_authority_application_adjustments_path(model.application_details.id) %>
   </p>
 <% end %>

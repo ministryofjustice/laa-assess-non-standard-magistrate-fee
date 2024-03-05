@@ -91,36 +91,731 @@ RSpec.describe PriorAuthority::V1::Quote do
     end
   end
 
-  describe '#formatted_travel_cost_per_unit' do
-    subject(:formatted_travel_cost_per_unit) do
-      described_class.new(travel_cost_per_hour: 10.1).formatted_travel_cost_per_unit
-    end
+  context 'with service costs' do
+    describe '#requested_humanized_units' do
+      subject(:requested_humanized_units) do
+        described_class.new(attributes).requested_humanized_units
+      end
 
-    it 'returns the humanized currency value sentence' do
-      expect(formatted_travel_cost_per_unit).to eq '£10.10 per hour'
-    end
-  end
+      context 'with adusted number of items' do
+        let(:attributes) do
+          {
+            cost_type: 'per_item',
+            item_type: 'word',
+            items: 1000,
+            items_original: 900
+          }
+        end
 
-  describe '#formatted_base_cost_per_unit' do
-    subject(:formatted_base_cost_per_unit) do
-      described_class.new(cost_type:, **cost_attributes).formatted_base_cost_per_unit
-    end
+        it 'returns formatted original number of items' do
+          expect(requested_humanized_units).to eql '900 words'
+        end
+      end
 
-    context 'with cost type per_hour' do
-      let(:cost_type) { 'per_hour' }
-      let(:cost_attributes) { { cost_per_hour: 53.3 } }
+      context 'with unadusted number of items' do
+        let(:attributes) do
+          {
+            cost_type: 'per_item',
+            item_type: 'minute',
+            items: 120,
+          }
+        end
 
-      it 'returns the humanized currency value sentence' do
-        expect(formatted_base_cost_per_unit).to eq '£53.30 per hour'
+        it 'returns formatted number of items' do
+          expect(requested_humanized_units).to eql '120 minutes'
+        end
+      end
+
+      context 'with adjusted time period' do
+        let(:attributes) do
+          {
+            cost_type: 'per_hour',
+            item_type: 'item',
+            period: 90,
+            period_original: 120
+          }
+        end
+
+        it 'returns formatted original time period' do
+          expect(requested_humanized_units).to eql '2 hours 0 minutes'
+        end
+      end
+
+      context 'with unadjusted time period' do
+        let(:attributes) do
+          {
+            cost_type: 'per_hour',
+            item_type: 'item',
+            period: 90,
+          }
+        end
+
+        it 'returns formatted original time period' do
+          expect(requested_humanized_units).to eql '1 hour 30 minutes'
+        end
       end
     end
 
-    context 'with cost type per_item' do
-      let(:cost_type) { 'per_item' }
-      let(:cost_attributes) { { cost_per_item: 33.2 } }
+    describe '#requested_humanized_cost_per_unit' do
+      subject(:requested_humanized_cost_per_unit) do
+        described_class.new(attributes).requested_humanized_cost_per_unit
+      end
 
-      it 'returns the humanized currency value sentence' do
-        expect(formatted_base_cost_per_unit).to eq '£33.20 per item'
+      context 'with adusted cost per item (word)' do
+        let(:attributes) do
+          {
+            cost_type: 'per_item',
+            item_type: 'word',
+            items: 1000,
+            cost_per_item: '0.10',
+            cost_per_item_original: '0.20'
+          }
+        end
+
+        it 'returns formatted original cost per item' do
+          expect(requested_humanized_cost_per_unit).to eql '£0.20 per word'
+        end
+      end
+
+      context 'with unadusted cost per item (word)' do
+        let(:attributes) do
+          {
+            cost_type: 'per_item',
+            item_type: 'word',
+            items: 1000,
+            cost_per_item: '0.20',
+          }
+        end
+
+        it 'returns formatted cost per item' do
+          expect(requested_humanized_cost_per_unit).to eql '£0.20 per word'
+        end
+      end
+
+      context 'with adjusted cost per hour AND adjusted period' do
+        let(:attributes) do
+          {
+            cost_type: 'per_hour',
+            cost_per_hour: '120.00',
+            cost_per_hour_original: '150.00',
+            period: 90,
+            period_original: 180,
+          }
+        end
+
+        it 'returns formatted original cost per hour' do
+          expect(requested_humanized_cost_per_unit).to eql '£150.00 per hour'
+        end
+      end
+
+      context 'with adjusted cost per hour BUT unadjusted period' do
+        let(:attributes) do
+          {
+            cost_type: 'per_hour',
+            cost_per_hour: '120.00',
+            cost_per_hour_original: '150.00',
+          }
+        end
+
+        it 'returns formatted original cost per hour' do
+          expect(requested_humanized_cost_per_unit).to eql '£150.00 per hour'
+        end
+      end
+
+      context 'with unadjusted cost per hour BUT adjusted period' do
+        let(:attributes) do
+          {
+            cost_type: 'per_hour',
+            cost_per_hour: '120.00',
+            period_original: 90,
+          }
+        end
+
+        it 'returns formatted cost per hour' do
+          expect(requested_humanized_cost_per_unit).to eql '£120.00 per hour'
+        end
+      end
+    end
+
+    describe '#requested_formatted_service_cost_total' do
+      subject(:requested_formatted_service_cost_total) do
+        described_class.new(attributes).requested_formatted_service_cost_total
+      end
+
+      context 'with hourly adjustments' do
+        let(:attributes) do
+          {
+            cost_type: 'per_hour',
+            cost_per_hour: '120.00',
+            period: 120,
+            period_original: 90,
+          }
+        end
+
+        it 'returns formatted original total' do
+          expect(requested_formatted_service_cost_total).to eql '£180.00'
+        end
+      end
+
+      context 'without hourly adjustments' do
+        let(:attributes) do
+          {
+            cost_type: 'per_hour',
+            cost_per_hour: '120.00',
+            period: 120,
+          }
+        end
+
+        it 'returns formatted total' do
+          expect(requested_formatted_service_cost_total).to eql '£240.00'
+        end
+
+        context 'with item adjustments' do
+          let(:attributes) do
+            {
+              cost_type: 'per_item',
+              item_type: 'page',
+              cost_per_item: '50.00',
+              items: 9,
+              items_original: 10,
+            }
+          end
+
+          it 'returns formatted original total' do
+            expect(requested_formatted_service_cost_total).to eql '£500.00'
+          end
+
+          context 'without item adjustments' do
+            let(:attributes) do
+              {
+                cost_type: 'per_item',
+                item_type: 'page',
+                cost_per_item: '50.00',
+                items: 11,
+              }
+            end
+
+            it 'returns formatted original total' do
+              expect(requested_formatted_service_cost_total).to eql '£550.00'
+            end
+          end
+        end
+      end
+    end
+
+    describe '#adjusted_humanized_units' do
+      subject(:adjusted_humanized_units) do
+        described_class.new(attributes).adjusted_humanized_units
+      end
+
+      context 'with adjusted items' do
+        let(:attributes) do
+          {
+            cost_type: 'per_item',
+            item_type: 'word',
+            items: 1000,
+            items_original: 900
+          }
+        end
+
+        it 'returns formatted adjusted number of items' do
+          expect(adjusted_humanized_units).to eql '1000 words'
+        end
+      end
+
+      context 'with adjusted item cost' do
+        let(:attributes) do
+          {
+            cost_type: 'per_item',
+            item_type: 'word',
+            items: 1000,
+            cost_per_item_original: '1.00'
+          }
+        end
+
+        it 'returns formatted adjusted number of items' do
+          expect(adjusted_humanized_units).to eql '1000 words'
+        end
+      end
+
+      context 'without any item unadustment' do
+        let(:attributes) do
+          {
+            cost_type: 'per_item',
+            item_type: 'minute',
+            items: 120,
+            cost_per_item: '5.00'
+          }
+        end
+
+        it 'returns formatted number of items' do
+          expect(adjusted_humanized_units).to be_nil
+        end
+      end
+
+      context 'with adjusted time period' do
+        let(:attributes) do
+          {
+            cost_type: 'per_hour',
+            period: 90,
+            period_original: 120
+          }
+        end
+
+        it 'returns formatted original time period' do
+          expect(adjusted_humanized_units).to eql '1 hour 30 minutes'
+        end
+      end
+
+      context 'with adjusted cost per hour' do
+        let(:attributes) do
+          {
+            cost_type: 'per_hour',
+            period: 90,
+            cost_per_hour_original: 120
+          }
+        end
+
+        it 'returns formatted original time period' do
+          expect(adjusted_humanized_units).to eql '1 hour 30 minutes'
+        end
+      end
+
+      context 'without time period or cost unadustment' do
+        let(:attributes) do
+          {
+            cost_type: 'per_hour',
+            period: 90,
+            cost_per_hour: '120.00'
+          }
+        end
+
+        it 'returns formatted time period' do
+          expect(adjusted_humanized_units).to be_nil
+        end
+      end
+    end
+
+    describe '#adjusted_humanized_cost_per_unit' do
+      subject(:adjusted_humanized_cost_per_unit) do
+        described_class.new(attributes).adjusted_humanized_cost_per_unit
+      end
+
+      context 'with adjusted cost per item' do
+        let(:attributes) do
+          {
+            cost_type: 'per_item',
+            item_type: 'word',
+            items: 1000,
+            cost_per_item: '0.50',
+            cost_per_item_original: '1.00'
+          }
+        end
+
+        it 'returns formatted adjusted cost per item (word)' do
+          expect(adjusted_humanized_cost_per_unit).to eql '£0.50 per word'
+        end
+      end
+
+      context 'with unadjusted item cost BUT adjusted item count' do
+        let(:attributes) do
+          {
+            cost_type: 'per_item',
+            item_type: 'word',
+            items: 1000,
+            items_original: 1000,
+            cost_per_item: '0.50'
+          }
+        end
+
+        it 'returns formatted unadjusted cost per item (word)' do
+          expect(adjusted_humanized_cost_per_unit).to eql '£0.50 per word'
+        end
+      end
+
+      context 'without any item adustment' do
+        let(:attributes) do
+          {
+            cost_type: 'per_item',
+            item_type: 'word',
+            items: 1000,
+            cost_per_item: '0.50'
+          }
+        end
+
+        it 'returns nil' do
+          expect(adjusted_humanized_cost_per_unit).to be_nil
+        end
+      end
+
+      context 'with adjusted time period BUT unadjusted cost per hour' do
+        let(:attributes) do
+          {
+            cost_type: 'per_hour',
+            period: 90,
+            period_original: 120,
+            cost_per_hour: '111.00',
+          }
+        end
+
+        it 'returns formatted cost per hour' do
+          expect(adjusted_humanized_cost_per_unit).to eql '£111.00 per hour'
+        end
+      end
+
+      context 'with adjusted cost per hour BUT unadjusted time period' do
+        let(:attributes) do
+          {
+            cost_type: 'per_hour',
+            period: 90,
+            cost_per_hour: '100.00',
+            cost_per_hour_original: '111.00',
+          }
+        end
+
+        it 'returns formatted cost per hour' do
+          expect(adjusted_humanized_cost_per_unit).to eql '£100.00 per hour'
+        end
+      end
+
+      context 'without time period or cost adustment' do
+        let(:attributes) do
+          {
+            cost_type: 'per_hour',
+            period: 90,
+            cost_per_hour: '120.00'
+          }
+        end
+
+        it 'returns formatted time period' do
+          expect(adjusted_humanized_cost_per_unit).to be_nil
+        end
+      end
+    end
+
+    describe '#adjusted_formatted_service_cost_total' do
+      subject(:adjusted_formatted_service_cost_total) do
+        described_class.new(attributes).adjusted_formatted_service_cost_total
+      end
+
+      context 'with hourly adjustments' do
+        let(:attributes) do
+          {
+            cost_type: 'per_hour',
+            cost_per_hour: '120.00',
+            period: 120,
+            period_original: 90,
+          }
+        end
+
+        it 'returns formatted adjusted total' do
+          expect(adjusted_formatted_service_cost_total).to eql '£240.00'
+        end
+      end
+
+      context 'without hourly adjustments' do
+        let(:attributes) do
+          {
+            cost_type: 'per_hour',
+            cost_per_hour: '120.00',
+            period: 120,
+          }
+        end
+
+        it 'returns nil' do
+          expect(adjusted_formatted_service_cost_total).to be_nil
+        end
+
+        context 'with item adjustments' do
+          let(:attributes) do
+            {
+              cost_type: 'per_item',
+              item_type: 'page',
+              cost_per_item: '50.00',
+              items: 9,
+              items_original: 10,
+            }
+          end
+
+          it 'returns formatted adjusted total' do
+            expect(adjusted_formatted_service_cost_total).to eql '£450.00'
+          end
+
+          context 'without item adjustments' do
+            let(:attributes) do
+              {
+                cost_type: 'per_item',
+                item_type: 'page',
+                cost_per_item: '50.00',
+                items: 11,
+              }
+            end
+
+            it 'returns formatted original total' do
+              expect(adjusted_formatted_service_cost_total).to be_nil
+            end
+          end
+        end
+      end
+    end
+  end
+
+  context 'with travel costs' do
+    describe '#requested_travel_units' do
+      subject(:requested_travel_units) do
+        described_class.new(attributes).requested_travel_units
+      end
+
+      context 'with adjusted travel time' do
+        let(:attributes) { { travel_time: 90, travel_time_original: 120 } }
+
+        it 'returns formatted original travel time' do
+          expect(requested_travel_units).to eql '2 hours 0 minutes'
+        end
+      end
+
+      context 'with unadjusted travel time' do
+        let(:attributes) { { travel_time: 90 } }
+
+        it 'returns formatted travel time' do
+          expect(requested_travel_units).to eql '1 hour 30 minutes'
+        end
+      end
+
+      context 'with nil travel time' do
+        let(:attributes) { { travel_time: nil } }
+
+        it 'returns nil' do
+          expect(requested_travel_units).to be_nil
+        end
+      end
+    end
+
+    describe '#requested_formatted_travel_cost_per_hour' do
+      subject(:requested_formatted_travel_cost_per_hour) do
+        described_class.new(attributes).requested_formatted_travel_cost_per_hour
+      end
+
+      context 'with adjusted travel cost per hour' do
+        let(:attributes) { { travel_cost_per_hour: '25.00', travel_cost_per_hour_original: '30.00' } }
+
+        it 'returns formatted original travel cost per hour' do
+          expect(requested_formatted_travel_cost_per_hour).to eql '£30.00 per hour'
+        end
+      end
+
+      context 'with unadjusted travel cost per hour' do
+        let(:attributes) { { travel_cost_per_hour: '28:00' } }
+
+        it 'returns formatted travel cost per hour' do
+          expect(requested_formatted_travel_cost_per_hour).to eql '£28.00 per hour'
+        end
+      end
+
+      context 'with nil travel cost per hour' do
+        let(:attributes) { { travel_cost_per_hour: nil } }
+
+        it 'returns nil' do
+          expect(requested_formatted_travel_cost_per_hour).to be_nil
+        end
+      end
+    end
+
+    describe '#requested_formatted_travel_cost' do
+      subject(:requested_formatted_travel_cost) do
+        described_class.new(attributes).requested_formatted_travel_cost
+      end
+
+      context 'with adjusted travel cost' do
+        let(:attributes) do
+          {
+            travel_time: 90,
+            travel_time_original: 120,
+            travel_cost_per_hour: '25.00',
+            travel_cost_per_hour_original: '30.00',
+          }
+        end
+
+        it 'returns formatted original travel cost' do
+          expect(requested_formatted_travel_cost).to eql '£60.00'
+        end
+      end
+
+      context 'with unadjusted travel costs' do
+        let(:attributes) do
+          {
+            travel_time: 90,
+            travel_cost_per_hour: '25.00',
+          }
+        end
+
+        it 'returns formatted travel cost' do
+          expect(requested_formatted_travel_cost).to eql '£37.50'
+        end
+      end
+
+      context 'with nil travel time' do
+        let(:attributes) do
+          {
+            travel_time: nil,
+            travel_cost_per_hour: '25.00',
+          }
+        end
+
+        it 'returns nil' do
+          expect(requested_formatted_travel_cost).to be_nil
+        end
+      end
+
+      context 'with nil travel cost per hour' do
+        let(:attributes) do
+          {
+            travel_time: 90,
+            travel_cost_per_hour: nil,
+          }
+        end
+
+        it 'returns nil' do
+          expect(requested_formatted_travel_cost).to be_nil
+        end
+      end
+    end
+
+    describe '#adjusted_travel_units' do
+      subject(:adjusted_travel_units) do
+        described_class.new(attributes).adjusted_travel_units
+      end
+
+      context 'with adjusted travel time' do
+        let(:attributes) { { travel_time: 90, travel_time_original: 120 } }
+
+        it 'returns formatted adjusted travel time' do
+          expect(adjusted_travel_units).to eql '1 hour 30 minutes'
+        end
+      end
+
+      context 'with unadjusted travel time' do
+        let(:attributes) { { travel_time: 90 } }
+
+        it 'returns nil' do
+          expect(adjusted_travel_units).to be_nil
+        end
+      end
+
+      context 'with nil travel time' do
+        let(:attributes) { { travel_time: nil } }
+
+        it 'returns nil' do
+          expect(adjusted_travel_units).to be_nil
+        end
+      end
+    end
+
+    describe '#adjusted_formatted_travel_cost_per_hour' do
+      subject(:adjusted_formatted_travel_cost_per_hour) do
+        described_class.new(attributes).adjusted_formatted_travel_cost_per_hour
+      end
+
+      context 'with adjusted travel cost per hour' do
+        let(:attributes) { { travel_cost_per_hour: '25.00', travel_cost_per_hour_original: '30.00' } }
+
+        it 'returns formatted adjusted travel cost per hour' do
+          expect(adjusted_formatted_travel_cost_per_hour).to eql '£25.00 per hour'
+        end
+      end
+
+      context 'with unadjusted travel cost per hour' do
+        let(:attributes) { { travel_cost_per_hour: '25.00' } }
+
+        it 'returns nil' do
+          expect(adjusted_formatted_travel_cost_per_hour).to be_nil
+        end
+      end
+
+      context 'with unadjusted travel cost per hour BUT adjusted travel time' do
+        let(:attributes) { { travel_cost_per_hour: '25.00', travel_time_original: 90 } }
+
+        it 'returns formatted unadjusted travel cost per hour' do
+          expect(adjusted_formatted_travel_cost_per_hour).to eql '£25.00 per hour'
+        end
+      end
+
+      context 'with nil travel cost per hour' do
+        let(:attributes) { { travel_cost_per_hour: nil } }
+
+        it 'returns nil' do
+          expect(adjusted_formatted_travel_cost_per_hour).to be_nil
+        end
+      end
+    end
+
+    describe '#adjusted_formatted_travel_cost' do
+      subject(:adjusted_formatted_travel_cost) do
+        described_class.new(attributes).adjusted_formatted_travel_cost
+      end
+
+      context 'with adjusted travel time and travel cost per hour' do
+        let(:attributes) do
+          {
+            travel_time: 90,
+            travel_time_original: 120,
+            travel_cost_per_hour: '15.00',
+            travel_cost_per_hour_original: '30.00'
+          }
+        end
+
+        it 'returns formatted adjusted travel cost per hour multiplied by hour' do
+          expect(adjusted_formatted_travel_cost).to eql '£22.50'
+        end
+      end
+
+      context 'with unadjusted travel time and travel cost per hour' do
+        let(:attributes) do
+          {
+            travel_time: 120,
+            travel_cost_per_hour: '30.00',
+          }
+        end
+
+        it 'returns ni' do
+          expect(adjusted_formatted_travel_cost).to be_nil
+        end
+      end
+
+      context 'with unadjusted travel cost per hour BUT adjusted travel time' do
+        let(:attributes) do
+          {
+            travel_time: 90,
+            travel_time_original: 120,
+            travel_cost_per_hour: '30.00',
+          }
+        end
+
+        it 'returns formatted unadjusted travel cost per hour' do
+          expect(adjusted_formatted_travel_cost).to eql '£45.00'
+        end
+      end
+
+      context 'with unadjusted travel time BUT adjusted travel cost per hour' do
+        let(:attributes) do
+          {
+            travel_time: 90,
+            travel_cost_per_hour: '15.00',
+            travel_cost_per_hour_original: '30.00'
+          }
+        end
+
+        it 'returns formatted unadjusted travel cost per hour' do
+          expect(adjusted_formatted_travel_cost).to eql '£22.50'
+        end
+      end
+
+      context 'with nil travel cost per hour' do
+        let(:attributes) { { travel_cost_per_hour: nil } }
+
+        it 'returns nil' do
+          expect(adjusted_formatted_travel_cost).to be_nil
+        end
       end
 
       context 'with unusual item type' do

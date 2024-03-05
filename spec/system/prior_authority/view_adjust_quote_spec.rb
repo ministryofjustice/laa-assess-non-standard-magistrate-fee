@@ -153,7 +153,7 @@ RSpec.describe 'View Adjust quote tab' do
         within('.govuk-table#service_costs') do
           expect(page)
             .to have_content('Amount100 minutes')
-            .and have_content('Cost£2.00 per item') # TODO: will become per minute
+            .and have_content('Cost£2.00 per minute')
             .and have_content('Total£200.00')
         end
 

@@ -7,11 +7,8 @@ module PriorAuthority
     def requested_formatted_travel_cost_per_hour
       return if requested_travel_cost_per_hour.zero?
 
-      I18n.t(
-        'per_hour',
-        gbp: NumberTo.pounds(requested_travel_cost_per_hour),
-        scope: 'prior_authority.application_details.items.per_unit_descriptions'
-      )
+      "#{NumberTo.pounds(requested_travel_cost_per_hour)} " \
+        "#{I18n.t('prior_authority.application_details.items.per_unit_descriptions.per_hour')}"
     end
 
     def requested_formatted_travel_cost
@@ -46,11 +43,8 @@ module PriorAuthority
     def adjusted_formatted_travel_cost_per_hour
       return unless adjusted_travel_cost_per_hour
 
-      I18n.t(
-        'per_hour',
-        gbp: NumberTo.pounds(adjusted_travel_cost_per_hour),
-        scope: 'prior_authority.application_details.items.per_unit_descriptions'
-      )
+      "#{NumberTo.pounds(adjusted_travel_cost_per_hour)} " \
+        "#{I18n.t('prior_authority.application_details.items.per_unit_descriptions.per_hour')}"
     end
 
     def adjusted_formatted_travel_cost

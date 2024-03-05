@@ -10,15 +10,24 @@ module PriorAuthority
     end
 
     def requested_humanized_cost_per_unit
-      I18n.t(
-        cost_type,
-        gbp: requested_base_cost_per_unit,
-        scope: 'prior_authority.application_details.items.per_unit_descriptions'
-      )
+      i18n_key = cost_type == 'per_item' ? "per_#{item_type}" : cost_type
+
+      "#{requested_base_cost_per_unit} " \
+        "#{I18n.t(i18n_key, scope: 'prior_authority.application_details.items.per_unit_descriptions')}"
     end
 
     def requested_formatted_service_cost_total
       NumberTo.pounds(requested_base_cost)
+    end
+
+    private
+
+    def requested_items
+      original_items
+    end
+
+    def requested_period
+      original_period
     end
 
     def requested_base_cost
@@ -30,16 +39,6 @@ module PriorAuthority
           ((requested_period.minutes / 60.0) * requested_cost_per_hour)
         ).round(2)
       end
-    end
-
-    private
-
-    def requested_items
-      original_items
-    end
-
-    def requested_period
-      original_period
     end
 
     def requested_base_cost_per_unit
@@ -76,11 +75,10 @@ module PriorAuthority
     def adjusted_humanized_cost_per_unit
       return unless adjusted_formatted_cost_per_unit
 
-      I18n.t(
-        cost_type,
-        gbp: adjusted_formatted_cost_per_unit,
-        scope: 'prior_authority.application_details.items.per_unit_descriptions'
-      )
+      i18n_key = cost_type == 'per_item' ? "per_#{item_type}" : cost_type
+
+      "#{adjusted_formatted_cost_per_unit} " \
+        "#{I18n.t(i18n_key, scope: 'prior_authority.application_details.items.per_unit_descriptions')}"
     end
 
     def adjusted_formatted_service_cost_total

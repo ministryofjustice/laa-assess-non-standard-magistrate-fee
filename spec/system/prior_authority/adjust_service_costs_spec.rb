@@ -130,7 +130,7 @@ RSpec.describe 'Adjust service costs' do
       within('.govuk-table#service_costs') do
         expect(page)
           .to have_content('Amount100 minutes60 minutes')
-          .and have_content('Cost£2.00 per item£2.00 per item')
+          .and have_content('Cost£2.00 per minute£2.00 per minute')
           .and have_content('Total£200.00£120.00')
       end
     end
@@ -144,7 +144,7 @@ RSpec.describe 'Adjust service costs' do
       within('.govuk-table#service_costs') do
         expect(page)
           .to have_content('Amount100 minutes100 minutes')
-          .and have_content('Cost£2.00 per item£1.50 per item')
+          .and have_content('Cost£2.00 per minute£1.50 per minute')
           .and have_content('Total£200.00£150.00')
       end
     end
