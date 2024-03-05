@@ -35,16 +35,11 @@ module PriorAuthority
     private
 
     def requested_items
-      value_from_first_event('items') || items
+      original_items
     end
 
     def requested_period
-      # TODO: this could be simplified if the cast time period behaved as a nilClass
-      # e.g. Type::TimePeriod.new.cast(value_from_first_event('period')) || period
-      requested_period = Type::TimePeriod.new.cast(value_from_first_event('period'))
-      return requested_period unless requested_period.nil?
-
-      period
+      original_period
     end
 
     def requested_base_cost_per_unit
@@ -56,11 +51,11 @@ module PriorAuthority
     end
 
     def requested_cost_per_item
-      (value_from_first_event('cost_per_item') || cost_per_item).to_f
+      original_cost_per_item
     end
 
     def requested_cost_per_hour
-      (value_from_first_event('cost_per_hour') || cost_per_hour).to_f
+      original_cost_per_hour
     end
   end
 
@@ -122,32 +117,19 @@ module PriorAuthority
     end
 
     def adjusted_items
-      return unless adjusted_from_value_for('items') || adjusted_from_value_for('cost_per_item')
-
-      adjusted_to_value_for('items') || items
+      items if items_original || cost_per_item_original
     end
 
     def adjusted_period
-      return unless adjusted_to_value_for('period') || adjusted_to_value_for('cost_per_hour')
-
-      # TODO: this could be simplified if the cast time period behaved as a nilClass
-      # e.g. Type::TimePeriod.new.cast(value_to_first_event('period')) || period
-      adjusted_period = Type::TimePeriod.new.cast(value_to_first_event('period'))
-      return adjusted_period unless adjusted_period.nil?
-
-      period
+      period if period_original || cost_per_hour_original
     end
 
     def adjusted_cost_per_item
-      return unless adjusted_to_value_for('items') || adjusted_to_value_for('cost_per_item')
-
-      (adjusted_to_value_for('cost_per_item') || cost_per_item).to_f
+      cost_per_item if cost_per_item_original || items_original
     end
 
     def adjusted_cost_per_hour
-      return unless adjusted_to_value_for('period') || adjusted_to_value_for('cost_per_hour')
-
-      (adjusted_to_value_for('cost_per_hour') || cost_per_hour).to_f
+      cost_per_hour if cost_per_hour_original || period_original
     end
   end
 

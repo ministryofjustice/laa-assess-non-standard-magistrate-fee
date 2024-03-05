@@ -5,6 +5,8 @@ module PriorAuthority
     end
 
     def requested_formatted_travel_cost_per_hour
+      return if requested_travel_cost_per_hour.zero?
+
       I18n.t(
         'per_hour',
         gbp: NumberTo.pounds(requested_travel_cost_per_hour),
@@ -13,7 +15,7 @@ module PriorAuthority
     end
 
     def requested_formatted_travel_cost
-      NumberTo.pounds(requested_travel_costs)
+      NumberTo.pounds(requested_travel_costs) if requested_travel_costs
     end
 
     private
@@ -28,16 +30,11 @@ module PriorAuthority
     end
 
     def requested_travel_time
-      # TODO: this could be simplified if the cast time prriod behaved as a nilClass
-      # e.g. Type::TimePeriod.new.cast(value_from_first_event('travel_time')) || travel_time
-      requested_travel_time = Type::TimePeriod.new.cast(value_from_first_event('travel_time'))
-      return requested_travel_time unless requested_travel_time.nil?
-
-      travel_time
+      original_travel_time
     end
 
     def requested_travel_cost_per_hour
-      (value_from_first_event('travel_cost_per_hour') || travel_cost_per_hour).to_f
+      original_travel_cost_per_hour.to_f
     end
   end
 
@@ -72,20 +69,11 @@ module PriorAuthority
     end
 
     def adjusted_travel_time
-      return unless adjusted_to_value_for('travel_time') || adjusted_to_value_for('travel_cost_per_hour')
-
-      # TODO: this could be simplified if the cast time period behaved as a nilClass
-      # e.g. Type::TimePeriod.new.cast(value_to_first_event('travel_time')) || travel_time
-      adjusted_travel_time = Type::TimePeriod.new.cast(value_to_first_event('travel_time'))
-      return adjusted_travel_time unless adjusted_travel_time.nil?
-
-      travel_time
+      travel_time if travel_time_original || travel_cost_per_hour_original
     end
 
     def adjusted_travel_cost_per_hour
-      return unless adjusted_to_value_for('travel_time') || adjusted_to_value_for('travel_cost_per_hour')
-
-      (value_to_first_event('travel_cost_per_hour') || travel_cost_per_hour).to_f
+      travel_cost_per_hour if travel_cost_per_hour_original || travel_time_original
     end
   end
 

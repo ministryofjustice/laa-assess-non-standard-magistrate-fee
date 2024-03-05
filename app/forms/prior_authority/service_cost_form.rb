@@ -7,12 +7,13 @@ module PriorAuthority
 
     attribute :id, :string
     attribute :cost_type, :string
+    attribute :item_type, :string
+    attribute :service_type, :string
+
     attribute :period, :time_period
     attribute :cost_per_hour, :gbp
     attribute :items, :integer
-    attribute :item_type, :string
     attribute :cost_per_item, :gbp
-    attribute :service_type, :string
 
     with_options if: :per_item? do
       validates :items, presence: true, numericality: { greater_than: 0 }, is_a_number: true

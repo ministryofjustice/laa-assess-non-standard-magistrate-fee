@@ -1,10 +1,11 @@
+# rubocop:disable Metrics/ClassLength
 module PriorAuthority
   module V1
     class Quote < BaseWithAdjustments
       LINKED_TYPE = 'quotes'.freeze
 
-      # include ServiceCostsWithAdjustments
-      # include TravelCostsWithAdjustments
+      include ServiceCostsWithAdjustments
+      include TravelCostsWithAdjustments
       # # TODO: include AdditionalCostsWithAdjustments
 
       attribute :id, :string
@@ -133,3 +134,4 @@ module PriorAuthority
     end
   end
 end
+# rubocop:enable Metrics/ClassLength
