@@ -32,4 +32,8 @@ class Submission < ApplicationRecord
   def namespace
     Submission::APPLICATION_TYPES.invert[application_type].to_s.camelcase.constantize
   end
+
+  def latest_decision_event
+    events.latest_decision
+  end
 end

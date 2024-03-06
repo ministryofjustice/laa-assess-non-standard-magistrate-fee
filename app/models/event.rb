@@ -27,6 +27,10 @@ class Event < ApplicationRecord
     def rehydrate!(params)
       new(params).save!
     end
+
+    def latest_decision
+      order(created_at: :desc).find_by(event_type: 'Event::Decision')
+    end
   end
 
   def title

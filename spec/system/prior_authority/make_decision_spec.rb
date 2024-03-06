@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Decide an application', :stub_oauth_token do
   let(:caseworker) { create(:caseworker) }
-  let(:application) { create(:prior_authority_application, state: 'in_progress') }
+  let(:application) { create(:prior_authority_application, state: 'submitted') }
   let(:app_store_stub) do
     stub_request(:put, %r{http.*/v1/application/.*})
       .to_return(

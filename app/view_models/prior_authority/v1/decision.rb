@@ -7,7 +7,7 @@ module PriorAuthority
       delegate :state, to: :submission
 
       def comments
-        submission.events.find_by(event_type: 'Event::Decision').details['comment']
+        submission.latest_decision_event.details['comment']
       end
     end
   end
