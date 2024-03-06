@@ -90,4 +90,15 @@ RSpec.describe 'Adjust travel costs' do
     click_on 'Cancel'
     expect(page).to have_title('Adjustments')
   end
+
+  context 'when I calculate the adjusted values', :javascript do
+    it 'displays the updated calculated value' do
+      fill_in 'Hours', with: 2
+      fill_in 'Minutes', with: 0
+      fill_in 'Hourly cost', with: '100.00'
+
+      click_on 'Calculate my changes'
+      expect(page).to have_css('#adjusted-cost', text: '200.00')
+    end
+  end
 end

@@ -81,6 +81,15 @@ RSpec.describe 'Adjust service costs' do
       end
     end
 
+    it 'allows me to recalculate the values on the page', :javascript do
+      fill_in 'Hours', with: 20
+      fill_in 'Minutes', with: 0
+      fill_in 'Hourly cost', with: '1.50'
+
+      click_on 'Calculate my changes'
+      expect(page).to have_css('#adjusted-cost', text: '30.00')
+    end
+
     it 'warns me that I have not made any changes' do
       fill_in 'Explain your decision', with: 'rates have risen'
       click_on 'Save changes'
@@ -147,6 +156,14 @@ RSpec.describe 'Adjust service costs' do
           .and have_content('Cost£2.00 per minute£1.50 per minute')
           .and have_content('Total£200.00£150.00')
       end
+    end
+
+    it 'allows me to calculate the values on the page', :javascript do
+      fill_in 'Number of minutes', with: 60
+      fill_in 'What is the cost per minute?', with: 2.50
+
+      click_on 'Calculate my changes'
+      expect(page).to have_css('#adjusted-cost', text: '150.00')
     end
   end
 end

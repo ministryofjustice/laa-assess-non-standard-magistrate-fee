@@ -4,7 +4,7 @@
 
 <% title t('.page_title') %>
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds" id="service-cost-adjustment-container">
+  <div class="govuk-grid-column-two-thirds" id="service-cost-adjustment-container", data-turbo="false">
     <h1 class="govuk-heading-xl"><%= t('.page_title') %></h1>
     <h2 class="govuk-heading-l"><%= t('.service_type_cost', service_type: t(submission.data['service_type'], scope: 'prior_authority.service_types')) %></h2>
     <p class="govuk-body"><%= t('.adjustment_blurb', service_type: t(submission.data['service_type'], scope: 'prior_authority.service_types')) %></p>
@@ -17,17 +17,9 @@
 
       <%= render 'cost_fields', form: f %>
 
-      <%= govuk_button_link_to(
-            t('.calculate_button_text'), '#',
-            secondary: true,
-            id:'calculate_change_button',
-            data: {
-              'unit-amount': item.period || item.items,
-              'unit-price': item.cost_per_hour || item.cost_per_item,
-              # page: item.type.value,
-              # 'vat-multiplier': item.vat_registered? ? (1.0 + item.vat_rate) : 1.0,
-            }
-          ) %>
+      <%= govuk_button_link_to(t('.calculate_button_text'), '#',
+                               secondary: true,
+                               id:'calculate_change_button') %>
 
       <h2 class="govuk-heading-l">
         <span class="govuk-caption-m">Adjusted cost</span>

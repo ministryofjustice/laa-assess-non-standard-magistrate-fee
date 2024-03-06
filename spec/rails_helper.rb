@@ -34,8 +34,12 @@ end
 Capybara.register_driver :headless_chrome do |app|
   options = Selenium::WebDriver::Chrome::Options.new
   options.add_argument('--headless=new')
+  options.add_argument('--window-size=1080,1920')
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
+
+Capybara.default_driver = :headless_chrome
+Capybara.javascript_driver = :headless_chrome
 
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
@@ -66,4 +70,8 @@ RSpec.configure do |config|
   end
 
   config.filter_run_excluding :accessibility unless ENV['INCLUDE_ACCESSIBILITY_SPECS']
+
+  config.before(:each, :javascript, type: :system) do
+    driven_by Capybara.javascript_driver
+  end
 end
