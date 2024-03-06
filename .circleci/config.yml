@@ -357,13 +357,13 @@ workflows:
   build-opened-pr:
     jobs:
       - build-to-ecr:
-          context: laa-assess-crime-forms-dev
+          context: ivan-test-caseworker
           filters:
             branches:
               ignore:
                 - main
       - deploy-dev:
-          context: laa-assess-crime-forms-dev
+          context: ivan-test-caseworker
           requires:
             - build-to-ecr
 
@@ -384,12 +384,12 @@ workflows:
           requires:
             - rspec-tests
       - build-to-ecr:
-          context: laa-assess-crime-forms-dev
+          context: ivan-test-caseworker
           requires:
             - linter-tests
             - rspec-tests
       - deploy-dev:
-          context: laa-assess-crime-forms-dev
+          context: ivan-test-caseworker
           requires:
             - build-to-ecr
       - hold-uat:
