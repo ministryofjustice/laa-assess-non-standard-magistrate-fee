@@ -26,15 +26,12 @@ module PriorAuthority
       return false unless valid?
 
       PriorAuthorityApplication.transaction do
-        process_field(value: period.to_i, field: 'period')
-
+        process_fields
         submission.save
       end
 
       true
     end
-
-    private
 
     def per_item?
       unit_type == PER_ITEM
@@ -44,6 +41,18 @@ module PriorAuthority
       unit_type == PER_HOUR
     end
 
+    private
+
+    def process_fields
+      if per_hour?
+        process_field(value: period.to_i, field: 'period')
+        process_field(value: cost_per_hour.to_s, field: 'cost_per_hour')
+      else
+        process_field(value: items.to_i, field: 'items')
+        process_field(value: cost_per_item, field: 'cost_per_item')
+      end
+    end
+
     def selected_record
       @selected_record ||= submission.data['additional_costs'].detect do |row|
         row.fetch('id') == item.id
@@ -51,7 +60,11 @@ module PriorAuthority
     end
 
     def data_has_changed?
-      period != item.period || cost_per_hour != item.cost_per_hour
+      if per_hour?
+        period != item.period || cost_per_hour != item.cost_per_hour
+      else
+        items != item.items || cost_per_item != item.cost_per_item
+      end
     end
   end
 end

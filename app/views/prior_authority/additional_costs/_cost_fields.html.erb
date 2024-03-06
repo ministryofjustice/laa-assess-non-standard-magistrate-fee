@@ -1,0 +1,30 @@
+<% if form.object.per_item? %>
+  <%= form.govuk_number_field :items,
+                              width: 5,
+                              label: {
+                                text: t('.items'),
+                                size: 's'
+                              } %>
+
+  <%= form.govuk_text_field :cost_per_item,
+                            width: 5,
+                            prefix_text: "&pound;".html_safe,
+                            inputmode: "decimal",
+                            value: gbp_field_value(form.object.cost_per_item),
+                            label: { text: t('.cost_per_item'), size: 's' } %>
+<% else %>
+  <%= form.govuk_period_field :period,
+                              legend: {
+                                text: t('.period'),
+                                size: 's',
+                                class: 'govuk-!-font-weight-bold'
+                              },
+                              width: 'one-third' %>
+
+  <%= form.govuk_text_field  :cost_per_hour,
+                             width: 5,
+                             prefix_text: "&pound;".html_safe,
+                             inputmode: "decimal",
+                             value: gbp_field_value(form.object.cost_per_hour),
+                             label: { text: t('.cost_per_hour'), size: 's' } %>
+<% end %>

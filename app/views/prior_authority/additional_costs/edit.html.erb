@@ -12,26 +12,11 @@
       <%= govuk_error_summary(form) %>
       <%= f.hidden_field(:unit_type, value: item.unit_type) %>
 
-      <%= f.govuk_period_field :period, legend: { text: t('.period'), size: 's', class: 'govuk-!-font-weight-bold' }, width: 'one-third' %>
+      <%= render 'cost_fields', form: f %>
 
-      <%= f.govuk_text_field  :cost_per_hour,
-                              width: 5,
-                              prefix_text: "&pound;".html_safe,
-                              inputmode: "decimal",
-                              label: { text: t('.hourly_cost'), size: 's' } %>
-
-
-      <%= govuk_button_link_to(
-            t('.calculate_button_text'), '#',
-            secondary: true,
-            id:'calculate_change_button',
-            data: {
-              'unit-amount': item.period || item.items,
-              'unit-price': item.cost_per_hour || item.cost_per_item,
-              # page: item.type.value,
-              # 'vat-multiplier': item.vat_registered? ? (1.0 + item.vat_rate) : 1.0,
-            }
-          ) %>
+      <%= govuk_button_link_to(t('.calculate_button_text'), '#',
+                               secondary: true,
+                               id:'calculate_change_button') %>
 
       <h2 class="govuk-heading-l">
         <span class="govuk-caption-m">Adjusted cost</span>

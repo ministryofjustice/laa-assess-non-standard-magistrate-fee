@@ -63,7 +63,11 @@ module PriorAuthority
     end
 
     def data_has_changed?
-      period != item.period || cost_per_hour != item.cost_per_hour
+      if per_hour?
+        period != item.period || cost_per_hour != item.cost_per_hour
+      else
+        items != item.items || cost_per_item != item.cost_per_item
+      end
     end
   end
 end

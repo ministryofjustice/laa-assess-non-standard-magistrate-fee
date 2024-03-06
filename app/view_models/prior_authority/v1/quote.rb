@@ -5,7 +5,6 @@ module PriorAuthority
 
       include ServiceCostsWithAdjustments
       include TravelCostsWithAdjustments
-      # # TODO: include AdditionalCostsWithAdjustments
 
       attribute :id, :string
       attribute :cost_type, :string

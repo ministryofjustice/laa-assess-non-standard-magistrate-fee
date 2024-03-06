@@ -3,6 +3,8 @@ module PriorAuthority
     class AdditionalCost < BaseWithAdjustments
       LINKED_TYPE = 'additional_costs'.freeze
 
+      include AdditionalCostsWithAdjustments
+
       attribute :id, :string
       attribute :name, :string
       attribute :description, :string
@@ -35,7 +37,7 @@ module PriorAuthority
       end
 
       def form_attributes
-        attributes.slice('id', 'period', 'cost_per_hour')
+        attributes.slice('id', 'unit_type', 'period', 'cost_per_hour', 'items', 'cost_per_item')
       end
 
       def unit_label
@@ -52,11 +54,6 @@ module PriorAuthority
 
       def cost_per_unit
         NumberTo.pounds(unit_type == 'per_item' ? cost_per_item : cost_per_hour)
-      end
-
-      def formatted_cost_per_unit
-        "#{cost_per_unit} " \
-          "#{I18n.t(unit_type, scope: 'prior_authority.application_details.items.per_unit_descriptions')}"
       end
     end
   end
