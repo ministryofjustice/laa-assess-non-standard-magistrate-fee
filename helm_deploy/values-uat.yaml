@@ -61,8 +61,9 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-secrets:
+variables:
   environment: uat
+  app_store_url: https://laa-crime-application-store-uat.apps.live.cloud-platform.service.justice.gov.uk
 
 service_account:
   name: laa-assess-crime-forms-uat-irsa
