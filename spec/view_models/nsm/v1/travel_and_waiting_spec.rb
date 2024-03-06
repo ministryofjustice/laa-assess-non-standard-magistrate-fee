@@ -16,10 +16,6 @@ RSpec.describe Nsm::V1::TravelAndWaiting do
   end
   let(:vat_registered) { 'yes' }
 
-  before do
-    allow(CostCalculator).to receive(:cost).and_return(100.0)
-  end
-
   describe '#vat_registered?' do
     let(:work_items) { [] }
 
@@ -43,12 +39,13 @@ RSpec.describe Nsm::V1::TravelAndWaiting do
   describe '#table_fields' do
     context 'when a single work item exists' do
       let(:work_items) do
-        [{ 'work_type' => { 'en' => 'Travel', 'value' => 'travel' }, 'time_spent' => 20, 'vat_rate' => 0.2 }]
+        [{ 'work_type' => { 'en' => 'Travel', 'value' => 'travel' },
+           'time_spent' => 20, 'vat_rate' => 0.2, 'pricing' => 300.0 }]
       end
 
       it 'includes the summed table field row' do
         expect(subject.table_fields).to include(
-          ['Travel', '0 Hours<br>20 Minutes', '£120.00', '0 Hours<br>20 Minutes', '£120.00'],
+          ['Travel', '0 hours<br>20 minutes', '£120.00', '0 hours<br>20 minutes', '£120.00'],
         )
       end
 
@@ -59,14 +56,16 @@ RSpec.describe Nsm::V1::TravelAndWaiting do
 
     context 'when multiple work item of diffent types exists' do
       let(:work_items) do
-        [{ 'work_type' => { 'en' => 'Travel', 'value' => 'travel' }, 'time_spent' => 20, 'vat_rate' => 0.2 },
-         { 'work_type' => { 'en' => 'Waiting', 'value' => 'waiting' }, 'time_spent' => 30, 'vat_rate' => 0.2 }]
+        [{ 'work_type' => { 'en' => 'Travel', 'value' => 'travel' },
+           'time_spent' => 20, 'vat_rate' => 0.2, 'pricing' => 300.0 },
+         { 'work_type' => { 'en' => 'Waiting', 'value' => 'waiting' },
+           'time_spent' => 30, 'vat_rate' => 0.2, 'pricing' => 200.0 }]
       end
 
       it 'returns a single table field row' do
         expect(subject.table_fields).to include(
-          ['Travel', '0 Hours<br>20 Minutes', '£120.00', '0 Hours<br>20 Minutes', '£120.00'],
-          ['Waiting', '0 Hours<br>30 Minutes', '£120.00', '0 Hours<br>30 Minutes', '£120.00']
+          ['Travel', '0 hours<br>20 minutes', '£120.00', '0 hours<br>20 minutes', '£120.00'],
+          ['Waiting', '0 hours<br>30 minutes', '£120.00', '0 hours<br>30 minutes', '£120.00']
         )
       end
 
@@ -77,7 +76,8 @@ RSpec.describe Nsm::V1::TravelAndWaiting do
 
     context 'when waiting and travel work items do not exist' do
       let(:work_items) do
-        [{ 'work_type' => { 'en' => 'preparation', 'value' => 'preparation' }, 'time_spent' => 30, 'vat_rate' => 0.2 }]
+        [{ 'work_type' => { 'en' => 'preparation', 'value' => 'preparation' },
+           'time_spent' => 30, 'vat_rate' => 0.2, 'pricing' => 300.0 }]
       end
 
       it 'nothing is returned' do
@@ -89,13 +89,15 @@ RSpec.describe Nsm::V1::TravelAndWaiting do
 
     context 'when multiple work item of the same types exists' do
       let(:work_items) do
-        [{ 'work_type' => { 'en' => 'Travel', 'value' => 'travel' }, 'time_spent' => 20, 'vat_rate' => 0.2  },
-         { 'work_type' => { 'en' => 'Travel', 'value' => 'travel' }, 'time_spent' => 30, 'vat_rate' => 0.2  }]
+        [{ 'work_type' => { 'en' => 'Travel', 'value' => 'travel' },
+           'time_spent' => 20, 'vat_rate' => 0.2, 'pricing' => 150.0 },
+         { 'work_type' => { 'en' => 'Travel', 'value' => 'travel' },
+           'time_spent' => 30, 'vat_rate' => 0.2, 'pricing' => 300.0 }]
       end
 
       it 'includes a summed table field row' do
         expect(subject.table_fields).to include(
-          ['Travel', '0 Hours<br>50 Minutes', '£240.00', '0 Hours<br>50 Minutes', '£240.00']
+          ['Travel', '0 hours<br>50 minutes', '£240.00', '0 hours<br>50 minutes', '£240.00']
         )
       end
     end

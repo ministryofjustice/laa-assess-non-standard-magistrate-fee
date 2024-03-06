@@ -13,12 +13,12 @@ RSpec.describe Nsm::LettersCallsForm do
       Nsm::V1::LetterAndCall,
       count: 12,
       uplift: uplift_provided ? 95 : nil,
-      provider_requested_uplift: provider_requested_uplift,
+      original_uplift: original_uplift,
       uplift?: uplift_provided
     )
   end
-  let(:uplift_provided) { !provider_requested_uplift.nil? }
-  let(:provider_requested_uplift) { 95 }
+  let(:uplift_provided) { !original_uplift.nil? }
+  let(:original_uplift) { 95 }
   let(:explanation) { 'change to letters' }
   let(:current_user) { instance_double(User) }
 
@@ -147,9 +147,11 @@ RSpec.describe Nsm::LettersCallsForm do
                        .detect { |row| row.dig('type', 'value') == 'letters' }
         expect(letters).to eq(
           'count' => 2,
+          'count_original' => 12,
           'pricing' => 3.56,
           'type' => { 'en' => 'Letters', 'value' => 'letters' },
           'uplift' => 95,
+          'adjustment_comment' => 'change to letters',
         )
       end
     end
@@ -184,7 +186,9 @@ RSpec.describe Nsm::LettersCallsForm do
           'count' => 12,
           'pricing' => 3.56,
           'type' => { 'en' => 'Letters', 'value' => 'letters' },
-          'uplift' => 0.0,
+          'uplift' => 0,
+          'uplift_original' => 95,
+          'adjustment_comment' => 'change to letters'
         )
       end
     end
@@ -201,9 +205,12 @@ RSpec.describe Nsm::LettersCallsForm do
                        .detect { |row| row.dig('type', 'value') == 'letters' }
         expect(letters).to eq(
           'count' => 2,
+          'count_original' => 12,
           'pricing' => 3.56,
           'type' => { 'en' => 'Letters', 'value' => 'letters' },
           'uplift' => 0,
+          'uplift_original' => 95,
+          'adjustment_comment' => 'change to letters',
         )
       end
     end
@@ -217,7 +224,7 @@ RSpec.describe Nsm::LettersCallsForm do
     end
 
     context 'when uplift is not populated from provider' do
-      let(:provider_requested_uplift) { nil }
+      let(:original_uplift) { nil }
 
       it 'saves without error' do
         expect { subject.save }.to change(Event, :count).by(1)

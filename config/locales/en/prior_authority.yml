@@ -7,6 +7,7 @@ en:
     shared:
       application_nav:
         requested: 'Requested:'
+        allowed: 'Allowed:'
         service: 'Service:'
         rep_order_date: 'Representation order date:'
         date_received: 'Date received:'

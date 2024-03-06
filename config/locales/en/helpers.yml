@@ -5,15 +5,15 @@ en:
     time_period:
       hours:
         short:
-          one: '%{count} Hr '
-          other: '%{count} Hrs '
+          one: '%{count} hour '
+          other: '%{count} hours '
         long_html:
-          one: '%{count} Hour<br>'
-          other: '%{count} Hours<br>'
+          one: '%{count} hour<br>'
+          other: '%{count} hours<br>'
       minutes:
         short:
-          one: '%{count} Min'
-          other: '%{count} Mins'
+          one: '%{count} minute'
+          other: '%{count} minutes'
         long_html:
-          one: '%{count} Minute'
-          other: '%{count} Minutes'
+          one: '%{count} minute'
+          other: '%{count} minutes'

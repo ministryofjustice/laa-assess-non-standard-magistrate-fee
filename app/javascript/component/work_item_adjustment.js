@@ -1,9 +1,9 @@
 function init() {
   const workItemAdjustmentContainer = document.getElementById('work-items-adjustment-container');
-  const hoursField = document.getElementById('work_item_form_time_spent_1i');
-  const minutesField = document.getElementById('work_item_form_time_spent_2i');
-  const upliftRemovedYesField = document.getElementById('work-item-form-uplift-yes-field');
-  const upliftRemovedNoField = document.getElementById('work-item-form-uplift-no-field');
+  const hoursField = document.getElementById('nsm_work_item_form_time_spent_1i');
+  const minutesField = document.getElementById('nsm_work_item_form_time_spent_2i');
+  const upliftRemovedYesField = document.getElementById('nsm-work-item-form-uplift-yes-field');
+  const upliftRemovedNoField = document.getElementById('nsm-work-item-form-uplift-no-field');
   const calculateChangeButton = document.getElementById('calculate_change_button');
   const caseworkerAdjustedValue = document.getElementById('work_item_caseworker_allowed_amount');
   const caseworkerAdjustedUplift = document.getElementById('work_item_uplift_allowed_amount');

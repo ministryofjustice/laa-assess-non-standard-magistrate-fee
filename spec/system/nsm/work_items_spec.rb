@@ -17,7 +17,7 @@ RSpec.describe 'Work items' do
       expect(page).to have_content(
         'Waiting' \
         '95%' \
-        '2 Hours41 Minutes' \
+        '2 hours41 minutes' \
         'Change'
       )
       click_on 'Change'
@@ -37,9 +37,9 @@ RSpec.describe 'Work items' do
       expect(page).to have_content(
         'Waiting' \
         '95%' \
-        '2 Hours41 Minutes' \
+        '2 hours41 minutes' \
         '0%' \
-        '10 Hours59 Minutes' \
+        '10 hours59 minutes' \
         'Change'
       )
     end
@@ -61,9 +61,9 @@ RSpec.describe 'Work items' do
       expect(page).to have_content(
         'Waiting' \
         '95%' \
-        '2 Hours41 Minutes' \
+        '2 hours41 minutes' \
         '0%' \
-        '2 Hours41 Minutes' \
+        '2 hours41 minutes' \
         'Change'
       )
     end
@@ -81,7 +81,7 @@ RSpec.describe 'Work items' do
       expect(page).to have_content(
         'Waiting' \
         'Date12 December 2022' \
-        'Time spent2 Hrs 41 Mins' \
+        'Time spent2 hours 41 minutes' \
         'Fee earner initialsaaa' \
         'Uplift claimed95%' \
         'Claim cost£125.58'

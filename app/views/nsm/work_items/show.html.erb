@@ -7,7 +7,7 @@
 <div class="govuk-grid-row" id="work-items-adjustment-container">
   <div class="govuk-grid-column-three-quarters">
     <h1 class="govuk-heading-xl">
-        <%= t('.heading', count: item.adjustments.count) %>
+        <%= t('.heading', count: item.any_adjustments? ? 1 : 0) %>
     </h1>
   </div>
   <div class="govuk-grid-column-two-thirds">
@@ -22,7 +22,7 @@
       end
     %>
 
-    <% if item.adjustments.any? %>
+    <% if item.any_adjustments? %>
       <h2 class="govuk-heading-l"><%= t('.laa_adjustments') %></h2>
 
       <%=
@@ -36,7 +36,7 @@
           *work_type_row,
           [t('.time_spent_changed'), format_period(item.time_spent)],
           [t('.caseworker_allowed'), NumberTo.pounds(item.caseworker_amount)],
-          [t('.explanation'), item.previous_explanation.to_s],
+          [t('.explanation'), item.adjustment_comment],
         ]
 
         govuk_table(head: '', first_cell_is_header: true, rows:)

@@ -35,6 +35,34 @@ RSpec.describe 'View applications' do
     fill_in 'Minutes', with: '17'
     fill_in 'Explanation', with: 'typoe'
     click_on 'Save changes'
-    expect(page).to have_content '3 Hrs 17 Mins'
+    expect(page).to have_content '3 hours 17 minutes'
+  end
+
+  it 'updates the total at the top of the page' do
+    visit prior_authority_application_path(application)
+    expect(page).to have_content 'Requested: £356.50'
+    click_on 'Adjust quote'
+    expect(page).to have_content 'Time1 hour 0 minutesCost£32.00 per hour'
+    click_on 'Adjust additional cost'
+    fill_in 'Minutes', with: '30'
+    fill_in 'Explanation', with: 'Feeling generous'
+    click_on 'Save changes'
+    expect(page).to have_content 'Requested: £356.50'
+    expect(page).to have_content 'Allowed: £372.50'
+  end
+
+  it 'does not change the requested value even if I make multiple adjustments' do
+    visit prior_authority_application_adjustments_path(application)
+    click_on 'Adjust additional cost'
+    fill_in 'Minutes', with: '30'
+    fill_in 'Explanation', with: 'Feeling generous'
+    click_on 'Save changes'
+
+    click_on 'Adjust additional cost'
+    fill_in 'Minutes', with: '15'
+    fill_in 'Explanation', with: 'Feeling less generous'
+    click_on 'Save changes'
+
+    expect(page).to have_content 'Requested: £356.50'
   end
 end

@@ -28,6 +28,7 @@ en:
           prior_authority: Prior authority granted
           vat: VAT
           total: Claim cost (including any VAT)
+          miles: Miles
       show:
         page_title: Adjust a disbursement
         provider_submission: Provider submission
@@ -44,6 +45,7 @@ en:
           prior_authority: Prior authority granted
           vat: VAT
           total: Total
+          miles: Miles
         refuse: Refuse disbursement
         explanation: Adjustment reason
         refuse_status:

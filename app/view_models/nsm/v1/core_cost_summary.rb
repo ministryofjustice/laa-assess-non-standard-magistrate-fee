@@ -38,13 +38,13 @@ module Nsm
       def letter_and_call_data
         rows = LettersAndCallsSummary.new('submission' => submission).rows
         rows.filter_map do |letter_or_call|
-          next if letter_or_call.provider_requested_count.zero?
+          next if letter_or_call.original_count.zero?
 
           [
             letter_or_call.type.to_s,
             letter_or_call.provider_requested_amount,
             nil,
-            letter_or_call.allowed_amount,
+            letter_or_call.caseworker_amount,
             nil
           ]
         end

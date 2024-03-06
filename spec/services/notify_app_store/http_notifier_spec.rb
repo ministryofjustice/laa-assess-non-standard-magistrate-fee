@@ -28,6 +28,19 @@ RSpec.describe NotifyAppStore::HttpNotifier, :stub_oauth_token do
 
       subject.put(message)
     end
+
+    context 'when authentication is not configured' do
+      before do
+        allow(ENV).to receive(:fetch).with('APP_STORE_TENANT_ID', nil).and_return(nil)
+      end
+
+      it 'puts the message without headers' do
+        expect(described_class).to receive(:put).with("http://some.url/v1/application/#{application_id}",
+                                                      body: message.to_json)
+
+        subject.put(message)
+      end
+    end
   end
 
   context 'when APP_STORE_URL is not present' do
