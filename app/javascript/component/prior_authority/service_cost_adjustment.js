@@ -5,7 +5,7 @@ function init() {
   const itemsField = document.getElementById('prior-authority-service-cost-form-items-field')
   const costPerItemField = document.getElementById('prior-authority-service-cost-form-cost-per-item-field')
   const calculateChangeButton = document.getElementById('calculate_change_button');
-  const AdjustedCost = document.getElementById('adjusted-cost');
+  const adjustedCost = document.getElementById('adjusted-cost');
 
   if (calculationType() != 'unknown_type') {
     updateDomElements();
@@ -29,7 +29,7 @@ function init() {
 
   function updateDomElements() {
     const totalPrice = calculateAdjustedCost();
-    AdjustedCost.innerHTML = totalPrice;
+    adjustedCost.innerHTML = totalPrice;
   }
 
   function calculateAdjustedCost() {

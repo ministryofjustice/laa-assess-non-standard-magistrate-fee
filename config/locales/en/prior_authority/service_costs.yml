@@ -11,7 +11,6 @@ en:
         page: page
         period: Time
 
-
       edit:
         adjustment_blurb: Adjust the providers' costs by changing the values.
         calculate_button_text: Calculate my changes

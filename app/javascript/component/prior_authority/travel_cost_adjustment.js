@@ -3,7 +3,7 @@ function init() {
   const minutesField = document.getElementById('prior_authority_travel_cost_form_travel_time_2i')
   const costPerHourField = document.getElementById('prior-authority-travel-cost-form-travel-cost-per-hour-field')
   const calculateChangeButton = document.getElementById('calculate_change_button');
-  const AdjustedCost = document.getElementById('adjusted-cost');
+  const adjustedCost = document.getElementById('adjusted-cost');
 
   if (hoursField && minutesField && costPerHourField) {
     updateDomElements();
@@ -17,7 +17,7 @@ function init() {
 
   function updateDomElements() {
     const totalPrice = calculateAdjustedCost();
-    AdjustedCost.innerHTML = totalPrice;
+    adjustedCost.innerHTML = totalPrice;
   }
 
   function calculateAdjustedCost() {
