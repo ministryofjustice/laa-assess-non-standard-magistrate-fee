@@ -71,6 +71,7 @@ module PriorAuthority
     end
   end
 
+  # NOTE: since the requested/adjusted mixin helpers are large and required together we add a thin wrapper module
   module TravelCostsWithAdjustments
     include RequestedTravelCosts
     include AdjustedTravelCosts
