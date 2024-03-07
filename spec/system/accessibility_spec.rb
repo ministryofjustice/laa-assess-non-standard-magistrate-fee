@@ -110,6 +110,21 @@ RSpec.describe 'Accessibility', :accessibility do
     end
   end
 
+  context 'when viewing application-specific screens' do
+    %i[prior_authority_application
+       prior_authority_application_adjustments].each do |path|
+      describe "#{path} screen" do
+        before do
+          visit send(:"#{path}_path", application)
+        end
+
+        it 'is accessible' do
+          expect(page).to(be_axe_clean_with_caveats)
+        end
+      end
+    end
+  end
+
   context 'when signed out' do
     before do
       visit root_path

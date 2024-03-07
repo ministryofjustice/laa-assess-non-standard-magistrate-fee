@@ -10,6 +10,8 @@ module PriorAuthority
       attribute :custom_service_name, :string
       attribute :rep_order_date, :date
       attribute :submission
+      attribute :main_offence_id, :string
+      attribute :custom_main_offence_name, :string
 
       delegate :id, to: :submission
 
@@ -18,6 +20,14 @@ module PriorAuthority
           custom_service_name
         else
           I18n.t("prior_authority.service_types.#{service_type}")
+        end
+      end
+
+      def main_offence
+        if main_offence_id == 'custom'
+          custom_main_offence_name
+        else
+          I18n.t("prior_authority.offences.#{main_offence_id}")
         end
       end
 
