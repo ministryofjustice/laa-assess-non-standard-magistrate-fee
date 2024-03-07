@@ -1,80 +1,26 @@
+import CostAdjustment from './cost_adjustment.js'
+
 function init() {
-  const hoursField = document.getElementById('prior_authority_additional_cost_form_period_1i');
-  const minutesField = document.getElementById('prior_authority_additional_cost_form_period_2i')
-  const costPerHourField = document.getElementById('prior-authority-additional-cost-form-cost-per-hour-field')
-  const itemsField = document.getElementById('prior-authority-additional-cost-form-items-field')
-  const costPerItemField = document.getElementById('prior-authority-additional-cost-form-cost-per-item-field')
-  const calculateChangeButton = document.getElementById('calculate_change_button');
-  const AdjustedCost = document.getElementById('adjusted-cost');
+  const fields = [
+    document.getElementById('prior_authority_additional_cost_form_period_1i'),
+    document.getElementById('prior_authority_additional_cost_form_period_2i'),
+    document.getElementById('prior-authority-additional-cost-form-cost-per-hour-field'),
+    document.getElementById('prior-authority-additional-cost-form-items-field'),
+    document.getElementById('prior-authority-additional-cost-form-cost-per-item-field'),
+    document.getElementById('calculate_change_button'),
+    document.getElementById('adjusted-cost'),
+  ]
 
+  const costAdjustment = new CostAdjustment(...fields)
 
-  if (calculationType() != 'unknown_type') {
-    updateDomElements();
-    calculateChangeButton.addEventListener('click', handleTestButtonClick);
-  }
-
-  function calculationType() {
-    if (hoursField && minutesField && costPerHourField) {
-      return 'per_hour';
-    } else if (itemsField && costPerItemField) {
-      return 'per_item';
-    } else {
-      return 'unknown_type';
-    }
+  if (costAdjustment.calculationType() != 'unknown_type') {
+    costAdjustment.updateDomElements();
+    costAdjustment.calculateChangeButton.addEventListener('click', handleTestButtonClick);
   }
 
   function handleTestButtonClick(event) {
     event.preventDefault();
-    updateDomElements();
-  }
-
-  function updateDomElements() {
-    const totalPrice = calculateAdjustedCost();
-    AdjustedCost.innerHTML = totalPrice;
-  }
-
-  function calculateAdjustedCost() {
-    switch(calculationType()) {
-      case 'per_hour':
-        return calculateTimeCost()
-      case 'per_item':
-        return calculateItemCost()
-      default:
-        throw new Error('Unrecognized calculation type!');
-    }
-  }
-
-  function calculateTimeCost() {
-    const unitPrice = parseFloat(costPerHourField.value)
-
-    checkMinutesThreshold();
-
-    if(isNaN(hoursField?.value) || isNaN(minutesField?.value)){
-      return '--';
-    }
-
-    if(hoursField?.value && minutesField?.value){
-      var minutes = (parseInt(hoursField.value) * 60) + parseInt(minutesField.value);
-    }
-
-    // rounding to two decimal places
-    return (`${((minutes / 60) * unitPrice).toFixed(2)}`);
-  }
-
-  function calculateItemCost() {
-    const items = parseInt(itemsField.value)
-    const unitPrice = parseFloat(costPerItemField.value)
-
-    // rounding to two decimal places
-    return (`${(items * unitPrice).toFixed(2)}`);
-  }
-
-  function checkMinutesThreshold(){
-    if(minutesField){
-      if(parseInt(minutesField.value) >= 60){
-        minutesField.value = 59;
-      }
-    }
+    costAdjustment.updateDomElements();
   }
 }
 
