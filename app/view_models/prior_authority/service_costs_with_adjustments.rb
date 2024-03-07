@@ -2,59 +2,43 @@ module PriorAuthority
   module RequestedServiceCosts
     def requested_humanized_units
       if cost_type == 'per_item'
-        "#{requested_items} " \
-          "#{I18n.t("prior_authority.application_details.items.#{item_type}").pluralize(requested_items)}"
+        "#{original_items} " \
+          "#{I18n.t("prior_authority.application_details.items.#{item_type}").pluralize(original_items)}"
       else
-        format_period(requested_period)
+        format_period(original_period)
       end
     end
 
     def requested_humanized_cost_per_unit
       i18n_key = cost_type == 'per_item' ? "per_#{item_type}" : cost_type
 
-      "#{requested_base_cost_per_unit} " \
+      "#{requested_formatted_cost_per_unit} " \
         "#{I18n.t(i18n_key, scope: 'prior_authority.application_details.items.per_unit_descriptions')}"
     end
 
     def requested_formatted_service_cost_total
-      NumberTo.pounds(requested_base_cost)
+      NumberTo.pounds(requested_service_cost_total)
     end
 
     private
 
-    def requested_items
-      original_items
-    end
-
-    def requested_period
-      original_period
-    end
-
-    def requested_base_cost
+    def requested_service_cost_total
       if cost_type == 'per_item'
-        requested_items * requested_cost_per_item
+        original_items * original_cost_per_item
       else
         (
-          (requested_period.hours * requested_cost_per_hour) +
-          ((requested_period.minutes / 60.0) * requested_cost_per_hour)
+          (original_period.hours * original_cost_per_hour) +
+          ((original_period.minutes / 60.0) * original_cost_per_hour)
         ).round(2)
       end
     end
 
-    def requested_base_cost_per_unit
+    def requested_formatted_cost_per_unit
       NumberTo.pounds(requested_cost_per_unit)
     end
 
     def requested_cost_per_unit
-      @requested_cost_per_unit ||= cost_type == 'per_item' ? requested_cost_per_item : requested_cost_per_hour
-    end
-
-    def requested_cost_per_item
-      original_cost_per_item
-    end
-
-    def requested_cost_per_hour
-      original_cost_per_hour
+      cost_type == 'per_item' ? original_cost_per_item : original_cost_per_hour
     end
   end
 
@@ -62,18 +46,18 @@ module PriorAuthority
     include RequestedServiceCosts
 
     def adjusted_humanized_units
-      return unless adjusted_items || adjusted_period
+      return unless any_adjustments?
 
       if cost_type == 'per_item'
-        "#{adjusted_items} " \
-          "#{I18n.t("prior_authority.application_details.items.#{item_type}").pluralize(adjusted_items)}"
+        "#{items} " \
+          "#{I18n.t("prior_authority.application_details.items.#{item_type}").pluralize(items)}"
       else
-        format_period(adjusted_period)
+        format_period(period)
       end
     end
 
     def adjusted_humanized_cost_per_unit
-      return unless adjusted_formatted_cost_per_unit
+      return unless any_adjustments?
 
       i18n_key = cost_type == 'per_item' ? "per_#{item_type}" : cost_type
 
@@ -82,17 +66,17 @@ module PriorAuthority
     end
 
     def adjusted_formatted_service_cost_total
-      NumberTo.pounds(adjusted_service_cost_total) if adjusted_service_cost_total
+      NumberTo.pounds(adjusted_service_cost_total) if any_adjustments?
     end
 
     private
 
     def adjusted_formatted_cost_per_unit
-      NumberTo.pounds(adjusted_cost_per_unit) if adjusted_cost_per_unit
+      NumberTo.pounds(adjusted_cost_per_unit)
     end
 
     def adjusted_cost_per_unit
-      @adjusted_cost_per_unit ||= cost_type == 'per_item' ? adjusted_cost_per_item : adjusted_cost_per_hour
+      cost_type == 'per_item' ? cost_per_item : cost_per_hour
     end
 
     def adjusted_service_cost_total
@@ -100,38 +84,30 @@ module PriorAuthority
     end
 
     def adjusted_item_cost_total
-      return unless adjusted_items && adjusted_cost_per_item
-
-      adjusted_items * adjusted_cost_per_item
+      items * cost_per_item
     end
 
     def adjusted_hour_cost_total
-      return unless adjusted_period && adjusted_cost_per_hour
-
       (
-        (adjusted_period.hours * adjusted_cost_per_hour) +
-        ((adjusted_period.minutes / 60.0) * adjusted_cost_per_hour)
+        (period.hours * cost_per_hour) +
+        ((period.minutes / 60.0) * cost_per_hour)
       ).round(2)
     end
 
-    def adjusted_items
-      items if items_original || cost_per_item_original
+    def any_adjustments?
+      any_per_item_adjustments? || any_per_hour_adjustments?
     end
 
-    def adjusted_period
-      period if period_original || cost_per_hour_original
+    def any_per_item_adjustments?
+      items_original || cost_per_item_original
     end
 
-    def adjusted_cost_per_item
-      cost_per_item if cost_per_item_original || items_original
-    end
-
-    def adjusted_cost_per_hour
-      cost_per_hour if cost_per_hour_original || period_original
+    def any_per_hour_adjustments?
+      period_original || cost_per_hour_original
     end
   end
 
-  # NOTE: since the requested/adjusted mixin helpers are large and required together we add a thin wrapper module
+  # NOTE: since the requested/adjusted mixin helpers are required together we add a thin wrapper module
   module ServiceCostsWithAdjustments
     include RequestedServiceCosts
     include AdjustedServiceCosts
