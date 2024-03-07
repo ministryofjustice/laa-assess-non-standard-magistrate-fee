@@ -112,7 +112,7 @@ module PriorAuthority
         if additional_costs.present?
           additional_costs.sum { _1.total_cost(original:) }
         else
-          (original ? original_additional_cost_total : additional_cost_total).to_i
+          (original ? original_additional_cost_total : additional_cost_total).to_f
         end
       end
 
