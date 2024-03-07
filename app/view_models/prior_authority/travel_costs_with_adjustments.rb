@@ -1,13 +1,13 @@
 module PriorAuthority
   module RequestedTravelCosts
     def requested_travel_units
-      format_period(requested_travel_time)
+      format_period(original_travel_time)
     end
 
     def requested_formatted_travel_cost_per_hour
-      return if requested_travel_cost_per_hour.zero?
+      return if original_travel_cost_per_hour.to_f.zero?
 
-      "#{NumberTo.pounds(requested_travel_cost_per_hour)} " \
+      "#{NumberTo.pounds(original_travel_cost_per_hour)} " \
         "#{I18n.t('prior_authority.application_details.items.per_unit_descriptions.per_hour')}"
     end
 
@@ -18,56 +18,42 @@ module PriorAuthority
     private
 
     def requested_travel_costs
-      return if requested_travel_time.nil? || requested_travel_cost_per_hour.zero?
+      return if original_travel_time.nil? || original_travel_cost_per_hour.to_f.zero?
 
       (
-        (requested_travel_time.hours * requested_travel_cost_per_hour) +
-        ((requested_travel_time.minutes / 60.0) * requested_travel_cost_per_hour)
+        (original_travel_time.hours * original_travel_cost_per_hour) +
+        ((original_travel_time.minutes / 60.0) * original_travel_cost_per_hour)
       ).round(2)
-    end
-
-    def requested_travel_time
-      original_travel_time
-    end
-
-    def requested_travel_cost_per_hour
-      original_travel_cost_per_hour.to_f
     end
   end
 
   module AdjustedTravelCosts
     def adjusted_travel_units
-      format_period(adjusted_travel_time) if adjusted_travel_time
+      format_period(travel_time) if any_travel_adjustments?
     end
 
     def adjusted_formatted_travel_cost_per_hour
-      return unless adjusted_travel_cost_per_hour
+      return unless any_travel_adjustments?
 
-      "#{NumberTo.pounds(adjusted_travel_cost_per_hour)} " \
+      "#{NumberTo.pounds(travel_cost_per_hour)} " \
         "#{I18n.t('prior_authority.application_details.items.per_unit_descriptions.per_hour')}"
     end
 
     def adjusted_formatted_travel_cost
-      NumberTo.pounds(adjusted_travel_costs) if adjusted_travel_costs
+      NumberTo.pounds(adjusted_travel_costs) if any_travel_adjustments?
     end
 
     private
 
     def adjusted_travel_costs
-      return unless adjusted_travel_time.to_i.positive? && adjusted_travel_cost_per_hour.to_f.positive?
-
       (
-        (adjusted_travel_time.hours * adjusted_travel_cost_per_hour) +
-        ((adjusted_travel_time.minutes / 60.0) * adjusted_travel_cost_per_hour)
+        (travel_time.hours * travel_cost_per_hour) +
+        ((travel_time.minutes / 60.0) * travel_cost_per_hour)
       ).round(2)
     end
 
-    def adjusted_travel_time
-      travel_time if travel_time_original || travel_cost_per_hour_original
-    end
-
-    def adjusted_travel_cost_per_hour
-      travel_cost_per_hour if travel_cost_per_hour_original || travel_time_original
+    def any_travel_adjustments?
+      travel_time_original || travel_cost_per_hour_original
     end
   end
 
