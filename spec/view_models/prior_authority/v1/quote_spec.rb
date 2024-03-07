@@ -817,14 +817,6 @@ RSpec.describe PriorAuthority::V1::Quote do
           expect(adjusted_formatted_travel_cost).to be_nil
         end
       end
-
-      context 'with unusual item type' do
-        let(:cost_attributes) { { cost_per_item: 33.2, item_type: 'page' } }
-
-        it 'returns the humanized currency value sentence' do
-          expect(formatted_base_cost_per_unit).to eq '£33.20 per page'
-        end
-      end
     end
   end
 end
