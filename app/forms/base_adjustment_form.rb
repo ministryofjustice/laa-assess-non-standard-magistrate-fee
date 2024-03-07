@@ -42,9 +42,9 @@ class BaseAdjustmentForm
   end
 
   def changed_value(val1, val2)
-    hash = {}
-    hash = { change: val1 - val2 } if val1.respond_to?(:-) && val2.respond_to?(:-)
-    hash
+    return { change: val1 - val2 } if val1.respond_to?(:-) && val2.respond_to?(:-)
+
+    {}
   end
 
   def linked
