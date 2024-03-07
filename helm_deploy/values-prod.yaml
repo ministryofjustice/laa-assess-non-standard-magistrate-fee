@@ -33,7 +33,7 @@ ingress:
       external-dns.alpha.kubernetes.io/set-identifier: laa-assess-crime-forms-app-laa-assess-crime-forms-prod-green
       external-dns.alpha.kubernetes.io/aws-weight: "100"
   hosts:
-    - host: submit-crime-forms.service.justice.gov.uk
+    - host: assess-crime-forms.service.justice.gov.uk
       paths:
         - path: /
           pathType: ImplementationSpecific
@@ -44,7 +44,7 @@ ingress:
               number: 3000
   tls:
     - hosts:
-      - submit-crime-forms.service.justice.gov.uk
+      - assess-crime-forms.service.justice.gov.uk
 
 resources:
   limits:
