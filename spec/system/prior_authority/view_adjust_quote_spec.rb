@@ -64,7 +64,7 @@ RSpec.describe 'View Adjust quote tab' do
     within('.govuk-summary-card') do
       expect(page)
         .to have_css('.govuk-summary-card__title', text: 'Key information')
-        .and have_content('Main offenceBattery (common)')
+        .and have_content('Main offenceRobbery')
         .and have_content('Expert postcodeSW1 1AA')
     end
   end

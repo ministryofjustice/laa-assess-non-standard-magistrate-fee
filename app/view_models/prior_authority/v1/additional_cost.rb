@@ -56,7 +56,10 @@ module PriorAuthority
       end
 
       def formatted_cost_per_unit
-        I18n.t(unit_type, gbp: cost_per_unit, scope: 'prior_authority.application_details.items.per_unit_descriptions')
+        I18n.t(unit_type,
+               gbp: cost_per_unit,
+               item: 'item',
+               scope: 'prior_authority.application_details.items.per_unit_descriptions')
       end
     end
   end

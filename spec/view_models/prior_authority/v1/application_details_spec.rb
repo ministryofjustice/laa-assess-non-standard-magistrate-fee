@@ -153,15 +153,23 @@ RSpec.describe PriorAuthority::V1::ApplicationDetails do
   describe '#case_details_card' do
     let(:args) do
       {
-        main_offence: 'Jay walking',
+        main_offence_id: main_offence_id,
+        custom_main_offence_name: custom_main_offence_name,
         rep_order_date: '2023-02-01',
-        client_detained: false,
+        client_detained: client_detained,
+        prison_id: prison_id,
+        custom_prison_name: custom_prison_name,
         subject_to_poca: false,
         defendant: { 'maat' => '123123' }
       }
     end
+    let(:main_offence_id) { 'robbery' }
+    let(:custom_main_offence_name) { nil }
+    let(:client_detained) { false }
+    let(:prison_id) { nil }
+    let(:custom_prison_name) { nil }
     let(:expected_rows) do
-      [{ key: { text: 'Main offence' }, value: { text: 'Jay walking' } },
+      [{ key: { text: 'Main offence' }, value: { text: 'Robbery' } },
        { key: { text: 'Date of representation order' },
         value: { text: '01 February 2023' } },
        { key: { text: 'MAAT number' }, value: { text: '123123' } },
@@ -170,6 +178,33 @@ RSpec.describe PriorAuthority::V1::ApplicationDetails do
     end
 
     it { expect(subject.case_details_card.card_rows).to eq(expected_rows) }
+
+    context 'when there is a custom main offence' do
+      let(:main_offence_id) { 'custom' }
+      let(:custom_main_offence_name) { 'Jaywalking' }
+      let(:offence_row) { { key: { text: 'Main offence' }, value: { text: 'Jaywalking' } } }
+
+      it { expect(subject.case_details_card.card_rows).to include(offence_row) }
+    end
+
+    context 'when client is detained' do
+      let(:client_detained) { true }
+
+      context 'when in a standard prison' do
+        let(:prison_id) { 'hmp_albany' }
+        let(:prison_row) { { key: { text: 'Where client is detained' }, value: { text: 'HMP Albany' } } }
+
+        it { expect(subject.case_details_card.card_rows).to include(prison_row) }
+      end
+
+      context 'when in a custom prison' do
+        let(:prison_id) { 'custom' }
+        let(:custom_prison_name) { 'HMP Overseas' }
+        let(:prison_row) { { key: { text: 'Where client is detained' }, value: { text: 'HMP Overseas' } } }
+
+        it { expect(subject.case_details_card.card_rows).to include(prison_row) }
+      end
+    end
   end
 
   describe '#hearing_details_card' do

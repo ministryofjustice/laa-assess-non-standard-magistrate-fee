@@ -29,8 +29,12 @@ FactoryBot.define do
         'contact_email' => 'jane@doe.com'
       }
     end
-    main_offence { 'Battery (common)' }
+    main_offence_id { 'robbery' }
     service_type { 'pathologist_report' }
+    client_detained { false }
+    subject_to_poca { false }
+    prior_authority_granted { true }
+    plea { 'guilty' }
     court_type { 'crown_court' }
     rep_order_date { '2023-01-02' }
     next_hearing_date { '2025-01-01' }

@@ -13,6 +13,24 @@ RSpec.describe PriorAuthority::V1::ApplicationSummary do
     end
   end
 
+  describe '#main_offence' do
+    context 'when using a standard offence' do
+      subject(:key_information) { described_class.new(main_offence_id: 'robbery') }
+
+      it 'returns the main offence' do
+        expect(key_information.main_offence).to eq('Robbery')
+      end
+
+      context 'when using a custom offence' do
+        subject(:key_information) { described_class.new(main_offence_id: 'custom', custom_main_offence_name: 'Stuff') }
+
+        it 'returns the main offence' do
+          expect(key_information.main_offence).to eq('Stuff')
+        end
+      end
+    end
+  end
+
   describe '#current_section' do
     let(:submission) { create(:prior_authority_application, state:) }
     let(:state) { 'submitted' }
