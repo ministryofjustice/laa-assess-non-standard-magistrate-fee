@@ -43,7 +43,7 @@ group :development, :test do
   gem 'overcommit'
   gem 'pry'
   gem 'rspec-expectations'
-  gem 'rspec_junit_formatter'
+  gem 'rspec_junit_formatter', require: false
   gem 'rspec-rails'
 end
 
