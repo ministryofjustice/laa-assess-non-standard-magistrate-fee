@@ -9,6 +9,7 @@ module PriorAuthority
         ].freeze
 
         delegate :additional_cost_list, :formatted_total_cost, to: :quote
+        delegate :formatted_original_total_cost, to: :primary_quote
 
         def initialize(application_details, alternative_quote)
           @alternative_quote = alternative_quote
@@ -65,11 +66,9 @@ module PriorAuthority
         end
 
         def footer_row
-          [tag.strong(total_label), tag.strong(formatted_total_cost), tag.strong(formatted_primary_quote_total_cost)]
-        end
-
-        def formatted_primary_quote_total_cost
-          primary_quote.formatted_total_cost
+          [tag.strong(total_label),
+           tag.strong(formatted_total_cost),
+           tag.strong(formatted_original_total_cost)]
         end
       end
     end

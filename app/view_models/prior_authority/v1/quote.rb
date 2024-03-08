@@ -93,6 +93,10 @@ module PriorAuthority
         NumberTo.pounds(total_cost)
       end
 
+      def formatted_original_total_cost
+        NumberTo.pounds(original_total_cost)
+      end
+
       def travel_costs(original: false)
         time = original ? original_travel_time : travel_time
         hourly_cost = original ? original_travel_cost_per_hour : travel_cost_per_hour
