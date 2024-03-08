@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_07_154917) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_08_150518) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -52,6 +52,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_07_154917) do
     t.jsonb "data"
     t.datetime "app_store_updated_at"
     t.string "application_type"
+    t.index "((data ->> 'client_name'::text))", name: "index_submissions_on_client_name"
+    t.index "((data ->> 'firm_name'::text))", name: "index_submissions_on_firm_name"
+    t.index "((data ->> 'laa_reference'::text))", name: "index_submissions_on_laa_reference"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
