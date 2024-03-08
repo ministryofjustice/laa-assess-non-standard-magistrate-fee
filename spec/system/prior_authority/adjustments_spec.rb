@@ -25,7 +25,8 @@ RSpec.describe 'View applications' do
     click_on 'Adjust additional cost'
     fill_in 'Hours', with: '3'
     click_on 'Save changes'
-    expect(page).to have_content 'Add an explanation for your decision'
+
+    expect(page).to have_content 'Explain your decision for adjusting the costs'
   end
 
   it 'lets me adjust an additional cost' do
@@ -33,7 +34,7 @@ RSpec.describe 'View applications' do
     click_on 'Adjust additional cost'
     fill_in 'Hours', with: '3'
     fill_in 'Minutes', with: '17'
-    fill_in 'Explanation', with: 'typoe'
+    fill_in 'Explain your decision', with: 'typoe'
     click_on 'Save changes'
     expect(page).to have_content '3 hours 17 minutes'
   end
@@ -45,7 +46,7 @@ RSpec.describe 'View applications' do
     expect(page).to have_content 'Time1 hour 0 minutesCost£32.00 per hour'
     click_on 'Adjust additional cost'
     fill_in 'Minutes', with: '30'
-    fill_in 'Explanation', with: 'Feeling generous'
+    fill_in 'Explain your decision', with: 'Feeling generous'
     click_on 'Save changes'
     expect(page).to have_content 'Requested: £356.50'
     expect(page).to have_content 'Allowed: £372.50'
@@ -55,12 +56,12 @@ RSpec.describe 'View applications' do
     visit prior_authority_application_adjustments_path(application)
     click_on 'Adjust additional cost'
     fill_in 'Minutes', with: '30'
-    fill_in 'Explanation', with: 'Feeling generous'
+    fill_in 'Explain your decision', with: 'Feeling generous'
     click_on 'Save changes'
 
     click_on 'Adjust additional cost'
     fill_in 'Minutes', with: '15'
-    fill_in 'Explanation', with: 'Feeling less generous'
+    fill_in 'Explain your decision', with: 'Feeling less generous'
     click_on 'Save changes'
 
     expect(page).to have_content 'Requested: £356.50'

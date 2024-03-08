@@ -1,0 +1,12 @@
+en:
+  prior_authority:
+    additional_costs:
+      edit:
+        adjustment_blurb: Adjust the providers' costs by changing the values.
+        calculate_button_text: Calculate my changes
+        explanation:
+          hint: For example, why you made adjustments to the cost or time. We'll share this explanation with the provider.
+          label: Explain your decision
+        hourly_cost: Hourly cost
+        page_title: Adjust additional cost %{n}
+        period: Time

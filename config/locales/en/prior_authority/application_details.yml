@@ -17,8 +17,11 @@ en:
           per_item: Item
           per_hour: Time
         per_unit_descriptions:
-          per_item: "%{gbp} per %{item}"
-          per_hour: "%{gbp} per hour"
+          per_hour: per hour
+          per_item: per item
+          per_minute: per minute
+          per_page: per page
+          per_word: per word
         item: item
         page: page
         minute: minute

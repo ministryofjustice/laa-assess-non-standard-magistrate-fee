@@ -23,11 +23,8 @@ class BaseAdjustmentForm
       field: field,
       from: selected_record[field],
       to: value,
-      comment: explanation
-    }
-    # TODO: uncomment once work_type edits are implemented as they won't have a change
-    # details[:change] = value - selected_record[field] if value.methods.include?(:'-')
-    details[:change] = value - selected_record[field]
+      comment: explanation,
+    }.merge(changed_value(value, selected_record[field]))
 
     ensure_original_field_value_set(field)
     assign_new_attributes(field, value)
@@ -42,6 +39,12 @@ class BaseAdjustmentForm
   def assign_new_attributes(field, value)
     selected_record[field] = value
     selected_record['adjustment_comment'] = explanation
+  end
+
+  def changed_value(val1, val2)
+    return { change: val1 - val2 } if val1.respond_to?(:-) && val2.respond_to?(:-)
+
+    {}
   end
 
   def linked

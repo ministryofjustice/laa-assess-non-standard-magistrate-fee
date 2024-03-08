@@ -1,5 +1,14 @@
 ---
 en:
+  shared_time_errors: &shared_time_errors
+    blank: Enter the time
+    blank_hours: Enter number of hours
+    blank_minutes: Enter number of minutes
+    invalid_hours: Hours must be greater than 0
+    invalid_minutes: Minutes must be between 0 and 59
+    invalid: Time must be valid
+    zero_time_period: Time must be more than 0
+
   errors:
     format: "%{message}"
     page_title_prefix: "Error: "
@@ -46,3 +55,36 @@ en:
       heading: Sorry, there is a problem with your request
       body_1: You can go back, refresh the page, and try again.
       body_2: If this problem continues, contact %{url} for help.
+
+  activemodel:
+    errors:
+      models:
+        prior_authority/additional_cost_form:
+          attributes:
+            base:
+              no_change: There are no changes to save. Select cancel if you do not want to make any changes.
+            period: *shared_time_errors
+            explanation:
+              blank: Explain your decision for adjusting the costs
+        prior_authority/service_cost_form:
+          attributes:
+            base:
+              no_change: There are no changes to save. Select cancel if you do not want to make any changes.
+            explanation:
+              blank: Explain your decision for adjusting the costs
+            period: *shared_time_errors
+            cost_per_hour:
+              blank: The hourly cost must be more than 0
+              greater_than: The hourly cost must be more than 0
+              not_a_number: The cost per hour must be a number, like 25
+        prior_authority/travel_cost_form:
+          attributes:
+            base:
+              no_change: There are no changes to save. Select cancel if you do not want to make any changes.
+            explanation:
+              blank: Explain your decision for adjusting the costs
+            travel_time: *shared_time_errors
+            travel_cost_per_hour:
+              blank: The hourly cost must be more than 0
+              greater_than: The hourly cost must be more than 0
+              not_a_number: The cost per hour must be a number, like 25

@@ -1,6 +1,6 @@
 <h2 class="govuk-heading-m"><%= t('.travel_cost') %></h2>
 
-<% quote = application_summary.primary_quote %>
+<% quote = application_summary.travel_cost %>
 
 <% if quote.travel_cost_reason %>
   <p class="govuk-text"><%= t(".cost_description", description: quote.travel_cost_reason) %></p>
@@ -18,24 +18,25 @@
       table.with_body do |body|
         body.with_row do |row|
           row.with_cell(text: t('.time'))
-          row.with_cell(text: quote.travel_units)
-          row.with_cell(text: '') # TODO: CRM457-1114
+          row.with_cell(text: quote.requested_travel_units)
+          row.with_cell(text: quote.adjusted_travel_units)
         end
 
         body.with_row do |row|
           row.with_cell(text: t('.cost'))
-          row.with_cell(text: quote.formatted_travel_cost_per_unit)
-          row.with_cell(text: '') # TODO: CRM457-1114
+          row.with_cell(text: quote.requested_formatted_travel_cost_per_hour)
+          row.with_cell(text: quote.adjusted_formatted_travel_cost_per_hour)
         end
 
         body.with_row do |row|
           row.with_cell(text: t('.total'))
-          row.with_cell(text: quote.formatted_travel_cost)
-          row.with_cell(text: '') # TODO: CRM457-1114
+          row.with_cell(text: quote.requested_formatted_travel_cost)
+          row.with_cell(text: quote.adjusted_formatted_travel_cost)
         end
       end
     end %>
 <%= link_to t(".adjust_travel_cost"),
-            '#', # TODO: edit_prior_authority_application_service_cost_path(application, quote.id),
+            edit_prior_authority_application_travel_cost_path(application, quote.id),
+            data: { turbo: false },
             class: 'govuk-button govuk-button--secondary' %>
 

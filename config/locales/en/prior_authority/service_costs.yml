@@ -1,0 +1,22 @@
+en:
+  prior_authority:
+    service_costs:
+      cost_fields:
+        cost_per_item: What is the cost per %{item}?
+        cost_per_hour: Hourly cost
+        items: Number of %{items}
+        item: item
+        minute: minute
+        word: word
+        page: page
+        period: Time
+
+      edit:
+        adjustment_blurb: Adjust the providers' costs by changing the values.
+        calculate_button_text: Calculate my changes
+        explanation:
+          hint: For example, why you made adjustments to the cost or time. We'll share this explanation with the provider.
+          label: Explain your decision
+        hourly_cost: Hourly cost
+        page_title: Adjust service costs
+        service_type_cost: "%{service_type} cost"

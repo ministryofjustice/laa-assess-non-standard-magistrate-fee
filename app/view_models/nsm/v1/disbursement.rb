@@ -2,10 +2,9 @@ module Nsm
   module V1
     class Disbursement < BaseWithAdjustments
       LINKED_TYPE = 'disbursements'.freeze
-      ID_FIELDS = %w[id].freeze
+
       attribute :disbursement_type, :translated
       attribute :other_type, :translated
-      # TODO: import time_period code from provider app
       attribute :miles, :decimal, precision: 10, scale: 3
       attribute :pricing, :decimal, precision: 10, scale: 2
       adjustable_attribute :total_cost_without_vat, :decimal, precision: 10, scale: 2

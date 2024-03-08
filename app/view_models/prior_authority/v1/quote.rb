@@ -1,12 +1,19 @@
 module PriorAuthority
   module V1
     class Quote < BaseWithAdjustments
+      LINKED_TYPE = 'quotes'.freeze
+
+      include ServiceCostsWithAdjustments
+      include TravelCostsWithAdjustments
+      # # TODO: include AdditionalCostsWithAdjustments
+
       attribute :id, :string
       attribute :cost_type, :string
+      attribute :item_type, :string, default: 'item'
+
       adjustable_attribute :cost_per_hour, :decimal, precision: 10, scale: 2
       adjustable_attribute :cost_per_item, :decimal, precision: 10, scale: 2
       adjustable_attribute :items, :integer
-      attribute :item_type, :string, default: 'item'
       adjustable_attribute :period, :time_period
 
       adjustable_attribute :travel_time, :time_period
@@ -67,21 +74,8 @@ module PriorAuthority
         NumberTo.pounds(travel_cost_per_hour)
       end
 
-      def formatted_travel_cost_per_unit
-        I18n.t('per_hour',
-               gbp: travel_cost_per_unit,
-               scope: 'prior_authority.application_details.items.per_unit_descriptions')
-      end
-
       def base_cost_per_unit
         NumberTo.pounds(cost_type == 'per_item' ? cost_per_item : cost_per_hour)
-      end
-
-      def formatted_base_cost_per_unit
-        I18n.t(cost_type,
-               gbp: base_cost_per_unit,
-               item: I18n.t("prior_authority.application_details.items.#{item_type}"),
-               scope: 'prior_authority.application_details.items.per_unit_descriptions')
       end
 
       def formatted_base_cost
