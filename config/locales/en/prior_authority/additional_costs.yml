@@ -9,4 +9,8 @@ en:
           label: Explain your decision
         hourly_cost: Hourly cost
         page_title: Adjust additional cost %{n}
+      cost_fields:
+        cost_per_hour: What is the hourly cost?
+        cost_per_item: What is the cost per item?
+        items: Number of items
         period: Time

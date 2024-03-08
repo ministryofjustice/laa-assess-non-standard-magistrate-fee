@@ -16,24 +16,26 @@
         table.with_body do |body|
           body.with_row do |row|
             row.with_cell(text: additional_cost.unit_label)
-            row.with_cell(text: additional_cost.unit_description)
-          row.with_cell(text: '') # TODO: CRM457-1114
+            row.with_cell(text: additional_cost.requested_humanized_units)
+            row.with_cell(text: additional_cost.adjusted_humanized_units)
           end
 
           body.with_row do |row|
             row.with_cell(text: t('.cost'))
-            row.with_cell(text: additional_cost.formatted_cost_per_unit)
-            row.with_cell(text: '') # TODO: CRM457-1114
+            row.with_cell(text: additional_cost.requested_humanized_cost_per_unit)
+            row.with_cell(text: additional_cost.adjusted_humanized_cost_per_unit)
           end
 
           body.with_row do |row|
             row.with_cell(text: t('.total'))
-            row.with_cell(text: additional_cost.formatted_total_cost)
-            row.with_cell(text: '') # TODO: CRM457-1114
+            row.with_cell(text: additional_cost.requested_formatted_cost_total)
+            row.with_cell(text: additional_cost.adjusted_formatted_cost_total)
           end
         end
       end %>
   <%= link_to t(".adjust_additional_cost"),
               edit_prior_authority_application_additional_cost_path(application, additional_cost.id),
-              class: 'govuk-button govuk-button--secondary' %>
+              class: 'govuk-button govuk-button--secondary',
+              id: "additional_cost_#{index + 1}",
+              data: { turbo: false } %>
 <% end %>

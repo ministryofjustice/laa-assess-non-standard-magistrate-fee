@@ -189,7 +189,7 @@ RSpec.describe 'View Adjust quote tab' do
 
     it 'does not show the travel costs summary' do
       expect(page).to have_no_content('Travel cost')
-        .and have_no_content('Reason for travel cost: "it was a long way"')
+        .and have_no_content('Reason for travel cost')
         .and have_no_css('.govuk-table#travel_costs')
     end
 
