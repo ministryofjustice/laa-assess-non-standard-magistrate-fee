@@ -37,6 +37,7 @@ export default class CostAdjustment {
 
   calculateTimeCost() {
     const unitPrice = parseFloat(this.costPerHourField.value)
+    let minutes
 
     this.checkMinutesThreshold();
 
@@ -45,7 +46,7 @@ export default class CostAdjustment {
     }
 
     if(this.hoursField?.value && this.minutesField?.value){
-      var minutes = (parseInt(this.hoursField.value) * 60) + parseInt(this.minutesField.value);
+      minutes = (parseInt(this.hoursField.value) * 60) + parseInt(this.minutesField.value);
     }
 
     // rounding to two decimal places
