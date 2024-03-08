@@ -12,14 +12,14 @@ en:
         provider_updated: Provider updated
       your:
         page_title: 'Your applications'
-        no_applications: 'You have no applications assigned to you for assessment'
+        no_applications: 'You have no applications assigned to you for assessment.'
         next_application: 'Assess next application'
       open:
         page_title: Open applications
-        no_applications: There are no open applications.
+        no_applications: There are not any applications to assess. Good job!
       assessed:
         page_title: Assessed applications
-        no_applications: There are no assessed applications.
+        no_applications: There are not any applications that have been assessed.
       table:
         table_info_item: 'application'
         header:

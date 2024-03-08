@@ -24,6 +24,7 @@ RSpec.describe 'View Adjust quote tab' do
     let(:application) do
       create(
         :prior_authority_application,
+        state: 'in_progress',
         data: build(
           :prior_authority_data,
           laa_reference: 'LAA-1234',
@@ -128,6 +129,7 @@ RSpec.describe 'View Adjust quote tab' do
       let(:application) do
         create(
           :prior_authority_application,
+          state: 'in_progress',
           data: build(
             :prior_authority_data,
             laa_reference: 'LAA-1234',

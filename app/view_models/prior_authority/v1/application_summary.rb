@@ -80,13 +80,17 @@ module PriorAuthority
       end
 
       def current_section(current_user)
-        if submission.state != 'submitted'
+        if !submission.state.in?(%w[submitted in_progress])
           :assessed
         elsif submission.assignments.find_by(user: current_user)
           :your
         else
           :open
         end
+      end
+
+      def can_edit?(caseworker)
+        submission.state == 'in_progress' && submission.assignments.find_by(user: caseworker)
       end
     end
   end
