@@ -21,7 +21,7 @@ RSpec.describe 'Adjust additional costs' do
 
   let(:caseworker) { create(:caseworker) }
 
-  context 'with a per item additional cost' do
+  context 'with per item and per hour additional costs' do
     let(:application) do
       create(
         :prior_authority_application,
