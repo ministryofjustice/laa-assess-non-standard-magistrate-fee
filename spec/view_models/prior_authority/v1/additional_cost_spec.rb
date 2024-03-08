@@ -1,15 +1,25 @@
 require 'rails_helper'
 
 RSpec.describe PriorAuthority::V1::AdditionalCost do
-  describe '#unit_description' do
+  describe '#original_unit_description' do
     it 'translates a period into something sensible' do
       cost = described_class.new(unit_type: 'per_hour', period: 180)
-      expect(cost.unit_description).to eq('3 hours 0 minutes')
+      expect(cost.original_unit_description).to eq('3 hours 0 minutes')
     end
 
     it 'translates an item into something sensible' do
       cost = described_class.new(unit_type: 'per_item', items: 1)
-      expect(cost.unit_description).to eq('1 item')
+      expect(cost.original_unit_description).to eq('1 item')
+    end
+
+    it 'uses the original period value' do
+      cost = described_class.new(unit_type: 'per_hour', period_original: 90, period: 180)
+      expect(cost.original_unit_description).to eq('1 hour 30 minutes')
+    end
+
+    it 'uses the original items value' do
+      cost = described_class.new(unit_type: 'per_item', items_original: 2, items: 1)
+      expect(cost.original_unit_description).to eq('2 items')
     end
   end
 
@@ -35,15 +45,25 @@ RSpec.describe PriorAuthority::V1::AdditionalCost do
     end
   end
 
-  describe '#cost_per_unit' do
+  describe '#original_cost_per_unit' do
     it 'translates a period into something sensible' do
       cost = described_class.new(unit_type: 'per_hour', cost_per_hour: 50.3)
-      expect(cost.cost_per_unit).to eq('£50.30')
+      expect(cost.original_cost_per_unit).to eq('£50.30')
     end
 
     it 'translates an item into something sensible' do
       cost = described_class.new(unit_type: 'per_item', cost_per_item: 1)
-      expect(cost.cost_per_unit).to eq('£1.00')
+      expect(cost.original_cost_per_unit).to eq('£1.00')
+    end
+
+    it 'uses the original cost_per_hour value' do
+      cost = described_class.new(unit_type: 'per_hour', cost_per_hour_original: '200.00', cost_per_hour: '180.00')
+      expect(cost.original_cost_per_unit).to eq('£200.00')
+    end
+
+    it 'uses the original cost_per_item value' do
+      cost = described_class.new(unit_type: 'per_item', cost_per_item_original: '50.00', cost_per_item: '30.00')
+      expect(cost.original_cost_per_unit).to eq('£50.00')
     end
   end
 
