@@ -1,0 +1,17 @@
+en:
+  prior_authority:
+    manual_assignments:
+      new:
+        page_title: Are you sure you want to add this application to your list?
+        label: Explain your decision
+        hint: This information will be shared internally. This information will not be shared with the provider.
+        button_text: Yes, add to my list
+      create:
+        already_assigned: This application is already assigned to a caseworker
+  activemodel:
+    errors:
+      models:
+        prior_authority/manual_assignment_form:
+          attributes:
+            comment:
+              blank: Explain why you are adding this application to your list

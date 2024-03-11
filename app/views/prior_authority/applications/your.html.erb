@@ -10,7 +10,7 @@
       <h2 class="govuk-body-l"><%= t('.no_applications') %></h2>
     <% end %>
     <div class="govuk-button-group">
-      <%= govuk_button_to(t('.next_application'), prior_authority_assignments_path) %>
+      <%= govuk_button_to(t('.next_application'), prior_authority_auto_assignments_path) %>
     </div>
     <% if @applications.any? %>
       <%= render 'table',

@@ -92,6 +92,14 @@ module PriorAuthority
       def can_edit?(caseworker)
         submission.state == 'in_progress' && submission.assignments.find_by(user: caseworker)
       end
+
+      def unassignable?
+        submission.state == 'in_progress'
+      end
+
+      def assignable?
+        submission.state.in?(%w[submitted provider_updated])
+      end
     end
   end
 end

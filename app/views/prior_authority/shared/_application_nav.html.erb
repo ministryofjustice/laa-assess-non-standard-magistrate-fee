@@ -23,7 +23,15 @@
     </strong> <%= application_summary.date_created_str %>
   </span>
 </p>
-<%= govuk_button_link_to t('.remove_from_list'), '#', secondary: true %>
+<% if application_summary.unassignable? %>
+  <%= govuk_button_link_to t('.remove_from_list'),
+                           new_prior_authority_application_unassignment_path(application_summary.id),
+                           secondary: true %>
+<% elsif application_summary.assignable? %>
+  <%= govuk_button_link_to t('.add_to_my_list'),
+                           new_prior_authority_application_manual_assignment_path(application_summary.id),
+                           secondary: true %>
+<% end %>
 <nav class="moj-sub-navigation" aria-label="Sub navigation" id="application_nav">
   <ul class="moj-sub-navigation__list">
     <li class="moj-sub-navigation__item">

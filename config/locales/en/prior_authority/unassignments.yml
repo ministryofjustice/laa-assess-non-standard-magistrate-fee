@@ -1,0 +1,18 @@
+en:
+  prior_authority:
+    unassignments:
+      new:
+        page_title: Are you sure you want to remove this application from %{caseworker}'s list?
+        paragraph: The application will go into the list of unallocated applications.
+        label: Explain your decision
+        hint: This information will be shared internally. This information will not be shared with the provider.
+        button_text: Yes, remove from list
+      create:
+        not_assigned: This application is not on a list so cannot be removed from one
+  activemodel:
+    errors:
+      models:
+        prior_authority/unassignment_form:
+          attributes:
+            comment:
+              blank: Explain why you are removing this application from the list
