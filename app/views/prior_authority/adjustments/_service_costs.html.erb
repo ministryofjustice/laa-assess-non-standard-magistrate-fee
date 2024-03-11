@@ -31,7 +31,7 @@
         end
       end
     end %>
-<% if application_summary.can_edit?(current_user) %>
+<% if editable %>
   <%= link_to t(".adjust_service_cost"),
               edit_prior_authority_application_service_cost_path(application, service_cost.id),
               data: { turbo: false },
