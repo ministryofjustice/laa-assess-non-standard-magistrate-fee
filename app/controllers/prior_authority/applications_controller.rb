@@ -34,8 +34,9 @@ module PriorAuthority
     end
 
     def set_default_table_sort_options
-      @sort_by = params.fetch(:sort_by, 'laa_reference')
-      @sort_direction = params.fetch(:sort_direction, 'ascending')
+      default = action_name == 'assessed' ? 'date_assessed' : 'date_received'
+      @sort_by = params.fetch(:sort_by, default)
+      @sort_direction = params.fetch(:sort_direction, 'descending')
     end
   end
 end
