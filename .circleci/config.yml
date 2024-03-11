@@ -106,21 +106,6 @@ commands:
     steps:
       - install-gems
       - install-compile-assets
-      - install-codeclimate-tt
-
-  install-codeclimate-tt:
-      steps:
-        - run:
-            name: Install codeclimate test reporter
-            command: |
-              mkdir -p tmp/
-              mkdir -p tmp/coverage/
-              curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > tmp/cc-test-reporter
-              chmod +x tmp/cc-test-reporter
-        - persist_to_workspace:
-            root: tmp
-            paths:
-              - cc-test-reporter
 
   rubocop:
     steps:
@@ -142,14 +127,9 @@ commands:
   rspec:
     steps:
       - db-setup
-      - save_cache:
-          key: nsmf-assess-repo-{{ .Environment.CIRCLE_SHA1 }}
-          paths:
-            - ~/repo
       - run:
           name: Run rspec tests
           command: |
-            tmp/cc-test-reporter before-build
             TESTFILES=$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings --timings-type=filename)
             RUBYOPT=-W:no-deprecated \
             INCLUDE_ACCESSIBILITY_SPECS=1 \
@@ -158,28 +138,20 @@ commands:
               --format RspecJunitFormatter \
               --out /tmp/test-results/rspec/rspec.xml \
               -- ${TESTFILES}
-
-            tmp/cc-test-reporter format-coverage -t simplecov -o "tmp/coverage/codeclimate.$CIRCLE_NODE_INDEX.json"
       - store_test_results:
           path: /tmp/test-results/rspec
-      - restore_cache:
-          key: nsmf-assess-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          name: Stash coverage results
+          command: |
+            mkdir coverage_results
+            cp -R coverage/.resultset.json coverage_results/.resultset-${CIRCLE_NODE_INDEX}.json
+      - persist_to_workspace:
+          root: .
+          paths:
+            - coverage_results
       - store_artifacts:
           path: ~/repo/coverage
           destination: coverage
-      - persist_to_workspace:
-          root: tmp
-          paths:
-            - coverage/codeclimate.*.json
-      - store_artifacts:
-          path: tmp/coverage
-
-  upload-coverage:
-      steps:
-        - run:
-            name: Upload coverage results to Code Climate
-            command: |
-              tmp/cc-test-reporter sum-coverage --output - tmp/coverage/codeclimate.*.json | tmp/cc-test-reporter upload-coverage --input -
 
   build-docker-image-for-scan:
       steps:
@@ -245,6 +217,7 @@ jobs:
       - rubocop
 
   rspec-tests:
+    parallelism: 2
     executor: test-executor
     steps:
       - checkout
@@ -256,13 +229,28 @@ jobs:
           install-firefox: false
           install-geckodriver: false
           install-chromedriver: false
+      - save_cache:
+          name: Saving assets and dependencies cache for use in later steps
+          key: assess-crime-forms-repo-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ~/repo
       - rspec
 
-  upload-test-coverage:
+  coverage:
     executor: test-executor
     steps:
-      - *attach-tmp-workspace
-      - upload-coverage
+      - attach_workspace:
+          at: .
+      - restore_cache:
+          name: Restoring assets and dependencies cache from tests
+          key: assess-crime-forms-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          name: Process coverage
+          command: |
+            bundle exec rake simplecov:process_coverage
+      - store_artifacts:
+          path: ~/repo/coverage
+          destination: coverage
 
   scan-docker-image:
     executor: test-executor
@@ -349,12 +337,12 @@ workflows:
       - rspec-tests:
           requires:
             - build-test-container
-      - upload-test-coverage:
+      - coverage:
           requires:
             - rspec-tests
       - scan-docker-image:
           requires:
-            - upload-test-coverage
+            - rspec-tests
 
   build-opened-pr:
     jobs:
@@ -382,7 +370,7 @@ workflows:
       - rspec-tests:
           requires:
             - build-test-container
-      - upload-test-coverage:
+      - coverage:
           requires:
             - rspec-tests
       - build-to-ecr:

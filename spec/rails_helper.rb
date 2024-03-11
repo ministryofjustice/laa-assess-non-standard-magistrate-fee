@@ -74,4 +74,8 @@ RSpec.configure do |config|
   config.before(:each, :javascript, type: :system) do
     driven_by Capybara.javascript_driver
   end
+
+  config.after(:each, type: :system) do
+    ActiveJob::Base.queue_adapter.enqueued_jobs.clear
+  end
 end
