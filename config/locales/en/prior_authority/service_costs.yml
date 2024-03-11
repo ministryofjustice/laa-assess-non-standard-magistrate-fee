@@ -13,6 +13,7 @@ en:
 
       edit:
         adjustment_blurb: Adjust the providers' costs by changing the values.
+        adjusted_cost: Adjusted cost
         calculate_button_text: Calculate my changes
         explanation:
           hint: For example, why you made adjustments to the cost or time. We'll share this explanation with the provider.
