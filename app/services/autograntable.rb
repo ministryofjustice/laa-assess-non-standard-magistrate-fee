@@ -1,0 +1,77 @@
+class Autograntable
+  attr_reader :submission
+
+  def initialize(submission:)
+    @submission = submission
+  end
+
+  def grantable?
+    return false unless submission.version == 1
+    return false unless limits
+    return false if additional_costs
+    return false unless below_service_cost_limit?
+    return false unless below_travel_cost_limit?
+
+    return true
+  end
+
+  def below_service_cost_limit?
+    if cost_type == 'per_hour' && limits.unit_type == 'hours'
+      limits.max_units >= quote.period && max_rate >= quote.cost_per_hour
+    elsif cost_type == 'per_item' && limits.unit_type == 'items'
+      limits.max_units >= quote.items && max_travel_rate >= quote.cost_per_item
+    else
+      false
+    end
+  end
+
+  def below_travel_cost_limit?
+    return true if quote.travel_time.zero?
+
+    travel_time.to_f / 60 < limits.travel_hours && travel_rate < quote.travel_cost_per_hour
+  end
+
+  def max_travel_rate
+    london? ? limits.travel_rate_london : limits.travel_rate_non_london
+  end
+
+  def max_rate
+    london? ? limits.max_rate_london : limits.max_rate_non_london
+  end
+
+  def london?
+    true
+  end
+
+  def limits
+    @limits ||= AutograntLimit.order(start_date: :desc).find_by(service_type:, start_date:)
+  end
+
+  def quote
+    Quote.new(
+      submission.data['quotes'].find { _1['primary'] }
+    )
+  end
+
+  private
+
+  def additional_costs
+    submission.data['additional_costs']
+  end
+
+  def service_type
+    submission.data['service_type']
+  end
+
+  def start_date
+    date =
+      if submission.data['prison_law']
+        _, day, month, year = submission.data['prison_law'].ufn.match(%r{\A(\d{2})(\d{2})(\d{2})/})
+        Date.new(2000 + year.to_i, month.to_i, day.to_i)
+      else
+        submission.data['rep_order_date']
+      end
+
+    (..date)
+  end
+end

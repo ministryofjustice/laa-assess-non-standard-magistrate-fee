@@ -29,11 +29,25 @@ class PullLatestVersionData < ApplicationJob
       data: json_data['application']
     )
 
-    submission.save!
 
-    json_data['events']&.each do |event|
-      submission.events.rehydrate!(event)
+    submission.transaction do
+      submission.save!
+
+      json_data['events']&.each do |event|
+        submission.events.rehydrate!(event)
+      end
+      Event::NewVersion.build(submission:)
+
+      if Autograntable.new(submission:).grantable?
+        previous_state = submission.state
+        submission.update!(state: 'auto-grant')
+
+        # TODO: needs a current_user or new class.....
+        Event::Decision.build(submission: submission,
+                              comment: comment,
+                              previous_state: previous_state)
+        NotifyAppStore.process(submission:)
+      end
     end
-    Event::NewVersion.build(submission:)
   end
 end
