@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe NotifyAppStore do
   subject { described_class.new }
 
-  let(:submission) { instance_double(Claim) }
+  let(:submission) { build(:claim) }
   let(:message_builder) { instance_double(described_class::MessageBuilder, message: { some: 'message' }) }
 
   before do
@@ -16,7 +16,7 @@ RSpec.describe NotifyAppStore do
       before do
         allow(ENV).to receive(:key?).and_call_original
         allow(ENV).to receive(:key?).with('REDIS_HOST').and_return(false)
-        allow(SubmissionFeedbackMailer).to receive_message_chain(:notify, :deliver_later!)
+        allow(Nsm::SubmissionFeedbackMailer).to receive_message_chain(:notify, :deliver_later!)
         expect(described_class::HttpNotifier).to receive(:new)
           .and_return(http_notifier)
       end
@@ -65,7 +65,7 @@ RSpec.describe NotifyAppStore do
     before do
       allow(described_class::HttpNotifier).to receive(:new)
         .and_return(http_notifier)
-      allow(SubmissionFeedbackMailer).to receive_message_chain(:notify, :deliver_later!)
+      allow(Nsm::SubmissionFeedbackMailer).to receive_message_chain(:notify, :deliver_later!)
     end
 
     it 'creates a new MessageBuilder' do

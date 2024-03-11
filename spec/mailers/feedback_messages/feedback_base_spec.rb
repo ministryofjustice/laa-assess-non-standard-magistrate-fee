@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe FeedbackMessages::FeedbackBase do
+RSpec.describe Nsm::FeedbackMessages::FeedbackBase do
   subject(:feedback) { described_class.new(claim) }
 
   let(:claim) { build(:claim) }

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe FeedbackMessages::RejectedFeedback do
+RSpec.describe Nsm::FeedbackMessages::RejectedFeedback do
   subject(:feedback) { described_class.new(claim, caseworker_decision_explanation) }
 
   let(:claim) { build(:claim) }

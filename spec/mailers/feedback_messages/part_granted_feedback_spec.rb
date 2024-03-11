@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe FeedbackMessages::PartGrantedFeedback do
+RSpec.describe Nsm::FeedbackMessages::PartGrantedFeedback do
   subject(:feedback) { described_class.new(claim, caseworker_decision_explanation) }
 
   let(:claim) { build(:claim) }

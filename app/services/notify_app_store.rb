@@ -8,7 +8,7 @@ class NotifyAppStore < ApplicationJob
     else
       begin
         new.notify(MessageBuilder.new(submission:))
-        SubmissionFeedbackMailer.notify(submission).deliver_later!
+        new.send_email(submission)
       rescue StandardError => e
         # we only get errors here when processing inline, which we don't want
         # to be visible to the end user, so swallow errors
@@ -19,7 +19,7 @@ class NotifyAppStore < ApplicationJob
 
   def perform(submission)
     notify(MessageBuilder.new(submission:))
-    SubmissionFeedbackMailer.notify(submission).deliver_later!
+    send_email(submission)
   end
 
   def notify(message_builder)
@@ -32,5 +32,13 @@ class NotifyAppStore < ApplicationJob
     # put requests
     post_manager = HttpNotifier.new
     post_manager.put(message_builder.message)
+  end
+
+  def send_email(submission)
+    if submission.application_type == 'crm7'
+      Nsm::SubmissionFeedbackMailer.notify(submission).deliver_later!
+    elsif submission.application_type == 'crm4'
+      # TODO: add email code for CRM4
+    end
   end
 end
