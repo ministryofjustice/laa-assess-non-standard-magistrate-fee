@@ -42,10 +42,7 @@ class PullLatestVersionData < ApplicationJob
         previous_state = submission.state
         submission.update!(state: 'auto-grant')
 
-        # TODO: needs a current_user or new class.....
-        Event::Decision.build(submission: submission,
-                              comment: comment,
-                              previous_state: previous_state)
+        Event::AutoDecision.build(submission: submission, previous_state: previous_state)
         NotifyAppStore.process(submission:)
       end
     end
