@@ -6,7 +6,6 @@ function init() {
   const adjustedCost = document.getElementById('adjusted-cost');
 
   if (hoursField && minutesField && costPerHourField) {
-    updateDomElements();
     calculateChangeButton.addEventListener('click', handleTestButtonClick);
   }
 

@@ -97,6 +97,7 @@ RSpec.describe 'Adjust travel costs' do
     fill_in 'Minutes', with: 0
     fill_in 'Hourly cost', with: '100.00'
 
+    expect(page).to have_css('#adjusted-cost', text: '0.00')
     click_on 'Calculate my changes'
     expect(page).to have_css('#adjusted-cost', text: '200.00')
   end
