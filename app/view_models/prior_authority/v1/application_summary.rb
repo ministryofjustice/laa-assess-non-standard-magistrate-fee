@@ -51,13 +51,11 @@ module PriorAuthority
         @all_quotes ||= Quote.build(:quote, submission, 'quotes')
       end
 
-      def service_cost
-        @service_cost ||= all_quotes.find { |q| q.primary == true }
+      def built_primary_quote
+        @built_primary_quote ||= all_quotes.find { |q| q.primary == true }
       end
-
-      def travel_cost
-        @travel_cost ||= all_quotes.find { |q| q.primary == true }
-      end
+      alias travel_cost built_primary_quote
+      alias service_cost built_primary_quote
 
       def primary_quote
         @primary_quote ||=

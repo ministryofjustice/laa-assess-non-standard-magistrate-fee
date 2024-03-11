@@ -33,7 +33,7 @@ module PriorAuthority
       end
 
       def formatted_total_cost
-        NumberTo.pounds(total_cost)
+        NumberTo.pounds(total_cost(original: true))
       end
 
       def form_attributes
@@ -44,16 +44,16 @@ module PriorAuthority
         I18n.t(unit_type, scope: 'prior_authority.application_details.items.unit_description')
       end
 
-      def unit_description
+      def original_unit_description
         if unit_type == 'per_item'
-          "#{items} #{I18n.t('prior_authority.application_details.items.item').pluralize(items)}"
+          "#{original_items} #{I18n.t('prior_authority.application_details.items.item').pluralize(original_items)}"
         else
-          format_period(period)
+          format_period(original_period)
         end
       end
 
-      def cost_per_unit
-        NumberTo.pounds(unit_type == 'per_item' ? cost_per_item : cost_per_hour)
+      def original_cost_per_unit
+        NumberTo.pounds(unit_type == 'per_item' ? original_cost_per_item : original_cost_per_hour)
       end
     end
   end

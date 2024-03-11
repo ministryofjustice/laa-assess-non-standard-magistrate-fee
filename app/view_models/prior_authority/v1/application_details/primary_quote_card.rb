@@ -26,13 +26,15 @@ module PriorAuthority
 
         def additional_cost_row(additional_cost)
           [additional_cost.name,
-           additional_cost.unit_description,
-           additional_cost.cost_per_unit,
+           additional_cost.original_unit_description,
+           additional_cost.original_cost_per_unit,
            additional_cost.formatted_total_cost]
         end
 
         delegate :primary_quote, :service_name, :prior_authority_granted, to: :application_details
-        delegate :travel_cost_reason, :base_units, :base_cost_per_unit, :travel_units, :travel_cost_per_unit,
+
+        delegate :base_units, :base_cost_per_unit,
+                 :travel_units, :travel_cost_per_unit, :travel_cost_reason,
                  :formatted_base_cost, :formatted_travel_cost,
                  to: :quote
 

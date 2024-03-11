@@ -36,14 +36,11 @@ RSpec.describe 'View applications' do
     visit '/'
     click_on 'Accept analytics cookies'
     visit prior_authority_root_path
+    create(:assignment, user: caseworker, submission: application)
+    click_on 'Start now'
   end
 
   context 'when an application is already assigned to me' do
-    before do
-      create(:assignment, user: caseworker, submission: application)
-      click_on 'Start now'
-    end
-
     it 'shows me that application in the list' do
       expect(page).to have_content 'LAA-1234'
     end
@@ -130,6 +127,116 @@ RSpec.describe 'View applications' do
         expect(page).to have_current_path(
           %r{/123123123\?response-content-disposition=attachment%3B%20filename%3Dtest\.pdf}
         )
+      end
+    end
+  end
+
+  context 'when adjustments have been made to the primary quote' do
+    let(:application) do
+      create(
+        :prior_authority_application,
+        created_at: '2023-3-2',
+        data: build(
+          :prior_authority_data,
+          laa_reference: 'LAA-1234',
+          quotes: [
+            build(
+              :primary_quote,
+              cost_type: 'per_hour',
+              period: 210,
+              period_original: 240,
+              cost_per_hour: '60.00',
+              cost_per_hour_original: '70.00',
+              travel_time: 90,
+              travel_time_original: 120,
+              travel_cost_per_hour: '20.00',
+              travel_cost_per_hour_original: '30.00',
+            ),
+            build(
+              :alternative_quote,
+              cost_type: 'per_hour',
+              period: 300,
+              cost_per_hour: '80.00',
+              travel_time: 120,
+              travel_cost_per_hour: '40.00',
+              additional_cost_list: 'Stuff to buy',
+              additional_cost_total: '500.00',
+            ),
+            build(
+              :alternative_quote,
+              cost_type: 'per_hour',
+              period: 300,
+              cost_per_hour: '500.00',
+              travel_time: nil,
+              travel_cost_per_hour: nil,
+              additional_cost_list: nil,
+              additional_cost_total: nil,
+            ),
+          ],
+          additional_costs: [
+            build(
+              :additional_cost,
+              name: 'Mileage',
+              unit_type: 'per_item',
+              items_original: 100,
+              items: 90,
+              cost_per_item_original: '3.50',
+              cost_per_item: '2.50',
+            ),
+            build(
+              :additional_cost,
+              name: 'Waiting time',
+              unit_type: 'per_hour',
+              period_original: 120,
+              period: 90,
+              cost_per_hour_original: '40.0',
+              cost_per_hour: '35.0',
+            ),
+          ]
+        )
+      )
+    end
+
+    before { click_on 'LAA-1234' }
+
+    it 'shows requested values in the primary quote card' do
+      within('#primary-quote.govuk-summary-card') do
+        within('.govuk-table') do
+          expect(page)
+            .to have_content('Cost typeAmountRequestedTotal')
+            .and have_content('Service4 hours 0 minutes£70.00£280.00')
+            .and have_content('Travel2 hours 0 minutes£30.00£60.00')
+            .and have_content('Mileage100 items£3.50£350.00')
+            .and have_content('Waiting time2 hours 0 minutes£40.00£80.00')
+        end
+      end
+    end
+
+    it 'shows requested values in the alternative quote card' do
+      within('.govuk-summary-card', text: 'Alternative quote 1') do
+        within('.govuk-table') do
+          expect(page)
+            .to have_content('Cost typeAlternative quotePrimary quote')
+            .and have_content('Service£400.00£280.00')
+            .and have_content('Travel£80.00£60.00')
+            .and have_content('Additional£500.00£430.00')
+            .and have_content('Total cost£980.00£770.00')
+        end
+      end
+    end
+
+    context 'when alternative quotes have no travel or additional costs' do
+      it 'shows requested values in the alternative quote card' do
+        within('.govuk-summary-card', text: 'Alternative quote 2') do
+          within('.govuk-table') do
+            expect(page)
+              .to have_content('Cost typeAlternative quotePrimary quote')
+              .and have_content('Service£2,500.00£280.00')
+              .and have_content('Travel£0.00£60.00')
+              .and have_content('Additional£0.00£430.00')
+              .and have_content('Total cost£2,500.00£770.00')
+          end
+        end
       end
     end
   end

@@ -59,38 +59,42 @@ module PriorAuthority
 
       def base_units
         if cost_type == 'per_item'
-          "#{items} #{I18n.t("prior_authority.application_details.items.#{item_type}").pluralize(items)}"
+          "#{original_items} #{I18n.t("prior_authority.application_details.items.#{item_type}").pluralize(items)}"
         else
-          format_period(period)
+          format_period(original_period)
         end
       end
 
       def travel_units
-        format_period(travel_time)
+        format_period(original_travel_time)
       end
 
       def travel_cost_per_unit
-        NumberTo.pounds(travel_cost_per_hour)
+        NumberTo.pounds(original_travel_cost_per_hour)
       end
 
       def base_cost_per_unit
-        NumberTo.pounds(cost_type == 'per_item' ? cost_per_item : cost_per_hour)
+        NumberTo.pounds(cost_type == 'per_item' ? original_cost_per_item : original_cost_per_hour)
       end
 
       def formatted_base_cost
-        NumberTo.pounds(base_cost)
+        NumberTo.pounds(base_cost(original: true))
       end
 
       def formatted_travel_cost
-        NumberTo.pounds(travel_costs)
+        NumberTo.pounds(travel_costs(original: true))
       end
 
       def formatted_additional_costs
-        NumberTo.pounds(total_additional_costs)
+        NumberTo.pounds(total_additional_costs(original: true))
       end
 
       def formatted_total_cost
         NumberTo.pounds(total_cost)
+      end
+
+      def formatted_original_total_cost
+        NumberTo.pounds(original_total_cost)
       end
 
       def travel_costs(original: false)
