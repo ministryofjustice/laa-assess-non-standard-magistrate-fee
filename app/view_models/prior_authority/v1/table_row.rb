@@ -4,11 +4,19 @@ module PriorAuthority
       include ActionView::Helpers::TagHelper
 
       attribute :laa_reference, :string
-      attribute :firm_name
-      attribute :client_name
+      attribute :firm_office
+      attribute :defendant
       attribute :submission
 
       delegate :id, to: :submission
+
+      def firm_name
+        firm_office['name']
+      end
+
+      def client_name
+        "#{defendant['first_name']} #{defendant['last_name']}"
+      end
 
       def date_created_str
         submission.created_at.to_fs(:stamp)
@@ -16,6 +24,10 @@ module PriorAuthority
 
       def date_assessed_str
         submission.updated_at.to_fs(:stamp)
+      end
+
+      def service_name
+        I18n.t(submission.data['service_type'], scope: 'prior_authority.service_types')
       end
 
       def caseworker

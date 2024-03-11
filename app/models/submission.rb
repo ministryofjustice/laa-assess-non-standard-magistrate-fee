@@ -14,6 +14,10 @@ class Submission < ApplicationRecord
   scope :pending_decision, -> { where.not(state: Nsm::MakeDecisionForm::STATES) }
   scope :decision_made, -> { where(state: Nsm::MakeDecisionForm::STATES) }
 
+  scope :related_applications, lambda { |ufn, account_number|
+    PriorAuthority::RelatedApplications.call(ufn, account_number)
+  }
+
   scope :pending_and_assigned_to, lambda { |user|
     pending_decision
       .joins(:assignments)
