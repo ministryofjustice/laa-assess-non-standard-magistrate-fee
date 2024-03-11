@@ -80,7 +80,7 @@ module PriorAuthority
       end
 
       def current_section(current_user)
-        if !submission.state.in?(%w[submitted in_progress])
+        if !pending?
           :assessed
         elsif submission.assignments.find_by(user: current_user)
           :your
@@ -90,14 +90,18 @@ module PriorAuthority
       end
 
       def can_edit?(caseworker)
-        submission.state == 'in_progress' && submission.assignments.find_by(user: caseworker)
+        pending? && submission.assignments.find_by(user: caseworker)
       end
 
       def unassignable?
-        submission.state == 'in_progress'
+        pending? && submission.assignments.any?
       end
 
       def assignable?
+        submission.state.in?(%w[submitted provider_updated])
+      end
+
+      def pending?
         submission.state.in?(%w[submitted provider_updated])
       end
     end

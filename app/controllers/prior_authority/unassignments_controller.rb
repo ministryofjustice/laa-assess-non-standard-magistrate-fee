@@ -25,19 +25,12 @@ module PriorAuthority
           Event::Unassignment.build(submission: application, user: assignment.user,
                                     current_user: current_user, comment: comment)
 
-          application.update!(state: unassigned_state(application))
           assignment.destroy
         end
         redirect_to prior_authority_application_path(application)
       else
         redirect_to prior_authority_application_path(application), flash: { notice: t('.not_assigned') }
       end
-    end
-
-    def unassigned_state(_application)
-      # TODO: RFI - if there are any RFI events in the event history,
-      # then this should revert to the new RFI provider_updated status
-      'submitted'
     end
   end
 end

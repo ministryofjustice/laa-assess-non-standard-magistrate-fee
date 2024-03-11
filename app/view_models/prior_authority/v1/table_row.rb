@@ -24,8 +24,14 @@ module PriorAuthority
 
       def status
         tag.span(class: "govuk-tag govuk-tag--#{tag_colour}") do
-          I18n.t("prior_authority.applications.statuses.#{submission.state}")
+          I18n.t("prior_authority.applications.statuses.#{augmented_state}")
         end
+      end
+
+      def augmented_state
+        return 'in_progress' if submission.state == 'submitted' && submission.assignments.any?
+
+        submission.state
       end
 
       private
@@ -39,7 +45,7 @@ module PriorAuthority
           'part_grant' => 'blue',
           'granted' => 'green',
           'rejected' => 'red'
-        }.fetch(submission.state)
+        }.fetch(augmented_state)
       end
     end
   end

@@ -19,7 +19,7 @@ RSpec.describe 'Assign applications' do
       click_on 'Assess next application'
       expect(application.reload.assignments.first.user).to eq caseworker
       expect(application.events.first).to be_an Event::Assignment
-      expect(application.state).to eq 'in_progress'
+      expect(application.state).to eq 'submitted'
       expect(page).to have_current_path prior_authority_application_path(application)
     end
 
@@ -34,7 +34,7 @@ RSpec.describe 'Assign applications' do
         click_on 'Yes, add to my list'
         expect(application.reload.assignments.first.user).to eq caseworker
         expect(application.events.first).to be_an Event::Assignment
-        expect(application.state).to eq 'in_progress'
+        expect(application.state).to eq 'submitted'
         expect(page).to have_current_path prior_authority_application_path(application)
       end
 
@@ -56,7 +56,6 @@ RSpec.describe 'Assign applications' do
 
       before do
         create(:assignment, user: someone_else, submission: application)
-        application.update(state: 'in_progress')
       end
 
       context "when I click to remove the application from the user's list" do

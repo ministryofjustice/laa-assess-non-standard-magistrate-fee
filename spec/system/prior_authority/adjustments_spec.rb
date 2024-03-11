@@ -29,7 +29,7 @@ RSpec.describe 'View applications' do
       create(:assignment,
              user: caseworker,
              submission: application)
-      application.update(state: 'in_progress')
+      application.update(state: 'submitted')
     end
 
     it 'shows the application adjustments overview' do
