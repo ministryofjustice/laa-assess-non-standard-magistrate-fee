@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Nsm
+module PriorAuthority
   module FeedbackMessages
     class FeedbackBase
       def initialize(submission, comment = '')
