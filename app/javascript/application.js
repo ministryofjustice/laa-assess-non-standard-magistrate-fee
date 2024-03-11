@@ -1,6 +1,5 @@
 import "@hotwired/turbo-rails"
 import "./controllers"
-import "./component/sortable_table"
 import "./component/nsm/letters_calls_adjustment"
 import "./component/nsm/work_item_adjustment"
 import "./component/prior_authority/service_cost_adjustment"

@@ -20,6 +20,7 @@ RSpec.describe 'Assign applications' do
       # As the UI has not yet been built, the most we can do is demonstrate that an assignment has been made
       expect(application.reload.assignments.first.user).to eq caseworker
       expect(application.events.first).to be_an Event::Assignment
+      expect(application.state).to eq 'in_progress'
     end
   end
 

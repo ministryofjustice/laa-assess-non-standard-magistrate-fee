@@ -1,5 +1,5 @@
 <% content_for(:primary_navigation) do %>
-  <% render partial: 'layouts/prior_authority/primary_navigation', current: :your %>
+  <% render 'layouts/prior_authority/primary_navigation', current: application_summary.current_section(current_user) %>
 <% end %>
 <% title t('.page_title') %>
 
@@ -11,18 +11,19 @@
     <h2 class="govuk-heading-m"><%= t('.adjust_quote') %></h2>
 
     <%= render 'key_information_card', model: @key_information.key_information_card %>
-    <%= render 'service_costs', application_summary:, application: %>
+    <%= render 'service_costs', application_summary:, application:, editable: %>
 
     <% if application_summary.primary_quote.travel_costs.positive? %>
-      <%= render 'travel_costs', application_summary:, application: %>
+      <%= render 'travel_costs', application_summary:, application:, editable: %>
     <% end %>
 
-    <%= render 'additional_costs', additional_costs: core_cost_summary.additional_costs, application: %>
-
-    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible govuk-!-margin-top-9">
-    <div class="govuk-button-group">
-      <%= govuk_button_link_to(t('.make_a_decision'), '#') %>
-      <%= govuk_button_link_to(t('.save_and_exit'), your_prior_authority_applications_path, secondary: true) %>
-    </div>
+    <%= render 'additional_costs', additional_costs: core_cost_summary.additional_costs, application:, editable: %>
+    <% if editable %>
+      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible govuk-!-margin-top-9">
+      <div class="govuk-button-group">
+        <%= govuk_button_link_to(t('.make_a_decision'), '#') %>
+        <%= govuk_button_link_to(t('.save_and_exit'), your_prior_authority_applications_path, secondary: true) %>
+      </div>
+    <% end %>
   </div>
 </div>

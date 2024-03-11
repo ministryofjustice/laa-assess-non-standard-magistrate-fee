@@ -33,9 +33,11 @@
           end
         end
       end %>
-  <%= link_to t(".adjust_additional_cost"),
-              edit_prior_authority_application_additional_cost_path(application, additional_cost.id),
-              class: 'govuk-button govuk-button--secondary',
-              id: "additional_cost_#{index + 1}",
-              data: { turbo: false } %>
+  <% if editable %>
+    <%= link_to t(".adjust_additional_cost"),
+                edit_prior_authority_application_additional_cost_path(application, additional_cost.id),
+                class: 'govuk-button govuk-button--secondary',
+                id: "additional_cost_#{index + 1}",
+                data: { turbo: false } %>
+  <% end %>
 <% end %>
