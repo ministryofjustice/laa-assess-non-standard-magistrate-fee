@@ -63,7 +63,7 @@ autoscaling:
 
 variables:
   environment: uat
-  app_store_url: https://laa-crime-application-store-uat.apps.live.cloud-platform.service.justice.gov.uk
+  appStoreUrl: https://laa-crime-application-store-uat.apps.live.cloud-platform.service.justice.gov.uk
 
 service_account:
   name: laa-assess-crime-forms-uat-irsa
