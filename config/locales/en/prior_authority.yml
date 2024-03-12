@@ -12,6 +12,7 @@ en:
         rep_order_date: 'Representation order date:'
         date_received: 'Date received:'
         remove_from_list: Remove from list
+        add_to_my_list: Add to my list
         overview: Overview
         adjust_quote: Adjust quote
         related_applications: Related applications
@@ -29,7 +30,7 @@ en:
         page_title: Adjustments
         make_a_decision: Make a decision
         save_and_exit: Save and exit
-    assignments:
+    auto_assignments:
       create:
         no_unassigned_applications: There are no applications waiting to be allocated
   helpers:

@@ -97,8 +97,10 @@ Rails.application.routes.draw do
       resources :service_costs, only: [:edit, :update]
       resources :travel_costs, only: [:edit, :update]
       resources :additional_costs, only: [:edit, :update]
+      resources :manual_assignments, only: %i[new create]
+      resources :unassignments, only: %i[new create]
     end
-    resources :assignments, only: [:create]
+    resources :auto_assignments, only: [:create]
     resources :downloads, only: :show
   end
 end

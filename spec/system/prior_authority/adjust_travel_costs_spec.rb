@@ -26,7 +26,7 @@ RSpec.describe 'Adjust travel costs' do
   let(:application) do
     create(
       :prior_authority_application,
-      state: 'in_progress',
+      state: 'submitted',
       data: build(
         :prior_authority_data,
         laa_reference: 'LAA-1234',

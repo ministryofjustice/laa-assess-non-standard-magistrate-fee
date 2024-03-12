@@ -5,12 +5,12 @@ RSpec.describe 'Prior authority list views' do
   let(:someone_else) { create(:caseworker) }
   let(:assigned_to_me) do
     create(:prior_authority_application,
-           state: 'in_progress',
+           state: 'submitted',
            data: build(:prior_authority_data, laa_reference: 'LAA-111'))
   end
   let(:assigned_to_someone_else) do
     create(:prior_authority_application,
-           state: 'in_progress',
+           state: 'submitted',
            data: build(:prior_authority_data, laa_reference: 'LAA-222'))
   end
   let(:unassigned) do
@@ -55,9 +55,10 @@ RSpec.describe 'Prior authority list views' do
     end
 
     it 'lets me sort applications' do
-      expect(page.body).to match(/111.*222.*333/m)
       click_on 'LAA reference'
       expect(page.body).to match(/333.*222.*111/m)
+      click_on 'LAA reference'
+      expect(page.body).to match(/111.*222.*333/m)
     end
   end
 

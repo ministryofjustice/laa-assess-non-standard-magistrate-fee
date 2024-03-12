@@ -1,0 +1,21 @@
+<% content_for(:primary_navigation) do %>
+  <% render 'layouts/prior_authority/primary_navigation', current: :open %>
+<% end %>
+
+<% title t('.page_title') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds" id="travel-cost-adjustment-container">
+    <h1 class="govuk-heading-xl"><%= t('.page_title') %></h1>
+    <%= form_with model: @form, url: prior_authority_application_manual_assignments_path(params[:application_id]) do |f| %>
+      <%= govuk_error_summary(@form) %>
+      <%= f.govuk_text_area :comment,
+                            label: { size: 's', text: t('.label') },
+                            hint: { size: 's', text: t('.hint') } %>
+
+      <%= f.govuk_submit t('.button_text') do %>
+        <%= link_to t('shared.cancel'), prior_authority_application_path(params[:application_id]), class: 'govuk-link', data: { turbo: 'false' } %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
