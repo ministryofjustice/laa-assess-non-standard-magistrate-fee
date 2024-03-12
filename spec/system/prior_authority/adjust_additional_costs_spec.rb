@@ -118,6 +118,7 @@ RSpec.describe 'Adjust additional costs' do
       fill_in 'Number of items', with: 100
       fill_in 'What is the cost per item?', with: '3.00'
 
+      expect(page).to have_css('#adjusted-cost', text: '0.00')
       click_on 'Calculate my changes'
       expect(page).to have_css('#adjusted-cost', text: '300.00')
     end
@@ -131,6 +132,7 @@ RSpec.describe 'Adjust additional costs' do
       fill_in 'Minutes', with: 30
       fill_in 'What is the hourly cost?', with: '40.00'
 
+      expect(page).to have_css('#adjusted-cost', text: '0.00')
       click_on 'Calculate my changes'
       expect(page).to have_css('#adjusted-cost', text: '60.00')
     end
