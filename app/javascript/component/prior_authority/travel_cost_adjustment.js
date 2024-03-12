@@ -20,15 +20,15 @@ function init() {
   }
 
   function calculateAdjustedCost() {
+    if(isNaN(hoursField?.value) || isNaN(minutesField?.value) || isNaN(costPerHourField?.value)) {
+      return '--';
+    }
+
     const unitPrice = parseFloat(costPerHourField.value)
 
     checkMinutesThreshold();
 
     var minutes = calculateChangeButton?.getAttribute('data-provider-time-spent');
-
-    if(isNaN(hoursField?.value) || isNaN(minutesField?.value)){
-      return '--';
-    }
 
     if(hoursField?.value && minutesField?.value){
       minutes = (parseInt(hoursField.value) * 60) + parseInt(minutesField.value);

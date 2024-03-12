@@ -36,14 +36,14 @@ export default class CostAdjustment {
   }
 
   calculateTimeCost() {
+    if(isNaN(this.hoursField?.value) || isNaN(this.minutesField?.value) || isNaN(this.costPerHourField?.value)) {
+      return '--';
+    }
+
     const unitPrice = parseFloat(this.costPerHourField.value)
     let minutes
 
     this.checkMinutesThreshold();
-
-    if(isNaN(this.hoursField?.value) || isNaN(this.minutesField?.value)){
-      return '--';
-    }
 
     if(this.hoursField?.value && this.minutesField?.value){
       minutes = (parseInt(this.hoursField.value) * 60) + parseInt(this.minutesField.value);
@@ -54,8 +54,13 @@ export default class CostAdjustment {
   }
 
   calculateItemCost() {
+    if(isNaN(this.itemsField?.value) || isNaN(this.costPerItemField?.value)){
+      return '--';
+    }
+
     const items = parseInt(this.itemsField.value)
     const unitPrice = parseFloat(this.costPerItemField.value)
+
 
     // rounding to two decimal places
     return (`${(items * unitPrice).toFixed(2)}`);
