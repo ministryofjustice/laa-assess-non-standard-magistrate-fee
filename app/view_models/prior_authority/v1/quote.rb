@@ -31,6 +31,8 @@ module PriorAuthority
       attribute :related_to_post_mortem, :boolean
       attribute :document
 
+      attribute :travel_adjustment_comment
+
       def total_cost
         base_cost + travel_costs + total_additional_costs
       end

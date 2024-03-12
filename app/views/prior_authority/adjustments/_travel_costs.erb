@@ -2,6 +2,12 @@
 
 <% quote = application_summary.travel_cost %>
 
+<% if quote.travel_adjustment_comment %>
+  <div class="govuk-inset-text">
+    <%= quote.travel_adjustment_comment %>
+  </div>
+<% end %>
+
 <% if quote.travel_cost_reason %>
   <p class="govuk-text"><%= t(".cost_description", description: quote.travel_cost_reason) %></p>
 <% end %>

@@ -2,6 +2,12 @@
 
 <% service_cost = application_summary.service_cost %>
 
+<% if service_cost.adjustment_comment %>
+  <div class="govuk-inset-text">
+    <%= service_cost.adjustment_comment %>
+  </div>
+<% end %>
+
 <%= govuk_table(id: 'service_costs') do |table|
       table.with_head do |head|
         head.with_row do |row|

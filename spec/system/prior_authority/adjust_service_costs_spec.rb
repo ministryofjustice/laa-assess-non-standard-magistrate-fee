@@ -55,10 +55,12 @@ RSpec.describe 'Adjust service costs' do
 
       fill_in 'Hours', with: 10
       fill_in 'Minutes', with: 30
-      fill_in 'Explain your decision', with: 'they worked longer'
+      fill_in 'Explain your decision', with: 'service cost adjustment explanation'
       click_on 'Save changes'
 
       expect(page).to have_title('Adjustments')
+      expect(page).to have_css('.govuk-inset-text', text: 'service cost adjustment explanation')
+
       within('.govuk-table#service_costs') do
         expect(page)
           .to have_content('Amount3 hours 0 minutes10 hours 30 minutes')
@@ -69,10 +71,11 @@ RSpec.describe 'Adjust service costs' do
 
     it 'allows me to adjust the cost per hour' do
       fill_in 'Hourly cost', with: '5.50'
-      fill_in 'Explain your decision', with: 'rates have risen'
+      fill_in 'Explain your decision', with: 'service cost adjustment explanation'
       click_on 'Save changes'
 
       expect(page).to have_title('Adjustments')
+      expect(page).to have_css('.govuk-inset-text', text: 'service cost adjustment explanation')
 
       within('.govuk-table#service_costs') do
         expect(page)

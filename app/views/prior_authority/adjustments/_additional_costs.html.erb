@@ -2,6 +2,12 @@
 
   <h2 class="govuk-heading-m"><%= t('.additional_cost', n: index + 1) %></h2>
 
+  <% if additional_cost.adjustment_comment %>
+    <div class="govuk-inset-text">
+      <%= additional_cost.adjustment_comment %>
+    </div>
+  <% end %>
+
   <p class="govuk-text"><%= t(".cost_description", name: additional_cost.name, description: additional_cost.description) %></p>
 
   <%= govuk_table(id: "additional_cost_#{index + 1}") do |table|
