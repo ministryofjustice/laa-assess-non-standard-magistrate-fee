@@ -1,34 +1,39 @@
 class Autograntable
-  attr_reader :submission
+  attr_reader :submission, :reason
 
   def initialize(submission:)
     @submission = submission
   end
 
   def grantable?
-    return false unless submission.version == 1
-    return false unless limits
-    return false if additional_costs
-    return false unless below_service_cost_limit?
-    return false unless below_travel_cost_limit?
+    return fail_with_reason(:version) unless submission.current_version == 1
+    return fail_with_reason(:additional_costs) if additional_costs.any?
+    return fail_with_reason(:unknown_service) unless limits
+    return fail_with_reason(:exceed_service_costs) unless below_service_cost_limit?
+    return fail_with_reason(:exceed_travel_costs) unless below_travel_cost_limit?
 
     return true
   end
 
   def below_service_cost_limit?
-    if cost_type == 'per_hour' && limits.unit_type == 'hours'
+    if quote.cost_type == 'per_hour' && limits.unit_type == 'hours'
       limits.max_units >= quote.period && max_rate >= quote.cost_per_hour
-    elsif cost_type == 'per_item' && limits.unit_type == 'items'
-      limits.max_units >= quote.items && max_travel_rate >= quote.cost_per_item
+    elsif quote.cost_type == 'per_item' && limits.unit_type == 'items'
+      limits.max_units >= quote.items && max_rate >= quote.cost_per_item
     else
       false
     end
   end
 
+  def fail_with_reason(reason)
+    @reason = reason
+    false
+  end
+
   def below_travel_cost_limit?
     return true if quote.travel_time.zero?
 
-    travel_time.to_f / 60 < limits.travel_hours && travel_rate < quote.travel_cost_per_hour
+    (limits.travel_hours * 60) >= quote.travel_time && max_travel_rate >= quote.travel_cost_per_hour
   end
 
   def max_travel_rate
@@ -44,11 +49,11 @@ class Autograntable
   end
 
   def limits
-    @limits ||= AutograntLimit.order(start_date: :desc).find_by(service_type:, start_date:)
+    @limits ||= AutograntLimit.order(start_date: :desc).find_by(service:, start_date:)
   end
 
   def quote
-    Quote.new(
+    PriorAuthority::V1::Quote.new(
       submission.data['quotes'].find { _1['primary'] }
     )
   end
@@ -59,7 +64,7 @@ class Autograntable
     submission.data['additional_costs']
   end
 
-  def service_type
+  def service
     submission.data['service_type']
   end
 
