@@ -35,10 +35,6 @@ class NotifyAppStore < ApplicationJob
   end
 
   def send_email(submission)
-    if submission.application_type == 'crm7'
-      Nsm::SubmissionFeedbackMailer.notify(submission).deliver_later!
-    elsif submission.application_type == 'crm4'
-      # TODO: add email code for CRM4
-    end
+    Nsm::SubmissionFeedbackMailer.notify(submission).deliver_later! if submission.application_type == 'crm7'
   end
 end
