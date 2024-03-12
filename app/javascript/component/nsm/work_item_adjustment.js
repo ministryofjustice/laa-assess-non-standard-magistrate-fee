@@ -1,7 +1,7 @@
 function init() {
   const workItemAdjustmentContainer = document.getElementById('work-items-adjustment-container');
-  const hoursField = document.getElementById('nsm_work_item_form_time_spent_1i');
-  const minutesField = document.getElementById('nsm_work_item_form_time_spent_2i');
+  const hoursField = document.getElementById('nsm_work_item_form_time_spent_1');
+  const minutesField = document.getElementById('nsm_work_item_form_time_spent_2');
   const upliftRemovedYesField = document.getElementById('nsm-work-item-form-uplift-yes-field');
   const upliftRemovedNoField = document.getElementById('nsm-work-item-form-uplift-no-field');
   const calculateChangeButton = document.getElementById('calculate_change_button');

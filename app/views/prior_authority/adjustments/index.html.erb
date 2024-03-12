@@ -19,7 +19,7 @@
 
     <%= render 'additional_costs', additional_costs: core_cost_summary.additional_costs, application:, editable: %>
     <% if editable %>
-      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible govuk-!-margin-top-9">
+      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
       <div class="govuk-button-group">
         <%= govuk_button_link_to(t('.make_a_decision'), '#') %>
         <%= govuk_button_link_to(t('.save_and_exit'), your_prior_authority_applications_path, secondary: true) %>

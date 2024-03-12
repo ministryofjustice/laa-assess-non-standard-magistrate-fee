@@ -71,8 +71,11 @@ RSpec.describe 'Adjust additional costs' do
 
       fill_in 'Number of items', with: 100
       fill_in 'What is the cost per item?', with: '3.00'
-      fill_in 'Explain your decision', with: 'maximum mileage claimable is 100, and cost per mile is 3.00'
+      fill_in 'Explain your decision', with: 'additional cost 1 explanation'
       click_on 'Save changes'
+
+      expect(page).to have_title('Adjustments')
+      expect(page).to have_css('.govuk-inset-text', text: 'additional cost 1 explanation')
 
       within('.govuk-table#additional_cost_1') do
         expect(page)
@@ -99,8 +102,11 @@ RSpec.describe 'Adjust additional costs' do
       fill_in 'Hours', with: 1
       fill_in 'Minutes', with: 30
       fill_in 'What is the hourly cost?', with: '40.00'
-      fill_in 'Explain your decision', with: 'maximums breached'
+      fill_in 'Explain your decision', with: 'additional cost 2 explanation'
       click_on 'Save changes'
+
+      expect(page).to have_title('Adjustments')
+      expect(page).to have_css('.govuk-inset-text', text: 'additional cost 2 explanation')
 
       within('.govuk-table#additional_cost_2') do
         expect(page)

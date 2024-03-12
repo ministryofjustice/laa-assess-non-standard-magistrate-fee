@@ -55,10 +55,12 @@ RSpec.describe 'Adjust service costs' do
 
       fill_in 'Hours', with: 10
       fill_in 'Minutes', with: 30
-      fill_in 'Explain your decision', with: 'they worked longer'
+      fill_in 'Explain your decision', with: 'service cost adjustment explanation'
       click_on 'Save changes'
 
       expect(page).to have_title('Adjustments')
+      expect(page).to have_css('.govuk-inset-text', text: 'service cost adjustment explanation')
+
       within('.govuk-table#service_costs') do
         expect(page)
           .to have_content('Amount3 hours 0 minutes10 hours 30 minutes')
@@ -69,10 +71,11 @@ RSpec.describe 'Adjust service costs' do
 
     it 'allows me to adjust the cost per hour' do
       fill_in 'Hourly cost', with: '5.50'
-      fill_in 'Explain your decision', with: 'rates have risen'
+      fill_in 'Explain your decision', with: 'service cost adjustment explanation'
       click_on 'Save changes'
 
       expect(page).to have_title('Adjustments')
+      expect(page).to have_css('.govuk-inset-text', text: 'service cost adjustment explanation')
 
       within('.govuk-table#service_costs') do
         expect(page)
@@ -83,11 +86,16 @@ RSpec.describe 'Adjust service costs' do
     end
 
     it 'allows me to recalculate the values on the page', :javascript do
+      expect(page).to have_css('#adjusted-cost', text: '0.00')
+
+      fill_in 'Hours', with: 'a'
+      click_on 'Calculate my changes'
+      expect(page).to have_css('#adjusted-cost', text: '--')
+
       fill_in 'Hours', with: 20
       fill_in 'Minutes', with: 0
       fill_in 'Hourly cost', with: '1.50'
 
-      expect(page).to have_css('#adjusted-cost', text: '0.00')
       click_on 'Calculate my changes'
       expect(page).to have_css('#adjusted-cost', text: '30.00')
     end
@@ -104,6 +112,19 @@ RSpec.describe 'Adjust service costs' do
     it 'allows me to cancel and return to adjustments page' do
       click_on 'Cancel'
       expect(page).to have_title('Adjustments')
+    end
+
+    it 'displays erroroneous values with appropriate message' do
+      fill_in 'Hours', with: 'a'
+      fill_in 'Hourly cost', with: 'b'
+
+      click_on 'Save changes'
+
+      expect(page)
+        .to have_content('The number of hours must be a number')
+        .and have_content('The cost per hour must be a number')
+        .and have_field('Hours', with: 'a')
+        .and have_field('Hourly cost', with: 'b')
     end
   end
 
@@ -162,10 +183,14 @@ RSpec.describe 'Adjust service costs' do
     end
 
     it 'allows me to calculate the values on the page', :javascript do
+      expect(page).to have_css('#adjusted-cost', text: '0.00')
+
+      fill_in 'What is the cost per minute?', with: 'a'
+      click_on 'Calculate my changes'
+      expect(page).to have_css('#adjusted-cost', text: '--')
+
       fill_in 'Number of minutes', with: 60
       fill_in 'What is the cost per minute?', with: 2.50
-
-      expect(page).to have_css('#adjusted-cost', text: '0.00')
       click_on 'Calculate my changes'
       expect(page).to have_css('#adjusted-cost', text: '150.00')
     end

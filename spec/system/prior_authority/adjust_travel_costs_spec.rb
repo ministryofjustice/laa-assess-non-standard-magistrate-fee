@@ -51,10 +51,12 @@ RSpec.describe 'Adjust travel costs' do
   it 'allows me to adjust the travel time' do
     fill_in 'Hours', with: 1
     fill_in 'Minutes', with: 0
-    fill_in 'Explain your decision', with: 'estimated time of jourmey from googlemaps without traffic'
+    fill_in 'Explain your decision', with: 'travel cost adjustment explanation'
     click_on 'Save changes'
 
     expect(page).to have_title('Adjustments')
+    expect(page).to have_css('.govuk-inset-text', text: 'travel cost adjustment explanation')
+
     within('.govuk-table#travel_costs') do
       expect(page)
         .to have_content('Time1 hour 30 minutes1 hour 0 minutes')
@@ -65,10 +67,11 @@ RSpec.describe 'Adjust travel costs' do
 
   it 'allows me to adjust the cost per hour' do
     fill_in 'Hourly cost', with: '90.00'
-    fill_in 'Explain your decision', with: 'maximum travel per hour rate exceeded'
+    fill_in 'Explain your decision', with: 'travel cost adjustment explanation'
     click_on 'Save changes'
 
     expect(page).to have_title('Adjustments')
+    expect(page).to have_css('.govuk-inset-text', text: 'travel cost adjustment explanation')
 
     within('.govuk-table#travel_costs') do
       expect(page)

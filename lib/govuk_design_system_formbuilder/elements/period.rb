@@ -13,7 +13,7 @@ module GOVUKDesignSystemFormBuilder
       DEFAULT_WIDTH = 2
 
       def segement_id(key)
-        "#{FIELDS.index(key) + 1}i"
+        (FIELDS.index(key) + 1).to_s
       end
 
       def multiparameter_key(key)

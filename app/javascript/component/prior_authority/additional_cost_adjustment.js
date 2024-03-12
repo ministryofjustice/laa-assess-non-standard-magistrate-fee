@@ -2,8 +2,8 @@ import CostAdjustment from './cost_adjustment.js'
 
 function init() {
   const fields = [
-    document.getElementById('prior_authority_additional_cost_form_period_1i'),
-    document.getElementById('prior_authority_additional_cost_form_period_2i'),
+    document.getElementById('prior_authority_additional_cost_form_period_1'),
+    document.getElementById('prior_authority_additional_cost_form_period_2'),
     document.getElementById('prior-authority-additional-cost-form-cost-per-hour-field'),
     document.getElementById('prior-authority-additional-cost-form-items-field'),
     document.getElementById('prior-authority-additional-cost-form-cost-per-item-field'),

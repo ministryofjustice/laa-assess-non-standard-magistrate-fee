@@ -23,8 +23,10 @@ module PriorAuthority
     private
 
     def process_fields
-      process_field(value: travel_time.to_i, field: 'travel_time')
-      process_field(value: travel_cost_per_hour.to_s, field: 'travel_cost_per_hour')
+      comment_field = 'travel_adjustment_comment'
+
+      process_field(value: travel_time.to_i, field: 'travel_time', comment_field: comment_field)
+      process_field(value: travel_cost_per_hour.to_s, field: 'travel_cost_per_hour', comment_field: comment_field)
     end
 
     def selected_record
