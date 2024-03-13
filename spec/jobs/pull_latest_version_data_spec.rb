@@ -214,5 +214,31 @@ RSpec.describe PullLatestVersionData do
         expect(application.data).to eq data.with_indifferent_access
       end
     end
+
+    context 'when pulled data can be auto-granted' do
+      let(:autograntable) { double(Autograntable, grantable?: true) }
+      let(:data) { build(:prior_authority_data) }
+
+      before do
+        allow(Autograntable).to receive(:new).and_return(autograntable)
+        allow(Event::AutoDecision).to receive(:build)
+        allow(NotifyAppStore).to receive(:process)
+      end
+
+      it 'updates the state to auto-grant' do
+        subject.perform(application)
+        expect(application.state).to eq('auto-grant')
+      end
+
+      it 'create an event record' do
+        subject.perform(application)
+        expect(Event::AutoDecision).to have_received(:build).with(submission: application, previous_state: 'submitted')
+      end
+
+      it 'notifys the app store' do
+        subject.perform(application)
+        expect(NotifyAppStore).to have_received(:process).with(submission: application)
+      end
+    end
   end
 end

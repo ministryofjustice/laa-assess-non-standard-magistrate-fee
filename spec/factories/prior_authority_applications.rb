@@ -11,6 +11,7 @@ FactoryBot.define do
   factory :prior_authority_data, class: Hash do
     initialize_with { attributes }
     laa_reference { 'LAA-123456' }
+    ufn { '130324/001' }
     prison_law { false }
     provider do
       {
@@ -114,9 +115,8 @@ FactoryBot.define do
       cost_type { 'per_hour' }
       cost_per_hour { '80.0' }
       cost_per_item { nil }
-      items { nil }
       item_type { nil }
-      period { 6 }
+      period { 420 }
     end
 
     trait :no_travel do

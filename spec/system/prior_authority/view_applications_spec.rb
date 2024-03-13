@@ -67,7 +67,7 @@ RSpec.describe 'View applications' do
 
       it 'shows application details card' do
         within('.govuk-summary-card', text: 'Application details') do
-          expect(page).to have_content "LAA referenceLAA-1234\nPrison LawNo"
+          expect(page).to have_content "LAA referenceLAA-1234\nUnique file number130324/001\nPrison LawNo"
         end
       end
 

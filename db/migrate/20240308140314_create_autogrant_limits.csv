@@ -1,117 +1,117 @@
 service,start_date,unit_type,max_units,max_rate_london,max_rate_non_london,travel_rate_london,travel_rate_non_london,travel_hours
-A&E consultant,2/12/2013,hours,8,108.00,100.80,40.00,40.00,4
-Accident reconstruction,2/12/2013,hours,15,54.40,72.00,27.20,36.00,4
-Animal behaviourist,2/12/2013,hours,13,85,85,40,40,4
-Benefit expert,2/12/2013,hours,12,72.00,72.00,36.00,36.00,4
-Cardiologist,2/12/2013,hours,8,72.00,115.20,36.00,40.00,4
-Cell phone site analysis,2/12/2013,hours,30,72.00,72.00,36.00,36.00,4
-Consultant engineer,2/12/2013,hours,12,54.40,72.00,27.20,36.00,4
-Dentist,2/12/2013,hours,15,72.00,93.60,36.00,40.00,4
-Doctor (GP),2/12/2013,hours,4,72.00,79.20,36.00,39.60,4
-DNA Report,2/12/2013,items,1,252,252,36.00,36.00,4
-Drug expert,2/12/2013,hours,4,72.00,72.00,36.00,36.00,4
-Engineer's report,2/12/2013,hours,8,100,100,40,40,4
-ENT surgeon,2/12/2013,hours,8,72.00,100.80,36.00,40.00,4
-Facial mapping expert,2/12/2013,hours,15,72.00,108.00,36.00,40.00,4
-Fingerprint expert,2/12/2013,hours,12,37.60,72.00,18.80,36,4
-Firearm expert,2/12/2013,hours,12,72.00,72.00,36.00,36.00,4
-Fire investigation report,2/12/2013,hours,12,54.40,72.00,27.20,36.00,4
-General surgeon,2/12/2013,hours,12,72.00,108.00,36.00,40.00,4
-Handwriting expert,2/12/2013,hours,12,72.00,72.00,36.00,36.00,4
-Jewellery valuation,2/12/2013,hours,6,100,100,40,40,4
-Legal/Prison expert,2/12/2013,hours,10,150,150,40,40,4
-Medical consultant,2/12/2013,hours,8,72.00,108.00,36.00,40.00,4
-Midwife,2/12/2013,hours,8,72.00,72.00,36.00,36.00,4
-Neonatologist,2/12/2013,hours,12,72.00,108.00,36.00,40.00,4
-Neurologist's report,2/12/2013,hours,12,72.00,122.40,36.00,40.00,4
-Neuropathologist,2/12/2013,hours,15,190.00,190.00,40.00,40.00,4
-Neuropsychiatrist,2/12/2013,hours,18,72.00,126.40,36.00,40.00,4
-Neuropsychologist,2/12/2013,hours,18,72.00,126.40,36.00,40.00,4
-Neuroradiologist,2/12/2013,hours,12,72.00,136.80,36.00,40.00,4
-Neurosurgeon,2/12/2013,hours,12,72.00,136.80,36.00,40.00,4
-Nursing expert,2/12/2013,hours,8,64.80,64.80,32.40,32.40,4
-Obstetrician,2/12/2013,hours,8,72.00,108.00,36.00,40.00,4
-Occupational therapist,2/12/2013,hours,8,54.40,54.40,27.20,27.20,4
-Ophthalmologist,2/12/2013,hours,12,150,150,40,40,4
-Orthopaedic surgeon,2/12/2013,hours,12,72.00,115.20,36.00,40.00,4
-Paediatrician report,2/12/2013,hours,16,72.00,108.00,36.00,40.00,4
-Photographer,2/12/2013,hours,6,18.40,25.60,9.20,12.80,4
-Process server,2/12/2013,hours,4,18.40,25.60,9.20,12.80,4
-Psychiatrist (including child),2/12/2013,hours,16,72.00,108.00,36.00,40.00,4
-Psychologist,2/12/2013,hours,16,72.00,93.60,36.00,40.00,4
-Child psychologist,2/12/2013,hours,16,72.00,100.80,36.00,40.00,4
-Radiologist,2/12/2013,hours,8,72.00,108.00,36.00,40.00,4
-Rheumatologist,2/12/2013,hours,8,72.00,108.00,36.00,40.00,4
-Risk assessment expert,2/12/2013,hours,8,50.40,50.40,25.20,25.20,4
-Sleep expert,2/12/2013,hours,12,100,100,40,40,4
-Speech therapist,2/12/2013,hours,8,72.00,79.20,36.00,39.60,4
-Surgeon,2/12/2013,hours,8,72.00,108.00,36.00,40.00,4
-Surveyor's report,2/12/2013,hours,8,250.00,250.00,20.00,20.00,4
-Surveyor (housing disrepair),2/12/2013,hours,8,115.00,85.00,40.00,40.00,4
-Tachograph expert,2/12/2013,hours,8,100,100,40,40,4
-Toxicologist report,2/12/2013,hours,8,72.00,108.00,36.00,40.00,4
-Urologist,2/12/2013,hours,8,72.00,108.00,36.00,40.00,4
-Veterinary report,2/12/2013,hours,13,72.00,72.00,36.00,36.00,4
-"Specialist barrister (Land, Property, Chancery Law)",2/12/2013,hours,8,150.00,150.00,40.00,40.00,4
-Independent social worker,2/12/2013,hours,15,50.40,50.40,25.20,25.20,4
-Psychiatric report (Prison Law),2/12/2013,hours,16,72.00,108.00,36.00,40.00,4
-Psychological report (Prison Law),2/12/2013,hours,16,72.00,93.60,36.00,40.00,4
-A&E consultant,30/9/22,hours,8,124.20,115.92,40.00,40.00,4
-Accident reconstruction,30/9/22,hours,15,62.56,82.80,31.30,40.00,4
-Animal behaviourist,30/9/22,hours,13,85,85,40.00,40.00,4
-Benefit expert,30/9/22,hours,12,83.00,83.00,40.00,40.00,4
-Cardiologist,30/9/22,hours,8,83.00,132.00,40.00,40.00,4
-Cell phone site analysis,30/9/22,hours,30,83.00,83.00,40.00,40.00,4
-Consultant engineer,30/9/22,hours,12,63.00,83.00,31.50,40.00,4
-Dentist,30/9/22,hours,15,83.00,108.00,40.00,40.00,4
-DNA Report,30/9/22,items,1,289.80,289.80,40.00,40.00,4
-Doctor (GP),30/9/22,hours,4,83.00,91.00,40.00,40.00,4
-Drug expert,30/9/22,hours,4,83.00,83.00,40.00,40.00,4
-Engineer's report,30/9/22,hours,8,100,100,40.00,40.00,4
-ENT surgeon,30/9/22,hours,8,83.00,116.00,40.00,40.00,4
-Facial mapping expert,30/9/22,hours,15,83.00,124.00,40.00,40.00,4
-Fingerprint expert,30/9/22,hours,12,43.00,83.00,21.50,40.00,4
-Firearm expert,30/9/22,hours,12,83.00,83.00,40.00,40.00,4
-Fire investigation report,30/9/22,hours,12,63.00,83.00,31.50,40.00,4
-General surgeon,30/9/22,hours,12,83.00,124.00,40.00,40.00,4
-Handwriting expert,30/9/22,hours,12,83.00,83.00,40.00,40.00,4
-Jewellery valuation,30/9/22,hours,6,100,100,40.00,40.00,4
-Legal/Prison expert,30/9/22,hours,10,150,150,40.00,40.00,4
-Medical consultant,30/9/22,hours,8,83.00,124.00,40.00,40.00,4
-Midwife,30/9/22,hours,8,83.00,83.00,40.00,40.00,4
-Neonatologist,30/9/22,hours,12,83.00,124.00,40.00,40.00,4
-Neurologist's report,30/9/22,hours,12,83.00,141.00,40.00,40.00,4
-Neuropathologist,30/9/22,hours,15,190.00,190.00,40.00,40.00,4
-Neuropsychiatrist,30/9/22,hours,18,83.00,145.00,40.00,40.00,4
-Neuropsychologist,30/9/22,hours,18,83.00,145.00,40.00,40.00,4
-Neuroradiologist,30/9/22,hours,12,83.00,157.00,40.00,40.00,4
-Neurosurgeon,30/9/22,hours,12,83.00,157.00,40.00,40.00,4
-Nursing expert,30/9/22,hours,8,75.00,75.00,37.50,37.50,4
-Obstetrician,30/9/22,hours,8,83.00,124.00,40.00,40.00,4
-Occupational therapist,30/9/22,hours,8,63.00,63.00,31.50,31.50,4
-Ophthalmologist,30/9/22,hours,12,150,150,40.00,40.00,4
-Orthopaedic surgeon,30/9/22,hours,12,83.00,132.00,40.00,40.00,4
-Paediatrician report,30/9/22,hours,16,83.00,124.00,40.00,40.00,4
-Photographer,30/9/22,hours,6,21.16,29.44,10.58,14.72,4
-Process server,30/9/22,hours,4,21.16,29.44,10.58,14.72,4
-Psychiatrist (including child),30/9/22,hours,16,82.80,124.20,40.00,40.00,4
-Psychologist,30/9/22,hours,16,82.80,107.64,40.00,40.00,4
-Child psychologist,30/9/22,hours,16,83.00,116.00,40.00,40.00,4
-Radiologist,30/9/22,hours,8,82.80,124.20,40.00,40.00,4
-Rheumatologist,30/9/22,hours,8,82.80,124.20,40.00,40.00,4
-Risk assessment expert,30/9/22,hours,8,57.96,57.96,28.98,28.98,4
-Sleep expert,30/9/22,hours,12,100,100,40.00,40.00,4
-Speech therapist,30/9/22,hours,8,82.80,91.08,40.00,39.60,4
-Surgeon,30/9/22,hours,8,82.80,124.20,40.00,40.00,4
-Surveyor's report,30/9/22,hours,8,287.50,287.50,23.00,23.00,4
-Surveyor (housing disrepair),30/9/22,hours,8,115.00,85.00,40.00,40.00,4
-Tachograph expert,30/9/22,hours,8,100,100,40.00,40.00,4
-Toxicologist report,30/9/22,hours,8,82.80,124.20,40.00,40.00,4
-Transcription (recording),30/9/22,items,120,2.2,2.2,0,0,0
-Translation and transcription,30/9/22,items,120,4,4,0,0,0
-Urologist,30/9/22,hours,8,82.80,124.20,40.00,40.00,4
-Veterinary report,30/9/22,hours,13,82.80,82.80,40.00,40.00,4
-"Specialist barrister (Land, Property, Chancery Law)",30/9/22,hours,8,150.00,150.00,40.00,40.00,4
-Independent social worker,30/9/22,hours,15,50.40,50.40,25.20,25.20,4
-Psychiatric report (Prison Law),30/9/22,hours,16,82.80,124.20,40.00,40.00,4
-Psychological report (Prison Law),30/9/22,hours,16,82.80,107.64,40.00,40.00,4
+A&E consultant,2/12/2013,per_hour,8,108.00,100.80,40.00,40.00,4
+Accident reconstruction,2/12/2013,per_hour,15,54.40,72.00,27.20,36.00,4
+Animal behaviourist,2/12/2013,per_hour,13,85,85,40,40,4
+Benefit expert,2/12/2013,per_hour,12,72.00,72.00,36.00,36.00,4
+Cardiologist,2/12/2013,per_hour,8,72.00,115.20,36.00,40.00,4
+Cell phone site analysis,2/12/2013,per_hour,30,72.00,72.00,36.00,36.00,4
+Consultant engineer,2/12/2013,per_hour,12,54.40,72.00,27.20,36.00,4
+Dentist,2/12/2013,per_hour,15,72.00,93.60,36.00,40.00,4
+Doctor (GP),2/12/2013,per_hour,4,72.00,79.20,36.00,39.60,4
+DNA Report,2/12/2013,per_item,1,252,252,36.00,36.00,4
+Drug expert,2/12/2013,per_hour,4,72.00,72.00,36.00,36.00,4
+Engineer's report,2/12/2013,per_hour,8,100,100,40,40,4
+ENT surgeon,2/12/2013,per_hour,8,72.00,100.80,36.00,40.00,4
+Facial mapping expert,2/12/2013,per_hour,15,72.00,108.00,36.00,40.00,4
+Fingerprint expert,2/12/2013,per_hour,12,37.60,72.00,18.80,36,4
+Firearm expert,2/12/2013,per_hour,12,72.00,72.00,36.00,36.00,4
+Fire investigation report,2/12/2013,per_hour,12,54.40,72.00,27.20,36.00,4
+General surgeon,2/12/2013,per_hour,12,72.00,108.00,36.00,40.00,4
+Handwriting expert,2/12/2013,per_hour,12,72.00,72.00,36.00,36.00,4
+Jewellery valuation,2/12/2013,per_hour,6,100,100,40,40,4
+Legal/Prison expert,2/12/2013,per_hour,10,150,150,40,40,4
+Medical consultant,2/12/2013,per_hour,8,72.00,108.00,36.00,40.00,4
+Midwife,2/12/2013,per_hour,8,72.00,72.00,36.00,36.00,4
+Neonatologist,2/12/2013,per_hour,12,72.00,108.00,36.00,40.00,4
+Neurologist's report,2/12/2013,per_hour,12,72.00,122.40,36.00,40.00,4
+Neuropathologist,2/12/2013,per_hour,15,190.00,190.00,40.00,40.00,4
+Neuropsychiatrist,2/12/2013,per_hour,18,72.00,126.40,36.00,40.00,4
+Neuropsychologist,2/12/2013,per_hour,18,72.00,126.40,36.00,40.00,4
+Neuroradiologist,2/12/2013,per_hour,12,72.00,136.80,36.00,40.00,4
+Neurosurgeon,2/12/2013,per_hour,12,72.00,136.80,36.00,40.00,4
+Nursing expert,2/12/2013,per_hour,8,64.80,64.80,32.40,32.40,4
+Obstetrician,2/12/2013,per_hour,8,72.00,108.00,36.00,40.00,4
+Occupational therapist,2/12/2013,per_hour,8,54.40,54.40,27.20,27.20,4
+Ophthalmologist,2/12/2013,per_hour,12,150,150,40,40,4
+Orthopaedic surgeon,2/12/2013,per_hour,12,72.00,115.20,36.00,40.00,4
+Paediatrician report,2/12/2013,per_hour,16,72.00,108.00,36.00,40.00,4
+Photographer,2/12/2013,per_hour,6,18.40,25.60,9.20,12.80,4
+Process server,2/12/2013,per_hour,4,18.40,25.60,9.20,12.80,4
+Psychiatrist (including child),2/12/2013,per_hour,16,72.00,108.00,36.00,40.00,4
+Psychologist,2/12/2013,per_hour,16,72.00,93.60,36.00,40.00,4
+Child psychologist,2/12/2013,per_hour,16,72.00,100.80,36.00,40.00,4
+Radiologist,2/12/2013,per_hour,8,72.00,108.00,36.00,40.00,4
+Rheumatologist,2/12/2013,per_hour,8,72.00,108.00,36.00,40.00,4
+Risk assessment expert,2/12/2013,per_hour,8,50.40,50.40,25.20,25.20,4
+Sleep expert,2/12/2013,per_hour,12,100,100,40,40,4
+Speech therapist,2/12/2013,per_hour,8,72.00,79.20,36.00,39.60,4
+Surgeon,2/12/2013,per_hour,8,72.00,108.00,36.00,40.00,4
+Surveyor's report,2/12/2013,per_hour,8,250.00,250.00,20.00,20.00,4
+Surveyor (housing disrepair),2/12/2013,per_hour,8,115.00,85.00,40.00,40.00,4
+Tachograph expert,2/12/2013,per_hour,8,100,100,40,40,4
+Toxicologist report,2/12/2013,per_hour,8,72.00,108.00,36.00,40.00,4
+Urologist,2/12/2013,per_hour,8,72.00,108.00,36.00,40.00,4
+Veterinary report,2/12/2013,per_hour,13,72.00,72.00,36.00,36.00,4
+"Specialist barrister (Land, Property, Chancery Law)",2/12/2013,per_hour,8,150.00,150.00,40.00,40.00,4
+Independent social worker,2/12/2013,per_hour,15,50.40,50.40,25.20,25.20,4
+Psychiatric report (Prison Law),2/12/2013,per_hour,16,72.00,108.00,36.00,40.00,4
+Psychological report (Prison Law),2/12/2013,per_hour,16,72.00,93.60,36.00,40.00,4
+A&E consultant,30/9/22,per_hour,8,124.20,115.92,40.00,40.00,4
+Accident reconstruction,30/9/22,per_hour,15,62.56,82.80,31.30,40.00,4
+Animal behaviourist,30/9/22,per_hour,13,85,85,40.00,40.00,4
+Benefit expert,30/9/22,per_hour,12,83.00,83.00,40.00,40.00,4
+Cardiologist,30/9/22,per_hour,8,83.00,132.00,40.00,40.00,4
+Cell phone site analysis,30/9/22,per_hour,30,83.00,83.00,40.00,40.00,4
+Consultant engineer,30/9/22,per_hour,12,63.00,83.00,31.50,40.00,4
+Dentist,30/9/22,per_hour,15,83.00,108.00,40.00,40.00,4
+DNA Report,30/9/22,per_item,1,289.80,289.80,40.00,40.00,4
+Doctor (GP),30/9/22,per_hour,4,83.00,91.00,40.00,40.00,4
+Drug expert,30/9/22,per_hour,4,83.00,83.00,40.00,40.00,4
+Engineer's report,30/9/22,per_hour,8,100,100,40.00,40.00,4
+ENT surgeon,30/9/22,per_hour,8,83.00,116.00,40.00,40.00,4
+Facial mapping expert,30/9/22,per_hour,15,83.00,124.00,40.00,40.00,4
+Fingerprint expert,30/9/22,per_hour,12,43.00,83.00,21.50,40.00,4
+Firearm expert,30/9/22,per_hour,12,83.00,83.00,40.00,40.00,4
+Fire investigation report,30/9/22,per_hour,12,63.00,83.00,31.50,40.00,4
+General surgeon,30/9/22,per_hour,12,83.00,124.00,40.00,40.00,4
+Handwriting expert,30/9/22,per_hour,12,83.00,83.00,40.00,40.00,4
+Jewellery valuation,30/9/22,per_hour,6,100,100,40.00,40.00,4
+Legal/Prison expert,30/9/22,per_hour,10,150,150,40.00,40.00,4
+Medical consultant,30/9/22,per_hour,8,83.00,124.00,40.00,40.00,4
+Midwife,30/9/22,per_hour,8,83.00,83.00,40.00,40.00,4
+Neonatologist,30/9/22,per_hour,12,83.00,124.00,40.00,40.00,4
+Neurologist's report,30/9/22,per_hour,12,83.00,141.00,40.00,40.00,4
+Neuropathologist,30/9/22,per_hour,15,190.00,190.00,40.00,40.00,4
+Neuropsychiatrist,30/9/22,per_hour,18,83.00,145.00,40.00,40.00,4
+Neuropsychologist,30/9/22,per_hour,18,83.00,145.00,40.00,40.00,4
+Neuroradiologist,30/9/22,per_hour,12,83.00,157.00,40.00,40.00,4
+Neurosurgeon,30/9/22,per_hour,12,83.00,157.00,40.00,40.00,4
+Nursing expert,30/9/22,per_hour,8,75.00,75.00,37.50,37.50,4
+Obstetrician,30/9/22,per_hour,8,83.00,124.00,40.00,40.00,4
+Occupational therapist,30/9/22,per_hour,8,63.00,63.00,31.50,31.50,4
+Ophthalmologist,30/9/22,per_hour,12,150,150,40.00,40.00,4
+Orthopaedic surgeon,30/9/22,per_hour,12,83.00,132.00,40.00,40.00,4
+Paediatrician report,30/9/22,per_hour,16,83.00,124.00,40.00,40.00,4
+Photographer,30/9/22,per_hour,6,21.16,29.44,10.58,14.72,4
+Process server,30/9/22,per_hour,4,21.16,29.44,10.58,14.72,4
+Psychiatrist (including child),30/9/22,per_hour,16,82.80,124.20,40.00,40.00,4
+Psychologist,30/9/22,per_hour,16,82.80,107.64,40.00,40.00,4
+Child psychologist,30/9/22,per_hour,16,83.00,116.00,40.00,40.00,4
+Radiologist,30/9/22,per_hour,8,82.80,124.20,40.00,40.00,4
+Rheumatologist,30/9/22,per_hour,8,82.80,124.20,40.00,40.00,4
+Risk assessment expert,30/9/22,per_hour,8,57.96,57.96,28.98,28.98,4
+Sleep expert,30/9/22,per_hour,12,100,100,40.00,40.00,4
+Speech therapist,30/9/22,per_hour,8,82.80,91.08,40.00,39.60,4
+Surgeon,30/9/22,per_hour,8,82.80,124.20,40.00,40.00,4
+Surveyor's report,30/9/22,per_hour,8,287.50,287.50,23.00,23.00,4
+Surveyor (housing disrepair),30/9/22,per_hour,8,115.00,85.00,40.00,40.00,4
+Tachograph expert,30/9/22,per_hour,8,100,100,40.00,40.00,4
+Toxicologist report,30/9/22,per_hour,8,82.80,124.20,40.00,40.00,4
+Transcription (recording),30/9/22,per_item,120,2.2,2.2,0,0,0
+Translation and transcription,30/9/22,per_item,120,4,4,0,0,0
+Urologist,30/9/22,per_hour,8,82.80,124.20,40.00,40.00,4
+Veterinary report,30/9/22,per_hour,13,82.80,82.80,40.00,40.00,4
+"Specialist barrister (Land, Property, Chancery Law)",30/9/22,per_hour,8,150.00,150.00,40.00,40.00,4
+Independent social worker,30/9/22,per_hour,15,50.40,50.40,25.20,25.20,4
+Psychiatric report (Prison Law),30/9/22,per_hour,16,82.80,124.20,40.00,40.00,4
+Psychological report (Prison Law),30/9/22,per_hour,16,82.80,107.64,40.00,40.00,4

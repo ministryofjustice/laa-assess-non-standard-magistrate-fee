@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :limits, class: 'AutograntLimit' do
     service { 'pathologist_report' }
     start_date { Date.new(2023, 1, 1) }
-    unit_type { 'items' }
+    unit_type { 'per_item' }
     max_units { 4 }
     max_rate_london { 80.0 }
     max_rate_non_london { 100.0 }

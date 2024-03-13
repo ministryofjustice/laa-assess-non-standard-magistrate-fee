@@ -29,22 +29,27 @@ class PullLatestVersionData < ApplicationJob
       data: json_data['application']
     )
 
+    PriorAuthorityApplication.transaction do
+      update_submission(submission, json_data)
 
-    submission.transaction do
-      submission.save!
-
-      json_data['events']&.each do |event|
-        submission.events.rehydrate!(event)
-      end
-      Event::NewVersion.build(submission:)
-
-      if Autograntable.new(submission:).grantable?
-        previous_state = submission.state
-        submission.update!(state: 'auto-grant')
-
-        Event::AutoDecision.build(submission: submission, previous_state: previous_state)
-        NotifyAppStore.process(submission:)
-      end
+      autogrant(submission) if Autograntable.new(submission:).grantable?
     end
+  end
+
+  def update_submission(submission, json_data)
+    submission.save!
+
+    json_data['events']&.each do |event|
+      submission.events.rehydrate!(event)
+    end
+    Event::NewVersion.build(submission:)
+  end
+
+  def autogrant(submission)
+    previous_state = submission.state
+    submission.update!(state: 'auto-grant')
+
+    Event::AutoDecision.build(submission:, previous_state:)
+    NotifyAppStore.process(submission:)
   end
 end

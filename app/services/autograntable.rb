@@ -12,18 +12,18 @@ class Autograntable
     return fail_with_reason(:exceed_service_costs) unless below_service_cost_limit?
     return fail_with_reason(:exceed_travel_costs) unless below_travel_cost_limit?
 
-    return true
+    true
   end
 
+  # rubocop:disable Metrics/AbcSize
   def below_service_cost_limit?
-    if quote.cost_type == 'per_hour' && limits.unit_type == 'hours'
-      limits.max_units >= quote.period && max_rate >= quote.cost_per_hour
-    elsif quote.cost_type == 'per_item' && limits.unit_type == 'items'
-      limits.max_units >= quote.items && max_rate >= quote.cost_per_item
+    if quote.cost_type == 'per_hour'
+      (limits.max_units * 60) >= quote.period.to_i && max_rate >= quote.cost_per_hour
     else
-      false
+      limits.max_units >= quote.items && max_rate >= quote.cost_per_item
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def fail_with_reason(reason)
     @reason = reason
@@ -33,23 +33,26 @@ class Autograntable
   def below_travel_cost_limit?
     return true if quote.travel_time.zero?
 
-    (limits.travel_hours * 60) >= quote.travel_time && max_travel_rate >= quote.travel_cost_per_hour
+    (limits.travel_hours * 60) >= quote.travel_time.to_i && max_travel_rate >= quote.travel_cost_per_hour
   end
 
   def max_travel_rate
-    london? ? limits.travel_rate_london : limits.travel_rate_non_london
+    limits.travel_rate_london
+    # london? ? limits.travel_rate_london : limits.travel_rate_non_london
   end
 
   def max_rate
-    london? ? limits.max_rate_london : limits.max_rate_non_london
+    limits.max_rate_london
+    # london? ? limits.max_rate_london : limits.max_rate_non_london
   end
 
-  def london?
-    true
-  end
+  # def london?
+  #   true
+  # end
 
   def limits
-    @limits ||= AutograntLimit.order(start_date: :desc).find_by(service:, start_date:)
+    @limits ||= AutograntLimit.order(start_date: :desc)
+                              .find_by(service: service, start_date: period, unit_type: quote.cost_type)
   end
 
   def quote
@@ -68,10 +71,10 @@ class Autograntable
     submission.data['service_type']
   end
 
-  def start_date
+  def period
     date =
       if submission.data['prison_law']
-        _, day, month, year = submission.data['prison_law'].ufn.match(%r{\A(\d{2})(\d{2})(\d{2})/})
+        _, day, month, year = *submission.data['ufn'].match(%r{\A(\d{2})(\d{2})(\d{2})/})
         Date.new(2000 + year.to_i, month.to_i, day.to_i)
       else
         submission.data['rep_order_date']
