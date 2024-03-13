@@ -1,5 +1,7 @@
 module PriorAuthority
   class Sorter
+    # NOTE: applications in a 'submitted' state can be assigned and therefore "In progresss", or unassigned.
+    # Unassigned applications require the visual label "Not assigned" for caseworker
     STATUS_ORDER_CLAUSE = <<-SQL.squish.freeze
     CASE WHEN state = 'submitted' THEN
            CASE WHEN users.id IS NULL THEN  'not_assigned'
@@ -9,14 +11,15 @@ module PriorAuthority
 
     ORDERS = {
       'laa_reference' => "data->>'laa_reference' ?",
-      'firm_name' => "data->>'firm_name' ?",
-      'client_name' => "data->>'client_name' ?",
+      'firm_name' => "data->'firm_office'->>'name' ?",
+      'client_name' => "(data->'defendant'->>'first_name') || ' ' || (data->'defendant'->>'last_name') ?",
       'date_received' => 'submissions.created_at ?',
-      'caseworker' => 'users.last_name ?, users.first_name ?',
-      # 'submitted' state has visual label "Not assigned" or "In progress",
-      # so correct for that when ordering alphabetically
+      'caseworker' => "COALESCE(users.first_name, 'Not') || ' ' || COALESCE(users.last_name, 'assigned') ?",
       'status' => STATUS_ORDER_CLAUSE,
-      'date_assessed' => 'submissions.updated_at ?'
+      'date_updated' => 'submissions.updated_at ?',
+      'date_assessed' => 'submissions.updated_at ?',
+      'date_created' => 'submissions.created_at ?',
+      'service_name' => "data->>'service_type' ?",
     }.freeze
 
     DIRECTIONS = {

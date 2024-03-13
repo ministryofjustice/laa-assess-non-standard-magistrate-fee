@@ -1,0 +1,41 @@
+<% content_for(:primary_navigation) do %>
+  <% render 'layouts/prior_authority/primary_navigation', current: application_summary.current_section(current_user) %>
+<% end %>
+<% title t('.page_title') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+      <%= render 'prior_authority/shared/application_nav', application_summary:, current_page: 'related_applications' %>
+  </div>
+  <div class="govuk-grid-column-full">
+    <h2 class="govuk-heading-m"><%= t('.page_title') %></h2>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <% if @applications.none? %>
+          <h2 class="govuk-body-l"><%= t('.no_applications') %></h2>
+        <% else %>
+          <%= render 'table',
+                    path: prior_authority_application_related_applications_path,
+                    columns: {
+                        laa_reference: :laa_reference,
+                        client_name: :client_name,
+                        caseworker: :caseworker,
+                        service_name: :service_name,
+                        date_updated: :date_updated_str,
+                        status: :status
+                    } %>
+        <% end %>
+      </div>
+    </div>
+
+    <% if editable %>
+      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible govuk-!-margin-top-9">
+      <div class="govuk-button-group">
+        <%= govuk_button_link_to(t('.make_a_decision'), '#') %>
+        <%= govuk_button_link_to(t('.save_and_exit'), your_prior_authority_applications_path, secondary: true) %>
+      </div>
+    <% end %>
+  </div>
+</div>
+

@@ -1,0 +1,31 @@
+<table class="govuk-table" data-module="moj-sortable-table" aria-describedby="page-title">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <% columns.keys.each_with_index do |column_key, index| %>
+        <%= table_header(column_key,
+                        "prior_authority.applications.table.header",
+                        index,
+                        path,
+                        @sort_by,
+                        @sort_direction) %>
+      <% end %>
+    </tr>
+  </thead>
+
+  <tbody class="govuk-table__body app-task-list__items">
+    <% @applications.each do |application| %>
+      <tr class="govuk-table__row app-task-list__item">
+        <% columns.values.each_with_index do |value_attribute, index| %>
+          <td class="govuk-table__cell">
+            <% if index.zero? %>
+              <%= link_to application.send(value_attribute), prior_authority_application_path(application.id), data: { turbo: false } %>
+            <% else %>
+              <%= application.send(value_attribute) %>
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= render 'shared/pagination', pagy: @pagy, item: t("prior_authority.applications.table.table_info_item") %>

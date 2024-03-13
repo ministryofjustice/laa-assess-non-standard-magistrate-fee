@@ -26,8 +26,10 @@ en:
           laa_reference: LAA reference
           firm_name: Firm name
           client_name: Client
+          service_name: Service
           caseworker: Caseworker
           date_received: Received
+          date_updated: Last updated
           date_assessed: Assessed
           status: Status
       show:

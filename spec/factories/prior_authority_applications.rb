@@ -39,6 +39,16 @@ FactoryBot.define do
     rep_order_date { '2023-01-02' }
     next_hearing_date { '2025-01-01' }
     quotes { [build(:primary_quote)] }
+
+    trait :related_application do
+      ufn { '111111/111' }
+      firm_office do
+        {
+          'name' => 'LegalCo',
+          'account_number' => '2B0N2B'
+        }
+      end
+    end
   end
 
   factory :additional_cost, class: Hash do
