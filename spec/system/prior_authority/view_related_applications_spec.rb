@@ -118,7 +118,7 @@ RSpec.describe 'View related applications' do
 
     it 'displays the required table headers' do
       within('.govuk-table') do
-        expect(page).to have_content("LAA reference\nClient\nCaseworker\nService\nReceived\nStatus\n")
+        expect(page).to have_content("LAA reference\nClient\nCaseworker\nService\nLast updated\nStatus\n")
       end
     end
 
@@ -179,13 +179,13 @@ RSpec.describe 'View related applications' do
       end
     end
 
-    it 'allows me to sort by received date' do
-      click_on 'Received'
+    it 'allows me to sort by "Last updated" date' do
+      click_on 'Last updated'
       within(top_row_selector) do
         expect(page).to have_content('LAA-555')
       end
 
-      click_on 'Received'
+      click_on 'Last updated'
       within(top_row_selector) do
         expect(page).to have_content('LAA-222')
       end

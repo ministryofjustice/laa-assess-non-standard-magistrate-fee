@@ -25,6 +25,7 @@ module PriorAuthority
       def date_assessed_str
         submission.updated_at.to_fs(:stamp)
       end
+      alias date_updated_str date_assessed_str
 
       def service_name
         I18n.t(submission.data['service_type'], scope: 'prior_authority.service_types')

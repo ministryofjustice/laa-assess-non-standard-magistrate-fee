@@ -16,6 +16,7 @@ module PriorAuthority
       'date_received' => 'submissions.created_at ?',
       'caseworker' => "COALESCE(users.first_name, 'Not') || ' ' || COALESCE(users.last_name, 'assigned') ?",
       'status' => STATUS_ORDER_CLAUSE,
+      'date_updated' => 'submissions.updated_at ?',
       'date_assessed' => 'submissions.updated_at ?',
       'date_created' => 'submissions.created_at ?',
       'service_name' => 'submissions.service_type ?',
