@@ -20,6 +20,7 @@ RSpec.describe 'View related applications' do
         :prior_authority_data,
         :related_application,
         laa_reference: 'LAA-222',
+        service_type: 'ae_consultant',
         defendant: { 'last_name' => 'Abrahams', 'first_name' => 'Abe' },
       )
     )
@@ -34,6 +35,7 @@ RSpec.describe 'View related applications' do
         :prior_authority_data,
         :related_application,
         laa_reference: 'LAA-333',
+        service_type: 'voice_recognition',
         defendant: { 'last_name' => 'Bacharach', 'first_name' => 'Burt' },
       )
     )
@@ -176,6 +178,18 @@ RSpec.describe 'View related applications' do
       click_on 'Caseworker'
       within(top_row_selector) do
         expect(page).to have_content('Able Worker')
+      end
+    end
+
+    it 'allows me to sort by Service name' do
+      click_on 'Service'
+      within(top_row_selector) do
+        expect(page).to have_content('Voice recognition')
+      end
+
+      click_on 'Service'
+      within(top_row_selector) do
+        expect(page).to have_content('A&E consultant')
       end
     end
 

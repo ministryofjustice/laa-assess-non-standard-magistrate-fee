@@ -19,7 +19,7 @@ module PriorAuthority
       'date_updated' => 'submissions.updated_at ?',
       'date_assessed' => 'submissions.updated_at ?',
       'date_created' => 'submissions.created_at ?',
-      'service_name' => 'submissions.service_type ?',
+      'service_name' => "data->>'service_type' ?",
     }.freeze
 
     DIRECTIONS = {
