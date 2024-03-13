@@ -225,9 +225,9 @@ RSpec.describe PullLatestVersionData do
         allow(NotifyAppStore).to receive(:process)
       end
 
-      it 'updates the state to auto-grant' do
+      it 'updates the state to auto_grant' do
         subject.perform(application)
-        expect(application.state).to eq('auto-grant')
+        expect(application.state).to eq('auto_grant')
       end
 
       it 'create an event record' do

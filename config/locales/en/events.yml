@@ -2,7 +2,7 @@
 en:
   event/auto_decision:
     title:
-      auto-grant: Automatic decision made to grant claim
+      auto_grant: Automatic decision made to grant claim
   event/assignment:
     title: Claim allocated to caseworker
   event/change_risk:
