@@ -194,5 +194,30 @@ RSpec.describe 'Adjust service costs' do
       click_on 'Calculate my changes'
       expect(page).to have_css('#adjusted-cost', text: '150.00')
     end
+
+    it 'displays erroroneous values with appropriate message' do
+      fill_in 'Number of minutes', with: ''
+      fill_in 'What is the cost per minute?', with: ''
+
+      click_on 'Save changes'
+      expect(page)
+        .to have_content('Enter the number of minutes')
+        .and have_content('Enter the cost per minute')
+
+      fill_in 'Number of minutes', with: 0
+      fill_in 'What is the cost per minute?', with: 0
+
+      click_on 'Save changes'
+      expect(page)
+        .to have_content('The number of minutes must be more than 0')
+        .and have_content('The cost per minute must be more than 0')
+
+      fill_in 'What is the cost per minute?', with: 'a'
+
+      click_on 'Save changes'
+      expect(page)
+        .to have_content('The cost per minute must be a number, like 25')
+        .and have_field('What is the cost per minute?', with: 'a')
+    end
   end
 end
