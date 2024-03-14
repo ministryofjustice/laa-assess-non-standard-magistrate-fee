@@ -11,11 +11,8 @@ en:
         part_grant: Part granted
         rejected: Rejected
         pending_granted_explanation: Additional comments for the provider (optional)
-        pending_granted_explanation_hint: These are optional and should not contain appeal information
-        pending_part_grant_explanation: Additional comments for the provider (optional)
-        pending_part_grant_explanation_hint: These are optional and should not contain appeal information
+        pending_part_grant_explanation: Provide detailed reasons for part granting this application
         pending_rejected_explanation: Provide detailed reasons for rejecting this application
-        pending_rejected_explanation_hint: For example, that the wrong form was used
       show:
         page_title: Decision sent
         sent_to_provider: Your decision has been sent to the provider.
@@ -38,7 +35,9 @@ en:
               already_assessed: This application has already been assessed
             pending_decision:
               inclusion: Choose the outcome of your assessment
-              no_adjustments: You must make adjustments to the providers costs before you can submit this application as being Part Granted
+              no_adjustments: You must make adjustments to the providers costs before you can submit this application as being part granted
             pending_rejected_explanation:
               blank: Enter a reason for rejecting this application
+            pending_part_grant_explanation:
+              blank: Enter a reason for part granting this application
 

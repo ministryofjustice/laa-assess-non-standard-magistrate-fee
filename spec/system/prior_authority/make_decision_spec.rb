@@ -67,11 +67,17 @@ RSpec.describe 'Decide an application', :stub_oauth_token do
     expect(page).to have_content 'Enter a reason for rejecting this application'
   end
 
+  it 'requires an explanation for part grants' do
+    choose 'Part granted'
+    click_on 'Submit decision'
+    expect(page).to have_content 'Enter a reason for part granting this application'
+  end
+
   it 'does not allow part grants if no adjustments mae' do
     choose 'Part granted'
     click_on 'Submit decision'
     expect(page).to have_content(
-      'You must make adjustments to the providers costs before you can submit this application as being Part Granted'
+      'You must make adjustments to the providers costs before you can submit this application as being part granted'
     )
   end
 

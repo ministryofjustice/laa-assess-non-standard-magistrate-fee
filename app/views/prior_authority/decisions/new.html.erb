@@ -20,18 +20,15 @@
                                         hint: { text: t('.pending_decision_hint') } do %>
         <%= f.govuk_radio_button :pending_decision, @form_object.class::GRANTED, link_errors: true, label: { text: t('.granted') } do %>
           <%= f.govuk_text_area :pending_granted_explanation,
-                                label: { size: nil, text: t('.pending_granted_explanation') },
-                                hint: {  text: t('.pending_granted_explanation_hint') } %>
+                                label: { size: nil, text: t('.pending_granted_explanation') } %>
         <% end %>
         <%= f.govuk_radio_button :pending_decision, @form_object.class::PART_GRANT, label: { text: t('.part_grant') } do %>
           <%= f.govuk_text_area :pending_part_grant_explanation,
-                                label: { size: nil, text: t('.pending_part_grant_explanation') },
-                                hint: {  text: t('.pending_part_grant_explanation_hint') } %>
+                                label: { size: nil, text: t('.pending_part_grant_explanation') } %>
         <% end %>
         <%= f.govuk_radio_button :pending_decision, @form_object.class::REJECTED, label: { text: t('.rejected') } do %>
           <%= f.govuk_text_area :pending_rejected_explanation,
-                                label: { size: nil, text: t('.pending_rejected_explanation') },
-                                hint: {  text: t('.pending_rejected_explanation_hint') } %>
+                                label: { size: nil, text: t('.pending_rejected_explanation') } %>
         <% end %>
       <% end %>
 

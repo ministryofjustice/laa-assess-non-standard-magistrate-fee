@@ -56,7 +56,7 @@ RSpec.describe PriorAuthority::DecisionForm do
         it 'adds an appropriate error' do
           expect(subject.errors[:pending_decision]).to include(
             'You must make adjustments to the providers costs ' \
-            'before you can submit this application as being Part Granted'
+            'before you can submit this application as being part granted'
           )
         end
       end
