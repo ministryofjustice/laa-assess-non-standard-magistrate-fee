@@ -6,7 +6,7 @@ class Autograntable
   end
 
   def grantable?
-    return fail_with_reason(:crm4_only) unless submission.current_version == 1
+    return fail_with_reason(:crm4_only) unless submission.application_type == 'crm4'
     return fail_with_reason(:version) unless submission.current_version == 1
     return fail_with_reason(:additional_costs) if additional_costs.any?
     return fail_with_reason(:unknown_service) unless limits
@@ -46,7 +46,7 @@ class Autograntable
   end
 
   def london?
-
+    LocationService.inside_m25?(postcode)
   end
 
   def limits
@@ -68,6 +68,10 @@ class Autograntable
 
   def service
     submission.data['service_type']
+  end
+
+  def postcode
+    submission.data.dig('firm_office', 'postcode')
   end
 
   def period

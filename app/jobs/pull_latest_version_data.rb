@@ -29,8 +29,13 @@ class PullLatestVersionData < ApplicationJob
       data: json_data['application']
     )
 
-    # performed here to avoid slow transactions as requires API call to the OS API
-    autograntable = Autograntable.new(submission:).grantable?
+    autograntable =
+      begin
+        # performed here to avoid slow transactions as requires API call to the OS API
+        Autograntable.new(submission:).grantable?
+      rescue LocationService::LocationError
+        false
+      end
 
     PriorAuthorityApplication.transaction do
       update_submission(submission, json_data)

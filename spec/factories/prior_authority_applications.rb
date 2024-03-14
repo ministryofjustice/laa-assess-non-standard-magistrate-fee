@@ -20,7 +20,10 @@ FactoryBot.define do
       }
     end
     firm_office do
-      { 'name' => 'LegalCo' }
+      {
+        'name' => 'LegalCo',
+        'postcode' => 'CR0 1RE'
+      }
     end
     defendant do
       {
