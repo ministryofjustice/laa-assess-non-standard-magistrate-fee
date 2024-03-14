@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Autograntable do
   subject(:autograntable) { described_class.new(submission:) }
+
   before do
     allow(LocationService).to receive(:inside_m25?).and_return(true)
   end

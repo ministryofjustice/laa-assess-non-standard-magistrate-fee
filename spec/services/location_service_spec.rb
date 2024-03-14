@@ -99,7 +99,10 @@ RSpec.describe LocationService do
       end
 
       it 'raises an appropriate error' do
-        expect { subject }.to raise_error described_class::ResponseError, 'OS API returned unexpected format when queried for postcode SOMEPOSTCODE'
+        expect do
+          subject
+        end.to raise_error described_class::ResponseError,
+                           'OS API returned unexpected format when queried for postcode SOMEPOSTCODE'
       end
     end
 
@@ -119,7 +122,9 @@ RSpec.describe LocationService do
       end
 
       it 'raises an appropriate error' do
-        expect { subject }.to raise_error described_class::NotFoundError, 'OS API returned no matching entry for postcode SOMEPOSTCODE'
+        expect do
+          subject
+        end.to raise_error described_class::NotFoundError, 'OS API returned no matching entry for postcode SOMEPOSTCODE'
       end
     end
 
@@ -139,7 +144,8 @@ RSpec.describe LocationService do
       it 'raises an appropriate error' do
         expect do
           subject
-        end.to raise_error described_class::InvalidFormatError, 'OS API did not provide coordinates in expected format for postcode SOMEPOSTCODE'
+        end.to raise_error described_class::InvalidFormatError,
+                           'OS API did not provide coordinates in expected format for postcode SOMEPOSTCODE'
       end
     end
   end

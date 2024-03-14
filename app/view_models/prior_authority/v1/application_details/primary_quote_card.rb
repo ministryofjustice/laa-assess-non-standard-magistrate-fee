@@ -15,9 +15,7 @@ module PriorAuthority
         def table_rows
           rows = [[service_label, base_units, base_cost_per_unit, formatted_base_cost]]
 
-          if quote.travel_costs.positive?
-            rows << [travel_label, travel_units, travel_cost_per_unit, formatted_travel_cost]
-          end
+          rows << [travel_label, travel_units, travel_cost_per_unit, formatted_travel_cost] if quote.travel_costs.positive?
 
           rows + quote.additional_costs.map do |additional_cost|
             additional_cost_row(additional_cost)

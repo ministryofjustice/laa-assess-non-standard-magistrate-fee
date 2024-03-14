@@ -15,8 +15,7 @@ class LocationService
 
     def os_coordinates_from_postcode(postcode)
       canonical = postcode.delete(' ').upcase
-      results = HTTParty.get("https://api.os.uk/search/names/v1/find?query=#{canonical}&key=#{ENV.fetch('OS_API_KEY',
-                                                                                                        nil)}")
+      results = HTTParty.get("https://api.os.uk/search/names/v1/find?query=#{canonical}&key=#{ENV.fetch('OS_API_KEY', nil)}")
       process_api_response(results, canonical)
     end
 
@@ -30,7 +29,9 @@ class LocationService
       easting = matching.dig('GAZETTEER_ENTRY', 'GEOMETRY_X')
       northing = matching.dig('GAZETTEER_ENTRY', 'GEOMETRY_Y')
 
-      raise InvalidFormatError, "OS API did not provide coordinates in expected format for postcode #{postcode}" unless easting && northing
+      unless easting && northing
+        raise InvalidFormatError, "OS API did not provide coordinates in expected format for postcode #{postcode}"
+      end
 
       [easting, northing]
     end

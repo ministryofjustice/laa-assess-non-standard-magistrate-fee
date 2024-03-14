@@ -259,7 +259,7 @@ RSpec.describe PullLatestVersionData do
       end
     end
 
-    context 'when autogrant check returns an unknown  error' do
+    context 'when autogrant check returns an unknown error' do
       let(:autograntable) { double(Autograntable) }
       let(:data) { build(:prior_authority_data) }
 

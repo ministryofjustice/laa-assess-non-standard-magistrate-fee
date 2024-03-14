@@ -133,6 +133,9 @@ Naming/PredicateName:
     - has_codefendants
     - has_one_association
 
+Layout/LineLength:
+  Max: 130
+
 # TODO: adjust these values towards the rubocop defaults
 RSpec/MultipleMemoizedHelpers:
   Max: 12
