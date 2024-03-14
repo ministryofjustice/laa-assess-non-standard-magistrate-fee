@@ -46,7 +46,7 @@ class Autograntable
   end
 
   def london?
-    LocationService.inside_m25?(postcode)
+    LocationService.inside_m25?(quote.postcode)
   end
 
   def limits
@@ -68,10 +68,6 @@ class Autograntable
 
   def service
     submission.data['service_type']
-  end
-
-  def postcode
-    submission.data.dig('firm_office', 'postcode')
   end
 
   def period
