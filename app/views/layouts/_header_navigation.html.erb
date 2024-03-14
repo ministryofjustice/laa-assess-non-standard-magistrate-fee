@@ -13,11 +13,17 @@
         </li>
       <% end %>
 
-      <li class="govuk-header__navigation-item govuk-!-static-margin-left-3">
+      <li class="govuk-header__navigation-item">
         <%# Signing out will reset the session ID which will reset the CSP nonce token, so turbo-based page replacement
             will fail as inline scripts will no longer have a valid nonce %>
         <%= govuk_link_to t('.sign_out'), destroy_user_session_path, class: 'govuk-header__link', data: { turbo: false } %>
       </li>
+
+      <% unless request.path == root_path %>
+        <li class="govuk-header__navigation-item  govuk-!-static-margin-left-0">
+          <%= link_to t('assess_a_crime_form.switch_service'), root_path, class: 'govuk-header__link govuk-header__link-with-pipe' %>
+        </li>
+      <% end %>
     </ul>
   <% end %>
 </nav>

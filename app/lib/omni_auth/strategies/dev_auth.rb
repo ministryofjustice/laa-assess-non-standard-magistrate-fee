@@ -23,11 +23,6 @@ module OmniAuth
       credentials { { expires_in: 12.hours } }
       info { { email:, first_name:, last_name: } }
 
-      # Redirect to the dev_auth form, so that a user can be selected.
-      def request_phase
-        redirect('/dev_auth')
-      end
-
       private
 
       def email

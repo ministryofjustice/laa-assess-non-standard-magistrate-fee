@@ -8,7 +8,6 @@ RSpec.describe 'Assign applications' do
     visit '/'
     click_on 'Accept analytics cookies'
     visit prior_authority_root_path
-    click_on 'Start now'
     application
   end
 

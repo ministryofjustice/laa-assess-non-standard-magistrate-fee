@@ -11,7 +11,6 @@ RSpec.describe 'Adjust travel costs' do
            submission: application)
 
     visit prior_authority_root_path
-    click_on 'Start now'
     expect(page).to have_content 'LAA-1234'
     click_on 'LAA-1234'
     expect(page).to have_current_path prior_authority_application_path(application)
