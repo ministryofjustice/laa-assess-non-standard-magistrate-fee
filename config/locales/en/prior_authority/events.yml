@@ -1,0 +1,18 @@
+en:
+  prior_authority:
+    events:
+      received: Received
+      assigned: Assigned to %{caseworker}
+      unassigned: Unassigned by %{caseworker}
+      self_assigned: Self-assigned by %{caseworker}
+      decision_granted: Granted
+      decision_part_grant: Part granted
+      decision_rejected: Rejected
+      na: N/A
+      index:
+        page_title: Application history
+        date: Date
+        caseworker: Caseworker
+        update: Update
+        make_a_decision: Make a decision
+        save_and_exit: Save and exit

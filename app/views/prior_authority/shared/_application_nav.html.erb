@@ -44,7 +44,7 @@
       <%= link_to t('.related_applications'), prior_authority_application_related_applications_path(application_summary.id), class: 'moj-sub-navigation__link', 'aria-current': (current_page == 'related_applications' ? "page" : nil) %>
     </li>
     <li class="moj-sub-navigation__item">
-      <%= link_to t('.application_history'), '#', class: 'moj-sub-navigation__link', 'aria-current': (current_page == 'application_history' ? "page" : nil) %>
+      <%= link_to t('.application_history'), prior_authority_application_events_path(application_summary.id), class: 'moj-sub-navigation__link', 'aria-current': (current_page == 'application_history' ? "page" : nil) %>
     </li>
   </ul>
 </nav>
