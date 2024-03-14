@@ -48,6 +48,14 @@ class LocationService
     end
 
     def m25_kml
+      # This KML was generated, and can be re-generated, in the following way:
+      # First, use OSRM to generate a driving route in a loop round the M25 and return a granular
+      # set of coordinates:
+      # https://router.project-osrm.org/route/v1/driving/-0.404893,51.306192;0.267195,51.483951;-0.447781,51.684867;-0.404893,51.306192?overview=full&annotations=nodes&geometries=geojson
+      # Next, use those coordinates to generate a KML file using https://kmltools.appspot.com/gps2kml
+      # You can verify that KML file by uploading it to https://kmlviewer.nsspot.net/
+      # Finally Postgis can only parse _part_ of the KML, so pull out the <LineString> node and everything inside it
+      # and discard the rest, then save what you've kept to M25.kml
       Rails.root.join('app/services/location_service/M25.kml').read
     end
 
