@@ -32,7 +32,7 @@ class Autograntable
   end
 
   def below_travel_cost_limit?
-    return true if quote.travel_time.zero?
+    return true if quote.travel_time.to_i.zero?
 
     (limits.travel_hours * 60) >= quote.travel_time.to_i && max_travel_rate >= quote.travel_cost_per_hour
   end
