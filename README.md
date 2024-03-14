@@ -70,15 +70,6 @@ It is expected that records will be generated in the Provider app and sent acros
 as opposed to being manually generated to avoid creating invalid data records.
 
 
-### Overcommit
-
-[Overcommit](https://github.com/sds/overcommit) is a gem which adds git pre-commit hooks to your project. Pre-commit hooks run various
-lint checks before making a commit. Checks are configured on a project-wide basis in .overcommit.yml.
-
-To install the git hooks locally, run `overcommit --install`. If you don't want the git hooks installed, just don't run this command.
-
-Once the hooks are installed, if you need to you can skip them with the `-n` flag: `git commit -n`
-
 ### Adding users
 
 ```
@@ -129,3 +120,20 @@ We expect every feature's happy path to have a system test, and every screen to 
 **8. Development end-to-end setup**
 
 see [Development e2e setup](https://github.com/ministryofjustice/laa-submit-crime-forms/blob/main/docs/development-e2e-setup.md)
+
+**9. Developing**
+
+### Overcommit
+
+[Overcommit](https://github.com/sds/overcommit) is a gem which adds git pre-commit hooks to your project. Pre-commit hooks run various
+lint checks before making a commit. Checks are configured on a project-wide basis in .overcommit.yml.
+
+To install the git hooks locally, run `overcommit --install`. If you don't want the git hooks installed, just don't run this command.
+
+Once the hooks are installed, if you need to you can skip them with the `-n` flag: `git commit -n`
+
+### API keys
+To send emails, you will need to generate a notifications API key. You can generate a test key at https://www.notifications.service.gov.uk/
+Add it to your.env.development.local under GOVUK_NOTIFY_API_KEY
+
+To use the location service you will need an Ordnance Survey API key. You can generate a test key at https://osdatahub.os.uk/projects. Create and account, create a test project, add the OS Names API to that project, then move its key to OS_API_KEY in .env.development.local

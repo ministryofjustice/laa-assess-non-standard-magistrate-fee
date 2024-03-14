@@ -158,6 +158,11 @@ spec:
                   key: tracking_key
             - name: APP_STORE_WAIT_SECS
               value: '30'
+            - name: OS_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: ordnance-survey
+                  key: api-key
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
