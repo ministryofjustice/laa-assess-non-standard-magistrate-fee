@@ -6,6 +6,7 @@ class Autograntable
   end
 
   def grantable?
+    return fail_with_reason(:crm4_only) unless submission.current_version == 1
     return fail_with_reason(:version) unless submission.current_version == 1
     return fail_with_reason(:additional_costs) if additional_costs.any?
     return fail_with_reason(:unknown_service) unless limits
@@ -37,18 +38,16 @@ class Autograntable
   end
 
   def max_travel_rate
-    limits.travel_rate_london
-    # london? ? limits.travel_rate_london : limits.travel_rate_non_london
+    london? ? limits.travel_rate_london : limits.travel_rate_non_london
   end
 
   def max_rate
-    limits.max_rate_london
-    # london? ? limits.max_rate_london : limits.max_rate_non_london
+    london? ? limits.max_rate_london : limits.max_rate_non_london
   end
 
-  # def london?
-  #   true
-  # end
+  def london?
+
+  end
 
   def limits
     @limits ||= AutograntLimit.order(start_date: :desc)
