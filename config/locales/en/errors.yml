@@ -13,6 +13,18 @@ en:
     non_numerical_hours: The number of hours must be a number
     non_numerical_minutes: The number of minutes must be a number
     zero_time_period: Time must be more than 0
+  shared_cost_per_hour_errors: &shared_cost_per_hour_errors
+    blank: The hourly cost must be more than 0
+    greater_than: The hourly cost must be more than 0
+    not_a_number: The cost per hour must be a number, like 25
+  shared_cost_per_item_errors: &shared_cost_per_item_errors
+    blank: Enter the cost per %{item_type}
+    greater_than: The cost per %{item_type} must be more than 0
+    not_a_number: The cost per %{item_type} must be a number, like 25
+  shared_items_errors: &shared_items_errors
+    blank: Enter the number of %{item_type}
+    greater_than: The number of %{item_type} must be more than 0
+    not_a_number: The number of  %{item_type} must be a number, like 25
 
   errors:
     format: "%{message}"
@@ -69,19 +81,21 @@ en:
             base:
               no_change: There are no changes to save. Select cancel if you do not want to make any changes.
             period: *shared_time_errors
+            cost_per_hour: *shared_cost_per_hour_errors
+            items: *shared_items_errors
+            cost_per_item: *shared_cost_per_item_errors
             explanation:
               blank: Explain your decision for adjusting the costs
         prior_authority/service_cost_form:
           attributes:
             base:
               no_change: There are no changes to save. Select cancel if you do not want to make any changes.
+            period: *shared_time_errors
+            cost_per_hour: *shared_cost_per_hour_errors
+            items: *shared_items_errors
+            cost_per_item: *shared_cost_per_item_errors
             explanation:
               blank: Explain your decision for adjusting the costs
-            period: *shared_time_errors
-            cost_per_hour:
-              blank: The hourly cost must be more than 0
-              greater_than: The hourly cost must be more than 0
-              not_a_number: The cost per hour must be a number, like 25
         prior_authority/travel_cost_form:
           attributes:
             base:
@@ -89,7 +103,4 @@ en:
             explanation:
               blank: Explain your decision for adjusting the costs
             travel_time: *shared_time_errors
-            travel_cost_per_hour:
-              blank: The hourly cost must be more than 0
-              greater_than: The hourly cost must be more than 0
-              not_a_number: The cost per hour must be a number, like 25
+            travel_cost_per_hour: *shared_cost_per_hour_errors
