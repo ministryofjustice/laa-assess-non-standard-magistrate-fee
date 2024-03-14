@@ -30,7 +30,7 @@ class PullLatestVersionData < ApplicationJob
     )
 
     # performed here to avoid slow transactions as requires API call to the OS API
-    cached_autograntable = autograntable
+    cached_autograntable = autograntable(submission:)
 
     PriorAuthorityApplication.transaction do
       update_submission(submission, json_data)
@@ -39,7 +39,7 @@ class PullLatestVersionData < ApplicationJob
     end
   end
 
-  def autograntable
+  def autograntable(submission:)
     # performed here to avoid slow transactions as requires API call to the OS API
     Autograntable.new(submission:).grantable?
   rescue LocationService::LocationError
