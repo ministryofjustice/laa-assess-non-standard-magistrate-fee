@@ -5,3 +5,4 @@
 #
 Date::DATE_FORMATS[:stamp] = '%d %B %Y' # DD MONTH YYYY
 Time::DATE_FORMATS[:stamp] = '%d %B %Y' # DD MONTH YYYY
+Time::DATE_FORMATS[:time_of_day] = '%-I:%M%P' # H:MM with am/pm
