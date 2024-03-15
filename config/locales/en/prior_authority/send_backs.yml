@@ -1,0 +1,36 @@
+en:
+  prior_authority:
+    send_backs:
+      new:
+        page_title: Send back to provider
+        which_updates: What updates to the application are needed?
+        which_updates_hint: Select all options that are relevant to you.
+        further_information: Further information
+        further_information_explanation: Describe what further information you require
+        incorrect_information: Incorrect information
+        incorrect_information_explanation: Describe what information is incorrect and needs amending
+        submit: Submit
+        save_and_exit: Save and come back later
+      show:
+        page_title: Application sent
+        sent_to_provider: Your request has been sent to the provider.
+        laa_reference: Application reference
+        further_information: Further information
+        incorrect_information: Incorrect information
+        next_application: Assess next application
+        return: Return to this application
+
+  activemodel:
+    errors:
+      models:
+        prior_authority/send_back_form:
+          attributes:
+            base:
+              already_assessed: This application has already been assessed
+            updates_needed:
+              blank: Select what updates to the application are needed
+            further_information_explanation:
+              blank: Enter a description of what further information your require
+            incorrect_information_explanation:
+              blank: Enter a description of what information is incorrect and needs amending
+

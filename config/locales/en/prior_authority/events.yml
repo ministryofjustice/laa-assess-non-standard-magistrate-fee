@@ -9,11 +9,11 @@ en:
       decision_granted: Granted
       decision_part_grant: Part granted
       decision_rejected: Rejected
+      draft_send_back: '%{caseworker} saved a draft send-back decision'
+      sent_back: Sent back
       na: N/A
       index:
         page_title: Application history
         date: Date
         caseworker: Caseworker
         update: Update
-        make_a_decision: Make a decision
-        save_and_exit: Save and exit

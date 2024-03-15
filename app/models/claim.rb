@@ -3,6 +3,9 @@ class Claim < Submission
 
   default_scope -> { where(application_type: APPLICATION_TYPES[:nsm]) }
 
+  scope :pending_decision, -> { where.not(state: Nsm::MakeDecisionForm::STATES) }
+  scope :decision_made, -> { where(state: Nsm::MakeDecisionForm::STATES) }
+
   def editable?
     Nsm::MakeDecisionForm::STATES.exclude?(state)
   end

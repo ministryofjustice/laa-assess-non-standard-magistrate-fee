@@ -1,0 +1,40 @@
+<% content_for(:primary_navigation) do %>
+  <% render 'layouts/prior_authority/primary_navigation', current: @form_object.summary.current_section(current_user) %>
+<% end %>
+
+<% content_for(:back_link) do %>
+  <%= govuk_back_link(href: prior_authority_application_path(@form_object.summary.id), html_attributes: {'data-turbo': 'false'}) %>
+<% end %>
+
+ <% title t('.page_title') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <span class="govuk-caption-xl"><%= @form_object.summary.laa_reference %></span>
+    <h1 class="govuk-heading-xl"><%= t('.page_title') %></h1>
+    <%= form_with model: @form_object, url: prior_authority_application_send_back_path(@form_object.summary.id) do |f| %>
+      <%= govuk_error_summary(@form_object) %>
+      <%= f.govuk_check_boxes_fieldset :updates_needed,
+                                      legend: { size: 's', text: t('.which_updates') },
+                                      hint: { text: t('.which_updates_hint') } do %>
+        <%= f.govuk_check_box :updates_needed, "further_information",
+                              link_errors: true,
+                              label: { size: nil, text: t('.further_information') } do %>
+          <%= f.govuk_text_area :further_information_explanation,
+                                label: { size: nil, text: t('.further_information_explanation') } %>
+        <% end %>
+        <%= f.govuk_check_box :updates_needed, "incorrect_information",
+                              label: { size: nil, text: t('.incorrect_information') } do %>
+          <%= f.govuk_text_area :incorrect_information_explanation,
+                                label: { size: nil, text: t('.incorrect_information_explanation') } %>
+        <% end %>
+      <% end %>
+
+      <%= f.govuk_submit(t('.submit')) do %>
+        <%= f.govuk_submit t('.save_and_exit'), secondary: true, name: 'save_and_exit' %>
+      <% end %>
+
+    <% end %>
+  </div>
+</div>

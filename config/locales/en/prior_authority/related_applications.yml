@@ -2,7 +2,5 @@ en:
   prior_authority:
     related_applications:
       index:
-        make_a_decision: Make a decision
         no_applications: No related applications have been found
         page_title: Related applications
-        save_and_exit: Save and exit
