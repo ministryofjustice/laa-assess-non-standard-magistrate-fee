@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-RSpec.describe FeedbackMessages::GrantedFeedback do
+RSpec.describe Nsm::FeedbackMessages::ProviderRequestFeedback do
   subject(:feedback) { described_class.new(claim) }
 
   let(:claim) { build(:claim) }
-  let(:feedback_template) { '80c0dcd2-597b-4c82-8c94-f6e26af71a40' }
+  let(:feedback_template) { 'bfd28bd8-b9d8-4b18-8ce0-3fb763123573' }
   let(:recipient) { 'provider@example.com' }
   let(:laa_case_reference) { 'LAA-FHaMVK' }
   let(:ufn) { '123456/001' }

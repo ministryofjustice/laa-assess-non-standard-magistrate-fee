@@ -19,10 +19,11 @@ module About
     private
 
     def submit_feedback
-      FeedbackMailer.notify(**feedback_params.to_h
-                                             .symbolize_keys
-                                             .merge(application_env: application_environment))
-                    .deliver_later!
+      Nsm::FeedbackMailer
+        .notify(**feedback_params.to_h
+                    .symbolize_keys
+                    .merge(application_env: application_environment))
+        .deliver_later!
     end
 
     def feedback_params

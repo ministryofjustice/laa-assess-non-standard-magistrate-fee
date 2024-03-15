@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe FeedbackMailer, type: :mailer do
+RSpec.describe Nsm::FeedbackMailer, type: :mailer do
   let(:feedback_template) { '8e51ffcd-0d97-4f27-a1a5-8b7a33eb56b7' }
   let(:user_feedback) { 'A feedback comment' }
   let(:user_email) { 'feedback.user@example.com' }
