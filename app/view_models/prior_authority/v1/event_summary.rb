@@ -27,11 +27,11 @@ module PriorAuthority
         I18n.t(key, caseworker:)
       end
 
-      def details?
-        details.present?
+      def comment?
+        comment.present?
       end
 
-      def details
+      def comment
         event.details['comment']
       end
 
@@ -48,7 +48,7 @@ module PriorAuthority
       end
 
       def assignment_heading_key
-        if details?
+        if comment?
           'prior_authority.events.self_assigned'
         else
           'prior_authority.events.assigned'
