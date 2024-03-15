@@ -15,7 +15,7 @@ FactoryBot.define do
     provider do
       {
         'email' => 'provider@example.com',
-        'description' => nil, # TODO: is this a thing?
+        'description' => nil,
       }
     end
     firm_office do
