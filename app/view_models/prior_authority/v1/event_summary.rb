@@ -21,18 +21,10 @@ module PriorAuthority
       end
 
       def heading
-        case event.event_type
-        when 'Event::NewVersion'
-          I18n.t('prior_authority.events.received')
-        when 'Event::Assignment'
-          assignment_heading
-        when 'Event::Unassignment'
-          I18n.t('prior_authority.events.unassigned', caseworker:)
-        when 'Event::Decision'
-          I18n.t("prior_authority.events.decision_#{event.details['to']}")
-        else
-          raise "Prior Authority event summaries don't know how to display events of type #{event.event_type}"
-        end
+        key = heading_keys[event.event_type]
+        raise "Prior Authority event summaries don't know how to display events of type #{event.event_type}" unless key
+
+        I18n.t(key, caseworker:)
       end
 
       def details?
@@ -45,11 +37,21 @@ module PriorAuthority
 
       private
 
-      def assignment_heading
+      def heading_keys
+        {
+          'Event::NewVersion' => 'prior_authority.events.received',
+          'Event::Assignment' => assignment_heading_key,
+          'Event::Unassignment' => 'prior_authority.events.unassigned',
+          'Event::DraftDecision' => 'prior_authority.events.draft_decision',
+          'Event::Decision' => "prior_authority.events.decision_#{event.details['to']}"
+        }
+      end
+
+      def assignment_heading_key
         if details?
-          I18n.t('prior_authority.events.self_assigned', caseworker:)
+          'prior_authority.events.self_assigned'
         else
-          I18n.t('prior_authority.events.assigned', caseworker:)
+          'prior_authority.events.assigned'
         end
       end
     end

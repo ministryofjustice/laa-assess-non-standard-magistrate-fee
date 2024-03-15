@@ -17,8 +17,10 @@ RSpec.describe 'History events' do
                               comment: 'unassignment comment').update(created_at: 8.hours.ago)
     Event::Assignment.build(submission: application, current_user: supervisor,
                             comment: 'manual assignment comment').update(created_at: 7.hours.ago)
+    Event::DraftDecision.build(submission: application, current_user: caseworker, next_state: 'rejected',
+                               comment: 'draft decision comment').update(created_at: 6.hours.ago)
     Event::Decision.build(submission: application, current_user: caseworker, previous_state: 'submitted',
-                          comment: 'decision comment').update(created_at: 6.hours.ago)
+                          comment: 'decision comment').update(created_at: 5.hours.ago)
   end
 
   it 'shows all (visible) events in the history' do
@@ -30,7 +32,8 @@ RSpec.describe 'History events' do
     ).map { _1.text.strip.gsub(/\s+/, ' ') }
 
     expect(history).to eq(
-      ['01 February 20233:00am', 'case worker', 'Granted decision comment',
+      ['01 February 20234:00am', 'case worker', 'Granted decision comment',
+       '01 February 20233:00am', 'case worker', 'case worker saved a draft decision draft decision comment',
        '01 February 20232:00am', 'super visor', 'Self-assigned by super visor manual assignment comment',
        '01 February 20231:00am', 'case worker', 'Unassigned by case worker unassignment comment',
        '01 February 202312:00am', 'case worker', 'Assigned to case worker',

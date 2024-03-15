@@ -5,6 +5,7 @@ en:
       assigned: Assigned to %{caseworker}
       unassigned: Unassigned by %{caseworker}
       self_assigned: Self-assigned by %{caseworker}
+      draft_decision: '%{caseworker} saved a draft decision'
       decision_granted: Granted
       decision_part_grant: Part granted
       decision_rejected: Rejected

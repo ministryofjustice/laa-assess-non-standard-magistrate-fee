@@ -31,7 +31,7 @@ module PriorAuthority
       return false unless valid?
 
       PriorAuthorityApplication.transaction do
-        stash
+        stash(add_draft_decision_event: false)
         previous_state = submission.state
 
         submission.update!(state: pending_decision)
@@ -45,9 +45,16 @@ module PriorAuthority
       true
     end
 
-    def stash
+    def stash(add_draft_decision_event: true)
       submission.data.merge!(attributes.except('submission', 'current_user'))
       submission.save!
+
+      return unless add_draft_decision_event
+
+      Event::DraftDecision.build(submission: submission,
+                                 comment: explanation,
+                                 next_state: pending_decision,
+                                 current_user: current_user)
     end
 
     def explanation

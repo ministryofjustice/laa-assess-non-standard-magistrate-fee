@@ -8,6 +8,7 @@ class Event < ApplicationRecord
   HISTORY_EVENTS = [
     'Event::Assignment',
     'Event::Decision',
+    'Event::DraftDecision',
     'Event::ChangeRisk',
     'Event::NewVersion',
     'Event::Note',
