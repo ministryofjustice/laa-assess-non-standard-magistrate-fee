@@ -57,7 +57,7 @@ class PullLatestVersionData < ApplicationJob
 
   def autogrant(submission)
     previous_state = submission.state
-    submission.update!(state: 'auto_grant')
+    submission.update!(state: PriorAuthorityApplication::AUTO_GRANT)
 
     Event::AutoDecision.build(submission:, previous_state:)
     NotifyAppStore.process(submission:)

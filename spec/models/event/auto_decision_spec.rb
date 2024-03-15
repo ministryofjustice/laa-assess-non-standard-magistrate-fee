@@ -4,7 +4,7 @@ RSpec.describe Event::AutoDecision do
   subject { described_class.build(submission:, previous_state:) }
 
   let(:submission) { create(:claim, state:) }
-  let(:state) { 'auto_grant' }
+  let(:state) { PriorAuthorityApplication::AUTO_GRANT }
   let(:previous_state) { 'submitted' }
 
   it 'can build a new record' do

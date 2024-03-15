@@ -10,7 +10,8 @@ class PriorAuthorityApplication < Submission
         GRANTED = 'granted'.freeze,
         PART_GRANT = 'part_grant'.freeze,
         REJECTED = 'rejected'.freeze,
-        SENT_BACK = 'sent_back'.freeze
+        SENT_BACK = 'sent_back'.freeze,
+        AUTO_GRANT = 'auto_grant'.freeze
       ].freeze)
   ].freeze
 
