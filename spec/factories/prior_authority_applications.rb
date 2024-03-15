@@ -120,8 +120,8 @@ FactoryBot.define do
     end
 
     trait :no_travel do
-      travel_time { 0 }
-      travel_cost_per_hour { '0.0' }
+      travel_time { nil }
+      travel_cost_per_hour { nil }
       travel_cost_reason { nil }
     end
   end

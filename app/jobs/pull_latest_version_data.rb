@@ -42,7 +42,10 @@ class PullLatestVersionData < ApplicationJob
   def autograntable(submission:)
     # performed here to avoid slow transactions as requires API call to the OS API
     Autograntable.new(submission:).grantable?
-  rescue LocationService::LocationError
+  rescue LocationService::NotFoundError
+    false
+  rescue LocationService::LocationError => e
+    Sentry.capture_exception(e)
     false
   end
 

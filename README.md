@@ -31,9 +31,6 @@ DATABASE_URL=postgresql://john.smith@localhost/laa-claim-non-standard-magistrate
 
 After you've defined your DB configuration in the above files, run the following:
 
-> NOTE: you need to manually instal postgis for the migrations to run. This can be done with
-> the following command `brew install postgis`
-
 * `bin/rails db:prepare` (for the development database)
 * `RAILS_ENV=test bin/rails db:prepare` (for the test database)
 
