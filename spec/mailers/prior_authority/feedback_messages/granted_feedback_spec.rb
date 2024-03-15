@@ -3,42 +3,46 @@
 require 'rails_helper'
 
 RSpec.describe PriorAuthority::FeedbackMessages::GrantedFeedback do
-  subject(:feedback) { described_class.new(claim) }
+  subject(:feedback) { described_class.new(application) }
 
-  let(:claim) { build(:claim) }
-  let(:feedback_template) { '80c0dcd2-597b-4c82-8c94-f6e26af71a40' }
+  let(:application) do
+    create(
+      :prior_authority_application,
+      data: build(
+        :prior_authority_data,
+        laa_reference: 'LAA-FHaMVK',
+        ufn: '111111/111',
+        provider: { 'email' => 'provider@example.com' },
+        defendant: { 'last_name' => 'Abrahams', 'first_name' => 'Abe' },
+      )
+    )
+  end
+
+  let(:feedback_template) { 'd4f3da60-4da5-423e-bc93-d9235ff01a7b' }
   let(:recipient) { 'provider@example.com' }
-  let(:laa_case_reference) { 'LAA-FHaMVK' }
-  let(:ufn) { '123456/001' }
-  let(:main_defendant_name) { 'Tracy Linklater' }
-  let(:defendant_reference) { 'MAAT ID: AB12123' }
-  let(:claim_total) { 0 }
-  let(:date) { DateTime.now.strftime('%d %B %Y') }
-  let(:feedback_url) { 'tbc' }
 
   describe '#template' do
     it 'has correct template id' do
-      expect(subject.template).to eq(feedback_template)
+      expect(feedback.template).to eq(feedback_template)
     end
   end
 
   describe '#contents' do
-    it 'throws a not implemented exception' do
-      expect(subject.contents).to include(
-        laa_case_reference:,
-        ufn:,
-        main_defendant_name:,
-        defendant_reference:,
-        claim_total:,
-        date:,
-        feedback_url:
+    it 'has expected content' do
+      expect(feedback.contents).to include(
+        laa_case_reference: 'LAA-FHaMVK',
+        ufn: '111111/111',
+        defendant_name: 'Abe Abrahams',
+        application_total: 'TODO',
+        date: DateTime.now.strftime('%d %B %Y'),
+        feedback_url: 'tbc',
       )
     end
   end
 
   describe '#recipient' do
     it 'has correct recipient' do
-      expect(subject.recipient).to eq(recipient)
+      expect(feedback.recipient).to eq(recipient)
     end
   end
 end

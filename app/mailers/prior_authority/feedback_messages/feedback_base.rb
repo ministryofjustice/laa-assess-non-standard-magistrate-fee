@@ -17,34 +17,17 @@ module PriorAuthority
       end
 
       def recipient
-        @submission.data['submitter']['email']
+        @submission.data['provider']['email']
       end
 
       protected
 
-      def main_defendant
-        @submission.data['defendants'].find { _1['main'] }
+      def defendant
+        @submission.data['defendant']
       end
 
       def defendant_name
-        main_defendant['full_name']
-      end
-
-      def maat_id
-        main_defendant['maat']
-      end
-
-      def cntp_order
-        @submission.data['cntp_order']
-      end
-
-      # Markdown conditionals do not allow to format the string nicely so formatting here.
-      def defendant_reference_string
-        if maat_id.nil?
-          "Client's CNTP number: #{cntp_order}"
-        else
-          "MAAT ID: #{maat_id}"
-        end
+        "#{defendant['first_name']} #{defendant['last_name']}"
       end
 
       def case_reference
@@ -55,8 +38,9 @@ module PriorAuthority
         @submission.data['ufn']
       end
 
-      def claim_total
-        @submission.data['submitted_total_inc_vat'] || @submission.data['submitted_total'] || 0
+      def application_total
+        'TODO'
+        # @submission.data['submitted_total_inc_vat'] || @submission.data['submitted_total'] || 0
       end
 
       def feedback_url

@@ -4,16 +4,15 @@ module PriorAuthority
   module FeedbackMessages
     class RejectedFeedback < FeedbackBase
       def template
-        '7e807120-b661-452c-95a6-1ae46f411cfe'
+        '81e9222e-c6bd-4fba-91ff-d90d3d61af87'
       end
 
       def contents
         {
           laa_case_reference: case_reference,
           ufn: ufn,
-          main_defendant_name: defendant_name,
-          defendant_reference: defendant_reference_string,
-          claim_total: claim_total,
+          defendant_name: defendant_name,
+          application_total: application_total,
           caseworker_decision_explanation: @comment,
           date: DateTime.now.strftime('%d %B %Y'),
           feedback_url: feedback_url

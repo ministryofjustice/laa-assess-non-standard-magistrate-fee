@@ -19,8 +19,6 @@ module PriorAuthority
         FeedbackMessages::PartGrantedFeedback.new(submission)
       when 'rejected'
         FeedbackMessages::RejectedFeedback.new(submission)
-      when 'provider_requested'
-        FeedbackMessages::ProviderRequestFeedback.new(submission)
       else
         FeedbackMessages::FurtherInformationRequestFeedback.new(submission)
       end

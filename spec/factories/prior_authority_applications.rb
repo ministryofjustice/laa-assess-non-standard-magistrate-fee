@@ -12,6 +12,12 @@ FactoryBot.define do
     initialize_with { attributes }
     laa_reference { 'LAA-123456' }
     prison_law { false }
+    provider do
+      {
+        'email' => 'provider@example.com',
+        'description' => nil, # TODO: is this a thing?
+      }
+    end
     firm_office do
       { 'name' => 'LegalCo' }
     end

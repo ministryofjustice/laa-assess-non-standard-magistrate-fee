@@ -3,46 +3,48 @@
 require 'rails_helper'
 
 RSpec.describe PriorAuthority::FeedbackMessages::FurtherInformationRequestFeedback do
-  subject(:feedback) { described_class.new(claim, caseworker_information_requested) }
+  subject(:feedback) { described_class.new(application, 'Caseworker wants...') }
 
-  let(:claim) { build(:claim) }
-  let(:feedback_template) { '9ecdec30-83d7-468d-bec2-cf770a2c9828' }
+  let(:application) do
+    create(
+      :prior_authority_application,
+      data: build(
+        :prior_authority_data,
+        laa_reference: 'LAA-FHaMVK',
+        ufn: '111111/111',
+        provider: { 'email' => 'provider@example.com' },
+        defendant: { 'last_name' => 'Abrahams', 'first_name' => 'Abe' },
+      )
+    )
+  end
+
+  let(:feedback_template) { 'c8abf9ee-5cfe-44ab-9253-72111b7a35ba' }
   let(:recipient) { 'provider@example.com' }
-  let(:laa_case_reference) { 'LAA-FHaMVK' }
-  let(:ufn) { '123456/001' }
-  let(:main_defendant_name) { 'Tracy Linklater' }
-  let(:defendant_reference) { 'MAAT ID: AB12123' }
-  let(:claim_total) { 0 }
-  let(:date_to_respond_by) { 7.days.from_now.strftime('%d %B %Y') }
-  let(:caseworker_information_requested) { 'Test Request' }
-  let(:date) { DateTime.now.strftime('%d %B %Y') }
-  let(:feedback_url) { 'tbc' }
 
   describe '#template' do
     it 'has correct template id' do
-      expect(subject.template).to eq(feedback_template)
+      expect(feedback.template).to eq(feedback_template)
     end
   end
 
   describe '#contents' do
-    it 'throws a not implemented exception' do
-      expect(subject.contents).to include(
-        laa_case_reference:,
-        ufn:,
-        main_defendant_name:,
-        defendant_reference:,
-        claim_total:,
-        date_to_respond_by:,
-        caseworker_information_requested:,
-        date:,
-        feedback_url:
+    it 'has expected content' do
+      expect(feedback.contents).to include(
+        laa_case_reference: 'LAA-FHaMVK',
+        ufn: '111111/111',
+        defendant_name: 'Abe Abrahams',
+        application_total: 'TODO',
+        date_to_respond_by: 14.days.from_now.strftime('%d %B %Y'),
+        caseworker_information_requested: 'Caseworker wants...',
+        date: DateTime.now.strftime('%d %B %Y'),
+        feedback_url: 'tbc',
       )
     end
   end
 
   describe '#recipient' do
     it 'has correct recipient' do
-      expect(subject.recipient).to eq(recipient)
+      expect(feedback.recipient).to eq('provider@example.com')
     end
   end
 end
