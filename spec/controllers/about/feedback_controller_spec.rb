@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe About::FeedbackController do
-  let(:message_delivery) { instance_double(Nsm::FeedbackMailer::MessageDelivery) }
+  let(:message_delivery) { instance_double(FeedbackMailer::MessageDelivery) }
 
   describe '#feedback' do
     context 'index' do
@@ -13,7 +13,7 @@ RSpec.describe About::FeedbackController do
 
     context 'submitting' do
       before do
-        allow(Nsm::FeedbackMailer).to receive(:notify).and_return(message_delivery)
+        allow(FeedbackMailer).to receive(:notify).and_return(message_delivery)
         allow(message_delivery).to receive(:deliver_later!)
         post :create, params: feedback_params
       end

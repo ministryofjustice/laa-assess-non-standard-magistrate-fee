@@ -14,7 +14,7 @@ RSpec.describe 'Feedback' do
     click_on 'Continue'
     expect(page).to have_content 'Your feedback has been submitted'
     job = ActiveJob::Base.queue_adapter.enqueued_jobs.first
-    expect(job[:args][0..2]).to eq ['Nsm::FeedbackMailer', 'notify', 'deliver_now!']
+    expect(job[:args][0..2]).to eq ['FeedbackMailer', 'notify', 'deliver_now!']
     params = job[:args][3]['args'][0]
     expect(params['user_email']).to eq 'foo@example.com'
     expect(params['user_rating']).to eq '2'
