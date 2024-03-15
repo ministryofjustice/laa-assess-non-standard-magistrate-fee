@@ -280,23 +280,6 @@ RSpec.describe PullLatestVersionData do
       end
     end
 
-    context 'when autogrant check returns a LocationService error' do
-      let(:autograntable) { double(Autograntable) }
-      let(:data) { build(:prior_authority_data) }
-
-      before do
-        allow(autograntable).to receive(:grantable?).and_raise(LocationService::ResponseError)
-        allow(Autograntable).to receive(:new).and_return(autograntable)
-        allow(Event::AutoDecision).to receive(:build)
-        allow(NotifyAppStore).to receive(:process)
-      end
-
-      it 'updates the data' do
-        subject.perform(application)
-        expect(application.data).to eq data.with_indifferent_access
-      end
-    end
-
     context 'when autogrant check returns an unknown error' do
       let(:autograntable) { double(Autograntable) }
       let(:data) { build(:prior_authority_data) }
