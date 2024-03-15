@@ -24,7 +24,7 @@ en:
   shared_items_errors: &shared_items_errors
     blank: Enter the number of %{item_type}
     greater_than: The number of %{item_type} must be more than 0
-    not_a_number: The number of  %{item_type} must be a number, like 25
+    not_a_number: The number of %{item_type} must be a number, like 25
 
   errors:
     format: "%{message}"
