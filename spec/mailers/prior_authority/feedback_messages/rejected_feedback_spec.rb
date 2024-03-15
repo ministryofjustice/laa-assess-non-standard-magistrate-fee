@@ -33,9 +33,9 @@ RSpec.describe PriorAuthority::FeedbackMessages::RejectedFeedback do
         laa_case_reference: 'LAA-FHaMVK',
         ufn: '111111/111',
         defendant_name: 'Abe Abrahams',
-        application_total: 'TODO',
+        application_total: '£324.50',
         caseworker_decision_explanation: 'Caseworker rejected coz...',
-        date: DateTime.now.strftime('%d %B %Y'),
+        date: DateTime.now.to_fs(:stamp),
         feedback_url: 'tbc',
       )
     end

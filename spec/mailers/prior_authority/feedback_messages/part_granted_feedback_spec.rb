@@ -14,6 +14,9 @@ RSpec.describe PriorAuthority::FeedbackMessages::PartGrantedFeedback do
         ufn: '111111/111',
         provider: { 'email' => 'provider@example.com' },
         defendant: { 'last_name' => 'Abrahams', 'first_name' => 'Abe' },
+        quotes: [
+          build(:primary_quote, :with_adjustments),
+        ]
       )
     )
   end
@@ -33,10 +36,10 @@ RSpec.describe PriorAuthority::FeedbackMessages::PartGrantedFeedback do
         laa_case_reference: 'LAA-FHaMVK',
         ufn: '111111/111',
         defendant_name: 'Abe Abrahams',
-        application_total: 'TODO',
-        part_grant_total: 'TODO',
+        application_total: '£300.00',
+        part_grant_total: '£150.00',
         caseworker_decision_explanation: 'Caseworker part granted coz...',
-        date: DateTime.now.strftime('%d %B %Y'),
+        date: DateTime.now.to_fs(:stamp),
         feedback_url: 'tbc',
       )
     end

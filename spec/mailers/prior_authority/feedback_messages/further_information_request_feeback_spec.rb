@@ -33,10 +33,10 @@ RSpec.describe PriorAuthority::FeedbackMessages::FurtherInformationRequestFeedba
         laa_case_reference: 'LAA-FHaMVK',
         ufn: '111111/111',
         defendant_name: 'Abe Abrahams',
-        application_total: 'TODO',
-        date_to_respond_by: 14.days.from_now.strftime('%d %B %Y'),
+        application_total: '£324.50',
+        date_to_respond_by: 14.days.from_now.to_fs(:stamp),
         caseworker_information_requested: 'Caseworker wants...',
-        date: DateTime.now.strftime('%d %B %Y'),
+        date: DateTime.now.to_fs(:stamp),
         feedback_url: 'tbc',
       )
     end

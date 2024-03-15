@@ -8,9 +8,8 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
   let(:laa_case_reference) { 'LAA-FHaMVK' }
   let(:ufn) { '111111/111' }
   let(:defendant_name) { 'Abe Abrahams' }
-  let(:application_total) { 'TODO' }
-  let(:part_grant_total) { 'TODO' }
-  let(:date) { DateTime.now.strftime('%d %B %Y') }
+  let(:application_total) { '£324.50' }
+  let(:date) { DateTime.now.to_fs(:stamp) }
   let(:feedback_url) { 'tbc' }
 
   let(:base_application) do
@@ -39,7 +38,26 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
   end
 
   context 'with part granted state' do
-    let(:application) { base_application.tap { |app| app.update!(state: 'part_grant') } }
+    let(:application) do
+      create(
+        :prior_authority_application,
+        state: 'part_grant',
+        data: build(
+          :prior_authority_data,
+          laa_reference: 'LAA-FHaMVK',
+          ufn: '111111/111',
+          provider: { 'email' => 'provider@example.com' },
+          defendant: { 'last_name' => 'Abrahams', 'first_name' => 'Abe' },
+          quotes: [
+            build(:primary_quote, :with_adjustments),
+          ]
+        )
+      )
+    end
+
+    let(:application_total) { '£300.00' }
+    let(:part_grant_total) { '£150.00' }
+
     let(:feedback_template) { '97c0245f-9fec-4ec1-98cc-c9d392a81254' }
     let(:caseworker_decision_explanation) { '' }
 

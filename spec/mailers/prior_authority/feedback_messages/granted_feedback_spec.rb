@@ -33,8 +33,8 @@ RSpec.describe PriorAuthority::FeedbackMessages::GrantedFeedback do
         laa_case_reference: 'LAA-FHaMVK',
         ufn: '111111/111',
         defendant_name: 'Abe Abrahams',
-        application_total: 'TODO',
-        date: DateTime.now.strftime('%d %B %Y'),
+        application_total: '£324.50',
+        date: DateTime.now.to_fs(:stamp),
         feedback_url: 'tbc',
       )
     end

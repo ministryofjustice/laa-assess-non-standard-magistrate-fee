@@ -39,12 +39,17 @@ module PriorAuthority
       end
 
       def application_total
-        'TODO'
-        # @submission.data['submitted_total_inc_vat'] || @submission.data['submitted_total'] || 0
+        application_summary.formatted_original_total_cost
       end
 
       def feedback_url
         Rails.configuration.x.contact.feedback_url
+      end
+
+      private
+
+      def application_summary
+        @application_summary ||= BaseViewModel.build(:application_summary, @submission)
       end
     end
   end

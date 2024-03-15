@@ -21,7 +21,7 @@ module PriorAuthority
       end
 
       def adjusted_total
-        'TODO'
+        application_summary.formatted_total_cost
       end
     end
   end

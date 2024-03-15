@@ -95,6 +95,19 @@ FactoryBot.define do
         'file_path' => '123123123'
       }
     end
+
+    trait :with_adjustments do
+      cost_type { 'per_item' }
+      items { 10 }
+      item_type { 'item' }
+      cost_per_item { '5.0' }
+      cost_per_item_original { '10.0' }
+      travel_time { 60 }
+      travel_cost_per_hour { '100.0' }
+      travel_cost_per_hour_original { '200.0' }
+      adjustment_comment { 'caseworker service cost adjustment explanantion' }
+      travel_adjustment_comment { 'caseworker travel cost adjustment explanantion' }
+    end
   end
 
   factory :alternative_quote, class: Hash do
