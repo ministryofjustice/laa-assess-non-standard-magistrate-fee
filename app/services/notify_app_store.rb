@@ -8,7 +8,9 @@ class NotifyAppStore < ApplicationJob
     else
       begin
         new.notify(MessageBuilder.new(submission:))
-        SubmissionFeedbackMailer.notify(submission).deliver_later!
+
+        klass = "#{submission.namespace}::SubmissionFeedbackMailer".constantize
+        klass.notify(submission).deliver_later!
       rescue StandardError => e
         # we only get errors here when processing inline, which we don't want
         # to be visible to the end user, so swallow errors
@@ -19,7 +21,9 @@ class NotifyAppStore < ApplicationJob
 
   def perform(submission)
     notify(MessageBuilder.new(submission:))
-    SubmissionFeedbackMailer.notify(submission).deliver_later!
+
+    klass = "#{submission.namespace}::SubmissionFeedbackMailer".constantize
+    klass.notify(submission).deliver_later!
   end
 
   def notify(message_builder)

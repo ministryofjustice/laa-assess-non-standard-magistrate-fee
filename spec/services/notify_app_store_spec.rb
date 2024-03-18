@@ -16,7 +16,9 @@ RSpec.describe NotifyAppStore do
       before do
         allow(ENV).to receive(:key?).and_call_original
         allow(ENV).to receive(:key?).with('REDIS_HOST').and_return(false)
-        allow(SubmissionFeedbackMailer).to receive_message_chain(:notify, :deliver_later!)
+        allow(submission).to receive(:namespace).and_return(Nsm)
+        allow(Nsm::SubmissionFeedbackMailer).to receive_message_chain(:notify, :deliver_later!)
+
         expect(described_class::HttpNotifier).to receive(:new)
           .and_return(http_notifier)
       end
@@ -63,9 +65,9 @@ RSpec.describe NotifyAppStore do
     let(:http_notifier) { instance_double(described_class::HttpNotifier, put: true) }
 
     before do
-      allow(described_class::HttpNotifier).to receive(:new)
-        .and_return(http_notifier)
-      allow(SubmissionFeedbackMailer).to receive_message_chain(:notify, :deliver_later!)
+      allow(described_class::HttpNotifier).to receive(:new).and_return(http_notifier)
+      allow(submission).to receive(:namespace).and_return(Nsm)
+      allow(Nsm::SubmissionFeedbackMailer).to receive_message_chain(:notify, :deliver_later!)
     end
 
     it 'creates a new MessageBuilder' do

@@ -2,19 +2,19 @@
 
 require 'rails_helper'
 
-RSpec.describe FeedbackMessages::PartGrantedFeedback do
-  subject(:feedback) { described_class.new(claim, caseworker_decision_explanation) }
+RSpec.describe Nsm::FeedbackMessages::FurtherInformationRequestFeedback do
+  subject(:feedback) { described_class.new(claim, caseworker_information_requested) }
 
   let(:claim) { build(:claim) }
-  let(:feedback_template) { '9df38f19-f76b-42f9-a4e1-da36a65d6aca' }
+  let(:feedback_template) { '9ecdec30-83d7-468d-bec2-cf770a2c9828' }
   let(:recipient) { 'provider@example.com' }
   let(:laa_case_reference) { 'LAA-FHaMVK' }
   let(:ufn) { '123456/001' }
   let(:main_defendant_name) { 'Tracy Linklater' }
   let(:defendant_reference) { 'MAAT ID: AB12123' }
   let(:claim_total) { 0 }
-  let(:part_grant_total) { 0 }
-  let(:caseworker_decision_explanation) { 'Test Explanation' }
+  let(:date_to_respond_by) { 7.days.from_now.strftime('%d %B %Y') }
+  let(:caseworker_information_requested) { 'Test Request' }
   let(:date) { DateTime.now.strftime('%d %B %Y') }
   let(:feedback_url) { 'tbc' }
 
@@ -32,8 +32,8 @@ RSpec.describe FeedbackMessages::PartGrantedFeedback do
         main_defendant_name:,
         defendant_reference:,
         claim_total:,
-        part_grant_total:,
-        caseworker_decision_explanation:,
+        date_to_respond_by:,
+        caseworker_information_requested:,
         date:,
         feedback_url:
       )
