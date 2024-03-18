@@ -2,17 +2,18 @@
 
 require 'rails_helper'
 
-RSpec.describe FeedbackMessages::RejectedFeedback do
+RSpec.describe Nsm::FeedbackMessages::PartGrantedFeedback do
   subject(:feedback) { described_class.new(claim, caseworker_decision_explanation) }
 
   let(:claim) { build(:claim) }
-  let(:feedback_template) { '7e807120-b661-452c-95a6-1ae46f411cfe' }
+  let(:feedback_template) { '9df38f19-f76b-42f9-a4e1-da36a65d6aca' }
   let(:recipient) { 'provider@example.com' }
   let(:laa_case_reference) { 'LAA-FHaMVK' }
   let(:ufn) { '123456/001' }
   let(:main_defendant_name) { 'Tracy Linklater' }
   let(:defendant_reference) { 'MAAT ID: AB12123' }
   let(:claim_total) { 0 }
+  let(:part_grant_total) { 0 }
   let(:caseworker_decision_explanation) { 'Test Explanation' }
   let(:date) { DateTime.now.strftime('%d %B %Y') }
   let(:feedback_url) { 'tbc' }
@@ -31,6 +32,7 @@ RSpec.describe FeedbackMessages::RejectedFeedback do
         main_defendant_name:,
         defendant_reference:,
         claim_total:,
+        part_grant_total:,
         caseworker_decision_explanation:,
         date:,
         feedback_url:
