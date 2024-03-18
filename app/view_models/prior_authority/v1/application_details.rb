@@ -60,6 +60,10 @@ module PriorAuthority
       def case_contact_card
         CaseContactCard.new(self)
       end
+
+      def assessment_comment
+        @assessment_comment ||= submission.latest_decision_event&.details&.dig('comment')
+      end
     end
   end
 end

@@ -1,3 +1,8 @@
+<% if show_tag_on_details_page?(application_summary.submission) %>
+  <%= prior_authority_state_tag(application_summary.submission) %>
+  <br><br>
+<% end %>
+
 <span class="govuk-caption-xl"><%= application_summary.firm_name %></span>
 <h1 class="govuk-heading-xl"><%= application_summary.laa_reference %></h1>
 <p class="govuk-body-l">
@@ -17,11 +22,18 @@
     <%= application_summary.rep_order_date_str %>
   <% end %>
 </p>
-<p>
-  <span class="govuk-body-m">
-    <strong><%= t('.date_received') %>
-    </strong> <%= application_summary.date_created_str %>
-  </span>
+<p class="govuk-body-m">
+  <strong><%= t('.date_received') %>
+  </strong> <%= application_summary.date_created_str %>
+  <% if application_summary.unassignable? %>
+    <br>
+    <strong><%= t('.caseworker') %></strong> <%= application_summary.caseworker %>
+  <% elsif !application_summary.pending? %>
+    <br>
+    <strong><%= t('.date_assessed') %></strong> <%= application_summary.date_updated_str %>
+  <% end %>
+</p>
+
 </p>
 <% if application_summary.unassignable? %>
   <%= govuk_button_link_to t('.remove_from_list'),

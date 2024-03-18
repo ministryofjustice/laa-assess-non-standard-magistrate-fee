@@ -9,6 +9,12 @@
   </div>
   <div class="govuk-grid-column-two-thirds">
     <h2 class="govuk-heading-m"><%= t('.overview') %></h2>
+    <% if @details.assessment_comment.present? %>
+      <div class="govuk-inset-text">
+        <p><strong><%= t(".assessed_statuses.#{@details.submission.state}") %></strong></p>
+        <p> <%= @details.assessment_comment %></p>
+      </div>
+    <% end %>
     <%= render 'overview_card', model: @details.overview_card %>
 
     <h2 class="govuk-heading-m"><%= t('.about_the_request') %></h2>
