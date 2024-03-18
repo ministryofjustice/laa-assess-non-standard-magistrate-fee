@@ -27,11 +27,30 @@ class Event < ApplicationRecord
     private :create
 
     def rehydrate!(params)
+      check_user(params) unless HostEnv.production?
+
       new(params).save!
     end
 
     def latest_decision
       order(created_at: :desc).find_by(event_type: 'Event::Decision')
+    end
+
+    private
+
+    def check_user(params)
+      User.find_or_initialize_by(id: params['primary_user_id']) do |user|
+        user.update!(
+          first_name: params['primary_user_id'].split('-').first,
+          role: User::CASEWORKER,
+          email: "#{params['primary_user_id']}@fake.com",
+          last_name: 'branchbuilder',
+          auth_oid: params['primary_user_id'],
+          auth_subject_id: params['primary_user_id'],
+          last_auth_at: Time.zone.now,
+          first_auth_at: Time.zone.now
+        )
+      end
     end
   end
 
