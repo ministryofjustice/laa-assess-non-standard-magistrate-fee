@@ -4,7 +4,5 @@ en:
     switch_service: Switch service
   home:
     index:
-      introduction_html: You can only use these services if you have been invited to take part in the private pilot. If you do not have access continue using %{eforms_link}.
-      eforms: eForms
       prior_authority: Assess prior authority to incur disbursements, previously CRM4
       nsm: Assess a non-standard magistrates' court payment, previously CRM7
