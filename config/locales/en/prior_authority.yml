@@ -17,11 +17,13 @@ en:
         adjust_quote: Adjust quote
         related_applications: Related applications
         application_history: Application history
+      application_buttons:
+        make_a_decision: Make a decision
+        send_back: Send back to provider
+        save_and_exit: Back to your applications
     adjustments:
       index:
         page_title: Adjustments
-        make_a_decision: Make a decision
-        save_and_exit: Save and exit
     auto_assignments:
       create:
         no_unassigned_applications: There are no applications waiting to be allocated

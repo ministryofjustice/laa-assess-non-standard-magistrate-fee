@@ -10,10 +10,6 @@ class Submission < ApplicationRecord
   validates :current_version, numericality: { only_integer: true, greater_than: 0 }
   validates :application_type, inclusion: { in: APPLICATION_TYPES.values }
 
-  # TODO: When prior authority states are defined, stop referring to specifically NSM states here
-  scope :pending_decision, -> { where.not(state: Nsm::MakeDecisionForm::STATES) }
-  scope :decision_made, -> { where(state: Nsm::MakeDecisionForm::STATES) }
-
   scope :related_applications, lambda { |ufn, account_number|
     PriorAuthority::RelatedApplications.call(ufn, account_number)
   }

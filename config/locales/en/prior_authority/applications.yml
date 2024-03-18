@@ -38,9 +38,6 @@ en:
         about_the_request: About the request
         about_the_case: About the case
         contact_details: Contact details
-        make_a_decision: Make a decision
-        send_back: Send back to provider
-        come_back_later: Save and come back later
       overview_card:
         application_details: Application details
       primary_quote_card:

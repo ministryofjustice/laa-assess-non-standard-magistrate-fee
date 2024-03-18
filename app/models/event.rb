@@ -13,6 +13,7 @@ class Event < ApplicationRecord
     'Event::NewVersion',
     'Event::Note',
     'Event::SendBack',
+    'Event::DraftSendBack',
     'Event::Unassignment',
   ].freeze
   scope :history, -> { where(event_type: HISTORY_EVENTS).order(created_at: :desc) }

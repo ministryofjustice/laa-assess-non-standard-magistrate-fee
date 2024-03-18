@@ -31,11 +31,7 @@
     <%= render 'case_contact_card', model: @details.case_contact_card %>
 
     <% if @summary.can_edit?(current_user) %>
-      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible govuk-!-margin-top-9">
-      <div class="govuk-button-group">
-        <%= govuk_button_link_to(t('.make_a_decision'), new_prior_authority_application_decision_path(@summary.id), data: { turbo: false }) %>
-        <%= govuk_button_link_to(t('.come_back_later'), your_prior_authority_applications_path, secondary: true) %>
-      </div>
+      <%= render 'prior_authority/shared/application_buttons', application_summary: @summary %>
     <% end %>
   </div>
 </div>

@@ -32,7 +32,12 @@ module PriorAuthority
       end
 
       def comment
-        event.details['comment']
+        case event.event_type
+        when 'Event::DraftSendBack', 'Event::DraftDecision'
+          nil
+        else
+          event.details['comment']
+        end
       end
 
       private
@@ -43,7 +48,9 @@ module PriorAuthority
           'Event::Assignment' => assignment_heading_key,
           'Event::Unassignment' => 'prior_authority.events.unassigned',
           'Event::DraftDecision' => 'prior_authority.events.draft_decision',
-          'Event::Decision' => "prior_authority.events.decision_#{event.details['to']}"
+          'Event::Decision' => "prior_authority.events.decision_#{event.details['to']}",
+          'Event::DraftSendBack' => 'prior_authority.events.draft_send_back',
+          'Event::SendBack' => 'prior_authority.events.sent_back'
         }
       end
 

@@ -100,6 +100,7 @@ Rails.application.routes.draw do
       resources :unassignments, only: %i[new create]
       resource :decision, only: %i[new create show]
       resources :events, path: :history, only: :index
+      resource :send_back, only: %i[new create show]
     end
     resources :auto_assignments, only: [:create]
     resources :downloads, only: :show

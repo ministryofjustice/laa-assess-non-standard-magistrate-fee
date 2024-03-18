@@ -98,11 +98,11 @@ module PriorAuthority
       end
 
       def assignable?
-        submission.state.in?(%w[submitted provider_updated])
+        pending? && submission.assignments.none?
       end
 
       def pending?
-        submission.state.in?(%w[submitted provider_updated])
+        submission.state.in?(PriorAuthorityApplication::PENDING_STATES)
       end
     end
   end
