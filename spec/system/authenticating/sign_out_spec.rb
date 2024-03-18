@@ -14,6 +14,6 @@ RSpec.describe 'Sign out' do
   end
 
   it 'shows the notification banner' do
-    expect(page).to have_content('You have signed out')
+    expect(page).to have_content('Sign in to access the service')
   end
 end

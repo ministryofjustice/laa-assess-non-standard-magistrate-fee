@@ -2,7 +2,7 @@ class ErrorsController < ApplicationController
   skip_before_action :authenticate_user!
   skip_before_action :set_security_headers
 
-  layout 'external'
+  layout 'assess_a_crime_form'
 
   before_action :set_response_format
 

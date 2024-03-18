@@ -20,7 +20,7 @@ module Users
     # The fix for this is in Devise but awaiting release:
     # https://github.com/heartcombo/devise/pull/5508
     def passthru
-      redirect_to unauthenticated_root_path
+      redirect_to new_user_session_path
     end
     # :nocov:
   end

@@ -98,7 +98,6 @@ RSpec.describe 'Accessibility', :accessibility do
        nsm_assessed_claims
        about_feedback_index
        about_cookies
-       prior_authority_root
        your_prior_authority_applications].each do |path|
       describe "#{path} screen" do
         before { visit send(:"#{path}_path") }

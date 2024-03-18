@@ -7,7 +7,7 @@ RSpec.describe 'Risk' do
   before do
     sign_in user
     claim
-    visit '/'
+    visit nsm_root_path
     click_on claim.data['laa_reference']
     expect(page).to have_content 'Low risk'
     click_on 'Change risk'

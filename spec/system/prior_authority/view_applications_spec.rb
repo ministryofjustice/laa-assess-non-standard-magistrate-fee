@@ -35,9 +35,8 @@ RSpec.describe 'View applications' do
     sign_in caseworker
     visit '/'
     click_on 'Accept analytics cookies'
-    visit prior_authority_root_path
     create(:assignment, user: caseworker, submission: application)
-    click_on 'Start now'
+    visit prior_authority_root_path
   end
 
   context 'when an application is already assigned to me' do

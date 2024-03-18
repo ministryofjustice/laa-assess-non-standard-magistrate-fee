@@ -63,6 +63,7 @@ en:
     forbidden:
       page_title: Not authorised
       heading: Access to this service is restricted
+      sign_in: Sign in
     datastore_error:
       page_title: Unexpected error
       heading: Sorry, something went wrong with our service

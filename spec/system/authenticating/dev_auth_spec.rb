@@ -8,7 +8,6 @@ RSpec.describe 'Authenticating with the DevAuth strategy' do
   describe 'clicking the "Sign in" button' do
     before do
       visit '/'
-      click_on 'Start now'
     end
 
     it 'shows the dev auth page' do
@@ -44,7 +43,7 @@ RSpec.describe 'Authenticating with the DevAuth strategy' do
 
       it 'signs in the user' do
         expect(page).to have_content 'Zoe Doe'
-        expect(page).to have_content 'Your claims'
+        expect(page).to have_content 'Assess a crime form'
       end
 
       it 'guesses the name from the email' do
@@ -75,7 +74,7 @@ RSpec.describe 'Authenticating with the DevAuth strategy' do
 
       it 'signs in as the user' do
         expect(page).to have_content 'Zoe Dowe'
-        expect(page).to have_content 'Your claims'
+        expect(page).to have_content 'Assess a crime form'
       end
 
       it 'does not change user\'s name or auth_subject_id' do

@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   end
   mount Sidekiq::Web => "/sidekiq"
 
-  root "nsm/landing#index"
+  root "home#index"
 
   get :ping, to: 'healthcheck#ping'
 
@@ -27,12 +27,10 @@ Rails.application.routes.draw do
   get "users/auth/failure", to: "errors#forbidden"
 
   devise_scope :user do
-    unauthenticated :user do
-      root 'users/sessions#new', as: :unauthenticated_root
-
-      if FeatureFlags.dev_auth.enabled?
-        get 'dev_auth', to: 'users/dev_auth#new'
-      end
+    if FeatureFlags.dev_auth.enabled?
+      get "dev_auth", to: "users/dev_auth#new", as: :new_user_session
+    else
+      get 'unauthorized', to: 'errors#forbidden', as: :new_user_session
     end
 
     authenticated :user do
@@ -47,7 +45,7 @@ Rails.application.routes.draw do
   end
 
   namespace :nsm do
-    resources :landing, only: [:index]
+    root to: "claims#index"
     resources :claims, only: [:new, :index] do
       resource :claim_details, only: [:show]
       resource :adjustments, only: [:show]
@@ -85,7 +83,7 @@ Rails.application.routes.draw do
   end
 
   namespace :prior_authority do
-    root to: 'static_pages#landing'
+    root to: "applications#your"
     resources :applications, only: [:new, :show] do
       collection do
         get :your

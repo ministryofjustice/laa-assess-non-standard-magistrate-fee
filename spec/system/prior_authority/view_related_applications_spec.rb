@@ -85,7 +85,6 @@ RSpec.describe 'View related applications' do
            submission: assigned_to_me)
 
     visit prior_authority_root_path
-    click_on 'Start now'
   end
 
   context 'when the application has NO related applications' do
