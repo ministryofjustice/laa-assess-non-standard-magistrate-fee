@@ -98,6 +98,8 @@ Rails.application.routes.draw do
       resources :additional_costs, only: [:edit, :update]
       resources :manual_assignments, only: %i[new create]
       resources :unassignments, only: %i[new create]
+      resource :decision, only: %i[new create show]
+      resources :events, path: :history, only: :index
     end
     resources :auto_assignments, only: [:create]
     resources :downloads, only: :show

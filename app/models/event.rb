@@ -8,6 +8,7 @@ class Event < ApplicationRecord
   HISTORY_EVENTS = [
     'Event::Assignment',
     'Event::Decision',
+    'Event::DraftDecision',
     'Event::ChangeRisk',
     'Event::NewVersion',
     'Event::Note',
@@ -26,6 +27,10 @@ class Event < ApplicationRecord
 
     def rehydrate!(params)
       new(params).save!
+    end
+
+    def latest_decision
+      order(created_at: :desc).find_by(event_type: 'Event::Decision')
     end
   end
 
