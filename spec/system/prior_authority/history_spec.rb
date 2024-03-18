@@ -37,9 +37,9 @@ RSpec.describe 'History events' do
 
     expect(history).to eq(
       ['01 February 20236:00am', 'case worker', 'Sent back send back comment',
-       '01 February 20235:00am', 'case worker', 'case worker saved a draft send-back decision draft send back comment',
+       '01 February 20235:00am', 'case worker', 'case worker saved a draft',
        '01 February 20234:00am', 'case worker', 'Granted decision comment',
-       '01 February 20233:00am', 'case worker', 'case worker saved a draft decision draft decision comment',
+       '01 February 20233:00am', 'case worker', 'case worker saved a draft decision',
        '01 February 20232:00am', 'super visor', 'Self-assigned by super visor manual assignment comment',
        '01 February 20231:00am', 'case worker', 'Unassigned by case worker unassignment comment',
        '01 February 202312:00am', 'case worker', 'Assigned to case worker',

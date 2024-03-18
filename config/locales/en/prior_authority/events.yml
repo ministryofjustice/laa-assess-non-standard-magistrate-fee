@@ -9,7 +9,7 @@ en:
       decision_granted: Granted
       decision_part_grant: Part granted
       decision_rejected: Rejected
-      draft_send_back: '%{caseworker} saved a draft send-back decision'
+      draft_send_back: '%{caseworker} saved a draft'
       sent_back: Sent back
       na: N/A
       index:

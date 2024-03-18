@@ -32,7 +32,12 @@ module PriorAuthority
       end
 
       def comment
-        event.details['comment']
+        case event.event_type
+        when 'Event::DraftSendBack', 'Event::DraftDecision'
+          nil
+        else
+          event.details['comment']
+        end
       end
 
       private
