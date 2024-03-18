@@ -57,6 +57,7 @@ module PriorAuthority
           'sent_back' => 'yellow',
           'part_grant' => 'blue',
           'granted' => 'green',
+          'auto_grant' => 'green',
           'rejected' => 'red'
         }.fetch(augmented_state)
       end
