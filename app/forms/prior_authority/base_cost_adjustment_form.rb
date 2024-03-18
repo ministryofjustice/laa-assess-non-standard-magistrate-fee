@@ -5,7 +5,7 @@ module PriorAuthority
 
     attribute :id, :string
 
-    attribute :items, :integer
+    attribute :items, :fully_validatable_integer
     attribute :cost_per_item, :gbp
     attribute :period, :time_period
     attribute :cost_per_hour, :gbp
