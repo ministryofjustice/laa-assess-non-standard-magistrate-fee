@@ -13,7 +13,7 @@ module PriorAuthority
           ufn: ufn,
           defendant_name: defendant_name,
           application_total: application_total,
-          caseworker_decision_explanation: @comment,
+          caseworker_decision_explanation: comments,
           date: DateTime.now.strftime('%d %B %Y'),
           feedback_url: feedback_url
         }

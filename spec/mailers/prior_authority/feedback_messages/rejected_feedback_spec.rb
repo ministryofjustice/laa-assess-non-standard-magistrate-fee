@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe PriorAuthority::FeedbackMessages::RejectedFeedback do
-  subject(:feedback) { described_class.new(application, 'Caseworker rejected coz...') }
+  subject(:feedback) { described_class.new(application) }
 
   let(:application) do
     create(
@@ -15,7 +15,16 @@ RSpec.describe PriorAuthority::FeedbackMessages::RejectedFeedback do
         provider: { 'email' => 'provider@example.com' },
         defendant: { 'last_name' => 'Abrahams', 'first_name' => 'Abe' },
       )
-    )
+    ).tap do |app|
+      create(
+        :event,
+        event_type: Event::Decision.to_s,
+        details: {
+          comment: 'Caseworker rejected coz...',
+        },
+        submission: app,
+      )
+    end
   end
 
   let(:feedback_template) { '81e9222e-c6bd-4fba-91ff-d90d3d61af87' }

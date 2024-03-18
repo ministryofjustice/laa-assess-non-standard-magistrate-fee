@@ -7,7 +7,7 @@ module PriorAuthority
       delegate :state, to: :submission
 
       def comments
-        submission.latest_decision_event.details['comment']
+        submission.latest_decision_event.details.fetch('comment', '')
       end
     end
   end

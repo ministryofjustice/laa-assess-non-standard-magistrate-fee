@@ -12,9 +12,10 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
   let(:date) { DateTime.now.to_fs(:stamp) }
   let(:feedback_url) { 'tbc' }
 
-  let(:base_application) do
-    build(
+  let(:application) do
+    create(
       :prior_authority_application,
+      state: state,
       data: build(
         :prior_authority_data,
         laa_reference: 'LAA-FHaMVK',
@@ -22,11 +23,25 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
         provider: { 'email' => 'provider@example.com' },
         defendant: { 'last_name' => 'Abrahams', 'first_name' => 'Abe' },
       )
-    )
+    ).tap do |app|
+      create(
+        :event,
+        event_type: Event::Decision.to_s,
+        details: {
+          field: 'state',
+          from: 'submitted',
+          to: state,
+          comment: caseworker_comment,
+        },
+        submission: app,
+        submission_version: app.current_version
+      )
+    end
   end
 
   context 'with granted state' do
-    let(:application) { base_application.tap { |app| app.update!(state: 'granted') } }
+    let(:state) { 'granted' }
+    let(:caseworker_comment) { '' }
     let(:feedback_template) { 'd4f3da60-4da5-423e-bc93-d9235ff01a7b' }
 
     let(:personalisation) do
@@ -38,10 +53,12 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
   end
 
   context 'with part granted state' do
+    let(:state) { 'part_grant' }
+
     let(:application) do
       create(
         :prior_authority_application,
-        state: 'part_grant',
+        state: state,
         data: build(
           :prior_authority_data,
           laa_reference: 'LAA-FHaMVK',
@@ -52,14 +69,28 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
             build(:primary_quote, :with_adjustments),
           ]
         )
-      )
+      ).tap do |app|
+        create(
+          :event,
+          event_type: Event::Decision.to_s,
+          details: {
+            field: 'state',
+            from: 'submitted',
+            to: state,
+            comment: caseworker_comment,
+          },
+          submission: app,
+          submission_version: app.current_version
+        )
+      end
     end
 
     let(:application_total) { '£300.00' }
     let(:part_grant_total) { '£150.00' }
 
     let(:feedback_template) { '97c0245f-9fec-4ec1-98cc-c9d392a81254' }
-    let(:caseworker_decision_explanation) { '' }
+    let(:caseworker_decision_explanation) { caseworker_comment }
+    let(:caseworker_comment) { 'part granting because...' }
 
     let(:personalisation) do
       [laa_case_reference:, ufn:, defendant_name:,
@@ -71,9 +102,10 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
   end
 
   context 'with rejected state' do
-    let(:application) { base_application.tap { |app| app.update!(state: 'rejected') } }
+    let(:state) { 'rejected' }
+    let(:caseworker_comment) { 'rejected because...' }
     let(:feedback_template) { '81e9222e-c6bd-4fba-91ff-d90d3d61af87' }
-    let(:caseworker_decision_explanation) { '' }
+    let(:caseworker_decision_explanation) { caseworker_comment }
 
     let(:personalisation) do
       [laa_case_reference:, ufn:, defendant_name:,
@@ -85,10 +117,11 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
   end
 
   context 'with further information state' do
-    let(:application) { base_application.tap { |app| app.update!(state: 'further_information') } }
+    let(:state) { 'submitted' }
     let(:feedback_template) { 'c8abf9ee-5cfe-44ab-9253-72111b7a35ba' }
     let(:date_to_respond_by) { 14.days.from_now.strftime('%d %B %Y') }
-    let(:caseworker_information_requested) { '' }
+    let(:caseworker_information_requested) { caseworker_comment }
+    let(:caseworker_comment) { 'further info requested because...' }
 
     let(:personalisation) do
       [laa_case_reference:, ufn:, defendant_name:,
@@ -100,10 +133,11 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
   end
 
   context 'with other state for further information request' do
-    let(:application) { base_application.tap { |app| app.update!(state: 'fake') } }
+    let(:state) { 'fake' }
     let(:feedback_template) { 'c8abf9ee-5cfe-44ab-9253-72111b7a35ba' }
     let(:date_to_respond_by) { 14.days.from_now.strftime('%d %B %Y') }
-    let(:caseworker_information_requested) { '' }
+    let(:caseworker_information_requested) { caseworker_comment }
+    let(:caseworker_comment) { 'further info requested because...' }
 
     let(:personalisation) do
       [laa_case_reference:, ufn:, defendant_name:,

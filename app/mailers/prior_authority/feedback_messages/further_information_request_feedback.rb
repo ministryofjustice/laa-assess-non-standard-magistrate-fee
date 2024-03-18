@@ -14,7 +14,7 @@ module PriorAuthority
           defendant_name: defendant_name,
           application_total: application_total,
           date_to_respond_by: 14.days.from_now.strftime('%d %B %Y'),
-          caseworker_information_requested: @comment,
+          caseworker_information_requested: comments,
           date: DateTime.now.strftime('%d %B %Y'),
           feedback_url: feedback_url
         }

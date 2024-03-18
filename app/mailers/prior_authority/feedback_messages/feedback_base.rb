@@ -3,9 +3,8 @@
 module PriorAuthority
   module FeedbackMessages
     class FeedbackBase
-      def initialize(submission, comment = '')
+      def initialize(submission)
         @submission = submission
-        @comment = comment
       end
 
       def template
@@ -42,6 +41,10 @@ module PriorAuthority
         application_summary.formatted_original_total_cost
       end
 
+      def comments
+        decision.comments
+      end
+
       def feedback_url
         Rails.configuration.x.contact.feedback_url
       end
@@ -50,6 +53,10 @@ module PriorAuthority
 
       def application_summary
         @application_summary ||= BaseViewModel.build(:application_summary, @submission)
+      end
+
+      def decision
+        @decision ||= BaseViewModel.build(:decision, @submission)
       end
     end
   end

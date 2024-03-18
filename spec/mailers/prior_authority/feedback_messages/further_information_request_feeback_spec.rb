@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe PriorAuthority::FeedbackMessages::FurtherInformationRequestFeedback do
-  subject(:feedback) { described_class.new(application, 'Caseworker wants...') }
+  subject(:feedback) { described_class.new(application) }
 
   let(:application) do
     create(
@@ -15,7 +15,16 @@ RSpec.describe PriorAuthority::FeedbackMessages::FurtherInformationRequestFeedba
         provider: { 'email' => 'provider@example.com' },
         defendant: { 'last_name' => 'Abrahams', 'first_name' => 'Abe' },
       )
-    )
+    ).tap do |app|
+      create(
+        :event,
+        event_type: Event::Decision.to_s,
+        details: {
+          comment: 'Caseworker wants...',
+        },
+        submission: app,
+      )
+    end
   end
 
   let(:feedback_template) { 'c8abf9ee-5cfe-44ab-9253-72111b7a35ba' }

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe PriorAuthority::FeedbackMessages::PartGrantedFeedback do
-  subject(:feedback) { described_class.new(application, 'Caseworker part granted coz...') }
+  subject(:feedback) { described_class.new(application) }
 
   let(:application) do
     create(
@@ -18,7 +18,16 @@ RSpec.describe PriorAuthority::FeedbackMessages::PartGrantedFeedback do
           build(:primary_quote, :with_adjustments),
         ]
       )
-    )
+    ).tap do |app|
+      create(
+        :event,
+        event_type: Event::Decision.to_s,
+        details: {
+          comment: 'Caseworker part granted coz...',
+        },
+        submission: app,
+      )
+    end
   end
 
   let(:feedback_template) { '97c0245f-9fec-4ec1-98cc-c9d392a81254' }
