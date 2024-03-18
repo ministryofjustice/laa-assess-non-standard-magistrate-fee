@@ -7,7 +7,7 @@ RSpec.describe 'View related applications' do
 
   let(:assigned_to_me) do
     create(:prior_authority_application,
-           state: 'in_progress',
+           state: 'submitted',
            data: build(:prior_authority_data, :related_application, laa_reference: 'LAA-111'))
   end
 
