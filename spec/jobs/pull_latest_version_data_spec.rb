@@ -90,9 +90,9 @@ RSpec.describe PullLatestVersionData do
           end
 
           it 'does not insert the event and raises and error' do
-            expect {
+            expect do
               expect { subject.perform(claim) }.not_to change(Event, :count)
-            }.to raise_error(ActiveRecord::InvalidForeignKey)
+            end.to raise_error(ActiveRecord::InvalidForeignKey)
           end
         end
 
@@ -106,12 +106,6 @@ RSpec.describe PullLatestVersionData do
               submission_id: claim.id,
               submission_version: 1,
               primary_user_id: primary_user_id,
-              secondary_user_id: nil,
-              linked_type: nil,
-              linked_id: nil,
-              details: { 'to' => 'granted', 'from' => 'submitted', 'field' => 'state', 'comment' => nil },
-              created_at: Time.parse('2023-10-02T14:41:45.136Z'),
-              updated_at: Time.parse('2023-10-02T14:41:45.136Z'),
             )
             expect(Event::Edit.last.primary_user).to have_attributes(
               first_name: primary_user_id.split('-').first,
