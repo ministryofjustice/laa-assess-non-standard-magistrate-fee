@@ -71,7 +71,6 @@ module GOVUKDesignSystemFormBuilder
         end
       end
 
-      # rubocop:disable Metrics/MethodLength
       def value(segment)
         attribute = @builder.object.try(@attribute_name)
 
@@ -90,7 +89,6 @@ module GOVUKDesignSystemFormBuilder
                 'invalid TimePeriod-like object: must be a Time Period or Hash in MULTIPARAMETER_KEY format')
         end
       end
-      # rubocop:enable Metrics/MethodLength
 
       def label(segment, link_errors)
         tag.label(

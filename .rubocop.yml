@@ -98,7 +98,7 @@ Naming/VariableNumber:
 
 # To be tweaked until we find the right balance
 Metrics/MethodLength:
-  Max: 12
+  Max: 13
 
 # To be tweaked until we find the right balance
 Metrics/AbcSize:
