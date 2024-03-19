@@ -382,20 +382,8 @@ workflows:
           context: laa-assess-crime-forms-dev
           requires:
             - build-to-ecr
-      - hold-uat:
-          type: approval
-          requires:
-            - build-to-ecr
-          filters:
-            branches:
-              only:
-                - main
       - deploy-uat:
           context: laa-assess-crime-forms-uat
-          requires:
-            - hold-uat
-      - hold-prod:
-          type: approval
           requires:
             - build-to-ecr
           filters:
@@ -405,4 +393,8 @@ workflows:
       - deploy-prod:
           context: laa-assess-crime-forms-production
           requires:
-            - hold-prod
+            - deploy-uat
+          filters:
+            branches:
+              only:
+                - main

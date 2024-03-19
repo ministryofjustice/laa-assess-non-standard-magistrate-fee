@@ -62,7 +62,6 @@ module Nsm
         %w[attendance_with_counsel attendance_without_counsel].include?(work_type.value)
       end
 
-      # rubocop:disable Metrics/MethodLength
       def provider_fields
         rows = {
           '.date' => format_in_zone(completed_on),
@@ -79,7 +78,6 @@ module Nsm
 
         rows
       end
-      # rubocop:enable Metrics/MethodLength
 
       private
 
