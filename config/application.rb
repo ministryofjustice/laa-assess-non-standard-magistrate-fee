@@ -70,6 +70,7 @@ module LaaAssessNonStandardMagistrateFee
     config.x.analytics.cookies_consent_expiration = 1.year
     config.x.analytics.analytics_consent_name = 'analytics_preferences_set'
     config.x.analytics.analytics_consent_expiration = 1.year
+    config.x.rfi.resubmission_window = 14.days
 
     config.x.contact.feedback_url = 'tbc'
     #time to wait for requests to be made to app store for db consistency

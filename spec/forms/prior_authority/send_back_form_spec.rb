@@ -46,4 +46,73 @@ RSpec.describe PriorAuthority::SendBackForm do
       end
     end
   end
+
+  describe '#save' do
+    let(:fixed_arbitrary_date) { DateTime.new(2023, 12, 3, 12, 3, 12) }
+    let(:user) { create(:caseworker) }
+
+    before do
+      allow(NotifyAppStore).to receive(:process)
+      travel_to fixed_arbitrary_date
+      create(:assignment, submission:, user:)
+    end
+
+    context 'when params are invalid' do
+      let(:params) do
+        {
+          updates_needed: ['further_information'],
+          further_information_explanation: '',
+          submission: submission
+        }
+      end
+
+      it 'returns false' do
+        expect(subject.save).to be false
+      end
+    end
+
+    context 'when params are valid' do
+      let(:params) do
+        {
+          updates_needed: ['further_information'],
+          further_information_explanation: further_information_explanation,
+          submission: submission,
+          current_user: user
+        }
+      end
+
+      it 'returns true' do
+        expect(subject.save).to be true
+      end
+
+      it 'removes the assignment' do
+        expect { subject.save }.to change { submission.assignments.count }.from(1).to(0)
+      end
+
+      context 'when save runs' do
+        before { subject.save }
+
+        it 'stores information' do
+          expect(submission.data['updates_needed']).to include('further_information')
+          expect(submission.data['further_information_explanation']).to eq further_information_explanation
+        end
+
+        it 'sets a resubmission deadline' do
+          expect(DateTime.parse(submission.data['resubmission_deadline'])).to eq 14.days.from_now
+        end
+
+        it 'updates the state' do
+          expect(submission.state).to eq 'sent_back'
+        end
+
+        it 'adds an event' do
+          expect(submission.events.first).to be_a(Event::SendBack)
+        end
+
+        it 'notifies the app store' do
+          expect(NotifyAppStore).to have_received(:process).with(submission:)
+        end
+      end
+    end
+  end
 end
