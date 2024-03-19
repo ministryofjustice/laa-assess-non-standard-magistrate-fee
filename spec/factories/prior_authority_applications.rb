@@ -108,7 +108,6 @@ FactoryBot.define do
       travel_cost_per_hour_original { '200.0' }
       adjustment_comment { 'caseworker service cost adjustment explanantion' }
       travel_adjustment_comment { 'caseworker travel cost adjustment explanantion' }
-
     end
 
     trait :per_hour do
