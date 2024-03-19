@@ -21,7 +21,7 @@ class Event < ApplicationRecord
   # simplifies the rehydrate process
   attribute :public
 
-  # Make these methods private to ensure tehy are created via the various `build` methods`
+  # Make these methods private to ensure they are created via the various `build` methods`
   class << self
     protected :new
     private :create
