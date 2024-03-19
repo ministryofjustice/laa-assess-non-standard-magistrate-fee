@@ -13,7 +13,7 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
         <% if @applications.none? %>
-          <div class="govuk-body-l"><%= t('.no_applications') %></div>
+          <p class="govuk-body-m"><%= t('.no_applications') %></p>
         <% else %>
           <%= render 'table',
                     path: prior_authority_application_related_applications_path,
