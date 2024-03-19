@@ -49,10 +49,11 @@ RSpec.describe PullLatestVersionData do
     context 'when event data exists' do
       let(:claim) { create(:claim, current_version: current_version, data: {}) }
       let(:user) { create(:supervisor) }
+      let(:primary_user_id) { user.id }
       let(:events_data) do
         [{
           'submission_version' => 1,
-          'primary_user_id' => user.id,
+          'primary_user_id' => primary_user_id,
           'secondary_user_id' => nil,
           'linked_type' => nil,
           'linked_id' => nil,
@@ -70,7 +71,7 @@ RSpec.describe PullLatestVersionData do
         expect(Event::Edit.last).to have_attributes(
           submission_id: claim.id,
           submission_version: 1,
-          primary_user_id: user.id,
+          primary_user_id: primary_user_id,
           secondary_user_id: nil,
           linked_type: nil,
           linked_id: nil,
@@ -78,6 +79,44 @@ RSpec.describe PullLatestVersionData do
           created_at: Time.parse('2023-10-02T14:41:45.136Z'),
           updated_at: Time.parse('2023-10-02T14:41:45.136Z'),
         )
+      end
+
+      context 'but the associated user does does exist' do
+        let(:primary_user_id) { SecureRandom.uuid }
+
+        context 'and it is the production environment' do
+          before do
+            allow(HostEnv).to receive(:production?).and_return(true)
+          end
+
+          it 'does not insert the event and raises and error' do
+            expect do
+              expect { subject.perform(claim) }.not_to change(Event, :count)
+            end.to raise_error(ActiveRecord::InvalidForeignKey)
+          end
+        end
+
+        context 'and it is not the production environment' do
+          it 'creates a new user as it inserts the record' do
+            claim
+            expect { subject.perform(claim) }.to change(User, :count).by(1)
+
+            expect(Event.count).to eq(1)
+            expect(Event::Edit.last).to have_attributes(
+              submission_id: claim.id,
+              submission_version: 1,
+              primary_user_id: primary_user_id,
+            )
+            expect(Event::Edit.last.primary_user).to have_attributes(
+              first_name: primary_user_id.split('-').first,
+              role: User::CASEWORKER,
+              email: "#{primary_user_id}@fake.com",
+              last_name: 'branchbuilder',
+              auth_oid: primary_user_id,
+              auth_subject_id: primary_user_id
+            )
+          end
+        end
       end
     end
 
