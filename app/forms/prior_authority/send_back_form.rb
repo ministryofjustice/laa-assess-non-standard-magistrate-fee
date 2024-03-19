@@ -39,6 +39,8 @@ module PriorAuthority
     end
 
     def stash(add_draft_send_back_event: true)
+      updates_needed.compact_blank! # The checkbox array introduces an empty string value
+
       submission.data.merge!(attributes.except('submission', 'current_user'))
       submission.save!
 
@@ -50,10 +52,15 @@ module PriorAuthority
     end
 
     def update_local_records
-      previous_state = submission.state
+      submission.data['resubmission_deadline'] = Rails.application.config.x.rfi.resubmission_window.from_now
 
       submission.update!(state: PriorAuthorityApplication::SENT_BACK)
       submission.assignments.destroy_all
+      save_event
+    end
+
+    def save_event
+      previous_state = submission.state
       Event::SendBack.build(submission:,
                             comment:,
                             previous_state:,
