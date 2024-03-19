@@ -1,6 +1,8 @@
 <% if form.object.per_item? %>
-  <%= form.govuk_number_field :items,
+  <%= form.govuk_text_field :items,
                               width: 5,
+                              inputmode: "numeric",
+                              pattern: "[0-9]*",
                               label: {
                                 text: t('.items', items: t(".#{form.object.item_type}").pluralize(2)),
                                 size: 's'

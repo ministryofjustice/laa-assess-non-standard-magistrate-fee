@@ -120,12 +120,47 @@ RSpec.describe 'Adjust additional costs' do
 
       expect(page).to have_title('Adjust additional cost 1')
 
+      expect(page).to have_css('#adjusted-cost', text: '0.00')
+      fill_in 'Number of items', with: 'a'
+      fill_in 'What is the cost per item?', with: 'a'
+      click_on 'Calculate my changes'
+      expect(page).to have_css('#adjusted-cost', text: '--')
+
       fill_in 'Number of items', with: 100
       fill_in 'What is the cost per item?', with: '3.00'
 
-      expect(page).to have_css('#adjusted-cost', text: '0.00')
       click_on 'Calculate my changes'
       expect(page).to have_css('#adjusted-cost', text: '300.00')
+    end
+
+    it 'displays erroroneous values with appropriate message for the first additional cost (item)' do
+      click_on 'Adjust additional cost', match: :first
+
+      fill_in 'Number of items', with: ''
+      fill_in 'What is the cost per item?', with: ''
+
+      click_on 'Save changes'
+      expect(page)
+        .to have_content('Enter the number of items')
+        .and have_content('Enter the cost per item')
+
+      fill_in 'Number of items', with: 0
+      fill_in 'What is the cost per item?', with: 0
+
+      click_on 'Save changes'
+      expect(page)
+        .to have_content('The number of items must be more than 0')
+        .and have_content('The cost per item must be more than 0')
+
+      fill_in 'Number of items', with: 'a'
+      fill_in 'What is the cost per item?', with: 'a'
+
+      click_on 'Save changes'
+      expect(page)
+        .to have_content('The number of items must be a number, like 25')
+        .and have_content('The cost per item must be a number, like 25')
+        .and have_field('Number of items', with: 'a')
+        .and have_field('What is the cost per item?', with: 'a')
     end
 
     it 'allows me to recalculate the time cost on the page', :javascript do
@@ -140,6 +175,23 @@ RSpec.describe 'Adjust additional costs' do
       expect(page).to have_css('#adjusted-cost', text: '0.00')
       click_on 'Calculate my changes'
       expect(page).to have_css('#adjusted-cost', text: '60.00')
+    end
+
+    it 'displays erroroneous values with appropriate message for the second additional cost (time)' do
+      page.click_on(id: 'additional_cost_2', text: 'Adjust additional cost', exact: true)
+
+      fill_in 'Hours', with: 'a'
+      fill_in 'Minutes', with: 'b'
+      fill_in 'What is the hourly cost?', with: 'c'
+
+      click_on 'Save changes'
+
+      expect(page)
+        .to have_content('The number of hours must be a number')
+        .and have_content('The cost per hour must be a number, like 25')
+        .and have_field('Hours', with: 'a')
+        .and have_field('Minutes', with: 'b')
+        .and have_field('What is the hourly cost?', with: 'c')
     end
 
     it 'warns me that I have not made any changes' do
