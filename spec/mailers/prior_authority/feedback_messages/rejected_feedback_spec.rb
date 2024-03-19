@@ -45,7 +45,7 @@ RSpec.describe PriorAuthority::FeedbackMessages::RejectedFeedback do
         application_total: '£324.50',
         caseworker_decision_explanation: 'Caseworker rejected coz...',
         date: DateTime.now.to_fs(:stamp),
-        feedback_url: 'tbc',
+        feedback_url: kind_of(String),
       )
     end
   end

@@ -72,7 +72,9 @@ module LaaAssessNonStandardMagistrateFee
     config.x.analytics.analytics_consent_expiration = 1.year
     config.x.rfi.resubmission_window = 14.days
 
-    config.x.contact.feedback_url = 'tbc'
+    config.x.nsm.provider_feedback_url = 'https://eu.surveymonkey.com/r/PDDG6YB'
+    config.x.prior_authority.provider_feedback_url = 'https://eu.surveymonkey.com/r/authprior'
+
     #time to wait for requests to be made to app store for db consistency
     config.x.application.app_store_wait = ENV.fetch('APP_STORE_WAIT_SECS',0).to_i
   end

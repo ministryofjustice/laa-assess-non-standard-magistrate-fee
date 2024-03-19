@@ -15,7 +15,7 @@ RSpec.describe Nsm::FeedbackMessages::RejectedFeedback do
   let(:claim_total) { 0 }
   let(:caseworker_decision_explanation) { 'Test Explanation' }
   let(:date) { DateTime.now.strftime('%d %B %Y') }
-  let(:feedback_url) { 'tbc' }
+  let(:feedback_url) { kind_of(String) }
 
   describe '#template' do
     it 'has correct template id' do

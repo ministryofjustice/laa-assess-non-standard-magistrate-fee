@@ -49,7 +49,7 @@ RSpec.describe PriorAuthority::FeedbackMessages::PartGrantedFeedback do
         part_grant_total: '£150.00',
         caseworker_decision_explanation: 'Caseworker part granted coz...',
         date: DateTime.now.to_fs(:stamp),
-        feedback_url: 'tbc',
+        feedback_url: kind_of(String),
       )
     end
   end

@@ -46,7 +46,7 @@ module PriorAuthority
       end
 
       def feedback_url
-        Rails.configuration.x.contact.feedback_url
+        Rails.configuration.x.prior_authority.provider_feedback_url
       end
 
       private

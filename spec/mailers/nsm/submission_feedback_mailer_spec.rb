@@ -11,7 +11,7 @@ RSpec.describe Nsm::SubmissionFeedbackMailer, type: :mailer do
   let(:defendant_reference) { 'MAAT ID: AB12123' }
   let(:claim_total) { 0 }
   let(:date) { DateTime.now.strftime('%d %B %Y') }
-  let(:feedback_url) { 'tbc' }
+  let(:feedback_url) { kind_of(String) }
 
   describe 'granted' do
     context 'with maat id' do

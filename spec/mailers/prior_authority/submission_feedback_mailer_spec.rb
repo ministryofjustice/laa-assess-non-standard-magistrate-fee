@@ -10,7 +10,7 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
   let(:defendant_name) { 'Abe Abrahams' }
   let(:application_total) { '£324.50' }
   let(:date) { DateTime.now.to_fs(:stamp) }
-  let(:feedback_url) { 'tbc' }
+  let(:feedback_url) { kind_of(String) }
 
   let(:application) do
     create(

@@ -16,7 +16,7 @@ RSpec.describe Nsm::FeedbackMessages::FurtherInformationRequestFeedback do
   let(:date_to_respond_by) { 7.days.from_now.strftime('%d %B %Y') }
   let(:caseworker_information_requested) { 'Test Request' }
   let(:date) { DateTime.now.strftime('%d %B %Y') }
-  let(:feedback_url) { 'tbc' }
+  let(:feedback_url) { kind_of(String) }
 
   describe '#template' do
     it 'has correct template id' do

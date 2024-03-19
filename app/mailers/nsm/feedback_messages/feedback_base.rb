@@ -60,7 +60,7 @@ module Nsm
       end
 
       def feedback_url
-        Rails.configuration.x.contact.feedback_url
+        Rails.configuration.x.nsm.provider_feedback_url
       end
     end
   end
