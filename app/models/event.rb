@@ -27,7 +27,7 @@ class Event < ApplicationRecord
     private :create
 
     def rehydrate!(params)
-      check_user(params) unless HostEnv.production?
+      create_dummy_user_if_non_production(params) unless HostEnv.production?
 
       new(params).save!
     end
@@ -38,7 +38,7 @@ class Event < ApplicationRecord
 
     private
 
-    def check_user(params)
+    def create_dummy_user_if_non_production(params)
       User.find_or_initialize_by(id: params['primary_user_id']) do |user|
         user.update!(
           first_name: params['primary_user_id'].split('-').first,
