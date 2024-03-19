@@ -19,6 +19,20 @@ module PriorAuthority
           feedback_url: feedback_url
         }
       end
+
+      protected
+
+      def comments
+        [incorrect_information_explanation, further_information_explanation].compact_blank.join("\n\n")
+      end
+
+      def incorrect_information_explanation
+        @submission.data['incorrect_information_explanation']
+      end
+
+      def further_information_explanation
+        @submission.data['further_information_explanation']
+      end
     end
   end
 end

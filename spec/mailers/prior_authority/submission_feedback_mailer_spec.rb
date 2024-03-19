@@ -117,11 +117,38 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
   end
 
   context 'with further information state' do
-    let(:state) { 'submitted' }
     let(:feedback_template) { 'c8abf9ee-5cfe-44ab-9253-72111b7a35ba' }
     let(:date_to_respond_by) { 14.days.from_now.strftime('%d %B %Y') }
-    let(:caseworker_information_requested) { caseworker_comment }
-    let(:caseworker_comment) { 'further info requested because...' }
+
+    let(:caseworker_information_requested) do
+      "Please correct this information...\n\n" \
+        'Please provide this further info...'
+    end
+
+    let(:application) do
+      create(
+        :prior_authority_application,
+        state: 'sent_back',
+        data: build(
+          :prior_authority_data,
+          laa_reference: 'LAA-FHaMVK',
+          ufn: '111111/111',
+          provider: { 'email' => 'provider@example.com' },
+          defendant: { 'last_name' => 'Abrahams', 'first_name' => 'Abe' },
+          incorrect_information_explanation: 'Please correct this information...',
+          further_information_explanation: 'Please provide this further info...',
+        )
+      ).tap do |app|
+        create(
+          :event,
+          event_type: Event::SendBack.to_s,
+          details: {
+            comment: 'This message is set but not used by the mailer',
+          },
+          submission: app,
+        )
+      end
+    end
 
     let(:personalisation) do
       [laa_case_reference:, ufn:, defendant_name:,
@@ -133,19 +160,39 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
   end
 
   context 'with other state for further information request' do
-    let(:state) { 'fake' }
-    let(:feedback_template) { 'c8abf9ee-5cfe-44ab-9253-72111b7a35ba' }
-    let(:date_to_respond_by) { 14.days.from_now.strftime('%d %B %Y') }
-    let(:caseworker_information_requested) { caseworker_comment }
-    let(:caseworker_comment) { 'further info requested because...' }
-
-    let(:personalisation) do
-      [laa_case_reference:, ufn:, defendant_name:,
-       application_total:, date_to_respond_by:,
-       caseworker_information_requested:, date:, feedback_url:]
+    let(:application) do
+      create(
+        :prior_authority_application,
+        state: 'fake',
+        data: build(
+          :prior_authority_data,
+          laa_reference: 'LAA-FHaMVK',
+          ufn: '111111/111',
+          provider: { 'email' => 'provider@example.com' },
+          defendant: { 'last_name' => 'Abrahams', 'first_name' => 'Abe' },
+        )
+      )
     end
 
-    include_examples 'creates a prior authority feedback mailer'
+    before do
+      allow(Sentry).to receive(:capture_message)
+    end
+
+    it 'raises the error' do
+      expect { described_class.notify(application).deliver_now }
+        .to raise_error(
+          described_class::InvalidState,
+          "submission with id '#{application.id}' has unhandlable state '#{application.state}'"
+        )
+    end
+
+    it 'captures the message' do
+      described_class.notify(application).deliver_now
+    rescue described_class::InvalidState
+      expect(Sentry)
+        .to have_received(:capture_message)
+        .with("submission with id '#{application.id}' has unhandlable state '#{application.state}'")
+    end
   end
 end
 # rubocop:enable RSpec/MultipleMemoizedHelpers
