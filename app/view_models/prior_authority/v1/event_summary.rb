@@ -16,15 +16,23 @@ module PriorAuthority
                   ])
       end
 
+      def caseworker_name
+        caseworker&.display_name || I18n.t('prior_authority.events.na')
+      end
+
       def caseworker
-        event.primary_user&.display_name || I18n.t('prior_authority.events.na')
+        if event.respond_to?(:secondary_user)
+          event.secondary_user || event.primary_user
+        else
+          event.primary_user
+        end
       end
 
       def heading
         key = heading_keys[event.event_type]
         raise "Prior Authority event summaries don't know how to display events of type #{event.event_type}" unless key
 
-        I18n.t(key, caseworker:)
+        I18n.t(key, caseworker: caseworker_name)
       end
 
       def comment?
