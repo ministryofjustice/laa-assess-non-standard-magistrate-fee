@@ -39,6 +39,8 @@ class Event < ApplicationRecord
     private
 
     def create_dummy_user_if_non_production(params)
+      return if params['primary_user_id'].blank?
+
       User.find_or_initialize_by(id: params['primary_user_id']) do |user|
         user.update!(
           first_name: params['primary_user_id'].split('-').first,

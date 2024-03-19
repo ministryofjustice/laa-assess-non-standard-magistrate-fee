@@ -81,6 +81,39 @@ RSpec.describe PullLatestVersionData do
         )
       end
 
+      context 'an no primary user is set' do
+        let(:events_data) do
+          [{
+            'submission_version' => 1,
+            'primary_user_id' => nil,
+            'secondary_user_id' => nil,
+            'linked_type' => nil,
+            'linked_id' => nil,
+            'details' => {},
+            'created_at' => '2023-10-02T14:41:45.136Z',
+            'updated_at' => '2023-10-02T14:41:45.136Z',
+            'public' => true,
+            'event_type' => 'Event::NewVersion'
+          }]
+        end
+
+        it 'rehydrates the events' do
+          subject.perform(claim)
+          expect(Event.count).to eq(1)
+          expect(Event::NewVersion.last).to have_attributes(
+            submission_id: claim.id,
+            submission_version: 1,
+            primary_user_id: nil,
+            secondary_user_id: nil,
+            linked_type: nil,
+            linked_id: nil,
+            details: {},
+            created_at: Time.parse('2023-10-02T14:41:45.136Z'),
+            updated_at: Time.parse('2023-10-02T14:41:45.136Z'),
+          )
+        end
+      end
+
       context 'but the associated user does does exist' do
         let(:primary_user_id) { SecureRandom.uuid }
 
