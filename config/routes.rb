@@ -93,9 +93,15 @@ Rails.application.routes.draw do
 
       resources :adjustments, only: :index
       resources :related_applications, only: :index
-      resources :service_costs, only: [:edit, :update]
-      resources :travel_costs, only: [:edit, :update]
-      resources :additional_costs, only: [:edit, :update]
+      resources :service_costs, only: %i[edit update destroy] do
+        member { get :confirm_deletion }
+      end
+      resources :travel_costs, only: %i[edit update destroy] do
+        member { get :confirm_deletion }
+      end
+      resources :additional_costs, only: %i[edit update destroy] do
+        member { get :confirm_deletion }
+      end
       resources :manual_assignments, only: %i[new create]
       resources :unassignments, only: %i[new create]
       resource :decision, only: %i[new create show]

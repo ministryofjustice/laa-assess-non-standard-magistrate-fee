@@ -43,6 +43,10 @@ module PriorAuthority
       NumberTo.pounds(adjusted_travel_costs) if any_travel_adjustments?
     end
 
+    def any_travel_adjustments?
+      travel_time_original || travel_cost_per_hour_original
+    end
+
     private
 
     def adjusted_travel_costs
@@ -50,10 +54,6 @@ module PriorAuthority
         (travel_time.hours * travel_cost_per_hour) +
         ((travel_time.minutes / 60.0) * travel_cost_per_hour)
       ).round(2)
-    end
-
-    def any_travel_adjustments?
-      travel_time_original || travel_cost_per_hour_original
     end
   end
 

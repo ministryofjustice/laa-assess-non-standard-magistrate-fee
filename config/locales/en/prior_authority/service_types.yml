@@ -1,7 +1,6 @@
 en:
   prior_authority:
     service_types:
-      service_types:
       ae_consultant: A&E consultant
       accident_reconstruction: Accident reconstruction
       accountant: Accountant

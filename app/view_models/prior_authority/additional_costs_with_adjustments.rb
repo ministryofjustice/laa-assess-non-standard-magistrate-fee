@@ -63,6 +63,10 @@ module PriorAuthority
       NumberTo.pounds(adjusted_cost_total) if any_adjustments?
     end
 
+    def any_adjustments?
+      any_per_item_adjustments? || any_per_hour_adjustments?
+    end
+
     private
 
     def adjusted_formatted_cost_per_unit
@@ -86,10 +90,6 @@ module PriorAuthority
         (period.hours * cost_per_hour) +
         ((period.minutes / 60.0) * cost_per_hour)
       ).round(2)
-    end
-
-    def any_adjustments?
-      any_per_item_adjustments? || any_per_hour_adjustments?
     end
 
     def any_per_item_adjustments?

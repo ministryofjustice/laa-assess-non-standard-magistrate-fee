@@ -40,10 +40,17 @@
         end
       end %>
   <% if editable %>
-    <%= link_to t(".adjust_additional_cost"),
-                edit_prior_authority_application_additional_cost_path(application, additional_cost.id),
-                class: 'govuk-button govuk-button--secondary',
-                id: "additional_cost_#{index + 1}",
-                data: { turbo: false } %>
+    <div class="govuk-button-group govuk-button-group-vertically-centred">
+      <%= link_to t(".adjust_additional_cost"),
+                  edit_prior_authority_application_additional_cost_path(application, additional_cost.id),
+                  data: { turbo: false },
+                  id: "additional_cost_#{index + 1}",
+                  class: 'govuk-button govuk-button--secondary' %>
+      <% if additional_cost.any_adjustments? %>
+        <%= link_to t(".delete"),
+                    confirm_deletion_prior_authority_application_additional_cost_path(application, additional_cost.id),
+                    class: "govuk-link govuk-link--no-visited-state" %>
+      <% end %>
+    </div>
   <% end %>
 <% end %>

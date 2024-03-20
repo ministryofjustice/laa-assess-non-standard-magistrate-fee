@@ -38,8 +38,15 @@
       end
     end %>
 <% if editable %>
-  <%= link_to t(".adjust_service_cost"),
-              edit_prior_authority_application_service_cost_path(application, service_cost.id),
-              data: { turbo: false },
-              class: 'govuk-button govuk-button--secondary' %>
+  <div class="govuk-button-group govuk-button-group-vertically-centred">
+    <%= link_to t(".adjust_service_cost"),
+                edit_prior_authority_application_service_cost_path(application, service_cost.id),
+                data: { turbo: false },
+                class: 'govuk-button govuk-button--secondary' %>
+    <% if service_cost.any_adjustments? %>
+      <%= link_to t(".delete"),
+                  confirm_deletion_prior_authority_application_service_cost_path(application, service_cost.id),
+                  class: "govuk-link govuk-link--no-visited-state" %>
+    <% end %>
+  </div>
 <% end %>
