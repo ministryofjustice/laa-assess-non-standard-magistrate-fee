@@ -84,7 +84,7 @@ module PriorAuthority
       end
 
       def current_section(current_user)
-        if !pending?
+        if assessed?
           :assessed
         elsif submission.assignments.find_by(user: current_user)
           :your
@@ -94,20 +94,26 @@ module PriorAuthority
       end
 
       def can_edit?(caseworker)
-        pending? && submission.assignments.find_by(user: caseworker)
+        assessable? && submission.assignments.find_by(user: caseworker)
       end
 
       def unassignable?
-        pending? && submission.assignments.any?
+        assessable? && submission.assignments.any?
       end
 
       def assignable?
-        pending? && submission.assignments.none?
+        assessable? && submission.assignments.none?
       end
 
-      def pending?
-        submission.state.in?(PriorAuthorityApplication::PENDING_STATES)
+      def assessable?
+        submission.state.in?(PriorAuthorityApplication::ASSESSABLE_STATES)
       end
+
+      def assessed?
+        submission.state.in?(PriorAuthorityApplication::ASSESSED_STATES)
+      end
+
+      delegate :sent_back?, to: :submission
 
       def caseworker
         submission.assignments.first.display_name

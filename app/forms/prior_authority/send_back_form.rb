@@ -85,7 +85,7 @@ module PriorAuthority
     end
 
     def not_yet_assessed
-      return unless submission.state.in?(PriorAuthorityApplication::ASSESSED_STATES)
+      return if submission.state.in?(PriorAuthorityApplication::ASSESSABLE_STATES)
 
       errors.add(:base, :already_assessed)
     end

@@ -19,6 +19,9 @@ module PriorAuthority
       attribute :psychiatric_liaison_reason_not, :string
       attribute :youth_court, :boolean
       attribute :no_alternative_quote_reason, :string
+      attribute :further_information_explanation, :string
+      attribute :incorrect_information_explanation, :string
+      attribute :updates_needed, array: true
 
       def overview_card
         OverviewCard.new(self)
@@ -63,6 +66,14 @@ module PriorAuthority
 
       def assessment_comment
         @assessment_comment ||= submission.latest_decision_event&.details&.dig('comment')
+      end
+
+      def further_information_requested?
+        updates_needed.include?(SendBackForm::FURTHER_INFORMATION)
+      end
+
+      def corrections_requested?
+        updates_needed.include?(SendBackForm::INCORRECT_INFORMATION)
       end
     end
   end
