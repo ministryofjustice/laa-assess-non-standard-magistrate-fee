@@ -8,9 +8,13 @@
 <p class="govuk-body-l">
   <strong><%= t('.requested') %></strong>
   <%= application_summary.formatted_original_total_cost %><br>
-  <% if application_summary.adjustments_made? %>
+  <% if application_summary.adjustments_made? || !application_summary.pending? %>
     <strong><%= t('.allowed') %></strong>
-    <%= application_summary.formatted_total_cost %><br>
+    <% if application_summary.submission.state == 'rejected' %>
+      <%= NumberTo.pounds(0) %><br>
+    <% else %>
+      <%= application_summary.formatted_total_cost %><br>
+    <% end %>
   <% end %>
 </p>
 <p class="govuk-body-m">
