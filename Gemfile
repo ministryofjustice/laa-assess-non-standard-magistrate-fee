@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby File.read('.ruby-version').strip
 
 gem 'activerecord-postgis-adapter'
-gem 'aws-sdk-s3', '~> 1.143'
+gem 'aws-sdk-s3', '~> 1.146'
 gem 'bootsnap', require: false
 gem 'cssbundling-rails'
 gem 'devise'
