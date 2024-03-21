@@ -8,7 +8,7 @@
 <p class="govuk-body-l">
   <strong><%= t('.requested') %></strong>
   <%= application_summary.formatted_original_total_cost %><br>
-  <% if application_summary.adjustments_made? || !application_summary.pending? %>
+  <% if application_summary.adjustments_made? || application_summary.assessed? %>
     <strong><%= t('.allowed') %></strong>
     <% if application_summary.submission.state == 'rejected' %>
       <%= NumberTo.pounds(0) %><br>
@@ -32,9 +32,12 @@
   <% if application_summary.unassignable? %>
     <br>
     <strong><%= t('.caseworker') %></strong> <%= application_summary.caseworker %>
-  <% elsif !application_summary.pending? %>
+  <% elsif application_summary.assessed? %>
     <br>
     <strong><%= t('.date_assessed') %></strong> <%= application_summary.date_updated_str %>
+  <% elsif application_summary.sent_back? %>
+    <br>
+    <strong><%= t('.date_sent_back') %></strong> <%= application_summary.date_updated_str %>
   <% end %>
 </p>
 

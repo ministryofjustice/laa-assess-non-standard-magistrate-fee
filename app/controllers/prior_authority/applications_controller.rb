@@ -3,21 +3,21 @@ module PriorAuthority
     before_action :set_default_table_sort_options, only: %i[your open assessed]
 
     def your
-      @pagy, applications = order_and_paginate(PriorAuthorityApplication.pending_and_assigned_to(current_user))
+      @pagy, applications = order_and_paginate(PriorAuthorityApplication.open_and_assigned_to(current_user))
       @applications = applications.map do |application|
         BaseViewModel.build(:table_row, application)
       end
     end
 
     def open
-      @pagy, applications = order_and_paginate(PriorAuthorityApplication.pending_decision)
+      @pagy, applications = order_and_paginate(PriorAuthorityApplication.open)
       @applications = applications.map do |application|
         BaseViewModel.build(:table_row, application)
       end
     end
 
     def assessed
-      @pagy, applications = order_and_paginate(PriorAuthorityApplication.decision_made)
+      @pagy, applications = order_and_paginate(PriorAuthorityApplication.assessed)
       @applications = applications.map do |application|
         BaseViewModel.build(:table_row, application)
       end
