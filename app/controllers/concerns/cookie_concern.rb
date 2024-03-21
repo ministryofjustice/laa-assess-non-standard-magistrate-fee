@@ -37,7 +37,7 @@ module CookieConcern
       value: value,
       domain: request.host,
       expires: 1.year.from_now,
-      secure: !Rails.env.test?
+      secure: ENV.fetch('USE_SECURE_COOKIES', 'true') == 'true'
     }
   end
 
