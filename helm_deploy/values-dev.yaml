@@ -46,7 +46,7 @@ ingress:
   tls:
     - hosts:
       - dev.assess-crime-forms.service.justice.gov.uk
-      secretName: laa-assess-crime-forms-cert-q6hz2
+      secretName: laa-assess-crime-forms-cert-42fpz
 
 resources:
   limits:
