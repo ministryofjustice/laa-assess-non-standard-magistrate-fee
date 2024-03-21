@@ -4,7 +4,7 @@ require 'rails_helper'
 
 # rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
-  let(:recipient) { 'provider@example.com' }
+  let(:recipient) { 'solicitor-contact@example.com' }
   let(:laa_case_reference) { 'LAA-FHaMVK' }
   let(:ufn) { '111111/111' }
   let(:defendant_name) { 'Abe Abrahams' }
@@ -20,7 +20,7 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
         :prior_authority_data,
         laa_reference: 'LAA-FHaMVK',
         ufn: '111111/111',
-        provider: { 'email' => 'provider@example.com' },
+        solicitor: { 'contact_email' => 'solicitor-contact@example.com' },
         defendant: { 'last_name' => 'Abrahams', 'first_name' => 'Abe' },
       )
     ).tap do |app|
@@ -63,7 +63,7 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
           :prior_authority_data,
           laa_reference: 'LAA-FHaMVK',
           ufn: '111111/111',
-          provider: { 'email' => 'provider@example.com' },
+          solicitor: { 'contact_email' => 'solicitor-contact@example.com' },
           defendant: { 'last_name' => 'Abrahams', 'first_name' => 'Abe' },
           quotes: [
             build(:primary_quote, :with_adjustments),
@@ -133,7 +133,7 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
           :prior_authority_data,
           laa_reference: 'LAA-FHaMVK',
           ufn: '111111/111',
-          provider: { 'email' => 'provider@example.com' },
+          solicitor: { 'contact_email' => 'solicitor-contact@example.com' },
           defendant: { 'last_name' => 'Abrahams', 'first_name' => 'Abe' },
           incorrect_information_explanation: 'Please correct this information...',
           further_information_explanation: 'Please provide this further info...',
@@ -168,7 +168,7 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
           :prior_authority_data,
           laa_reference: 'LAA-FHaMVK',
           ufn: '111111/111',
-          provider: { 'email' => 'provider@example.com' },
+          solicitor: { 'contact_email' => 'solicitor-contact@example.com' },
           defendant: { 'last_name' => 'Abrahams', 'first_name' => 'Abe' },
         )
       )
