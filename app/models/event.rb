@@ -4,7 +4,7 @@ class Event < ApplicationRecord
 
   self.inheritance_column = :event_type
 
-  PUBLIC_EVENTS = ['Event::Decision'].freeze
+  PUBLIC_EVENTS = ['Event::Decision', 'Event::SendBack'].freeze
   HISTORY_EVENTS = [
     'Event::Assignment',
     'Event::Decision',
