@@ -35,6 +35,11 @@ en:
       show:
         page_title: Application details
         overview: Overview
+        assessed_statuses:
+          rejected: Rejected
+          part_grant: Part granted
+          granted: Granted
+        review_adjustments: Review quote adjustments
         about_the_request: About the request
         about_the_case: About the case
         contact_details: Contact details

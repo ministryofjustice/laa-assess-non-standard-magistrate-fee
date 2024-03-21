@@ -8,7 +8,7 @@
       <%= render 'prior_authority/shared/application_nav', application_summary:, current_page: 'adjust_quote' %>
   </div>
   <div class="govuk-grid-column-two-thirds">
-    <h2 class="govuk-heading-m"><%= t('.adjust_quote') %></h2>
+    <h2 class="govuk-heading-m"><%= editable ? t('.adjust_quote') :  t('.adjustments') %></h2>
 
     <%= render 'key_information_card', model: @key_information.key_information_card %>
     <%= render 'service_costs', application_summary:, application:, editable: %>

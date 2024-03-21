@@ -9,6 +9,15 @@
   </div>
   <div class="govuk-grid-column-two-thirds">
     <h2 class="govuk-heading-m"><%= t('.overview') %></h2>
+    <% if @details.assessment_comment.present? %>
+      <div class="govuk-inset-text">
+        <p><strong><%= t(".assessed_statuses.#{@details.submission.state}") %></strong></p>
+        <p> <%= @details.assessment_comment %></p>
+        <% if @details.submission.state == 'part_grant' %>
+          <p> <%= link_to t('.review_adjustments'), prior_authority_application_adjustments_path(@summary.id) %></p>
+        <% end %>
+      </div>
+    <% end %>
     <%= render 'overview_card', model: @details.overview_card %>
 
     <h2 class="govuk-heading-m"><%= t('.about_the_request') %></h2>

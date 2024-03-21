@@ -43,6 +43,10 @@ module PriorAuthority
         submission.created_at.to_fs(:stamp)
       end
 
+      def date_updated_str
+        submission.updated_at.to_fs(:stamp)
+      end
+
       def rep_order_date_str
         rep_order_date.to_fs(:stamp)
       end
@@ -103,6 +107,10 @@ module PriorAuthority
 
       def pending?
         submission.state.in?(PriorAuthorityApplication::PENDING_STATES)
+      end
+
+      def caseworker
+        submission.assignments.first.display_name
       end
     end
   end

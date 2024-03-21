@@ -11,10 +11,13 @@ en:
         service: 'Service:'
         rep_order_date: 'Representation order date:'
         date_received: 'Date received:'
+        date_assessed: 'Date assessed:'
+        caseworker: 'Caseworker:'
         remove_from_list: Remove from list
         add_to_my_list: Add to my list
         overview: Overview
         adjust_quote: Adjust quote
+        adjustments: Adjustments
         related_applications: Related applications
         application_history: Application history
       application_buttons:
