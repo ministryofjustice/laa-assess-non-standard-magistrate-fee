@@ -159,11 +159,11 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
     include_examples 'creates a prior authority feedback mailer'
   end
 
-  context 'with other state for further information request' do
+  context 'with an unhandled state' do
     let(:application) do
       create(
         :prior_authority_application,
-        state: 'fake',
+        state: 'submitted',
         data: build(
           :prior_authority_data,
           laa_reference: 'LAA-FHaMVK',
