@@ -1,10 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe 'View applications' do
-  let(:caseworker) { create(:caseworker) }
+  let(:caseworker) { create(:caseworker, first_name: 'Jane', last_name: 'Doe') }
   let(:application) do
     create(
       :prior_authority_application,
+      state: 'submitted',
       created_at: '2023-3-2',
       data: build(
         :prior_authority_data,
@@ -54,6 +55,14 @@ RSpec.describe 'View applications' do
           "Requested: £80.50\nService: Pathologist report " \
           "Representation order date: 02 January 2023\nDate received: 02 March 2023"
         )
+      end
+
+      it 'shows my name' do
+        expect(page).to have_content('Caseworker: Jane Doe')
+      end
+
+      it 'shows that it is in progress' do
+        expect(page).to have_content('In progress')
       end
 
       it 'shows application details card' do
@@ -237,6 +246,22 @@ RSpec.describe 'View applications' do
           end
         end
       end
+    end
+  end
+
+  context 'when application has been assessed' do
+    before do
+      application.update(state: 'rejected', updated_at: DateTime.new(2023, 6, 5, 4, 3, 2))
+      create(:event, :decision, submission: application, details: { comment: 'Not good use of money' })
+      click_on 'LAA-1234'
+    end
+
+    it 'shows the rejection comment' do
+      expect(page).to have_content 'Not good use of money'
+    end
+
+    it 'shows the rejection date' do
+      expect(page).to have_content 'Date assessed: 05 June 2023'
     end
   end
 end
