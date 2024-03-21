@@ -29,7 +29,7 @@ RSpec.describe 'View related applications' do
   let(:in_progress) do
     create(
       :prior_authority_application,
-      state: 'in_progress',
+      state: 'submitted',
       created_at: 3.days.ago,
       data: build(
         :prior_authority_data,

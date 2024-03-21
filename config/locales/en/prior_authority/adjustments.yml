@@ -3,6 +3,7 @@ en:
     adjustments:
       index:
         adjust_quote: Adjust quote
+        adjustments: Adjustments
       key_information_card:
         key_information: Key information
       additional_costs:

@@ -1,7 +1,7 @@
 module PriorAuthority
   module V1
     class TableRow < BaseViewModel
-      include ActionView::Helpers::TagHelper
+      include PriorAuthorityTagHelper
 
       attribute :laa_reference, :string
       attribute :firm_office
@@ -36,29 +36,7 @@ module PriorAuthority
       end
 
       def status
-        tag.span(class: "govuk-tag govuk-tag--#{tag_colour}") do
-          I18n.t("prior_authority.applications.statuses.#{augmented_state}")
-        end
-      end
-
-      def augmented_state
-        return 'in_progress' if submission.state == 'submitted' && submission.assignments.any?
-
-        submission.state
-      end
-
-      private
-
-      def tag_colour
-        {
-          'submitted' => 'grey',
-          'in_progress' => 'purple',
-          'provider_updated' => 'grey',
-          'sent_back' => 'yellow',
-          'part_grant' => 'blue',
-          'granted' => 'green',
-          'rejected' => 'red'
-        }.fetch(augmented_state)
+        prior_authority_state_tag(submission)
       end
     end
   end
