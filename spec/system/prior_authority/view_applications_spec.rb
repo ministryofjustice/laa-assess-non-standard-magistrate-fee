@@ -264,4 +264,21 @@ RSpec.describe 'View applications' do
       expect(page).to have_content 'Date assessed: 05 June 2023'
     end
   end
+
+  context 'when application has been sent back' do
+    before do
+      application.data['updates_needed'] = ['further_information']
+      application.data['further_information_explanation'] = 'Set the scene a little more'
+      application.update(state: 'sent_back', updated_at: DateTime.new(2023, 6, 5, 4, 3, 2))
+      click_on 'LAA-1234'
+    end
+
+    it 'shows the relevant comment' do
+      expect(page).to have_content 'Set the scene a little more'
+    end
+
+    it 'shows the rejection date' do
+      expect(page).to have_content 'Date sent back to provider: 05 June 2023'
+    end
+  end
 end

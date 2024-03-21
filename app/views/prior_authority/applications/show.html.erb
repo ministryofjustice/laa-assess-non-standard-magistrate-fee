@@ -17,6 +17,24 @@
           <p> <%= link_to t('.review_adjustments'), prior_authority_application_adjustments_path(@summary.id) %></p>
         <% end %>
       </div>
+    <% elsif @summary.sent_back? %>
+      <div class="govuk-inset-text">
+        <p><strong><%= t(".sent_back", date: @summary.date_updated_str) %></strong></p>
+        <% if @details.further_information_requested? %>
+          <p>
+            <%= t('.further_information') %>
+            <br>
+            <%= @details.further_information_explanation %>
+          </p>
+        <% end %>
+        <% if @details.corrections_requested? %>
+          <p>
+            <%= t('.incorrect_information') %>
+            <br>
+            <%= @details.incorrect_information_explanation %>
+          </p>
+        <% end %>
+      </div>
     <% end %>
     <%= render 'overview_card', model: @details.overview_card %>
 

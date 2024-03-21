@@ -7,7 +7,7 @@ module PriorAuthority
           CASE WHEN data->>'service_type' = 'pathologist_report' THEN 0 ELSE 1 END as pathologist_report
         SQL
 
-        PriorAuthorityApplication.unassigned(user)
+        PriorAuthorityApplication.assignable(user)
                                  .select('submissions.*', criminal_court, pathologist_report)
                                  .order(criminal_court: :asc, pathologist_report: :asc, created_at: :asc)
                                  .first

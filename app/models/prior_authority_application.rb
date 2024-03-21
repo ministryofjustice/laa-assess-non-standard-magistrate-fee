@@ -1,8 +1,8 @@
 class PriorAuthorityApplication < Submission
   default_scope -> { where(application_type: APPLICATION_TYPES[:prior_authority]) }
 
-  STATES = [
-    (PENDING_STATES = [
+  STATES = (
+    (ASSESSABLE_STATES = [
       SUBMITTED = 'submitted'.freeze,
       PROVIDER_UPDATED = 'provider_updated'.freeze
     ].freeze) +
@@ -10,11 +10,24 @@ class PriorAuthorityApplication < Submission
         GRANTED = 'granted'.freeze,
         PART_GRANT = 'part_grant'.freeze,
         REJECTED = 'rejected'.freeze,
-        SENT_BACK = 'sent_back'.freeze,
         AUTO_GRANT = 'auto_grant'.freeze
-      ].freeze)
-  ].freeze
+      ].freeze) +
+      [SENT_BACK = 'sent_back'.freeze]
+  ).freeze
 
-  scope :pending_decision, -> { where(state: PENDING_STATES) }
-  scope :decision_made, -> { where(state: ASSESSED_STATES) }
+  enum :state, STATES.to_h { [_1, _1] }
+
+  scope :open, -> { where(state: ASSESSABLE_STATES + [SENT_BACK]) }
+  scope :assessed, -> { where(state: ASSESSED_STATES) }
+  scope :open_and_assigned_to, lambda { |user|
+    open.joins(:assignments).where(assignments: { user_id: user.id })
+  }
+  scope :assignable, lambda { |user|
+    where(state: ASSESSABLE_STATES)
+      .where.missing(:assignments)
+      .where.not(id: Event::Unassignment.where(primary_user_id: user.id).select(:submission_id))
+  }
+  scope :related_applications, lambda { |ufn, account_number|
+    PriorAuthority::RelatedApplications.call(ufn, account_number)
+  }
 end

@@ -40,6 +40,9 @@ en:
           rejected: Rejected
           part_grant: Part granted
           granted: Granted
+        sent_back: Sent back to provider %{date}
+        further_information: 'Further information:'
+        incorrect_information: 'Incorrect information:'
         review_adjustments: Review quote adjustments
         about_the_request: About the request
         about_the_case: About the case
