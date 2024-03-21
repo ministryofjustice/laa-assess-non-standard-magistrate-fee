@@ -16,7 +16,7 @@ module PriorAuthority
       end
 
       def recipient
-        @submission.data['provider']['email']
+        @submission.data['solicitor']['contact_email']
       end
 
       protected

@@ -12,7 +12,7 @@ RSpec.describe PriorAuthority::FeedbackMessages::FurtherInformationRequestFeedba
         :prior_authority_data,
         laa_reference: 'LAA-FHaMVK',
         ufn: '111111/111',
-        provider: { 'email' => 'provider@example.com' },
+        solicitor: { 'contact_email' => 'solicitor-contact@example.com' },
         defendant: { 'last_name' => 'Abrahams', 'first_name' => 'Abe' },
         incorrect_information_explanation: incorrect_information_explanation,
         further_information_explanation: further_information_explanation,
@@ -38,6 +38,12 @@ RSpec.describe PriorAuthority::FeedbackMessages::FurtherInformationRequestFeedba
   describe '#template' do
     it 'has correct template id' do
       expect(feedback.template).to eq(feedback_template)
+    end
+  end
+
+  describe '#recipient' do
+    it 'sets recipient to be the solicitors contact email' do
+      expect(feedback.recipient).to eq('solicitor-contact@example.com')
     end
   end
 
@@ -86,12 +92,6 @@ RSpec.describe PriorAuthority::FeedbackMessages::FurtherInformationRequestFeedba
           caseworker_information_requested: 'Please provide this further info...',
         )
       end
-    end
-  end
-
-  describe '#recipient' do
-    it 'has correct recipient' do
-      expect(feedback.recipient).to eq('provider@example.com')
     end
   end
 end
