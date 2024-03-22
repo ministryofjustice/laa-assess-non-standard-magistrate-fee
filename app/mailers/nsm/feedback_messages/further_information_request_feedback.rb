@@ -17,7 +17,6 @@ module Nsm
           date_to_respond_by: 7.days.from_now.strftime('%d %B %Y'),
           caseworker_information_requested: @comment,
           date: DateTime.now.strftime('%d %B %Y'),
-          feedback_url: feedback_url
         }
       end
     end

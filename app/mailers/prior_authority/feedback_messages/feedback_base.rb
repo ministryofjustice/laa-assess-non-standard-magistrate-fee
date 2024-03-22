@@ -45,10 +45,6 @@ module PriorAuthority
         decision.comments
       end
 
-      def feedback_url
-        Rails.configuration.x.contact.feedback_url
-      end
-
       private
 
       def application_summary
