@@ -21,7 +21,7 @@ module Nsm
 
       def main_defendant_name
         main_defendant = defendants.detect { |defendant| defendant['main'] }
-        main_defendant['full_name']
+        construct_name(main_defendant)
       end
 
       def main_defendant_maat
@@ -51,7 +51,7 @@ module Nsm
           [
             {
               title: I18n.t(".nsm.claim_details.#{key}.defendant_name", count: index + 1),
-              value: defendant['full_name']
+              value: construct_name(defendant)
             },
             {
               title: I18n.t(".nsm.claim_details.#{key}.defendant_maat", count: index + 1),

@@ -22,7 +22,7 @@ module Nsm
       end
 
       def solicitor_full_name
-        solicitor['full_name']
+        construct_name(solicitor)
       end
 
       def solicitor_ref_number
@@ -30,7 +30,7 @@ module Nsm
       end
 
       def contact_full_name
-        solicitor['contact_full_name']
+        construct_name(solicitor, prefix: 'contact_')
       end
 
       def contact_email

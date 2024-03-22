@@ -158,7 +158,8 @@ FactoryBot.define do
             'maat' =>  'AB12123',
             'main' =>  true,
             'position' =>  1,
-            'full_name' =>  'Tracy Linklater'
+            'first_name' =>  'Tracy',
+            'last_name' => 'Linklater'
           }
         ]
       end

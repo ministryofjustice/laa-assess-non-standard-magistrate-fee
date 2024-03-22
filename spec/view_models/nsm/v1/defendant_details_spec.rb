@@ -18,21 +18,21 @@ RSpec.describe Nsm::V1::DefendantDetails do
                 'maat' => 'AB12123',
                 'main' => true,
                 'position' => 1,
-                'full_name' => 'Main Defendant'
+                'first_name' => 'Main', 'last_name' => 'Defendant'
             },
             {
               'id' => '40fb1f98-6dea-4b03-9087-590436b62dd8',
               'maat' => 'AB454545',
               'main' => false,
               'position' => 2,
-              'full_name' => 'Defendant 1'
+              'first_name' => 'Defendant', 'last_name' => '1'
             },
             {
               'id' => '40fb2f88-6dea-4b03-9087-590436b62dd8',
               'maat' => 'AB676767',
               'main' => false,
               'position' => 3,
-              'full_name' => 'Defendant 2'
+              'first_name' => 'Defendant', 'last_name' => '2'
             }
           ]
         }
@@ -54,21 +54,21 @@ RSpec.describe Nsm::V1::DefendantDetails do
                 'maat' => 'AB12123',
                 'main' => true,
                 'position' => 1,
-                'full_name' => 'Main Defendant'
+                'first_name' => 'Main', 'last_name' => 'Defendant'
             },
             {
               'id' => '40fb1f98-6dea-4b03-9087-590436b62dd8',
               'maat' => 'AB454545',
               'main' => false,
               'position' => 2,
-              'full_name' => 'Defendant 1'
+              'first_name' => 'Defendant', 'last_name' => '1'
             },
             {
               'id' => '40fb2f88-6dea-4b03-9087-590436b62dd8',
               'maat' => 'AB676767',
               'main' => false,
               'position' => 3,
-              'full_name' => 'Defendant 2'
+              'first_name' => 'Defendant', 'last_name' => '2'
             }
           ]
         }
@@ -95,7 +95,7 @@ RSpec.describe Nsm::V1::DefendantDetails do
                 'maat' => 'AB12123',
                 'main' => true,
                 'position' => 1,
-                'full_name' => 'Main Defendant'
+                'first_name' => 'Main', 'last_name' => 'Defendant'
             }
           ]
         }
