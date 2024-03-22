@@ -50,7 +50,8 @@ module PriorAuthority
           'Event::DraftDecision' => 'prior_authority.events.draft_decision',
           'Event::Decision' => "prior_authority.events.decision_#{event.details['to']}",
           'Event::DraftSendBack' => 'prior_authority.events.draft_send_back',
-          'Event::SendBack' => 'prior_authority.events.sent_back'
+          'Event::SendBack' => 'prior_authority.events.sent_back',
+          'Event::Expiry' => 'prior_authority.events.expired'
         }
       end
 

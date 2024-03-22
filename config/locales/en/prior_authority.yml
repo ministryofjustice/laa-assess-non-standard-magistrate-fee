@@ -13,6 +13,7 @@ en:
         date_received: 'Date received:'
         date_assessed: 'Date assessed:'
         date_sent_back: 'Date sent back to provider:'
+        date_expired: 'Date expired:'
         caseworker: 'Caseworker:'
         remove_from_list: Remove from list
         add_to_my_list: Add to my list

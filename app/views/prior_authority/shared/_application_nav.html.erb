@@ -38,6 +38,9 @@
   <% elsif application_summary.sent_back? %>
     <br>
     <strong><%= t('.date_sent_back') %></strong> <%= application_summary.date_updated_str %>
+  <% elsif application_summary.expired? %>
+    <br>
+    <strong><%= t('.date_expired') %></strong> <%= application_summary.date_updated_str %>
   <% end %>
 </p>
 

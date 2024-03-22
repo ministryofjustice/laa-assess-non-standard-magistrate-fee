@@ -9,15 +9,16 @@ class PriorAuthorityApplication < Submission
       (ASSESSED_STATES = [
         GRANTED = 'granted'.freeze,
         PART_GRANT = 'part_grant'.freeze,
-        REJECTED = 'rejected'.freeze
+        REJECTED = 'rejected'.freeze,
       ].freeze) +
-      [SENT_BACK = 'sent_back'.freeze]
+      [SENT_BACK = 'sent_back'.freeze,
+       EXPIRED = 'expired'.freeze]
   ).freeze
 
   enum :state, STATES.to_h { [_1, _1] }
 
   scope :open, -> { where(state: ASSESSABLE_STATES + [SENT_BACK]) }
-  scope :assessed, -> { where(state: ASSESSED_STATES) }
+  scope :assessed, -> { where(state: ASSESSED_STATES + [EXPIRED]) }
   scope :open_and_assigned_to, lambda { |user|
     open.joins(:assignments).where(assignments: { user_id: user.id })
   }

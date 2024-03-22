@@ -11,6 +11,7 @@ en:
       decision_rejected: Rejected
       draft_send_back: '%{caseworker} saved a draft'
       sent_back: Sent back
+      expired: Expired
       na: N/A
       index:
         page_title: Application history

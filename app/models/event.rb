@@ -15,6 +15,7 @@ class Event < ApplicationRecord
     'Event::SendBack',
     'Event::DraftSendBack',
     'Event::Unassignment',
+    'Event::Expiry',
   ].freeze
   scope :history, -> { where(event_type: HISTORY_EVENTS).order(created_at: :desc) }
 

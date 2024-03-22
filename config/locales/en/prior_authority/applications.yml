@@ -10,6 +10,7 @@ en:
         rejected: Rejected
         sent_back: Sent back
         provider_updated: Provider updated
+        expired: Expired
       your:
         page_title: 'Your applications'
         no_applications: 'You have no applications assigned to you for assessment.'

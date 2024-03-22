@@ -1,13 +1,14 @@
 class NotifyAppStore < ApplicationJob
   queue_as :default
 
-  def self.process(submission:)
+  def self.process(submission:, trigger_email: true)
     if ENV.key?('REDIS_HOST')
       set(wait: Rails.application.config.x.application.app_store_wait.seconds)
-        .perform_later(submission)
+        .perform_later(submission, trigger_email:)
     else
       begin
         new.notify(MessageBuilder.new(submission:))
+        return unless trigger_email
 
         klass = "#{submission.namespace}::SubmissionFeedbackMailer".constantize
         klass.notify(submission).deliver_later!
@@ -19,8 +20,10 @@ class NotifyAppStore < ApplicationJob
     end
   end
 
-  def perform(submission)
+  def perform(submission, trigger_email: true)
     notify(MessageBuilder.new(submission:))
+
+    return unless trigger_email
 
     klass = "#{submission.namespace}::SubmissionFeedbackMailer".constantize
     klass.notify(submission).deliver_later!
