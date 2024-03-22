@@ -15,7 +15,6 @@ module PriorAuthority
           application_total: application_total,
           caseworker_decision_explanation: comments,
           date: DateTime.now.strftime('%d %B %Y'),
-          feedback_url: feedback_url
         }
       end
     end

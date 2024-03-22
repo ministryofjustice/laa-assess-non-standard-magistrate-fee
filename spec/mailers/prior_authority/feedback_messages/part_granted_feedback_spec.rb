@@ -12,7 +12,7 @@ RSpec.describe PriorAuthority::FeedbackMessages::PartGrantedFeedback do
         :prior_authority_data,
         laa_reference: 'LAA-FHaMVK',
         ufn: '111111/111',
-        provider: { 'email' => 'provider@example.com' },
+        solicitor: { 'contact_email' => 'solicitor-contact@example.com' },
         defendant: { 'last_name' => 'Abrahams', 'first_name' => 'Abe' },
         quotes: [
           build(:primary_quote, :with_adjustments),
@@ -39,6 +39,12 @@ RSpec.describe PriorAuthority::FeedbackMessages::PartGrantedFeedback do
     end
   end
 
+  describe '#recipient' do
+    it 'sets recipient to be the solicitors contact email' do
+      expect(feedback.recipient).to eq('solicitor-contact@example.com')
+    end
+  end
+
   describe '#contents' do
     it 'has expected content' do
       expect(feedback.contents).to include(
@@ -49,14 +55,7 @@ RSpec.describe PriorAuthority::FeedbackMessages::PartGrantedFeedback do
         part_grant_total: '£150.00',
         caseworker_decision_explanation: 'Caseworker part granted coz...',
         date: DateTime.now.to_fs(:stamp),
-        feedback_url: 'tbc',
       )
-    end
-  end
-
-  describe '#recipient' do
-    it 'has correct recipient' do
-      expect(feedback.recipient).to eq(recipient)
     end
   end
 end

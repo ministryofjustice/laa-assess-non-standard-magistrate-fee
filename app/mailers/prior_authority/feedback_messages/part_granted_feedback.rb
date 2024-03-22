@@ -16,7 +16,6 @@ module PriorAuthority
           part_grant_total: adjusted_total,
           caseworker_decision_explanation: comments,
           date: DateTime.now.strftime('%d %B %Y'),
-          feedback_url: feedback_url
         }
       end
 

@@ -3,6 +3,8 @@
 module Nsm
   module FeedbackMessages
     class FeedbackBase
+      include NameConstructable
+
       def initialize(submission, comment = '')
         @submission = submission
         @comment = comment
@@ -27,7 +29,7 @@ module Nsm
       end
 
       def defendant_name
-        main_defendant['full_name']
+        construct_name(main_defendant)
       end
 
       def maat_id
@@ -57,10 +59,6 @@ module Nsm
 
       def claim_total
         @submission.data['submitted_total_inc_vat'] || @submission.data['submitted_total'] || 0
-      end
-
-      def feedback_url
-        Rails.configuration.x.contact.feedback_url
       end
     end
   end

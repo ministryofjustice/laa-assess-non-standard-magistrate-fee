@@ -1,6 +1,7 @@
 class BaseViewModel
   include ActiveModel::Model
   include ActiveModel::Attributes
+  include NameConstructable
 
   ID_FIELDS = %w[id].freeze
 
