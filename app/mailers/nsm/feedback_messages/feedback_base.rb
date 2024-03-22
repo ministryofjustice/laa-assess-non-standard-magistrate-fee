@@ -60,10 +60,6 @@ module Nsm
       def claim_total
         @submission.data['submitted_total_inc_vat'] || @submission.data['submitted_total'] || 0
       end
-
-      def feedback_url
-        Rails.configuration.x.contact.feedback_url
-      end
     end
   end
 end

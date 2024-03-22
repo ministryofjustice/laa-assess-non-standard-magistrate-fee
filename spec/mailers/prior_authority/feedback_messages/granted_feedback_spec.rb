@@ -40,7 +40,6 @@ RSpec.describe PriorAuthority::FeedbackMessages::GrantedFeedback do
         defendant_name: 'Abe Abrahams',
         application_total: '£324.50',
         date: DateTime.now.to_fs(:stamp),
-        feedback_url: 'tbc',
       )
     end
   end
