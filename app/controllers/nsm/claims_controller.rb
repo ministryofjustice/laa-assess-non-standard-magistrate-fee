@@ -12,7 +12,7 @@ module Nsm
       if claim
         Claim.transaction do
           claim.assignments.create!(user: current_user)
-          Event::Assignment.build(submission: claim, current_user: current_user)
+          ::Event::Assignment.build(submission: claim, current_user: current_user)
         end
 
         redirect_to nsm_claim_claim_details_path(claim)

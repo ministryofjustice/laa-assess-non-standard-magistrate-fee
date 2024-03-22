@@ -35,10 +35,10 @@ module PriorAuthority
         previous_state = submission.state
 
         submission.update!(state: pending_decision)
-        Event::Decision.build(submission: submission,
-                              comment: explanation,
-                              previous_state: previous_state,
-                              current_user: current_user)
+        ::Event::Decision.build(submission: submission,
+                                comment: explanation,
+                                previous_state: previous_state,
+                                current_user: current_user)
         NotifyAppStore.process(submission:)
       end
 
@@ -51,10 +51,10 @@ module PriorAuthority
 
       return unless add_draft_decision_event
 
-      Event::DraftDecision.build(submission: submission,
-                                 comment: explanation,
-                                 next_state: pending_decision,
-                                 current_user: current_user)
+      ::Event::DraftDecision.build(submission: submission,
+                                   comment: explanation,
+                                   next_state: pending_decision,
+                                   current_user: current_user)
     end
 
     def explanation

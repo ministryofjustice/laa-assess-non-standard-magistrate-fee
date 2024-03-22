@@ -20,7 +20,7 @@ RSpec.describe PriorAuthority::FeedbackMessages::FurtherInformationRequestFeedba
     ).tap do |app|
       create(
         :event,
-        event_type: Event::SendBack.to_s,
+        event_type: PriorAuthority::Event::SendBack.to_s,
         details: {
           comment: 'This message is set but not used by the mailer',
         },

@@ -21,10 +21,14 @@ RSpec.describe 'History events' do
                                comment: 'draft decision comment').update(created_at: 6.hours.ago)
     Event::Decision.build(submission: application, current_user: caseworker, previous_state: 'submitted',
                           comment: 'decision comment').update(created_at: 5.hours.ago)
-    Event::DraftSendBack.build(submission: application, current_user: caseworker,
-                               comment: 'draft send back comment').update(created_at: 4.hours.ago)
-    Event::SendBack.build(submission: application, current_user: caseworker, previous_state: 'submitted',
-                          comment: 'send back comment').update(created_at: 3.hours.ago)
+    PriorAuthority::Event::DraftSendBack.build(submission: application,
+                                               current_user: caseworker,
+                                               comments: { further_information: 'draft send back comment' },
+                                               updates_needed: ['further_information']).update(created_at: 4.hours.ago)
+    PriorAuthority::Event::SendBack.build(submission: application,
+                                          current_user: caseworker,
+                                          comments: { further_information: 'send back comment' },
+                                          updates_needed: ['further_information']).update(created_at: 3.hours.ago)
   end
 
   it 'shows all (visible) events in the history' do

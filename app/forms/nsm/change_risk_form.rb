@@ -26,10 +26,10 @@ module Nsm
       previous_risk_level = claim.risk
       Claim.transaction do
         claim.update!(risk: risk_level)
-        Event::ChangeRisk.build(submission: claim,
-                                explanation: explanation,
-                                previous_risk_level: previous_risk_level,
-                                current_user: current_user)
+        ::Event::ChangeRisk.build(submission: claim,
+                                  explanation: explanation,
+                                  previous_risk_level: previous_risk_level,
+                                  current_user: current_user)
       end
 
       true
