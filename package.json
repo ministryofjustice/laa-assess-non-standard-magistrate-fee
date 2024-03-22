@@ -5,11 +5,11 @@
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "8.0.4",
-    "@ministryofjustice/frontend": "^2.1.1",
-    "esbuild": "^0.20.1",
+    "@ministryofjustice/frontend": "^2.1.2",
+    "esbuild": "^0.20.2",
     "govuk-frontend": "^5.2.0",
     "jquery": "^3.6.0",
-    "sass": "^1.69.6"
+    "sass": "^1.72.0"
   },
   "scripts": {
     "unit-test": "jest",
@@ -17,7 +17,7 @@
     "build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css  ./app/assets/stylesheets/print.scss:./app/assets/builds/print.css --no-source-map --load-path=node_modules  --quiet-deps"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.24.0",
+    "@babel/preset-env": "^7.24.1",
     "jest-environment-jsdom": "^29.7.0"
   }
 }
