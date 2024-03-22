@@ -4,13 +4,12 @@ require 'rails_helper'
 
 # rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
-  let(:recipient) { 'provider@example.com' }
+  let(:recipient) { 'solicitor-contact@example.com' }
   let(:laa_case_reference) { 'LAA-FHaMVK' }
   let(:ufn) { '111111/111' }
   let(:defendant_name) { 'Abe Abrahams' }
   let(:application_total) { '£324.50' }
   let(:date) { DateTime.now.to_fs(:stamp) }
-  let(:feedback_url) { 'tbc' }
 
   let(:application) do
     create(
@@ -20,7 +19,7 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
         :prior_authority_data,
         laa_reference: 'LAA-FHaMVK',
         ufn: '111111/111',
-        provider: { 'email' => 'provider@example.com' },
+        solicitor: { 'contact_email' => 'solicitor-contact@example.com' },
         defendant: { 'last_name' => 'Abrahams', 'first_name' => 'Abe' },
       )
     ).tap do |app|
@@ -46,7 +45,7 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
 
     let(:personalisation) do
       [laa_case_reference:, ufn:, defendant_name:,
-       application_total:, date:, feedback_url:]
+       application_total:, date:]
     end
 
     include_examples 'creates a prior authority feedback mailer'
@@ -63,7 +62,7 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
           :prior_authority_data,
           laa_reference: 'LAA-FHaMVK',
           ufn: '111111/111',
-          provider: { 'email' => 'provider@example.com' },
+          solicitor: { 'contact_email' => 'solicitor-contact@example.com' },
           defendant: { 'last_name' => 'Abrahams', 'first_name' => 'Abe' },
           quotes: [
             build(:primary_quote, :with_adjustments),
@@ -95,7 +94,7 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
     let(:personalisation) do
       [laa_case_reference:, ufn:, defendant_name:,
        application_total:, part_grant_total:,
-       caseworker_decision_explanation:, date:, feedback_url:]
+       caseworker_decision_explanation:, date:]
     end
 
     include_examples 'creates a prior authority feedback mailer'
@@ -110,7 +109,7 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
     let(:personalisation) do
       [laa_case_reference:, ufn:, defendant_name:,
       application_total:, caseworker_decision_explanation:,
-      date:, feedback_url:]
+      date:]
     end
 
     include_examples 'creates a prior authority feedback mailer'
@@ -133,7 +132,7 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
           :prior_authority_data,
           laa_reference: 'LAA-FHaMVK',
           ufn: '111111/111',
-          provider: { 'email' => 'provider@example.com' },
+          solicitor: { 'contact_email' => 'solicitor-contact@example.com' },
           defendant: { 'last_name' => 'Abrahams', 'first_name' => 'Abe' },
           incorrect_information_explanation: 'Please correct this information...',
           further_information_explanation: 'Please provide this further info...',
@@ -153,22 +152,22 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
     let(:personalisation) do
       [laa_case_reference:, ufn:, defendant_name:,
        application_total:, date_to_respond_by:,
-       caseworker_information_requested:, date:, feedback_url:]
+       caseworker_information_requested:, date:]
     end
 
     include_examples 'creates a prior authority feedback mailer'
   end
 
-  context 'with other state for further information request' do
+  context 'with an unhandled state' do
     let(:application) do
       create(
         :prior_authority_application,
-        state: 'fake',
+        state: 'submitted',
         data: build(
           :prior_authority_data,
           laa_reference: 'LAA-FHaMVK',
           ufn: '111111/111',
-          provider: { 'email' => 'provider@example.com' },
+          solicitor: { 'contact_email' => 'solicitor-contact@example.com' },
           defendant: { 'last_name' => 'Abrahams', 'first_name' => 'Abe' },
         )
       )

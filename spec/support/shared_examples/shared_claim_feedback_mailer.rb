@@ -34,7 +34,7 @@ RSpec.shared_examples 'creates a prior authority feedback mailer' do
       expect(mail.delivery_method).to be_a(GovukNotifyRails::Delivery)
     end
 
-    it 'sets the recipient from config' do
+    it 'sets the recipient to be the solicitors contact email' do
       expect(mail.to).to eq([recipient])
     end
 

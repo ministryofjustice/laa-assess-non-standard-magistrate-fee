@@ -48,7 +48,8 @@
                 "maat": "ZZ1234",
                 "main": true,
                 "position": 1,
-                "full_name": "Jim Bob"
+                "first_name": "Jim",
+                "last_name": "Bob"
             }
         ],
         "disability": {

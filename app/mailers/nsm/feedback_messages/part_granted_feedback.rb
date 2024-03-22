@@ -17,7 +17,6 @@ module Nsm
           part_grant_total: adjusted_total,
           caseworker_decision_explanation: @comment,
           date: DateTime.now.strftime('%d %B %Y'),
-          feedback_url: feedback_url
         }
       end
 

@@ -14,7 +14,6 @@ module PriorAuthority
           defendant_name: defendant_name,
           application_total: application_total,
           date: DateTime.now.strftime('%d %B %Y'),
-          feedback_url: feedback_url
         }
       end
     end

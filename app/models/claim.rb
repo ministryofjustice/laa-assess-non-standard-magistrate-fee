@@ -5,6 +5,16 @@ class Claim < Submission
 
   scope :pending_decision, -> { where.not(state: Nsm::MakeDecisionForm::STATES) }
   scope :decision_made, -> { where(state: Nsm::MakeDecisionForm::STATES) }
+  scope :pending_and_assigned_to, lambda { |user|
+    pending_decision
+      .joins(:assignments)
+      .where(assignments: { user_id: user.id })
+  }
+  scope :unassigned, lambda { |user|
+    pending_decision
+      .where.missing(:assignments)
+      .where.not(id: Event::Unassignment.where(primary_user_id: user.id).select(:submission_id))
+  }
 
   def editable?
     Nsm::MakeDecisionForm::STATES.exclude?(state)
