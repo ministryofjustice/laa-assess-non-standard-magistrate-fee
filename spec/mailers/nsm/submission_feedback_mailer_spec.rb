@@ -2,7 +2,6 @@
 
 require 'rails_helper'
 
-# rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe Nsm::SubmissionFeedbackMailer, type: :mailer do
   let(:recipient) { 'provider@example.com' }
   let(:laa_case_reference) { 'LAA-FHaMVK' }
@@ -11,14 +10,13 @@ RSpec.describe Nsm::SubmissionFeedbackMailer, type: :mailer do
   let(:defendant_reference) { 'MAAT ID: AB12123' }
   let(:claim_total) { 0 }
   let(:date) { DateTime.now.strftime('%d %B %Y') }
-  let(:feedback_url) { 'tbc' }
 
   describe 'granted' do
     context 'with maat id' do
       let(:claim) { build(:claim, state: 'granted') }
       let(:feedback_template) { '80c0dcd2-597b-4c82-8c94-f6e26af71a40' }
       let(:personalisation) do
-        [laa_case_reference:, ufn:, main_defendant_name:, defendant_reference:, claim_total:, date:, feedback_url:]
+        [laa_case_reference:, ufn:, main_defendant_name:, defendant_reference:, claim_total:, date:]
       end
 
       include_examples 'creates a feedback mailer'
@@ -35,7 +33,7 @@ RSpec.describe Nsm::SubmissionFeedbackMailer, type: :mailer do
 
       let(:feedback_template) { '80c0dcd2-597b-4c82-8c94-f6e26af71a40' }
       let(:personalisation) do
-        [laa_case_reference:, ufn:, main_defendant_name:, defendant_reference:, claim_total:, date:, feedback_url:]
+        [laa_case_reference:, ufn:, main_defendant_name:, defendant_reference:, claim_total:, date:]
       end
 
       include_examples 'creates a feedback mailer'
@@ -50,7 +48,7 @@ RSpec.describe Nsm::SubmissionFeedbackMailer, type: :mailer do
     let(:personalisation) do
       [laa_case_reference:, ufn:, main_defendant_name:,
        defendant_reference:, claim_total:, part_grant_total:, caseworker_decision_explanation:,
-       date:, feedback_url:]
+       date:]
     end
 
     include_examples 'creates a feedback mailer'
@@ -62,7 +60,7 @@ RSpec.describe Nsm::SubmissionFeedbackMailer, type: :mailer do
     let(:caseworker_decision_explanation) { '' }
     let(:personalisation) do
       [laa_case_reference:, ufn:, main_defendant_name:, defendant_reference:, claim_total:,
-       caseworker_decision_explanation:, date:, feedback_url:]
+       caseworker_decision_explanation:, date:]
     end
 
     include_examples 'creates a feedback mailer'
@@ -76,7 +74,7 @@ RSpec.describe Nsm::SubmissionFeedbackMailer, type: :mailer do
     let(:personalisation) do
       [laa_case_reference:, ufn:, main_defendant_name:,
        defendant_reference:, claim_total:, date_to_respond_by:,
-       caseworker_information_requested:, date:, feedback_url:]
+       caseworker_information_requested:, date:]
     end
 
     include_examples 'creates a feedback mailer'
@@ -86,7 +84,7 @@ RSpec.describe Nsm::SubmissionFeedbackMailer, type: :mailer do
     let(:claim) { build(:claim, state: 'provider_requested') }
     let(:feedback_template) { 'bfd28bd8-b9d8-4b18-8ce0-3fb763123573' }
     let(:personalisation) do
-      [laa_case_reference:, ufn:, main_defendant_name:, defendant_reference:, claim_total:, date:, feedback_url:]
+      [laa_case_reference:, ufn:, main_defendant_name:, defendant_reference:, claim_total:, date:]
     end
 
     include_examples 'creates a feedback mailer'
@@ -100,10 +98,9 @@ RSpec.describe Nsm::SubmissionFeedbackMailer, type: :mailer do
     let(:personalisation) do
       [laa_case_reference:, ufn:, main_defendant_name:, defendant_reference:,
        claim_total:, date_to_respond_by:, caseworker_information_requested:,
-       date:, feedback_url:]
+       date:]
     end
 
     include_examples 'creates a feedback mailer'
   end
 end
-# rubocop:enable RSpec/MultipleMemoizedHelpers

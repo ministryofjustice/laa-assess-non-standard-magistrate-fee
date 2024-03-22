@@ -10,7 +10,6 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
   let(:defendant_name) { 'Abe Abrahams' }
   let(:application_total) { '£324.50' }
   let(:date) { DateTime.now.to_fs(:stamp) }
-  let(:feedback_url) { 'tbc' }
 
   let(:application) do
     create(
@@ -46,7 +45,7 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
 
     let(:personalisation) do
       [laa_case_reference:, ufn:, defendant_name:,
-       application_total:, date:, feedback_url:]
+       application_total:, date:]
     end
 
     include_examples 'creates a prior authority feedback mailer'
@@ -95,7 +94,7 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
     let(:personalisation) do
       [laa_case_reference:, ufn:, defendant_name:,
        application_total:, part_grant_total:,
-       caseworker_decision_explanation:, date:, feedback_url:]
+       caseworker_decision_explanation:, date:]
     end
 
     include_examples 'creates a prior authority feedback mailer'
@@ -110,7 +109,7 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
     let(:personalisation) do
       [laa_case_reference:, ufn:, defendant_name:,
       application_total:, caseworker_decision_explanation:,
-      date:, feedback_url:]
+      date:]
     end
 
     include_examples 'creates a prior authority feedback mailer'
@@ -153,7 +152,7 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
     let(:personalisation) do
       [laa_case_reference:, ufn:, defendant_name:,
        application_total:, date_to_respond_by:,
-       caseworker_information_requested:, date:, feedback_url:]
+       caseworker_information_requested:, date:]
     end
 
     include_examples 'creates a prior authority feedback mailer'

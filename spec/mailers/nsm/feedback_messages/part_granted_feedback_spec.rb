@@ -16,7 +16,6 @@ RSpec.describe Nsm::FeedbackMessages::PartGrantedFeedback do
   let(:part_grant_total) { 0 }
   let(:caseworker_decision_explanation) { 'Test Explanation' }
   let(:date) { DateTime.now.strftime('%d %B %Y') }
-  let(:feedback_url) { 'tbc' }
 
   describe '#template' do
     it 'has correct template id' do
@@ -35,7 +34,6 @@ RSpec.describe Nsm::FeedbackMessages::PartGrantedFeedback do
         part_grant_total:,
         caseworker_decision_explanation:,
         date:,
-        feedback_url:
       )
     end
   end

@@ -14,7 +14,6 @@ RSpec.describe Nsm::FeedbackMessages::ProviderRequestFeedback do
   let(:defendant_reference) { 'MAAT ID: AB12123' }
   let(:claim_total) { 0 }
   let(:date) { DateTime.now.strftime('%d %B %Y') }
-  let(:feedback_url) { 'tbc' }
 
   describe '#template' do
     it 'has correct template id' do
@@ -31,7 +30,6 @@ RSpec.describe Nsm::FeedbackMessages::ProviderRequestFeedback do
         defendant_reference:,
         claim_total:,
         date:,
-        feedback_url:
       )
     end
   end
