@@ -10,13 +10,13 @@
       <p class="govuk-body-m"><%= t('.no_applications') %></p>
     <% else %>
       <%= render 'table',
-                 path: assessed_prior_authority_applications_path,
+                 path: closed_prior_authority_applications_path,
                  columns: {
                     laa_reference: :laa_reference,
                     firm_name: :firm_name,
                     client_name: :client_name,
                     caseworker: :caseworker,
-                    date_assessed: :date_assessed_str,
+                    date_updated: :date_updated_str,
                     status: :status
                  } %>
     <% end %>

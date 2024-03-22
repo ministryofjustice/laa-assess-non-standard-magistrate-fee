@@ -3,7 +3,7 @@ en:
     service_name: 'Assess prior authority to incur disbursements'
     your_applications: Your applications
     open_applications: Open applications
-    assessed_applications: Assessed applications
+    closed_applications: Closed applications
     shared:
       application_nav:
         requested: 'Requested:'
