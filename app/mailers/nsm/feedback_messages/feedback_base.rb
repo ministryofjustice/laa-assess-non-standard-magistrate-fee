@@ -3,6 +3,8 @@
 module Nsm
   module FeedbackMessages
     class FeedbackBase
+      include NameConstructable
+
       def initialize(submission, comment = '')
         @submission = submission
         @comment = comment
@@ -27,7 +29,7 @@ module Nsm
       end
 
       def defendant_name
-        main_defendant['full_name']
+        construct_name(main_defendant)
       end
 
       def maat_id

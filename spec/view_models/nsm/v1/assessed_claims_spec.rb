@@ -6,7 +6,10 @@ RSpec.describe Nsm::V1::AssessedClaims, type: :view_model do
   end
 
   let(:laa_reference) { '1234567890' }
-  let(:defendants) { [{ 'full_name' => 'John Doe', 'main' => true }, 'main' => false, 'full_name' => 'jimbob'] }
+  let(:defendants) do
+    [{ 'first_name' => 'John', 'last_name' => 'Doe', 'main' => true },
+     { 'main' => false, 'first_name' => 'jim', 'last_name' => 'bob' }]
+  end
   let(:firm_office) { { 'name' => 'Acme Law Firm' } }
   let(:updated_at) { Time.zone.yesterday }
   let(:submission) { instance_double(Claim, id: 1, events: events) }
@@ -23,7 +26,7 @@ RSpec.describe Nsm::V1::AssessedClaims, type: :view_model do
     context 'when no main defendant record - shouold not be possible' do
       it 'returns an empty string' do
         defendants = [
-          { 'main' => false, 'full_name' => 'John Doe' },
+          { 'main' => false, 'first_name' => 'John', 'last_name' => 'Doe' },
         ]
         summary = described_class.new('defendants' => defendants)
         expect(summary.main_defendant_name).to eq('')

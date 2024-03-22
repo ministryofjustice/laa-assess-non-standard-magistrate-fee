@@ -1,5 +1,7 @@
 module Nsm
   class SendBacksController < ApplicationController
+    include NameConstructable
+
     def edit
       send_back = SendBackForm.new(claim:)
       render locals: { claim:, send_back:, defendant_name: }
@@ -30,7 +32,7 @@ module Nsm
     def defendant_name
       defendants = claim.data['defendants']
       main_defendant = defendants.detect { |defendant| defendant['main'] }
-      main_defendant ? main_defendant['full_name'] : ''
+      main_defendant ? construct_name(main_defendant) : ''
     end
 
     def send_back_params

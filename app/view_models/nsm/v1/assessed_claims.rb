@@ -10,7 +10,7 @@ module Nsm
 
       def main_defendant_name
         main_defendant = defendants.detect { |defendant| defendant['main'] }
-        main_defendant ? main_defendant['full_name'] : ''
+        main_defendant ? construct_name(main_defendant) : ''
       end
 
       def firm_name
