@@ -195,12 +195,12 @@ RSpec.describe 'View related applications' do
     it 'allows me to sort by "Last updated" date' do
       click_on 'Last updated'
       within(top_row_selector) do
-        expect(page).to have_content('LAA-555')
+        expect(page).to have_content('LAA-222')
       end
 
       click_on 'Last updated'
       within(top_row_selector) do
-        expect(page).to have_content('LAA-222')
+        expect(page).to have_content('LAA-555')
       end
     end
 

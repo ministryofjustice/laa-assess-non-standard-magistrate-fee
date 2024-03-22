@@ -13,12 +13,9 @@ module PriorAuthority
       'laa_reference' => "data->>'laa_reference' ?",
       'firm_name' => "data->'firm_office'->>'name' ?",
       'client_name' => "(data->'defendant'->>'first_name') || ' ' || (data->'defendant'->>'last_name') ?",
-      'date_received' => 'submissions.created_at ?',
       'caseworker' => "COALESCE(users.first_name, 'Not') || ' ' || COALESCE(users.last_name, 'assigned') ?",
       'status' => STATUS_ORDER_CLAUSE,
       'date_updated' => 'submissions.updated_at ?',
-      'date_assessed' => 'submissions.updated_at ?',
-      'date_created' => 'submissions.created_at ?',
       'service_name' => "data->>'service_type' ?",
     }.freeze
 

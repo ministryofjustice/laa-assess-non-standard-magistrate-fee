@@ -10,6 +10,7 @@ en:
         rejected: Rejected
         sent_back: Sent back
         provider_updated: Provider updated
+        expired: Expired
       your:
         page_title: 'Your applications'
         no_applications: 'You have no applications assigned to you for assessment.'
@@ -17,8 +18,8 @@ en:
       open:
         page_title: Open applications
         no_applications: There are not any applications to assess. Good job!
-      assessed:
-        page_title: Assessed applications
+      closed:
+        page_title: Closed applications
         no_applications: There are not any applications that have been assessed.
       table:
         table_info_item: 'application'
@@ -28,9 +29,7 @@ en:
           client_name: Client
           service_name: Service
           caseworker: Caseworker
-          date_received: Received
           date_updated: Last updated
-          date_assessed: Assessed
           status: Status
       show:
         page_title: Application details

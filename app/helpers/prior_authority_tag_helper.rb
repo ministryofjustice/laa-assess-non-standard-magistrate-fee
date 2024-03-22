@@ -21,7 +21,8 @@ module PriorAuthorityTagHelper
       'sent_back' => 'yellow',
       'part_grant' => 'blue',
       'granted' => 'green',
-      'rejected' => 'red'
+      'rejected' => 'red',
+      'expired' => 'red'
     }.fetch(augmented_state(submission))
   end
 

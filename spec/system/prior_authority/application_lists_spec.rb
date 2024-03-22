@@ -62,10 +62,10 @@ RSpec.describe 'Prior authority list views' do
     end
   end
 
-  context 'when I visit assessed applications' do
-    before { visit assessed_prior_authority_applications_path }
+  context 'when I visit closed applications' do
+    before { visit closed_prior_authority_applications_path }
 
-    it 'only shows me assessed applications' do
+    it 'only shows me closed applications' do
       expect(page).to have_no_content 'LAA-1'
       expect(page).to have_no_content 'LAA-2'
       expect(page).to have_no_content 'LAA-3'
