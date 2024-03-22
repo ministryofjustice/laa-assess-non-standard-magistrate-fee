@@ -16,7 +16,6 @@ module Nsm
           claim_total: claim_total,
           caseworker_decision_explanation: @comment,
           date: DateTime.now.strftime('%d %B %Y'),
-          feedback_url: feedback_url
         }
       end
     end

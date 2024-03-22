@@ -56,7 +56,6 @@ RSpec.describe PriorAuthority::FeedbackMessages::FurtherInformationRequestFeedba
         application_total: '£324.50',
         date_to_respond_by: 14.days.from_now.to_fs(:stamp),
         date: DateTime.now.to_fs(:stamp),
-        feedback_url: 'tbc',
       )
     end
 
