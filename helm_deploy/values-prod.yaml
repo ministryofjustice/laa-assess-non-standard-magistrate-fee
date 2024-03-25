@@ -33,7 +33,7 @@ ingress:
       external-dns.alpha.kubernetes.io/set-identifier: laa-assess-crime-forms-app-laa-assess-crime-forms-prod-green
       external-dns.alpha.kubernetes.io/aws-weight: "100"
   hosts:
-    - host: nsmassess.apps.live.cloud-platform.service.justice.gov.uk
+    - host: assess-crime-forms.service.justice.gov.uk
       paths:
         - path: /
           pathType: ImplementationSpecific
@@ -42,9 +42,11 @@ ingress:
             name: laa-assess-crime-forms-prod
             port:
               number: 3000
+
   tls:
     - hosts:
-      - nsmassess.apps.live.cloud-platform.service.justice.gov.uk
+      - assess-crime-forms.service.justice.gov.uk
+      secretName: laa-assess-crime-forms-cert
 
 resources:
   limits:

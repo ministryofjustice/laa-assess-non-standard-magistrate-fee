@@ -11,7 +11,7 @@
                 <%= link_to t('prior_authority.open_applications'), open_prior_authority_applications_path, class: 'moj-primary-navigation__link', 'aria-current': (current == :open ? 'page' : nil) %>
               </li>
               <li class="moj-primary-navigation__item">
-                <%= link_to t('prior_authority.assessed_applications'), assessed_prior_authority_applications_path, class: 'moj-primary-navigation__link', 'aria-current': (current == :assessed ? 'page' : nil) %>
+                <%= link_to t('prior_authority.closed_applications'), closed_prior_authority_applications_path, class: 'moj-primary-navigation__link', 'aria-current': (current == :assessed ? 'page' : nil) %>
               </li>
           </ul>
         </nav>

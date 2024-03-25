@@ -27,10 +27,10 @@ module Nsm
       previous_state = claim.state
       Claim.transaction do
         claim.update!(state:)
-        Event::Decision.build(submission: claim,
-                              comment: comment,
-                              previous_state: previous_state,
-                              current_user: current_user)
+        ::Event::Decision.build(submission: claim,
+                                comment: comment,
+                                previous_state: previous_state,
+                                current_user: current_user)
         NotifyAppStore.process(submission: claim)
       end
 

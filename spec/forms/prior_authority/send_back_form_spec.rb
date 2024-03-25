@@ -7,7 +7,7 @@ RSpec.describe PriorAuthority::SendBackForm do
   let(:further_information_explanation) { 'foo' }
   let(:incorrect_information_explanation) { 'bar' }
 
-  describe '#comment' do
+  describe '#comments' do
     context 'when further information is requested' do
       let(:params) do
         {
@@ -16,7 +16,7 @@ RSpec.describe PriorAuthority::SendBackForm do
         }
       end
 
-      it { expect(subject.comment).to eq further_information_explanation }
+      it { expect(subject.comments).to eq({ further_information: further_information_explanation }) }
     end
 
     context 'when incorrect information is cited' do
@@ -27,7 +27,7 @@ RSpec.describe PriorAuthority::SendBackForm do
         }
       end
 
-      it { expect(subject.comment).to eq incorrect_information_explanation }
+      it { expect(subject.comments).to eq({ incorrect_information: incorrect_information_explanation }) }
     end
 
     context 'when both reasons are given' do
@@ -40,8 +40,9 @@ RSpec.describe PriorAuthority::SendBackForm do
       end
 
       it 'combines the two explanations' do
-        expect(subject.comment).to eq(
-          "#{further_information_explanation} #{incorrect_information_explanation}"
+        expect(subject.comments).to eq(
+          { incorrect_information: incorrect_information_explanation,
+            further_information: further_information_explanation }
         )
       end
     end
@@ -106,7 +107,7 @@ RSpec.describe PriorAuthority::SendBackForm do
         end
 
         it 'adds an event' do
-          expect(submission.events.first).to be_a(Event::SendBack)
+          expect(submission.events.first).to be_a(PriorAuthority::Event::SendBack)
         end
 
         it 'notifies the app store' do

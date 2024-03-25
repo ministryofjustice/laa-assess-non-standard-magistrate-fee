@@ -64,7 +64,7 @@ RSpec.describe Nsm::SendBackForm do
     let(:params) { { claim: claim, state: 'further_info', comment: 'some comment', current_user: user } }
 
     before do
-      allow(Event::SendBack).to receive(:build)
+      allow(Nsm::Event::SendBack).to receive(:build)
       allow(NotifyAppStore).to receive(:process)
     end
 
@@ -77,7 +77,7 @@ RSpec.describe Nsm::SendBackForm do
 
     it 'creates a Decision event' do
       subject.save
-      expect(Event::SendBack).to have_received(:build).with(
+      expect(Nsm::Event::SendBack).to have_received(:build).with(
         submission: claim, comment: 'some comment', previous_state: 'submitted', current_user: user
       )
     end

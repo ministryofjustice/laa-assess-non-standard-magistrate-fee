@@ -31,7 +31,7 @@ module PriorAuthority
     end
 
     def set_default_table_sort_options
-      @sort_by = params.fetch(:sort_by, 'date_created')
+      @sort_by = params.fetch(:sort_by, 'date_updated')
       @sort_direction = params.fetch(:sort_direction, 'descending')
     end
   end

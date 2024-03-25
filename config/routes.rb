@@ -88,7 +88,7 @@ Rails.application.routes.draw do
       collection do
         get :your
         get :open
-        get :assessed
+        get :closed
       end
 
       resources :adjustments, only: :index

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Event::SendBack do
+RSpec.describe Nsm::Event::SendBack do
   subject { described_class.build(submission:, previous_state:, comment:, current_user:) }
 
   let(:submission) { create(:claim, state:) }
@@ -13,7 +13,7 @@ RSpec.describe Event::SendBack do
     expect(subject).to have_attributes(
       submission_id: submission.id,
       submission_version: 1,
-      event_type: 'Event::SendBack',
+      event_type: 'Nsm::Event::SendBack',
       primary_user: current_user,
       details: {
         'field' => 'state',

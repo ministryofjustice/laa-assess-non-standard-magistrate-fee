@@ -22,8 +22,8 @@ module PriorAuthority
     def process_unassignment(comment, application, assignment)
       if assignment
         PriorAuthorityApplication.transaction do
-          Event::Unassignment.build(submission: application, user: assignment.user,
-                                    current_user: current_user, comment: comment)
+          ::Event::Unassignment.build(submission: application, user: assignment.user,
+                                      current_user: current_user, comment: comment)
 
           assignment.destroy
         end

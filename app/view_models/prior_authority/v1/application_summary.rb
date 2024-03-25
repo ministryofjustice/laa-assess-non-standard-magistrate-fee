@@ -84,7 +84,7 @@ module PriorAuthority
       end
 
       def current_section(current_user)
-        if assessed?
+        if assessed? || expired?
           :assessed
         elsif submission.assignments.find_by(user: current_user)
           :your
@@ -113,7 +113,7 @@ module PriorAuthority
         submission.state.in?(PriorAuthorityApplication::ASSESSED_STATES)
       end
 
-      delegate :sent_back?, to: :submission
+      delegate :sent_back?, :expired?, to: :submission
 
       def caseworker
         submission.assignments.first.display_name

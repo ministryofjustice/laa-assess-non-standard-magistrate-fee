@@ -24,8 +24,8 @@ RSpec.describe 'History events' do
                             current_user: caseworker)
     Event::Note.build(submission: claim, current_user: caseworker, note: 'User test note')
     claim.state = 'further_info'
-    Event::SendBack.build(submission: claim, current_user: caseworker, previous_state: 'submitted',
-                          comment: 'Send Back test')
+    Nsm::Event::SendBack.build(submission: claim, current_user: caseworker, previous_state: 'submitted',
+                               comment: 'Send Back test')
     claim.state = 'granted'
     Event::Decision.build(submission: claim, current_user: caseworker, previous_state: 'further_info',
                           comment: 'Decision test')

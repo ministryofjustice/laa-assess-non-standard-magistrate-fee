@@ -35,7 +35,12 @@ RSpec.describe NotifyAppStore do
         described_class.process(submission:)
       end
 
-      describe 'when error during notify process' do
+      it 'queues an email' do
+        expect(Nsm::SubmissionFeedbackMailer).to receive_message_chain(:notify, :deliver_later!)
+        described_class.process(submission:)
+      end
+
+      context 'when error during notify process' do
         before do
           allow(http_notifier).to receive(:put).and_raise('annoying_error')
         end
@@ -46,6 +51,13 @@ RSpec.describe NotifyAppStore do
           expect { described_class.process(submission:) }.not_to raise_error
         end
       end
+
+      context 'when emails should not be triggered' do
+        it 'does not send an email' do
+          expect(Nsm::SubmissionFeedbackMailer).not_to receive(:notify)
+          described_class.process(submission: submission, trigger_email: false)
+        end
+      end
     end
 
     context 'when REDIS_HOST is present' do
@@ -54,7 +66,7 @@ RSpec.describe NotifyAppStore do
       end
 
       it 'schedules the job' do
-        expect(described_class).to receive_message_chain(:set, :perform_later).with(submission)
+        expect(described_class).to receive_message_chain(:set, :perform_later).with(submission, trigger_email: true)
 
         described_class.process(submission:)
       end
@@ -75,6 +87,18 @@ RSpec.describe NotifyAppStore do
         .with(submission:)
 
       subject.perform(submission)
+    end
+
+    it 'queues an email' do
+      expect(Nsm::SubmissionFeedbackMailer).to receive_message_chain(:notify, :deliver_later!)
+      subject.perform(submission)
+    end
+
+    context 'when emails should not be triggered' do
+      it 'does not send an email' do
+        expect(Nsm::SubmissionFeedbackMailer).not_to receive(:notify)
+        subject.perform(submission, trigger_email: false)
+      end
     end
   end
 
