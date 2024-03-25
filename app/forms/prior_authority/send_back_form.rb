@@ -46,9 +46,10 @@ module PriorAuthority
 
       return unless add_draft_send_back_event
 
-      Event::DraftSendBack.build(submission:,
-                                 comment:,
-                                 current_user:)
+      PriorAuthority::Event::DraftSendBack.build(submission:,
+                                                 updates_needed:,
+                                                 comments:,
+                                                 current_user:)
     end
 
     def update_local_records
@@ -60,22 +61,19 @@ module PriorAuthority
     end
 
     def save_event
-      previous_state = submission.state
-      Event::SendBack.build(submission:,
-                            comment:,
-                            previous_state:,
-                            current_user:)
+      PriorAuthority::Event::SendBack.build(submission:,
+                                            updates_needed:,
+                                            comments:,
+                                            current_user:)
     end
 
-    def comment
-      if updates_needed.select(&:present?) == [FURTHER_INFORMATION]
-        return further_information_explanation
-      elsif updates_needed.select(&:present?) == [INCORRECT_INFORMATION]
-        return incorrect_information_explanation
-      end
+    def comments
+      ret = {}
+      ret[:further_information] = further_information_explanation if updates_needed.include?(FURTHER_INFORMATION)
 
-      [further_information_explanation, incorrect_information_explanation].select(&:present?)
-                                                                          .join(' ')
+      ret[:incorrect_information] = incorrect_information_explanation if updates_needed.include?(INCORRECT_INFORMATION)
+
+      ret
     end
 
     def updates_needed_chosen

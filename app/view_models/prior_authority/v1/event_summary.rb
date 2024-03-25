@@ -33,8 +33,10 @@ module PriorAuthority
 
       def comment
         case event.event_type
-        when 'Event::DraftSendBack', 'Event::DraftDecision'
+        when 'PriorAuthority::Event::DraftSendBack', 'Event::DraftDecision'
           nil
+        when 'PriorAuthority::Event::SendBack'
+          event.details['comments'].values.join(' ')
         else
           event.details['comment']
         end
@@ -49,8 +51,8 @@ module PriorAuthority
           'Event::Unassignment' => 'prior_authority.events.unassigned',
           'Event::DraftDecision' => 'prior_authority.events.draft_decision',
           'Event::Decision' => "prior_authority.events.decision_#{event.details['to']}",
-          'Event::DraftSendBack' => 'prior_authority.events.draft_send_back',
-          'Event::SendBack' => 'prior_authority.events.sent_back',
+          'PriorAuthority::Event::DraftSendBack' => 'prior_authority.events.draft_send_back',
+          'PriorAuthority::Event::SendBack' => 'prior_authority.events.sent_back',
           'Event::Expiry' => 'prior_authority.events.expired'
         }
       end

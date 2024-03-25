@@ -13,7 +13,7 @@ en:
     title: New claim received
   event/note:
     title: Caseworker note
-  event/send_back:
+  nsm/event/send_back:
     title:
       further_info: Claim sent back to provider
       provider_requested: Claim sent back to provider

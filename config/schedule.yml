@@ -6,5 +6,5 @@ expiry_job:
   # Arbitrary out-of-office-hours time that avoids round number times,
   #  which might be congested by other processes
   cron: "3 23 * * *"
-  class: "ExpireSendBacks"
+  class: "ExpireSendbacks"
   queue: pooling
