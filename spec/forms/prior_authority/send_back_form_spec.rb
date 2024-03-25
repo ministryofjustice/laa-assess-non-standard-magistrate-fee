@@ -96,6 +96,7 @@ RSpec.describe PriorAuthority::SendBackForm do
         it 'stores information' do
           expect(submission.data['updates_needed']).to include('further_information')
           expect(submission.data['further_information_explanation']).to eq further_information_explanation
+          expect(submission.data['further_information'][0]['caseworker_id']).to eq user.id
         end
 
         it 'sets a resubmission deadline' do
