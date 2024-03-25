@@ -29,11 +29,40 @@ class PullLatestVersionData < ApplicationJob
       data: json_data['application']
     )
 
+    # performed here to avoid slow transactions as requires API call to the OS API
+    cached_autograntable = autograntable(submission:)
+
+    PriorAuthorityApplication.transaction do
+      update_submission(submission, json_data)
+
+      autogrant(submission) if cached_autograntable
+    end
+  end
+
+  def autograntable(submission:)
+    # performed here to avoid slow transactions as requires API call to the OS API
+    Autograntable.new(submission:).grantable?
+  rescue LocationService::NotFoundError
+    false
+  rescue LocationService::LocationError => e
+    Sentry.capture_exception(e)
+    false
+  end
+
+  def update_submission(submission, json_data)
     submission.save!
 
     json_data['events']&.each do |event|
       submission.events.rehydrate!(event)
     end
     Event::NewVersion.build(submission:)
+  end
+
+  def autogrant(submission)
+    previous_state = submission.state
+    submission.update!(state: PriorAuthorityApplication::AUTO_GRANT)
+
+    Event::AutoDecision.build(submission:, previous_state:)
+    NotifyAppStore.process(submission:)
   end
 end

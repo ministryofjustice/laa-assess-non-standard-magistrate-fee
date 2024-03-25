@@ -4,6 +4,7 @@ en:
       not_assigned: Not assigned
       statuses:
         submitted: Not assigned
+        auto_grant: Auto granted
         in_progress: In progress
         granted: Granted
         part_grant: Part granted

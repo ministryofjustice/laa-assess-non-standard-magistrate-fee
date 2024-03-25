@@ -6,6 +6,7 @@ RSpec.describe PullLatestVersionData do
                     id: id,
                     current_version: current_version,
                     assign_attributes: true,
+                    application_type: 'crm7',
                     save!: true,
                     data: data,
                     namespace: Nsm)
@@ -212,6 +213,86 @@ RSpec.describe PullLatestVersionData do
       it 'updates the data' do
         subject.perform(application)
         expect(application.data).to eq data.with_indifferent_access
+      end
+    end
+
+    context 'when pulled data can be auto-granted' do
+      let(:autograntable) { double(Autograntable, grantable?: true) }
+      let(:data) { build(:prior_authority_data) }
+
+      before do
+        allow(Autograntable).to receive(:new).and_return(autograntable)
+        allow(Event::AutoDecision).to receive(:build)
+        allow(NotifyAppStore).to receive(:process)
+      end
+
+      it 'updates the state to auto_grant' do
+        subject.perform(application)
+        expect(application.state).to eq('auto_grant')
+      end
+
+      it 'create an event record' do
+        subject.perform(application)
+        expect(Event::AutoDecision).to have_received(:build).with(submission: application, previous_state: 'submitted')
+      end
+
+      it 'notifys the app store' do
+        subject.perform(application)
+        expect(NotifyAppStore).to have_received(:process).with(submission: application)
+      end
+    end
+
+    context 'when autogrant check returns a LocationService::NotFoundError' do
+      let(:autograntable) { double(Autograntable) }
+      let(:data) { build(:prior_authority_data) }
+
+      before do
+        allow(autograntable).to receive(:grantable?).and_raise(LocationService::NotFoundError)
+        allow(Autograntable).to receive(:new).and_return(autograntable)
+        allow(Event::AutoDecision).to receive(:build)
+        allow(NotifyAppStore).to receive(:process)
+        allow(Sentry).to receive(:capture_exception)
+      end
+
+      it 'updates the data' do
+        subject.perform(application)
+        expect(application.data).to eq data.with_indifferent_access
+        expect(Sentry).not_to have_received(:capture_exception)
+      end
+    end
+
+    context 'when autogrant check returns a LocationService error' do
+      let(:autograntable) { double(Autograntable) }
+      let(:data) { build(:prior_authority_data) }
+
+      before do
+        allow(autograntable).to receive(:grantable?).and_raise(LocationService::ResponseError)
+        allow(Autograntable).to receive(:new).and_return(autograntable)
+        allow(Event::AutoDecision).to receive(:build)
+        allow(NotifyAppStore).to receive(:process)
+        allow(Sentry).to receive(:capture_exception)
+      end
+
+      it 'updates the data' do
+        subject.perform(application)
+        expect(application.data).to eq data.with_indifferent_access
+        expect(Sentry).to have_received(:capture_exception)
+      end
+    end
+
+    context 'when autogrant check returns an unknown error' do
+      let(:autograntable) { double(Autograntable) }
+      let(:data) { build(:prior_authority_data) }
+
+      before do
+        allow(autograntable).to receive(:grantable?).and_raise('unknown_error')
+        allow(Autograntable).to receive(:new).and_return(autograntable)
+        allow(Event::AutoDecision).to receive(:build)
+        allow(NotifyAppStore).to receive(:process)
+      end
+
+      it 'raise the erroor' do
+        expect { subject.perform(application) }.to raise_error('unknown_error')
       end
     end
   end

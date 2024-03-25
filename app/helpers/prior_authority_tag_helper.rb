@@ -22,6 +22,7 @@ module PriorAuthorityTagHelper
       'part_grant' => 'blue',
       'granted' => 'green',
       'rejected' => 'red',
+      'auto_grant' => 'green',
       'expired' => 'red'
     }.fetch(augmented_state(submission))
   end

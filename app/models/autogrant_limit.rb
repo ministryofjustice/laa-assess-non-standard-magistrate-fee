@@ -1,0 +1,2 @@
+class AutograntLimit < ApplicationRecord
+end

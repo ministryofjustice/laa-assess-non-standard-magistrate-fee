@@ -1,4 +1,9 @@
 class LocationService
+  LocationError = Class.new(StandardError)
+  ResponseError = Class.new(LocationError)
+  NotFoundError = Class.new(LocationError)
+  InvalidFormatError = Class.new(LocationError)
+
   class << self
     def inside_m25?(postcode)
       easting, northing = os_coordinates_from_postcode(postcode)
@@ -10,22 +15,23 @@ class LocationService
 
     def os_coordinates_from_postcode(postcode)
       canonical = postcode.delete(' ').upcase
-      results = HTTParty.get("https://api.os.uk/search/names/v1/find?query=#{canonical}&key=#{ENV.fetch('OS_API_KEY',
-                                                                                                        nil)}")
+      results = HTTParty.get("https://api.os.uk/search/names/v1/find?query=#{canonical}&key=#{ENV.fetch('OS_API_KEY', nil)}")
       process_api_response(results, canonical)
     end
 
     def process_api_response(payload, postcode)
-      raise "OS API returned unexpected format when queried for postcode #{postcode}" unless payload['results']
+      raise ResponseError, "OS API returned unexpected format when queried for postcode #{postcode}" unless payload['results']
 
       matching = payload['results'].find { _1.dig('GAZETTEER_ENTRY', 'ID') == postcode }
 
-      raise "OS API returned no matching entry for postcode #{postcode}" unless matching
+      raise NotFoundError, "OS API returned no matching entry for postcode #{postcode}" unless matching
 
       easting = matching.dig('GAZETTEER_ENTRY', 'GEOMETRY_X')
       northing = matching.dig('GAZETTEER_ENTRY', 'GEOMETRY_Y')
 
-      raise "OS API did not provide coordinates in expected format for postcode #{postcode}" unless easting && northing
+      unless easting && northing
+        raise InvalidFormatError, "OS API did not provide coordinates in expected format for postcode #{postcode}"
+      end
 
       [easting, northing]
     end

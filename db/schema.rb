@@ -25,6 +25,21 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_13_123836) do
     t.index ["user_id"], name: "index_assignments_on_user_id"
   end
 
+  create_table "autogrant_limits", force: :cascade do |t|
+    t.string "service"
+    t.string "unit_type"
+    t.date "start_date"
+    t.integer "max_units"
+    t.decimal "max_rate_london", precision: 10, scale: 2
+    t.decimal "max_rate_non_london", precision: 10, scale: 2
+    t.integer "travel_hours"
+    t.decimal "travel_rate_london", precision: 10, scale: 2
+    t.decimal "travel_rate_non_london", precision: 10, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["service", "start_date"], name: "index_autogrant_limits_on_service_and_start_date", unique: true
+  end
+
   create_table "events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "submission_id", null: false
     t.integer "submission_version"
