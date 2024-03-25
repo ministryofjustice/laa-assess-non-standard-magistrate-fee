@@ -15,7 +15,7 @@ module PriorAuthority
           application_total: application_total,
           part_grant_total: adjusted_total,
           caseworker_decision_explanation: comments,
-          date: DateTime.now.strftime('%d %B %Y'),
+          date: DateTime.now.to_fs(:stamp),
         }
       end
 

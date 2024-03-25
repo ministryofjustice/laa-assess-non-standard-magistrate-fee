@@ -17,4 +17,8 @@ class Submission < ApplicationRecord
   def latest_decision_event
     events.latest_decision
   end
+
+  def latest_provider_update_event
+    events.latest_provider_update
+  end
 end

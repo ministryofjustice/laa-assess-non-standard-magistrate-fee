@@ -41,7 +41,7 @@ RSpec.describe Nsm::V1::DetailsOfClaim do
       expect(subject.data).to eq([
                                    { title: 'Unique file number', value: 'ABC/12345' },
                                    { title: 'Type of claim', value: 'Non-standard fee - magistrate' },
-                                   { title: 'Representation order date', value: '01 February 2023' },
+                                   { title: 'Representation order date', value: '1 February 2023' },
                                  ])
     end
   end

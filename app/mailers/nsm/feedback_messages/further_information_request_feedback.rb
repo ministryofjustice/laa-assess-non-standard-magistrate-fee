@@ -14,9 +14,9 @@ module Nsm
           main_defendant_name: defendant_name,
           defendant_reference: defendant_reference_string,
           claim_total: claim_total,
-          date_to_respond_by: 7.days.from_now.strftime('%d %B %Y'),
+          date_to_respond_by: 7.days.from_now.to_fs(:stamp),
           caseworker_information_requested: @comment,
-          date: DateTime.now.strftime('%d %B %Y'),
+          date: DateTime.now.to_fs(:stamp),
         }
       end
     end

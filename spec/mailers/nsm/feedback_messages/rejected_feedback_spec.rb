@@ -14,7 +14,7 @@ RSpec.describe Nsm::FeedbackMessages::RejectedFeedback do
   let(:defendant_reference) { 'MAAT ID: AB12123' }
   let(:claim_total) { 0 }
   let(:caseworker_decision_explanation) { 'Test Explanation' }
-  let(:date) { DateTime.now.strftime('%d %B %Y') }
+  let(:date) { DateTime.now.to_fs(:stamp) }
 
   describe '#template' do
     it 'has correct template id' do

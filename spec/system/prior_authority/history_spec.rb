@@ -29,6 +29,12 @@ RSpec.describe 'History events' do
                                           current_user: caseworker,
                                           comments: { further_information: 'send back comment' },
                                           updates_needed: ['further_information']).update(created_at: 3.hours.ago)
+    Event::ProviderUpdated.create!(submission: application,
+                                   details: { comment: 'Foo', corrected_info: ['bar'] },
+                                   created_at: 2.hours.ago)
+    Event::ProviderUpdated.create!(submission: application,
+                                   details: {  corrected_info: ['bar'] },
+                                   created_at: 1.hour.ago)
   end
 
   it 'shows all (visible) events in the history' do
@@ -40,13 +46,15 @@ RSpec.describe 'History events' do
     ).map { _1.text.strip.gsub(/\s+/, ' ') }
 
     expect(history).to eq(
-      ['01 February 20236:00am', 'case worker', 'Sent back send back comment',
-       '01 February 20235:00am', 'case worker', 'case worker saved a draft',
-       '01 February 20234:00am', 'case worker', 'Granted decision comment',
-       '01 February 20233:00am', 'case worker', 'case worker saved a draft',
-       '01 February 20232:00am', 'super visor', 'Self-assigned by super visor manual assignment comment',
-       '01 February 20231:00am', 'super visor', 'Unassigned by super visor unassignment comment',
-       '01 February 202312:00am', 'case worker', 'Assigned to case worker',
+      ['1 February 20238:00am', 'N/A', 'Received Received from Provider with changes to data',
+       '1 February 20237:00am', 'N/A', 'Received Received from Provider with further information and changes to data',
+       '1 February 20236:00am', 'case worker', 'Sent back Sent back to Provider for further information',
+       '1 February 20235:00am', 'case worker', 'case worker saved a draft',
+       '1 February 20234:00am', 'case worker', 'Granted decision comment',
+       '1 February 20233:00am', 'case worker', 'case worker saved a draft ',
+       '1 February 20232:00am', 'super visor', 'Self-assigned by super visor manual assignment comment',
+       '1 February 20231:00am', 'super visor', 'Unassigned by super visor unassignment comment',
+       '1 February 202312:00am', 'case worker', 'Assigned to case worker',
        '31 January 202311:00pm', 'N/A', 'Received']
     )
   end

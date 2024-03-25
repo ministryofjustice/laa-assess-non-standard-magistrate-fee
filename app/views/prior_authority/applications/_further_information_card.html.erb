@@ -1,0 +1,3 @@
+<%= govuk_summary_card(title: t('.further_information_request', date: model.requested_at_str), html_attributes: { id: "further-information-#{n}" }) do %>
+  <%= govuk_summary_list(rows: model.card_rows) %>
+<% end %>

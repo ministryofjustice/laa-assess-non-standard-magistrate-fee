@@ -61,3 +61,6 @@ en:
       firm_details: Firm details
       no_alternative_quote_reason: Reason for no alternative quotes
       primary_quote_postcode: Service provider postcode
+      caseworker: Caseworker
+      information_request: Information request
+      provider_response: Provider response

@@ -1,1 +1,4 @@
-<%= govuk_summary_card(title: t('.reason_for_prior_authority')) { _1.with_summary_list(rows: model.card_rows) } %>
+<%= govuk_summary_card(title: t('.reason_for_prior_authority'), html_attributes: { id: 'reason-why' }) do %>
+  <%= render 'amended' if @details.section_amended?('reason_why') %>
+  <%= govuk_summary_list(rows: model.card_rows) %>
+<% end %>

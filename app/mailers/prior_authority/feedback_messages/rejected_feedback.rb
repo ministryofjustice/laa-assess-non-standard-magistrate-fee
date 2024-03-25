@@ -14,7 +14,7 @@ module PriorAuthority
           defendant_name: defendant_name,
           application_total: application_total,
           caseworker_decision_explanation: comments,
-          date: DateTime.now.strftime('%d %B %Y'),
+          date: DateTime.now.to_fs(:stamp),
         }
       end
     end

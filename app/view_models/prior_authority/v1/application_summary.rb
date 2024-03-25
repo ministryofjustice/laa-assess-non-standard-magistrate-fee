@@ -113,7 +113,7 @@ module PriorAuthority
         submission.state.in?(PriorAuthorityApplication::ASSESSED_STATES)
       end
 
-      delegate :sent_back?, :expired?, to: :submission
+      delegate :sent_back?, :expired?, :provider_updated?, to: :submission
 
       def caseworker
         submission.assignments.first.display_name

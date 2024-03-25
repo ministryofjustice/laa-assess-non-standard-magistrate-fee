@@ -35,6 +35,22 @@
           </p>
         <% end %>
       </div>
+    <% elsif @summary.provider_updated? %>
+      <div class="govuk-inset-text">
+        <p><strong><%= t(".provider_updated", date: @summary.date_updated_str) %></strong></p>
+        <ul class="govuk-list">
+          <% if @details.provider_added_further_information? %>
+            <li>
+              <%= link_to t('.further_information_provided'), '#further-information-1', class: "govuk-link--no-visited-state" %>
+            </li>
+          <% end %>
+          <% @details.updated_fields.each do |field| %>
+            <li>
+              <%= link_to t(".updated_field", field: t(".updated_fields.#{field[:label]}", n: field[:n])), field[:anchor], class: "govuk-link--no-visited-state" %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
     <% end %>
     <%= render 'overview_card', model: @details.overview_card %>
 
@@ -56,6 +72,13 @@
 
     <h2 class="govuk-heading-m"><%= t('.contact_details') %></h2>
     <%= render 'case_contact_card', model: @details.case_contact_card %>
+
+    <% if @details.further_information_cards.any? %>
+      <h2 class="govuk-heading-m"><%= t('.further_information_request') %></h2>
+      <% @details.further_information_cards.each_with_index do |further_information_card, index| %>
+        <%= render 'further_information_card', model: further_information_card, n: index + 1 %>
+      <% end %>
+    <% end %>
 
     <% if @summary.can_edit?(current_user) %>
       <%= render 'prior_authority/shared/application_buttons', application_summary: @summary %>

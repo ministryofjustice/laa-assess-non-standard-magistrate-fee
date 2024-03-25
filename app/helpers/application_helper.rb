@@ -38,7 +38,7 @@ module ApplicationHelper
       t("helpers.time_period.minutes.#{style}", count: period % 60)
   end
 
-  def format_in_zone(time_or_string, format: '%d %B %Y')
+  def format_in_zone(time_or_string, format: Date::DATE_FORMATS[:stamp])
     return unless time_or_string
 
     time_or_string = DateTime.parse(time_or_string) if time_or_string.is_a?(String)

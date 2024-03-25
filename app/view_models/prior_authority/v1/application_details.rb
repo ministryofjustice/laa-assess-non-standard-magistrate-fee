@@ -75,6 +75,34 @@ module PriorAuthority
       def corrections_requested?
         updates_needed.include?(SendBackForm::INCORRECT_INFORMATION)
       end
+
+      delegate :latest_provider_update_event, to: :submission
+
+      def provider_added_further_information?
+        latest_provider_update_event.details['comment'].present?
+      end
+
+      def updated_fields
+        (latest_provider_update_event.details['corrected_info'] || []).map do |section_name|
+          {
+            label: section_name.starts_with?('alternative_quote_') ? 'alternative_quote' : section_name,
+            n: section_name.gsub('alternative_quote_', ''),
+            anchor: "##{section_name == 'ufn' ? 'overview' : section_name.tr('_', '-')}"
+          }
+        end
+      end
+
+      def section_amended?(provider_section_name)
+        latest_provider_update_event&.details&.dig('corrected_info')&.include?(provider_section_name)
+      end
+
+      def further_information_cards
+        return [] unless submission.data['further_information']
+
+        submission.data['further_information'].select { _1['information_supplied'].present? }.map do |further_information|
+          FurtherInformationCard.new(self, further_information)
+        end
+      end
     end
   end
 end
