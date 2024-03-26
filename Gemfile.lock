@@ -390,7 +390,7 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.1.0)
-    rdoc (6.6.2)
+    rdoc (6.6.3.1)
       psych (>= 4.0.0)
     redis-client (0.20.0)
       connection_pool
@@ -453,7 +453,7 @@ GEM
     rubocop-performance (1.20.2)
       rubocop (>= 1.48.1, < 2.0)
       rubocop-ast (>= 1.30.0, < 2.0)
-    rubocop-rails (2.24.0)
+    rubocop-rails (2.24.1)
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 1.33.0, < 2.0)
@@ -601,7 +601,7 @@ DEPENDENCIES
   rspec_junit_formatter
   rubocop
   rubocop-performance
-  rubocop-rails
+  rubocop-rails (>= 2.24.1)
   rubocop-rspec
   selenium-webdriver
   sentry-rails
