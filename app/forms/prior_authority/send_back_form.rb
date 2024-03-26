@@ -53,11 +53,27 @@ module PriorAuthority
     end
 
     def update_local_records
-      submission.data['resubmission_deadline'] = Rails.application.config.x.rfi.resubmission_window.from_now
+      submission.data['resubmission_deadline'] = resubmission_deadline
+
+      append_further_information_object if updates_needed.include?(FURTHER_INFORMATION)
 
       submission.update!(state: PriorAuthorityApplication::SENT_BACK)
       submission.assignments.destroy_all
       save_event
+    end
+
+    def resubmission_deadline
+      Rails.application.config.x.rfi.resubmission_window.from_now
+    end
+
+    def append_further_information_object
+      submission.data['further_information'] ||= []
+
+      submission.data['further_information'] << {
+        caseworker_id: current_user.id,
+        information_requested: further_information_explanation,
+        requested_at: DateTime.current
+      }
     end
 
     def save_event
