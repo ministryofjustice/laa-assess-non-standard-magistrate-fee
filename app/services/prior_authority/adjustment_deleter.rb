@@ -66,7 +66,7 @@ module PriorAuthority
     def create_event(field, type, from, to_field, id_field)
       linked = { type: type, id: id_field }
       details = { field: field, from: from, to: to_field }
-      Event::UndoEdit.build(submission:, linked:, details:, current_user:)
+      ::Event::UndoEdit.build(submission:, linked:, details:, current_user:)
     end
   end
 end
