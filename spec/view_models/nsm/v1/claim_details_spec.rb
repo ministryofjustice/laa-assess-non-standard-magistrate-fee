@@ -57,7 +57,7 @@ RSpec.describe Nsm::V1::ClaimDetails do
                                      { title: 'Work done before order was granted', value: 'Yes' },
                                      { title: 'Date of work before order was granted', value: '20 January 2023' },
                                      { title: 'Work was done after last hearing', value: 'Yes' },
-                                     { title: 'Date of work after last hearing', value: '02 February 2023' }
+                                     { title: 'Date of work after last hearing', value: '2 February 2023' }
                                    ])
       end
     end

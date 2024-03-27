@@ -1,1 +1,4 @@
-<%= govuk_summary_card(title: t('.application_details')) { _1.with_summary_list(rows: model.card_rows) } %>
+<%= govuk_summary_card(title: t('.application_details'), html_attributes: { id: 'overview' }) do %>
+  <%= render 'amended' if @details.section_amended?('ufn') %>
+  <%= govuk_summary_list(rows: model.card_rows) %>
+<% end %>

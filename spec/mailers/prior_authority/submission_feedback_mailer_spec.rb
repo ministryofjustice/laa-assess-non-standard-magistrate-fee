@@ -117,7 +117,7 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
 
   context 'with further information state' do
     let(:feedback_template) { 'c8abf9ee-5cfe-44ab-9253-72111b7a35ba' }
-    let(:date_to_respond_by) { 14.days.from_now.strftime('%d %B %Y') }
+    let(:date_to_respond_by) { 14.days.from_now.to_fs(:stamp) }
 
     let(:caseworker_information_requested) do
       "Please correct this information...\n\n" \

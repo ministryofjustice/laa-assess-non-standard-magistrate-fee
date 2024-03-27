@@ -40,12 +40,28 @@ en:
           part_grant: Part granted
           granted: Granted
         sent_back: Sent back to provider %{date}
+        provider_updated: Provider updated %{date}
         further_information: 'Further information:'
         incorrect_information: 'Incorrect information:'
+        further_information_provided: 'Further information'
+        updated_field: '%{field} - updated'
+        updated_fields:
+          ufn: Application details
+          case_contact: Case contact
+          client_detail: Client details
+          case_detail: Case details
+          hearing_detail: Hearing details
+          next_hearing: Next hearing
+          primary_quote: Primary quote
+          reason_why: Reason for prior authority
+          alternative_quote: Alternative quote %{n}
         review_adjustments: Review quote adjustments
         about_the_request: About the request
         about_the_case: About the case
         contact_details: Contact details
+        further_information_request: Further information request
+      amended:
+        amended_by_provider: Amended by provider
       overview_card:
         application_details: Application details
       primary_quote_card:
@@ -74,3 +90,5 @@ en:
         next_hearing: Next hearing
       case_contact_card:
         case_contact: Case contact
+      further_information_card:
+        further_information_request: Further information request %{date}

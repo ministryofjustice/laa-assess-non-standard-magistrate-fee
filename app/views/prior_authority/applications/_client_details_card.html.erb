@@ -1,1 +1,4 @@
-<%= govuk_summary_card(title: t('.client_details')) { _1.with_summary_list(rows: model.card_rows) } %>
+<%= govuk_summary_card(title: t('.client_details'), html_attributes: { id: 'client-detail' }) do %>
+  <%= render 'amended' if @details.section_amended?('client_detail') %>
+  <%= govuk_summary_list(rows: model.card_rows) %>
+<% end %>

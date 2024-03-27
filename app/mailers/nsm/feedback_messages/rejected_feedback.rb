@@ -15,7 +15,7 @@ module Nsm
           defendant_reference: defendant_reference_string,
           claim_total: claim_total,
           caseworker_decision_explanation: @comment,
-          date: DateTime.now.strftime('%d %B %Y'),
+          date: DateTime.now.to_fs(:stamp),
         }
       end
     end

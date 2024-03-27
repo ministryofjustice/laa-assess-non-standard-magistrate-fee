@@ -5,13 +5,18 @@ en:
       assigned: Assigned to %{caseworker}
       unassigned: Unassigned by %{caseworker}
       self_assigned: Self-assigned by %{caseworker}
-      draft_decision: '%{caseworker} saved a draft decision'
+      draft_decision: '%{caseworker} saved a draft'
       decision_granted: Granted
       decision_part_grant: Part granted
       decision_rejected: Rejected
       draft_send_back: '%{caseworker} saved a draft'
       sent_back: Sent back
       expired: Expired
+      provider_updated: Received
+      further_information: further information
+      incorrect_information: changes to data
+      send_back_comment: Sent back to Provider for %{change_types}
+      provider_updated_comment: Received from Provider with %{change_types}
       na: N/A
       index:
         page_title: Application history

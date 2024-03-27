@@ -13,7 +13,7 @@ module PriorAuthority
           ufn: ufn,
           defendant_name: defendant_name,
           application_total: application_total,
-          date: DateTime.now.strftime('%d %B %Y'),
+          date: DateTime.now.to_fs(:stamp),
         }
       end
     end

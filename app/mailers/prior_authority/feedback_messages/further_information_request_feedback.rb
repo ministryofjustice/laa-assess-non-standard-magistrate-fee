@@ -13,9 +13,9 @@ module PriorAuthority
           ufn: ufn,
           defendant_name: defendant_name,
           application_total: application_total,
-          date_to_respond_by: 14.days.from_now.strftime('%d %B %Y'),
+          date_to_respond_by: Rails.configuration.x.rfi.resubmission_window.from_now.to_fs(:stamp),
           caseworker_information_requested: comments,
-          date: DateTime.now.strftime('%d %B %Y'),
+          date: DateTime.now.to_fs(:stamp),
         }
       end
 

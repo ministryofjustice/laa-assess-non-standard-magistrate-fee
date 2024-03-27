@@ -16,15 +16,23 @@ module PriorAuthority
                   ])
       end
 
+      def caseworker_name
+        caseworker&.display_name || I18n.t('prior_authority.events.na')
+      end
+
       def caseworker
-        event.primary_user&.display_name || I18n.t('prior_authority.events.na')
+        if event.respond_to?(:secondary_user)
+          event.secondary_user || event.primary_user
+        else
+          event.primary_user
+        end
       end
 
       def heading
         key = heading_keys[event.event_type]
         raise "Prior Authority event summaries don't know how to display events of type #{event.event_type}" unless key
 
-        I18n.t(key, caseworker:)
+        I18n.t(key, caseworker: caseworker_name)
       end
 
       def comment?
@@ -36,7 +44,9 @@ module PriorAuthority
         when 'PriorAuthority::Event::DraftSendBack', 'Event::DraftDecision'
           nil
         when 'PriorAuthority::Event::SendBack'
-          event.details['comments'].values.join(' ')
+          send_back_comment
+        when 'Event::ProviderUpdated'
+          provider_updated_comment
         else
           event.details['comment']
         end
@@ -53,7 +63,8 @@ module PriorAuthority
           'Event::Decision' => "prior_authority.events.decision_#{event.details['to']}",
           'PriorAuthority::Event::DraftSendBack' => 'prior_authority.events.draft_send_back',
           'PriorAuthority::Event::SendBack' => 'prior_authority.events.sent_back',
-          'Event::Expiry' => 'prior_authority.events.expired'
+          'Event::Expiry' => 'prior_authority.events.expired',
+          'Event::ProviderUpdated' => 'prior_authority.events.provider_updated'
         }
       end
 
@@ -63,6 +74,24 @@ module PriorAuthority
         else
           'prior_authority.events.assigned'
         end
+      end
+
+      def send_back_comment
+        I18n.t('prior_authority.events.send_back_comment',
+               change_types: change_types(event.details['updates_needed'].include?('further_information'),
+                                          event.details['updates_needed'].include?('incorrect_information')))
+      end
+
+      def provider_updated_comment
+        I18n.t('prior_authority.events.provider_updated_comment',
+               change_types: change_types(event.details['comment'].present?, event.details['corrected_info'].present?))
+      end
+
+      def change_types(further_information, incorrect_information)
+        [
+          (I18n.t('prior_authority.events.further_information') if further_information),
+          (I18n.t('prior_authority.events.incorrect_information') if incorrect_information)
+        ].compact.to_sentence
       end
     end
   end
