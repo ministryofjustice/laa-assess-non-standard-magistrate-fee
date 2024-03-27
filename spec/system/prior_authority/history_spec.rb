@@ -51,7 +51,7 @@ RSpec.describe 'History events' do
        '1 February 20236:00am', 'case worker', 'Sent back Sent back to Provider for further information',
        '1 February 20235:00am', 'case worker', 'case worker saved a draft',
        '1 February 20234:00am', 'case worker', 'Granted decision comment',
-       '1 February 20233:00am', 'case worker', 'case worker saved a draft ',
+       '1 February 20233:00am', 'case worker', 'case worker saved a draft',
        '1 February 20232:00am', 'super visor', 'Self-assigned by super visor manual assignment comment',
        '1 February 20231:00am', 'super visor', 'Unassigned by super visor unassignment comment',
        '1 February 202312:00am', 'case worker', 'Assigned to case worker',

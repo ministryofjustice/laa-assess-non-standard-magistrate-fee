@@ -36,11 +36,11 @@ class Event < ApplicationRecord
     end
 
     def latest_decision
-      order(created_at: :desc).find_by(event_type: 'Event::Decision')
+      where(event_type: 'Event::Decision').order(:created_at).last
     end
 
     def latest_provider_update
-      order(created_at: :desc).find_by(event_type: 'Event::ProviderUpdated')
+      where(event_type: 'Event::ProviderUpdated').order(:created_at).last
     end
 
     private
