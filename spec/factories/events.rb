@@ -100,5 +100,15 @@ FactoryBot.define do
         }
       end
     end
+
+    trait :provider_updated do
+      event_type { Event::ProviderUpdated.to_s }
+      details do
+        {
+          comment: 'Added more info',
+          corrected_info: %w[ufn case_contact]
+        }
+      end
+    end
   end
 end

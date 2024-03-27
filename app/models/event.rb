@@ -7,16 +7,17 @@ class Event < ApplicationRecord
   PUBLIC_EVENTS = ['Event::Decision', 'PriorAuthority::Event::SendBack'].freeze
   HISTORY_EVENTS = [
     'Event::Assignment',
+    'Event::ChangeRisk',
     'Event::Decision',
     'Event::DraftDecision',
-    'Event::ChangeRisk',
+    'Event::Expiry',
     'Event::NewVersion',
     'Event::Note',
-    'Nsm::Event::SendBack',
-    'PriorAuthority::Event::SendBack',
-    'PriorAuthority::Event::DraftSendBack',
+    'Event::ProviderUpdated',
     'Event::Unassignment',
-    'Event::Expiry',
+    'Nsm::Event::SendBack',
+    'PriorAuthority::Event::DraftSendBack',
+    'PriorAuthority::Event::SendBack',
   ].freeze
   scope :history, -> { where(event_type: HISTORY_EVENTS).order(created_at: :desc) }
 
@@ -35,7 +36,11 @@ class Event < ApplicationRecord
     end
 
     def latest_decision
-      order(created_at: :desc).find_by(event_type: 'Event::Decision')
+      where(event_type: 'Event::Decision').order(:created_at).last
+    end
+
+    def latest_provider_update
+      where(event_type: 'Event::ProviderUpdated').order(:created_at).last
     end
 
     private

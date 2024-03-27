@@ -9,7 +9,7 @@ RSpec.describe Nsm::SubmissionFeedbackMailer, type: :mailer do
   let(:main_defendant_name) { 'Tracy Linklater' }
   let(:defendant_reference) { 'MAAT ID: AB12123' }
   let(:claim_total) { 0 }
-  let(:date) { DateTime.now.strftime('%d %B %Y') }
+  let(:date) { DateTime.now.to_fs(:stamp) }
 
   describe 'granted' do
     context 'with maat id' do
@@ -69,7 +69,7 @@ RSpec.describe Nsm::SubmissionFeedbackMailer, type: :mailer do
   describe 'further information' do
     let(:claim) { build(:claim, state: 'further_information') }
     let(:feedback_template) { '9ecdec30-83d7-468d-bec2-cf770a2c9828' }
-    let(:date_to_respond_by) { 7.days.from_now.strftime('%d %B %Y') }
+    let(:date_to_respond_by) { 7.days.from_now.to_fs(:stamp) }
     let(:caseworker_information_requested) { '' }
     let(:personalisation) do
       [laa_case_reference:, ufn:, main_defendant_name:,
@@ -93,7 +93,7 @@ RSpec.describe Nsm::SubmissionFeedbackMailer, type: :mailer do
   describe 'other status' do
     let(:claim) { build(:claim, state: 'fake') }
     let(:feedback_template) { '9ecdec30-83d7-468d-bec2-cf770a2c9828' }
-    let(:date_to_respond_by) { 7.days.from_now.strftime('%d %B %Y') }
+    let(:date_to_respond_by) { 7.days.from_now.to_fs(:stamp) }
     let(:caseworker_information_requested) { '' }
     let(:personalisation) do
       [laa_case_reference:, ufn:, main_defendant_name:, defendant_reference:,

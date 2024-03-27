@@ -122,7 +122,7 @@ RSpec.describe PriorAuthority::V1::ApplicationDetails do
     end
     let(:expected_rows) do
       [{ key: { text: 'Client name' }, value: { text: 'Sally Smith' } },
-       { key: { text: 'Date of birth' }, value: { text: '01 January 2000' } }]
+       { key: { text: 'Date of birth' }, value: { text: '1 January 2000' } }]
     end
 
     it { expect(subject.client_details_card.card_rows).to eq(expected_rows) }
@@ -133,7 +133,7 @@ RSpec.describe PriorAuthority::V1::ApplicationDetails do
       { next_hearing: true, next_hearing_date: '2025-01-01' }
     end
     let(:expected_rows) do
-      [{ key: { text: 'Date of next hearing' }, value: { text: '01 January 2025' } }]
+      [{ key: { text: 'Date of next hearing' }, value: { text: '1 January 2025' } }]
     end
 
     it { expect(subject.next_hearing_card.card_rows).to eq(expected_rows) }
@@ -171,7 +171,7 @@ RSpec.describe PriorAuthority::V1::ApplicationDetails do
     let(:expected_rows) do
       [{ key: { text: 'Main offence' }, value: { text: 'Robbery' } },
        { key: { text: 'Date of representation order' },
-        value: { text: '01 February 2023' } },
+        value: { text: '1 February 2023' } },
        { key: { text: 'MAAT number' }, value: { text: '123123' } },
        { key: { text: 'Client detained' }, value: { text: 'No' } },
        { key: { text: 'Subject to POCA' }, value: { text: 'No' } }]
@@ -228,7 +228,7 @@ RSpec.describe PriorAuthority::V1::ApplicationDetails do
        { key: { text: 'Why not?' }, value: { text: 'reason' } },
        { key: { text: 'Youth court matter' }, value: { text: 'Yes' } }]
     end
-    let(:next_hearing_text) { '01 January 2023' }
+    let(:next_hearing_text) { '1 January 2023' }
 
     it { expect(subject.hearing_details_card.card_rows).to eq(expected_rows) }
 

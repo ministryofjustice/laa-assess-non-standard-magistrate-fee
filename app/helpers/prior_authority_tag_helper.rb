@@ -2,7 +2,7 @@ module PriorAuthorityTagHelper
   include ActionView::Helpers::TagHelper
 
   def show_tag_on_details_page?(submission)
-    tag_colour(submission) != 'grey'
+    augmented_state(submission) != 'submitted'
   end
 
   def prior_authority_state_tag(submission)

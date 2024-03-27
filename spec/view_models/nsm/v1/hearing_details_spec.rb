@@ -56,7 +56,7 @@ RSpec.describe Nsm::V1::HearingDetails do
     it 'shows correct table data' do
       expect(subject.data).to eq(
         [
-          { title: 'Date of first hearing', value: '02 January 2023' },
+          { title: 'Date of first hearing', value: '2 January 2023' },
           { title: 'Number of hearings', value: 3 },
           { title: "Magistrates' court", value: 'A Mag Court' },
           { title: 'Court is in designated area of the firm', value: 'Yes' },

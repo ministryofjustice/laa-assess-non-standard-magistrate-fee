@@ -53,7 +53,7 @@ RSpec.describe 'View applications' do
         expect(page).to have_content('LAA-1234')
         expect(page).to have_content(
           "Requested: £80.50\nService: Pathologist report " \
-          "Representation order date: 02 January 2023\nDate received: 02 March 2023"
+          "Representation order date: 2 January 2023\nDate received: 2 March 2023"
         )
       end
 
@@ -103,14 +103,14 @@ RSpec.describe 'View applications' do
 
       it 'shows client details card' do
         within('.govuk-summary-card', text: 'Client details') do
-          expect(page).to have_content "Client nameJoe Bloggs\nDate of birth01 January 1950"
+          expect(page).to have_content "Client nameJoe Bloggs\nDate of birth1 January 1950"
         end
       end
 
       it 'shows case details card' do
         within('.govuk-summary-card', text: 'Case details') do
           expect(page).to have_content "Main offenceRobbery\n" \
-                                       "Date of representation order02 January 2023\n" \
+                                       "Date of representation order2 January 2023\n" \
                                        "Client detainedNo\n" \
                                        'Subject to POCANo'
         end
@@ -118,7 +118,7 @@ RSpec.describe 'View applications' do
 
       it 'shows hearing details card' do
         within('.govuk-summary-card', text: 'Hearing details') do
-          expect(page).to have_content "Date of next hearing01 January 2025\n" \
+          expect(page).to have_content "Date of next hearing1 January 2025\n" \
                                        "Likely or actual pleaGuilty\n" \
                                        'Court typeCrown Court (excluding Central Criminal Court)'
         end
@@ -261,7 +261,7 @@ RSpec.describe 'View applications' do
     end
 
     it 'shows the rejection date' do
-      expect(page).to have_content 'Date assessed: 05 June 2023'
+      expect(page).to have_content 'Date assessed: 5 June 2023'
     end
   end
 
@@ -278,7 +278,42 @@ RSpec.describe 'View applications' do
     end
 
     it 'shows the rejection date' do
-      expect(page).to have_content 'Date sent back to provider: 05 June 2023'
+      expect(page).to have_content 'Date sent back to provider: 5 June 2023'
+    end
+  end
+
+  context 'when application has been updated by provider' do
+    before do
+      application.data['further_information'] = [
+        { caseworker_id: caseworker.id,
+          information_requested: 'Set the scene a little more',
+          information_supplied: 'It was a dark and stormy night',
+          requested_at: DateTime.new(2023, 5, 2, 4, 3, 2),
+          documents: [{ file_name: 'example.pdf', file_path: 'some-file-on-amazon' }] }
+      ]
+      application.update!(state: 'provider_updated', updated_at: DateTime.new(2023, 6, 5, 4, 3, 2))
+      create(:event, :provider_updated,
+             submission: application,
+             details: { comment: 'Added more info',
+                        corrected_info: %w[ufn alternative_quote_1] })
+      application.assignments.destroy_all
+      click_on 'LAA-1234'
+    end
+
+    it 'shows the relevant comments' do
+      expect(page).to have_content('Set the scene a little more')
+        .and have_content('It was a dark and stormy night')
+    end
+
+    it 'shows the relevant links' do
+      expect(page).to have_content('Application details - updated')
+        .and have_content('Alternative quote 1 - updated')
+        .and have_content('example.pdf')
+    end
+
+    it 'shows the updated date' do
+      expect(page).to have_content 'Further information request 2 May 2023'
+      expect(page).to have_content 'Date amended: 5 June 2023'
     end
   end
 end

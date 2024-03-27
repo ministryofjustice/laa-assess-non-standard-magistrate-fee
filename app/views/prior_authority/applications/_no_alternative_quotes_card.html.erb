@@ -1,1 +1,4 @@
-<%= govuk_summary_card(title: t('.alternative_quotes')) { _1.with_summary_list(rows: model.card_rows) } %>
+<%= govuk_summary_card(title: t('.alternative_quotes'), html_attributes: { id: 'alternative-quote-1' }) do %>
+  <%= render 'amended' if @details.section_amended?('alternative_quote_1') %>
+  <%= govuk_summary_list(rows: model.card_rows) %>
+<% end %>

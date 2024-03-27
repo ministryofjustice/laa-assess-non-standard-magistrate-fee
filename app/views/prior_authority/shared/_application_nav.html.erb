@@ -5,17 +5,19 @@
 
 <span class="govuk-caption-xl"><%= application_summary.firm_name %></span>
 <h1 class="govuk-heading-xl"><%= application_summary.laa_reference %></h1>
-<p class="govuk-body-l">
-  <strong><%= t('.requested') %></strong>
-  <%= application_summary.formatted_original_total_cost %><br>
-  <% if application_summary.adjustments_made? || application_summary.assessed? %>
-    <strong><%= t('.allowed') %></strong>
-    <% if application_summary.submission.state == 'rejected' %>
-      <%= NumberTo.pounds(0) %><br>
-    <% else %>
-      <%= application_summary.formatted_total_cost %><br>
+<p>
+  <span class="govuk-body-l">
+    <strong><%= t('.requested') %></strong>
+    <%= application_summary.formatted_original_total_cost %><br>
+    <% if application_summary.adjustments_made? || application_summary.assessed? %>
+      <strong><%= t('.allowed') %></strong>
+      <% if application_summary.submission.state == 'rejected' %>
+        <%= NumberTo.pounds(0) %><br>
+      <% else %>
+        <%= application_summary.formatted_total_cost %><br>
+      <% end %>
     <% end %>
-  <% end %>
+  </span>
 </p>
 <p class="govuk-body-m">
   <strong><%= t('.service') %> </strong>
@@ -41,6 +43,9 @@
   <% elsif application_summary.expired? %>
     <br>
     <strong><%= t('.date_expired') %></strong> <%= application_summary.date_updated_str %>
+  <% elsif application_summary.provider_updated? %>
+    <br>
+    <strong><%= t('.date_amended') %></strong> <%= application_summary.date_updated_str %>
   <% end %>
 </p>
 
