@@ -30,6 +30,18 @@ module PriorAuthority
       end
     end
 
+    def confirm_deletion
+      render 'prior_authority/shared/confirm_delete_adjustment',
+             locals: { item_name: t('.travel_cost'),
+                       deletion_path: prior_authority_application_travel_cost_path(params[:application_id],
+                                                                                   params[:id]) }
+    end
+
+    def destroy
+      AdjustmentDeleter.new(params, :travel_cost, current_user).call
+      redirect_to prior_authority_application_adjustments_path(params[:application_id])
+    end
+
     private
 
     def form_params

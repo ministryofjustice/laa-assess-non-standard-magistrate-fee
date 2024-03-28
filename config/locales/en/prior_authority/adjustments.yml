@@ -16,6 +16,7 @@ en:
         requested: Requested
         time: Time
         total: Total
+        delete: Delete additional cost adjustment
       service_costs:
         adjusted: Caseworker adjusted
         adjust_service_cost: Adjust service costs
@@ -24,6 +25,7 @@ en:
         requested: Requested
         amount: Amount
         total: Total
+        delete: Delete service cost adjustment
       travel_costs:
         adjusted: Caseworker adjusted
         adjust_travel_cost: Adjust travel costs
@@ -34,3 +36,4 @@ en:
         time: Time
         total: Total
         travel_cost: Travel cost
+        delete: Delete travel cost adjustment

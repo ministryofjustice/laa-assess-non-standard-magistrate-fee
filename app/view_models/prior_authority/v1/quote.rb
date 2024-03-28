@@ -21,7 +21,7 @@ module PriorAuthority
 
       attribute :additional_cost_json
       attribute :additional_cost_list, :string
-      adjustable_attribute :additional_cost_total, :decimal, precision: 10, scale: 2
+      attribute :additional_cost_total, :decimal, precision: 10, scale: 2
 
       attribute :contact_full_name, :string
       attribute :organisation, :string
@@ -111,7 +111,7 @@ module PriorAuthority
         if additional_costs.present?
           additional_costs.sum { _1.total_cost(original:) }
         else
-          (original ? original_additional_cost_total : additional_cost_total).to_f
+          additional_cost_total.to_f
         end
       end
 

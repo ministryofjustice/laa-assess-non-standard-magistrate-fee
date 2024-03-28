@@ -15,3 +15,5 @@ en:
         cost_per_item: What is the cost per item?
         items: Number of items
         period: Time
+      confirm_deletion:
+        additional_cost: "Additional cost %{n}"

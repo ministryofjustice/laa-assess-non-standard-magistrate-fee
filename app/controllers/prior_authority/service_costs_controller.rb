@@ -30,6 +30,19 @@ module PriorAuthority
       end
     end
 
+    def confirm_deletion
+      submission = PriorAuthorityApplication.find(params[:application_id])
+      service_type = t(submission.data['service_type'], scope: 'prior_authority.service_types')
+      render 'prior_authority/shared/confirm_delete_adjustment',
+             locals: { item_name: t('.service_type_cost', service_type:),
+                       deletion_path: prior_authority_application_service_cost_path(submission, params[:id]) }
+    end
+
+    def destroy
+      AdjustmentDeleter.new(params, :service_cost, current_user).call
+      redirect_to prior_authority_application_adjustments_path(params[:application_id])
+    end
+
     private
 
     def form_params
