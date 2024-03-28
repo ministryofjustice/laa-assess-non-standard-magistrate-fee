@@ -2,11 +2,10 @@
   <%= t('.page_title') %>
 <% end %>
 
-
+<%= render 'nsm/claims/claim_summary', { claim:, claim_summary: } %>
+<%= render 'nsm/claims/claim_nav', { claim: claim, current_page: 'supporting_evidences' } %>
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-three-quarters">
-    <%= render 'nsm/claims/claim_summary', { claim:, claim_summary: } %>
-    <%= render 'nsm/claims/claim_nav', { claim: claim, current_page: 'supporting_evidences' } %>
+  <div class="govuk-grid-column-full">
     <h2 class="govuk-heading-m">
       <%= t('.heading') %>
     </h2>

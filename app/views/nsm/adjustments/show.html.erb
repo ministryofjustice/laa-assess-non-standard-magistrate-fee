@@ -2,13 +2,10 @@
   <%= t('.review_and_adjust') %>
 <% end %>
 
-
+<%= render partial: 'nsm/claims/claim_summary', locals: { claim:, claim_summary: } %>
+<%= render partial: 'nsm/claims/claim_nav', locals: { claim: claim, current_page: 'review_and_adjust' } %>
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-three-quarters govuk-!-padding-right-0">
-
-    <%= render partial: 'nsm/claims/claim_summary', locals: { claim:, claim_summary: } %>
-    <%= render partial: 'nsm/claims/claim_nav', locals: { claim: claim, current_page: 'review_and_adjust' } %>
-
+  <div class="govuk-grid-column-full">
     <div class="govuk-tabs" data-module="govuk-tabs">
       <h2 class="govuk-heading-l">
         <%= t('.review_and_adjust') %>
