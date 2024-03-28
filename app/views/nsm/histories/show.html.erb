@@ -2,13 +2,10 @@
   <%= t('.history') %>
 <% end %>
 
-
+<%= render partial: 'nsm/claims/claim_summary', locals: { claim:, claim_summary: } %>
+<%= render partial: 'nsm/claims/claim_nav', locals: { claim: claim, current_page: 'history' } %>
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-full govuk-!-padding-right-0">
-
-    <%= render partial: 'nsm/claims/claim_summary', locals: { claim:, claim_summary: } %>
-    <%= render partial: 'nsm/claims/claim_nav', locals: { claim: claim, current_page: 'history' } %>
-
+  <div class="govuk-grid-column-full">
     <h2 class="govuk-heading-m">
       <%= t('.history') %>
     </h2>
