@@ -20,6 +20,8 @@ module PriorAuthority
       validates :cost_per_hour, presence: true, numericality: { greater_than: 0 }, is_a_number: true
     end
 
+    validates :explanation, presence: true, if: :explanation_required?
+
     def save
       return false unless valid?
 
