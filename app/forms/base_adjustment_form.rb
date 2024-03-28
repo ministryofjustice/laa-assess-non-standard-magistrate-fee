@@ -7,8 +7,6 @@ class BaseAdjustmentForm
   attribute :explanation, :string
   attribute :current_user
   attribute :item # used to detect changes in data
-
-  validates :explanation, presence: true, if: :explanation_required?
   validate :data_changed
 
   private

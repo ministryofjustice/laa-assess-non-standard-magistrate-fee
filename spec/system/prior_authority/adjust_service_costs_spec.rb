@@ -50,7 +50,7 @@ RSpec.describe 'Adjust service costs' do
     end
 
     it 'allows me to adjust the Time spent' do
-      expect(page).to have_content('Pathologist report cost')
+      expect(page).to have_content('Pathologist report')
 
       fill_in 'Hours', with: 10
       fill_in 'Minutes', with: 30
@@ -152,7 +152,7 @@ RSpec.describe 'Adjust service costs' do
     end
 
     it 'allows me to adjust the Number of items (minutes)' do
-      expect(page).to have_content('Translation and transcription cost')
+      expect(page).to have_content('Translation and transcription')
 
       fill_in 'Number of minutes', with: 60
       fill_in 'Explain your decision', with: '1 hour maximum allowed'

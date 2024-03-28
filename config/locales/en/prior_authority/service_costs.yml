@@ -20,4 +20,3 @@ en:
           label: Explain your decision
         hourly_cost: Hourly cost
         page_title: Adjust service costs
-        service_type_cost: "%{service_type} cost"

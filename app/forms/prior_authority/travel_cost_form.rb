@@ -9,6 +9,8 @@ module PriorAuthority
     validates :travel_time, presence: true, time_period: true
     validates :travel_cost_per_hour, presence: true, numericality: { greater_than: 0 }, is_a_number: true
 
+    validates :explanation, presence: true, if: :explanation_required?
+
     def save
       return false unless valid?
 
