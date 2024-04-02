@@ -31,6 +31,21 @@ module PriorAuthority
       end
     end
 
+    def confirm_deletion
+      submission = PriorAuthorityApplication.find(params[:application_id])
+      index = submission.data['additional_costs'].index { _1['id'] == params[:id] }
+      render 'prior_authority/shared/confirm_delete_adjustment',
+             locals: {
+               item_name: t('.additional_cost', n: index + 1),
+               deletion_path: prior_authority_application_additional_cost_path(params[:application_id], params[:id])
+             }
+    end
+
+    def destroy
+      AdjustmentDeleter.new(params, :additional_cost, current_user).call
+      redirect_to prior_authority_application_adjustments_path(params[:application_id])
+    end
+
     private
 
     def form_params

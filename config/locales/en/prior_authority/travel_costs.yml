@@ -11,3 +11,5 @@ en:
         hourly_cost: Hourly cost
         page_title: Adjust travel costs
         travel_time: Time
+      confirm_deletion:
+        travel_cost: "Travel costs"
