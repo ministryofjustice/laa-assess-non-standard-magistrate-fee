@@ -6,6 +6,7 @@ RSpec.describe Event do
       event = create(:event, :new_version)
       expect(event.as_json).to match(
         'submission_version' => 1,
+        'id' => event.id,
         'created_at' => an_instance_of(String),
         'details' => {},
         'linked_id' => nil,
@@ -25,6 +26,7 @@ RSpec.describe Event do
 
         expect(event.as_json).to match(
           'submission_version' => 1,
+          'id' => event.id,
           'created_at' => an_instance_of(String),
           'details' => { 'from' => 'submitted', 'to' => 'granted' },
           'linked_id' => nil,
