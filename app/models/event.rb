@@ -73,7 +73,7 @@ class Event < ApplicationRecord
 
   def as_json(*)
     super
-      .slice!('id', 'submission_id')
+      .except('submission_id')
       .merge(
         public: PUBLIC_EVENTS.include?(event_type),
         event_type: event_type
