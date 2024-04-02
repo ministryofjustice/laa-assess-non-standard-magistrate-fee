@@ -176,6 +176,8 @@ spec:
                 secretKeyRef:
                   name: ordnance-survey
                   key: api-key
+            - name: HOSTS
+              value: {{ range $index, $hostObject := .Values.ingress.hosts }}{{ if ne $index 0 }},{{ end }}{{ $hostObject.host }}{{ end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
