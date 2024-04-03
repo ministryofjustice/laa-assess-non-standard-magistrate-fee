@@ -62,7 +62,7 @@ RSpec.describe PullLatestVersionData do
           'created_at' => '2023-10-02T14:41:45.136Z',
           'updated_at' => '2023-10-02T14:41:45.136Z',
           'public' => true,
-          'event_type' => 'Event::Edit'
+          'event_type' => 'edit'
         }]
       end
 
@@ -82,7 +82,7 @@ RSpec.describe PullLatestVersionData do
         )
       end
 
-      context 'an no primary user is set' do
+      context 'and no primary user is set' do
         let(:events_data) do
           [{
             'submission_version' => 1,
@@ -94,7 +94,7 @@ RSpec.describe PullLatestVersionData do
             'created_at' => '2023-10-02T14:41:45.136Z',
             'updated_at' => '2023-10-02T14:41:45.136Z',
             'public' => true,
-            'event_type' => 'Event::NewVersion'
+            'event_type' => 'new_version'
           }]
         end
 
@@ -150,6 +150,22 @@ RSpec.describe PullLatestVersionData do
               auth_subject_id: primary_user_id
             )
           end
+        end
+      end
+
+      context 'when event is namespaced' do
+        let(:events_data) do
+          [{
+            'submission_version' => 1,
+            'primary_user_id' => primary_user_id,
+            'public' => true,
+            'event_type' => 'send_back'
+          }]
+        end
+
+        it 'rehydrates the event using the appropriate namespace' do
+          subject.perform(claim)
+          expect(Event.last).to be_a(Nsm::Event::SendBack)
         end
       end
     end

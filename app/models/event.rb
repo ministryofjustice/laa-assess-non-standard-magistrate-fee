@@ -5,6 +5,7 @@ class Event < ApplicationRecord
   self.inheritance_column = :event_type
 
   PUBLIC_EVENTS = ['Event::Decision', 'PriorAuthority::Event::SendBack'].freeze
+  NAMESPACED_EVENT_TYPES = %w[send_back draft_send_back].freeze
   HISTORY_EVENTS = [
     'Event::Assignment',
     'Event::ChangeRisk',
@@ -29,10 +30,17 @@ class Event < ApplicationRecord
     protected :new
     private :create
 
-    def rehydrate!(params)
+    def rehydrate!(params, application_type)
       create_dummy_user_if_non_production(params) unless HostEnv.production?
 
-      new(params).save!
+      event_type = params.delete('event_type')
+      klass = if event_type.in?(NAMESPACED_EVENT_TYPES)
+                top_level = Submission::APPLICATION_TYPES.invert[application_type]
+                "#{top_level.to_s.classify}::Event::#{event_type.classify}".constantize
+              else
+                "Event::#{event_type.classify}".constantize
+              end
+      klass.new(params).save!
     end
 
     def latest_decision
@@ -76,7 +84,7 @@ class Event < ApplicationRecord
       .except('submission_id')
       .merge(
         public: PUBLIC_EVENTS.include?(event_type),
-        event_type: event_type
+        event_type: event_type.demodulize.underscore
       )
   end
 
