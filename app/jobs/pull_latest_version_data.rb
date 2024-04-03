@@ -53,7 +53,7 @@ class PullLatestVersionData < ApplicationJob
     submission.save!
 
     json_data['events']&.each do |event|
-      submission.events.rehydrate!(event)
+      submission.events.rehydrate!(event, submission.application_type)
     end
     Event::NewVersion.build(submission:)
   end
