@@ -61,18 +61,24 @@ class Event < ApplicationRecord
     def create_dummy_user_if_non_production(user_id)
       return if user_id.blank?
 
-      User.find_or_initialize_by(id: user_id) do |user|
-        user.update!(
-          first_name: user_id.split('-').first,
-          role: User::CASEWORKER,
-          email: "#{user_id}@fake.com",
-          last_name: 'branchbuilder',
-          auth_oid: user_id,
-          auth_subject_id: user_id,
-          last_auth_at: Time.zone.now,
-          first_auth_at: Time.zone.now
-        )
+      User.with_advisory_lock('create_dummy_user') do
+        User.find_or_initialize_by(id: user_id) do |user|
+          user.update!(dummy_attributes(user_id))
+        end
       end
+    end
+
+    def dummy_attributes(user_id)
+      {
+        first_name: user_id.split('-').first,
+        role: User::CASEWORKER,
+        email: "#{user_id}@fake.com",
+        last_name: 'branchbuilder',
+        auth_oid: user_id,
+        auth_subject_id: user_id,
+        last_auth_at: Time.zone.now,
+        first_auth_at: Time.zone.now
+      }
     end
   end
 
