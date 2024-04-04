@@ -39,11 +39,13 @@
     "cntp_date": "2022-10-09",
     "concluded": "yes",
     "solicitor": {
-      "full_name": "Daniel Treaty",
+      "first_name": "Daniel",
+      "last_name": "Treaty",
       "previous_id": null,
       "contact_email": "f.solomon@solicitor.com",
       "reference_number": "1212333",
-      "contact_full_name": "Frank Solomon"
+      "contact_first_name": "Frank",
+      "contact_last_name": "Solomon",
     },
     "claim_type": {
       "value": "non_standard_magistrate",

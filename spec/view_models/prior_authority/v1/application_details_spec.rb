@@ -243,12 +243,12 @@ RSpec.describe PriorAuthority::V1::ApplicationDetails do
   describe '#case_contact_card' do
     let(:args) do
       {
-        solicitor: { 'contact_full_name' => 'A', 'contact_email' => 'B' },
+        solicitor: { 'contact_first_name' => 'A1', 'contact_last_name' => 'A2', 'contact_email' => 'B' },
         firm_office: { 'name' => 'C', 'account_number' => 'C' }
       }
     end
     let(:expected_rows) do
-      [{ key: { text: 'Case contact' }, value: { text: 'A<br>B' } },
+      [{ key: { text: 'Case contact' }, value: { text: 'A1 A2<br>B' } },
        { key: { text: 'Firm details' }, value: { text: 'C<br>C' } }]
     end
 

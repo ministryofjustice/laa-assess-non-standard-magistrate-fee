@@ -32,7 +32,8 @@ FactoryBot.define do
     additional_costs { [] }
     solicitor do
       {
-        'contact_full_name' => 'Jane Doe',
+        'contact_first_name' => 'Jane',
+        'contact_last_name' => 'Doe',
         'contact_email' => 'jane@doe.com'
       }
     end
@@ -84,7 +85,8 @@ FactoryBot.define do
     travel_cost_reason { nil }
     additional_cost_list { nil }
     additional_cost_total { nil }
-    contact_full_name { 'ABC DEF' }
+    contact_first_name { 'ABC' }
+    contact_last_name { 'DEF' }
     organisation { 'ABC' }
     postcode { 'SW1 1AA' }
     primary { true }
@@ -138,7 +140,8 @@ FactoryBot.define do
     travel_cost_reason { nil }
     additional_cost_list { "Foo\nBar" }
     additional_cost_total { 100.0 }
-    contact_full_name { 'ABC DEF' }
+    contact_first_name { 'ABC' }
+    contact_last_name { 'DEF' }
     organisation { 'ABC' }
     postcode { 'SW1 1AA' }
     primary { false }
