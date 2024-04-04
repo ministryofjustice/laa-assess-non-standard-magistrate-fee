@@ -31,7 +31,7 @@ class Event < ApplicationRecord
     private :create
 
     def rehydrate!(params, application_type)
-      create_dummy_user_if_non_production(params) unless HostEnv.production?
+      create_dummy_users_if_non_production(params) unless HostEnv.production?
 
       event_type = params.delete('event_type')
       klass = if event_type.in?(NAMESPACED_EVENT_TYPES)
@@ -53,21 +53,32 @@ class Event < ApplicationRecord
 
     private
 
-    def create_dummy_user_if_non_production(params)
-      return if params['primary_user_id'].blank?
+    def create_dummy_users_if_non_production(params)
+      create_dummy_user_if_non_production(params['primary_user_id'])
+      create_dummy_user_if_non_production(params['secondary_user_id'])
+    end
 
-      User.find_or_initialize_by(id: params['primary_user_id']) do |user|
-        user.update!(
-          first_name: params['primary_user_id'].split('-').first,
-          role: User::CASEWORKER,
-          email: "#{params['primary_user_id']}@fake.com",
-          last_name: 'branchbuilder',
-          auth_oid: params['primary_user_id'],
-          auth_subject_id: params['primary_user_id'],
-          last_auth_at: Time.zone.now,
-          first_auth_at: Time.zone.now
-        )
+    def create_dummy_user_if_non_production(user_id)
+      return if user_id.blank?
+
+      User.with_advisory_lock('create_dummy_user') do
+        User.find_or_initialize_by(id: user_id) do |user|
+          user.update!(dummy_attributes(user_id))
+        end
       end
+    end
+
+    def dummy_attributes(user_id)
+      {
+        first_name: user_id.split('-').first,
+        role: User::CASEWORKER,
+        email: "#{user_id}@fake.com",
+        last_name: 'branchbuilder',
+        auth_oid: user_id,
+        auth_subject_id: user_id,
+        last_auth_at: Time.zone.now,
+        first_auth_at: Time.zone.now
+      }
     end
   end
 
