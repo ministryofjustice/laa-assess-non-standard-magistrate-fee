@@ -126,11 +126,17 @@ spec:
                 secretKeyRef:
                   name: app-store-auth
                   key: app_client_id
-            - name: APP_STORE_CLIENT_SECRET
+            - name: CASEWORKER_CLIENT_ID
               valueFrom:
                 secretKeyRef:
                   name: app-store-auth
-                  key: app_client_secret
+                  key: caseworker_client_id
+            - name: CASEWORKER_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: app-store-auth
+                  key:
+                    caseworker_client_secret
             - name: RACK_ENV
               value: 'production'
             - name: RAILS_ENV
