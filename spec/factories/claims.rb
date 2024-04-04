@@ -49,9 +49,11 @@ FactoryBot.define do
         },
         'concluded' => 'no',
         'solicitor' => {
-          'full_name' => 'Barry Scott',
+          'first_name' => 'Barry',
+          'last_name' => 'Scott',
           'reference_number' => '2P314B',
-          'contact_full_name' => nil,
+          'contact_first_name' => nil,
+          'contact_last_name' => nil,
           'contact_email' => nil,
           'previous_id' => nil
         },
