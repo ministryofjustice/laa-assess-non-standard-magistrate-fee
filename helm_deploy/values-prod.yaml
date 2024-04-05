@@ -67,6 +67,7 @@ variables:
   environment: production
   appStoreUrl: https://laa-crime-application-store-prod.apps.live.cloud-platform.service.justice.gov.uk
   enableSyncTriggerEndpoint: 'false'
+  allowIndexing: 'true'
 
 service_account:
   name: laa-assess-crime-forms-prod-irsa
