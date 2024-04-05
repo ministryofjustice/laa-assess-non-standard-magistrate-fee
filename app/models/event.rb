@@ -31,6 +31,8 @@ class Event < ApplicationRecord
     private :create
 
     def rehydrate!(params, application_type)
+      return if find_by(id: params['id'])
+
       create_dummy_users_if_non_production(params) unless HostEnv.production?
 
       event_type = params.delete('event_type')
