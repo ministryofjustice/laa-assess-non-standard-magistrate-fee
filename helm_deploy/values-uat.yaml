@@ -66,6 +66,8 @@ autoscaling:
 variables:
   environment: uat
   appStoreUrl: https://laa-crime-application-store-uat.apps.live.cloud-platform.service.justice.gov.uk
+  enableSyncTriggerEndpoint: 'false'
+  allowIndexing: 'false'
 
 service_account:
   name: laa-assess-crime-forms-uat-irsa

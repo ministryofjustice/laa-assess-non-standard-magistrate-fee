@@ -62,7 +62,8 @@ RSpec.describe PullLatestVersionData do
           'created_at' => '2023-10-02T14:41:45.136Z',
           'updated_at' => '2023-10-02T14:41:45.136Z',
           'public' => true,
-          'event_type' => 'edit'
+          'event_type' => 'edit',
+          'id' => SecureRandom.uuid,
         }]
       end
 
@@ -80,6 +81,16 @@ RSpec.describe PullLatestVersionData do
           created_at: Time.parse('2023-10-02T14:41:45.136Z'),
           updated_at: Time.parse('2023-10-02T14:41:45.136Z'),
         )
+      end
+
+      context 'when event already exists in the local database' do
+        before do
+          create(:event, submission: claim, id: events_data.dig(0, 'id'))
+        end
+
+        it 'does not create another one' do
+          expect { subject.perform(claim) }.not_to change(Event, :count)
+        end
       end
 
       context 'and no primary user is set' do
