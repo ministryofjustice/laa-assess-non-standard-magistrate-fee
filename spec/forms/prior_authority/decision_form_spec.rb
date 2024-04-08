@@ -64,8 +64,52 @@ RSpec.describe PriorAuthority::DecisionForm do
       context 'when adjustments have been made' do
         let(:data) { build(:prior_authority_data, quotes: [build(:primary_quote, items_original: 8)]) }
 
-        it 'adds an appropriate error' do
+        it 'adds no error' do
           expect(subject.errors[:pending_decision]).to be_empty
+        end
+      end
+    end
+
+    context 'when decision is rejected' do
+      let(:params) do
+        {
+          pending_decision: 'rejected',
+          submission: submission
+        }
+      end
+
+      before { subject.valid? }
+
+      context 'when adjustments have been made' do
+        let(:data) { build(:prior_authority_data, quotes: [build(:primary_quote, items_original: 8)]) }
+
+        it 'adds an error' do
+          expect(subject.errors[:pending_decision]).to include(
+            'You must delete adjustments made to the providers costs ' \
+            'before you can submit this application as being rejected'
+          )
+        end
+      end
+    end
+
+    context 'when decision is granted' do
+      let(:params) do
+        {
+          pending_decision: 'granted',
+          submission: submission
+        }
+      end
+
+      before { subject.valid? }
+
+      context 'when adjustments have been made' do
+        let(:data) { build(:prior_authority_data, quotes: [build(:primary_quote, items_original: 8)]) }
+
+        it 'adds an error' do
+          expect(subject.errors[:pending_decision]).to include(
+            'You must delete adjustments made to the providers costs ' \
+            'before you can submit this application as being granted'
+          )
         end
       end
     end
