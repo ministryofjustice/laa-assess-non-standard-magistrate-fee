@@ -26,7 +26,7 @@ spec:
         image: metabase/metabase:v0.49.3
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
-          - containerPort: 3000
+          - containerPort: 3001
         resources:
           requests:
             cpu: 25m

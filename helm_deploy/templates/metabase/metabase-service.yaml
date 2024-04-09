@@ -7,7 +7,7 @@ spec:
   ports:
     - port: 80
       name: http
-      targetPort: 3000
+      targetPort: 3001
   selector:
     app: {{ include "app.fullname" . }}-metabase-service
 {{- end }}
