@@ -128,3 +128,6 @@ redis:
   auth:
     enabled: true
     password: redis
+
+metabase:
+  enabled: true
