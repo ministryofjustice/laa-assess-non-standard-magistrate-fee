@@ -21,7 +21,8 @@ RSpec.describe Nsm::V1::ContactDetails do
             'address_line_2' => nil
           },
           'solicitor' => {
-            'full_name' => 'Daniel Treaty',
+            'first_name' => 'Daniel',
+            'last_name' => 'Treaty',
             'reference_number' => '1212333',
           },
           'submitter' => {
@@ -49,7 +50,8 @@ RSpec.describe Nsm::V1::ContactDetails do
             'address_line_2' => nil
           },
           'solicitor' => {
-            'full_name' => 'Daniel Treaty',
+            'first_name' => 'Daniel',
+            'last_name' => 'Treaty',
             'reference_number' => '1212333',
           },
           'submitter' => {
@@ -85,7 +87,8 @@ RSpec.describe Nsm::V1::ContactDetails do
             'address_line_2' => '5 Princess Road'
           },
           'solicitor' => {
-            'full_name' => 'Daniel Treaty',
+            'first_name' => 'Daniel',
+            'last_name' => 'Treaty',
             'reference_number' => '1212333',
           },
           'submitter' => {
@@ -121,9 +124,11 @@ RSpec.describe Nsm::V1::ContactDetails do
             'address_line_2' => '5 Princess Road'
           },
           'solicitor' => {
-            'full_name' => 'Daniel Treaty',
+            'first_name' => 'Daniel',
+            'last_name' => 'Treaty',
             'reference_number' => '1212333',
-            'contact_full_name' => 'Jim Bob',
+            'contact_first_name' => 'Jim',
+            'contact_last_name' => 'Bob',
             'contact_email' => 'jim@bob.com'
           },
           'submitter' => {

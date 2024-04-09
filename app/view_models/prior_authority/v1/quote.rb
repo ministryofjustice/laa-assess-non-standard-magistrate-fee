@@ -23,7 +23,8 @@ module PriorAuthority
       attribute :additional_cost_list, :string
       attribute :additional_cost_total, :decimal, precision: 10, scale: 2
 
-      attribute :contact_full_name, :string
+      attribute :contact_first_name, :string
+      attribute :contact_last_name, :string
       attribute :organisation, :string
       attribute :postcode, :string
       attribute :primary, :boolean
@@ -121,6 +122,10 @@ module PriorAuthority
 
       def uploaded_document
         @uploaded_document ||= Document.new(document)
+      end
+
+      def contact_full_name
+        "#{contact_first_name} #{contact_last_name}"
       end
     end
   end

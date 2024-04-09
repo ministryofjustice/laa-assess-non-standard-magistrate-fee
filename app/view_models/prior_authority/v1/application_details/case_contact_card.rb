@@ -8,7 +8,7 @@ module PriorAuthority
 
         def case_contact
           safe_join([
-                      solicitor['contact_full_name'],
+                      construct_name(solicitor, prefix: 'contact_'),
                       tag.br,
                       solicitor['contact_email']
                     ])

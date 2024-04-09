@@ -33,7 +33,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 # Pagination
 gem 'pagy'
 # Exception monitoring
-gem 'sentry-rails'
+gem 'sentry-rails', '>= 5.17.2'
 gem 'sentry-ruby'
 gem 'with_advisory_lock'
 
