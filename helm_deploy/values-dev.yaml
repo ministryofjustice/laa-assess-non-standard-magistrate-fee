@@ -133,4 +133,4 @@ metabase:
   enabled: true
   port: 80
   internalPort: 3001
-  url: crm-metabase-dev.apps.live.cloud-platform.service.justice.gov.uk
+  url: "crm-metabase-dev.apps.live.cloud-platform.service.justice.gov.uk"
