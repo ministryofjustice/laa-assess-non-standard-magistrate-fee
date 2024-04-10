@@ -85,8 +85,8 @@ RSpec.describe PriorAuthority::DecisionForm do
 
         it 'adds an error' do
           expect(subject.errors[:pending_decision]).to include(
-            "You must delete adjustments made to the provider's costs " \
-            'before you can submit this application as being rejected'
+            'You cannot reject an application after making adjustments to provider costs. ' \
+            'You can either keep the adjustments and part-grant it, or delete the cost adjustments to reject it.'
           )
         end
       end
@@ -107,8 +107,8 @@ RSpec.describe PriorAuthority::DecisionForm do
 
         it 'adds an error' do
           expect(subject.errors[:pending_decision]).to include(
-            "You must delete adjustments made to the provider's costs " \
-            'before you can submit this application as being granted'
+            'You cannot grant an application after making adjustments to provider costs. ' \
+            'You can either keep the adjustments and part-grant it, or delete the cost adjustments to reject it.'
           )
         end
       end

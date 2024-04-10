@@ -36,8 +36,8 @@ en:
             pending_decision:
               inclusion: Choose the outcome of your assessment
               no_adjustments: You must make adjustments to the provider's costs before you can submit this application as being part granted
-              adjustments_when_rejected: You must delete adjustments made to the provider's costs before you can submit this application as being rejected
-              adjustments_when_granted: You must delete adjustments made to the provider's costs before you can submit this application as being granted
+              adjustments_when_rejected: You cannot reject an application after making adjustments to provider costs. You can either keep the adjustments and part-grant it, or delete the cost adjustments to reject it.
+              adjustments_when_granted: You cannot grant an application after making adjustments to provider costs. You can either keep the adjustments and part-grant it, or delete the cost adjustments to reject it.
             pending_rejected_explanation:
               blank: Enter a reason for rejecting this application
             pending_part_grant_explanation:
