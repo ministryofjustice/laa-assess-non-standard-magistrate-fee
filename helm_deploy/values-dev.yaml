@@ -42,15 +42,6 @@ ingress:
             name: laa-assess-crime-forms-dev
             port:
               number: 3000
-    - host: crm-metabase-dev.apps.live.cloud-platform.service.justice.gov.uk
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-          backend:
-          service:
-            name: laa-assess-crime-forms-dev-metabase-service
-            port:
-              number: 3001
 
   tls:
     - hosts:
@@ -140,3 +131,6 @@ redis:
 
 metabase:
   enabled: true
+  port: 80
+  internalPort: 3001
+  url: crm-metabase-dev.apps.live.cloud-platform.service.justice.gov.uk

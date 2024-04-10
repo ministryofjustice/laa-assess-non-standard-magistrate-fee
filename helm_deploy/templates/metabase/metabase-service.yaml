@@ -2,12 +2,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "helm_deploy.fullname" . }}-metabase-service
+  name: {{ include "helm_deploy.fullname" . }}-metabase
 spec:
   ports:
-    - port: 81
+    - port: {{ .Values.metabase.port }}
       name: http
-      targetPort: 3001
+      targetPort: {{ .Values.metabase.internalPort }}
   selector:
-    app: {{ include "helm_deploy.fullname" . }}-metabase-service
+    app: {{ include "helm_deploy.fullname" . }}-metabase
 {{- end }}
