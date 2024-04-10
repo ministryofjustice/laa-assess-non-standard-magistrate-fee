@@ -39,9 +39,25 @@ spec:
           runAsUser: 1000
           runAsGroup: 1000
         env:
-          - name: MB_DB_CONNECTION_URI
+          - name: MB_DB_HOST
             valueFrom:
               secretKeyRef:
                 name: rds-postgresql-instance-output
-                key: jdbc_url
+                key: rds_instance_address
+          - name: MB_DB_PORT
+            value: 5432
+          - name: MB_DB_DBNAME
+            value: metabase
+          - name: MB_DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: rds-postgresql-instance-output
+                key: database_username
+          - name: MB_DB_PASS
+            valueFrom:
+              secretKeyRef:
+                name: rds-postgresql-instance-output
+                key: database_password
+          - name: MB_DB_TYPE
+            value: postgres
 {{- end }}
