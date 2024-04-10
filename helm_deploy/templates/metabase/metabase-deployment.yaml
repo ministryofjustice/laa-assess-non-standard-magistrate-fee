@@ -45,7 +45,7 @@ spec:
                 name: rds-postgresql-instance-output
                 key: rds_instance_address
           - name: MB_DB_PORT
-            value: 5432
+            value: "5432"
           - name: MB_DB_DBNAME
             value: metabase
           - name: MB_DB_USER
