@@ -63,9 +63,15 @@ class Event < ApplicationRecord
     def create_dummy_user_if_non_production(user_id)
       return if user_id.blank?
 
-      User.with_advisory_lock('create_dummy_user') do
-        User.find_or_initialize_by(id: user_id) do |user|
-          user.update!(dummy_attributes(user_id))
+      # This rather block-heavy chunk of code is cribbed from
+      # https://github.com/rails/rails/issues/43634#issuecomment-987240280
+      ActiveRecord::Base.transaction do
+        ActiveRecord::Base.with_advisory_lock("create_dummy_user-#{user_id}", transaction: true) do
+          ActiveRecord::Base.uncached do
+            User.find_or_initialize_by(id: user_id) do |user|
+              user.update!(dummy_attributes(user_id))
+            end
+          end
         end
       end
     end
