@@ -131,6 +131,6 @@ redis:
 
 metabase:
   enabled: true
-  port: 3000
+  port: 80
   internalPort: 3000
   url: "crm-metabase-dev.apps.live.cloud-platform.service.justice.gov.uk"
