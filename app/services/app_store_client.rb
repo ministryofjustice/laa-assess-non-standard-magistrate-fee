@@ -29,7 +29,7 @@ class AppStoreClient
     response = self.class.post("#{host}/v1/subscriber", **options(payload))
 
     case response.code
-    when 200, 201
+    when 200..204
       :success
     else
       raise "Unexpected response from AppStore - status #{response.code} on create subscription"
