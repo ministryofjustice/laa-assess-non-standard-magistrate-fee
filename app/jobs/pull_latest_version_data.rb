@@ -5,7 +5,7 @@ class PullLatestVersionData < ApplicationJob
     # data for required version is already here
     return if submission.data.present?
 
-    json_data = HttpPuller.new.get(submission)
+    json_data = AppStoreClient.new.get_submission(submission.id)
 
     PopulateSubmissionDetails.call(submission, json_data)
   end

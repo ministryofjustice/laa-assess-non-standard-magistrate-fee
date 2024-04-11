@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe PullUpdates do
   let(:last_update) { 2 }
-  let(:http_puller) { instance_double(HttpPuller, get_all: http_response) }
+  let(:client) { instance_double(AppStoreClient, get_all_submissions: http_response) }
   let(:http_response) do
     {
       'applications' => [{
@@ -20,7 +20,7 @@ RSpec.describe PullUpdates do
 
   before do
     allow(Claim).to receive(:maximum).and_return(last_update)
-    allow(HttpPuller).to receive(:new).and_return(http_puller)
+    allow(AppStoreClient).to receive(:new).and_return(client)
     allow(ReceiveApplicationMetadata).to receive(:new).and_return(metadata_processor)
   end
 
@@ -37,14 +37,15 @@ RSpec.describe PullUpdates do
     it 'creates and pushed it to the ReceiveApplicationMetadata class' do
       subject.perform
 
-      expect(ReceiveApplicationMetadata).to have_received(:new).with(id)
-      expect(metadata_processor).to have_received(:save).with(
-        state: 'submitted',
-        risk: 'high',
-        current_version: 2,
-        app_store_updated_at: 10,
-        application_type: 'crm7'
+      expect(ReceiveApplicationMetadata).to have_received(:new).with(
+        'application_id' => id,
+        'application_risk' => 'high',
+        'application_state' => 'submitted',
+        'application_type' => 'crm7',
+        'updated_at' => 10,
+        'version' => 2
       )
+      expect(metadata_processor).to have_received(:save)
     end
   end
 end

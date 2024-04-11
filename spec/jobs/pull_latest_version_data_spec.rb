@@ -14,7 +14,7 @@ RSpec.describe PullLatestVersionData do
   let(:data) { {} }
   let(:id) { SecureRandom.uuid }
   let(:current_version) { 2 }
-  let(:http_puller) { instance_double(HttpPuller, get: http_response) }
+  let(:client) { instance_double(AppStoreClient, get_submission: http_response) }
   let(:http_response) do
     {
       'version' => 2,
@@ -28,7 +28,7 @@ RSpec.describe PullLatestVersionData do
 
   before do
     allow(Event::NewVersion).to receive(:build).and_return(true)
-    allow(HttpPuller).to receive(:new).and_return(http_puller)
+    allow(AppStoreClient).to receive(:new).and_return(client)
   end
 
   context 'when current version already exists' do
@@ -36,15 +36,15 @@ RSpec.describe PullLatestVersionData do
 
     it 'do nothing' do
       expect(subject.perform(claim)).to be_nil
-      expect(HttpPuller).not_to have_received(:new)
+      expect(AppStoreClient).not_to have_received(:new)
     end
   end
 
   context 'when version does not already exist' do
-    it 'pulls data via HttpPuller' do
+    it 'pulls data via AppStoreClient' do
       subject.perform(claim)
 
-      expect(http_puller).to have_received(:get).with(claim)
+      expect(client).to have_received(:get_submission).with(claim.id)
     end
 
     context 'when event data exists' do

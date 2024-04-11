@@ -18,7 +18,7 @@ class PopulateSubmissionDetails
     # reset any data confirmations where data has changed
   end
 
-private
+  private
 
   def save(submission, json_data)
     submission.assign_attributes(

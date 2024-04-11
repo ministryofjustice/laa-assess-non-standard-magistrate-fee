@@ -1,12 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe ReceiveApplicationMetadata do
-  subject { described_class.new(submission_id) }
+  subject { described_class.new(record, is_full:) }
 
-  let(:params) do
-    { id: submission_id, risk: 'high', current_version: current_version, state: state, application_type: 'crm7' }
+  let(:record) do
+    {
+      'application_id' => submission_id,
+      'version' => current_version,
+      'application_state' => state,
+      'application_risk' => 'high',
+      'updated_at' => 10,
+      'application_type' => 'crm7'
+    }
   end
-
+  let(:is_full) { false }
   let(:state) { 'submitted' }
   let(:current_version) { 1 }
 
@@ -18,7 +25,7 @@ RSpec.describe ReceiveApplicationMetadata do
     let(:submission_id) { SecureRandom.uuid }
 
     it 'creates a new submission' do
-      expect { subject.save(params) }.to change(Submission, :count).by(1)
+      expect { subject.save }.to change(Submission, :count).by(1)
       expect(Submission.last).to have_attributes(
         risk: 'high',
         current_version: 1,
@@ -28,7 +35,7 @@ RSpec.describe ReceiveApplicationMetadata do
     end
 
     it 'triggers the pull callback' do
-      subject.save(params)
+      subject.save
 
       expect(PullLatestVersionData).to have_received(:perform_later).with(Submission.last)
     end
@@ -43,23 +50,38 @@ RSpec.describe ReceiveApplicationMetadata do
     before { submission }
 
     it 'does not create a new submission' do
-      expect { subject.save(params) }.not_to change(Submission, :count)
+      expect { subject.save }.not_to change(Submission, :count)
     end
 
     it 'triggers the pull callback' do
-      subject.save(params)
+      subject.save
 
       expect(PullLatestVersionData).to have_received(:perform_later).with(Submission.last)
     end
 
     it 'updates the existing submission' do
-      expect { subject.save(params) }.not_to change(Submission, :count)
+      expect { subject.save }.not_to change(Submission, :count)
       expect(Submission.last).to have_attributes(
         risk: 'high',
         current_version: 2,
         received_on: Date.yesterday,
         state: 're-submitted',
       )
+    end
+
+    context 'when record is explicitly marked as full' do
+      let(:is_full) { true }
+
+      before do
+        allow(PopulateSubmissionDetails).to receive(:call)
+      end
+
+      it 'does does synchronous population insteaf of async' do
+        subject.save
+
+        expect(PopulateSubmissionDetails).to have_received(:call).with(submission.becomes(Submission), record)
+        expect(PullLatestVersionData).not_to have_received(:perform_later)
+      end
     end
   end
 
@@ -69,7 +91,7 @@ RSpec.describe ReceiveApplicationMetadata do
     let(:current_version) { -1 }
 
     it 'returns false' do
-      expect(subject.save(params)).to be_falsey
+      expect(subject.save).to be_falsey
     end
   end
 end
