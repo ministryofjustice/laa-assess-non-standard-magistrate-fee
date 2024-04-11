@@ -20,7 +20,7 @@ module PriorAuthority
     validates :pending_decision, inclusion: { in: STATES }
     validates :pending_rejected_explanation, presence: true, if: -> { pending_decision == REJECTED }
     validates :pending_part_grant_explanation, presence: true, if: -> { pending_decision == PART_GRANT }
-    validate :check_adjustments_made_if_part_grant
+    validate :check_adjustments_made
     validate :not_yet_assessed
 
     def summary
@@ -68,11 +68,12 @@ module PriorAuthority
       end
     end
 
-    def check_adjustments_made_if_part_grant
-      return unless pending_decision == PART_GRANT
-      return if summary.adjustments_made?
-
-      errors.add(:pending_decision, :no_adjustments)
+    def check_adjustments_made
+      if pending_decision == PART_GRANT
+        errors.add(:pending_decision, :no_adjustments) unless summary.adjustments_made?
+      elsif summary.adjustments_made?
+        errors.add(:pending_decision, :"adjustments_when_#{pending_decision}")
+      end
     end
 
     def not_yet_assessed

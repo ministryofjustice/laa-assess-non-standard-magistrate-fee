@@ -55,8 +55,8 @@ RSpec.describe PriorAuthority::DecisionForm do
       context 'when no adjustments have been made' do
         it 'adds an appropriate error' do
           expect(subject.errors[:pending_decision]).to include(
-            'You must make adjustments to the providers costs ' \
-            'before you can submit this application as being part granted'
+            'You can only part-grant an application if you have made adjustments to provider costs. ' \
+            'You can either grant it without any cost adjustments, or make cost adjustments and part-grant it.'
           )
         end
       end
@@ -64,8 +64,52 @@ RSpec.describe PriorAuthority::DecisionForm do
       context 'when adjustments have been made' do
         let(:data) { build(:prior_authority_data, quotes: [build(:primary_quote, items_original: 8)]) }
 
-        it 'adds an appropriate error' do
+        it 'adds no error' do
           expect(subject.errors[:pending_decision]).to be_empty
+        end
+      end
+    end
+
+    context 'when decision is rejected' do
+      let(:params) do
+        {
+          pending_decision: 'rejected',
+          submission: submission
+        }
+      end
+
+      before { subject.valid? }
+
+      context 'when adjustments have been made' do
+        let(:data) { build(:prior_authority_data, quotes: [build(:primary_quote, items_original: 8)]) }
+
+        it 'adds an error' do
+          expect(subject.errors[:pending_decision]).to include(
+            'You cannot reject an application after making adjustments to provider costs. ' \
+            'You can either keep the adjustments and part-grant it, or delete the cost adjustments to reject it.'
+          )
+        end
+      end
+    end
+
+    context 'when decision is granted' do
+      let(:params) do
+        {
+          pending_decision: 'granted',
+          submission: submission
+        }
+      end
+
+      before { subject.valid? }
+
+      context 'when adjustments have been made' do
+        let(:data) { build(:prior_authority_data, quotes: [build(:primary_quote, items_original: 8)]) }
+
+        it 'adds an error' do
+          expect(subject.errors[:pending_decision]).to include(
+            'You cannot grant an application after making adjustments to provider costs. ' \
+            'You can either keep the adjustments and part-grant it, or delete the cost adjustments to reject it.'
+          )
         end
       end
     end
