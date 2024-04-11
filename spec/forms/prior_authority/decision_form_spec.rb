@@ -55,8 +55,8 @@ RSpec.describe PriorAuthority::DecisionForm do
       context 'when no adjustments have been made' do
         it 'adds an appropriate error' do
           expect(subject.errors[:pending_decision]).to include(
-            "You must make adjustments to the provider's costs " \
-            'before you can submit this application as being part granted'
+            'You can only part-grant an application if you have made adjustments to provider costs. ' \
+            'You can either grant it without any cost adjustments, or make cost adjustments and part-grant it.'
           )
         end
       end
