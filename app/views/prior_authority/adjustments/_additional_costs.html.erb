@@ -8,7 +8,7 @@
     </div>
   <% end %>
 
-  <p class="govuk-text"><%= t(".cost_description", name: additional_cost.name, description: additional_cost.description) %></p>
+  <%= simple_format t(".cost_description", name: additional_cost.name, description: additional_cost.description) %>
 
   <%= govuk_table(id: "additional_cost_#{index + 1}") do |table|
         table.with_head do |head|
