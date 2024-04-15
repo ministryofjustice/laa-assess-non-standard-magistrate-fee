@@ -24,9 +24,9 @@ The instructions assume you have [Homebrew](https://brew.sh) installed in your m
 
 ```
 # amend database url to use your local superuser role, typically your personal user
-DATABASE_URL=postgresql://postgres@localhost/laa-claim-non-standard-magistrate-fee-dev
+DATABASE_URL=postgresql://postgres@localhost/laa-assess-crime-forms-dev
 =>
-DATABASE_URL=postgresql://john.smith@localhost/laa-claim-non-standard-magistrate-fee-dev
+DATABASE_URL=postgresql://john.smith@localhost/laa-assess-crime-forms-dev
 ```
 
 After you've defined your DB configuration in the above files, run the following:
