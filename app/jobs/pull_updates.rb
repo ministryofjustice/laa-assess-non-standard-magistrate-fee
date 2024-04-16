@@ -7,7 +7,7 @@ class PullUpdates < ApplicationJob
     json_data = AppStoreClient.new.get_all_submissions(last_update)
 
     json_data['applications'].each do |record|
-      ReceiveApplicationMetadata.new(record).save
+      UpdateSubmission.call(record)
     end
   end
 end

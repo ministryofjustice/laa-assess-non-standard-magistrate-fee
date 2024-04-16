@@ -10,7 +10,7 @@ class SyncController < ApplicationController
 
   def sync_individual
     record = AppStoreClient.new.get_submission(params[:submission_id])
-    ReceiveApplicationMetadata.new(record, is_full: true).save
+    UpdateSubmission.call(record)
     head :ok
   end
 

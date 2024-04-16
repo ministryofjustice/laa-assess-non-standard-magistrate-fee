@@ -16,12 +16,11 @@ RSpec.describe PullUpdates do
     }
   end
   let(:id) { SecureRandom.uuid }
-  let(:metadata_processor) { instance_double(ReceiveApplicationMetadata, save: true) }
 
   before do
     allow(Claim).to receive(:maximum).and_return(last_update)
     allow(AppStoreClient).to receive(:new).and_return(client)
-    allow(ReceiveApplicationMetadata).to receive(:new).and_return(metadata_processor)
+    allow(UpdateSubmission).to receive(:call)
   end
 
   context 'no data since last pull' do
@@ -29,7 +28,7 @@ RSpec.describe PullUpdates do
 
     it 'do nothing' do
       subject.perform
-      expect(ReceiveApplicationMetadata).not_to have_received(:new)
+      expect(UpdateSubmission).not_to have_received(:call)
     end
   end
 
@@ -37,7 +36,7 @@ RSpec.describe PullUpdates do
     it 'creates and pushed it to the ReceiveApplicationMetadata class' do
       subject.perform
 
-      expect(ReceiveApplicationMetadata).to have_received(:new).with(
+      expect(UpdateSubmission).to have_received(:call).with(
         'application_id' => id,
         'application_risk' => 'high',
         'application_state' => 'submitted',
@@ -45,7 +44,6 @@ RSpec.describe PullUpdates do
         'updated_at' => 10,
         'version' => 2
       )
-      expect(metadata_processor).to have_received(:save)
     end
   end
 end

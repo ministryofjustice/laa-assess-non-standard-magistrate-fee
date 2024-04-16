@@ -52,7 +52,6 @@ RSpec.describe 'Syncs' do
         end
         let(:client) { instance_double(AppStoreClient) }
         let(:record) { :record }
-        let(:job) { instance_double(ReceiveApplicationMetadata, save: true) }
 
         before do
           allow(JWT::JWK::Set).to receive(:new).with('keys').and_return(jwks)
@@ -60,15 +59,14 @@ RSpec.describe 'Syncs' do
 
           allow(AppStoreClient).to receive(:new).and_return(client)
           allow(client).to receive(:get_submission).and_return(record)
-          allow(ReceiveApplicationMetadata).to receive(:new).and_return(job)
+          allow(UpdateSubmission).to receive(:call)
         end
 
         it 'triggers a sync' do
           post '/app_store_webhook', params: { submission_id: '123' }, headers: { 'Authorization' => 'Bearer ABC' }
           expect(response).to have_http_status(:ok)
           expect(client).to have_received(:get_submission).with('123')
-          expect(ReceiveApplicationMetadata).to have_received(:new).with(record, is_full: true)
-          expect(job).to have_received(:save)
+          expect(UpdateSubmission).to have_received(:call).with(record)
         end
       end
     end

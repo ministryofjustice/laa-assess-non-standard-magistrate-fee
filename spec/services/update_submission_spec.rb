@@ -1,56 +1,65 @@
 require 'rails_helper'
 
-RSpec.describe PullLatestVersionData do
-  let(:claim) do
-    instance_double(Claim,
-                    id: id,
-                    current_version: current_version,
-                    assign_attributes: true,
-                    application_type: 'crm7',
-                    save!: true,
-                    data: data,
-                    namespace: Nsm)
-  end
-  let(:data) { {} }
-  let(:id) { SecureRandom.uuid }
-  let(:current_version) { 2 }
-  let(:client) { instance_double(AppStoreClient, get_submission: http_response) }
-  let(:http_response) do
+RSpec.describe UpdateSubmission do
+  let(:record) do
     {
-      'version' => 2,
-      'json_schema_version' => 1,
-      'application_state' => 'submitted',
-      'application' => { 'same' => 'data' },
-      'events' => events_data
+      'application_id' => submission_id,
+      'version' => current_version,
+      'application_state' => state,
+      'application_risk' => 'high',
+      'updated_at' => 10,
+      'application_type' => 'crm7',
+      'events' => events_data,
     }
   end
+  let(:state) { 'submitted' }
+  let(:current_version) { 1 }
   let(:events_data) { nil }
 
-  before do
-    allow(Event::NewVersion).to receive(:build).and_return(true)
-    allow(AppStoreClient).to receive(:new).and_return(client)
-  end
+  context 'when submission does not already exist' do
+    let(:submission_id) { SecureRandom.uuid }
 
-  context 'when current version already exists' do
-    let(:data) { { existing: :data } }
-
-    it 'do nothing' do
-      expect(subject.perform(claim)).to be_nil
-      expect(AppStoreClient).not_to have_received(:new)
+    it 'creates a new submission' do
+      expect { described_class.call(record) }.to change(Submission, :count).by(1)
+      expect(Submission.last).to have_attributes(
+        risk: 'high',
+        current_version: 1,
+        received_on: Time.zone.today,
+        state: 'submitted',
+      )
     end
   end
 
-  context 'when version does not already exist' do
-    it 'pulls data via AppStoreClient' do
-      subject.perform(claim)
+  context 'when submission already exists' do
+    let(:submission) { create(:claim) }
+    let(:submission_id) { submission.id }
+    let(:state) { 're-submitted' }
+    let(:current_version) { 2 }
 
-      expect(client).to have_received(:get_submission).with(claim.id)
+    before { submission }
+
+    it 'does not create a new submission' do
+      expect { described_class.call(record) }.not_to change(Submission, :count)
     end
 
-    context 'when event data exists' do
-      let(:claim) { create(:claim, current_version: current_version, data: {}) }
+    it 'adds a new version event' do
+      expect { described_class.call(record) }.to change(Event::NewVersion, :count).from(0).to(1)
+    end
+
+    it 'updates the existing submission' do
+      described_class.call(record)
+      expect(submission.reload).to have_attributes(
+        risk: 'high',
+        current_version: 2,
+        received_on: Date.yesterday,
+        state: 're-submitted',
+      )
+    end
+
+    context 'when event data is provided' do
       let(:user) { create(:supervisor) }
       let(:primary_user_id) { user.id }
+      let(:event_id) { SecureRandom.uuid }
       let(:events_data) do
         [{
           'submission_version' => 1,
@@ -63,15 +72,14 @@ RSpec.describe PullLatestVersionData do
           'updated_at' => '2023-10-02T14:41:45.136Z',
           'public' => true,
           'event_type' => 'edit',
-          'id' => SecureRandom.uuid,
+          'id' => event_id,
         }]
       end
 
       it 'rehydrates the events' do
-        subject.perform(claim)
-        expect(Event.count).to eq(1)
+        described_class.call(record)
         expect(Event::Edit.last).to have_attributes(
-          submission_id: claim.id,
+          submission_id: submission_id,
           submission_version: 1,
           primary_user_id: primary_user_id,
           secondary_user_id: nil,
@@ -85,11 +93,11 @@ RSpec.describe PullLatestVersionData do
 
       context 'when event already exists in the local database' do
         before do
-          create(:event, submission: claim, id: events_data.dig(0, 'id'))
+          create(:event, submission: submission, id: events_data.dig(0, 'id'))
         end
 
         it 'does not create another one' do
-          expect { subject.perform(claim) }.not_to change(Event, :count)
+          expect { described_class.call(record) }.not_to change(Event::Edit, :count)
         end
       end
 
@@ -105,15 +113,16 @@ RSpec.describe PullLatestVersionData do
             'created_at' => '2023-10-02T14:41:45.136Z',
             'updated_at' => '2023-10-02T14:41:45.136Z',
             'public' => true,
-            'event_type' => 'new_version'
+            'event_type' => 'new_version',
+            'id' => event_id,
           }]
         end
 
         it 'rehydrates the events' do
-          subject.perform(claim)
-          expect(Event.count).to eq(1)
-          expect(Event::NewVersion.last).to have_attributes(
-            submission_id: claim.id,
+          described_class.call(record)
+          expect(Event.count).to eq(2)
+          expect(Event.find(event_id)).to have_attributes(
+            submission_id: submission.id,
             submission_version: 1,
             primary_user_id: nil,
             secondary_user_id: nil,
@@ -126,7 +135,7 @@ RSpec.describe PullLatestVersionData do
         end
       end
 
-      context 'but the associated user does does exist' do
+      context 'but the associated user does does not exist' do
         let(:primary_user_id) { SecureRandom.uuid }
 
         context 'and it is the production environment' do
@@ -136,19 +145,19 @@ RSpec.describe PullLatestVersionData do
 
           it 'does not insert the event and raises and error' do
             expect do
-              expect { subject.perform(claim) }.not_to change(Event, :count)
+              expect { described_class.call(record) }.not_to change(Event, :count)
             end.to raise_error(ActiveRecord::InvalidForeignKey)
           end
         end
 
         context 'and it is not the production environment' do
           it 'creates a new user as it inserts the record' do
-            claim
-            expect { subject.perform(claim) }.to change(User, :count).by(1)
+            submission
+            expect { described_class.call(record) }.to change(User, :count).by(1)
 
-            expect(Event.count).to eq(1)
+            expect(Event.count).to eq(2)
             expect(Event::Edit.last).to have_attributes(
-              submission_id: claim.id,
+              submission_id: submission.id,
               submission_version: 1,
               primary_user_id: primary_user_id,
             )
@@ -170,65 +179,29 @@ RSpec.describe PullLatestVersionData do
             'submission_version' => 1,
             'primary_user_id' => primary_user_id,
             'public' => true,
-            'event_type' => 'send_back'
+            'event_type' => 'send_back',
+            'id' => event_id
           }]
         end
 
         it 'rehydrates the event using the appropriate namespace' do
-          subject.perform(claim)
-          expect(Event.last).to be_a(Nsm::Event::SendBack)
+          described_class.call(record)
+          expect(Event.find(event_id)).to be_a(Nsm::Event::SendBack)
         end
-      end
-    end
-
-    context 'when pulled version matches current' do
-      it 'creates the new version' do
-        subject.perform(claim)
-
-        expect(claim).to have_received(:assign_attributes).with(
-          json_schema_version: 1,
-          data: { 'same' => 'data' }
-        )
-        expect(claim).to have_received(:save!)
-      end
-
-      it 'creates a new version event' do
-        subject.perform(claim)
-
-        expect(Event::NewVersion).to have_received(:build).with(submission: claim)
-      end
-    end
-
-    context 'when pulled version is higher than current' do
-      let(:current_version) { 1 }
-
-      it 'do nothing' do
-        subject.perform(claim)
-
-        expect(claim).not_to have_received(:assign_attributes)
-      end
-    end
-
-    context 'when pulled version is lower than current' do
-      let(:current_version) { 3 }
-
-      it 'raise an error' do
-        expect { subject.perform(claim) }.to raise_error(
-          "Correct version not found on AppStore: #{claim.id} - 3 only found 2"
-        )
       end
     end
   end
 
   context 'when pulling prior authority data' do
-    let(:http_response) do
+    let(:record) do
       {
         'version' => 1,
         'json_schema_version' => 1,
         'application_state' => 'submitted',
         'application_type' => 'crm4',
         'application' => data,
-        'events' => []
+        'events' => [],
+        'application_id' => application.id
       }
     end
 
@@ -238,8 +211,8 @@ RSpec.describe PullLatestVersionData do
       let(:data) { build(:prior_authority_data) }
 
       it 'updates the data' do
-        subject.perform(application)
-        expect(application.data).to eq data.with_indifferent_access
+        described_class.call(record)
+        expect(application.reload.data).to eq data.with_indifferent_access
       end
     end
 
@@ -254,18 +227,19 @@ RSpec.describe PullLatestVersionData do
       end
 
       it 'updates the state to auto_grant' do
-        subject.perform(application)
-        expect(application.state).to eq('auto_grant')
+        described_class.call(record)
+        expect(application.reload.state).to eq('auto_grant')
       end
 
       it 'create an event record' do
-        subject.perform(application)
-        expect(Event::AutoDecision).to have_received(:build).with(submission: application, previous_state: 'submitted')
+        described_class.call(record)
+        expect(Event::AutoDecision).to have_received(:build).with(submission: application.becomes(Submission),
+                                                                  previous_state: 'submitted')
       end
 
       it 'notifys the app store' do
-        subject.perform(application)
-        expect(NotifyAppStore).to have_received(:process).with(submission: application)
+        described_class.call(record)
+        expect(NotifyAppStore).to have_received(:process).with(submission: application.becomes(Submission))
       end
     end
 
@@ -282,8 +256,8 @@ RSpec.describe PullLatestVersionData do
       end
 
       it 'updates the data' do
-        subject.perform(application)
-        expect(application.data).to eq data.with_indifferent_access
+        described_class.call(record)
+        expect(application.reload.data).to eq data.with_indifferent_access
         expect(Sentry).not_to have_received(:capture_exception)
       end
     end
@@ -301,8 +275,8 @@ RSpec.describe PullLatestVersionData do
       end
 
       it 'updates the data' do
-        subject.perform(application)
-        expect(application.data).to eq data.with_indifferent_access
+        described_class.call(record)
+        expect(application.reload.data).to eq data.with_indifferent_access
         expect(Sentry).to have_received(:capture_exception)
       end
     end
@@ -319,7 +293,7 @@ RSpec.describe PullLatestVersionData do
       end
 
       it 'raise the erroor' do
-        expect { subject.perform(application) }.to raise_error('unknown_error')
+        expect { described_class.call(record) }.to raise_error('unknown_error')
       end
     end
   end
