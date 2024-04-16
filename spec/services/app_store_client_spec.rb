@@ -34,7 +34,7 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
 
         it 'gets the claims without headers' do
           expect(described_class).to receive(:get)
-            .with("http://some.url/v1/application/#{claim.id}")
+            .with("http://some.url/v1/application/#{claim.id}", headers: { 'X-Client-Type': 'caseworker' })
 
           subject.get_submission(claim.id)
         end
@@ -141,7 +141,8 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
 
         it 'puts the message without headers' do
           expect(described_class).to receive(:put).with("http://some.url/v1/application/#{application_id}",
-                                                        body: message.to_json)
+                                                        body: message.to_json,
+                                                        headers: { 'X-Client-Type': 'caseworker' })
 
           subject.update_submission(message)
         end
