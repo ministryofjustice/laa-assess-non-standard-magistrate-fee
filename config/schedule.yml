@@ -1,7 +1,3 @@
-polling_job:
-  cron: "*/10 * * * *"
-  class: "PullUpdates"
-  queue: pooling
 expiry_job:
   # Arbitrary out-of-office-hours time that avoids round number times,
   #  which might be congested by other processes

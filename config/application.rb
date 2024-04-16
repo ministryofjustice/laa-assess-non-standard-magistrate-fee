@@ -75,5 +75,10 @@ module LaaAssessNonStandardMagistrateFee
     config.x.contact.feedback_url = 'tbc'
     #time to wait for requests to be made to app store for db consistency
     config.x.application.app_store_wait = ENV.fetch('APP_STORE_WAIT_SECS',0).to_i
+
+    config.after_initialize do
+      Rails.application.reload_routes!
+      AppStoreSubscriber.call
+    end
   end
 end
