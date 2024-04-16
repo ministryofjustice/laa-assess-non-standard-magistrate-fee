@@ -65,8 +65,7 @@ autoscaling:
 
 variables:
   environment: development
-  # TEMPORARILY POINT THIS BRANCH AT APP STORE BRANCH. TODO: REVERT BEFORE MERGE
-  appStoreUrl: https://spike-ruby-nscc-store-dev.cloud-platform.service.justice.gov.uk/
+  appStoreUrl: https://laa-crime-application-store-dev.apps.live.cloud-platform.service.justice.gov.uk
   enableSyncTriggerEndpoint: 'true'
   allowIndexing: 'false'
 
