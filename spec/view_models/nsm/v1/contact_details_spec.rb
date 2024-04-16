@@ -66,7 +66,7 @@ RSpec.describe Nsm::V1::ContactDetails do
             { title: 'Firm name', value: 'Blundon Solicitor Firm' },
             { title: 'Firm account number', value: '121234' },
             { title: 'Firm address', value: '1 Princess Road<br>Stoke Newington<br>NE10 4AB' },
-            { title: 'Firm VAT registered', value: 'No'}
+            { title: 'Firm VAT registered', value: 'No' },
             { title: 'Solicitor full name', value: 'Daniel Treaty' },
             { title: 'Solicitor reference number', value: '1212333' },
             { title: 'Alternative contact details', value: 'Not provided' },
@@ -105,7 +105,7 @@ RSpec.describe Nsm::V1::ContactDetails do
             { title: 'Firm name', value: 'Blundon Solicitor Firm' },
             { title: 'Firm account number', value: '121234' },
             { title: 'Firm address', value: 'Suite 3<br>5 Princess Road<br>Stoke Newington<br>NE10 4AB' },
-            { title: 'Firm VAT registered', value: 'No'}
+            { title: 'Firm VAT registered', value: 'No' },
             { title: 'Solicitor full name', value: 'Daniel Treaty' },
             { title: 'Solicitor reference number', value: '1212333' },
             { title: 'Alternative contact details', value: 'Not provided' },
@@ -147,7 +147,7 @@ RSpec.describe Nsm::V1::ContactDetails do
             { title: 'Firm name', value: 'Blundon Solicitor Firm' },
             { title: 'Firm account number', value: '121234' },
             { title: 'Firm address', value: 'Suite 3<br>5 Princess Road<br>Stoke Newington<br>NE10 4AB' },
-            { title: 'Firm VAT registered', value: 'No'}
+            { title: 'Firm VAT registered', value: 'No' },
             { title: 'Solicitor full name', value: 'Daniel Treaty' },
             { title: 'Solicitor reference number', value: '1212333' },
             { title: 'Alternative contact full name', value: 'Jim Bob' },
@@ -191,7 +191,7 @@ RSpec.describe Nsm::V1::ContactDetails do
             { title: 'Firm name', value: 'Blundon Solicitor Firm' },
             { title: 'Firm account number', value: '121234' },
             { title: 'Firm address', value: 'Suite 3<br>5 Princess Road<br>Stoke Newington<br>NE10 4AB' },
-            { title: 'Firm VAT registered', value: '20%'}
+            { title: 'Firm VAT registered', value: '20%' },
             { title: 'Solicitor full name', value: 'Daniel Treaty' },
             { title: 'Solicitor reference number', value: '1212333' },
             { title: 'Alternative contact full name', value: 'Jim Bob' },

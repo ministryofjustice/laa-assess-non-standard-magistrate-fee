@@ -1,4 +1,3 @@
-# rubocop:disable Metrics/ClassLength
 module GOVUKDesignSystemFormBuilder
   module Elements
     class Period < ::GOVUKDesignSystemFormBuilder::Base
@@ -145,4 +144,3 @@ module GOVUKDesignSystemFormBuilder
     end
   end
 end
-# rubocop:enable Metrics/ClassLength
