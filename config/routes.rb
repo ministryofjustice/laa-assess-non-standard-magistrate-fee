@@ -116,4 +116,6 @@ Rails.application.routes.draw do
     get "sync", to: "sync#sync_all"
   end
   get "robots.txt", to: "robots#index"
+
+  post :app_store_webhook, to: 'sync#sync_individual'
 end

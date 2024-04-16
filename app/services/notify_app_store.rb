@@ -37,7 +37,7 @@ class NotifyAppStore < ApplicationJob
     # TODO: we only do post requests here as the system is not currently
     # able to support re-sending/submitting an appplication so we can ignore
     # put requests
-    post_manager = HttpNotifier.new
-    post_manager.put(message_builder.message)
+    client = AppStoreClient.new
+    client.update_submission(message_builder.message)
   end
 end
