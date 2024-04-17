@@ -15,10 +15,33 @@ RSpec.describe 'Syncs' do
   end
 
   describe 'POST /app_store_webhook' do
+    let(:client) { instance_double(AppStoreClient) }
+    let(:record) { :record }
+
     context 'when no auth token is provided' do
       it 'rejects all requests' do
         post '/app_store_webhook'
         expect(response).to have_http_status :unauthorized
+      end
+
+      context 'when authentication can be bypassed' do
+        let(:token_provider) { instance_double(AppStoreTokenProvider) }
+
+        before do
+          allow(AppStoreTokenProvider).to receive(:instance).and_return(token_provider)
+          allow(token_provider).to receive(:authentication_configured?).and_return false
+
+          allow(AppStoreClient).to receive(:new).and_return(client)
+          allow(client).to receive(:get_submission).and_return(record)
+          allow(UpdateSubmission).to receive(:call)
+        end
+
+        it 'triggers a sync' do
+          post '/app_store_webhook', params: { submission_id: '123' }, headers: { 'Authorization' => 'Bearer ABC' }
+          expect(response).to have_http_status(:ok)
+          expect(client).to have_received(:get_submission).with('123')
+          expect(UpdateSubmission).to have_received(:call).with(record)
+        end
       end
     end
 
@@ -50,8 +73,6 @@ RSpec.describe 'Syncs' do
              'iss' => 'https://login.microsoftonline.com/123/v2.0',
              'exp' => 1.hour.from_now.to_i }]
         end
-        let(:client) { instance_double(AppStoreClient) }
-        let(:record) { :record }
 
         before do
           allow(JWT::JWK::Set).to receive(:new).with('keys').and_return(jwks)
