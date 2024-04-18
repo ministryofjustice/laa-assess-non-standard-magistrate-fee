@@ -17,20 +17,17 @@ module Nsm
         ]
       end
 
-      def table_fields(formatted = true)
+      def table_fields(formatted: true)
         [
-          profit_costs(formatted),
-          waiting(formatted),
-          travel(formatted),
-          disbursements(formatted)
+          calculate_profit_costs(formatted:),
+          calculate_waiting(formatted:),
+          calculate_travel(formatted:),
+          calculate_disbursements(formatted:)
         ]
       end
 
       def summed_fields
-        summed_fields = Hash.new { 0 }
-        summed_fields[:name] = :total
-
-        data = table_fields(false)
+        data = table_fields(formatted: false)
 
         {
           name: t('total', numeric: false),
@@ -46,73 +43,79 @@ module Nsm
       private
 
       def sum_allowed(data, field)
-        return nil if data.none? { _1["allowed_#{field}".to_sym] }
+        return nil if data.none? { _1[:"allowed_#{field}"] }
 
-        data.sum { _1["allowed_#{field}".to_sym] || _1[field] }
+        data.sum { _1[:"allowed_#{field}"] || _1[field] }
       end
 
-      def profit_costs(formatted)
+      def calculate_profit_costs(formatted:)
         letters_calls = LettersAndCallsSummary.new('submission' => submission).rows
 
-        calculate_row(work_items[PROFIT_COSTS] || [] + letters_calls, 'profit_costs', formatted)
+        calculate_row(work_items[PROFIT_COSTS] || ([] + letters_calls), 'profit_costs', formatted:)
       end
 
-      def waiting(formatted)
-        calculate_row(work_items['waiting'] || [], 'waiting', formatted)
+      def calculate_waiting(formatted:)
+        calculate_row(work_items['Waiting'] || [], 'waiting', formatted:)
       end
 
-      def travel(formatted)
-        calculate_row(work_items['travel'] || [], 'travel', formatted)
+      def calculate_travel(formatted:)
+        calculate_row(work_items['Travel'] || [], 'travel', formatted:)
       end
 
-      def disbursements(formatted)
-        rows = BaseViewModel.build(:disbursement, submission, 'disbursements')
+      def calculate_disbursements(formatted:)
+        net_cost = disbursements.sum(&:original_total_cost_without_vat)
+        vat = disbursements.sum(&:original_vat_amount)
+        allowed_net_cost = disbursements.sum(&:total_cost_without_vat)
+        allowed_vat = disbursements.sum(&:vat_amount) unless net_cost == allowed_net_cost
 
-        net_cost = rows.sum(&:original_total_cost_without_vat)
-        vat = rows.sum(&:original_vat_amount)
-        allowed_net_cost = rows.sum(&:total_cost_without_vat)
-        allowed_vat = rows.sum(&:vat_amount)
-
-        edited = net_cost != allowed_net_cost
-
-        {
-          name: t('disbursements', numeric: false),
-          net_cost: format(net_cost, formatted),
-          vat: format(vat, formatted),
-          gross_cost: format(net_cost + vat, formatted),
-          allowed_net_cost: format(edited ? allowed_net_cost : nil, formatted),
-          allowed_vat: format(edited ? allowed_vat : nil, formatted),
-          allowed_gross_cost: format(edited ? (allowed_net_cost + allowed_vat) : nil, formatted)
-        }
+        build_hash(
+          name: 'disbursements',
+          net_cost: net_cost,
+          vat: vat,
+          allowed_net_cost: allowed_net_cost,
+          allowed_vat: allowed_vat,
+          formatted: formatted
+        )
       end
 
-      def calculate_row(rows, name, formatted)
+      def calculate_row(rows, name, formatted:)
         net_cost = rows.sum(&:provider_requested_amount)
         allowed_net_cost =
-          if rows.any? { |row| row.provider_requested_amount != row.caseworker_amount }
-            rows.sum(&:caseworker_amount)
-          else
-            nil
-          end
+          (rows.sum(&:caseworker_amount) if rows.any? { |row| row.provider_requested_amount != row.caseworker_amount })
 
+        build_hash(
+          name: name,
+          net_cost: net_cost,
+          vat: net_cost * vat_rate,
+          allowed_net_cost: allowed_net_cost,
+          allowed_vat: allowed_net_cost && (allowed_net_cost * vat_rate),
+          formatted: formatted
+        )
+      end
+
+      def build_hash(name:, net_cost:, vat:, allowed_net_cost:, allowed_vat:, formatted:)
         {
           name: t(name, numeric: false),
-          net_cost: format(net_cost, formatted),
-          vat: format(net_cost * vat_rate, formatted),
-          gross_cost: format(net_cost * (1.0 + vat_rate), formatted),
-          allowed_net_cost: format(allowed_net_cost, formatted),
-          allowed_vat: format(allowed_net_cost && allowed_net_cost * vat_rate, formatted),
-          allowed_gross_cost: format(allowed_net_cost && allowed_net_cost * (1.0 + vat_rate), formatted),
+          net_cost: format(net_cost, formatted:),
+          vat: format(vat, formatted:),
+          gross_cost: format(net_cost + vat, formatted:),
+          allowed_net_cost: format(allowed_vat && allowed_net_cost, formatted:),
+          allowed_vat: format(allowed_vat, formatted:),
+          allowed_gross_cost: format(allowed_vat && (allowed_net_cost + allowed_vat), formatted:),
         }
       end
 
       def work_items
         @work_items ||= BaseViewModel.build(:work_item, submission, 'work_items')
-                     .group_by { |work_item| group_type(work_item.work_type.to_s) }
+                                     .group_by { |work_item| group_type(work_item.work_type.to_s) }
+      end
+
+      def disbursements
+        @disbursements ||= BaseViewModel.build(:disbursement, submission, 'disbursements')
       end
 
       def group_type(work_type)
-        return work_type if work_type.in?(%w[travel waiting])
+        return work_type if work_type.in?(%w[Travel Waiting])
 
         PROFIT_COSTS
       end
@@ -126,7 +129,7 @@ module Nsm
           end
       end
 
-      def format(value, formatted = true)
+      def format(value, formatted: true)
         return value unless formatted
         return '' if value.nil?
 
@@ -135,7 +138,7 @@ module Nsm
 
       def t(key, numeric: true, width: nil)
         {
-          text: I18n.translate("nsm.adjustments.show.#{key}"),
+          text: I18n.t("nsm.adjustments.show.#{key}"),
           numeric: numeric,
           width: width
         }
