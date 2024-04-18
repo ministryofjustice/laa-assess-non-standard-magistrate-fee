@@ -1,3 +1,9 @@
+<% title t('.page_title') %>
+<%# headers needed here to pass accibility tests (not sure why this doesn't affect work items screen) %>
+<%# headers do not appear in the screen as only the page inside 'turbo-frame' is rendered %>
+<h1><%= t('.page_title') %></h1>
+<h2><%= t('.page_title') %></h1>
+
 <turbo-frame id="letters_and_calls">
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
