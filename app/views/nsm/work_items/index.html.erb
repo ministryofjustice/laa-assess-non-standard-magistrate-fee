@@ -48,8 +48,8 @@
           link
         ]
       end
-      # govuk_table(caption: completed_on.strftime('%-d %B %Y'), head:, rows:)
-      govuk_table do |table|
+
+govuk_table do |table|
         table.with_caption(text: completed_on.strftime('%-d %B %Y'), size: 's')
         table.with_head(rows: [head])
         table.with_body(rows: rows, first_cell_is_header: true)
