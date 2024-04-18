@@ -1,6 +1,8 @@
 module PriorAuthority
   module V1
     class ApplicationSummary < BaseViewModel
+      attribute :prison_law, :boolean
+      attribute :ufn, :string
       attribute :laa_reference, :string
       attribute :firm_office
       attribute :quotes
@@ -26,7 +28,7 @@ module PriorAuthority
       def main_offence
         if main_offence_id == 'custom'
           custom_main_offence_name
-        else
+        elsif main_offence_id
           I18n.t("prior_authority.offences.#{main_offence_id}")
         end
       end
