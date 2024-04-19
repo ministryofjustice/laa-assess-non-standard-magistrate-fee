@@ -1,3 +1,5 @@
+<% title t('.page_title') %>
+
 <turbo-frame id="work_items">
   <h3 class="govuk-heading-m">
     <%= t('.work_items') %>
@@ -34,7 +36,6 @@
     <%=
       head = [t('.type_of_work'), t('.uplift_request'), t('.requested'), t('.uplift_allowed'), t('.allowed'), t('.action')]
 
-
       rows = work_items_for_date.map do |work_item|
         link = if claim.editable?
                   link_to(t('.change'), edit_nsm_claim_work_item_path(claim_id: claim.id, id: work_item.id), data: { turbo: 'false' })
@@ -46,7 +47,12 @@
           link
         ]
       end
-      govuk_table(caption: completed_on.strftime('%-d %B %Y'), head:, rows:)
+
+      govuk_table do |table|
+        table.with_caption(text: completed_on.strftime('%-d %B %Y'), size: 's')
+        table.with_head(rows: [head])
+        table.with_body(rows: rows, first_cell_is_header: true)
+      end
     %>
   <% end %>
 </turbo-frame>
