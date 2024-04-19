@@ -52,9 +52,9 @@ module Nsm
         [
           work_type.to_s,
           "#{original_uplift.to_i}%",
-          ApplicationController.helpers.format_period(original_time_spent, style: :long),
+          ApplicationController.helpers.format_period(original_time_spent, style: :long_html),
           any_adjustments? ? "#{uplift.to_i}%" : '',
-          any_adjustments? ? ApplicationController.helpers.format_period(time_spent.to_i, style: :long) : ''
+          any_adjustments? ? ApplicationController.helpers.format_period(time_spent.to_i, style: :long_html) : ''
         ]
       end
 

@@ -16,6 +16,10 @@ class Claim < Submission
       .where.not(id: Event::Unassignment.where(primary_user_id: user.id).select(:submission_id))
   }
 
+  def part_grant?
+    state == Nsm::MakeDecisionForm::PART_GRANT
+  end
+
   def editable?
     Nsm::MakeDecisionForm::STATES.exclude?(state)
   end

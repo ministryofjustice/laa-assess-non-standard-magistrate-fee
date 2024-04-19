@@ -7,13 +7,13 @@ module Nsm
 
       def headers
         [
-          t('.items', numeric: false, width: 'govuk-!-width-one-quarter'),
-          t('.request_net'),
-          t('.request_vat'),
-          t('.request_gross'),
-          t('.allowed_net'),
-          t('.allowed_vat'),
-          t('.allowed_gross')
+          t('items', numeric: false, width: 'govuk-!-width-one-quarter'),
+          t('request_net'),
+          t('request_vat'),
+          t('request_gross'),
+          t('allowed_net'),
+          t('allowed_vat'),
+          t('allowed_gross')
         ]
       end
 
@@ -66,7 +66,7 @@ module Nsm
         net_cost = disbursements.sum(&:original_total_cost_without_vat)
         vat = disbursements.sum(&:original_vat_amount)
         allowed_net_cost = disbursements.sum(&:total_cost_without_vat)
-        allowed_vat = disbursements.sum(&:vat_amount) unless net_cost == allowed_net_cost
+        allowed_vat = disbursements.sum(&:vat_amount) unless net_cost == allowed_net_cost || submission.part_grant?
 
         build_hash(
           name: 'disbursements',
@@ -80,8 +80,9 @@ module Nsm
 
       def calculate_row(rows, name, formatted:)
         net_cost = rows.sum(&:provider_requested_amount)
-        allowed_net_cost =
-          (rows.sum(&:caseworker_amount) if rows.any? { |row| row.provider_requested_amount != row.caseworker_amount })
+        allowed_net_cost = if submission.part_grant? || rows.any? { |row| row.provider_requested_amount != row.caseworker_amount }
+          rows.sum(&:caseworker_amount)
+        end
 
         build_hash(
           name: name,

@@ -10,6 +10,9 @@ en:
         long_html:
           one: '%{count} hour<br>'
           other: '%{count} hours<br>'
+        line_html:
+          one: '<nobr>%{count} hour '
+          other: '<nobr>%{count} hours '
       minutes:
         short:
           one: '%{count} minute'
@@ -17,3 +20,6 @@ en:
         long_html:
           one: '%{count} minute'
           other: '%{count} minutes'
+        line_html:
+          one: '%{count} minute</nobr>'
+          other: '%{count} minutes</nobr>'

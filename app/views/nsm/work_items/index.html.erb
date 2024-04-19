@@ -5,27 +5,14 @@
     <%= t('.work_items') %>
   </h3>
 
-  <% if travel_and_waiting.any? %>
-    <div class="govuk-body-m">
-      <%= t('.travel_and_waiting') %>
-      <div class="govuk-heading-l">
-        <%= travel_and_waiting.total_cost %>
-      </div>
-    </div>
 
-    <%= govuk_details(summary_text: t('.check_totals')) do %>
-      <%=
-        head = [
-          t('.items'),
-          t('.requested_time'),
-          t(".requested_cost.#{travel_and_waiting.vat_registered? ? 'inc' : 'exc'}_vat_html"),
-          t('.allowed_time'),
-          t(".allowed_cost.#{travel_and_waiting.vat_registered? ? 'inc' : 'exc'}_vat_html")
-        ]
-        rows = travel_and_waiting.table_fields
-        govuk_table(first_cell_is_header: true, head:, rows:)
-      %>
-    <% end %>
+  <%= govuk_details(summary_text: t('.check_totals')) do %>
+    <%=
+      head = work_item_summary.header
+      rows = work_item_summary.table_fields
+      foot = work_item_summary.footer
+      govuk_table(first_cell_is_header: true, head:, rows:, foot:)
+    %>
   <% end %>
 
   <% if claim.editable? && work_items.any? { |work_item| work_item.uplift&.positive? } %>

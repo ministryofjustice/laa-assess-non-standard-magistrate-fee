@@ -12,20 +12,17 @@ en:
         requested: Provider requested
         uplift_allowed: Uplift allowed
         allowed: Caseworker allowed
-        check_totals: View cost total
+        check_totals: Work items summary
         action: Action
         change: Change
         view: View
         travel_and_waiting: Travel and waiting
-        items: Items
-        requested_time: Time requested
-        requested_cost:
-          inc_vat_html: Cost requested<br>(including VAT)
-          exc_vat_html: Cost requested
+        items: Item
+        requested_time: Time claimed
+        requested_cost: Net cost claimed
         allowed_time: Time allowed
-        allowed_cost:
-          inc_vat_html: Cost allowed<br>(including VAT)
-          exc_vat_html: Cost allowed
+        allowed_cost: Net cost allowed
+        total: Total
       edit:
         page_title: "Your claims"
         heading: "Adjust a work item"
