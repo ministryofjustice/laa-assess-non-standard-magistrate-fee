@@ -86,7 +86,9 @@ RSpec.describe 'View Adjust quote tab' do
 
     it 'shows the travel cost summary' do
       expect(page).to have_css('.govuk-heading-m', text: 'Travel cost')
-      expect(page).to have_css('p', text: 'Reason for travel cost: "it was a long way"')
+      expect(page)
+        .to have_css('p', text: 'Reason for travel cost:')
+        .and have_css('p', text: 'it was a long way')
 
       within('.govuk-table#travel_costs') do
         expect(page)
@@ -100,7 +102,8 @@ RSpec.describe 'View Adjust quote tab' do
 
     it 'shows the additional cost summaries' do
       expect(page).to have_css('.govuk-heading-m', text: 'Additional cost 1')
-      expect(page).to have_css('p', text: 'Cost description: "Mileage - fuel is expensive"')
+      expect(page).to have_css('p', text: 'Cost description: Mileage')
+                  .and have_css('p', text: 'fuel is expensive')
 
       within('.govuk-table#additional_cost_1') do
         expect(page)
@@ -109,10 +112,8 @@ RSpec.describe 'View Adjust quote tab' do
           .and have_content('Total£385.00')
       end
 
-      expect(page).to have_css(
-        'p',
-        text: 'Cost description: "Waiting time - delayed interview at police station"'
-      )
+      expect(page).to have_css('p', text: 'Cost description: Waiting time')
+                  .and have_css('p', text: 'delayed interview at police station')
 
       within('.govuk-table#additional_cost_2') do
         expect(page)
