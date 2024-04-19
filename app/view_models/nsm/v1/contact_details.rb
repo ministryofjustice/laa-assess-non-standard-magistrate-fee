@@ -4,6 +4,7 @@ module Nsm
       attribute :firm_office
       attribute :solicitor
       attribute :submitter
+      attribute :vat_rate
 
       def key
         'contact_details'
@@ -47,6 +48,14 @@ module Nsm
                  tags: %w[br])
       end
 
+      def vat_registered
+        if firm_office['vat_registered'] == 'yes'
+          "#{(vat_rate * 100).to_i}%"
+        else
+          'No'
+        end
+      end
+
       def provider_email_address
         submitter['email']
       end
@@ -65,6 +74,10 @@ module Nsm
           {
             title: I18n.t(".nsm.claim_details.#{key}.firm_address"),
             value: firm_address
+          },
+          {
+            title: I18n.t(".nsm.claim_details.#{key}.vat_registered"),
+            value: vat_registered
           },
           {
             title: I18n.t(".nsm.claim_details.#{key}.solicitor_full_name"),

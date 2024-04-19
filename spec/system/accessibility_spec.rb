@@ -22,7 +22,6 @@ RSpec.describe 'Accessibility', :accessibility do
   context 'when viewing claim-specific screens' do
     %i[nsm_claim_claim_details
        nsm_claim_adjustments
-       nsm_claim_letters_and_calls
        nsm_claim_supporting_evidences
        nsm_claim_history
        edit_nsm_claim_change_risk
@@ -46,8 +45,6 @@ RSpec.describe 'Accessibility', :accessibility do
     end
 
     describe 'when dealing with letters and calls' do
-      let(:item_id) { claim.data.dig('letters_and_calls', 0, 'id') }
-
       %i[nsm_claim_letters_and_calls
          edit_nsm_claim_letters_and_call
          edit_nsm_claim_letters_and_call].each do |path|

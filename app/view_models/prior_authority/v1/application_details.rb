@@ -1,8 +1,6 @@
 module PriorAuthority
   module V1
     class ApplicationDetails < ApplicationSummary
-      attribute :ufn, :string
-      attribute :prison_law, :boolean
       attribute :prior_authority_granted, :boolean
       attribute :reason_why, :string
       attribute :supporting_documents
