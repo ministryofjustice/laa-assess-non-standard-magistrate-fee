@@ -12,7 +12,7 @@
     <% unless @supporting_evidence.empty? %>
       <%= render 'supporting_evidence_table', { claim: claim, supporting_evidence: @supporting_evidence } %>
     <% end %>
-    <% if claim_summary.send_by_post %>
+    <% if FeatureFlags.postal_evidence.enabled? && claim_summary.send_by_post %>
       <%= render 'send_by_post' %>
     <% end %>
     <% unless @supporting_evidence.empty? %>
