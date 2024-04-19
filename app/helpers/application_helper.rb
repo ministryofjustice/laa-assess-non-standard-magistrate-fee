@@ -30,7 +30,7 @@ module ApplicationHelper
   end
 
   def format_period(period, style: :short)
-    return if period.nil?
+    return period if period.blank?
 
     t("helpers.time_period.hours.#{style}", count: period / 60) +
       t("helpers.time_period.minutes.#{style}", count: period % 60)

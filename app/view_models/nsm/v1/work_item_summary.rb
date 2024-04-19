@@ -62,9 +62,9 @@ module Nsm
       def summed_values(work_items, periods: true)
         [
           work_items.sum(&:provider_requested_amount),
-          periods ? work_items.sum(&:original_time_spent) : nil,
+          periods ? work_items.sum(&:original_time_spent) : '',
           work_items.sum(&:caseworker_amount),
-          periods ? work_items.sum(&:time_spent) : nil,
+          periods ? work_items.sum(&:time_spent) : '',
         ]
       end
 
