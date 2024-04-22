@@ -9,7 +9,8 @@
 <% end %>
 
 <% if quote.travel_cost_reason %>
-  <p class="govuk-text"><%= t(".cost_description", description: quote.travel_cost_reason) %></p>
+  <p><%= t(".cost_description") %></p>
+  <%= simple_format quote.travel_cost_reason %>
 <% end %>
 
 <%= govuk_table(id: 'travel_costs') do |table|

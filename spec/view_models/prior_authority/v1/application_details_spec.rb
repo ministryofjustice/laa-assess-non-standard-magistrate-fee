@@ -64,7 +64,7 @@ RSpec.describe PriorAuthority::V1::ApplicationDetails do
     end
     let(:expected_rows) do
       [{ key: { text: 'Why prior authority is required' },
-         value: { text: 'because' } },
+         value: { text: '<p>because</p>' } },
        { key: { text: 'Supporting documents' },
         value: { text: '<a href="/prior_authority/downloads/B?file_name=A">A</a><br>' } }]
     end
@@ -92,7 +92,7 @@ RSpec.describe PriorAuthority::V1::ApplicationDetails do
         value:          { text: 'None' } },
        { key: { text: 'Additional items' }, value: { text: additional_cost_description } }]
     end
-    let(:additional_cost_description) { 'Foo<br>Bar<br>' }
+    let(:additional_cost_description) { "<p>Foo\n<br />Bar</p>" }
 
     it { expect(subject.alternative_quote_cards.first.card_rows).to eq(expected_rows) }
 
@@ -225,7 +225,7 @@ RSpec.describe PriorAuthority::V1::ApplicationDetails do
        { key: { text: 'Court type' }, value: { text: 'Central Criminal Court' } },
        { key: { text: 'Psychiatric liaison service accessed' },
         value: { text: 'No' } },
-       { key: { text: 'Why not?' }, value: { text: 'reason' } },
+       { key: { text: 'Why not?' }, value: { text: '<p>reason</p>' } },
        { key: { text: 'Youth court matter' }, value: { text: 'Yes' } }]
     end
     let(:next_hearing_text) { '1 January 2023' }

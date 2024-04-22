@@ -575,7 +575,7 @@ DEPENDENCIES
   capybara-selenium
   cssbundling-rails
   debug
-  devise
+  devise (>= 4.9.4)
   dotenv-rails
   erb_lint
   factory_bot_rails
@@ -607,7 +607,7 @@ DEPENDENCIES
   rubocop-rails (>= 2.24.1)
   rubocop-rspec
   selenium-webdriver
-  sentry-rails (>= 5.17.2)
+  sentry-rails (>= 5.17.3)
   sentry-ruby
   sidekiq (~> 7.2)
   sidekiq-cron

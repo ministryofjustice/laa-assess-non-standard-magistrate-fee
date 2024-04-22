@@ -32,12 +32,16 @@ module PriorAuthority
         delegate :primary_quote, :service_name, :prior_authority_granted, to: :application_details
 
         delegate :base_units, :base_cost_per_unit,
-                 :travel_units, :travel_cost_per_unit, :travel_cost_reason,
+                 :travel_units, :travel_cost_per_unit,
                  :formatted_base_cost, :formatted_travel_cost,
                  to: :quote
 
         def quote
           primary_quote
+        end
+
+        def travel_cost_reason
+          simple_format(quote.travel_cost_reason) if quote.travel_cost_reason.present?
         end
 
         def service_label

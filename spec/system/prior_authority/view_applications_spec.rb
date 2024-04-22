@@ -92,7 +92,7 @@ RSpec.describe 'View applications' do
       it 'shows alternative quote card' do
         within('.govuk-summary-card', text: 'Alternative quote 1') do
           expect(page).to have_content "Service detailsABC DEFABC, SW1 1AA\n" \
-                                       "Quote uploadNone\nAdditional itemsFooBar"
+                                       "Quote uploadNone\nAdditional items\nFoo Bar"
           expect(page).to have_content 'Cost typeAlternative quotePrimary quote' \
                                        'Service£10.50£10.50' \
                                        'Travel£300.00£0.00' \

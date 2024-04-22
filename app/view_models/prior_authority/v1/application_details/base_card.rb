@@ -5,6 +5,7 @@ module PriorAuthority
         include ActionView::Helpers::TagHelper
         include ActionView::Helpers::OutputSafetyHelper
         include ActionView::Helpers::UrlHelper
+        include ActionView::Helpers::TextHelper
         include NameConstructable
 
         CARD_ROWS = [].freeze
