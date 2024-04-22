@@ -58,7 +58,7 @@ module Nsm
       end
 
       def claim_total
-        @submission.data['submitted_total_inc_vat'] || @submission.data['submitted_total'] || 0
+        @submission.formatted_claimed_total
       end
     end
   end

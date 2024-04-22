@@ -23,4 +23,20 @@ class Claim < Submission
   def display_state?
     Nsm::SendBackForm::STATES.include?(state) || !editable?
   end
+
+  def formatted_claimed_total
+    summed_costs.dig(:gross_cost, :text)
+  end
+
+  def formatted_allowed_total
+    return formatted_claimed_total if summed_costs[:allowed_gross_cost].blank?
+
+    summed_costs.dig(:allowed_gross_cost, :text)
+  end
+
+  private
+
+  def summed_costs
+    @summed_costs ||= BaseViewModel.build(:core_cost_summary, self).summed_fields
+  end
 end
