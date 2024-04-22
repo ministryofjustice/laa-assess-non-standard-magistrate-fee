@@ -11,7 +11,7 @@ en:
         adjust_additional_cost: Adjust additional cost
         adjusted: Caseworker adjusted
         cost: Cost
-        cost_description: "Cost description: \"%{name} - %{description}\""
+        cost_description: "Cost description: %{name}"
         details: Details
         requested: Requested
         time: Time
@@ -30,7 +30,7 @@ en:
         adjusted: Caseworker adjusted
         adjust_travel_cost: Adjust travel costs
         cost: Cost
-        cost_description: "Reason for travel cost: \"%{description}\""
+        cost_description: "Reason for travel cost:"
         details: Details
         requested: Requested
         time: Time
