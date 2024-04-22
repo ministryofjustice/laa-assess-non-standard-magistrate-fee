@@ -6,10 +6,10 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby File.read('.ruby-version').strip
 
 gem 'activerecord-postgis-adapter'
-gem 'aws-sdk-s3', '~> 1.146'
+gem 'aws-sdk-s3', '~> 1.147'
 gem 'bootsnap', require: false
 gem 'cssbundling-rails'
-gem 'devise'
+gem 'devise', '>= 4.9.4'
 gem 'govuk-components'
 gem 'govuk_design_system_formbuilder'
 gem 'govuk_notify_rails', '~> 2.2.0'
@@ -33,7 +33,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 # Pagination
 gem 'pagy'
 # Exception monitoring
-gem 'sentry-rails', '>= 5.17.2'
+gem 'sentry-rails', '>= 5.17.3'
 gem 'sentry-ruby'
 gem 'with_advisory_lock'
 

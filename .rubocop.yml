@@ -81,7 +81,7 @@ RSpec/StubbedMock:
 RSpec/NoExpectationExample:
   Enabled: false
 
-RSpec/Rails/InferredSpecType:
+RSpecRails/InferredSpecType:
   Enabled: false
 
 RSpec/MessageChain:
@@ -99,6 +99,9 @@ Naming/VariableNumber:
 # To be tweaked until we find the right balance
 Metrics/MethodLength:
   Max: 13
+
+Metrics/ClassLength:
+  Max: 140
 
 # To be tweaked until we find the right balance
 Metrics/AbcSize:
