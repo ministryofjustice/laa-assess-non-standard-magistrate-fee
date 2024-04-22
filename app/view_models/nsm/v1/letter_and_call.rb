@@ -77,6 +77,7 @@ module Nsm
         )
       end
 
+      # rubocop:disable Metrics/AbcSize
       def table_fields
         [
           type.to_s,
@@ -88,6 +89,7 @@ module Nsm
           format(any_adjustments? && caseworker_amount)
         ]
       end
+      # rubocop:enable Metrics/AbcSize
 
       def provider_fields
         rows = {

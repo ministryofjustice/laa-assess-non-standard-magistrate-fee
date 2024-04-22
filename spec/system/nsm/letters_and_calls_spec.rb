@@ -115,7 +115,7 @@ RSpec.describe 'Letters and Calls' do
         '4' \
         '20%' \
         '£17.09' \
-        '4'\
+        '4' \
         '0%' \
         '£14.24' \
         'Change'

@@ -128,10 +128,10 @@ RSpec.describe Nsm::V1::Disbursement do
     it 'returns the fields for the table display if no adjustments' do
       expect(disbursement.table_fields).to eq(
         [
-          "Type",
-          {:numeric=>true, :text=>"£100.00"},
-          {:numeric=>true, :text=>"£0.00"},
-          {:numeric=>true, :text=>"£100.00"},
+          'Type',
+          { numeric: true, text: '£100.00' },
+          { numeric: true, text: '£0.00' },
+          { numeric: true, text: '£100.00' },
           '', '', ''
         ]
       )
@@ -142,13 +142,13 @@ RSpec.describe Nsm::V1::Disbursement do
 
       it 'returns an array with the correct fields' do
         expected_fields = [
-          "Type",
-          {:numeric=>true, :text=>"£100.00"},
-          {:numeric=>true, :text=>"£0.00"},
-          {:numeric=>true, :text=>"£100.00"},
-          {:numeric=>true, :text=>"£0.00"},
-          {:numeric=>true, :text=>"£0.00"},
-          {:numeric=>true, :text=>"£0.00"},
+          'Type',
+          { numeric: true, text: '£100.00' },
+          { numeric: true, text: '£0.00' },
+          { numeric: true, text: '£100.00' },
+          { numeric: true, text: '£0.00' },
+          { numeric: true, text: '£0.00' },
+          { numeric: true, text: '£0.00' },
         ]
         expect(disbursement.table_fields).to eq(expected_fields)
       end

@@ -92,7 +92,7 @@ module Nsm
         ]
       end
 
-      def format(value, as: :pounds)
+      def format(value)
         return '' if value.nil? || value == false
 
         { text: NumberTo.pounds(value), numeric: true }
