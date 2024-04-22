@@ -48,13 +48,28 @@ module Nsm
         )
       end
 
+      def headers
+        [
+          t('.item', width: 'govuk-!-width-one-fifth', numeric: false),
+          t('.claimed_time'),
+          t('.claimed_uplift'),
+          t('.claimed_net_cost'),
+          t('.allowed_time'),
+          t('.allowed_uplift'),
+          t('.allowed_net_cost'),
+          t('.action')
+        ]
+      end
+
       def table_fields
         [
           work_type.to_s,
-          "#{original_uplift.to_i}%",
-          ApplicationController.helpers.format_period(original_time_spent, style: :long_html),
-          any_adjustments? ? "#{uplift.to_i}%" : '',
-          any_adjustments? ? ApplicationController.helpers.format_period(time_spent.to_i, style: :long_html) : ''
+          format(original_time_spent, as: :time),
+          format(original_uplift.to_i, as: :percentage),
+          format(provider_requested_amount),
+          format(any_adjustments? ? time_spent : nil, as: :time),
+          format(any_adjustments? ? uplift.to_i : nil, as: :percentage),
+          format(any_adjustments? ? caseworker_amount : nil)
         ]
       end
 
@@ -84,6 +99,24 @@ module Nsm
       def calculate_cost(original: false)
         scoped_uplift, scoped_time_spent = original ? [original_uplift, original_time_spent] : [uplift, time_spent]
         pricing * scoped_time_spent * (100 + scoped_uplift.to_i) / 100 / 60
+      end
+
+      def format(value, as: :pounds)
+        return '' if value.nil?
+
+        case as
+        when :percentage then { text: NumberTo.percentage(value, multiplier: 1), numeric: true }
+        when :time then { text: ApplicationController.helpers.format_period(value, style: :long_html), numeric: true }
+        else { text: NumberTo.pounds(value), numeric: true }
+        end
+      end
+
+      def t(key, width: nil, numeric: true)
+        {
+          text: I18n.t("nsm.work_items.index.#{key}"),
+          numeric: numeric,
+          width: width
+        }
       end
     end
   end

@@ -16,8 +16,9 @@ RSpec.describe 'Work items' do
     within('.govuk-table__row', text: 'Waiting') do
       expect(page).to have_content(
         'Waiting' \
-        '95%' \
         '2 hours41 minutes' \
+        '95%' \
+        '£125.58' \
         'Change'
       )
       click_on 'Change'
@@ -36,10 +37,12 @@ RSpec.describe 'Work items' do
     within('.govuk-table__row', text: 'Waiting') do
       expect(page).to have_content(
         'Waiting' \
-        '95%' \
         '2 hours41 minutes' \
-        '0%' \
+        '95%' \
+        '£125.58' \
         '10 hours59 minutes' \
+        '0%' \
+        '£263.60' \
         'Change'
       )
     end
@@ -60,13 +63,15 @@ RSpec.describe 'Work items' do
     within('.govuk-table__row', text: 'Waiting') do
       expect(page).to have_content(
         'Waiting' \
+        '2 hours41 minutes' \
         '95%' \
+        '£125.58' \
         '2 hours41 minutes' \
         '0%' \
-        '2 hours41 minutes' \
+        '£64.40' \
         'Change'
       )
-    end
+  end
 
     expect(page).to have_no_content('Remove uplifts for all items')
   end

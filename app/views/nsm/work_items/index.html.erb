@@ -19,10 +19,9 @@
     <%= govuk_button_link_to(t(".remove_uplift_all"), edit_nsm_claim_work_items_uplift_path(claim), secondary: true, data: { turbo: 'false' }) %>
   <% end %>
 
+  <% head = work_items.first.headers %>
   <% work_items.group_by(&:completed_on).each do |completed_on, work_items_for_date| %>
     <%=
-      head = [t('.type_of_work'), t('.uplift_request'), t('.requested'), t('.uplift_allowed'), t('.allowed'), t('.action')]
-
       rows = work_items_for_date.map do |work_item|
         link = if claim.editable?
                   link_to(t('.change'), edit_nsm_claim_work_item_path(claim_id: claim.id, id: work_item.id), data: { turbo: 'false' })

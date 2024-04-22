@@ -30,11 +30,11 @@ module Nsm
           { text: format_period(requested_time, style: :line_html), numeric: true },
           { text: NumberTo.pounds(requested_cost), numeric: true },
         ]
-        if requested_cost == allowed_cost
-          result << '' << ''
-        else
+        if requested_cost != allowed_cost || submission.part_grant?
           result << { text: format_period(allowed_time, style: :line_html), numeric: true }
           result << { text: NumberTo.pounds(allowed_cost), numeric: true }
+        else
+          result << '' << ''
         end
 
         result

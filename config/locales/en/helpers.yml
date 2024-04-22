@@ -18,8 +18,8 @@ en:
           one: '%{count} minute'
           other: '%{count} minutes'
         long_html:
-          one: '%{count} minute'
-          other: '%{count} minutes'
+          one: '<nobr>%{count} minute</nobr>'
+          other: '<nobr>%{count} minutes</nobr>'
         line_html:
           one: '%{count} minute</nobr>'
           other: '%{count} minutes</nobr>'
