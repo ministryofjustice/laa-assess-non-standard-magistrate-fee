@@ -83,8 +83,8 @@ module Nsm
       def table_fields
         [
           type_name,
-          format(total_cost_without_vat),
-          format(vat_amount),
+          format(original_total_cost_without_vat),
+          format(original_vat_amount),
           format(provider_requested_total_cost),
           format(any_adjustments? && 0),
           format(any_adjustments? && 0),

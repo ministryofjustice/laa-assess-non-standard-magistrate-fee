@@ -122,7 +122,6 @@ module Nsm
 
         case as
         when :percentage then { text: NumberTo.percentage(value, multiplier: 1), numeric: true }
-        when :time then { text: ApplicationController.helpers.format_period(value, style: :long_html), numeric: true }
         when :number then { text: value, numeric: true }
         else { text: NumberTo.pounds(value), numeric: true }
         end

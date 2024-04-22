@@ -200,7 +200,15 @@ RSpec.describe Nsm::V1::LetterAndCall do
     end
 
     it 'returns the fields for the table display' do
-      expect(subject.table_fields).to eq(['Letters', '12', '0%', '£42.72', '', ''])
+      expect(subject.table_fields).to eq(
+        [
+          "Letters",
+          {:numeric=>true, :text=>"12"},
+          {:numeric=>true, :text=>"0%"},
+          {:numeric=>true, :text=>"£42.72"},
+          "", "", ""
+        ]
+      )
     end
 
     context 'when adjustments exist' do
@@ -217,7 +225,17 @@ RSpec.describe Nsm::V1::LetterAndCall do
       end
 
       it 'also renders caseworker values' do
-        expect(subject.table_fields).to eq(['Letters', '12', '95%', '£104.13', '0%', '£42.72'])
+        expect(subject.table_fields).to eq(
+          [
+            "Letters",
+            {:numeric=>true, :text=>"15"},
+            {:numeric=>true, :text=>"95%"},
+            {:numeric=>true, :text=>"£104.13"},
+            {:numeric=>true, :text=>"12"},
+            {:numeric=>true, :text=>"0%"},
+            {:numeric=>true, :text=>"£42.72"}
+          ]
+        )
       end
     end
   end

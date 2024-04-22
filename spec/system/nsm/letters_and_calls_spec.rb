@@ -36,9 +36,10 @@ RSpec.describe 'Letters and Calls' do
     within('.govuk-table__row', text: 'Letters') do
       expect(page).to have_content(
         'Letters' \
-        '22' \
+        '12' \
         '95%' \
         '£83.30' \
+        '22' \
         '0%' \
         '£78.32' \
         'Change'
@@ -72,9 +73,10 @@ RSpec.describe 'Letters and Calls' do
     within('.govuk-table__row', text: 'Calls') do
       expect(page).to have_content(
         'Calls' \
-        '22' \
+        '4' \
         '20%' \
         '£17.09' \
+        '22' \
         '0%' \
         '£78.32' \
         'Change'
@@ -100,17 +102,20 @@ RSpec.describe 'Letters and Calls' do
         '12' \
         '95%' \
         '£83.30' \
+        '12' \
         '0%' \
         '£42.72' \
         'Change'
       )
     end
+
     within('.govuk-table__row', text: 'Calls') do
       expect(page).to have_content(
         'Calls' \
         '4' \
         '20%' \
         '£17.09' \
+        '4'\
         '0%' \
         '£14.24' \
         'Change'
