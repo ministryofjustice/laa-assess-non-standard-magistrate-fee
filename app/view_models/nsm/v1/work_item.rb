@@ -50,14 +50,14 @@ module Nsm
 
       def headers
         [
-          t('.item', width: 'govuk-!-width-one-fifth', numeric: false),
-          t('.claimed_time'),
-          t('.claimed_uplift'),
-          t('.claimed_net_cost'),
-          t('.allowed_time'),
-          t('.allowed_uplift'),
-          t('.allowed_net_cost'),
-          t('.action')
+          t('item', width: 'govuk-!-width-one-fifth', numeric: false),
+          t('claimed_time'),
+          t('claimed_uplift'),
+          t('claimed_net_cost'),
+          t('allowed_time'),
+          t('allowed_uplift'),
+          t('allowed_net_cost'),
+          t('action')
         ]
       end
 
