@@ -11,6 +11,31 @@ module Nsm
       attribute :vat_rate
       attribute :firm_office
 
+      class << self
+        def headers
+          [
+            t('.items', width: 'govuk-!-width-one-fifth', numeric: false),
+            t('.number'),
+            t('.uplift_requested'),
+            t('.provider_requested'),
+            t('.number_allowed'),
+            t('.uplift_allowed'),
+            t('.caseworker_allowed'),
+            t('.action')
+          ]
+        end
+
+        private
+
+        def t(key, width: nil, numeric: true)
+          {
+            text: I18n.t("nsm.letters_and_calls.index.#{key}"),
+            numeric: numeric,
+            width: width
+          }
+        end
+      end
+
       def vat_registered?
         firm_office['vat_registered'] == 'yes'
       end
@@ -55,11 +80,12 @@ module Nsm
       def table_fields
         [
           type.to_s,
-          count.to_s,
-          "#{original_uplift.to_i}%",
-          NumberTo.pounds(provider_requested_amount),
-          any_adjustments? ? "#{uplift}%" : '',
-          any_adjustments? ? NumberTo.pounds(caseworker_amount) : '',
+          format(original_count.to_s, as: :number),
+          format(original_uplift.to_i, as: :percentage),
+          format(provider_requested_amount),
+          format(any_adjustments? && count.to_s, as: :number),
+          format(any_adjustments? && uplift.to_i, as: :percentage),
+          format(any_adjustments? && caseworker_amount)
         ]
       end
 
@@ -89,6 +115,17 @@ module Nsm
       def calculate_cost(original: false)
         scoped_count, scoped_uplift = original ? [original_count, original_uplift] : [count, uplift]
         pricing * scoped_count * (100 + scoped_uplift.to_i) / 100
+      end
+
+      def format(value, as: :pounds)
+        return '' if value.nil? || value == false
+
+        case as
+        when :percentage then { text: NumberTo.percentage(value, multiplier: 1), numeric: true }
+        when :time then { text: ApplicationController.helpers.format_period(value, style: :long_html), numeric: true }
+        when :number then { text: value, numeric: true }
+        else { text: NumberTo.pounds(value), numeric: true }
+        end
       end
     end
   end

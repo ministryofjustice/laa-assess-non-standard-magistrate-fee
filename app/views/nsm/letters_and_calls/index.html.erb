@@ -16,7 +16,7 @@
   </div>
   <div class="govuk-grid-column-full">
     <%=
-    head = [t('.items'), t('.number'),t('.uplift_requested'), t('.provider_requested'),t('.uplift_allowed'), t('.caseworker_allowed'), t('.action')]
+    head = Nsm::V1::LetterAndCall.headers
 
     rows = letters_and_calls.rows.map do |letter_and_call|
       link = if claim.editable?
@@ -30,8 +30,7 @@
         link
       ]
     end
-    foot = [t('.total'), *letters_and_calls.summary_row]
-    govuk_table(head:, rows:, foot:)
+    govuk_table(head:, rows:)
     %>
   </div>
 </div>
