@@ -65,7 +65,7 @@ autoscaling:
 
 variables:
   environment: production
-  appStoreUrl: https://laa-crime-application-store-prod.apps.live.cloud-platform.service.justice.gov.uk
+  appStoreUrl: http://laa-crime-application-store-app.laa-crime-application-store-production.svc.cluster.local
   enableSyncTriggerEndpoint: 'false'
   allowIndexing: 'true'
 
