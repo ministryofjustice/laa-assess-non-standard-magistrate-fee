@@ -42,11 +42,11 @@ RSpec.describe Nsm::V1::WorkItem do
     it 'returns the fields for the table display' do
       expect(subject.table_fields).to eq(
         [
-          "Waiting",
-          {:numeric=>true, :text=>"2 hours<br><nobr>41 minutes</nobr>"},
-          {:numeric=>true, :text=>"0%"},
-          {:numeric=>true, :text=>"£64.40"},
-          "", "", ""
+          'Waiting',
+          { numeric: true, text: '2 hours<br><nobr>41 minutes</nobr>' },
+          { numeric: true, text: '0%' },
+          { numeric: true, text: '£64.40' },
+          '', '', ''
         ]
       )
     end
@@ -66,13 +66,14 @@ RSpec.describe Nsm::V1::WorkItem do
       it 'also renders caseworker values' do
         expect(subject.table_fields).to eq(
           [
-            "Waiting",
-            {:numeric=>true, :text=>"2 hours<br><nobr>41 minutes</nobr>"},
-            {:numeric=>true, :text=>"20%"},
-            {:numeric=>true, :text=>"£77.28"},
-            {:numeric=>true, :text=>"2 hours<br><nobr>41 minutes</nobr>"},
-            {:numeric=>true, :text=>"0%"},
-            {:numeric=>true, :text=>"£64.40"}]
+            'Waiting',
+            { numeric: true, text: '2 hours<br><nobr>41 minutes</nobr>' },
+            { numeric: true, text: '20%' },
+            { numeric: true, text: '£77.28' },
+            { numeric: true, text: '2 hours<br><nobr>41 minutes</nobr>' },
+            { numeric: true, text: '0%' },
+            { numeric: true, text: '£64.40' }
+          ]
         )
       end
     end

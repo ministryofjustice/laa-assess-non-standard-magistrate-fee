@@ -67,9 +67,9 @@ module Nsm
           format(original_time_spent, as: :time),
           format(original_uplift.to_i, as: :percentage),
           format(provider_requested_amount),
-          format(any_adjustments? ? time_spent : nil, as: :time),
-          format(any_adjustments? ? uplift.to_i : nil, as: :percentage),
-          format(any_adjustments? ? caseworker_amount : nil)
+          format(any_adjustments? && time_spent, as: :time),
+          format(any_adjustments? && uplift.to_i, as: :percentage),
+          format(any_adjustments? && caseworker_amount)
         ]
       end
 
@@ -102,7 +102,7 @@ module Nsm
       end
 
       def format(value, as: :pounds)
-        return '' if value.nil?
+        return '' if value.nil? || value == false
 
         case as
         when :percentage then { text: NumberTo.percentage(value, multiplier: 1), numeric: true }

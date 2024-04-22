@@ -81,8 +81,8 @@ module Nsm
       def calculate_row(rows, name, formatted:)
         net_cost = rows.sum(&:provider_requested_amount)
         allowed_net_cost = if submission.part_grant? || rows.any? { |row| row.provider_requested_amount != row.caseworker_amount }
-          rows.sum(&:caseworker_amount)
-        end
+                             rows.sum(&:caseworker_amount)
+                           end
 
         build_hash(
           name: name,

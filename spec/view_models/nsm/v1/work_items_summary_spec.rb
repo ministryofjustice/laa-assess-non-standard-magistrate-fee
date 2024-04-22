@@ -11,11 +11,11 @@ RSpec.describe Nsm::V1::WorkItemSummary do
     it 'renders the translations' do
       expect(subject.header).to eq(
         [
-          {:numeric=>false, :text=>"Item"},
-          {:numeric=>true, :text=>"Time claimed"},
-          {:numeric=>true, :text=>"Net cost claimed"},
-          {:numeric=>true, :text=>"Time allowed"},
-          {:numeric=>true, :text=>"Net cost allowed"}
+          { numeric: false, text: 'Item' },
+          { numeric: true, text: 'Time claimed' },
+          { numeric: true, text: 'Net cost claimed' },
+          { numeric: true, text: 'Time allowed' },
+          { numeric: true, text: 'Net cost allowed' }
         ]
       )
     end
@@ -25,18 +25,17 @@ RSpec.describe Nsm::V1::WorkItemSummary do
     let(:work_items) do
       [{ 'work_type' => { 'en' => 'Travel', 'value' => 'travel' },
           'time_spent' => 20, 'vat_rate' => 0.2, 'pricing' => 300.0 },
-        { 'work_type' => { 'en' => 'Waiting', 'value' => 'waiting' },
-          'time_spent' => 30, 'vat_rate' => 0.2, 'pricing' => 200.0 }]
+       { 'work_type' => { 'en' => 'Waiting', 'value' => 'waiting' },
+         'time_spent' => 30, 'vat_rate' => 0.2, 'pricing' => 200.0 }]
     end
 
     it 'renders a summary row' do
       expect(subject.footer).to eq(
         [
-          {:numeric=>false, :text=>"Total"},
-          {:numeric=>true, :text=>""},
-          {:numeric=>true, :text=>"£200.00"},
-          "",
-          ""
+          { numeric: false, text: 'Total' },
+          { numeric: true, text: '' },
+          { numeric: true, text: '£200.00' },
+          '', ''
         ]
       )
     end
@@ -53,11 +52,10 @@ RSpec.describe Nsm::V1::WorkItemSummary do
         expect(subject.table_fields).to eq(
           [
             [
-              "Travel",
-              {:numeric => true, :text => "<nobr>0 hours 20 minutes</nobr>"},
-              {:numeric => true, :text => "£100.00"},
-              "",
-              ""
+              'Travel',
+              { numeric: true, text: '<nobr>0 hours 20 minutes</nobr>' },
+              { numeric: true, text: '£100.00' },
+              '', ''
             ]
           ]
         )
@@ -74,11 +72,11 @@ RSpec.describe Nsm::V1::WorkItemSummary do
         expect(subject.table_fields).to eq(
           [
             [
-              "Travel",
-              {:numeric => true, :text => "<nobr>0 hours 40 minutes</nobr>"},
-              {:numeric => true, :text => "£200.00"},
-              {:numeric => true, :text => "<nobr>0 hours 20 minutes</nobr>"},
-              {:numeric => true, :text => "£100.00"}
+              'Travel',
+              { numeric: true, text: '<nobr>0 hours 40 minutes</nobr>' },
+              { numeric: true, text: '£200.00' },
+              { numeric: true, text: '<nobr>0 hours 20 minutes</nobr>' },
+              { numeric: true, text: '£100.00' }
             ]
           ]
         )
@@ -97,20 +95,17 @@ RSpec.describe Nsm::V1::WorkItemSummary do
         expect(subject.table_fields).to eq(
           [
             [
-              "Travel",
-              {:numeric => true, :text => "<nobr>0 hours 20 minutes</nobr>"},
-              {:numeric => true, :text => "£100.00"},
-              "",
-              ""
+              'Travel',
+              { numeric: true, text: '<nobr>0 hours 20 minutes</nobr>' },
+              { numeric: true, text: '£100.00' },
+              '', ''
             ], [
-              "Waiting",
-              {:numeric => true, :text => "<nobr>0 hours 30 minutes</nobr>"},
-              {:numeric => true, :text => "£100.00"},
-              "",
-              ""
+              'Waiting',
+              { numeric: true, text: '<nobr>0 hours 30 minutes</nobr>' },
+              { numeric: true, text: '£100.00' },
+              '', ''
             ]
           ]
-
         )
       end
     end
@@ -125,11 +120,10 @@ RSpec.describe Nsm::V1::WorkItemSummary do
         expect(subject.table_fields).to eq(
           [
             [
-              "preparation",
-              {:numeric=>true, :text=>"<nobr>0 hours 30 minutes</nobr>"},
-              {:numeric=>true, :text=>"£150.00"},
-              "",
-              ""
+              'preparation',
+              { numeric: true, text: '<nobr>0 hours 30 minutes</nobr>' },
+              { numeric: true, text: '£150.00' },
+              '', ''
             ]
           ]
         )
@@ -148,11 +142,10 @@ RSpec.describe Nsm::V1::WorkItemSummary do
         expect(subject.table_fields).to eq(
           [
             [
-              "Travel",
-              {:numeric => true, :text => "<nobr>0 hours 50 minutes</nobr>"},
-              {:numeric => true, :text => "£200.00"},
-              "",
-              ""
+              'Travel',
+              { numeric: true, text: '<nobr>0 hours 50 minutes</nobr>' },
+              { numeric: true, text: '£200.00' },
+              '', ''
             ]
           ]
         )

@@ -56,7 +56,6 @@ module Nsm
 
       def work_items
         @work_items ||= BaseViewModel.build(:work_item, submission, 'work_items')
-
       end
 
       def summed_values(work_items, periods: true)

@@ -71,7 +71,7 @@ RSpec.describe 'Work items' do
         '£64.40' \
         'Change'
       )
-  end
+    end
 
     expect(page).to have_no_content('Remove uplifts for all items')
   end
