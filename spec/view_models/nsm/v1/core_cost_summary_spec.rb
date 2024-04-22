@@ -4,206 +4,307 @@ RSpec.describe Nsm::V1::CoreCostSummary do
   subject { described_class.new(submission:) }
 
   let(:submission) do
-    build(:claim).tap do |claim|
-      claim.data.merge!('letters_and_calls' => letters_and_calls, 'work_items' => work_items)
-    end
+    build(
+      :claim,
+      work_items: work_items.map(&:deep_stringify_keys),
+      letters_and_calls: letters_and_calls,
+      disbursements: disbursements.map(&:deep_stringify_keys),
+      vat_registered: vat_registered
+    )
   end
+  let(:vat_registered) { 'no' }
   let(:letters_and_calls) do
     [
       { 'type' => { 'en' => 'Letters' }, 'count' => 10, 'pricing' => 4.0 },
       { 'type' => { 'en' => 'Calls' }, 'count' => 5, 'pricing' => 4.0 }
     ]
   end
-  let(:work_items) { [{ data: 1 }] }
+  let(:disbursements) do
+    [{ total_cost_without_vat: 100.0, vat_amount: 0.0 }]
+  end
+  let(:work_items) { [] }
 
-  before do
-    allow(BaseViewModel).to receive(:build).and_call_original
-    allow(BaseViewModel).to receive(:build).with(:work_item, anything, anything).and_return(v1_work_items)
+  describe '#headers' do
+    it 'retruns the translated headers' do
+      expect(subject.headers).to eq(
+        [
+          { numeric: false, text: 'Items', width: 'govuk-!-width-one-quarter' },
+          { numeric: true, text: 'Net cost claimed', width: nil },
+          { numeric: true, text: 'VAT on claimed', width: nil },
+          { numeric: true, text: 'Total claimed', width: nil },
+          { numeric: true, text: 'Net cost allowed', width: nil },
+          { numeric: true, text: 'VAT on allowed', width: nil },
+          { numeric: true, text: 'Total allowed', width: nil }
+        ]
+      )
+    end
   end
 
   describe '#table_fields' do
     context 'when a single work item exists' do
-      let(:v1_work_items) do
+      let(:work_items) do
         [
-          instance_double(Nsm::V1::WorkItem,
-                          work_type: mock_translated('advocacy'),
-                          time_spent: 20,
-           original_time_spent: 20,
-           provider_requested_amount_inc_vat: 100.0,
-           caseworker_amount_inc_vat: 80.00,
-           firm_office: { 'vat_registered' => 'no' })
+          {
+            work_type: { value: 'advocacy', en: 'Advocacy' },
+            pricing: 10.0, time_spent_original: 600,
+            time_spent: 480,
+          }
         ]
       end
 
-      it 'includes the letters and calls rows' do
-        expect(subject.table_fields).to include(['Letters', '£40.00', ''], ['Calls', '£20.00', ''])
-      end
-
-      context 'when letters and calls proposed costs are zero' do
-        let(:letters_and_calls) do
-          [
-            { 'type' => { 'en' => 'Letters' }, 'count' => 0, 'pricing' => 4.04 },
-            { 'type' => { 'en' => 'Calls' }, 'count' => 0, 'pricing' => 4.04 }
-          ]
-        end
-
-        it 'does not include them' do
-          expect(subject.table_fields).to eq([['Advocacy', '£80.00', '20min']])
-        end
-      end
-
-      it 'builds the view model' do
-        subject.summed_fields
-        expect(BaseViewModel).to have_received(:build).with(
-          :work_item, submission, 'work_items'
+      it 'sums them into profit costs' do
+        expect(subject.table_fields[0]).to eq(
+          {
+            allowed_gross_cost: { numeric: true, text: '£80.00' },
+            allowed_net_cost: { numeric: true, text: '£80.00' }, allowed_vat: { numeric: true, text: '£0.00' },
+            gross_cost: { numeric: true, text: '£100.00' }, name: { numeric: false, text: 'Profit costs', width: nil },
+            net_cost: { numeric: true, text: '£100.00' }, vat: { numeric: true, text: '£0.00' }
+          }
         )
-      end
-
-      it 'includes the summed table field row' do
-        expect(subject.table_fields).to include(['Advocacy', '£80.00', '20min'])
       end
     end
 
     context 'when multiple work item of diffent types exists' do
-      let(:v1_work_items) do
+      let(:work_items) do
         [
-          instance_double(Nsm::V1::WorkItem,
-                          work_type: mock_translated('advocacy'), time_spent: 20,
-                          original_time_spent: 20,
-                          provider_requested_amount_inc_vat: 100.0, caseworker_amount_inc_vat: 80.00,
-                          firm_office: { 'vat_registered' => 'no' }),
-          instance_double(Nsm::V1::WorkItem,
-                          work_type: mock_translated('preparation'), time_spent: 30,
-                          original_time_spent: 20,
-                          provider_requested_amount_inc_vat: 110.0, caseworker_amount_inc_vat: 90.00,
-                          firm_office: { 'vat_registered' => 'no' })
+          {
+
+            work_type: { value: 'advocacy', en: 'Advocacy' },
+            pricing: 10.0, time_spent_original: 600, time_spent: 480,
+          },
+          {
+            work_type: { value: 'preparation', en: 'Preparation' },
+            pricing: 10.0, time_spent_original: 660, time_spent: 540,
+          }
         ]
       end
 
-      it 'returns a single table field row' do
-        expect(subject.table_fields).to include(
-          ['Advocacy', '£80.00', '20min'],
-          ['Preparation', '£90.00', '30min']
+      it 'summs them all together in profit costs' do
+        expect(subject.table_fields[0]).to eq(
+          {
+            allowed_gross_cost: { numeric: true, text: '£170.00' },
+            allowed_net_cost: { numeric: true, text: '£170.00' }, allowed_vat: { numeric: true, text: '£0.00' },
+            gross_cost: { numeric: true, text: '£210.00' }, name: { numeric: false, text: 'Profit costs', width: nil },
+            net_cost: { numeric: true, text: '£210.00' }, vat: { numeric: true, text: '£0.00' }
+          }
         )
       end
     end
 
     context 'when waiting and travel work items exist' do
-      let(:v1_work_items) do
+      let(:work_items) do
         [
-          instance_double(Nsm::V1::WorkItem,
-                          work_type: mock_translated('travel'), time_spent: 20,
-                          original_time_spent: 20,
-                          provider_requested_amount_inc_vat: 100.0, caseworker_amount_inc_vat: 80.00,
-                          firm_office: { 'vat_registered' => 'no' }),
-          instance_double(Nsm::V1::WorkItem,
-                          work_type: mock_translated('waiting'), time_spent: 20,
-                          original_time_spent: 20,
-                          provider_requested_amount_inc_vat: 100.0, caseworker_amount_inc_vat: 80.00,
-                          firm_office: { 'vat_registered' => 'no' }),
-          instance_double(Nsm::V1::WorkItem,
-                          work_type: mock_translated('preparation'), time_spent: 30,
-                          original_time_spent: 20,
-                        provider_requested_amount_inc_vat: 110.0, caseworker_amount_inc_vat: 90.00,
-                          firm_office: { 'vat_registered' => 'no' })
+          {
+            work_type: { value: 'travel', en: 'Travel' },
+            pricing: 10.0, time_spent_original: 600, time_spent: 480,
+          },
+          {
+            work_type: { value: 'waiting', en: 'Waiting' },
+            pricing: 10.0, time_spent_original: 600, time_spent: 480,
+          },
+          {
+            work_type: { value: 'preparation', en: 'Preparation' },
+            pricing: 10.0, time_spent_original: 660, time_spent: 540,
+          }
         ]
       end
 
-      it 'they are not returned' do
-        expect(subject.table_fields.map(&:first)).to eq(%w[Preparation Letters Calls])
+      it 'they are returned' do
+        expect(subject.table_fields[1]).to eq(
+          {
+            allowed_gross_cost: { numeric: true, text: '£80.00' }, allowed_net_cost: { numeric: true, text: '£80.00' },
+            allowed_vat: { numeric: true, text: '£0.00' }, gross_cost: { numeric: true, text: '£100.00' },
+            name: { numeric: false, text: 'Waiting', width: nil }, net_cost: { numeric: true, text: '£100.00' },
+            vat: { numeric: true, text: '£0.00' }
+          }
+        )
+        expect(subject.table_fields[2]).to eq(
+          {
+            allowed_gross_cost: { numeric: true, text: '£80.00' }, allowed_net_cost: { numeric: true, text: '£80.00' },
+            allowed_vat: { numeric: true, text: '£0.00' }, gross_cost: { numeric: true, text: '£100.00' },
+            name: { numeric: false, text: 'Travel', width: nil }, net_cost: { numeric: true, text: '£100.00' },
+            vat: { numeric: true, text: '£0.00' }
+          }
+        )
       end
     end
 
     context 'when multiple work item of the same types exists' do
-      let(:v1_work_items) do
+      let(:work_items) do
         [
-          instance_double(Nsm::V1::WorkItem,
-                          work_type: mock_translated('advocacy'), time_spent: 20,
-                          original_time_spent: 20,
-                          provider_requested_amount_inc_vat: 100.0, caseworker_amount_inc_vat: 80.00,
-                          firm_office: { 'vat_registered' => 'no' }),
-          instance_double(Nsm::V1::WorkItem,
-                          work_type: mock_translated('advocacy'), time_spent: 30,
-                          original_time_spent: 20,
-                          provider_requested_amount_inc_vat: 110.0, caseworker_amount_inc_vat: 90.00,
-                          firm_office: { 'vat_registered' => 'no' })
+          {
+            work_type: { value: 'advocacy', en: 'Advocacy' },
+            pricing: 10.0, time_spent_original: 600, time_spent: 480,
+          },
+          {
+            work_type: { value: 'advocacy', en: 'Advocacy' },
+            pricing: 10.0, time_spent_original: 660, time_spent: 540,
+          }
         ]
       end
 
       it 'includes a summed table field row' do
-        expect(subject.table_fields).to include(['Advocacy', '£170.00', '50min'])
+        expect(subject.table_fields[0]).to eq(
+          {
+            allowed_gross_cost: { numeric: true, text: '£170.00' },
+            allowed_net_cost: { numeric: true, text: '£170.00' }, allowed_vat: { numeric: true, text: '£0.00' },
+            gross_cost: { numeric: true, text: '£210.00' }, name: { numeric: false, text: 'Profit costs', width: nil },
+            net_cost: { numeric: true, text: '£210.00' }, vat: { numeric: true, text: '£0.00' }
+          }
+        )
+      end
+    end
+
+    context 'when disbursements exists - with adjustments' do
+      let(:disbursements) do
+        [
+          {
+            total_cost_without_vat: 0.0, total_cost_without_vat_original: 60.0,
+            vat_amount: 0.0, vat_amount_original: 12.0
+          }
+        ]
+      end
+
+      it 'summs them all together in profit costs' do
+        expect(subject.table_fields[3]).to eq(
+          {
+            allowed_gross_cost: { numeric: true, text: '£0.00' },
+            allowed_net_cost: { numeric: true, text: '£0.00' }, allowed_vat: { numeric: true, text: '£0.00' },
+            gross_cost: { numeric: true, text: '£72.00' }, name: { numeric: false, text: 'Disbursements', width: nil },
+            net_cost: { numeric: true, text: '£60.00' }, vat: { numeric: true, text: '£12.00' }
+          }
+        )
+      end
+    end
+
+    context 'when disbursements exists - without adjustments' do
+      it 'summs them all together in profit costs' do
+        expect(subject.table_fields[3]).to eq(
+          {
+            allowed_gross_cost: '', allowed_net_cost: '', allowed_vat: '',
+            gross_cost: { numeric: true, text: '£100.00' }, name: { numeric: false, text: 'Disbursements', width: nil },
+            net_cost: { numeric: true, text: '£100.00' }, vat: { numeric: true, text: '£0.00' }
+          }
+        )
       end
     end
   end
 
   describe '#summed_fields' do
-    before do
-      allow(BaseViewModel).to receive(:build).and_call_original
-      allow(BaseViewModel).to receive(:build).with(:work_item, anything, anything).and_return(v1_work_items)
-    end
-
     context 'when a single work item exists' do
-      let(:v1_work_items) do
+      let(:work_items) do
         [
-          instance_double(Nsm::V1::WorkItem,
-                          work_type: mock_translated('advocacy'), time_spent: 20,
-                       original_time_spent: 20,
-                       provider_requested_amount_inc_vat: 100.0, caseworker_amount_inc_vat: 80.00,
-                       firm_office: { 'vat_registered' => 'no' })
+          {
+            work_type: { value: 'advocacy', en: 'Advocacy' },
+            pricing: 10.0, time_spent_original: 600, time_spent: 480,
+          }
         ]
       end
 
-      it 'builds a WorkType record to use in the calculations' do
-        subject.summed_fields
-        expect(BaseViewModel).to have_received(:build).with(
-          :work_item, submission, 'work_items'
+      it 'returns the summed time and cost' do
+        expect(subject.summed_fields).to eq(
+          {
+            allowed_gross_cost: { numeric: true, text: '£180.00' }, allowed_net_cost: { numeric: true, text: '£180.00' },
+            allowed_vat: { numeric: true, text: '£0.00' }, gross_cost: { numeric: true, text: '£200.00' },
+            name: { numeric: false, text: 'Total', width: nil }, net_cost: { numeric: true, text: '£200.00' },
+            vat: { numeric: true, text: '£0.00' }
+          }
         )
+      end
+    end
+
+    context 'when no adjustments have been made' do
+      let(:work_items) do
+        [
+          {
+            work_type: { value: 'advocacy', en: 'Advocacy' },
+            pricing: 10.0, time_spent: 480,
+          }
+        ]
       end
 
       it 'returns the summed time and cost' do
-        expect(subject.summed_fields).to eq(['£140.00', ''])
+        expect(subject.summed_fields).to eq(
+          {
+            allowed_gross_cost: '', allowed_net_cost: '', allowed_vat: '', gross_cost: { numeric: true, text: '£180.00' },
+            name: { numeric: false, text: 'Total', width: nil }, net_cost: { numeric: true, text: '£180.00' },
+            vat: { numeric: true, text: '£0.00' }
+          }
+        )
+      end
+    end
+
+    context 'when firm is VAT registered' do
+      let(:vat_registered) { 'yes' }
+      let(:work_items) do
+        [
+          {
+            work_type: { value: 'advocacy', en: 'Advocacy' },
+            pricing: 10.0, time_spent: 480,
+          }
+        ]
+      end
+
+      it 'returns the summed time and cost' do
+        expect(subject.summed_fields).to eq(
+          {
+            allowed_gross_cost: '', allowed_net_cost: '', allowed_vat: '', gross_cost: { numeric: true, text: '£196.00' },
+            name: { numeric: false, text: 'Total', width: nil }, net_cost: { numeric: true, text: '£180.00' },
+            vat: { numeric: true, text: '£16.00' }
+          }
+        )
       end
     end
 
     context 'when multiple work item of diffent types exists' do
-      let(:v1_work_items) do
+      let(:work_items) do
         [
-          instance_double(Nsm::V1::WorkItem,
-                          work_type: mock_translated('advocacy'), time_spent: 20,
-                         original_time_spent: 20,
-                         provider_requested_amount_inc_vat: 100.0, caseworker_amount_inc_vat: 80.00,
-                         firm_office: { 'vat_registered' => 'no' }),
-          instance_double(Nsm::V1::WorkItem,
-                          work_type: mock_translated('travel'), time_spent: 30,
-                          original_time_spent: 30,
-                          provider_requested_amount_inc_vat: 100.0, caseworker_amount_inc_vat: 80.00,
-                          firm_office: { 'vat_registered' => 'no' })
+          {
+            work_type: { value: 'advocacy', en: 'Advocacy' },
+            pricing: 10.0, time_spent_original: 600, time_spent: 480,
+          },
+          {
+            work_type: { value: 'travel', en: 'Travel' },
+            pricing: 10.0, time_spent_original: 600, time_spent: 480,
+          }
         ]
       end
 
       it 'returns the summed cost' do
-        expect(subject.summed_fields).to eq(['£140.00', ''])
+        expect(subject.summed_fields).to eq(
+          {
+            allowed_gross_cost: { numeric: true, text: '£260.00' }, allowed_net_cost: { numeric: true, text: '£260.00' },
+            allowed_vat: { numeric: true, text: '£0.00' }, gross_cost: { numeric: true, text: '£300.00' },
+            name: { numeric: false, text: 'Total', width: nil }, net_cost: { numeric: true, text: '£300.00' },
+            vat: { numeric: true, text: '£0.00' }
+          }
+        )
       end
     end
 
     context 'when multiple work item of the same types exists' do
-      let(:v1_work_items) do
+      let(:work_items) do
         [
-          instance_double(Nsm::V1::WorkItem,
-                          work_type: mock_translated('advocacy'), time_spent: 20,
-                          original_time_spent: 20,
-                          provider_requested_amount_inc_vat: 100.0, caseworker_amount_inc_vat: 80.00,
-                          firm_office: { 'vat_registered' => 'no' }),
-          instance_double(Nsm::V1::WorkItem,
-                          work_type: mock_translated('advocacy'), time_spent: 30,
-                          original_time_spent: 30,
-                           provider_requested_amount_inc_vat: 100.0, caseworker_amount_inc_vat: 80.00,
-                          firm_office: { 'vat_registered' => 'no' })
+          {
+            work_type: { value: 'advocacy', en: 'Advocacy' },
+                          pricing: 10.0, time_spent_original: 600, time_spent: 480,
+          },
+          {
+            work_type: { value: 'advocacy', en: 'Advocacy' },
+                           pricing: 10.0, time_spent_original: 600, time_spent: 480,
+          }
         ]
       end
 
       it 'returns the summed cost' do
-        expect(subject.summed_fields).to eq(['£220.00', ''])
+        expect(subject.summed_fields).to eq(
+          {
+            allowed_gross_cost: { numeric: true, text: '£260.00' }, allowed_net_cost: { numeric: true, text: '£260.00' },
+            allowed_vat: { numeric: true, text: '£0.00' }, gross_cost: { numeric: true, text: '£300.00' },
+            name: { numeric: false, text: 'Total', width: nil }, net_cost: { numeric: true, text: '£300.00' },
+            vat: { numeric: true, text: '£0.00' }
+          }
+        )
       end
     end
   end

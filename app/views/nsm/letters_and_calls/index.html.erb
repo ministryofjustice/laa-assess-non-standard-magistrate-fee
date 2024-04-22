@@ -1,9 +1,15 @@
+<% title t('.page_title') %>
+<%# headers needed here to pass accibility tests (not sure why this doesn't affect work items screen) %>
+<%# headers do not appear in the screen as only the page inside 'turbo-frame' is rendered %>
+<h1><%= t('.page_title') %></h1>
+<h2><%= t('.page_title') %></h1>
+
 <turbo-frame id="letters_and_calls">
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
-    <h1 class="govuk-heading-m">
+    <h3 class="govuk-heading-m">
       <%= t('.heading') %>
-    </h1>
+    </h3>
     <% if claim.editable? && letters_and_calls.uplift? %>
       <%= govuk_button_link_to(t(".remove_uplift_all"), edit_nsm_claim_letters_and_calls_uplift_path(claim), secondary: true, data: { turbo: 'false' }) %>
     <% end %>
