@@ -8,7 +8,7 @@ RSpec.describe Nsm::SubmissionFeedbackMailer, type: :mailer do
   let(:ufn) { '123456/001' }
   let(:main_defendant_name) { 'Tracy Linklater' }
   let(:defendant_reference) { 'MAAT ID: AB12123' }
-  let(:claim_total) { 0 }
+  let(:claim_total) { '£325.97' }
   let(:date) { DateTime.now.to_fs(:stamp) }
 
   describe 'granted' do
@@ -43,7 +43,7 @@ RSpec.describe Nsm::SubmissionFeedbackMailer, type: :mailer do
   describe 'part granted' do
     let(:claim) { build(:claim, state: 'part_grant') }
     let(:feedback_template) { '9df38f19-f76b-42f9-a4e1-da36a65d6aca' }
-    let(:part_grant_total) { 0 }
+    let(:part_grant_total) { '£325.97' }
     let(:caseworker_decision_explanation) { '' }
     let(:personalisation) do
       [laa_case_reference:, ufn:, main_defendant_name:,

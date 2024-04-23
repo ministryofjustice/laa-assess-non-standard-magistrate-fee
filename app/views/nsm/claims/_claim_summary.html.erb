@@ -1,17 +1,30 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <% if claim.display_state?  %>
-        <p class="govuk-!-margin-bottom-2">
-          <%= govuk_tag(text: t(".status_list.#{'granted'}"), colour: accessed_colour('granted')) %>
+      <% if claim.display_state? %>
+        <p>
+          <%= govuk_tag(text: t(".status_list.#{claim.state}"), colour: accessed_colour(claim.state)) %>
         </p>
       <% end %>
-      <p class="govuk-body-l govuk-!-margin-bottom-2">
+      <p class="govuk-caption-xl">
         <%= claim_summary.laa_reference %>
       </p>
-      <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">
+      <h1 class="govuk-heading-xl">
         <%= claim_summary.main_defendant_name %>
       </h1>
-      <p class="govuk-body-l govuk-!-margin-bottom-2"><%= claim_summary.total %></p>
+      <p>
+        <span class="govuk-body-l">
+          <strong><%= t('.claimed') %></strong>
+          <%= claim_summary.claimed_total %>
+          <br>
+        </span>
+         <% if claim_summary.display_allowed_total? %>
+          <span class="govuk-body-l">
+            <strong><%= t('.allowed') %></strong>
+            <%= claim_summary.allowed_total %>
+          </span>
+        <% end %>
+      </p>
+
       <p class="govuk-body-l">
         <%= t(".risk.#{claim.risk}") %>
         <% if claim.editable? %>
