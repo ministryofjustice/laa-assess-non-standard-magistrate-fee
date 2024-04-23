@@ -30,9 +30,7 @@ module ApplicationHelper
   end
 
   def format_period(period, style: :short)
-    return if period.nil?
-
-    style = "#{style}_html" if style.to_sym == :long
+    return period if period.blank?
 
     t("helpers.time_period.hours.#{style}", count: period / 60) +
       t("helpers.time_period.minutes.#{style}", count: period % 60)

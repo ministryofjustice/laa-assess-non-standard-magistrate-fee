@@ -26,7 +26,11 @@
           link
         ]
       end
-      govuk_table(caption: disbursement_date.strftime('%-d %B %Y'), head:, rows:)
+      govuk_table do |table|
+        table.with_caption(text: disbursement_date.strftime('%-d %B %Y'), size: 's')
+        table.with_head(rows: [head])
+        table.with_body(rows: rows, first_cell_is_header: true)
+      end
     %>
   <% end %>
 </turbo-frame>
