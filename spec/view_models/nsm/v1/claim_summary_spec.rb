@@ -30,29 +30,6 @@ RSpec.describe Nsm::V1::ClaimSummary do
     end
   end
 
-  describe 'total' do
-    context 'there is an adjusted total' do
-      it 'returns the correct total' do
-        summary = described_class.new('adjusted_total' => 100.20, 'submitted_total' => 50.00)
-        expect(summary.total).to eq('£100.20')
-      end
-    end
-
-    context 'there is no adjusted total' do
-      it 'returns the correct total' do
-        summary = described_class.new('submitted_total' => 70.20)
-        expect(summary.total).to eq('£70.20')
-      end
-    end
-
-    context 'no total' do
-      it 'returns nil' do
-        summary = described_class.new
-        expect(summary.total).to be_nil
-      end
-    end
-  end
-
   describe '#assiged_to' do
     it 'returns the first assignment' do
       assignment1 = double(:one)

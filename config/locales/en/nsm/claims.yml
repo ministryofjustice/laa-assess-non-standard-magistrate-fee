@@ -28,6 +28,8 @@ en:
           rejected: "Rejected"
           further_info: Further information requested
           provider_requested: Provider requested
+        claimed: "Claimed:"
+        allowed: "Allowed:"
         risk:
           high: High risk
           medium: Medium risk

@@ -13,12 +13,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
     )
   end
   let(:vat_registered) { 'no' }
-  let(:letters_and_calls) do
-    [
-      { 'type' => { 'en' => 'Letters' }, 'count' => 10, 'pricing' => 4.0 },
-      { 'type' => { 'en' => 'Calls' }, 'count' => 5, 'pricing' => 4.0 }
-    ]
-  end
+  let(:letters_and_calls) { [] }
   let(:disbursements) do
     [{ total_cost_without_vat: 100.0, vat_amount: 0.0 }]
   end
@@ -188,6 +183,29 @@ RSpec.describe Nsm::V1::CoreCostSummary do
         )
       end
     end
+
+    context 'when letters and calls exist' do
+      let(:letters_and_calls) do
+        [
+          { 'type' => { 'en' => 'Letters' }, 'count' => 10, 'pricing' => 4.0 },
+          { 'type' => { 'en' => 'Calls' }, 'count' => 5, 'pricing' => 4.0 }
+        ]
+      end
+
+      it 'sums them into profit costs' do
+        expect(subject.table_fields[0]).to eq(
+          {
+            allowed_gross_cost: '',
+            allowed_net_cost: '',
+            allowed_vat: '',
+            gross_cost: { numeric: true, text: '£60.00' },
+            name: { numeric: false, text: 'Profit costs', width: nil },
+            net_cost: { numeric: true, text: '£60.00' },
+            vat: { numeric: true, text: '£0.00' }
+          }
+        )
+      end
+    end
   end
 
   describe '#summed_fields' do
@@ -302,6 +320,29 @@ RSpec.describe Nsm::V1::CoreCostSummary do
             allowed_gross_cost: { numeric: true, text: '£260.00' }, allowed_net_cost: { numeric: true, text: '£260.00' },
             allowed_vat: { numeric: true, text: '£0.00' }, gross_cost: { numeric: true, text: '£300.00' },
             name: { numeric: false, text: 'Total', width: nil }, net_cost: { numeric: true, text: '£300.00' },
+            vat: { numeric: true, text: '£0.00' }
+          }
+        )
+      end
+    end
+
+    context 'when letters and calls exist' do
+      let(:letters_and_calls) do
+        [
+          { 'type' => { 'en' => 'Letters' }, 'count' => 10, 'pricing' => 4.0 },
+          { 'type' => { 'en' => 'Calls' }, 'count' => 5, 'pricing' => 4.0 }
+        ]
+      end
+
+      it 'returns the summed cost' do
+        expect(subject.summed_fields).to eq(
+          {
+            allowed_gross_cost: '',
+            allowed_net_cost: '',
+            allowed_vat: '',
+            gross_cost: { numeric: true, text: '£160.00' },
+            name: { numeric: false, text: 'Total', width: nil },
+            net_cost: { numeric: true, text: '£160.00' },
             vat: { numeric: true, text: '£0.00' }
           }
         )

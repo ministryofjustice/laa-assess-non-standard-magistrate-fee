@@ -12,8 +12,8 @@ RSpec.describe Nsm::FeedbackMessages::PartGrantedFeedback do
   let(:ufn) { '123456/001' }
   let(:main_defendant_name) { 'Tracy Linklater' }
   let(:defendant_reference) { 'MAAT ID: AB12123' }
-  let(:claim_total) { 0 }
-  let(:part_grant_total) { 0 }
+  let(:claim_total) { '£325.97' }
+  let(:part_grant_total) { '£325.97' }
   let(:caseworker_decision_explanation) { 'Test Explanation' }
   let(:date) { DateTime.now.to_fs(:stamp) }
 
