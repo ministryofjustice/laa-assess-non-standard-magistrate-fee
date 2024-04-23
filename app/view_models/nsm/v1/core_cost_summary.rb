@@ -51,7 +51,7 @@ module Nsm
       def calculate_profit_costs(formatted:)
         letters_calls = LettersAndCallsSummary.new('submission' => submission).rows
 
-        calculate_row(work_items[PROFIT_COSTS] || ([] + letters_calls), 'profit_costs', formatted:)
+        calculate_row((work_items[PROFIT_COSTS] || []) + letters_calls, 'profit_costs', formatted:)
       end
 
       def calculate_waiting(formatted:)

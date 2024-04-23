@@ -8,7 +8,7 @@ module PriorAuthority
           additional_items
         ].freeze
 
-        delegate :additional_cost_list, :formatted_total_cost, to: :quote
+        delegate :formatted_total_cost, :additional_cost_list, to: :quote
         delegate :formatted_original_total_cost, to: :primary_quote
 
         def initialize(application_details, alternative_quote)
@@ -23,9 +23,7 @@ module PriorAuthority
         def additional_items
           return I18n.t('prior_authority.application_details.none') if additional_cost_list.blank?
 
-          safe_join(
-            additional_cost_list.split("\n").map { [_1, tag.br] }.flatten
-          )
+          simple_format(additional_cost_list)
         end
 
         def additional_label

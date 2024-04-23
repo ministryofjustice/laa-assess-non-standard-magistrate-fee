@@ -4,7 +4,9 @@ module PriorAuthority
       class NoAlternativeQuotesCard < BaseCard
         CARD_ROWS = %i[no_alternative_quote_reason].freeze
 
-        delegate :no_alternative_quote_reason, to: :application_details
+        def no_alternative_quote_reason
+          simple_format(application_details.no_alternative_quote_reason)
+        end
       end
     end
   end

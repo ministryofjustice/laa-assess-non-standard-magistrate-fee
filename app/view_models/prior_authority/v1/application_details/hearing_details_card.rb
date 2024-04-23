@@ -5,7 +5,7 @@ module PriorAuthority
         CARD_ROWS = %i[next_hearing_string plea_string court_type_string psychiatric_liaison_string
                        psychiatric_liaison_reason_not youth_court_string].freeze
 
-        delegate :next_hearing_date, :plea, :court_type, :psychiatric_liaison, :psychiatric_liaison_reason_not,
+        delegate :next_hearing_date, :plea, :court_type, :psychiatric_liaison,
                  :youth_court, to: :application_details
 
         def next_hearing_string
@@ -30,6 +30,12 @@ module PriorAuthority
 
         def youth_court_string
           I18n.t("shared.#{youth_court}") unless youth_court.nil?
+        end
+
+        def psychiatric_liaison_reason_not
+          return if application_details.psychiatric_liaison_reason_not.blank?
+
+          simple_format(application_details.psychiatric_liaison_reason_not)
         end
       end
     end

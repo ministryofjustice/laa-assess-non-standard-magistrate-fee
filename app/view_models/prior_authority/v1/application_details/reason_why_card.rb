@@ -4,7 +4,11 @@ module PriorAuthority
       class ReasonWhyCard < BaseCard
         CARD_ROWS = %i[reason_why supporting_document_string].freeze
 
-        delegate :reason_why, :supporting_documents, to: :application_details
+        delegate :supporting_documents, to: :application_details
+
+        def reason_why
+          simple_format(application_details.reason_why)
+        end
 
         def supporting_document_string
           return I18n.t('prior_authority.application_details.none') if supporting_documents.blank?
