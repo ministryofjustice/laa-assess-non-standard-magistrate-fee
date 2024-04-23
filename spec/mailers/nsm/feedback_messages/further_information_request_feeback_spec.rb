@@ -12,7 +12,7 @@ RSpec.describe Nsm::FeedbackMessages::FurtherInformationRequestFeedback do
   let(:ufn) { '123456/001' }
   let(:main_defendant_name) { 'Tracy Linklater' }
   let(:defendant_reference) { 'MAAT ID: AB12123' }
-  let(:claim_total) { 0 }
+  let(:claim_total) { '£325.97' }
   let(:date_to_respond_by) { 7.days.from_now.to_fs(:stamp) }
   let(:caseworker_information_requested) { 'Test Request' }
   let(:date) { DateTime.now.to_fs(:stamp) }

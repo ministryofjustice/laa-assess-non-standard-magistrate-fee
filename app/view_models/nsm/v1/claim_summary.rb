@@ -3,8 +3,6 @@ module Nsm
     class ClaimSummary < BaseViewModel
       attribute :laa_reference
       attribute :defendants
-      attribute :submitted_total
-      attribute :adjusted_total
       attribute :submission
       attribute :send_by_post
 
@@ -21,12 +19,16 @@ module Nsm
         submission.events.where(event_type: 'Event::Decision').order(created_at: :desc).first&.created_at
       end
 
-      def total
-        if adjusted_total.present?
-          NumberTo.pounds(adjusted_total)
-        elsif submitted_total.present?
-          NumberTo.pounds(submitted_total)
-        end
+      def claimed_total
+        submission.formatted_claimed_total
+      end
+
+      def allowed_total
+        submission.formatted_allowed_total
+      end
+
+      def display_allowed_total?
+        claimed_total != allowed_total || submission.display_state?
       end
     end
   end

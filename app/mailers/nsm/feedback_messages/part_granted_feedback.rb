@@ -21,7 +21,7 @@ module Nsm
       end
 
       def adjusted_total
-        @submission.data['adjusted_total_inc_vat'] || @submission.data['adjusted_total'] || 0
+        @submission.formatted_allowed_total
       end
     end
   end
