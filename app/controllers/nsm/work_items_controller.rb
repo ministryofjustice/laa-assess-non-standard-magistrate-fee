@@ -5,9 +5,9 @@ module Nsm
     def index
       claim = Claim.find(params[:claim_id])
       work_items = BaseViewModel.build(:work_item, claim, 'work_items')
-      travel_and_waiting = BaseViewModel.build(:travel_and_waiting, claim)
+      work_item_summary = BaseViewModel.build(:work_item_summary, claim)
 
-      render locals: { claim:, work_items:, travel_and_waiting: }
+      render locals: { claim:, work_items:, work_item_summary: }
     end
 
     def show

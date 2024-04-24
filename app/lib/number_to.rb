@@ -12,7 +12,7 @@ module NumberTo
     pounds(*, round_mode: :down)
   end
 
-  def self.percentage(value, decimals: 0)
-    "#{(value * 100).round(decimals)}%"
+  def self.percentage(value, decimals: 0, multiplier: 100)
+    "#{(value * multiplier).round(decimals)}%"
   end
 end
