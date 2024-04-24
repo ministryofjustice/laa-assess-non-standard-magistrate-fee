@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Nsm::V1::YourClaims, type: :view_model do
   subject(:your_claims) do
-    described_class.new(laa_reference:, defendants:, firm_office:, created_at:, submission:, risk:)
+    described_class.new(laa_reference:, defendants:, firm_office:, submission:, risk:)
   end
 
   let(:laa_reference) { '1234567890' }
@@ -12,7 +12,7 @@ RSpec.describe Nsm::V1::YourClaims, type: :view_model do
   end
   let(:firm_office) { { 'name' => 'Acme Law Firm' } }
   let(:created_at) { Time.zone.yesterday }
-  let(:submission) { instance_double(Claim, id: 1) }
+  let(:submission) { instance_double(Claim, id: 1, created_at: created_at) }
   let(:risk) { 'low' }
 
   describe '#main_defendant_name' do
@@ -69,16 +69,14 @@ RSpec.describe Nsm::V1::YourClaims, type: :view_model do
   end
 
   describe 'date_created' do
-    before do
-      subject.created_at = DateTime.new(2023, 11, 21, 17, 17, 43)
-    end
+    let(:submission) { instance_double(Claim, id: 1, created_at: DateTime.new(2023, 11, 21, 17, 17, 43)) }
 
     it 'date_created_str -> formats the created_at date' do
       expect(subject.date_created_str).to eq('21 Nov 2023')
     end
 
     it 'date_created_sort -> returns value for sort' do
-      expect(subject.date_created_sort).to eq('2023-11-21')
+      expect(subject.date_created_sort).to eq('2023-11-21 17:17:43')
     end
   end
 end

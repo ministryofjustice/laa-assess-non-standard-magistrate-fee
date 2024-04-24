@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Nsm::V1::AllClaims, type: :view_model do
   subject(:all_claims) do
-    described_class.new(laa_reference:, defendants:, firm_office:, created_at:, submission:)
+    described_class.new(laa_reference:, defendants:, firm_office:, submission:)
   end
 
   let(:laa_reference) { '1234567890' }
@@ -12,7 +12,7 @@ RSpec.describe Nsm::V1::AllClaims, type: :view_model do
   end
   let(:firm_office) { { 'name' => 'Acme Law Firm' } }
   let(:created_at) { Time.zone.today }
-  let(:submission) { build(:claim, id: SecureRandom.uuid) }
+  let(:submission) { build(:claim, id: SecureRandom.uuid, created_at: created_at) }
 
   describe '#main_defendant_name' do
     it 'returns the name of the main defendant' do
@@ -60,7 +60,7 @@ RSpec.describe Nsm::V1::AllClaims, type: :view_model do
         { laa_reference: '1234567890', claim_id: submission.id },
         'Acme Law Firm',
         'John Doe',
-        { text: I18n.l(Time.zone.today, format: '%-d %b %Y'), sort_value: Time.zone.today.to_fs(:db) },
+        { text: I18n.l(Time.zone.today, format: '%-d %b %Y'), sort_value: Time.zone.today.beginning_of_day.to_fs(:db) },
         'Unassigned'
       ]
       expect(all_claims.table_fields).to eq(expected_fields)
