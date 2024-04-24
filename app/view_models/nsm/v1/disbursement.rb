@@ -16,6 +16,31 @@ module Nsm
       attribute :apply_vat, :string
       adjustable_attribute :vat_amount, :decimal, precision: 10, scale: 2
 
+      class << self
+        def headers
+          [
+            t('.item', width: 'govuk-!-width-one-fifth', numeric: false),
+            t('.claimed_net'),
+            t('.claimed_vat'),
+            t('.claimed_gross'),
+            t('.allowed_net'),
+            t('.allowed_vat'),
+            t('.allowed_gross'),
+            t('.action')
+          ]
+        end
+
+        private
+
+        def t(key, width: nil, numeric: true)
+          {
+            text: I18n.t("nsm.disbursements.index.#{key}"),
+            numeric: numeric,
+            width: width
+          }
+        end
+      end
+
       def provider_requested_total_cost
         original_total_cost_without_vat + original_vat_amount
       end
@@ -58,10 +83,19 @@ module Nsm
       def table_fields
         [
           type_name,
-          NumberTo.pounds(provider_requested_total_cost),
-          apply_vat == 'true' ? format_vat_rate(vat_rate) : '0%',
-          any_adjustments? ? NumberTo.pounds(caseworker_total_cost) : '',
+          format(original_total_cost_without_vat),
+          format(original_vat_amount),
+          format(provider_requested_total_cost),
+          format(any_adjustments? && 0),
+          format(any_adjustments? && 0),
+          format(any_adjustments? && 0)
         ]
+      end
+
+      def format(value)
+        return '' if value.nil? || value == false
+
+        { text: NumberTo.pounds(value), numeric: true }
       end
     end
   end
