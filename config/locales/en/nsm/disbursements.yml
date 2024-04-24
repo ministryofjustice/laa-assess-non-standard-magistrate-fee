@@ -3,12 +3,16 @@ en:
   nsm:
     disbursements:
       index:
+        page_title: "Your claims"
         disbursements: Disbursements
         disbursement_total: Disbursement total
-        disbursement: Disbursement
-        requested: Provider requested
-        vat_applied: VAT applied
-        adjusted: Caseworker allowed
+        item: Item
+        claimed_net: Net cost claimed
+        claimed_vat: VAT on claimed
+        claimed_gross: Total claimed
+        allowed_net: Net cost allowed
+        allowed_vat: VAT on allowed
+        allowed_gross: Total allowed
         action: Action
         change: Change
         view: View

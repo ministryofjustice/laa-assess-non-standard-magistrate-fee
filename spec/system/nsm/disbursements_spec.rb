@@ -15,7 +15,8 @@ RSpec.describe 'Disbursements' do
       expect(page).to have_content(
         'Apples' \
         '£100.00' \
-        '0%' \
+        '£0.00' \
+        '£100.00' \
         'Change'
       )
     end
@@ -30,12 +31,14 @@ RSpec.describe 'Disbursements' do
       expect(page).to have_content(
         'Apples' \
         '£100.00' \
-        '0%' \
+        '£0.00' \
+        '£100.00' \
+        '£0.00' \
+        '£0.00' \
         '£0.00' \
         'Change'
       )
     end
-    expect(page).to have_css('.govuk-heading-l', text: '£0.00')
   end
 
   it 'shows error if no changes made to an item' do
@@ -44,7 +47,8 @@ RSpec.describe 'Disbursements' do
       expect(page).to have_content(
         'Apples' \
         '£100.00' \
-        '0%' \
+        '£0.00' \
+        '£100.00' \
         'Change'
       )
     end

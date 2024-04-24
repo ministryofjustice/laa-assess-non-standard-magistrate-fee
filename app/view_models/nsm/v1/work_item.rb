@@ -14,6 +14,29 @@ module Nsm
       attribute :vat_rate, :float
       attribute :firm_office
 
+      class << self
+        def headers
+          [
+            t('item', width: 'govuk-!-width-one-fifth', numeric: false),
+            t('claimed_time'),
+            t('claimed_uplift'),
+            t('claimed_net_cost'),
+            t('allowed_time'),
+            t('allowed_uplift'),
+            t('allowed_net_cost'),
+            t('action')
+          ]
+        end
+
+        def t(key, width: nil, numeric: true)
+          {
+            text: I18n.t("nsm.work_items.index.#{key}"),
+            numeric: numeric,
+            width: width
+          }
+        end
+      end
+
       def vat_registered?
         firm_office['vat_registered'] == 'yes'
       end
@@ -46,19 +69,6 @@ module Nsm
         attributes.slice('time_spent', 'uplift').merge(
           'explanation' => adjustment_comment
         )
-      end
-
-      def headers
-        [
-          t('item', width: 'govuk-!-width-one-fifth', numeric: false),
-          t('claimed_time'),
-          t('claimed_uplift'),
-          t('claimed_net_cost'),
-          t('allowed_time'),
-          t('allowed_uplift'),
-          t('allowed_net_cost'),
-          t('action')
-        ]
       end
 
       def table_fields
@@ -109,14 +119,6 @@ module Nsm
         when :time then { text: ApplicationController.helpers.format_period(value, style: :long_html), numeric: true }
         else { text: NumberTo.pounds(value), numeric: true }
         end
-      end
-
-      def t(key, width: nil, numeric: true)
-        {
-          text: I18n.t("nsm.work_items.index.#{key}"),
-          numeric: numeric,
-          width: width
-        }
       end
     end
   end
