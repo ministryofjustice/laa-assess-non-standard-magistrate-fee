@@ -162,8 +162,6 @@ spec:
                 secretKeyRef:
                   name: s3-policy-arns
                   key: bucket_name
-            - name: APP_STORE_WAIT_SECS
-              value: '30'
             - name: SIDEKIQ_WEB_UI_USERNAME
               valueFrom:
                 secretKeyRef:
