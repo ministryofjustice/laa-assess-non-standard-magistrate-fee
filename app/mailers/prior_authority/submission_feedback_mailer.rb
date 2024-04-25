@@ -6,6 +6,7 @@ module PriorAuthority
 
     FEEDBACK_MESSAGE_KLASSES = {
       PriorAuthorityApplication::GRANTED => FeedbackMessages::GrantedFeedback,
+      PriorAuthorityApplication::AUTO_GRANT => FeedbackMessages::GrantedFeedback,
       PriorAuthorityApplication::PART_GRANT => FeedbackMessages::PartGrantedFeedback,
       PriorAuthorityApplication::REJECTED => FeedbackMessages::RejectedFeedback,
       PriorAuthorityApplication::SENT_BACK => FeedbackMessages::FurtherInformationRequestFeedback,
