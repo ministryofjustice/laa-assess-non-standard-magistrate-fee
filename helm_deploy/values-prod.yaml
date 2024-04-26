@@ -61,7 +61,7 @@ autoscaling:
   minReplicas: 2
   maxReplicas: 10
   targetCPUUtilizationPercentage: 80
-
+  targetMemoryUtilizationPercentage: 80
 variables:
   environment: production
   appStoreUrl: http://laa-crime-application-store-app.laa-crime-application-store-production.svc.cluster.local
