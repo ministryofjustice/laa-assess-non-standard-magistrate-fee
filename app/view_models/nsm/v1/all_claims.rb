@@ -4,8 +4,8 @@ module Nsm
       attribute :laa_reference
       attribute :defendants
       attribute :firm_office
-      attribute :created_at, :date
       attribute :submission
+      delegate :created_at, to: :submission
 
       def main_defendant_name
         main_defendant = defendants.detect { |defendant| defendant['main'] }

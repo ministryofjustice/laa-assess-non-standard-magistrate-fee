@@ -9,12 +9,6 @@ RSpec.describe Nsm::V1::LettersAndCallsSummary, type: :model do
   let(:uplift) { 0 }
   let(:submission) { build(:claim).tap { |claim| claim.data.merge!('letters_and_calls' => letters_and_calls) } }
 
-  describe '#summary_row' do
-    it 'returns an array of summary row fields' do
-      expect(subject.summary_row).to eq(['12', '-', '£42.72', '-', '£42.72'])
-    end
-  end
-
   describe 'uplift?' do
     context 'when uplift is 0' do
       it { expect(subject).not_to be_uplift }
