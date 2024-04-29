@@ -27,9 +27,20 @@ RSpec.describe NotifyAppStore do
       subject.perform(submission:)
     end
 
-    it 'queues an email' do
-      expect(Nsm::SubmissionFeedbackMailer).to receive_message_chain(:notify, :deliver_later!)
+    it 'does not queue an email' do
+      expect(Nsm::SubmissionFeedbackMailer).not_to receive(:notify)
       subject.perform(submission:)
+    end
+
+    context 'when email flag is set' do
+      before do
+        allow(ENV).to receive(:fetch).with('SEND_EMAILS', 'false').and_return 'true'
+      end
+
+      it 'queues an email' do
+        expect(Nsm::SubmissionFeedbackMailer).to receive_message_chain(:notify, :deliver_later!)
+        subject.perform(submission:)
+      end
     end
 
     context 'when emails should not be triggered' do
