@@ -2,12 +2,16 @@ class AppStoreClient
   include HTTParty
   headers 'Content-Type' => 'application/json'
 
-  def get_submission(submission_id)
-    process(:get, "/v1/application/#{submission_id}")
-  end
-
   def get_all_submissions(last_update)
-    process(:get, "/v1/applications?since=#{last_update.to_i}")
+    url = "/v1/applications?since=#{last_update.to_i}"
+    response = self.class.get "#{host}#{url}", **options
+
+    case response.code
+    when 200
+      JSON.parse(response.body)
+    else
+      raise "Unexpected response from AppStore - status #{response.code} for '#{url}'"
+    end
   end
 
   def update_submission(payload)
@@ -37,17 +41,6 @@ class AppStoreClient
   end
 
   private
-
-  def process(method, url)
-    response = self.class.public_send(method, "#{host}#{url}", **options)
-
-    case response.code
-    when 200
-      JSON.parse(response.body)
-    else
-      raise "Unexpected response from AppStore - status #{response.code} for '#{url}'"
-    end
-  end
 
   def options(payload = nil)
     options = payload ? { body: payload.to_json } : {}
