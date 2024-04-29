@@ -9,8 +9,7 @@ class SyncController < ApplicationController
   end
 
   def sync_individual
-    record = AppStoreClient.new.get_submission(params[:submission_id])
-    UpdateSubmission.call(record)
+    UpdateSubmission.call(params[:data].permit!.to_h)
     head :ok
   end
 
