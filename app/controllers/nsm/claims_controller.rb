@@ -1,7 +1,7 @@
 module Nsm
   class ClaimsController < ApplicationController
     def index
-      @pagy, claims = pagy_array(Claim.pending_decision)
+      @pagy, claims = pagy(Claim.pending_decision)
       @claims = claims.map { |claim| BaseViewModel.build(:all_claims, claim) }
     end
 
