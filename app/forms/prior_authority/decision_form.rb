@@ -39,7 +39,7 @@ module PriorAuthority
                                 comment: explanation,
                                 previous_state: previous_state,
                                 current_user: current_user)
-        NotifyAppStore.process(submission:)
+        NotifyAppStore.perform_later(submission:)
       end
 
       true

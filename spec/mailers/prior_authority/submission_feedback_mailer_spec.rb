@@ -51,6 +51,19 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
     include_examples 'creates a prior authority feedback mailer'
   end
 
+  context 'with auto_grant state' do
+    let(:state) { 'auto_grant' }
+    let(:caseworker_comment) { nil }
+    let(:feedback_template) { 'd4f3da60-4da5-423e-bc93-d9235ff01a7b' }
+
+    let(:personalisation) do
+      [laa_case_reference:, ufn:, defendant_name:,
+       application_total:, date:]
+    end
+
+    include_examples 'creates a prior authority feedback mailer'
+  end
+
   context 'with part granted state' do
     let(:state) { 'part_grant' }
 

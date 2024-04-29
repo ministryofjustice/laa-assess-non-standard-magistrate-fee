@@ -53,7 +53,7 @@ RSpec.describe PriorAuthority::SendBackForm do
     let(:user) { create(:caseworker) }
 
     before do
-      allow(NotifyAppStore).to receive(:process)
+      allow(NotifyAppStore).to receive(:perform_later)
       travel_to fixed_arbitrary_date
       create(:assignment, submission:, user:)
     end
@@ -112,7 +112,7 @@ RSpec.describe PriorAuthority::SendBackForm do
         end
 
         it 'notifies the app store' do
-          expect(NotifyAppStore).to have_received(:process).with(submission:)
+          expect(NotifyAppStore).to have_received(:perform_later).with(submission:)
         end
       end
     end
@@ -157,7 +157,7 @@ RSpec.describe PriorAuthority::SendBackForm do
         end
 
         it 'notifies the app store' do
-          expect(NotifyAppStore).to have_received(:process).with(submission:)
+          expect(NotifyAppStore).to have_received(:perform_later).with(submission:)
         end
       end
     end

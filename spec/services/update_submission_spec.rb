@@ -223,7 +223,7 @@ RSpec.describe UpdateSubmission do
       before do
         allow(Autograntable).to receive(:new).and_return(autograntable)
         allow(Event::AutoDecision).to receive(:build)
-        allow(NotifyAppStore).to receive(:process)
+        allow(NotifyAppStore).to receive(:perform_later)
       end
 
       it 'updates the state to auto_grant' do
@@ -239,7 +239,7 @@ RSpec.describe UpdateSubmission do
 
       it 'notifys the app store' do
         described_class.call(record)
-        expect(NotifyAppStore).to have_received(:process).with(submission: application.becomes(Submission))
+        expect(NotifyAppStore).to have_received(:perform_later).with(submission: application.becomes(Submission))
       end
     end
 
@@ -251,7 +251,7 @@ RSpec.describe UpdateSubmission do
         allow(autograntable).to receive(:grantable?).and_raise(LocationService::NotFoundError)
         allow(Autograntable).to receive(:new).and_return(autograntable)
         allow(Event::AutoDecision).to receive(:build)
-        allow(NotifyAppStore).to receive(:process)
+        allow(NotifyAppStore).to receive(:perform_later)
         allow(Sentry).to receive(:capture_exception)
       end
 
@@ -270,7 +270,7 @@ RSpec.describe UpdateSubmission do
         allow(autograntable).to receive(:grantable?).and_raise(LocationService::ResponseError)
         allow(Autograntable).to receive(:new).and_return(autograntable)
         allow(Event::AutoDecision).to receive(:build)
-        allow(NotifyAppStore).to receive(:process)
+        allow(NotifyAppStore).to receive(:perform_later)
         allow(Sentry).to receive(:capture_exception)
       end
 
@@ -289,7 +289,7 @@ RSpec.describe UpdateSubmission do
         allow(autograntable).to receive(:grantable?).and_raise('unknown_error')
         allow(Autograntable).to receive(:new).and_return(autograntable)
         allow(Event::AutoDecision).to receive(:build)
-        allow(NotifyAppStore).to receive(:process)
+        allow(NotifyAppStore).to receive(:perform_later)
       end
 
       it 'raise the erroor' do

@@ -69,6 +69,6 @@ class UpdateSubmission
     submission.update!(state: PriorAuthorityApplication::AUTO_GRANT)
 
     Event::AutoDecision.build(submission:, previous_state:)
-    NotifyAppStore.process(submission:)
+    NotifyAppStore.perform_later(submission:)
   end
 end

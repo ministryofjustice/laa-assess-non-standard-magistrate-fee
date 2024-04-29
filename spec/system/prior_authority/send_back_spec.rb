@@ -3,15 +3,8 @@ require 'rails_helper'
 RSpec.describe 'Send an application back', :stub_oauth_token do
   let(:caseworker) { create(:caseworker) }
   let(:application) { create(:prior_authority_application, state: 'submitted') }
-  let(:app_store_stub) do
-    stub_request(:put, %r{http.*/v1/application/.*})
-      .to_return(
-        status: 201
-      )
-  end
 
   before do
-    app_store_stub
     sign_in caseworker
     create(:assignment, submission: application, user: caseworker)
     visit '/'
@@ -26,16 +19,14 @@ RSpec.describe 'Send an application back', :stub_oauth_token do
       fill_in 'Describe what further information you require', with: 'You forgot to say please'
     end
 
-    it 'triggers an email' do
-      expect { click_on 'Submit' }.to have_enqueued_job.on_queue('mailers')
+    it 'triggers an app store stync' do
+      expect { click_on 'Submit' }.to have_enqueued_job(NotifyAppStore)
     end
 
     context 'once the decision has been processed' do
       before do
         click_on 'Submit'
       end
-
-      it { expect(app_store_stub).to have_been_requested }
 
       it 'shows my application' do
         expect(page).to have_content 'Application sent'

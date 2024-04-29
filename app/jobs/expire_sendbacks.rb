@@ -12,6 +12,6 @@ class ExpireSendbacks < ApplicationJob
   def expire(submission)
     submission.update!(state: PriorAuthorityApplication::EXPIRED)
     Event::Expiry.build(submission:)
-    NotifyAppStore.process(submission: submission, trigger_email: false)
+    NotifyAppStore.perform_later(submission: submission, trigger_email: false)
   end
 end

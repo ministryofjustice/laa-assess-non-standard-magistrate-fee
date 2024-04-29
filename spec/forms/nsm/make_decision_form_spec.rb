@@ -72,7 +72,7 @@ RSpec.describe Nsm::MakeDecisionForm do
 
     before do
       allow(Event::Decision).to receive(:build)
-      allow(NotifyAppStore).to receive(:process)
+      allow(NotifyAppStore).to receive(:perform_later)
     end
 
     it { expect(subject.save).to be_truthy }
@@ -91,7 +91,7 @@ RSpec.describe Nsm::MakeDecisionForm do
 
     it 'trigger an update to the app store' do
       subject.save
-      expect(NotifyAppStore).to have_received(:process).with(submission: claim)
+      expect(NotifyAppStore).to have_received(:perform_later).with(submission: claim)
     end
 
     context 'when not valid' do

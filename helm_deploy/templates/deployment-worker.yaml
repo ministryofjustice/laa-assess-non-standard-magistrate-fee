@@ -162,8 +162,6 @@ spec:
                 secretKeyRef:
                   name: google-analytics
                   key: tracking_key
-            - name: APP_STORE_WAIT_SECS
-              value: '30'
             - name: OS_API_KEY
               valueFrom:
                 secretKeyRef:
