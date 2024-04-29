@@ -286,10 +286,15 @@ RSpec.describe 'View applications' do
     before do
       application.data['further_information'] = [
         { caseworker_id: caseworker.id,
-          information_requested: 'Set the scene a little more',
-          information_supplied: 'It was a dark and stormy night',
+          information_requested: "Set the scene \na little more",
+          information_supplied: "It was a dark \nand stormy night",
           requested_at: DateTime.new(2023, 5, 2, 4, 3, 2),
-          documents: [{ file_name: 'example.pdf', file_path: 'some-file-on-amazon' }] }
+          documents: [{ file_name: 'example.pdf', file_path: 'some-file-on-amazon' }] },
+        { caseworker_id: caseworker.id,
+          information_requested: 'Next request',
+          information_supplied: 'Next response',
+          requested_at: DateTime.new(2023, 5, 3, 4, 3, 2),
+          documents: [] }
       ]
       application.update!(state: 'provider_updated', updated_at: DateTime.new(2023, 6, 5, 4, 3, 2))
       create(:event, :provider_updated,
@@ -314,6 +319,10 @@ RSpec.describe 'View applications' do
     it 'shows the updated date' do
       expect(page).to have_content 'Further information request 2 May 2023'
       expect(page).to have_content 'Date amended: 5 June 2023'
+    end
+
+    it 'shows RFIs in reverse order' do
+      expect(page).to have_text(/Next request.+Set the scene/m)
     end
   end
 end
