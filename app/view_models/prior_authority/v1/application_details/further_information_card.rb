@@ -24,7 +24,7 @@ module PriorAuthority
         def provider_response
           safe_join(
             [simple_format(@further_information['information_supplied'])] +
-             documents.map { [tag.br, document_link(_1)] }.flatten
+             documents.flat_map { [tag.br, document_link(_1)] }
           )
         end
 
