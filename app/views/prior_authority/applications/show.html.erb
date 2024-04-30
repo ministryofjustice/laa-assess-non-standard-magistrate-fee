@@ -21,18 +21,12 @@
       <div class="govuk-inset-text">
         <p><strong><%= t(".sent_back", date: @summary.date_updated_str) %></strong></p>
         <% if @details.further_information_requested? %>
-          <p>
-            <%= t('.further_information') %>
-            <br>
-            <%= @details.further_information_explanation %>
-          </p>
+          <p><%= t('.further_information') %></p>
+          <%= simple_format @details.further_information_explanation %>
         <% end %>
         <% if @details.corrections_requested? %>
-          <p>
-            <%= t('.incorrect_information') %>
-            <br>
-            <%= @details.incorrect_information_explanation %>
-          </p>
+          <p><%= t('.incorrect_information') %></p>
+          <%= simple_format @details.incorrect_information_explanation %>
         <% end %>
       </div>
     <% elsif @summary.provider_updated? %>
