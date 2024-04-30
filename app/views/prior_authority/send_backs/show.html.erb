@@ -28,7 +28,7 @@
               <%= t('.further_information') %>
             </dt>
             <dd class="govuk-summary-list__value">
-              <%= @model.further_information_explanation %>
+              <%= simple_format @model.further_information_explanation %>
             </dd>
           </div>
         <% end %>
@@ -39,11 +39,10 @@
               <%= t('.incorrect_information') %>
             </dt>
             <dd class="govuk-summary-list__value">
-              <%= @model.incorrect_information_explanation %>
+              <%= simple_format @model.incorrect_information_explanation %>
             </dd>
           </div>
         <% end %>
-
 
       </dl>
       <div class="govuk-button-group govuk-button-group-vertically-centred">
