@@ -1,0 +1,20 @@
+<% content_for(:primary_navigation) do %>
+  <% render 'layouts/prior_authority/primary_navigation', current: @form_object.summary.current_section(current_user) %>
+<% end %>
+
+<% content_for(:back_link) do %>
+  <%= govuk_back_link(href: prior_authority_application_path(@form_object.summary.id), html_attributes: {'data-turbo': 'false'}) %>
+<% end %>
+
+ <% title t('.page_title') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: @form_object, url: prior_authority_application_notes_path(@form_object.submission.id) do |f| %>
+      <%= govuk_error_summary(@form_object) %>
+      <%= f.govuk_text_area :note, label: { text: t('.page_title'), tag: 'h1', size: 'l' }, hint: { text: t('.hint' )} %>
+
+      <%= f.govuk_submit(t('.submit')) %>
+    <% end %>
+  </div>
+</div>

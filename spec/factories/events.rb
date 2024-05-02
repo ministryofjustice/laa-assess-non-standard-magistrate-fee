@@ -22,6 +22,16 @@ FactoryBot.define do
       end
     end
 
+    trait :auto_decision do
+      event_type { Event::AutoDecision.to_s }
+      details do
+        {
+          from: 'submitted',
+          to: 'granted'
+        }
+      end
+    end
+
     trait :new_version do
       event_type { Event::NewVersion.to_s }
     end
