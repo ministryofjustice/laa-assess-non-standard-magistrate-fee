@@ -78,7 +78,7 @@ Rails.application.routes.draw do
     resources :feedback, only: [:index, :create]
     resources :cookies, only: [:index, :create]
     get :update_cookies, to: 'cookies#update_cookies'
-    get :privacy
+    resources :privacy, only: [:index]
     get :accessibility
   end
 
