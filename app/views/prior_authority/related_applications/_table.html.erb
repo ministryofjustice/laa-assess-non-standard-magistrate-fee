@@ -18,7 +18,10 @@
         <% columns.values.each_with_index do |value_attribute, index| %>
           <td class="govuk-table__cell">
             <% if index.zero? %>
-              <%= link_to application.send(value_attribute), prior_authority_application_path(application.id), data: { turbo: false } %>
+              <%= link_to application.send(value_attribute),
+                          prior_authority_application_path(application.id),
+                          data: { turbo: false },
+                          target: "_blank" %>
             <% else %>
               <%= application.send(value_attribute) %>
             <% end %>
