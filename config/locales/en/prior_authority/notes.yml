@@ -1,0 +1,7 @@
+en:
+  prior_authority:
+    notes:
+      new:
+        page_title: Add a note to the application history
+        hint: This information is for internal use only
+        submit: Save and continue

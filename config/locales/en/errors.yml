@@ -105,3 +105,7 @@ en:
               blank: Explain your decision for adjusting the costs
             travel_time: *shared_time_errors
             travel_cost_per_hour: *shared_cost_per_hour_errors
+        prior_authority/note_form:
+          attributes:
+            note:
+              blank: Enter what information you want added to the application history
