@@ -30,7 +30,7 @@ RSpec.describe PriorAuthority::V1::ApplicationDetails do
       [{ key: { text: 'Service required' },
         value: { text: 'Accident reconstruction' } },
        { key: { text: 'Service details' },
-        value: { text: 'ABC DEF<br>ABC, SW1 1AA' } },
+        value: { text: 'ABC DEF<br>ABC, HIJ, SW1 1AA' } },
        { key: { text: 'Quote upload' },
         value:          { text: '<a href="/prior_authority/downloads/123123123?file_name=test.pdf">test.pdf</a>' } },
        { key: { text: 'Existing prior authority granted' }, value: { text: 'Yes' } }]
@@ -46,7 +46,7 @@ RSpec.describe PriorAuthority::V1::ApplicationDetails do
         [{ key: { text: 'Service required' },
           value: { text: 'Accident reconstruction' } },
          { key: { text: 'Service details' },
-           value: { text: 'ABC DEF<br>ABC, SW1 1AA' } },
+           value: { text: 'ABC DEF<br>ABC, HIJ, SW1 1AA' } },
          { key: { text: 'Quote upload' },
            value:          { text: '<a href="/prior_authority/downloads/123123123?file_name=test.pdf">test.pdf</a>' } },
          { key: { text: 'Ordered by court' }, value: { text: 'Yes' } },
@@ -87,7 +87,7 @@ RSpec.describe PriorAuthority::V1::ApplicationDetails do
     let(:alternative_quote) { build(:alternative_quote, additional_cost_list:) }
     let(:expected_rows) do
       [{ key: { text: 'Service details' },
-        value: { text: 'ABC DEF<br>ABC, SW1 1AA' } },
+        value: { text: 'ABC DEF<br>ABC, HIJ, SW1 1AA' } },
        { key: { text: 'Quote upload' },
         value:          { text: 'None' } },
        { key: { text: 'Additional items' }, value: { text: additional_cost_description } }]

@@ -53,7 +53,7 @@ module PriorAuthority
         end
 
         def service_details
-          safe_join([quote.contact_full_name, tag.br, quote.organisation, ', ', quote.postcode])
+          safe_join([quote.contact_full_name, tag.br, quote.organisation, ', ', quote.town, ', ', quote.postcode])
         end
 
         def quote_upload

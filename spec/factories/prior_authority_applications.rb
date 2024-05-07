@@ -88,6 +88,7 @@ FactoryBot.define do
     contact_first_name { 'ABC' }
     contact_last_name { 'DEF' }
     organisation { 'ABC' }
+    town { 'HIJ' }
     postcode { 'SW1 1AA' }
     primary { true }
     ordered_by_court { nil }
@@ -143,6 +144,7 @@ FactoryBot.define do
     contact_first_name { 'ABC' }
     contact_last_name { 'DEF' }
     organisation { 'ABC' }
+    town { 'HIJ' }
     postcode { 'SW1 1AA' }
     primary { false }
     ordered_by_court { nil }

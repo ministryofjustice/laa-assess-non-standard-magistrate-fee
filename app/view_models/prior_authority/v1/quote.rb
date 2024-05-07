@@ -26,6 +26,7 @@ module PriorAuthority
       attribute :contact_first_name, :string
       attribute :contact_last_name, :string
       attribute :organisation, :string
+      attribute :town, :string
       attribute :postcode, :string
       attribute :primary, :boolean
       attribute :ordered_by_court, :boolean

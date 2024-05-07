@@ -74,7 +74,7 @@ RSpec.describe 'View applications' do
       it 'shows primary quote card' do
         within('#primary-quote.govuk-summary-card') do
           expect(page).to have_content "Service requiredPathologist report\n" \
-                                       "Service detailsABC DEFABC, SW1 1AA\n" \
+                                       "Service detailsABC DEFABC, HIJ, SW1 1AA\n" \
                                        "Quote uploadtest.pdf\n" \
                                        'Existing prior authority grantedYes'
           expect(page).to have_content 'Cost typeAmountRequestedTotal' \
@@ -91,7 +91,7 @@ RSpec.describe 'View applications' do
 
       it 'shows alternative quote card' do
         within('.govuk-summary-card', text: 'Alternative quote 1') do
-          expect(page).to have_content "Service detailsABC DEFABC, SW1 1AA\n" \
+          expect(page).to have_content "Service detailsABC DEFABC, HIJ, SW1 1AA\n" \
                                        "Quote uploadNone\nAdditional items\nFoo Bar"
           expect(page).to have_content 'Cost typeAlternative quotePrimary quote' \
                                        'Service£10.50£10.50' \
