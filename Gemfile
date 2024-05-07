@@ -39,7 +39,7 @@ gem 'with_advisory_lock'
 
 group :development, :test do
   gem 'debug', platforms: %i[mri windows]
-  gem 'dotenv-rails'
+  gem 'dotenv-rails', '>= 3.1.2'
   gem 'erb_lint', require: false
   gem 'overcommit'
   gem 'pry'
