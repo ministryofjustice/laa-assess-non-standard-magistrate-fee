@@ -64,7 +64,8 @@ module PriorAuthority
           'PriorAuthority::Event::DraftSendBack' => 'prior_authority.events.draft_send_back',
           'PriorAuthority::Event::SendBack' => 'prior_authority.events.sent_back',
           'Event::Expiry' => 'prior_authority.events.expired',
-          'Event::ProviderUpdated' => 'prior_authority.events.provider_updated'
+          'Event::ProviderUpdated' => 'prior_authority.events.provider_updated',
+          'Event::Note' => 'prior_authority.events.note'
         }
       end
 

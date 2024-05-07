@@ -3,4 +3,5 @@ en:
     related_applications:
       index:
         no_applications: No related applications have been found
+        new_tab: All related applications open in a new tab or window.
         page_title: Related applications

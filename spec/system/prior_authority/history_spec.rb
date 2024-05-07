@@ -35,9 +35,12 @@ RSpec.describe 'History events' do
     Event::ProviderUpdated.create!(submission: application,
                                    details: {  corrected_info: ['bar'] },
                                    created_at: 1.hour.ago)
+    Event::Note.build(submission: application,
+                      current_user: caseworker,
+                      note: "Foo\nBar").update(created_at: 0.5.hours.ago)
   end
 
-  it 'shows all (visible) events in the history' do
+  it 'shows first page events in the history' do
     visit prior_authority_application_events_path(application)
 
     doc = Nokogiri::HTML(page.html)
@@ -46,7 +49,8 @@ RSpec.describe 'History events' do
     ).map { _1.text.strip.gsub(/\s+/, ' ') }
 
     expect(history).to eq(
-      ['1 February 20238:00am', 'N/A', 'Received Received from Provider with changes to data',
+      ['1 February 20238:30am', 'case worker', 'case worker added a note Foo Bar',
+       '1 February 20238:00am', 'N/A', 'Received Received from Provider with changes to data',
        '1 February 20237:00am', 'N/A', 'Received Received from Provider with further information and changes to data',
        '1 February 20236:00am', 'case worker', 'Sent back Sent back to Provider for further information',
        '1 February 20235:00am', 'case worker', 'case worker saved a draft',
@@ -54,8 +58,20 @@ RSpec.describe 'History events' do
        '1 February 20233:00am', 'case worker', 'case worker saved a draft',
        '1 February 20232:00am', 'super visor', 'Self-assigned by super visor manual assignment comment',
        '1 February 20231:00am', 'super visor', 'Unassigned by super visor unassignment comment',
-       '1 February 202312:00am', 'case worker', 'Assigned to case worker',
-       '31 January 202311:00pm', 'N/A', 'Received']
+       '1 February 202312:00am', 'case worker', 'Assigned to case worker']
+    )
+  end
+
+  it 'shows second page of events in the history' do
+    visit prior_authority_application_events_path(application, page: 2)
+
+    doc = Nokogiri::HTML(page.html)
+    history = doc.css(
+      '.govuk-table__cell'
+    ).map { _1.text.strip.gsub(/\s+/, ' ') }
+
+    expect(history).to eq(
+      ['31 January 202311:00pm', 'N/A', 'Received']
     )
   end
 end
