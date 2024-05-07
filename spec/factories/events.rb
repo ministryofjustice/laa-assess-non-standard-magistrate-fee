@@ -27,7 +27,7 @@ FactoryBot.define do
       details do
         {
           from: 'submitted',
-          to: 'granted'
+          to: 'auto_grant'
         }
       end
     end
