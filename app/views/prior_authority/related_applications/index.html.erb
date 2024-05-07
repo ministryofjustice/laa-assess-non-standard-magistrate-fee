@@ -15,6 +15,7 @@
         <% if @applications.none? %>
           <p class="govuk-body-m"><%= t('.no_applications') %></p>
         <% else %>
+          <p class="govuk-body-m"><%= t('.new_tab') %></p>
           <%= render 'table',
                     path: prior_authority_application_related_applications_path,
                     columns: {
