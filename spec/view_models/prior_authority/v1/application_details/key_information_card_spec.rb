@@ -6,20 +6,21 @@ RSpec.describe PriorAuthority::V1::ApplicationDetails::KeyInformationCard do
   let(:klass) { PriorAuthority::V1::KeyInformation }
   let(:application_summary) { klass.new(args) }
 
-  describe '#primary_quote_postcode' do
+  describe '#primary_quote_location' do
     let(:args) do
       {
         quotes: [
           {
             'primary' => true,
-            'postcode' => 'E15 3JQ',
+            'town' => 'Royston Vasey',
+            'postcode' => 'E15',
           },
         ],
       }
     end
 
-    it 'returns the postcode from the quote marked as primary true' do
-      expect(key_information.primary_quote_postcode).to eq('E15 3JQ')
+    it 'returns the town and postcode from the quote marked as primary true' do
+      expect(key_information.primary_quote_location).to eq('Royston Vasey, E15')
     end
   end
 
