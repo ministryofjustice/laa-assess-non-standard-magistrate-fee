@@ -23,8 +23,13 @@ class UpdateSubmission
     PriorAuthorityApplication.transaction do
       update_submission
       autogrant if cached_autograntable
-      Event::NewVersion.build(submission:) if version_changed
+      Event::NewVersion.build(submission:) if new_version_appropriate? && version_changed
     end
+  end
+
+  def new_version_appropriate?
+    # If this is a prior authority submission, only add a new version event on the first new version
+    @record['version'] == 1 || @record['application_type'] != Submission::APPLICATION_TYPES[:prior_authority]
   end
 
   def assign_attributes

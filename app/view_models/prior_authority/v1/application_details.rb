@@ -97,7 +97,11 @@ module PriorAuthority
       def further_information_cards
         return [] unless submission.data['further_information']
 
-        submission.data['further_information'].select { _1['information_supplied'].present? }.map do |further_information|
+        submission.data['further_information']
+                  .select { _1['information_supplied'].present? }
+                  .sort_by { _1['requested_at'] }
+                  .reverse
+                  .map do |further_information|
           FurtherInformationCard.new(self, further_information)
         end
       end

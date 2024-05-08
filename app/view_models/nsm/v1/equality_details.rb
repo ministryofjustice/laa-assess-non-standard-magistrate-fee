@@ -24,7 +24,6 @@ module Nsm
         ]
       end
 
-      # rubocop:disable Metrics/MethodLength
       def equality_answers
         return [] unless answer_equality.value == 'yes'
 
@@ -43,7 +42,6 @@ module Nsm
           }
         ]
       end
-      # rubocop:enable Metrics/MethodLength
 
       def rows
         { title:, data: }
