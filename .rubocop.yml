@@ -90,8 +90,6 @@ RSpec/MessageChain:
 RSpec/SpecFilePathFormat:
   Enabled: false
 
-
-
 Naming/VariableNumber:
   Enabled: false
 

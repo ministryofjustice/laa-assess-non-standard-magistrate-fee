@@ -32,12 +32,30 @@ module Nsm
     end
 
     def part_grant(claim)
+      adjust(claim)
+
       Nsm::MakeDecisionForm.new(
         claim: claim,
         current_user: User.first,
         partial_comment: Faker::Lorem.paragraph,
         state: 'part_grant'
       ).save
+    end
+
+    def adjust(claim)
+      items = BaseViewModel.build(:work_item, claim, 'work_items')
+      item = items.sample
+
+      form = WorkItemForm.new(
+        claim: claim,
+        item: item,
+        uplift: 0,
+        time_spent: Faker::Number.between(from: 1, to: 300),
+        explanation: Faker::Lorem.paragraph,
+        current_user: User.first,
+        id: item.id
+      )
+      form.save
     end
 
     def reject(claim)
