@@ -90,6 +90,8 @@ RSpec/MessageChain:
 RSpec/SpecFilePathFormat:
   Enabled: false
 
+
+
 Naming/VariableNumber:
   Enabled: false
 
@@ -98,7 +100,7 @@ Naming/VariableNumber:
 
 # To be tweaked until we find the right balance
 Metrics/MethodLength:
-  Max: 13
+  Max: 15
 
 Metrics/ClassLength:
   Max: 140
@@ -163,4 +165,8 @@ Rails/ActionControllerFlashBeforeRender:
   Enabled: false
 
 RSpec/FilePath:
+  Enabled: false
+
+# Occasionally it's useful to create big lists
+FactoryBot/ExcessiveCreateList:
   Enabled: false
