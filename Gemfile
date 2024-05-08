@@ -10,6 +10,7 @@ gem 'aws-sdk-s3', '~> 1.149'
 gem 'bootsnap', require: false
 gem 'cssbundling-rails'
 gem 'devise', '>= 4.9.4'
+gem 'faker'
 gem 'govuk-components'
 gem 'govuk_design_system_formbuilder'
 gem 'govuk_notify_rails', '~> 2.2.0'

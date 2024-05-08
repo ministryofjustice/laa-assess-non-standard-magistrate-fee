@@ -6,6 +6,7 @@ SimpleCov.start 'rails' do
   add_filter 'spec/'
   add_filter 'gems/'
   add_filter 'config/'
+  add_filter 'lib/tasks/'
 
   add_filter 'app/presenters/claim_details/table.rb'
   add_filter 'app/jobs/application_job.rb'
