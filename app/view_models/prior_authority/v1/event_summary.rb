@@ -12,7 +12,7 @@ module PriorAuthority
         safe_join([
                     event.created_at.to_fs(:stamp),
                     tag.br,
-                    event.created_at.to_fs(:time_of_day)
+                    event.created_at.in_time_zone('London').to_fs(:time_of_day)
                   ])
       end
 
