@@ -24,8 +24,12 @@ class Claim < Submission
     Nsm::MakeDecisionForm::STATES.exclude?(state)
   end
 
+  def sent_back?
+    Nsm::SendBackForm::STATES.include?(state)
+  end
+
   def display_state?
-    Nsm::SendBackForm::STATES.include?(state) || !editable?
+    sent_back? || !editable?
   end
 
   def formatted_claimed_total
