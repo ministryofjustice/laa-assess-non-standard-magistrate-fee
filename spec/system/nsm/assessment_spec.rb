@@ -49,6 +49,15 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
   end
 
   context 'provider requested' do
+    context 'when claim is already sent back' do
+      before { claim.update(state: 'provider_requested') }
+
+      it 'does not give the option to send back again' do
+        visit nsm_claim_claim_details_path(claim)
+        expect(page).to have_no_content 'Send back to provider'
+      end
+    end
+
     it 'sends a notification' do
       visit nsm_claim_claim_details_path(claim)
       click_link_or_button 'Send back to provider'
