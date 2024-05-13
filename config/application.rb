@@ -71,6 +71,12 @@ module LaaAssessNonStandardMagistrateFee
     config.x.analytics.analytics_consent_name = 'analytics_preferences_set'
     config.x.analytics.analytics_consent_expiration = 1.year
     config.x.rfi.resubmission_window = 14.days
+    config.x.redis_url = if ENV['REDIS_HOST'].present? && ENV['REDIS_PASSWORD'].present?
+      protocol = ENV.fetch("REDIS_PROTOCOL", "rediss")
+      password = ENV.fetch('REDIS_PASSWORD')
+      host = ENV.fetch('REDIS_HOST')
+      "#{protocol}://:#{password}@#{host}:6379"
+    end
 
     config.x.contact.feedback_url = 'tbc'
     config.after_initialize do
