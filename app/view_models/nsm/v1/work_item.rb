@@ -96,7 +96,7 @@ module Nsm
         }
         if vat_registered?
           rows['.vat'] = NumberTo.percentage(vat_rate)
-          rows['.total_claimed_inc_vate'] = NumberTo.pounds_inc_vat(provider_requested_amount_inc_vat)
+          rows['.total_claimed_inc_vate'] = NumberTo.pounds(provider_requested_amount_inc_vat)
         else
           rows['.total_claimed'] = NumberTo.pounds(provider_requested_amount)
         end
