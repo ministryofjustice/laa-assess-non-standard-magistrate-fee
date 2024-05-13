@@ -6,6 +6,7 @@
 
 <div class="govuk-grid-row" id="work-items-adjustment-container">
   <div class="govuk-grid-column-three-quarters">
+    <%= govuk_error_summary(form) %>
     <h1 class="govuk-heading-xl">
         <%= t('.heading') %>
     </h1>
@@ -23,7 +24,6 @@
 
     <h2 class="govuk-heading-l"><%= t('.laa_adjustments') %></h2>
     <%= form_with model: form, url: nsm_claim_work_item_path(claim.id, item.id), method: :put do |f| %>
-      <%= govuk_error_summary(form) %>
       <% if item.uplift? %>
         <%= f.govuk_radio_buttons_fieldset(:uplift, legend: { size: 's' }) do %>
           <%= f.govuk_radio_button :uplift, 'yes' %>

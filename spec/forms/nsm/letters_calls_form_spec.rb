@@ -81,6 +81,15 @@ RSpec.describe Nsm::LettersCallsForm do
         expect(subject.errors.of_kind?(:base, :no_change)).to be(true)
       end
 
+      context 'when there is no uplift to edit' do
+        let(:original_uplift) { nil }
+
+        it 'adds the error message to the one editable field' do
+          expect(subject).not_to be_valid
+          expect(subject.errors.of_kind?(:count, :no_change)).to be(true)
+        end
+      end
+
       context 'and explanation does not have an error' do
         let(:explanation) { '' }
 

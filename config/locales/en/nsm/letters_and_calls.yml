@@ -119,6 +119,7 @@ en:
               no_change: The new number of letters cannot be the same as the number submitted by the provider
             count:
               blank: Enter the number of letters you want to change the total to
+              no_change: The new number of letters cannot be the same as the number submitted by the provider
               greater_than_or_equal_to: The number of letters must be 0 or more
               not_a_number: The number of letters must be a number
               not_an_integer: The number of letters must be a whole number
@@ -128,6 +129,7 @@ en:
               no_change: The new number of calls cannot be the same as the number submitted by the provider
             count:
               blank: Enter the number of calls you want to change the total to
+              no_change: The new number of calls cannot be the same as the number submitted by the provider
               greater_than_or_equal_to: The number of calls must be 0 or more
               not_a_number: The number of calls must be a number
               not_an_integer: The number of calls must be a whole number

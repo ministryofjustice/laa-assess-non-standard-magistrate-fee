@@ -110,5 +110,6 @@ en:
               positive_minutes: Number of minutes must be 0 or more
               positive_hours: Number of hours must be 0 or more
               invalid: Something went wrong
+              no_change: The new time cannot be the same as the cost submitted by the provider
             explanation:
               blank: Add an explanaion for your decision

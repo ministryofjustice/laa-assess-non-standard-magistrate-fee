@@ -63,6 +63,15 @@ RSpec.describe Nsm::WorkItemForm do
         expect(subject.errors.of_kind?(:base, :no_change)).to be(true)
       end
 
+      context 'when there was no uplift originally' do
+        let(:original_uplift) { nil }
+
+        it 'marks the error on the only editable field' do
+          expect(subject).not_to be_valid
+          expect(subject.errors.of_kind?(:time_spent, :no_change)).to be(true)
+        end
+      end
+
       context 'and explanation does not have an error' do
         let(:explanation) { '' }
 

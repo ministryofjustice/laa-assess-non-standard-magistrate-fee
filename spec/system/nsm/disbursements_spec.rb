@@ -56,7 +56,7 @@ RSpec.describe 'Disbursements' do
     choose 'No'
     click_on 'Save changes'
     expect(page).to have_css('.govuk-error-summary__body',
-                             text: I18n.t("#{disbursement_form_error_message}.base.no_change"))
+                             text: I18n.t("#{disbursement_form_error_message}.total_cost_without_vat.no_change"))
   end
 
   context 'when claim has been assessed' do

@@ -76,8 +76,8 @@ en:
         nsm/disbursements_form:
           attributes:
             base:
-              no_change: There are no changes to save. Select cancel if you do not want to make any changes.
             total_cost_without_vat:
               inclusion: Select an option
+              no_change: There are no changes to save. Select cancel if you do not want to make any changes.
             explanation:
               blank: Add an explanation for your decision

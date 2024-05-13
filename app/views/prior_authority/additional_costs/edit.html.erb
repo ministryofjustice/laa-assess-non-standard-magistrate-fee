@@ -5,11 +5,11 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds" id="additional-cost-adjustment-container">
+    <%= govuk_error_summary(form) %>
     <h1 class="govuk-heading-xl"><%= t('.page_title', n: index + 1) %></h1>
     <p class="govuk-body"><%= t('.adjustment_blurb', service_type: t(submission.data['service_type'], scope: 'prior_authority.service_types')) %></h1>
 
     <%= form_with model: form, url: prior_authority_application_additional_cost_path(submission.id, item.id), method: :patch do |f| %>
-      <%= govuk_error_summary(form) %>
       <%= f.hidden_field(:unit_type, value: item.unit_type) %>
 
       <%= render 'cost_fields', form: f %>

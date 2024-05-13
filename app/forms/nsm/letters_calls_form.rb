@@ -55,6 +55,12 @@ module Nsm
       uplift == 'yes' ? 0 : item.original_uplift
     end
 
+    def no_change_field
+      return super if item.uplift?
+
+      :count
+    end
+
     def data_has_changed?
       count.to_s.strip != item.count.to_s ||
         (item.uplift? && item.uplift.zero? != (uplift == UPLIFT_RESET))
