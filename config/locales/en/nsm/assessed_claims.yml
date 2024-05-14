@@ -3,11 +3,11 @@ en:
   nsm:
     assessed_claims:
       index:
-        page_title: "Assessed claims"
-        heading: "Assessed claims"
+        page_title: "Closed claims"
+        heading: "Closed claims"
         table_info_item: "claim"
       assessed_claims_table:
-        table_heading: "Assessed Claims"
+        table_heading: "Closed Claims"
         laa_reference: "LAA reference"
         firm_name: "Firm name"
         defendant_name: "Defendant"
