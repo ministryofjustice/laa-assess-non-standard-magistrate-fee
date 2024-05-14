@@ -42,6 +42,15 @@ module Nsm
 
       private
 
+      def show_allowed?
+        return @show_allowed unless @show_allowed.nil?
+
+        @show_allowed ||=
+          submission.part_grant? ||
+          disbursements.any? { |row| row.original_total_cost_without_vat != row.total_cost_without_vat } ||
+          work_items.any? { |_, rows| rows.any? { |row| row.provider_requested_amount != row.caseworker_amount } }
+      end
+
       def sum_allowed(data, field)
         return nil if data.none? { _1[:"allowed_#{field}"] }
 
@@ -65,8 +74,8 @@ module Nsm
       def calculate_disbursements(formatted:)
         net_cost = disbursements.sum(&:original_total_cost_without_vat)
         vat = disbursements.sum(&:original_vat_amount)
-        allowed_net_cost = disbursements.sum(&:total_cost_without_vat)
-        allowed_vat = disbursements.sum(&:vat_amount) unless net_cost == allowed_net_cost || submission.part_grant?
+        allowed_net_cost = show_allowed? ? disbursements.sum(&:total_cost_without_vat) : nil
+        allowed_vat = show_allowed? ? disbursements.sum(&:vat_amount) : nil
 
         build_hash(
           name: 'disbursements',
@@ -80,9 +89,7 @@ module Nsm
 
       def calculate_row(rows, name, formatted:)
         net_cost = rows.sum(&:provider_requested_amount)
-        allowed_net_cost = if submission.part_grant? || rows.any? { |row| row.provider_requested_amount != row.caseworker_amount }
-                             rows.sum(&:caseworker_amount)
-                           end
+        allowed_net_cost = show_allowed? ? rows.sum(&:caseworker_amount) : nil
 
         build_hash(
           name: name,
