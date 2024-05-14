@@ -32,6 +32,23 @@ module Nsm
           'low' => 3,
         }[risk]
       end
+
+      def state
+        @state ||= if submission.sent_back?
+                     submission.state
+                   else
+                     'in_progress'
+                   end
+      end
+
+      def tag_colour
+        case state
+        when 'in_progress'
+          'purple'
+        else
+          'yellow'
+        end
+      end
     end
   end
 end
