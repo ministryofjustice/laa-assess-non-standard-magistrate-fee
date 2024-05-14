@@ -6,6 +6,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
+    <%= govuk_error_summary(form) %>
     <h1 class="govuk-heading-xl">
         <%= t('.heading') %>
     </h1>
@@ -27,7 +28,6 @@
 
     <div id='disbursement-adjustment-form'>
       <%= form_with model: form, url: nsm_claim_disbursement_path(claim.id, item.id), method: :put do |f| %>
-          <%= govuk_error_summary(form) %>
           <%= f.govuk_radio_buttons_fieldset(:total_cost_without_vat, legend: { size: 's' }) do %>
             <%= f.govuk_radio_button :total_cost_without_vat, 'yes' do %>
               <%= f.govuk_text_area :explanation, label: { size: 's' }, rows: 5 %>

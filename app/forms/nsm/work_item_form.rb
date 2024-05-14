@@ -37,6 +37,12 @@ module Nsm
 
     private
 
+    def no_change_field
+      return super if item.uplift?
+
+      :time_spent
+    end
+
     def selected_record
       @selected_record ||= claim.data['work_items'].detect do |row|
         row.fetch('id') == item.id

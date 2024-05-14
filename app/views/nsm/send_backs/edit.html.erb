@@ -2,13 +2,13 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(send_back) %>
     <h1 class="govuk-heading-xl"><%= t('.heading', defendant_name:) %></h1>
   </div>
 </div>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_with model: send_back, url: nsm_claim_send_back_path(claim_id: claim.id), method: :put do |f| %>
-      <%= govuk_error_summary(send_back) %>
       <%= f.govuk_radio_buttons_fieldset :state, legend: { size: 's' } do %>
         <%= f.govuk_radio_button :state, Nsm::SendBackForm::FURTHER_INFO %>
         <%= f.govuk_radio_button :state, Nsm::SendBackForm::PROVIDER_REQUESTED %>

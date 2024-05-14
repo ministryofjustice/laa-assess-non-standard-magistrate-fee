@@ -36,6 +36,10 @@ module Nsm
       end
     end
 
+    def no_change_field
+      :total_cost_without_vat
+    end
+
     def new_total_cost_without_vat
       total_cost_without_vat == 'yes' ? 0 : item.original_total_cost_without_vat
     end

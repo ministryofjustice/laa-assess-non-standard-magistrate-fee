@@ -55,7 +55,11 @@ class BaseAdjustmentForm
   def data_changed
     return if data_has_changed?
 
-    errors.add(:base, :no_change)
+    errors.add(no_change_field, :no_change)
+  end
+
+  def no_change_field
+    :base
   end
 
   def explanation_required?
