@@ -97,6 +97,10 @@ module Nsm
 
         { text: NumberTo.pounds(value), numeric: true }
       end
+
+      def changed?
+        original_total_cost_without_vat != total_cost_without_vat
+      end
     end
   end
 end

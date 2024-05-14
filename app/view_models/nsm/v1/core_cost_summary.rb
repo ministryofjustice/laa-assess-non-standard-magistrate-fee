@@ -47,8 +47,7 @@ module Nsm
 
         @show_allowed ||=
           submission.part_grant? ||
-          disbursements.any? { |row| row.original_total_cost_without_vat != row.total_cost_without_vat } ||
-          work_items.any? { |_, rows| rows.any? { |row| row.provider_requested_amount != row.caseworker_amount } }
+          [disbursements, letters_calls, *work_items.values].any? { |rows| rows.any?(&:changed?) }
       end
 
       def sum_allowed(data, field)
@@ -58,8 +57,6 @@ module Nsm
       end
 
       def calculate_profit_costs(formatted:)
-        letters_calls = LettersAndCallsSummary.new('submission' => submission).rows
-
         calculate_row((work_items[PROFIT_COSTS] || []) + letters_calls, 'profit_costs', formatted:)
       end
 
@@ -116,6 +113,10 @@ module Nsm
       def work_items
         @work_items ||= BaseViewModel.build(:work_item, submission, 'work_items')
                                      .group_by { |work_item| group_type(work_item.work_type.to_s) }
+      end
+
+      def letters_calls
+        @letters_calls ||= LettersAndCallsSummary.new('submission' => submission).rows
       end
 
       def disbursements

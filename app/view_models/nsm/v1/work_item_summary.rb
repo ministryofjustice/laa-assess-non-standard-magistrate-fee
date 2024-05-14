@@ -55,7 +55,7 @@ module Nsm
       private
 
       def show_allowed?
-        submission.part_grant? || work_items.any? { |row| row.provider_requested_amount != row.caseworker_amount }
+        submission.part_grant? || work_items.any?(&:changed?)
       end
 
       def work_items
