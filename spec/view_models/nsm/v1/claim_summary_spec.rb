@@ -42,7 +42,7 @@ RSpec.describe Nsm::V1::ClaimSummary do
     end
   end
 
-  describe '#accessed_on' do
+  describe '#assessed_on' do
     context 'when a decision has been made' do
       it 'returns the date from the last Decision event' do
         decision = create(:event, :decision)
