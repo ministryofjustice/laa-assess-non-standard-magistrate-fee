@@ -2,7 +2,7 @@
     <div class="govuk-grid-column-two-thirds">
       <% if claim.display_state? %>
         <p>
-          <%= govuk_tag(text: t(".status_list.#{claim.state}"), colour: accessed_colour(claim.state)) %>
+          <%= govuk_tag(text: t(".status_list.#{claim.state}"), colour: assessed_colour(claim.state)) %>
         </p>
       <% end %>
       <p class="govuk-caption-xl">

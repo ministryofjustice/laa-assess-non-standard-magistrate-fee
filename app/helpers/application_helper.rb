@@ -60,7 +60,7 @@ module ApplicationHelper
     end
   end
 
-  def accessed_colour(state)
+  def assessed_colour(state)
     {
       'granted' => 'green',
       'part-grant' => 'blue',
