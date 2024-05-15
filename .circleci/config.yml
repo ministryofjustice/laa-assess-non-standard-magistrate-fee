@@ -303,15 +303,6 @@ jobs:
             --build-arg APP_GIT_COMMIT=${CIRCLE_SHA1}
             --build-arg APP_BRANCH_NAME=${CIRCLE_BRANCH}
 
-  run-e2e-tests:
-    executor: crime-forms-end-to-end-tests/e2e-test-executor
-    steps:
-      - crime-forms-end-to-end-tests/run-e2e-tests:
-          e2e_current_image_var: NSCC_CASEWORKER_IMAGE
-          e2e_current_image: ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/${CASEWORKER_ECR_REPOSITORY}:branch-${CIRCLE_SHA1}
-          e2e_working_directory: /tmp/nsm-end-to-end-tests
-          e2e_branch: main
-
   e2e-test-branch:
     executor: crime-forms-end-to-end-tests/e2e-test-executor
     steps:
