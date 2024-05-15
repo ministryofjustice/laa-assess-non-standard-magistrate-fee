@@ -90,9 +90,9 @@ RSpec.describe 'Accessibility', :accessibility do
   end
 
   context 'when viewing general screens' do
-    %i[nsm_claims
-       nsm_your_claims
-       nsm_assessed_claims
+    %i[your_nsm_claims
+       open_nsm_claims
+       closed_nsm_claims
        about_feedback_index
        about_cookies
        your_prior_authority_applications].each do |path|

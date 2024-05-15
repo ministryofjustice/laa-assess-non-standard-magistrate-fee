@@ -15,7 +15,7 @@ module Nsm
           ref: reference.laa_reference,
           url: nsm_claim_claim_details_path(claim.id)
         )
-        redirect_to nsm_assessed_claims_path, flash: { success: success_notice }
+        redirect_to closed_nsm_claims_path, flash: { success: success_notice }
       else
         render :edit, locals: { claim:, decision: }
       end

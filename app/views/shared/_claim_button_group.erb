@@ -4,6 +4,6 @@
     <% unless claim.sent_back? %>
       <%= govuk_button_link_to(t('.send_back'), edit_nsm_claim_send_back_path(claim), warning: true) %>
     <% end %>
-    <%= govuk_button_link_to(t('.save_and_come_back'), nsm_your_claims_path, secondary: true) %>
+    <%= govuk_button_link_to(t('.save_and_come_back'), your_nsm_claims_path, secondary: true) %>
   </div>
 <% end %>

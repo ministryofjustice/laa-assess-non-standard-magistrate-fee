@@ -56,7 +56,7 @@ reject_comment: nil, id: claim.id }
 reject_comment: nil, id: claim.id }
         }
 
-        expect(response).to redirect_to(nsm_assessed_claims_path)
+        expect(response).to redirect_to(closed_nsm_claims_path)
         expect(flash[:success]).to eq(
           'You granted this claim <a ' \
           "class=\"govuk-link\" href=\"/nsm/claims/#{claim.id}/claim_details\">AAA111</a>"

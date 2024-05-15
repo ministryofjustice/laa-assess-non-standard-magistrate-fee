@@ -4,18 +4,6 @@ en:
     claims:
       new:
         no_pending_claims: There are no claims waiting to be allocated.
-      index:
-        page_title: Assess a non-standard magistrates’ court payment
-        heading: "Open claims"
-        table_info_item: "claim"
-        unassigned: Unassigned
-      claims_table:
-        table_heading: "All Claims"
-        laa_reference: "LAA reference"
-        firm_name: "Firm name"
-        defendant_name: "Defendant"
-        date_received: "Date received"
-        caseworker_name: "Caseworker"
       claim_nav:
         claim_details: Overview
         review_and_adjust: Review and adjust

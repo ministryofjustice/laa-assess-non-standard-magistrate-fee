@@ -21,7 +21,7 @@ module Nsm
       end
 
       def case_worker_name
-        submission.assignments.first&.display_name || I18n.t('nsm.claims.index.unassigned')
+        submission.assignments.first&.display_name || I18n.t('nsm.claims.open.unassigned')
       end
 
       def table_fields

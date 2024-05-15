@@ -3,13 +3,19 @@ class Claim < Submission
 
   default_scope -> { where(application_type: APPLICATION_TYPES[:nsm]) }
 
+  # open
   scope :pending_decision, -> { where.not(state: Nsm::MakeDecisionForm::STATES) }
+
+  # closed
   scope :decision_made, -> { where(state: Nsm::MakeDecisionForm::STATES) }
+
+  # your
   scope :pending_and_assigned_to, lambda { |user|
     pending_decision
       .joins(:assignments)
       .where(assignments: { user_id: user.id })
   }
+
   scope :unassigned, lambda { |user|
     pending_decision
       .where.missing(:assignments)

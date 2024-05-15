@@ -45,8 +45,14 @@ Rails.application.routes.draw do
   end
 
   namespace :nsm do
-    root to: "claims#index"
-    resources :claims, only: [:new, :index] do
+    root to: "claims#your"
+    resources :claims, only: [:new] do
+      collection do
+        get :your
+        get :open
+        get :closed
+      end
+
       resource :claim_details, only: [:show]
       resource :adjustments, only: [:show]
       namespace :letters_and_calls do
@@ -69,9 +75,6 @@ Rails.application.routes.draw do
     end
 
     get 'claims/:claim', to: redirect('claims/%{claim}/claim_details')
-
-    resources :your_claims, only: [:index]
-    resources :assessed_claims, only: [:index]
   end
 
   namespace :about do
