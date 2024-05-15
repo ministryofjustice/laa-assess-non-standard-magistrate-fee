@@ -14,7 +14,3 @@ en:
         date_assessed: "Date assessed"
         caseworker_name: "Caseworker"
         status: "Status"
-        status_list:
-          granted: "Granted"
-          part_grant: "Part granted"
-          rejected: "Rejected"

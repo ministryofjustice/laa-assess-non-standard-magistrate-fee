@@ -199,15 +199,6 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
   end
 
-  describe '#assessed_colour' do
-    it 'returns the case based on the state' do
-      expect(helper.assessed_colour('granted')).to eq('green')
-      expect(helper.assessed_colour('part-grant')).to eq('blue')
-      expect(helper.assessed_colour('rejected')).to eq('red')
-      expect(helper.assessed_colour('other')).to eq('yellow')
-    end
-  end
-
   describe '#gbp_field_value' do
     context 'when it is given a string' do
       let(:value) { 'invalid value' }

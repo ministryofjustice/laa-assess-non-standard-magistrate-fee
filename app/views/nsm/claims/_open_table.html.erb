@@ -1,7 +1,4 @@
 <%=
-  rows = claims.map do |claim|
-    [*claim.table_fields]
-  end
   govuk_table(html_attributes: {'data-module': 'moj-sortable-table'}) do |table|
     table.with_caption(html_attributes: { class: "govuk-visually-hidden" }, text: t(".table_heading"))
 
@@ -10,21 +7,25 @@
         row.with_cell(text: t('.laa_reference'))
         row.with_cell(text: t('.firm_name'))
         row.with_cell(text: t('.defendant_name'))
-        row.with_cell(html_attributes:{'aria-sort': 'ascending'},text: t('.date_received'))
-        row.with_cell(html_attributes:{'aria-sort': 'ascending'},text: t('.caseworker_name'))
+        row.with_cell(text: t('.date_received'))
+        row.with_cell(text: t('.caseworker_name'))
+        row.with_cell(text: t('.status'))
       end
     end
 
     table.with_body do |body|
-      rows.each do |claim, firm, defendant, date_received, case_worker|
+      claims.each do |claim|
         body.with_row do |row|
           row.with_cell do
-            govuk_link_to(claim[:laa_reference], nsm_claim_claim_details_path([claim[:claim_id]]))
+            govuk_link_to(claim.laa_reference, nsm_claim_claim_details_path(claim.id))
           end
-          row.with_cell(text: firm)
-          row.with_cell(text: defendant)
-          row.with_cell(text: date_received[:text], html_attributes: { 'data-sort-value': date_received[:sort_value] })
-          row.with_cell(text: case_worker, html_attributes: { 'data-sort-value': case_worker })
+          row.with_cell(text: claim.firm_name)
+          row.with_cell(text: claim.main_defendant_name)
+          row.with_cell(text: claim.date_created)
+          row.with_cell(text: claim.case_worker_name)
+          row.with_cell do
+            submission_state_tag(claim.submission)
+          end
         end
       end
     end

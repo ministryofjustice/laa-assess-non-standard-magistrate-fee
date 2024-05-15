@@ -36,6 +36,18 @@ en:
       make_decision: Make a decision
       send_back: Send back to provider
       save_and_come_back: Save and comeback later
+    statuses:
+      submitted: Not assigned
+      auto_grant: Auto granted
+      in_progress: In progress
+      granted: Granted
+      part_grant: Part granted
+      rejected: Rejected
+      sent_back: Sent back
+      provider_updated: Provider updated
+      expired: Expired
+      further_info: Further information requested
+      provider_requested: Provider requested
 
   generic:
     cost: cost
