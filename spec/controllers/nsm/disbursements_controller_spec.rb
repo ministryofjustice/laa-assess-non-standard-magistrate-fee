@@ -7,7 +7,6 @@ RSpec.describe Nsm::DisbursementsController do
     let(:disbursements) do
       [instance_double(Nsm::V1::Disbursement, disbursement_date: Time.zone.today)]
     end
-    let(:grouped_disbursements) { { Time.zone.today => disbursements } }
 
     before do
       allow(Claim).to receive(:find).and_return(claim)
@@ -24,8 +23,9 @@ RSpec.describe Nsm::DisbursementsController do
     it 'renders successfully with claims' do
       allow(controller).to receive(:render)
       get :index, params: { claim_id: }
+      pagy = anything
 
-      expect(controller).to have_received(:render).with(locals: { claim: claim, disbursements: grouped_disbursements })
+      expect(controller).to have_received(:render).with(locals: { claim: claim, disbursements: disbursements, pagy: })
       expect(response).to be_successful
     end
   end
