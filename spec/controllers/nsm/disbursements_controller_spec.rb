@@ -25,7 +25,7 @@ RSpec.describe Nsm::DisbursementsController do
       get :index, params: { claim_id: }
       pagy = anything
 
-      expect(controller).to have_received(:render).with(locals: { claim: claim, disbursements: disbursements, pagy: })
+      expect(controller).to have_received(:render).with(locals: { claim:, disbursements:, pagy: })
       expect(response).to be_successful
     end
   end
