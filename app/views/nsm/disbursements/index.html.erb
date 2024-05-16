@@ -7,7 +7,7 @@
 
   <% head = Nsm::V1::Disbursement.headers %>
   <% if disbursements.size.zero? %>
-    <p>You do not have any disbursements</p>
+    <p><%= t('.no_data') %></p>
   <% else %>
     <% disbursements.group_by(&:disbursement_date).each do |disbursement_date, disbursements_for_date| %>
       <%=

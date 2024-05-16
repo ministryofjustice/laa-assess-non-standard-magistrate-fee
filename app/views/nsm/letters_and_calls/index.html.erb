@@ -16,7 +16,7 @@
   </div>
   <div class="govuk-grid-column-full">
     <% if letters_and_calls.rows.all? { _1.original_count.zero? } %>
-      <p>You do not have any letters or calls</p>
+      <p><%= t('.no_data') %></p>
     <% else %>
       <%=
       head = Nsm::V1::LetterAndCall.headers
