@@ -30,4 +30,15 @@ RSpec.describe IntegerTimePeriod do
       it { expect(subject.minutes).to eq(2) }
     end
   end
+
+  describe '#coerce' do
+    context 'when multiplying with a decimal' do
+      let(:value) { 36 }
+      let(:multiplier) { BigDecimal('45.35') }
+
+      it 'returns a decimal result' do
+        expect(multiplier * subject).to be_a BigDecimal
+      end
+    end
+  end
 end
