@@ -79,40 +79,4 @@ RSpec.describe Nsm::V1::YourClaims, type: :view_model do
       expect(subject.date_created_sort).to eq('2023-11-21 17:17:43')
     end
   end
-
-  describe 'state' do
-    context 'when the submission is sent back' do
-      let(:submission) { instance_double(Claim, sent_back?: true, state: 'provider_requested') }
-
-      it 'returns the submission state' do
-        expect(subject.state).to eq 'provider_requested'
-      end
-    end
-
-    context 'when the submission is not sent back' do
-      let(:submission) { instance_double(Claim, sent_back?: false) }
-
-      it 'returns in_progress' do
-        expect(subject.state).to eq 'in_progress'
-      end
-    end
-  end
-
-  describe 'tag_colour' do
-    context 'when the submission is sent back' do
-      let(:submission) { instance_double(Claim, sent_back?: true, state: 'provider_requested') }
-
-      it 'returns yellow' do
-        expect(subject.tag_colour).to eq 'yellow'
-      end
-    end
-
-    context 'when the submission is not sent back' do
-      let(:submission) { instance_double(Claim, sent_back?: false) }
-
-      it 'returns purple' do
-        expect(subject.tag_colour).to eq 'purple'
-      end
-    end
-  end
 end

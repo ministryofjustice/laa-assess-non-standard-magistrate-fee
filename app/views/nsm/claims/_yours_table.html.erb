@@ -24,7 +24,7 @@
           row.with_cell(text: your_claim.date_created_str, html_attributes: { 'data-sort-value': your_claim.date_created_sort })
           row.with_cell(text: t(".risk.#{your_claim.risk}"), html_attributes: { 'data-sort-value': your_claim.risk_sort })
           row.with_cell do
-            govuk_tag(text: t(".status.#{your_claim.state}"), colour: your_claim.tag_colour)
+            submission_state_tag(your_claim.submission)
           end
         end
       end

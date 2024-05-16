@@ -18,7 +18,7 @@ module Nsm
       end
 
       def date_assessed
-        { text: I18n.l(updated_at, format: '%-d %b %Y'), sort_value: updated_at.to_fs(:db) }
+        updated_at.to_fs(:stamp)
       end
 
       def case_worker_name
@@ -26,29 +26,7 @@ module Nsm
         event ? event.primary_user.display_name : ''
       end
 
-      def status(item)
-        case item
-        when 'granted'
-          { colour: 'green', text: item, sort_value: 1 }
-        when 'part_grant'
-          { colour: 'blue', text: item, sort_value: 2 }
-        when 'rejected'
-          { colour: 'red', text: item, sort_value: 3 }
-        else
-          { colour: 'grey', text: item, sort_value: 4 }
-        end
-      end
-
-      def table_fields
-        [
-          { laa_reference: laa_reference, claim_id: submission.id },
-          firm_name,
-          main_defendant_name,
-          date_assessed,
-          case_worker_name,
-          status(state)
-        ]
-      end
+      delegate :id, to: :submission
     end
   end
 end

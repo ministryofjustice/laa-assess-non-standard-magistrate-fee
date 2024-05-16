@@ -14,3 +14,4 @@ en:
         defendant_name: "Defendant"
         date_received: "Date received"
         caseworker_name: "Caseworker"
+        status: Status

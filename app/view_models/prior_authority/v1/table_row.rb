@@ -1,7 +1,7 @@
 module PriorAuthority
   module V1
     class TableRow < BaseViewModel
-      include PriorAuthorityTagHelper
+      include SubmissionTagHelper
 
       attribute :laa_reference, :string
       attribute :firm_office
@@ -31,7 +31,7 @@ module PriorAuthority
       end
 
       def status
-        prior_authority_state_tag(submission)
+        submission_state_tag(submission)
       end
     end
   end

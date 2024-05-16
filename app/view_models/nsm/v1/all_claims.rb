@@ -17,22 +17,14 @@ module Nsm
       end
 
       def date_created
-        { text: I18n.l(created_at, format: '%-d %b %Y'), sort_value: created_at.to_fs(:db) }
+        created_at.to_fs(:stamp)
       end
 
       def case_worker_name
         submission.assignments.first&.display_name || I18n.t('nsm.claims.open.unassigned')
       end
 
-      def table_fields
-        [
-          { laa_reference: laa_reference, claim_id: submission.id },
-          firm_name,
-          main_defendant_name,
-          date_created,
-          case_worker_name
-        ]
-      end
+      delegate :id, to: :submission
     end
   end
 end
