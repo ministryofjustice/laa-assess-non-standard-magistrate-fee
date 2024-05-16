@@ -46,7 +46,7 @@ en:
       sent_back: Sent back
       provider_updated: Provider updated
       expired: Expired
-      further_info: Further information requested
+      further_info: Sent back
       provider_requested: Provider requested
 
   generic:
