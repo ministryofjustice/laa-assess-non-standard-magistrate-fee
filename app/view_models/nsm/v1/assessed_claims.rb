@@ -18,7 +18,7 @@ module Nsm
       end
 
       def date_assessed
-        I18n.l(updated_at, format: '%-d %b %Y')
+        updated_at.to_fs(:stamp)
       end
 
       def case_worker_name

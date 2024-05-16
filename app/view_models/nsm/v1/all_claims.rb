@@ -17,7 +17,7 @@ module Nsm
       end
 
       def date_created
-        I18n.l(created_at, format: '%-d %b %Y')
+        created_at.to_fs(:stamp)
       end
 
       def case_worker_name
