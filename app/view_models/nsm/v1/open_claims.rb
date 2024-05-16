@@ -1,11 +1,13 @@
 module Nsm
   module V1
-    class AllClaims < BaseViewModel
+    class OpenClaims < BaseViewModel
+      include SubmissionTagHelper
+
       attribute :laa_reference
       attribute :defendants
       attribute :firm_office
       attribute :submission
-      delegate :created_at, to: :submission
+      delegate :updated_at, to: :submission
 
       def main_defendant_name
         main_defendant = defendants.detect { |defendant| defendant['main'] }
@@ -16,12 +18,16 @@ module Nsm
         firm_office['name']
       end
 
-      def date_created
-        created_at.to_fs(:stamp)
+      def date_updated
+        updated_at.to_fs(:stamp)
       end
 
       def case_worker_name
-        submission.assignments.first&.display_name || I18n.t('nsm.claims.open.unassigned')
+        submission.assignments.first&.display_name || I18n.t('nsm.claims.table.unassigned')
+      end
+
+      def state_tag
+        submission_state_tag(submission)
       end
 
       delegate :id, to: :submission

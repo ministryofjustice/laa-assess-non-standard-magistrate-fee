@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Nsm::V1::AllClaims, type: :view_model do
+RSpec.describe Nsm::V1::OpenClaims, type: :view_model do
   subject(:all_claims) do
     described_class.new(laa_reference:, defendants:, firm_office:, submission:)
   end
