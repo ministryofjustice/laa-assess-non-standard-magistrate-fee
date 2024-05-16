@@ -1,3 +1,5 @@
+import Decimal from 'decimal.js';
+
 export default class CostAdjustment {
   constructor(hoursField, minutesField, costPerHourField, itemsField, costPerItemField, calculateChangeButton, adjustedCost) {
     this.hoursField = hoursField;
@@ -40,7 +42,7 @@ export default class CostAdjustment {
       return '--';
     }
 
-    const unitPrice = parseFloat(this.costPerHourField.value)
+    const unitPrice = new Decimal(this.costPerHourField.value)
     let minutes
 
     this.checkMinutesThreshold();
@@ -49,8 +51,8 @@ export default class CostAdjustment {
       minutes = (parseInt(this.hoursField.value) * 60) + parseInt(this.minutesField.value);
     }
 
-    // rounding to two decimal places
-    return (`${((minutes / 60) * unitPrice).toFixed(2)}`);
+    const unrounded = unitPrice.times(minutes).dividedBy(60)
+    return unrounded.toFixed(2);
   }
 
   calculateItemCost() {
@@ -59,11 +61,10 @@ export default class CostAdjustment {
     }
 
     const items = parseInt(this.itemsField.value)
-    const unitPrice = parseFloat(this.costPerItemField.value)
+    const unitPrice = new Decimal(this.costPerItemField.value)
 
-
-    // rounding to two decimal places
-    return (`${(items * unitPrice).toFixed(2)}`);
+    const unrounded = unitPrice.times(items);
+    return unrounded.toFixed(2);
   }
 
   checkMinutesThreshold() {
