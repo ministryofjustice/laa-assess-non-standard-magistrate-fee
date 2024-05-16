@@ -7,7 +7,7 @@ module Nsm
       attribute :type, :translated
       adjustable_attribute :count, :integer
       adjustable_attribute :uplift, :integer
-      attribute :pricing, :float
+      attribute :pricing, :decimal
       attribute :vat_rate
       attribute :firm_office
 

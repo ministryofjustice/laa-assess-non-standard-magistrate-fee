@@ -1,3 +1,5 @@
+import Decimal from 'decimal.js';
+
 function init() {
   const hoursField = document.getElementById('prior_authority_travel_cost_form_travel_time_1');
   const minutesField = document.getElementById('prior_authority_travel_cost_form_travel_time_2')
@@ -24,7 +26,7 @@ function init() {
       return '--';
     }
 
-    const unitPrice = parseFloat(costPerHourField.value)
+    const unitPrice = new Decimal(costPerHourField.value)
 
     checkMinutesThreshold();
 
@@ -34,9 +36,8 @@ function init() {
       minutes = (parseInt(hoursField.value) * 60) + parseInt(minutesField.value);
     }
 
-    // rounding to two decimal places
-    console.log("travel cost = " + minutes + " * " + unitPrice)
-    return (`${((minutes / 60) * unitPrice).toFixed(2)}`);
+    const unrounded = unitPrice.times(minutes).dividedBy(60)
+    return `${unrounded.toFixed(2)}`;
   }
 
   function checkMinutesThreshold(){
