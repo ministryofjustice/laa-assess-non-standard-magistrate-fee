@@ -25,6 +25,10 @@ en:
       table:
         unassigned: Unassigned
         table_info_item: "claim"
+        risk:
+          high: High
+          medium: Medium
+          low: Low
         header:
           laa_reference: "LAA reference"
           firm_name: "Firm name"
@@ -32,6 +36,7 @@ en:
           date_updated: "Last updated"
           caseworker: "Caseworker"
           status: Status
+          risk: Risk
     adjustments:
       show:
         cost_summary: Costs summary
