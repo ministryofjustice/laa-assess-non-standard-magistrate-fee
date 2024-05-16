@@ -8,10 +8,10 @@ module Nsm
       adjustable_attribute :time_spent, :time_period
       attribute :completed_on, :date
 
-      attribute :pricing, :float
+      attribute :pricing, :decimal
       adjustable_attribute :uplift, :integer
       attribute :fee_earner, :string
-      attribute :vat_rate, :float
+      attribute :vat_rate, :decimal
       attribute :firm_office
 
       class << self

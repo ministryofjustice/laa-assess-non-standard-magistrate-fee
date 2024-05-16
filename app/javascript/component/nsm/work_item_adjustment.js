@@ -1,3 +1,5 @@
+import Decimal from 'decimal.js';
+
 function init() {
   const workItemAdjustmentContainer = document.getElementById('work-items-adjustment-container');
   const hoursField = document.getElementById('nsm_work_item_form_time_spent_1');
@@ -26,9 +28,9 @@ function init() {
   }
 
   function calculateAdjustedAmount() {
-    const unitPrice = calculateChangeButton?.getAttribute('data-unit-price');
+    const unitPrice = new Decimal(calculateChangeButton?.getAttribute('data-unit-price'));
     var upliftAmount = getProviderUplift();
-    const vatMultiplier = parseFloat(calculateChangeButton?.getAttribute('data-vat-multiplier'));
+    const vatMultiplier = new Decimal(calculateChangeButton?.getAttribute('data-vat-multiplier'));
 
     checkMinutesThreshold();
 
@@ -46,16 +48,10 @@ function init() {
       upliftAmount = 0;
     }
 
-    const upliftFactor = (parseFloat(upliftAmount) / 100) + 1;
+    const upliftFactor = new Decimal(upliftAmount).dividedBy(100).plus(1);
 
-    // rounding:
-    // * when VAT exists - round down
-    // * when no VAT exists - round to nearest decimal
-    if (vatMultiplier === 1.0) {
-      return (`£${((minutes / 60) * unitPrice * upliftFactor).toFixed(2)}`);
-    } else {
-      return (`£${Math.floor((minutes / 60) * unitPrice * upliftFactor * vatMultiplier * 100) / 100}`);
-    }
+    const unrounded = unitPrice.times(minutes).dividedBy(60).times(upliftFactor).times(vatMultiplier);
+    return (`£${unrounded.toFixed(2)}`);
   }
 
   function checkUpliftRemoved(){
