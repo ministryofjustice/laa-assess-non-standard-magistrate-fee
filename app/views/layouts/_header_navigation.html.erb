@@ -9,7 +9,7 @@
       </li>
       <% if current_user.supervisor? %>
         <li class="govuk-header__navigation-item govuk-!-static-margin-left-3">
-          <%= link_to t('.manage_users'), nsm_claims_path, class: 'govuk-header__link' %>
+          <%= link_to t('.manage_users'), your_nsm_claims_path, class: 'govuk-header__link' %>
         </li>
       <% end %>
 

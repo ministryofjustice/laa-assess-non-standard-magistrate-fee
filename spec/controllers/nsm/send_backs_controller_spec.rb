@@ -70,7 +70,7 @@ RSpec.describe Nsm::SendBacksController do
           nsm_send_back_form: { state: 'further_info', comment: nil, id: claim.id }
         }
 
-        expect(response).to redirect_to(nsm_your_claims_path)
+        expect(response).to redirect_to(your_nsm_claims_path)
         expect(flash[:success]).to eq(
           'You send back this claim <a ' \
           "class=\"govuk-link\" href=\"/nsm/claims/#{claim.id}/claim_details\">AAA111</a>"

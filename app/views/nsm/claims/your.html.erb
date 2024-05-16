@@ -10,7 +10,7 @@
       <%= govuk_button_link_to(t('.next_claim'), new_nsm_claim_path) %>
     </div>
     <% if your_claims.any? %>
-      <%= render 'your_claims_table', { your_claims: } %>
+      <%= render 'yours_table', { your_claims: } %>
       <%= render "shared/pagination", { pagy: pagy, item: t('.table_info_item')} %>
     <% end %>
   </div>
