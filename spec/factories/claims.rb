@@ -8,7 +8,7 @@ FactoryBot.define do
     application_type { 'crm7' }
     data do
       {
-        'laa_reference' => 'LAA-FHaMVK',
+        'laa_reference' => laa_reference,
         'ufn' => '123456/001',
         'cntp_order' => nil,
         'cntp_date' => nil,
@@ -65,6 +65,7 @@ FactoryBot.define do
     end
 
     transient do
+      laa_reference { 'LAA-FHaMVK' }
       submitter do
         {
           'email' => 'provider@example.com',

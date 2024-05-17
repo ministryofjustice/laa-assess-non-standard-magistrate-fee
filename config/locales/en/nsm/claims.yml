@@ -28,7 +28,7 @@ en:
         header:
           laa_reference: "LAA reference"
           firm_name: "Firm name"
-          client_name: "Defendant"
+          main_defendant_name: "Defendant"
           date_updated: "Last updated"
           caseworker: "Caseworker"
           status: Status

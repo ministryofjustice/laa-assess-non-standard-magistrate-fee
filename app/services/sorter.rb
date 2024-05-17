@@ -13,6 +13,7 @@ class Sorter
     'laa_reference' => "data->>'laa_reference' ?",
     'firm_name' => "data->'firm_office'->>'name' ?",
     'client_name' => "(data->'defendant'->>'first_name') || ' ' || (data->'defendant'->>'last_name') ?",
+    'main_defendant_name' => "(defendants.value->>'first_name') || ' ' || (defendants.value->>'last_name') ?",
     'caseworker' => "COALESCE(users.first_name, 'Not') || ' ' || COALESCE(users.last_name, 'assigned') ?",
     'status' => STATUS_ORDER_CLAUSE,
     'date_updated' => 'submissions.updated_at ?',
@@ -28,7 +29,16 @@ class Sorter
     def call(base_query, sort_by, sort_direction)
       order_template = ORDERS[sort_by]
       direction = DIRECTIONS[sort_direction]
-      base_query.left_joins(assignments: :user).order(Arel.sql(order_template.gsub('?', direction)))
+      base_query.then { add_joins(_1, sort_by) }.order(Arel.sql(order_template.gsub('?', direction)))
+    end
+
+    def add_joins(query, sort_by)
+      with_users = query.left_joins(assignments: :user)
+
+      return with_users unless sort_by == 'main_defendant_name'
+
+      with_users.joins("CROSS JOIN JSONB_ARRAY_ELEMENTS(data->'defendants') as defendants")
+                .where("defendants.value->>'main' = 'true'")
     end
   end
 end
