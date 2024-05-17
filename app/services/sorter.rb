@@ -14,6 +14,12 @@ class Sorter
     ELSE users.first_name || ' ' || users.last_name END ? NULLS LAST
   SQL
 
+  RISK_ORDER_CLAUSE = <<-SQL.squish.freeze
+  CASE risk WHEN 'high' THEN 3
+       WHEN 'medium' THEN 2
+       ELSE 1 END ?
+  SQL
+
   ORDERS = {
     'laa_reference' => "data->>'laa_reference' ?",
     'firm_name' => "data->'firm_office'->>'name' ?",
@@ -22,6 +28,7 @@ class Sorter
     'caseworker' => CASEWORKER_ORDER_CLAUSE,
     'status' => STATUS_ORDER_CLAUSE,
     'date_updated' => 'submissions.updated_at ?',
+    'risk' => RISK_ORDER_CLAUSE,
     'service_name' => "data->>'service_type' ?",
   }.freeze
 

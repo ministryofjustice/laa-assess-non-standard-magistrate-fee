@@ -4,14 +4,14 @@ module Nsm
 
     def your
       pagy, filtered_claims = order_and_paginate(Claim.pending_and_assigned_to(current_user))
-      your_claims = filtered_claims.map { |claim| BaseViewModel.build(:your_claims, claim) }
+      your_claims = filtered_claims.map { |claim| BaseViewModel.build(:table_row, claim) }
 
       render locals: { your_claims:, pagy: }
     end
 
     def open
       @pagy, claims = order_and_paginate(Claim.pending_decision)
-      @claims = claims.map { |claim| BaseViewModel.build(:open_claims, claim) }
+      @claims = claims.map { |claim| BaseViewModel.build(:table_row, claim) }
     end
 
     def closed

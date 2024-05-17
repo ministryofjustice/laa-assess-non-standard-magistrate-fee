@@ -1,12 +1,13 @@
 module Nsm
   module V1
-    class OpenClaims < BaseViewModel
+    class TableRow < BaseViewModel
       include SubmissionTagHelper
 
       attribute :laa_reference
       attribute :defendants
       attribute :firm_office
       attribute :submission
+      attribute :risk
       delegate :updated_at, to: :submission
 
       def main_defendant_name
@@ -28,6 +29,10 @@ module Nsm
 
       def state_tag
         submission_state_tag(submission)
+      end
+
+      def risk_name
+        I18n.t("nsm.claims.table.risk.#{risk}")
       end
 
       delegate :id, to: :submission
