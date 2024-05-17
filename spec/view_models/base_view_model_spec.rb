@@ -18,12 +18,12 @@ RSpec.describe BaseViewModel do
 
   describe '#build' do
     context 'for a single object' do
-      let(:data) { { 'laa_reference' => 'LA111', 'defendants' => [{ 'some' => 'data' }], 'state' => 'granted' } }
+      let(:data) { { 'laa_reference' => 'LA111', 'defendants' => [{ 'some' => 'data' }], 'risk' => 'high' } }
 
       it 'returns an instance with the correct attributes' do
-        result = described_class.build(:assessed_claims, claim)
+        result = described_class.build(:table_row, claim)
         expect(result).to have_attributes(
-          state: 'granted',
+          risk: 'high',
         )
       end
 
