@@ -10,8 +10,17 @@
       <%= govuk_button_link_to(t('.next_claim'), new_nsm_claim_path) %>
     </div>
     <% if your_claims.any? %>
-      <%= render 'yours_table', { your_claims: } %>
-      <%= render "shared/pagination", { pagy: pagy, item: t('.table_info_item')} %>
+      <%= render 'table',
+                path: your_nsm_claims_path,
+                 columns: {
+                    laa_reference: :laa_reference,
+                    firm_name: :firm_name,
+                    main_defendant_name: :main_defendant_name,
+                    date_updated: :date_updated,
+                    risk: :risk_name,
+                    status: :state_tag
+                 },
+                claims: your_claims, pagy: pagy %>
     <% end %>
   </div>
 </div>
