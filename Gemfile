@@ -24,7 +24,7 @@ gem 'omniauth-rails_csrf_protection', '>= 1.0.2'
 gem 'pg'
 gem 'propshaft'
 gem 'puma', '~> 6.4'
-gem 'rails', '~> 7.1.3'
+gem 'rails', '~> 7.1.3', '>= 7.1.3.3'
 gem 'redis'
 gem 'sidekiq', '~> 7.2'
 gem 'sidekiq_alive', '~> 2.4'
@@ -60,7 +60,7 @@ group :test do
   gem 'rspec-html-matchers'
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
-  gem 'rubocop-rails', '>= 2.24.1', require: false
+  gem 'rubocop-rails', '>= 2.25.0', require: false
   gem 'rubocop-rspec', require: false
   gem 'selenium-webdriver'
   gem 'simplecov'
