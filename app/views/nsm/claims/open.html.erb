@@ -1,0 +1,18 @@
+<% title t('.page_title') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+    <%= render 'table',
+                path: open_nsm_claims_path,
+                 columns: {
+                    laa_reference: :laa_reference,
+                    firm_name: :firm_name,
+                    main_defendant_name: :main_defendant_name,
+                    caseworker: :case_worker_name,
+                    date_updated: :date_updated,
+                    status: :state_tag
+                 },
+                claims: @claims, pagy: @pagy %>
+  </div>
+</div>

@@ -9,7 +9,7 @@ module Nsm
     def update
       unassignment = UnassignmentForm.new(claim:, **send_back_params)
       if unassignment.save
-        redirect_to nsm_your_claims_path, flash: { success: success_notice(unassignment) }
+        redirect_to your_nsm_claims_path, flash: { success: success_notice(unassignment) }
       else
         render :edit, locals: { claim:, unassignment: }
       end

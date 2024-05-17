@@ -1,13 +1,13 @@
-module PriorAuthorityTagHelper
+module SubmissionTagHelper
   include ActionView::Helpers::TagHelper
 
   def show_tag_on_details_page?(submission)
     augmented_state(submission) != 'submitted'
   end
 
-  def prior_authority_state_tag(submission)
+  def submission_state_tag(submission)
     tag.span(class: "govuk-tag govuk-tag--#{tag_colour(submission)}") do
-      I18n.t("prior_authority.applications.statuses.#{augmented_state(submission)}")
+      I18n.t("shared.statuses.#{augmented_state(submission)}")
     end
   end
 
@@ -23,7 +23,9 @@ module PriorAuthorityTagHelper
       'granted' => 'green',
       'rejected' => 'red',
       'auto_grant' => 'green',
-      'expired' => 'red'
+      'expired' => 'red',
+      'provider_requested' => 'yellow',
+      'further_info' => 'yellow',
     }.fetch(augmented_state(submission))
   end
 

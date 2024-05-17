@@ -1,3 +1,5 @@
+import Decimal from 'decimal.js';
+
 function init() {
   const calculateChangeButton = document.getElementById('calculate_change_button');
   const page = calculateChangeButton?.getAttribute('data-page');
@@ -22,25 +24,19 @@ function init() {
   }
 
   function calculateAdjustedAmount() {
-    const count = countField?.value;
-    const unitPrice = calculateChangeButton?.getAttribute('data-unit-price');
+    const count = parseInt(countField?.value);
+    const unitPrice = new Decimal(calculateChangeButton?.getAttribute('data-unit-price'));
     let upliftAmount = calculateChangeButton?.getAttribute('data-uplift-amount');
-    const vatMultiplier = parseFloat(calculateChangeButton?.getAttribute('data-vat-multiplier'));
+    const vatMultiplier = new Decimal(calculateChangeButton?.getAttribute('data-vat-multiplier'));
 
     if (!(upliftAmount && upliftNoField.checked)) {
       upliftAmount = 0
     }
 
-    const upliftFactor = (parseFloat(upliftAmount) / 100) + 1;
+    const upliftFactor = new Decimal(upliftAmount).dividedBy(100).plus(1);
 
-    // rounding:
-    // * when VAT exists - round down
-    // * when no VAT exists - round to nearest decimal
-    if (vatMultiplier === 1.0) {
-      return (`£${(count * unitPrice * upliftFactor).toFixed(2)}`);
-    } else {
-      return (`£${Math.floor(count * unitPrice * upliftFactor * vatMultiplier * 100) / 100}`);
-    }
+    const unrounded = unitPrice.times(count).times(upliftFactor).times(vatMultiplier);
+    return (`£${unrounded.toFixed(2)}`);
   }
 }
 

@@ -1,14 +1,14 @@
 ---
 en:
   nsm:
-    your_claims:
-      index:
+    claims:
+      your:
         page_title: "Your claims"
         heading: "Your claims"
         table_info_item: "claim"
         next_claim: "Assess next claim"
         no_claims: There are no claims allocated for you to assess.
-      your_claims_table:
+      yours_table:
         table_heading: "Your claims"
         laa_reference: "LAA reference"
         firm_name: "Firm name"

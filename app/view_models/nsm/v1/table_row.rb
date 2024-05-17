@@ -1,11 +1,13 @@
 module Nsm
   module V1
-    class AssessedClaims < BaseViewModel
+    class TableRow < BaseViewModel
+      include SubmissionTagHelper
+
       attribute :laa_reference
       attribute :defendants
       attribute :firm_office
-      attribute :state
       attribute :submission
+      attribute :risk
       delegate :updated_at, to: :submission
 
       def main_defendant_name
@@ -17,13 +19,20 @@ module Nsm
         firm_office['name']
       end
 
-      def date_assessed
+      def date_updated
         updated_at.to_fs(:stamp)
       end
 
       def case_worker_name
-        event = submission.events.where(event_type: 'Event::Decision').order(created_at: :desc).first
-        event ? event.primary_user.display_name : ''
+        submission.assignments.first&.display_name || I18n.t('nsm.claims.table.unassigned')
+      end
+
+      def state_tag
+        submission_state_tag(submission)
+      end
+
+      def risk_name
+        I18n.t("nsm.claims.table.risk.#{risk}")
       end
 
       delegate :id, to: :submission

@@ -91,6 +91,20 @@ RSpec.describe Nsm::V1::WorkItem do
     it 'calculates the correct provider requested amount' do
       expect(subject.provider_requested_amount).to eq(75.24)
     end
+
+    context 'when numbers might lead to floating point rounding errors' do
+      let(:params) do
+        {
+          'time_spent' => 36,
+          'uplift' => 0,
+          'pricing' => 45.35
+        }
+      end
+
+      it 'calculates the correct provider requested amount' do
+        expect(subject.provider_requested_amount).to eq(27.21)
+      end
+    end
   end
 
   describe 'provider_requested_amount_inc_vat' do
