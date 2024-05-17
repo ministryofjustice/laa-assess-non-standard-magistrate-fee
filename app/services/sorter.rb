@@ -15,8 +15,8 @@ class Sorter
   SQL
 
   RISK_ORDER_CLAUSE = <<-SQL.squish.freeze
-  CASE WHEN risk = 'high' THEN 3
-       WHEN risk = 'medium' THEN 2
+  CASE risk WHEN 'high' THEN 3
+       WHEN 'medium' THEN 2
        ELSE 1 END ?
   SQL
 
