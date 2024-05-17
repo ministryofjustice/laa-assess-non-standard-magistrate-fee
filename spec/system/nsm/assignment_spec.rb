@@ -6,7 +6,7 @@ RSpec.describe 'Assign claims' do
   before do
     claim
     sign_in caseworker
-    visit nsm_your_claims_path
+    visit your_nsm_claims_path
     click_on 'Assess next claim'
   end
 
@@ -20,7 +20,7 @@ RSpec.describe 'Assign claims' do
 
     context 'when the claim is already assigned to me' do
       it 'shows the claim in the Your Claims screen' do
-        visit nsm_your_claims_path
+        visit your_nsm_claims_path
         expect(page).to have_content claim.data['laa_reference']
       end
 

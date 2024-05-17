@@ -53,27 +53,4 @@ RSpec.describe Nsm::V1::AssessedClaims, type: :view_model do
       end
     end
   end
-
-  describe '#status' do
-    it 'returns the correct color for the given item' do
-      expect(subject.status('granted')).to eq({ colour: 'green', sort_value: 1, text: 'granted' })
-      expect(subject.status('part_grant')).to eq({ colour: 'blue', text: 'part_grant', sort_value: 2 })
-      expect(subject.status('rejected')).to eq({ colour: 'red', text: 'rejected', sort_value: 3 })
-      expect(subject.status('invalid')).to eq({ colour: 'grey', text: 'invalid', sort_value: 4 })
-    end
-  end
-
-  describe '#table_fields' do
-    it 'returns an array of table fields' do
-      expected_fields = [
-        { laa_reference: '1234567890', claim_id: 1 },
-        'Acme Law Firm',
-        'John Doe',
-        { text: I18n.l(Time.zone.yesterday, format: '%-d %b %Y'), sort_value: Time.zone.yesterday.to_fs(:db) },
-        'Jim Bob',
-        { colour: 'green', sort_value: 1, text: 'granted' }
-      ]
-      expect(assessed_claims.table_fields).to eq(expected_fields)
-    end
-  end
 end

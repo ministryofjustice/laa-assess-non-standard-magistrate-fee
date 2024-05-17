@@ -1,9 +1,21 @@
 require 'rails_helper'
 
 RSpec.describe Nsm::ClaimsController do
-  describe '#index' do
+  describe '#your' do
     it 'does not raise any errors' do
-      expect { get :index }.not_to raise_error
+      expect { get :your }.not_to raise_error
+    end
+  end
+
+  describe '#open' do
+    it 'does not raise any errors' do
+      expect { get :open }.not_to raise_error
+    end
+  end
+
+  describe '#closed' do
+    it 'does not raise any errors' do
+      expect { get :closed }.not_to raise_error
     end
   end
 
@@ -30,7 +42,7 @@ RSpec.describe Nsm::ClaimsController do
       it 'redirects to Your Claims with a flash notice' do
         get :new
 
-        expect(response).to redirect_to(nsm_your_claims_path)
+        expect(response).to redirect_to(your_nsm_claims_path)
         expect(flash[:notice]).to eq('There are no claims waiting to be allocated.')
       end
     end

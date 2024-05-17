@@ -53,17 +53,4 @@ RSpec.describe Nsm::V1::AllClaims, type: :view_model do
       end
     end
   end
-
-  describe '#table_fields' do
-    it 'returns an array of table fields' do
-      expected_fields = [
-        { laa_reference: '1234567890', claim_id: submission.id },
-        'Acme Law Firm',
-        'John Doe',
-        { text: I18n.l(Time.zone.today, format: '%-d %b %Y'), sort_value: Time.zone.today.beginning_of_day.to_fs(:db) },
-        'Unassigned'
-      ]
-      expect(all_claims.table_fields).to eq(expected_fields)
-    end
-  end
 end

@@ -1,0 +1,17 @@
+---
+en:
+  nsm:
+    claims:
+      open:
+        page_title: Assess a non-standard magistrates’ court payment
+        heading: "Open claims"
+        table_info_item: "claim"
+        unassigned: Unassigned
+      open_table:
+        table_heading: "All Claims"
+        laa_reference: "LAA reference"
+        firm_name: "Firm name"
+        defendant_name: "Defendant"
+        date_received: "Date received"
+        caseworker_name: "Caseworker"
+        status: Status
