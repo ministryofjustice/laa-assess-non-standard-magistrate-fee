@@ -4,9 +4,9 @@ module Nsm
 
     def index
       claim = Claim.find(params[:claim_id])
-      disbursements = BaseViewModel.build(:disbursement, claim, 'disbursements').group_by(&:disbursement_date)
-
-      render locals: { claim:, disbursements: }
+      items = BaseViewModel.build(:disbursement, claim, 'disbursements')
+      pagy, disbursements = pagy_array(items.sort_by(&:disbursement_date))
+      render locals: { claim:, disbursements:, pagy: }
     end
 
     def show

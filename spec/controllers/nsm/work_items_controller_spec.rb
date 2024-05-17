@@ -24,9 +24,10 @@ RSpec.describe Nsm::WorkItemsController do
     it 'renders successfully with claims' do
       allow(controller).to receive(:render)
       get :index, params: { claim_id: }
+      pagy = anything
 
       expect(controller).to have_received(:render).with(
-        locals: { claim:, work_items:, work_item_summary: }
+        locals: { claim:, work_items:, work_item_summary:, pagy: }
       )
       expect(response).to be_successful
     end

@@ -30,7 +30,7 @@ module Nsm
           { text: format_period(requested_time, style: :line_html), numeric: true },
           { text: NumberTo.pounds(requested_cost), numeric: true },
         ]
-        if requested_cost != allowed_cost || submission.part_grant?
+        if show_allowed?
           result << { text: format_period(allowed_time, style: :line_html), numeric: true }
           result << { text: NumberTo.pounds(allowed_cost), numeric: true }
         else
@@ -53,6 +53,10 @@ module Nsm
       end
 
       private
+
+      def show_allowed?
+        submission.part_grant? || work_items.any?(&:changed?)
+      end
 
       def work_items
         @work_items ||= BaseViewModel.build(:work_item, submission, 'work_items')

@@ -104,6 +104,10 @@ module Nsm
         rows
       end
 
+      def changed?
+        provider_requested_amount != caseworker_amount
+      end
+
       private
 
       def calculate_cost(original: false)

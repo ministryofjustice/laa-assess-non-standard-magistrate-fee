@@ -16,6 +16,8 @@ en:
         action: Action
         change: Change
         view: View
+        table_info_item: disbursement
+        no_data: You do not have any disbursements
       disbursements_total:
         link_title: View disbursement total
         provider_total: Requested (including any VAT)
