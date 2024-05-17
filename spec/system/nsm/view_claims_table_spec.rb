@@ -78,9 +78,16 @@ RSpec.describe 'NSM tables' do
 
     it 'lets me sort claims by main defendant' do
       click_on 'Defendant'
-      expect(page.body).to match(/Tracy.*Macy.*Acy/m)
-      click_on 'Defendant'
       expect(page.body).to match(/Acy.*Macy.*Tracy/m)
+      click_on 'Defendant'
+      expect(page.body).to match(/Tracy.*Macy.*Acy/m)
+    end
+
+    it 'lets me sort claims by caseworker' do
+      click_on 'Defendant'
+      expect(page.body).to match(/Bob.*Zob.*Not assigned/m)
+      click_on 'Defendant'
+      expect(page.body).to match(/Not assigned.*Zob.*Bob/m)
     end
   end
 end

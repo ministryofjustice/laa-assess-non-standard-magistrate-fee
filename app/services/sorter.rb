@@ -9,12 +9,17 @@ class Sorter
        ELSE state END ?
   SQL
 
+  CASEWORKER_ORDER_CLAUSE = <<-SQL.squish.freeze
+    CASE WHEN users.id IS NULL THEN NULL
+    ELSE users.first_name || ' ' || users.last_name END ? NULLS LAST
+  SQL
+
   ORDERS = {
     'laa_reference' => "data->>'laa_reference' ?",
     'firm_name' => "data->'firm_office'->>'name' ?",
     'client_name' => "(data->'defendant'->>'first_name') || ' ' || (data->'defendant'->>'last_name') ?",
     'main_defendant_name' => "(defendants.value->>'first_name') || ' ' || (defendants.value->>'last_name') ?",
-    'caseworker' => "COALESCE(users.first_name, 'Not') || ' ' || COALESCE(users.last_name, 'assigned') ?",
+    'caseworker' => CASEWORKER_ORDER_CLAUSE,
     'status' => STATUS_ORDER_CLAUSE,
     'date_updated' => 'submissions.updated_at ?',
     'service_name' => "data->>'service_type' ?",
