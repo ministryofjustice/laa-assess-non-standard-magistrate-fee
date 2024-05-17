@@ -56,9 +56,9 @@ RSpec.describe 'Prior authority list views' do
 
     it 'lets me sort applications' do
       click_on 'LAA reference'
-      expect(page.body).to match(/333.*222.*111/m)
-      click_on 'LAA reference'
       expect(page.body).to match(/111.*222.*333/m)
+      click_on 'LAA reference'
+      expect(page.body).to match(/333.*222.*111/m)
     end
   end
 

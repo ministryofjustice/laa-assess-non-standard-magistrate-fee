@@ -22,6 +22,16 @@ en:
         date_assessed: "Date assessed:"
         remove_from_list: Remove from list
         remove_from_yourlist: Remove from your list
+      table:
+        unassigned: Unassigned
+        table_info_item: "claim"
+        header:
+          laa_reference: "LAA reference"
+          firm_name: "Firm name"
+          main_defendant_name: "Defendant"
+          date_updated: "Last updated"
+          caseworker: "Caseworker"
+          status: Status
     adjustments:
       show:
         cost_summary: Costs summary
