@@ -112,7 +112,7 @@ module Nsm
 
       def calculate_cost(original: false)
         scoped_uplift, scoped_time_spent = original ? [original_uplift, original_time_spent] : [uplift, time_spent]
-        pricing * scoped_time_spent * (100 + scoped_uplift.to_i) / 100 / 60
+        Rational(pricing * scoped_time_spent * (100 + scoped_uplift.to_i), 100 * 60)
       end
 
       def format(value, as: :pounds)
