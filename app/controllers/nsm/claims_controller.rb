@@ -16,7 +16,7 @@ module Nsm
 
     def closed
       @pagy, claims = order_and_paginate(Claim.decision_made)
-      @claims = claims.map { |claim| BaseViewModel.build(:assessed_claims, claim) }
+      @claims = claims.map { |claim| BaseViewModel.build(:table_row, claim) }
     end
 
     def new
