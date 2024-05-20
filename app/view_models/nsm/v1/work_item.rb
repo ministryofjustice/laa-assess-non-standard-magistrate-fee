@@ -104,11 +104,18 @@ module Nsm
         rows
       end
 
+      def changed?
+        provider_requested_amount != caseworker_amount
+      end
+
       private
 
       def calculate_cost(original: false)
         scoped_uplift, scoped_time_spent = original ? [original_uplift, original_time_spent] : [uplift, time_spent]
-        pricing * scoped_time_spent * (100 + scoped_uplift.to_i) / 100 / 60
+        # We need to use a Rational because some numbers divided by 60 cannot be accurately represented as a decimal,
+        # and when summing up multiple work items with sub-penny precision, those small inaccuracies can lead to
+        # a larger inaccuracy when the total is eventually rounded to 2 decimal places.
+        Rational(pricing * scoped_time_spent * (100 + scoped_uplift.to_i), 100 * 60)
       end
 
       def format(value, as: :pounds)

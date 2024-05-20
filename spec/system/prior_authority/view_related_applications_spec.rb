@@ -147,48 +147,48 @@ RSpec.describe 'View related applications' do
     it 'allows me to sort by LAA reference' do
       click_on 'LAA reference'
       within(top_row_selector) do
-        expect(page).to have_content('LAA-555')
+        expect(page).to have_content('LAA-222')
       end
 
       click_on 'LAA reference'
       within(top_row_selector) do
-        expect(page).to have_content('LAA-222')
+        expect(page).to have_content('LAA-555')
       end
     end
 
     it 'allows me to sort by client name' do
       click_on 'Client'
       within(top_row_selector) do
-        expect(page).to have_content('Zoe Ziegler')
+        expect(page).to have_content('Abe Abrahams')
       end
 
       click_on 'Client'
       within(top_row_selector) do
-        expect(page).to have_content('Abe Abrahams')
+        expect(page).to have_content('Zoe Ziegler')
       end
     end
 
     it 'allows me to sort by case worker name' do
       click_on 'Caseworker'
       within(top_row_selector) do
-        expect(page).to have_content('Wanda Worker')
+        expect(page).to have_content('Able Worker')
       end
 
       click_on 'Caseworker'
       within(top_row_selector) do
-        expect(page).to have_content('Able Worker')
+        expect(page).to have_content('Wanda Worker')
       end
     end
 
     it 'allows me to sort by Service name' do
       click_on 'Service'
       within(top_row_selector) do
-        expect(page).to have_content('Voice recognition')
+        expect(page).to have_content('A&E consultant')
       end
 
       click_on 'Service'
       within(top_row_selector) do
-        expect(page).to have_content('A&E consultant')
+        expect(page).to have_content('Voice recognition')
       end
     end
 
@@ -207,12 +207,12 @@ RSpec.describe 'View related applications' do
     it 'allows me to sort by status' do
       click_on 'Status'
       within(top_row_selector) do
-        expect(page).to have_content('Rejected')
+        expect(page).to have_content('Granted')
       end
 
       click_on 'Status'
       within(top_row_selector) do
-        expect(page).to have_content('Granted')
+        expect(page).to have_content('Rejected')
       end
     end
 

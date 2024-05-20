@@ -5,7 +5,7 @@ module SortableTableHelper
       next_direction = sort_direction == 'ascending' ? 'descending' : 'ascending'
     else
       aria_sort = 'none'
-      next_direction = 'descending'
+      next_direction = 'ascending'
     end
 
     tag.th(scope: 'col', class: 'govuk-table__header', 'aria-sort': aria_sort) do
