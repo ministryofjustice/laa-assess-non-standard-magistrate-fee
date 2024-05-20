@@ -4,10 +4,11 @@ module Nsm
 
     def index
       claim = Claim.find(params[:claim_id])
-      work_items = BaseViewModel.build(:work_item, claim, 'work_items')
+      items = BaseViewModel.build(:work_item, claim, 'work_items')
+      pagy, work_items = pagy_array(items.sort_by(&:completed_on))
       work_item_summary = BaseViewModel.build(:work_item_summary, claim)
 
-      render locals: { claim:, work_items:, work_item_summary: }
+      render locals: { claim:, work_items:, work_item_summary:, pagy: }
     end
 
     def show

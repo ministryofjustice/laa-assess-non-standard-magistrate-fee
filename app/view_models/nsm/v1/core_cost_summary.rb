@@ -42,6 +42,14 @@ module Nsm
 
       private
 
+      def show_allowed?
+        return @show_allowed unless @show_allowed.nil?
+
+        @show_allowed ||=
+          submission.part_grant? ||
+          [disbursements, letters_calls, *work_items.values].any? { |rows| rows.any?(&:changed?) }
+      end
+
       def sum_allowed(data, field)
         return nil if data.none? { _1[:"allowed_#{field}"] }
 
@@ -49,8 +57,6 @@ module Nsm
       end
 
       def calculate_profit_costs(formatted:)
-        letters_calls = LettersAndCallsSummary.new('submission' => submission).rows
-
         calculate_row((work_items[PROFIT_COSTS] || []) + letters_calls, 'profit_costs', formatted:)
       end
 
@@ -65,8 +71,8 @@ module Nsm
       def calculate_disbursements(formatted:)
         net_cost = disbursements.sum(&:original_total_cost_without_vat)
         vat = disbursements.sum(&:original_vat_amount)
-        allowed_net_cost = disbursements.sum(&:total_cost_without_vat)
-        allowed_vat = disbursements.sum(&:vat_amount) unless net_cost == allowed_net_cost || submission.part_grant?
+        allowed_net_cost = show_allowed? ? disbursements.sum(&:total_cost_without_vat) : nil
+        allowed_vat = show_allowed? ? disbursements.sum(&:vat_amount) : nil
 
         build_hash(
           name: 'disbursements',
@@ -80,9 +86,7 @@ module Nsm
 
       def calculate_row(rows, name, formatted:)
         net_cost = rows.sum(&:provider_requested_amount)
-        allowed_net_cost = if submission.part_grant? || rows.any? { |row| row.provider_requested_amount != row.caseworker_amount }
-                             rows.sum(&:caseworker_amount)
-                           end
+        allowed_net_cost = show_allowed? ? rows.sum(&:caseworker_amount) : nil
 
         build_hash(
           name: name,
@@ -109,6 +113,10 @@ module Nsm
       def work_items
         @work_items ||= BaseViewModel.build(:work_item, submission, 'work_items')
                                      .group_by { |work_item| group_type(work_item.work_type.to_s) }
+      end
+
+      def letters_calls
+        @letters_calls ||= LettersAndCallsSummary.new('submission' => submission).rows
       end
 
       def disbursements
