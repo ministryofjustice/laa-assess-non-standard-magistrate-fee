@@ -74,7 +74,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
         ]
       end
 
-      it 'summs them all together in profit costs' do
+      it 'sums them all together in profit costs' do
         expect(subject.table_fields[0]).to eq(
           {
             allowed_gross_cost: { numeric: true, text: '£170.00' },
@@ -203,6 +203,24 @@ RSpec.describe Nsm::V1::CoreCostSummary do
             net_cost: { numeric: true, text: '£60.00' },
             vat: { numeric: true, text: '£0.00' }
           }
+        )
+      end
+    end
+
+    context 'when dealing with figures involving recurring decimals' do
+      let(:work_items) do
+        Array.new(30) do
+          {
+            work_type: { value: 'advocacy', en: 'Advocacy' },
+            pricing: 45.35, time_spent: 175,
+          }
+        end
+      end
+
+      it 'sums them into profit costs' do
+        expect(subject.table_fields[0]).to include(
+          gross_cost: { numeric: true, text: '£3,968.13' },
+          name: { numeric: false, text: 'Profit costs', width: nil }
         )
       end
     end

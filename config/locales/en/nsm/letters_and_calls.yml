@@ -19,6 +19,7 @@ en:
         remove_uplift_all: "Remove uplifts for all items"
         change: Change
         view: View
+        no_data: You do not have any letters or calls
       edit:
         page_title: "Your claims"
         heading: "Adjust %{type} total"

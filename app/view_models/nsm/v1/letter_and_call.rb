@@ -112,6 +112,10 @@ module Nsm
         !original_uplift.to_i.zero?
       end
 
+      def changed?
+        provider_requested_amount != caseworker_amount
+      end
+
       private
 
       def calculate_cost(original: false)
