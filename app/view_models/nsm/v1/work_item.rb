@@ -112,6 +112,9 @@ module Nsm
 
       def calculate_cost(original: false)
         scoped_uplift, scoped_time_spent = original ? [original_uplift, original_time_spent] : [uplift, time_spent]
+        # We need to use a Rational because some numbers divided by 60 cannot be accurately represented as a decimal,
+        # and when summing up multiple work items with sub-penny precision, those small inaccuracies can lead to
+        # a larger inaccuracy when the total is eventually rounded to 2 decimal places.
         Rational(pricing * scoped_time_spent * (100 + scoped_uplift.to_i), 100 * 60)
       end
 
