@@ -21,10 +21,10 @@ module Nsm
 
       Claim.transaction do
         if mileage_based?
-          process_field(value: miles, field: 'miles')
-          process_field(value: calculated_total_cost_without_vat, field: 'total_cost_without_vat')
+          process_field(value: miles.to_f, field: 'miles')
+          process_field(value: calculated_total_cost_without_vat.to_f, field: 'total_cost_without_vat')
         else
-          process_field(value: total_cost_without_vat, field: 'total_cost_without_vat')
+          process_field(value: total_cost_without_vat.to_f, field: 'total_cost_without_vat')
         end
 
         process_field(value: apply_vat, field: 'apply_vat')
@@ -54,9 +54,9 @@ module Nsm
     end
 
     def data_has_changed?
-      return true if apply_vat != item.apply_vat
+      return true if apply_vat != item.original_apply_vat
 
-      mileage_based? ? miles != item.miles : total_cost_without_vat != item.total_cost_without_vat
+      mileage_based? ? miles != item.original_miles : total_cost_without_vat != item.original_total_cost_without_vat
     end
 
     def explanation_required?

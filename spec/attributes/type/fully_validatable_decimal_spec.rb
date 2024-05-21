@@ -29,10 +29,34 @@ RSpec.describe Type::FullyValidatableDecimal do
     it { expect(coerced_value).to eq 123 }
   end
 
-  describe 'when value is an floaty string' do
+  describe 'when value is a floaty string' do
     let(:value) { '123.45' }
 
     it { expect(coerced_value).to eq 123.45 }
+  end
+
+  describe 'when value is an invalid floaty-like string' do
+    let(:value) { '123.4.5' }
+
+    it { expect(coerced_value).to eq '123.4.5' }
+  end
+
+  describe 'when value is zero' do
+    let(:value) { '0' }
+
+    it { expect(coerced_value).to eq 0 }
+  end
+
+  describe 'when value is zero point zero' do
+    let(:value) { '0.0' }
+
+    it { expect(coerced_value).to eq 0 }
+  end
+
+  describe 'when value is zero-like but invalid' do
+    let(:value) { '0.' }
+
+    it { expect(coerced_value).to eq '0.' }
   end
 
   describe 'when value is a numbery string with commas' do

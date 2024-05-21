@@ -57,7 +57,7 @@ RSpec.describe Nsm::DisbursementsForm do
 
       it 'processes the fields and saves the claim' do
         expect(form.save).to be(true)
-        expect(claim.data.dig('disbursements', 0, 'total_cost_without_vat')).to eq total_cost_without_vat.to_s
+        expect(claim.data.dig('disbursements', 0, 'total_cost_without_vat')).to eq total_cost_without_vat
         expect(claim.data.dig('disbursements', 0, 'total_cost_without_vat_original')).to eq original_total_cost_without_vat
         expect(claim.data.dig('disbursements', 0, 'vat_amount')).to eq total_cost_without_vat * vat_rate
       end
@@ -81,7 +81,7 @@ RSpec.describe Nsm::DisbursementsForm do
 
       it 'processes the fields and saves the claim' do
         expect(form.save).to be(true)
-        expect(claim.data.dig('disbursements', 0, 'total_cost_without_vat')).to eq (miles * pricing).to_s
+        expect(claim.data.dig('disbursements', 0, 'total_cost_without_vat')).to eq miles * pricing
         expect(claim.data.dig('disbursements', 0, 'total_cost_without_vat_original')).to eq original_total_cost_without_vat
       end
     end
