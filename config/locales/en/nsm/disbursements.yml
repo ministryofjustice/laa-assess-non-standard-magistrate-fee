@@ -33,8 +33,23 @@ en:
           details: Details of disbursement
           prior_authority: Prior authority granted
           vat: VAT
-          total: Claim cost (including any VAT)
-          miles: Miles
+          total: Total
+          miles: Number of miles
+        miles: Miles
+        mileage: Change number of miles
+        mileage_hint: For example, 2.5 miles
+        apply_vat: Change the VAT rate
+        apply_vat_no: 0%
+        total_cost_without_vat: Change disbursement cost
+        total_cost_without_vat_hint: Enter the cost, not including VAT, for example £301.55
+        calculate_button_text: Calculate my changes
+        explain: Explain your decision
+        explain_hint: For example, why you made adjustments to this disbursement. We'll share this explanation with the provider.
+        claim_cost_table:
+          title: Claim cost
+          provider_requested: Provider requested
+          caseworker_allowed: Caseworker allowed
+          vat_allowed: VAT allowed
       show:
         page_title: Adjust a disbursement
         provider_submission: Provider submission
@@ -78,8 +93,17 @@ en:
         nsm/disbursements_form:
           attributes:
             base:
+              no_change: The new values cannot be the same as the values submitted by the provider.
             total_cost_without_vat:
+              blank: Enter the cost
+              not_a_number: The cost must be a number
+              greater_than_or_equal_to: The cost must be 0 or more
+            miles:
+              blank: Enter the number of miles to allow
+              not_a_number: The number of miles must be a number
+              greater_than_or_equal_to: The number of miles must be 0 or more
+            apply_vat:
               inclusion: Select an option
-              no_change: There are no changes to save. Select cancel if you do not want to make any changes.
+
             explanation:
               blank: Add an explanation for your decision

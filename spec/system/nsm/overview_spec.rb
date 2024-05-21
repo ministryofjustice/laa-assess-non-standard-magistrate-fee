@@ -20,7 +20,7 @@ RSpec.describe 'Overview', type: :system do
     before do
       visit nsm_claim_disbursements_path(claim)
       click_on 'Change'
-      choose 'Yes'
+      fill_in 'Change disbursement cost', with: '0'
       fill_in 'Explain your decision', with: 'Testing'
       click_on 'Save changes'
     end

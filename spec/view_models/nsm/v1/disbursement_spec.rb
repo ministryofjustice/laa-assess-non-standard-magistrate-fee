@@ -34,8 +34,8 @@ RSpec.describe Nsm::V1::Disbursement do
     context 'when amount without vat is zero' do
       let(:args) { { 'total_cost_without_vat' => 0, 'vat_amount' => 60 } }
 
-      it 'returns 0' do
-        expect(disbursement.caseworker_total_cost).to eq(0)
+      it 'returns calculated cost' do
+        expect(disbursement.caseworker_total_cost).to eq(60)
       end
     end
 
@@ -104,6 +104,7 @@ RSpec.describe Nsm::V1::Disbursement do
           type: 'Type',
           details: 'Details',
           prior_authority: 'Prior_authority',
+          vat: '20%',
           total: '£100.00'
         }
 
