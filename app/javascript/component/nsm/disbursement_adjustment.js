@@ -8,6 +8,7 @@ function init() {
   const calculateChangeButton = document.getElementById('calculate-change-button');
   const caseworkerAllowedAmount = document.getElementById('disbursement-caseworker-allowed-amount');
   const caseworkerAllowedVatRate = document.getElementById('disbursement-allowed-vat-rate');
+  const total = document.getElementById('disbursement-total-allowed');
 
   if (disbursementAdjustmentForm ) {
     updateDomElements();
@@ -20,14 +21,15 @@ function init() {
   }
 
   function updateDomElements() {
-    const totalPrice = calculateTotalPrice();
+    const netPrice = calculateNet();
 
-    const allowedVatRate = applyVatYesField.checked ? calculateChangeButton.dataset.vatRate : 0;
-    caseworkerAllowedAmount.innerHTML =  `£${ totalPrice.toFixed(2) }`;
-    caseworkerAllowedVatRate.innerHTML = `${ allowedVatRate }%`;
+    const allowedVatRate = new Decimal(applyVatYesField.checked ? calculateChangeButton.dataset.vatRate : 0);
+    caseworkerAllowedAmount.innerHTML =  `£${ netPrice.toFixed(2) }`;
+    caseworkerAllowedVatRate.innerHTML = `${ allowedVatRate.times(100).toFixed() }%`;
+    total.innerHTML = `£${ netPrice.times(allowedVatRate.plus(1)).toFixed(2)}`
   }
 
-  function calculateTotalPrice() {
+  function calculateNet() {
     if (calculateChangeButton.dataset.mileageBased === 'true') {
       return new Decimal(milesField.value).times(calculateChangeButton.dataset.pricing);
     } else {

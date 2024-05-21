@@ -57,7 +57,7 @@
               id:'calculate-change-button',
               data: {
                 'pricing': item.pricing,
-                'vat-rate': (item.vat_rate * 100).round,
+                'vat-rate': item.vat_rate,
                 'mileage-based': form.mileage_based?
               }
             )
@@ -71,13 +71,15 @@
                   <%= row.with_cell(text: t(".claim_cost_table.provider_requested")) %>
                   <%= row.with_cell(text: t(".claim_cost_table.caseworker_allowed")) %>
                   <%= row.with_cell(text: t('.claim_cost_table.vat_allowed')) %>
+                  <%= row.with_cell(text: t('.claim_cost_table.total_allowed')) %>
                 <% end %>
               <% end %>
               <%= table.with_body do |body| %>
                 <%= body.with_row do |row| %>
-                  <%= row.with_cell(text: NumberTo.pounds(item.original_total_cost_without_vat), html_attributes: { id: 'disbursement-provider-requested-amount' }) %>
+                  <%= row.with_cell(text: NumberTo.pounds(item.provider_requested_total_cost), html_attributes: { id: 'disbursement-provider-requested-amount' }) %>
                   <%= row.with_cell(text: NumberTo.pounds(item.total_cost_without_vat), html_attributes: { id: 'disbursement-caseworker-allowed-amount' }) %>
                   <%= row.with_cell(text: form.apply_vat? ? form.vat_rate_text : "0%", html_attributes: { id: 'disbursement-allowed-vat-rate' }) %>
+                  <%= row.with_cell(text: NumberTo.pounds(item.caseworker_total_cost), html_attributes: { id: 'disbursement-total-allowed' }) %>
                 <% end %>
               <% end %>
             <% end %>

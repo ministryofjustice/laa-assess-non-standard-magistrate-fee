@@ -48,8 +48,9 @@ en:
         claim_cost_table:
           title: Claim cost
           provider_requested: Provider requested
-          caseworker_allowed: Caseworker allowed
+          caseworker_allowed: Net allowed
           vat_allowed: VAT allowed
+          total_allowed: Total allowed
       show:
         page_title: Adjust a disbursement
         provider_submission: Provider submission
