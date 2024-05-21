@@ -42,7 +42,8 @@ RSpec.describe Nsm::V1::ClaimDetails do
           'work_before' => 'yes',
           'work_before_date' => '2023-01-20',
           'work_after' => 'yes',
-          'work_after_date' => '2023-02-02'
+          'work_after_date' => '2023-02-02',
+          'wasted_costs' => 'yes'
         }
       )
 
@@ -57,7 +58,8 @@ RSpec.describe Nsm::V1::ClaimDetails do
                                      { title: 'Work done before order was granted', value: 'Yes' },
                                      { title: 'Date of work before order was granted', value: '20 January 2023' },
                                      { title: 'Work was done after last hearing', value: 'Yes' },
-                                     { title: 'Date of work after last hearing', value: '2 February 2023' }
+                                     { title: 'Date of work after last hearing', value: '2 February 2023' },
+                                     { title: 'Have wasted costs been applied to this case?', value: 'Yes' }
                                    ])
       end
     end
