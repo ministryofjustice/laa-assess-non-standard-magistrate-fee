@@ -5,7 +5,7 @@ module Type
         super(value&.to_s&.delete(','))
       else
         # If the user has entered a string that is not straightforwardly parseable
-        # as an integer, retain the original value so we can display it back to the user
+        # as a decimal, retain the original value so we can display it back to the user
         value
       end
     end
