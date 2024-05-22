@@ -7,6 +7,7 @@ module Nsm
       attribute :supplemental_claim
       attribute :work_before
       attribute :work_after
+      attribute :wasted_costs
       attribute :work_before_date
       attribute :work_after_date
       attribute :preparation_time
@@ -67,6 +68,12 @@ module Nsm
              {
                title: I18n.t(".nsm.claim_details.#{key}.work_after_date"),
                value: format_in_zone(work_after_date)
+             }
+           end),
+          (unless wasted_costs.nil?
+             {
+               title: I18n.t(".nsm.claim_details.#{key}.wasted_costs"),
+               value:  wasted_costs.capitalize
              }
            end),
         ].compact
