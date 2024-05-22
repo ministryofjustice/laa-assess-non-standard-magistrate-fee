@@ -13,4 +13,4 @@ spec:
       name: http
   selector:
     {{- include "helm_deploy.selectorLabels" . | nindent 4 }}
-    app: {{ include "laa-submit-crime-forms.fullname" . }}
+    app: {{ include "laa-assess-crime-forms.fullname" . }}
