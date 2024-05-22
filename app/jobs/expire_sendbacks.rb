@@ -1,7 +1,7 @@
 class ExpireSendbacks < ApplicationJob
   def perform
     PriorAuthorityApplication.where(state: PriorAuthorityApplication::SENT_BACK)
-                             .where('updated_at < ?', Rails.application.config.x.rfi.resubmission_window.ago)
+                             .where(updated_at: ...Rails.application.config.x.rfi.resubmission_window.ago)
                              .find_each do |expirable|
                                expire(expirable)
                              end
