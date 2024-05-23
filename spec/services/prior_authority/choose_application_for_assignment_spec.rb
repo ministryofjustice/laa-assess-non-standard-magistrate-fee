@@ -4,8 +4,8 @@ RSpec.describe PriorAuthority::ChooseApplicationForAssignment do
   let(:user) { create(:caseworker) }
 
   context 'when there is an older and a newer application' do
-    let(:newer_application) { create(:prior_authority_application, created_at: 1.day.ago) }
-    let(:older_application) { create(:prior_authority_application, created_at: 2.days.ago) }
+    let(:newer_application) { create(:prior_authority_application, app_store_updated_at: 1.day.ago) }
+    let(:older_application) { create(:prior_authority_application, app_store_updated_at: 2.days.ago) }
 
     before do
       newer_application && older_application

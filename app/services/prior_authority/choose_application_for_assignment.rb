@@ -9,7 +9,7 @@ module PriorAuthority
 
         PriorAuthorityApplication.assignable(user)
                                  .select('submissions.*', criminal_court, pathologist_report)
-                                 .order(criminal_court: :asc, pathologist_report: :asc, created_at: :asc)
+                                 .order(criminal_court: :asc, pathologist_report: :asc, app_store_updated_at: :asc)
                                  .first
       end
     end
