@@ -20,7 +20,7 @@ module Nsm
     end
 
     def new
-      claim = Claim.unassigned(current_user).order(created_at: :desc).first
+      claim = Claim.unassigned(current_user).order(created_at: :asc).first
 
       if claim
         Claim.transaction do

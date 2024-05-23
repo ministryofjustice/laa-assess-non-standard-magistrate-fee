@@ -2,9 +2,10 @@ require 'rails_helper'
 
 RSpec.describe 'Assign claims' do
   let(:caseworker) { create(:caseworker) }
+  let(:claims) { [claim] }
 
   before do
-    claim
+    claims
     sign_in caseworker
     visit your_nsm_claims_path
     click_on 'Assess next claim'
@@ -53,6 +54,16 @@ RSpec.describe 'Assign claims' do
 
     it 'shows me an explanation' do
       expect(page).to have_content 'There are no claims waiting to be allocated.'
+    end
+  end
+
+  context 'when there are multiple claims' do
+    let(:claims) { [new_claim, old_claim] }
+    let(:old_claim) { create(:claim, laa_reference: 'LAA-AAAAA', created_at: 6.days.ago) }
+    let(:new_claim) { create(:claim, laa_reference: 'LAA-BBBBB', created_at: 5.days.ago) }
+
+    it 'assigns the oldest claim to me' do
+      expect(page).to have_content 'LAA-AAAAA'
     end
   end
 end
