@@ -12,6 +12,9 @@
     "jquery": "^3.6.0",
     "sass": "^1.77.2"
   },
+  "resolutions": {
+    "sass/**/braces": "^3.0.3"
+  },
   "scripts": {
     "unit-test": "jest",
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
