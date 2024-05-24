@@ -28,12 +28,65 @@
 
     <div id='disbursement-adjustment-form'>
       <%= form_with model: form, url: nsm_claim_disbursement_path(claim.id, item.id), method: :put do |f| %>
-          <%= f.govuk_radio_buttons_fieldset(:total_cost_without_vat, legend: { size: 's' }) do %>
-            <%= f.govuk_radio_button :total_cost_without_vat, 'yes' do %>
-              <%= f.govuk_text_area :explanation, label: { size: 's' }, rows: 5 %>
-            <% end %>
-            <%= f.govuk_radio_button :total_cost_without_vat, 'no' %>
+          <% if form.mileage_based? %>
+            <%= f.govuk_text_field :miles,
+                                    width: 5,
+                                    suffix_text: t('.miles'),
+                                    inputmode: "decimal",
+                                    label: { text: t('.mileage'), size: 's' },
+                                    hint: { text: t('.mileage_hint'), size: 's' } %>
+          <% else %>
+            <%= f.govuk_text_field :total_cost_without_vat,
+                                    width: 5,
+                                    prefix_text: "£",
+                                    inputmode: "decimal",
+                                    value: gbp_field_value(form.total_cost_without_vat),
+                                    label: { text: t('.total_cost_without_vat'), size: 's' },
+                                    hint: { text: t('.total_cost_without_vat_hint'), size: 's' } %>
           <% end %>
+
+          <%= f.govuk_radio_buttons_fieldset(:apply_vat, legend: { size: 's', text: t('.apply_vat') }) do %>
+            <%= f.govuk_radio_button :apply_vat, 'true', label: { text: form.vat_rate_text } %>
+            <%= f.govuk_radio_button :apply_vat, 'false', label: { text: t('.apply_vat_no') } %>
+          <% end %>
+
+          <%=
+            govuk_button_link_to(
+              t('.calculate_button_text'), '',
+              secondary: true,
+              id:'calculate-change-button',
+              data: {
+                'pricing': item.pricing,
+                'vat-rate': item.vat_rate,
+                'mileage-based': form.mileage_based?
+              }
+            )
+          %>
+
+          <div id='claim-cost-table'>
+            <%= govuk_table do |table| %>
+              <%= table.with_caption(size: 'm', text: t('.claim_cost_table.title')) %>
+              <%= table.with_head do |head| %>
+                <%= head.with_row do |row| %>
+                  <%= row.with_cell(text: t(".claim_cost_table.provider_requested")) %>
+                  <%= row.with_cell(text: t(".claim_cost_table.caseworker_allowed")) %>
+                  <%= row.with_cell(text: t('.claim_cost_table.vat_allowed')) %>
+                  <%= row.with_cell(text: t('.claim_cost_table.total_allowed')) %>
+                <% end %>
+              <% end %>
+              <%= table.with_body do |body| %>
+                <%= body.with_row do |row| %>
+                  <%= row.with_cell(text: NumberTo.pounds(item.provider_requested_total_cost), html_attributes: { id: 'disbursement-provider-requested-amount' }) %>
+                  <%= row.with_cell(text: NumberTo.pounds(item.total_cost_without_vat), html_attributes: { id: 'disbursement-caseworker-allowed-amount' }) %>
+                  <%= row.with_cell(text: form.apply_vat? ? form.vat_rate_text : "0%", html_attributes: { id: 'disbursement-allowed-vat-rate' }) %>
+                  <%= row.with_cell(text: NumberTo.pounds(item.caseworker_total_cost), html_attributes: { id: 'disbursement-total-allowed' }) %>
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
+
+          <%= f.govuk_text_area :explanation, label: { text: t('.explain'), size: 's' }, hint: { text: t('.explain_hint')}, rows: 5 %>
+
           <%= f.govuk_submit t('shared.save_changes') do %>
             <%= govuk_link_to(t('shared.cancel'), nsm_claim_adjustments_path(claim, anchor: 'disbursements-tab'), data: { turbo: 'false' }) %>
           <% end %>

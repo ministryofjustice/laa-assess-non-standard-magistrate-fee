@@ -5,7 +5,7 @@ module Nsm
 
       attribute :disbursement_type, :translated
       attribute :other_type, :translated
-      attribute :miles, :decimal, precision: 10, scale: 3
+      adjustable_attribute :miles, :decimal, precision: 10, scale: 3
       attribute :pricing, :decimal, precision: 10, scale: 2
       adjustable_attribute :total_cost_without_vat, :decimal, precision: 10, scale: 2
       attribute :vat_rate, :decimal, precision: 3, scale: 2
@@ -13,7 +13,7 @@ module Nsm
       attribute :id, :string
       attribute :details, :string
       attribute :prior_authority, :string
-      attribute :apply_vat, :string
+      adjustable_attribute :apply_vat, :string
       adjustable_attribute :vat_amount, :decimal, precision: 10, scale: 2
 
       class << self
@@ -46,13 +46,11 @@ module Nsm
       end
 
       def caseworker_total_cost
-        return 0 if total_cost_without_vat.to_i.zero?
-
-        provider_requested_total_cost
+        total_cost_without_vat + vat_amount
       end
 
       def form_attributes
-        attributes.slice('total_cost_without_vat').merge(
+        attributes.slice('total_cost_without_vat', 'miles', 'apply_vat', 'vat_rate').merge(
           'explanation' => adjustment_comment
         )
       end
@@ -65,7 +63,7 @@ module Nsm
         table_fields[:miles] = miles.to_s if miles.present?
         table_fields[:details] = details.capitalize
         table_fields[:prior_authority] = prior_authority.capitalize
-        table_fields[:vat] = format_vat_rate(vat_rate) if apply_vat == 'true'
+        table_fields[:vat] = format_vat_rate(vat_rate)
         table_fields[:total] = NumberTo.pounds(provider_requested_total_cost)
 
         table_fields
@@ -86,9 +84,9 @@ module Nsm
           format(original_total_cost_without_vat),
           format(original_vat_amount),
           format(provider_requested_total_cost),
-          format(any_adjustments? && 0),
-          format(any_adjustments? && 0),
-          format(any_adjustments? && 0)
+          format(any_adjustments? && total_cost_without_vat),
+          format(any_adjustments? && vat_amount),
+          format(any_adjustments? && caseworker_total_cost)
         ]
       end
 

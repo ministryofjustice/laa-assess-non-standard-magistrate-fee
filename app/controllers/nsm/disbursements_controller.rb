@@ -47,6 +47,8 @@ module Nsm
       params.require(:nsm_disbursements_form).permit(
         :total_cost_without_vat,
         :explanation,
+        :miles,
+        :apply_vat,
       ).merge(
         current_user:
       )

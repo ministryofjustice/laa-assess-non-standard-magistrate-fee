@@ -9,7 +9,7 @@ RSpec.describe 'Disbursements' do
 
   before { sign_in user }
 
-  it 'can refuse disbursement item' do
+  it 'refuse disbursement item' do
     visit nsm_claim_disbursements_path(claim)
     within('.govuk-table__row', text: 'Apples') do
       expect(page).to have_content(
@@ -21,7 +21,7 @@ RSpec.describe 'Disbursements' do
       )
     end
     click_on 'Change'
-    choose 'Yes'
+    fill_in 'Change disbursement cost', with: '0'
     fill_in 'Explain your decision', with: 'Testing'
     click_on 'Save changes'
 
@@ -53,10 +53,10 @@ RSpec.describe 'Disbursements' do
       )
     end
     click_on 'Change'
-    choose 'No'
+    fill_in 'Change disbursement cost', with: '100'
     click_on 'Save changes'
     expect(page).to have_css('.govuk-error-summary__body',
-                             text: I18n.t("#{disbursement_form_error_message}.total_cost_without_vat.no_change"))
+                             text: I18n.t("#{disbursement_form_error_message}.base.no_change"))
   end
 
   context 'when claim has been assessed' do
@@ -71,6 +71,7 @@ RSpec.describe 'Disbursements' do
         'Disbursement typeApples' \
         'Details of disbursementDetails' \
         'Prior authority grantedYes' \
+        'VAT20%' \
         'Total£100.00'
       )
     end
