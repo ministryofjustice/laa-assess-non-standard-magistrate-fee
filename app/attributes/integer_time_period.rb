@@ -19,6 +19,6 @@ class IntegerTimePeriod < SimpleDelegator
   def coerce(arg)
     return [arg, to_d] if arg.is_a?(BigDecimal)
 
-    super(arg)
+    super
   end
 end
