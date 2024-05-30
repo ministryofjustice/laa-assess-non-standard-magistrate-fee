@@ -82,7 +82,7 @@ Rails.application.routes.draw do
     resources :cookies, only: [:index, :create]
     get :update_cookies, to: 'cookies#update_cookies'
     resources :privacy, only: [:index]
-    get :accessibility
+    resources :accessibility, only: [:index]
   end
 
   namespace :prior_authority do
