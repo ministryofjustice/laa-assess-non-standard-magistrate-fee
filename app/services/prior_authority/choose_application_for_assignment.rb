@@ -7,10 +7,16 @@ module PriorAuthority
           CASE WHEN data->>'service_type' = 'pathologist_report' THEN 0 ELSE 1 END as pathologist_report
         SQL
 
+        date_order_clause = Arel.sql("DATE_TRUNC('day', app_store_updated_at) ASC")
+
         PriorAuthorityApplication.assignable(user)
                                  .select('submissions.*', criminal_court, pathologist_report)
-                                 .order(criminal_court: :asc, pathologist_report: :asc, app_store_updated_at: :asc)
-                                 .first
+                                 .order(
+                                   date_order_clause,
+                                   criminal_court: :asc,
+                                   pathologist_report: :asc,
+                                   app_store_updated_at: :asc
+                                 ).first
       end
     end
   end
