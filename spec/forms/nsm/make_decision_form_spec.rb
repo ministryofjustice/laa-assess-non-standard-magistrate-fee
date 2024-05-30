@@ -34,10 +34,7 @@ RSpec.describe Nsm::MakeDecisionForm do
       context 'when partial_comment is blank' do
         let(:params) { { claim: claim, state: 'part_grant', partial_comment: nil } }
 
-        it 'is invalid' do
-          expect(subject).not_to be_valid
-          expect(subject.errors.of_kind?(:partial_comment, :blank)).to be(true)
-        end
+        it { expect(subject).to be_valid }
       end
 
       context 'when partial_comment is set' do

@@ -18,7 +18,6 @@ module Nsm
 
     validates :claim, presence: true
     validates :state, inclusion: { in: STATES }
-    validates :partial_comment, presence: true, if: -> { state == PART_GRANT }
     validates :reject_comment, presence: true, if: -> { state == REJECTED }
 
     def save

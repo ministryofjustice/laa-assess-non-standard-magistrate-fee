@@ -12,10 +12,10 @@
       <%= f.govuk_radio_buttons_fieldset :state, legend: { size: 's' } do %>
         <%= f.govuk_radio_button :state, Nsm::MakeDecisionForm::GRANTED %>
         <%= f.govuk_radio_button :state, Nsm::MakeDecisionForm::PART_GRANT do %>
-          <%= f.govuk_text_area :partial_comment, width: 'one-third', autocomplete: 'off', label: { size: 'm' } %>
+          <%= f.govuk_text_area :partial_comment, width: 'one-third', autocomplete: 'off' %>
         <% end %>
         <%= f.govuk_radio_button :state, Nsm::MakeDecisionForm::REJECTED do %>
-          <%= f.govuk_text_area :reject_comment, width: 'one-third', autocomplete: 'off', label: { size: 'm' } %>
+          <%= f.govuk_text_area :reject_comment, width: 'one-third', autocomplete: 'off' %>
         <% end %>
       <% end %>
 

@@ -21,12 +21,8 @@ en:
           granted: Grant it
           part_grant: Part grant it
           rejected: Reject it
-        partial_comment: Explain your decision
-        reject_comment: Explain your decision
-    hint:
-      nsm_make_decision_form:
-        partial_comment: We’ll share this information with the provider
-        reject_comment: We’ll share this information with the provider
+        partial_comment: Additional comments for the provider (optional)
+        reject_comment: Provide detailed reasons for rejecting this application
 
   activemodel:
     errors:
