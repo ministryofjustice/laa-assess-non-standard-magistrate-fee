@@ -38,6 +38,7 @@ gem 'pagy'
 gem 'sentry-rails', '>= 5.17.3'
 gem 'sentry-ruby'
 gem 'with_advisory_lock'
+gem 'meta_request'
 
 group :development, :test do
   gem 'debug', platforms: %i[mri windows]
