@@ -6,7 +6,8 @@ en:
         which_updates: What updates to the application are needed?
         which_updates_hint: Select all options that are relevant to you.
         further_information: Further information
-        further_information_explanation: Describe what further information you require
+        further_information_hint: For example, if further clarification is needed
+        further_information_explanation: Tell the provider what information they need to add
         incorrect_information: Incorrect information
         incorrect_information_explanation: Describe what information is incorrect and needs amending
         submit: Submit
