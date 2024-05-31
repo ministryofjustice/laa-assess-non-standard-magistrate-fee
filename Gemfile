@@ -38,9 +38,9 @@ gem 'pagy'
 gem 'sentry-rails', '>= 5.17.3'
 gem 'sentry-ruby'
 gem 'with_advisory_lock'
-gem 'meta_request'
 
 group :development, :test do
+  gem 'meta_request'
   gem 'debug', platforms: %i[mri windows]
   gem 'dotenv-rails'
   gem 'erb_lint', require: false
