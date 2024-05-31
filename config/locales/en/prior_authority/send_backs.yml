@@ -9,7 +9,8 @@ en:
         further_information_hint: For example, if further clarification is needed
         further_information_explanation: Tell the provider what information they need to add
         incorrect_information: Incorrect information
-        incorrect_information_explanation: Describe what information is incorrect and needs amending
+        incorrect_information_hint: For example, if the UFN, client name or representation order date need amending
+        incorrect_information_explanation: Tell the provider what information they need to amend
         submit: Submit
         save_and_exit: Save and come back later
       show:

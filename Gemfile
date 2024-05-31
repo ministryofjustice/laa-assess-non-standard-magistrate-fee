@@ -43,7 +43,6 @@ group :development, :test do
   gem 'debug', platforms: %i[mri windows]
   gem 'dotenv-rails'
   gem 'erb_lint', require: false
-  gem 'meta_request'
   gem 'overcommit'
   gem 'pry'
   gem 'rspec-expectations'
