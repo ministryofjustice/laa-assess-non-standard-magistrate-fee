@@ -30,7 +30,7 @@ RSpec.describe 'Send an application back', :stub_oauth_token do
 
       it 'shows my application' do
         expect(page).to have_content 'Application sent'
-        expect(page).to have_content "Further information\nYou forgot to say please"
+        expect(page).to have_content "Further information request\nYou forgot to say please"
       end
 
       it 'shows the decision in the history' do
