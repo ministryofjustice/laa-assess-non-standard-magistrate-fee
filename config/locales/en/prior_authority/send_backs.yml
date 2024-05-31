@@ -8,7 +8,7 @@ en:
         further_information: Further information
         further_information_hint: For example, if further clarification is needed
         further_information_explanation: Tell the provider what information they need to add
-        incorrect_information: Incorrect information
+        incorrect_information: Amendment
         incorrect_information_hint: For example, if the UFN, client name or representation order date need amending
         incorrect_information_explanation: Tell the provider what information they need to amend
         submit: Submit
@@ -17,8 +17,8 @@ en:
         page_title: Application sent
         sent_to_provider: Your request has been sent to the provider.
         laa_reference: Application reference
-        further_information: Further information
-        incorrect_information: Incorrect information
+        further_information: Further information request
+        incorrect_information: Amendment request
         next_application: Assess next application
         return: Return to this application
 

@@ -62,8 +62,8 @@ RSpec.describe 'Send an application back', :stub_oauth_token do
     expect(page).to have_content 'Enter a description of what further information your require'
   end
 
-  it 'requires an explanation for incorrect information requests' do
-    check 'Incorrect information'
+  it 'requires an explanation for amendment requests' do
+    check 'Amendment'
     click_on 'Submit'
     expect(page).to have_content 'Enter a description of what information is incorrect and needs amending'
   end
