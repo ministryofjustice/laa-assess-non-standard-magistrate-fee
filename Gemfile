@@ -40,10 +40,10 @@ gem 'sentry-ruby'
 gem 'with_advisory_lock'
 
 group :development, :test do
-  gem 'meta_request'
   gem 'debug', platforms: %i[mri windows]
   gem 'dotenv-rails'
   gem 'erb_lint', require: false
+  gem 'meta_request'
   gem 'overcommit'
   gem 'pry'
   gem 'rspec-expectations'
