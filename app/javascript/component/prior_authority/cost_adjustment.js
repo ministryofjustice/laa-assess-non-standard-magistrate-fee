@@ -56,8 +56,8 @@ export default class CostAdjustment {
   }
 
   calculateItemCost() {
-    var itemsFieldNum = convertCurrencyToNumber(this.itemsField?.value)
-    var costPerItemNum = convertCurrencyToNumber(this.costPerItemField?.value)
+    var itemsFieldNum = this.convertCurrencyToNumber(this.itemsField?.value)
+    var costPerItemNum = this.convertCurrencyToNumber(this.costPerItemField?.value)
     if(isNaN(itemsFieldNum) || isNaN(costPerItemNum)){
       return '--';
     }
