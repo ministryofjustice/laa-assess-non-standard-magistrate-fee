@@ -16,4 +16,4 @@ function checkCurrencyString(string){
   }
 }
 
-export {checkCurrencyString}
+export {checkCurrencyString, convertCurrencyToNumber}
