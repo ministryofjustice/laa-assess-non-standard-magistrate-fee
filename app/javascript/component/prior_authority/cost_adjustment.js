@@ -1,4 +1,5 @@
 import Decimal from 'decimal.js';
+import {checkCurrencyString} from '../../lib/currencyChecker.js';
 
 export default class CostAdjustment {
   constructor(hoursField, minutesField, costPerHourField, itemsField, costPerItemField, calculateChangeButton, adjustedCost) {
@@ -38,8 +39,7 @@ export default class CostAdjustment {
   }
 
   calculateTimeCost() {
-    var costPerHourNum = this.convertCurrencyToNumber(this.costPerHourField?.value)
-    if(isNaN(this.hoursField?.value) || isNaN(this.minutesField?.value) || isNaN(costPerHourNum)) {
+    if(isNaN(this.hoursField?.value) || isNaN(this.minutesField?.value) || checkCurrencyString(this.costPerHourField?.value)) {
       return '--';
     }
 
@@ -57,12 +57,11 @@ export default class CostAdjustment {
   }
 
   calculateItemCost() {
-    var costPerItemNum = this.convertCurrencyToNumber(this.costPerItemField?.value)
-    if(isNaN(this.itemsField?.value) || isNaN(costPerItemNum)){
+    if(isNaN(this.itemsField?.value) || checkCurrencyString(this.costPerItemField?.value)){
       return '--';
     }
 
-    const items = parseInt(this.itemsField?.value)
+    const items = parseInt(itemsFieldNum)
     const unitPrice = new Decimal(costPerItemNum)
 
     const unrounded = unitPrice.times(items);
@@ -75,9 +74,5 @@ export default class CostAdjustment {
         this.minutesField.value = 59;
       }
     }
-  }
-
-  convertCurrencyToNumber(string){
-    return string.replace(/[^0-9.-]+/g,"")
   }
 }

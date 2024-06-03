@@ -1,4 +1,5 @@
 import Decimal from 'decimal.js';
+import {checkCurrencyString} from '../../lib/currencyChecker.js';
 
 function init() {
   const hoursField = document.getElementById('prior_authority_travel_cost_form_travel_time_1');
@@ -22,8 +23,7 @@ function init() {
   }
 
   function calculateAdjustedCost() {
-    var costPerHourNum = convertCurrencyToNumber(costPerHourField?.value)
-    if(isNaN(hoursField?.value) || isNaN(minutesField?.value) || isNaN(costPerHourNum)) {
+    if(isNaN(hoursField?.value) || isNaN(minutesField?.value) || checkCurrencyString(costPerHourField?.value)) {
       return '--';
     }
 
@@ -47,10 +47,6 @@ function init() {
         minutesField.value = 59;
       }
     }
-  }
-
-  function convertCurrencyToNumber(string){
-    return string.replace(/[^0-9.-]+/g,"")
   }
 }
 
