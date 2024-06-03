@@ -12,6 +12,8 @@ function init() {
   ]
 
   const costAdjustment = new CostAdjustment(...fields)
+  console.log(fields)
+  console.log(costAdjustment.calculationType())
 
   if (costAdjustment.calculationType() != 'unknown_type') {
     costAdjustment.calculateChangeButton.addEventListener('click', handleTestButtonClick);
