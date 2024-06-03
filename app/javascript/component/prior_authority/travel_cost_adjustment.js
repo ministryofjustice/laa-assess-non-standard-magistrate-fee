@@ -22,7 +22,7 @@ function init() {
   }
 
   function calculateAdjustedCost() {
-    var costPerHourNum = this.convertCurrencyToNumber(costPerHourField?.value)
+    var costPerHourNum = convertCurrencyToNumber(costPerHourField?.value)
     if(isNaN(hoursField?.value) || isNaN(minutesField?.value) || isNaN(costPerHourNum)) {
       return '--';
     }
