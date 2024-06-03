@@ -16,7 +16,7 @@ RSpec.describe 'Send an application back', :stub_oauth_token do
   context 'when I send the application back' do
     before do
       check 'Further information'
-      fill_in 'Describe what further information you require', with: 'You forgot to say please'
+      fill_in 'Tell the provider what information they need to add', with: 'You forgot to say please'
     end
 
     it 'triggers an app store stync' do
@@ -30,7 +30,7 @@ RSpec.describe 'Send an application back', :stub_oauth_token do
 
       it 'shows my application' do
         expect(page).to have_content 'Application sent'
-        expect(page).to have_content "Further information\nYou forgot to say please"
+        expect(page).to have_content "Further information request\nYou forgot to say please"
       end
 
       it 'shows the decision in the history' do
@@ -62,19 +62,19 @@ RSpec.describe 'Send an application back', :stub_oauth_token do
     expect(page).to have_content 'Enter a description of what further information your require'
   end
 
-  it 'requires an explanation for incorrect information requests' do
-    check 'Incorrect information'
+  it 'requires an explanation for amendment requests' do
+    check 'Amendment'
     click_on 'Submit'
     expect(page).to have_content 'Enter a description of what information is incorrect and needs amending'
   end
 
   it 'lets me save my answers and return later' do
     check 'Further information'
-    fill_in 'Describe what further information you require', with: 'You forgot to say please'
+    fill_in 'Tell the provider what information they need to add', with: 'You forgot to say please'
     click_on 'Save and come back later'
     visit new_prior_authority_application_send_back_path(application)
     expect(page).to have_checked_field('Further information')
-    expect(page).to have_field('Describe what further information you require',
+    expect(page).to have_field('Tell the provider what information they need to add',
                                with: 'You forgot to say please')
   end
 end

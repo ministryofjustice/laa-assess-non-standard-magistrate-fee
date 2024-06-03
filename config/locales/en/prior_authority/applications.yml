@@ -31,9 +31,9 @@ en:
           granted: Granted
         sent_back: Sent back to provider %{date}
         provider_updated: Provider updated %{date}
-        further_information: 'Further information:'
-        incorrect_information: 'Incorrect information:'
-        further_information_provided: 'Further information'
+        further_information: 'Further information request:'
+        incorrect_information: 'Amendment request:'
+        further_information_provided: 'Further information requested'
         updated_field: '%{field} - updated'
         updated_fields:
           ufn: Application details

@@ -1,7 +1,7 @@
 # Assess non standard magistrates fee
 
 * Ruby version
-ruby 3.3.0
+ruby 3.3.2
 
 * Rails version
 rails 7.0.42.0
