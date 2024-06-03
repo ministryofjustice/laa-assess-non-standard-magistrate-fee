@@ -62,7 +62,7 @@ export default class CostAdjustment {
       return '--';
     }else{
       let costPerItemNum = convertCurrencyToNumber(this.costPerItemField?.value)
-      let items = parseInt(itemsFieldNum)
+      let items = parseInt(this.itemsField?.value)
       let unitPrice = new Decimal(costPerItemNum)
 
       let unrounded = unitPrice.times(items);
