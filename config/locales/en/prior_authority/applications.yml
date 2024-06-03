@@ -33,7 +33,8 @@ en:
         provider_updated: Provider updated %{date}
         further_information: 'Further information:'
         incorrect_information: 'Incorrect information:'
-        further_information_provided: 'Further information'
+        further_information_provided: 'Further information request'
+        amendment_request: Amendment request
         updated_field: '%{field} - updated'
         updated_fields:
           ufn: Application details
