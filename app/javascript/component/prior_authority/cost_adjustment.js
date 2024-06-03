@@ -57,13 +57,12 @@ export default class CostAdjustment {
   }
 
   calculateItemCost() {
-    var itemsFieldNum = this.convertCurrencyToNumber(this.itemsField?.value)
     var costPerItemNum = this.convertCurrencyToNumber(this.costPerItemField?.value)
-    if(isNaN(itemsFieldNum) || isNaN(costPerItemNum)){
+    if(isNaN(this.itemsField?.value) || isNaN(costPerItemNum)){
       return '--';
     }
 
-    const items = parseInt(itemsFieldNum)
+    const items = parseInt(this.itemsField?.value)
     const unitPrice = new Decimal(costPerItemNum)
 
     const unrounded = unitPrice.times(items);
