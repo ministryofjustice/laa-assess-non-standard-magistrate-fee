@@ -55,6 +55,8 @@ module PriorAuthority
     def update_local_records
       submission.data['resubmission_deadline'] = resubmission_deadline
 
+      # ordering is important here so we can order by date later and have Further info first
+      append_incorrect_information_object if updates_needed.include?(INCORRECT_INFORMATION)
       append_further_information_object if updates_needed.include?(FURTHER_INFORMATION)
 
       submission.update!(state: PriorAuthorityApplication::SENT_BACK)
@@ -76,6 +78,16 @@ module PriorAuthority
       }
     end
 
+    def append_incorrect_information_object
+      submission.data['incorrect_information'] ||= []
+
+      submission.data['incorrect_information'] << {
+        caseworker_id: current_user.id,
+        information_requested: incorrect_information_explanation,
+        requested_at: DateTime.current
+      }
+    end
+
     def save_event
       PriorAuthority::Event::SendBack.build(submission:,
                                             updates_needed:,
@@ -86,7 +98,6 @@ module PriorAuthority
     def comments
       ret = {}
       ret[:further_information] = further_information_explanation if updates_needed.include?(FURTHER_INFORMATION)
-
       ret[:incorrect_information] = incorrect_information_explanation if updates_needed.include?(INCORRECT_INFORMATION)
 
       ret

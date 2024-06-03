@@ -38,6 +38,7 @@
               <%= link_to t('.further_information_provided'), '#further-information-1', class: "govuk-link--no-visited-state" %>
             </li>
           <% end %>
+
           <% @details.updated_fields.each do |field| %>
             <li>
               <%= link_to t(".updated_field", field: t(".updated_fields.#{field[:label]}", n: field[:n])), field[:anchor], class: "govuk-link--no-visited-state" %>
