@@ -20,11 +20,13 @@
                                       hint: { text: t('.which_updates_hint') } do %>
         <%= f.govuk_check_box :updates_needed, "further_information",
                               link_errors: true,
+                              hint: { text: t('.further_information_hint') },
                               label: { size: nil, text: t('.further_information') } do %>
           <%= f.govuk_text_area :further_information_explanation,
                                 label: { size: nil, text: t('.further_information_explanation') } %>
         <% end %>
         <%= f.govuk_check_box :updates_needed, "incorrect_information",
+                              hint: { text: t('.incorrect_information_hint') },
                               label: { size: nil, text: t('.incorrect_information') } do %>
           <%= f.govuk_text_area :incorrect_information_explanation,
                                 label: { size: nil, text: t('.incorrect_information_explanation') } %>
