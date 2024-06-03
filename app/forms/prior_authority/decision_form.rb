@@ -19,7 +19,6 @@ module PriorAuthority
 
     validates :pending_decision, inclusion: { in: STATES }
     validates :pending_rejected_explanation, presence: true, if: -> { pending_decision == REJECTED }
-    validates :pending_part_grant_explanation, presence: true, if: -> { pending_decision == PART_GRANT }
     validate :check_adjustments_made
     validate :not_yet_assessed
 

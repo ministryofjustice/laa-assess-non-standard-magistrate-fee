@@ -11,7 +11,7 @@ en:
         part_grant: Part granted
         rejected: Rejected
         pending_granted_explanation: Additional comments for the provider (optional)
-        pending_part_grant_explanation: Provide detailed reasons for part granting this application
+        pending_part_grant_explanation: Additional comments for the provider (optional)
         pending_rejected_explanation: Provide detailed reasons for rejecting this application
       show:
         page_title: Decision sent
