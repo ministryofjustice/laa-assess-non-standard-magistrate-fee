@@ -56,12 +56,14 @@ export default class CostAdjustment {
   }
 
   calculateItemCost() {
-    if(isNaN(this.itemsField?.value) || isNaN(this.costPerItemField?.value)){
+    var itemsFieldNum = convertCurrencyToNumber(this.itemsField?.value)
+    var costPerItemNum = convertCurrencyToNumber(this.costPerItemField?.value)
+    if(isNaN(itemsFieldNum) || isNaN(costPerItemNum)){
       return '--';
     }
 
-    const items = parseInt(this.itemsField.value)
-    const unitPrice = new Decimal(this.costPerItemField.value)
+    const items = parseInt(itemsFieldNum)
+    const unitPrice = new Decimal(costPerItemNum)
 
     const unrounded = unitPrice.times(items);
     return unrounded.toFixed(2);
@@ -73,5 +75,9 @@ export default class CostAdjustment {
         this.minutesField.value = 59;
       }
     }
+  }
+
+  convertCurrencyToNumber(string){
+    return string.replace(/[^0-9.-]+/g,"")
   }
 }
