@@ -22,11 +22,12 @@ function init() {
   }
 
   function calculateAdjustedCost() {
-    if(isNaN(hoursField?.value) || isNaN(minutesField?.value) || isNaN(costPerHourField?.value)) {
+    var costPerHourNum = this.convertCurrencyToNumber(costPerHourField?.value)
+    if(isNaN(hoursField?.value) || isNaN(minutesField?.value) || isNaN(costPerHourNum)) {
       return '--';
     }
 
-    const unitPrice = new Decimal(costPerHourField.value)
+    const unitPrice = new Decimal(costPerHourNum)
 
     checkMinutesThreshold();
 
@@ -46,6 +47,10 @@ function init() {
         minutesField.value = 59;
       }
     }
+  }
+
+  function convertCurrencyToNumber(string){
+    return string.replace(/[^0-9.-]+/g,"")
   }
 }
 

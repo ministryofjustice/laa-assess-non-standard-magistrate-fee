@@ -38,11 +38,12 @@ export default class CostAdjustment {
   }
 
   calculateTimeCost() {
-    if(isNaN(this.hoursField?.value) || isNaN(this.minutesField?.value) || isNaN(this.costPerHourField?.value)) {
+    var costPerHourNum = this.convertCurrencyToNumber(this.costPerHourField?.value)
+    if(isNaN(this.hoursField?.value) || isNaN(this.minutesField?.value) || isNaN(costPerHourNum)) {
       return '--';
     }
 
-    const unitPrice = new Decimal(this.costPerHourField.value)
+    const unitPrice = new Decimal(costPerHourNum)
     let minutes
 
     this.checkMinutesThreshold();
