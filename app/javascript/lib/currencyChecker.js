@@ -8,10 +8,16 @@ function checkLetters(string){
 
 function checkCurrencyString(string){
   var currencyString = convertCurrencyToNumber(string)
+  console.log(string)
+  console.log(currencyString)
+  console.log(isNan(currencyString))
+  console.log(checkLetters(string))
   if(isNaN(currencyString) || checkLetters(string)){
+    console.log('returning true')
     return true
   }
   else{
+    console.log('returning false')
     return false
   }
 }
