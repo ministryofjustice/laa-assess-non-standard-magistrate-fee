@@ -10,7 +10,7 @@ function checkCurrencyString(string){
   var currencyString = convertCurrencyToNumber(string)
   console.log(string)
   console.log(currencyString)
-  console.log(isNan(currencyString))
+  console.log(isNaN(currencyString))
   console.log(checkLetters(string))
   if(isNaN(currencyString) || checkLetters(string)){
     console.log('returning true')
