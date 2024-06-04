@@ -3,7 +3,7 @@ function convertCurrencyToNumber(string){
 }
 
 function checkLetters(string){
-  /[a-zA-Z]/.test(string)
+  /[a-zA-Z]/g.test(string)
 }
 
 function checkCurrencyString(string){
