@@ -80,18 +80,16 @@ module PriorAuthority
         latest_provider_update_event.details['comment'].present?
       end
 
-      def updated_fields
-        (latest_provider_update_event.details['corrected_info'] || []).map do |section_name|
-          {
-            label: section_name.starts_with?('alternative_quote_') ? 'alternative_quote' : section_name,
-            n: section_name.gsub('alternative_quote_', ''),
-            anchor: "##{section_name == 'ufn' ? 'overview' : section_name.tr('_', '-')}"
-          }
-        end
+      def provider_corrected_information?
+        latest_provider_update_event.details['corrected_info'].any?
       end
 
       def section_amended?(provider_section_name)
         latest_provider_update_event&.details&.dig('corrected_info')&.include?(provider_section_name)
+      end
+
+      def information_cards
+        @information_cards ||= (further_information_cards + incorrect_information_cards).sort_by(&:requested_at).reverse
       end
 
       def further_information_cards
@@ -99,10 +97,18 @@ module PriorAuthority
 
         submission.data['further_information']
                   .select { _1['information_supplied'].present? }
-                  .sort_by { _1['requested_at'] }
-                  .reverse
                   .map do |further_information|
           FurtherInformationCard.new(self, further_information)
+        end
+      end
+
+      def incorrect_information_cards
+        return [] unless submission.data['incorrect_information']
+
+        submission.data['incorrect_information']
+                  .select { _1['sections_changed'].present? }
+                  .map do |incorrect_information|
+          IncorrectInformationCard.new(self, incorrect_information)
         end
       end
     end
