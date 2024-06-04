@@ -1,5 +1,5 @@
 import Decimal from 'decimal.js';
-import {checkCurrencyString, convertCurrencyToNumber} from '../../lib/currencyChecker.js';
+import {invalidCurrencyString, convertCurrencyToNumber} from '../../lib/currencyChecker.js';
 
 export default class CostAdjustment {
   constructor(hoursField, minutesField, costPerHourField, itemsField, costPerItemField, calculateChangeButton, adjustedCost) {
@@ -39,7 +39,7 @@ export default class CostAdjustment {
   }
 
   calculateTimeCost() {
-    if(isNaN(this.hoursField?.value) || isNaN(this.minutesField?.value) || checkCurrencyString(this.costPerHourField?.value)) {
+    if(isNaN(this.hoursField?.value) || isNaN(this.minutesField?.value) || invalidCurrencyString(this.costPerHourField?.value)) {
       return '--';
     }else{
       let costPerHourNum = convertCurrencyToNumber(this.costPerHourField?.value)
@@ -58,7 +58,7 @@ export default class CostAdjustment {
   }
 
   calculateItemCost() {
-    if(isNaN(this.itemsField?.value) || checkCurrencyString(this.costPerItemField?.value)){
+    if(isNaN(this.itemsField?.value) || invalidCurrencyString(this.costPerItemField?.value)){
       return '--';
     }else{
       let costPerItemNum = convertCurrencyToNumber(this.costPerItemField?.value)

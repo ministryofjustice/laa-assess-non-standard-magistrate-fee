@@ -3,10 +3,10 @@ function convertCurrencyToNumber(string){
 }
 
 function checkLetters(string){
-  /[a-zA-Z]/g.test(string)
+  return /[a-zA-Z]/g.test(string)
 }
 
-function checkCurrencyString(string){
+function invalidCurrencyString(string){
   var currencyString = convertCurrencyToNumber(string)
   console.log(string)
   console.log(currencyString)
@@ -22,4 +22,4 @@ function checkCurrencyString(string){
   }
 }
 
-export {checkCurrencyString, convertCurrencyToNumber}
+export {invalidCurrencyString, convertCurrencyToNumber}
