@@ -298,10 +298,9 @@ RSpec.describe 'View applications' do
       ]
       application.data['incorrect_information'] = [
         { caseworker_id: caseworker.id,
-          information_requested: "Correct it now",
+          information_requested: 'Correct it now',
           sections_changed: %w[ufn alternative_quote_1],
-          requested_at: DateTime.new(2023, 5, 2, 4, 3, 2),
-        },
+          requested_at: DateTime.new(2023, 5, 2, 4, 3, 2), },
       ]
       application.update!(state: 'provider_updated', updated_at: DateTime.new(2023, 6, 5, 4, 3, 2))
       create(:event, :provider_updated,

@@ -25,12 +25,13 @@ module PriorAuthority
           links = @incorrect_information['sections_changed'].map do |section_name|
             label = section_name.starts_with?('alternative_quote_') ? 'alternative_quote' : section_name
             n = section_name.gsub('alternative_quote_', '')
-            anchor = "##{section_name == 'ufn' ? 'overview' : section_name.tr('_', '-')}"
+            anchor_link = "##{section_name == 'ufn' ? 'overview' : section_name.tr('_', '-')}"
+            text = I18n.t(
+              'prior_authority.applications.show.updated_field',
+              field: I18n.t("prior_authority.applications.show.updated_fields.#{label}", n:)
+            )
 
-            tag.li do
-              link_to I18n.t("prior_authority.applications.show.updated_field", field: I18n.t("prior_authority.applications.show.updated_fields.#{label}", n: n)),
-              anchor, class: "govuk-link--no-visited-state"
-            end
+            tag.li { link_to(text, anchor_link, class: 'govuk-link--no-visited-state') }
           end
 
           tag.ul class: 'govuk-list' do
