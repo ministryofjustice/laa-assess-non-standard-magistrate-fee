@@ -19,6 +19,14 @@ RSpec.describe PriorAuthority::V1::Quote do
         expect(subject).to eq 50.25
       end
     end
+
+    context 'when cost type not recognised' do
+      let(:attributes) { { cost_type: 'random', period: 90, cost_per_hour: '33.5' } }
+
+      it 'returns nil' do
+        expect(subject).to eq nil
+      end
+    end
   end
 
   describe '#base_units' do
