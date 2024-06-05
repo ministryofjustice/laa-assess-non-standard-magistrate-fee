@@ -4,7 +4,7 @@ en:
       new:
         page_title: Send back to provider
         which_updates: What updates to the application are needed?
-        which_updates_hint: Select all options that are relevant to you.
+        which_updates_hint: This information will be shown to the provider. Select all options that are relevant to the application.
         further_information: Further information
         further_information_hint: For example, if further clarification is needed
         further_information_explanation: Tell the provider what information they need to add
