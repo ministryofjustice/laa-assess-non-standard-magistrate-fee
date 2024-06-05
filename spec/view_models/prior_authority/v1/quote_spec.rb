@@ -24,7 +24,7 @@ RSpec.describe PriorAuthority::V1::Quote do
       let(:attributes) { { cost_type: 'random', period: 90, cost_per_hour: '33.5' } }
 
       it 'returns nil' do
-        expect(subject).to eq nil
+        expect(subject).to be_nil
       end
     end
   end
