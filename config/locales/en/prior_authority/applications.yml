@@ -33,7 +33,7 @@ en:
         provider_updated: Provider updated %{date}
         further_information: 'Further information request:'
         incorrect_information: 'Amendment request:'
-        further_information_provided: 'Further information requested'
+        further_information_provided: 'Further information request'
         corrected_information_provided: Amendment request
         updated_field: '%{field} amended'
         updated_fields:
