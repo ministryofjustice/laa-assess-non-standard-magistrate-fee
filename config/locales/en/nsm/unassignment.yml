@@ -11,10 +11,6 @@ en:
           other: Are you sure you want to remove this claim from %{caseworker}'s list?
         hint: The claim will go into the list of unallocated claims.
         submit: Yes, remove from list
-      update:
-        unassignment:
-          assigned: <a class="govuk-link" href="%{url}">%{ref}</a> has been removed from your list
-          other: Claim <a class="govuk-link" href="%{url}">%{ref}</a> has been removed from %{caseworker}'s list
 
   helpers:
     label:
