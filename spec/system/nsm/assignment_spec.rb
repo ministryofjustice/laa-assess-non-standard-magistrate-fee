@@ -30,7 +30,7 @@ RSpec.describe 'Assign claims' do
         end
 
         context 'when I try to unassign the claim' do
-          before { click_on 'Remove from your list' }
+          before { click_on 'Remove from list' }
 
           it 'lets me unassign the claim' do
             fill_in 'Explain your decision', with: 'Too busy'
@@ -91,13 +91,14 @@ RSpec.describe 'Assign claims' do
       expect(page).to have_content 'Enter an explanation'
     end
 
-    it 'checks that claim is not already assigned' do
+    it 'replaces existing assignments' do
+      old_assignment = create(:assignment, submission: claim)
       visit nsm_claim_claim_details_path(claim)
       click_on 'Add to my list'
-      create(:assignment, submission: claim)
       fill_in 'Explain your decision', with: 'because I want to'
       click_on 'Yes, add to my list'
-      expect(page).to have_content 'This application is already assigned to a caseworker'
+      expect(claim.assignments.count).to eq 1
+      expect(claim.assignments.first).not_to eq old_assignment
     end
   end
 end

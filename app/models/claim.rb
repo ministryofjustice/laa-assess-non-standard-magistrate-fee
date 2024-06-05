@@ -26,8 +26,16 @@ class Claim < Submission
     state == Nsm::MakeDecisionForm::PART_GRANT
   end
 
-  def editable?
-    Nsm::MakeDecisionForm::STATES.exclude?(state)
+  def editable_by?(user)
+    !assessed? && assigned_to?(user)
+  end
+
+  def assigned_to?(user)
+    assignments.find_by(user:)
+  end
+
+  def assessed?
+    Nsm::MakeDecisionForm::STATES.include?(state)
   end
 
   def sent_back?
@@ -35,7 +43,7 @@ class Claim < Submission
   end
 
   def display_state?
-    sent_back? || !editable?
+    sent_back? || assessed?
   end
 
   def formatted_claimed_total

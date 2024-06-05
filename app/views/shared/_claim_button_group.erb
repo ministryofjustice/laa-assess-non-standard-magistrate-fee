@@ -1,4 +1,4 @@
-<% if claim.editable? %>
+<% if claim.editable_by?(current_user) %>
   <div class="govuk-button-group">
     <%= govuk_button_link_to( t('.make_decision'), edit_nsm_claim_make_decision_path(claim), primary: true, data: { turbo: "false" }) %>
     <% unless claim.sent_back? %>

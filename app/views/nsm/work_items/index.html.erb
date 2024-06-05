@@ -15,7 +15,7 @@
     %>
   <% end %>
 
-  <% if claim.editable? && work_items.any? { |work_item| work_item.uplift&.positive? } %>
+  <% if claim.editable_by?(current_user) && work_items.any? { |work_item| work_item.uplift&.positive? } %>
     <%= govuk_button_link_to(t(".remove_uplift_all"), edit_nsm_claim_work_items_uplift_path(claim), secondary: true, data: { turbo: 'false' }) %>
   <% end %>
 
@@ -23,7 +23,7 @@
   <% work_items.group_by(&:completed_on).each do |completed_on, work_items_for_date| %>
     <%=
       rows = work_items_for_date.map do |work_item|
-        link = if claim.editable?
+        link = if claim.editable_by?(current_user)
                   link_to(t('.change'), edit_nsm_claim_work_item_path(claim_id: claim.id, id: work_item.id), data: { turbo: 'false' })
                 else
                   link_to(t('.view'), nsm_claim_work_item_path(claim_id: claim.id, id: work_item.id), data: { turbo: 'false' })

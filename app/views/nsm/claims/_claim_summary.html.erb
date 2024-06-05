@@ -27,7 +27,7 @@
 
       <p class="govuk-body-l">
         <%= t(".risk.#{claim.risk}") %>
-        <% if claim.editable? %>
+        <% if claim.editable_by?(current_user) %>
           <%= link_to t('.risk.change'), edit_nsm_claim_change_risk_path(claim), class: 'govuk-!-font-size-19 govuk-!-margin-left-2' %>
         <% end %>
       </p>
@@ -44,7 +44,7 @@
         <span class="govuk-!-font-weight-bold"><%= t(".date_received") %></span>
         <%= format_in_zone(claim.received_on, format:'%d %b %Y') %>
       </p>
-      <% unless claim.editable? %>
+      <% unless claim.editable_by?(current_user) %>
         <p class="govuk-body-m govuk-!-margin-bottom-2">
           <span class="govuk-!-font-weight-bold"><%= t(".date_assessed") %></span>
           <%= format_in_zone(claim_summary.assessed_on, format:'%d %b %Y') %>
@@ -54,16 +54,16 @@
   </div>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-third">
-      <% if claim.editable? && claim_summary.assigned_to %>
+      <% if claim.editable_by?(current_user) %>
         <%=
           govuk_link_to(
-            t(claim_summary.assigned_to.user == current_user ? ".remove_from_yourlist" : ".remove_from_list"),
+            t( ".remove_from_list"),
             nsm_claim_unassignment_path(claim),
             class: "govuk-button govuk-button--secondary",
             data_module: "govuk-button"
           )
         %>
-      <% elsif claim.editable? %>
+      <% elsif !claim.assessed? %>
         <%= govuk_button_link_to(
             t(".add_to_my_list"),
             new_nsm_claim_assignment_path(claim),

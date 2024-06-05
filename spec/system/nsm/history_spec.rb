@@ -56,17 +56,21 @@ RSpec.describe 'History events' do
     )
   end
 
-  it 'lets me add a note' do
-    travel_to fixed_arbitrary_date
-    visit nsm_claim_history_path(claim)
-    fill_in 'Add a note to the claim history (optional)', with: 'Here is a note'
-    click_on 'Add to claim history'
-    expect(page).to have_content "Wednesday01 Feb 202309:00amcase worker\nCaseworker note\nHere is a note"
-  end
+  context 'when I am assigned to the claim' do
+    before { create(:assignment, submission: claim, user: caseworker) }
 
-  it 'rejects blank content' do
-    visit nsm_claim_history_path(claim)
-    click_on 'Add to claim history'
-    expect(page).to have_content 'You cannot add an empty note to the claim history'
+    it 'lets me add a note' do
+      travel_to fixed_arbitrary_date
+      visit nsm_claim_history_path(claim)
+      fill_in 'Add a note to the claim history (optional)', with: 'Here is a note'
+      click_on 'Add to claim history'
+      expect(page).to have_content "Wednesday01 Feb 202309:00amcase worker\nCaseworker note\nHere is a note"
+    end
+
+    it 'rejects blank content' do
+      visit nsm_claim_history_path(claim)
+      click_on 'Add to claim history'
+      expect(page).to have_content 'You cannot add an empty note to the claim history'
+    end
   end
 end

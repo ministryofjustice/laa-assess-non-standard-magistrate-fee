@@ -6,6 +6,7 @@ RSpec.describe 'Overview', type: :system do
 
   before do
     sign_in user
+    create(:assignment, submission: claim, user: user)
     visit nsm_claim_claim_details_path(claim)
   end
 
