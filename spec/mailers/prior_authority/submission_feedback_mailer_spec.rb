@@ -133,8 +133,10 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
     let(:date_to_respond_by) { 14.days.from_now.to_fs(:stamp) }
 
     let(:caseworker_information_requested) do
-      "Please correct this information...\n\n" \
-        'Please provide this further info...'
+      "## Further information request\n\n" \
+        "Please provide this further info...\n\n" \
+        "## Amendment request\n\n" \
+        'Please correct this information...' \
     end
 
     let(:application) do
