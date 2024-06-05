@@ -1,4 +1,4 @@
-<%= govuk_summary_card(title: t('.hearing_details'), html_attributes: { id: 'hearing-details' }) do %>
+<%= govuk_summary_card(title: t('.hearing_details'), html_attributes: { id: 'hearing-detail' }) do %>
   <%= render 'amended' if @details.section_amended?('hearing_detail') %>
   <%= govuk_summary_list(rows: model.card_rows) %>
 <% end %>

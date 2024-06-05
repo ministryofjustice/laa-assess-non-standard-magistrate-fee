@@ -296,6 +296,12 @@ RSpec.describe 'View applications' do
           requested_at: DateTime.new(2023, 5, 3, 4, 3, 2),
           documents: [] }
       ]
+      application.data['incorrect_information'] = [
+        { caseworker_id: caseworker.id,
+          information_requested: 'Correct it now',
+          sections_changed: %w[ufn alternative_quote_1],
+          requested_at: DateTime.new(2023, 5, 2, 4, 3, 2), },
+      ]
       application.update!(state: 'provider_updated', updated_at: DateTime.new(2023, 6, 5, 4, 3, 2))
       create(:event, :provider_updated,
              submission: application,
@@ -305,15 +311,16 @@ RSpec.describe 'View applications' do
       click_on 'LAA-1234'
     end
 
-    it 'shows the relevant comments' do
+    it 'shows the relevant further information comments and file links' do
       expect(page).to have_content('Set the scene a little more')
         .and have_content('It was a dark and stormy night')
+        .and have_content('example.pdf')
     end
 
-    it 'shows the relevant links' do
-      expect(page).to have_content('Application details - updated')
-        .and have_content('Alternative quote 1 - updated')
-        .and have_content('example.pdf')
+    it 'shows the relevant Amendment comments and links' do
+      expect(page).to have_content('Correct it now')
+        .and have_content('Application details amended')
+        .and have_content('Alternative quote 1 amended')
     end
 
     it 'shows the updated date' do

@@ -23,6 +23,7 @@ module Nsm
 
       previous_state = claim.state
       Claim.transaction do
+        claim.data['status'] = state
         claim.update!(state:)
         Nsm::Event::SendBack.build(submission: claim, comment: comment, previous_state: previous_state,
                                    current_user: current_user)

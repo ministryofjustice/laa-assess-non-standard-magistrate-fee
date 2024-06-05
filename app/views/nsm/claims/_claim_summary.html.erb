@@ -34,24 +34,26 @@
     </div>
   </div>
 
-  <div class="govuk-grid-row govuk-!-margin-bottom-6">
+  <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <p class="govuk-body-l govuk-!-margin-bottom-2">
+      <p class="govuk-body-m govuk-!-margin-bottom-2">
         <span class="govuk-!-font-weight-bold"><%= t(".assigned_to") %></span>
-        <%= claim_summary.assigned_to&.display_name %>
+        <%= claim_summary.assigned_to&.display_name || t(".unassigned") %>
       </p>
-      <p class="govuk-body-l govuk-!-margin-bottom-2">
+      <p class="govuk-body-m govuk-!-margin-bottom-2">
         <span class="govuk-!-font-weight-bold"><%= t(".date_received") %></span>
         <%= format_in_zone(claim.received_on, format:'%d %b %Y') %>
       </p>
       <% unless claim.editable? %>
-        <p class="govuk-body-l govuk-!-margin-bottom-2">
+        <p class="govuk-body-m govuk-!-margin-bottom-2">
           <span class="govuk-!-font-weight-bold"><%= t(".date_assessed") %></span>
           <%= format_in_zone(claim_summary.assessed_on, format:'%d %b %Y') %>
         </p>
       <% end %>
     </div>
-    <div class="govuk-grid-column-one-thirds govuk-!-padding-top-2">
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-third">
       <% if claim.editable? && claim_summary.assigned_to %>
         <%=
           govuk_link_to(
@@ -61,6 +63,12 @@
             data_module: "govuk-button"
           )
         %>
-      <% end%>
+      <% elsif claim.editable? %>
+        <%= govuk_button_link_to(
+            t(".add_to_my_list"),
+            new_nsm_claim_assignment_path(claim),
+            secondary: true
+          ) %>
+      <% end %>
     </div>
   </div>
