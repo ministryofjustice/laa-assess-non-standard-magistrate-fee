@@ -44,7 +44,7 @@ module PriorAuthority
         end
 
         def requested_at
-          @requested_at ||= Date.parse(@incorrect_information['requested_at'])
+          @requested_at ||= DateTime.parse(@incorrect_information['requested_at'])
         end
 
         def partial

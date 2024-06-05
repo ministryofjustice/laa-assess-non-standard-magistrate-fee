@@ -40,7 +40,7 @@ module PriorAuthority
         end
 
         def requested_at
-          @requested_at ||= Date.parse(@further_information['requested_at'])
+          @requested_at ||= DateTime.parse(@further_information['requested_at'])
         end
 
         def documents
