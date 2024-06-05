@@ -34,7 +34,7 @@ module PriorAuthority
       end
 
       def alternative_quote_cards
-        alternatives = quotes.reject { _1.primary }
+        alternatives = quotes.reject { _1['primary'] }
         if alternatives.any?
           alternatives.map { AlternativeQuoteCard.new(self, Quote.new(_1)) }
         else
