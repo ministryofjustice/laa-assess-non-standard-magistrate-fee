@@ -59,12 +59,7 @@ RSpec.describe Nsm::UnassignmentsController do
           nsm_unassignment_form: { comment: nil, id: claim.id }
         }
 
-        expect(response).to redirect_to(your_nsm_claims_path)
-        expect(flash[:success]).to eq(
-          'Claim <a class="govuk-link" href="' \
-          "/nsm/claims/#{claim.id}/claim_details\">AAA111</a> " \
-          "has been removed from Jim Bob's list"
-        )
+        expect(response).to redirect_to(nsm_claim_claim_details_path(claim))
       end
 
       context 'when current_user is the assigned user' do
@@ -76,12 +71,7 @@ RSpec.describe Nsm::UnassignmentsController do
             nsm_unassignment_form: { state: 'further_info', comment: nil, id: claim.id }
           }
 
-          expect(response).to redirect_to(your_nsm_claims_path)
-          expect(flash[:success]).to eq(
-            '<a class="govuk-link" ' \
-            "href=\"/nsm/claims/#{claim.id}/claim_details\">AAA111</a> " \
-            'has been removed from your list'
-          )
+          expect(response).to redirect_to(nsm_claim_claim_details_path(claim))
         end
       end
     end

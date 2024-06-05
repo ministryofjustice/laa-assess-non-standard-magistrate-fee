@@ -33,8 +33,9 @@ en:
         provider_updated: Provider updated %{date}
         further_information: 'Further information request:'
         incorrect_information: 'Amendment request:'
-        further_information_provided: 'Further information requested'
-        updated_field: '%{field} - updated'
+        further_information_provided: 'Further information request'
+        corrected_information_provided: Amendment request
+        updated_field: '%{field} amended'
         updated_fields:
           ufn: Application details
           case_contact: Case contact
@@ -49,7 +50,7 @@ en:
         about_the_request: About the request
         about_the_case: About the case
         contact_details: Contact details
-        further_information_request: Further information request
+        further_information_request: Provider updates
       amended:
         amended_by_provider: Amended by provider
       overview_card:
@@ -82,3 +83,5 @@ en:
         case_contact: Case contact
       further_information_card:
         further_information_request: Further information request %{date}
+      incorrect_information_card:
+        incorrect_information_request: Amendment request %{date}

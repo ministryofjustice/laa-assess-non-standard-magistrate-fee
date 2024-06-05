@@ -4,7 +4,8 @@ en:
     title:
       auto_grant: Automatic decision made to grant claim
   event/assignment:
-    title: Claim allocated to caseworker
+    auto_title: Claim allocated to caseworker
+    manual_title: Self assigned by %{caseworker}
   event/change_risk:
     title: Claim risk changed to %{risk} risk
   event/decision:

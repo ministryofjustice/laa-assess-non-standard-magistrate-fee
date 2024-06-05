@@ -9,23 +9,13 @@ module Nsm
     def update
       unassignment = UnassignmentForm.new(claim:, **send_back_params)
       if unassignment.save
-        redirect_to your_nsm_claims_path, flash: { success: success_notice(unassignment) }
+        redirect_to nsm_claim_claim_details_path(claim)
       else
         render :edit, locals: { claim:, unassignment: }
       end
     end
 
     private
-
-    def success_notice(unassignment)
-      reference = BaseViewModel.build(:laa_reference, claim)
-      t(
-        ".unassignment.#{unassignment.unassignment_user}",
-        ref: reference.laa_reference,
-        url: nsm_claim_claim_details_path(claim.id),
-        caseworker: unassignment.user.display_name
-      )
-    end
 
     def claim
       @claim ||= Claim.find(params[:claim_id])
