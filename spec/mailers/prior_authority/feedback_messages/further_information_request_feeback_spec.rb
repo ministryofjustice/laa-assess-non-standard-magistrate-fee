@@ -65,10 +65,11 @@ RSpec.describe PriorAuthority::FeedbackMessages::FurtherInformationRequestFeedba
 
       it 'has expected content' do
         expect(feedback.contents).to include(
-          caseworker_information_requested: "## Amendment request\n\n" \
-                                            "Please correct this information...\n\n" \
-                                            "## Further information request\n\n" \
-                                            'Please provide this further info...',
+          caseworker_information_requested:
+            "## Further information request\n\n" \
+            "Please provide this further info...\n\n" \
+            "## Amendment request\n\n" \
+            'Please correct this information...' \
         )
       end
     end
@@ -80,7 +81,7 @@ RSpec.describe PriorAuthority::FeedbackMessages::FurtherInformationRequestFeedba
       it 'has expected content' do
         expect(feedback.contents).to include(
           caseworker_information_requested: "## Amendment request\n\n" \
-                                            'Please correct this information...',
+                                            'Please correct this information...'
         )
 
         expect(feedback.contents).not_to include('Amendment request')
@@ -94,7 +95,7 @@ RSpec.describe PriorAuthority::FeedbackMessages::FurtherInformationRequestFeedba
       it 'has expected content' do
         expect(feedback.contents).to include(
           caseworker_information_requested: "## Further information request\n\n" \
-                                            'Please provide this further info...',
+                                            'Please provide this further info...'
         )
 
         expect(feedback.contents).not_to include('Further information request')
