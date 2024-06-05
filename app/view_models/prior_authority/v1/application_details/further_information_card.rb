@@ -36,11 +36,19 @@ module PriorAuthority
         end
 
         def requested_at_str
-          Date.parse(@further_information['requested_at']).to_fs(:stamp)
+          requested_at.to_fs(:stamp)
+        end
+
+        def requested_at
+          @requested_at ||= DateTime.parse(@further_information['requested_at'])
         end
 
         def documents
           @further_information['documents'] || []
+        end
+
+        def partial
+          'further_information_card'
         end
       end
     end

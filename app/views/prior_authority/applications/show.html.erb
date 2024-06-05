@@ -38,10 +38,9 @@
               <%= link_to t('.further_information_provided'), '#further-information-1', class: "govuk-link--no-visited-state" %>
             </li>
           <% end %>
-
-          <% @details.updated_fields.each do |field| %>
+          <% if @details.provider_corrected_information? %>
             <li>
-              <%= link_to t(".updated_field", field: t(".updated_fields.#{field[:label]}", n: field[:n])), field[:anchor], class: "govuk-link--no-visited-state" %>
+              <%= link_to t('.corrected_information_provided'), '#incorrect-information-1', class: "govuk-link--no-visited-state" %>
             </li>
           <% end %>
         </ul>
@@ -68,10 +67,10 @@
     <h2 class="govuk-heading-m"><%= t('.contact_details') %></h2>
     <%= render 'case_contact_card', model: @details.case_contact_card %>
 
-    <% if @details.further_information_cards.any? %>
+    <% if @details.information_cards.any? %>
       <h2 class="govuk-heading-m"><%= t('.further_information_request') %></h2>
-      <% @details.further_information_cards.each_with_index do |further_information_card, index| %>
-        <%= render 'further_information_card', model: further_information_card, n: index + 1 %>
+      <% @details.information_cards.each do |information_card, position| %>
+        <%= render information_card.partial, model: information_card, n: position %>
       <% end %>
     <% end %>
 
