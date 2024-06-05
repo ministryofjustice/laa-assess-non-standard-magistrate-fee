@@ -19,7 +19,7 @@ RSpec.describe 'History events' do
     Event::Assignment.build(submission: claim, current_user: caseworker)
     Event::Unassignment.build(submission: claim, user: caseworker, current_user: caseworker,
                               comment: 'unassignment 1')
-    Event::Assignment.build(submission: claim, current_user: caseworker)
+    Event::Assignment.build(submission: claim, current_user: caseworker, comment: 'Manual assignment note')
     Event::ChangeRisk.build(submission: claim, explanation: 'Risk change test', previous_risk_level: 'high',
                             current_user: caseworker)
     Event::Note.build(submission: claim, current_user: caseworker, note: 'User test note')
@@ -48,7 +48,7 @@ RSpec.describe 'History events' do
         'case worker', 'Claim sent back to provider', 'Send Back test',
         'case worker', 'Caseworker note', 'User test note',
         'case worker', 'Claim risk changed to low risk', 'Risk change test',
-        'case worker', 'Claim allocated to caseworker', '',
+        'case worker', 'Self assigned by case worker', 'Manual assignment note',
         'case worker', 'Caseworker removed self from claim', 'unassignment 1',
         'case worker', 'Claim allocated to caseworker', '',
         '', 'New claim received', ''

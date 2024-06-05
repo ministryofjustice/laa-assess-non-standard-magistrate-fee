@@ -10,5 +10,13 @@ class Event
         }
       )
     end
+
+    def title
+      if details['comment'].present?
+        t('manual_title', caseworker: primary_user.display_name)
+      else
+        t('auto_title')
+      end
+    end
   end
 end

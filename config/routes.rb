@@ -72,6 +72,7 @@ Rails.application.routes.draw do
       resource :make_decision, only: [:edit, :update], path_names: { edit: '' }
       resource :send_back, only: [:edit, :update], path_names: { edit: '' }
       resource :unassignment, only: [:edit, :update], path_names: { edit: '' }
+      resources :assignments, only: %i[new create]
     end
 
     get 'claims/:claim', to: redirect('claims/%{claim}/claim_details')
