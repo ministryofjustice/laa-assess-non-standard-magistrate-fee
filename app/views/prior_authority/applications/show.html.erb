@@ -69,9 +69,8 @@
 
     <% if @details.information_cards.any? %>
       <h2 class="govuk-heading-m"><%= t('.further_information_request') %></h2>
-      <% position = Hash.new(0)
-        @details.information_cards.each do |information_card| %>
-        <%= render information_card.partial, model: information_card, n: position[information_card.class] += 1 %>
+      <% @details.information_cards.each do |information_card, position| %>
+        <%= render information_card.partial, model: information_card, n: position %>
       <% end %>
     <% end %>
 

@@ -24,7 +24,7 @@ module PriorAuthority
         def provider_response
           links = @incorrect_information['sections_changed'].map do |section_name|
             label = section_name.starts_with?('alternative_quote_') ? 'alternative_quote' : section_name
-            n = section_name.gsub('alternative_quote_', ''),
+            n = section_name.gsub('alternative_quote_', '')
             anchor = "##{section_name == 'ufn' ? 'overview' : section_name.tr('_', '-')}"
 
             tag.li do

@@ -88,8 +88,14 @@ module PriorAuthority
         latest_provider_update_event&.details&.dig('corrected_info')&.include?(provider_section_name)
       end
 
+      # need to correctly set positional values by card type for anchor links on page
       def information_cards
-        @information_cards ||= (further_information_cards + incorrect_information_cards).sort_by(&:requested_at).reverse
+        @information_cards ||= begin
+          positions = Hash.new(0)
+          (further_information_cards + incorrect_information_cards).sort_by(&:requested_at)
+                                                                   .reverse
+                                                                   .map { |card| [card, positions[card.class] += 1] }
+        end
       end
 
       def further_information_cards
