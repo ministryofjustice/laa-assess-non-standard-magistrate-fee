@@ -22,7 +22,19 @@ module PriorAuthority
       protected
 
       def comments
-        [incorrect_information_explanation, further_information_explanation].compact_blank.join("\n\n")
+        comments = []
+
+        if further_information_explanation.present?
+          comments << "## #{I18n.t('prior_authority.send_backs.show.further_information')}"
+          comments << further_information_explanation
+        end
+
+        if incorrect_information_explanation.present?
+          comments << "## #{I18n.t('prior_authority.send_backs.show.incorrect_information')}"
+          comments << incorrect_information_explanation
+        end
+
+        comments.compact_blank.join("\n\n")
       end
 
       def incorrect_information_explanation
