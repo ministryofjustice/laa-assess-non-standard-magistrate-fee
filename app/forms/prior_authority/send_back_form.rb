@@ -59,6 +59,7 @@ module PriorAuthority
       append_incorrect_information_object if updates_needed.include?(INCORRECT_INFORMATION)
       append_further_information_object if updates_needed.include?(FURTHER_INFORMATION)
 
+      submission.data['status'] = PriorAuthorityApplication::SENT_BACK
       submission.update!(state: PriorAuthorityApplication::SENT_BACK)
       submission.assignments.destroy_all
       save_event
