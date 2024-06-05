@@ -49,8 +49,8 @@ module PriorAuthority
         else
           period_to_consider = original ? original_period : period
           hourly_cost = original ? original_cost_per_hour : cost_per_hour
-          ((period_to_consider.hours.to_f * hourly_cost.to_f) +
-          ((period_to_consider.minutes.to_f / 60.0) * hourly_cost.to_f)).round(2)
+          ((period_to_consider.hours * hourly_cost) +
+          ((period_to_consider.minutes / 60.0) * hourly_cost)).round(2)
         end
       end
 
