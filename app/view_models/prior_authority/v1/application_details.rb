@@ -90,8 +90,8 @@ module PriorAuthority
 
       # NOTES:
       # * Set positional values by card type for anchor links on page
-      # * relies on sort by honoring orginal ordering is sort key matches
-      #   i.e. [[1,:a], [2, :a], [1, :b], [2, :b]].sort_by(&:first) => [[1, :a], [1, :b], [2, :a], [2, :b]]
+      # * relies on sort by honouring original ordering in sort key matches
+      #   i.e. [[1, :a], [2, :a], [1, :b], [2, :b]].sort_by(&:first) => [[1, :a], [1, :b], [2, :a], [2, :b]]
       def information_cards
         @information_cards ||= begin
           positions = Hash.new(0)
