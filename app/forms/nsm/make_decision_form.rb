@@ -26,6 +26,7 @@ module Nsm
 
       previous_state = claim.state
       Claim.transaction do
+        claim.data['status'] = state
         claim.update!(state:)
         ::Event::Decision.build(submission: claim,
                                 comment: comment,
