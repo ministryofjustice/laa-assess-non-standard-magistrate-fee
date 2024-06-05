@@ -95,7 +95,7 @@ module PriorAuthority
       def information_cards
         @information_cards ||= begin
           positions = Hash.new(0)
-          (further_information_cards + incorrect_information_cards).sort_by(&:requested_at)
+          (incorrect_information_cards + further_information_cards).sort_by(&:requested_at)
                                                                    .reverse
                                                                    .map { |card| [card, positions[card.class] += 1] }
         end
