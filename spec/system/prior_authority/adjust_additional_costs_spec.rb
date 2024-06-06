@@ -144,12 +144,12 @@ RSpec.describe 'Adjust additional costs' do
         .to have_content('Enter the number of items')
         .and have_content('Enter the cost per item')
 
-      fill_in 'Number of items', with: 0
+      fill_in 'Number of items', with: '-1'
       fill_in 'What is the cost per item?', with: 0
 
       click_on 'Save changes'
       expect(page)
-        .to have_content('The number of items must be more than 0')
+        .to have_content('The number of items must be 0 or more')
         .and have_content('The cost per item must be more than 0')
 
       fill_in 'Number of items', with: 'a'

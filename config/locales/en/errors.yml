@@ -23,7 +23,7 @@ en:
     not_a_number: The cost per %{item_type} must be a number, like 25
   shared_items_errors: &shared_items_errors
     blank: Enter the number of %{item_type}
-    greater_than: The number of %{item_type} must be more than 0
+    greater_than: The number of %{item_type} must be 0 or more
     not_a_number: The number of %{item_type} must be a number, like 25
 
   errors:

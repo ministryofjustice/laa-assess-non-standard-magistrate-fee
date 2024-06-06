@@ -11,7 +11,7 @@ module PriorAuthority
     attribute :cost_per_hour, :gbp
 
     with_options if: :per_item? do
-      validates :items, item_type_dependant: { pluralize: true }
+      validates :items, item_type_dependant: { pluralize: true, allow_zero: true }
       validates :cost_per_item, item_type_dependant: true
     end
 

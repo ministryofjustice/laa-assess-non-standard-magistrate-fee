@@ -3,7 +3,11 @@ require 'rails_helper'
 RSpec.describe ItemTypeDependantValidator do
   subject(:instance) { klass.new(items:, cost_per_item:) }
 
+  let(:items_options) { { pluralize: true } }
   let(:klass) do
+    # needs to be a local variable to allow use in class definition block
+    options = items_options
+
     Class.new do
       include ActiveModel::Model
       include ActiveModel::Attributes
@@ -15,7 +19,7 @@ RSpec.describe ItemTypeDependantValidator do
       attribute :items
       attribute :cost_per_item, :gbp
 
-      validates :items, item_type_dependant: { pluralize: true }
+      validates :items, item_type_dependant: options
       validates :cost_per_item, item_type_dependant: true
     end
   end
@@ -56,7 +60,7 @@ RSpec.describe ItemTypeDependantValidator do
     end
   end
 
-  context 'when attribute is less zero or less' do
+  context 'when attribute is zero or' do
     let(:items) { 0 }
     let(:cost_per_item) { 0 }
 
@@ -64,6 +68,16 @@ RSpec.describe ItemTypeDependantValidator do
       expect(instance).not_to be_valid
       expect(instance.errors.of_kind?(:items, :greater_than)).to be(true)
       expect(instance.errors.of_kind?(:cost_per_item, :greater_than)).to be(true)
+    end
+
+    context 'when allow_zero is true' do
+      let(:items_options) { { pluralize: true, allow_zero: true } }
+
+      it 'adds no greater_than error to items' do
+        expect(instance).not_to be_valid
+        expect(instance.errors.of_kind?(:items, :greater_than)).to be(false)
+        expect(instance.errors.of_kind?(:cost_per_item, :greater_than)).to be(true)
+      end
     end
   end
 
