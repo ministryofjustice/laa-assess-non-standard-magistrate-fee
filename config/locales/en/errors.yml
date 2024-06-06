@@ -5,9 +5,9 @@ en:
     blank_hours: Enter number of hours
     blank_minutes: Enter number of minutes
     invalid: Time must be valid
-    invalid_hours: Hours must be greater than 0
+    invalid_hours: Hours must be 0 or more
     invalid_minutes: Minutes must be between 0 and 59
-    invalid_period: Time must be more than 0
+    invalid_period: Time must be 0 or more
     non_integer_hours: The number of hours must be a whole number
     non_integer_minutes: The number of minutes must be a whole number
     non_numerical_hours: The number of hours must be a number
