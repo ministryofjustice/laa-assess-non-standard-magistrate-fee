@@ -1,4 +1,5 @@
 import Decimal from 'decimal.js';
+import {invalidCurrencyString, convertCurrencyToNumber} from '../../lib/currencyChecker.js';
 
 export default class CostAdjustment {
   constructor(hoursField, minutesField, costPerHourField, itemsField, costPerItemField, calculateChangeButton, adjustedCost) {
@@ -38,33 +39,35 @@ export default class CostAdjustment {
   }
 
   calculateTimeCost() {
-    if(isNaN(this.hoursField?.value) || isNaN(this.minutesField?.value) || isNaN(this.costPerHourField?.value)) {
+    if(isNaN(this.hoursField?.value) || isNaN(this.minutesField?.value) || invalidCurrencyString(this.costPerHourField?.value)) {
       return '--';
+    }else{
+      let costPerHourNum = convertCurrencyToNumber(this.costPerHourField?.value)
+      let unitPrice = new Decimal(costPerHourNum)
+      let minutes
+
+      this.checkMinutesThreshold();
+
+      if(this.hoursField?.value && this.minutesField?.value){
+        minutes = (parseInt(this.hoursField.value) * 60) + parseInt(this.minutesField.value);
+      }
+
+      let unrounded = unitPrice.times(minutes).dividedBy(60)
+      return unrounded.toFixed(2);
     }
-
-    const unitPrice = new Decimal(this.costPerHourField.value)
-    let minutes
-
-    this.checkMinutesThreshold();
-
-    if(this.hoursField?.value && this.minutesField?.value){
-      minutes = (parseInt(this.hoursField.value) * 60) + parseInt(this.minutesField.value);
-    }
-
-    const unrounded = unitPrice.times(minutes).dividedBy(60)
-    return unrounded.toFixed(2);
   }
 
   calculateItemCost() {
-    if(isNaN(this.itemsField?.value) || isNaN(this.costPerItemField?.value)){
+    if(isNaN(this.itemsField?.value) || invalidCurrencyString(this.costPerItemField?.value)){
       return '--';
+    }else{
+      let costPerItemNum = convertCurrencyToNumber(this.costPerItemField?.value)
+      let items = parseInt(this.itemsField?.value)
+      let unitPrice = new Decimal(costPerItemNum)
+
+      let unrounded = unitPrice.times(items);
+      return unrounded.toFixed(2);
     }
-
-    const items = parseInt(this.itemsField.value)
-    const unitPrice = new Decimal(this.costPerItemField.value)
-
-    const unrounded = unitPrice.times(items);
-    return unrounded.toFixed(2);
   }
 
   checkMinutesThreshold() {

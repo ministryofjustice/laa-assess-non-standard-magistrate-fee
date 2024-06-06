@@ -46,10 +46,11 @@ module PriorAuthority
       def base_cost(original: false)
         if cost_type == 'per_item'
           original ? original_total_item_cost : total_item_cost
-        else
+        elsif cost_type == 'per_hour'
           period_to_consider = original ? original_period : period
           hourly_cost = original ? original_cost_per_hour : cost_per_hour
-          ((period_to_consider.hours * hourly_cost) + ((period_to_consider.minutes / 60.0) * hourly_cost)).round(2)
+          ((period_to_consider.hours * hourly_cost) +
+          ((period_to_consider.minutes / 60.0) * hourly_cost)).round(2)
         end
       end
 

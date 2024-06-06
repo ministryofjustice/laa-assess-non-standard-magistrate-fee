@@ -1,4 +1,5 @@
 import Decimal from 'decimal.js';
+import {invalidCurrencyString, convertCurrencyToNumber} from '../../lib/currencyChecker.js';
 
 function init() {
   const hoursField = document.getElementById('prior_authority_travel_cost_form_travel_time_1');
@@ -22,22 +23,23 @@ function init() {
   }
 
   function calculateAdjustedCost() {
-    if(isNaN(hoursField?.value) || isNaN(minutesField?.value) || isNaN(costPerHourField?.value)) {
+    if(isNaN(hoursField?.value) || isNaN(minutesField?.value) || invalidCurrencyString(costPerHourField?.value)) {
       return '--';
+    }else{
+      let costPerHourNum = convertCurrencyToNumber(costPerHourField?.value)
+      let unitPrice = new Decimal(costPerHourNum)
+
+      checkMinutesThreshold();
+
+      var minutes = calculateChangeButton?.getAttribute('data-provider-time-spent');
+
+      if(hoursField?.value && minutesField?.value){
+        minutes = (parseInt(hoursField.value) * 60) + parseInt(minutesField.value);
+      }
+
+      const unrounded = unitPrice.times(minutes).dividedBy(60)
+      return `${unrounded.toFixed(2)}`;
     }
-
-    const unitPrice = new Decimal(costPerHourField.value)
-
-    checkMinutesThreshold();
-
-    var minutes = calculateChangeButton?.getAttribute('data-provider-time-spent');
-
-    if(hoursField?.value && minutesField?.value){
-      minutes = (parseInt(hoursField.value) * 60) + parseInt(minutesField.value);
-    }
-
-    const unrounded = unitPrice.times(minutes).dividedBy(60)
-    return `${unrounded.toFixed(2)}`;
   }
 
   function checkMinutesThreshold(){
