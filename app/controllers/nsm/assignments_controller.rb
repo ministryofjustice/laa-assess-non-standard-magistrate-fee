@@ -20,7 +20,6 @@ module Nsm
       submission.with_lock do
         if submission.assignments.none?
           Claim.transaction do
-            submission.assignments.destroy_all
             submission.assignments.create!(user: current_user)
             ::Event::Assignment.build(submission:, current_user:, comment:)
           end
