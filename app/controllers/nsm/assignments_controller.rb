@@ -18,13 +18,17 @@ module Nsm
     def process_assignment(comment)
       submission = Claim.find(params[:claim_id])
       submission.with_lock do
-        Claim.transaction do
-          submission.assignments.destroy_all
-          submission.assignments.create!(user: current_user)
-          ::Event::Assignment.build(submission:, current_user:, comment:)
-        end
+        if submission.assignments.none?
+          Claim.transaction do
+            submission.assignments.destroy_all
+            submission.assignments.create!(user: current_user)
+            ::Event::Assignment.build(submission:, current_user:, comment:)
+          end
 
-        redirect_to nsm_claim_claim_details_path(submission)
+          redirect_to nsm_claim_claim_details_path(submission)
+        else
+          redirect_to nsm_claim_claim_details_path(submission), flash: { notice: t('.already_assigned') }
+        end
       end
     end
   end

@@ -6,6 +6,8 @@ en:
         label: Explain your decision
         hint: This information will be shared internally. This information will not be shared with the provider.
         button_text: Yes, add to my list
+      create:
+        already_assigned: This application is already assigned to a caseworker
   activemodel:
     errors:
       models:

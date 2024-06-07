@@ -54,7 +54,7 @@
   </div>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-third">
-      <% if claim.editable_by?(current_user) %>
+      <% if claim.editable_by?(current_user) || (!claim.assessed? && claim.assignments.any?) %>
         <%=
           govuk_link_to(
             t( ".remove_from_list"),

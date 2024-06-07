@@ -72,6 +72,21 @@ RSpec.describe 'Assign claims' do
     end
   end
 
+  context 'when a claim is assigned to someone else' do
+    let(:claim) { create(:claim, state: 'submitted') }
+
+    before { create(:assignment, submission: claim) }
+
+    it 'lets me unassign them' do
+      visit nsm_claim_claim_details_path(claim)
+      click_on 'Remove from list'
+      fill_in 'Explain your decision', with: 'I want them gone'
+      click_on 'Yes, remove from list'
+      expect(page).to have_content 'Assigned to: Unassigned'
+      expect(claim.reload.assignments).to be_empty
+    end
+  end
+
   context 'when manually assigning claims' do
     let(:claim) { create(:claim, state: 'submitted') }
 
@@ -91,14 +106,15 @@ RSpec.describe 'Assign claims' do
       expect(page).to have_content 'Enter an explanation'
     end
 
-    it 'replaces existing assignments' do
-      old_assignment = create(:assignment, submission: claim)
+    it 'checks that claim is not already assigned' do
       visit nsm_claim_claim_details_path(claim)
       click_on 'Add to my list'
+
+      create(:assignment, submission: claim)
+
       fill_in 'Explain your decision', with: 'because I want to'
       click_on 'Yes, add to my list'
-      expect(claim.assignments.count).to eq 1
-      expect(claim.assignments.first).not_to eq old_assignment
+      expect(page).to have_content 'This application is already assigned to a caseworker'
     end
   end
 end
