@@ -31,7 +31,7 @@ RSpec.describe 'Decide an application', :stub_oauth_token do
       it 'shows my decision' do
         expect(page).to have_content 'Decision sent'
         expect(page).to have_content 'LAA decision Rejected'
-        expect(page).to have_content 'Comments The wrong form was used'
+        expect(page).to have_content "Comments\nThe wrong form was used"
       end
 
       it 'removes the edit buttons from the application page' do
