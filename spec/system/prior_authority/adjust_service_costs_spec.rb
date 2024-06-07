@@ -203,12 +203,12 @@ RSpec.describe 'Adjust service costs' do
         .to have_content('Enter the number of minutes')
         .and have_content('Enter the cost per minute')
 
-      fill_in 'Number of minutes', with: 0
+      fill_in 'Number of minutes', with: '-1'
       fill_in 'What is the cost per minute?', with: 0
 
       click_on 'Save changes'
       expect(page)
-        .to have_content('The number of minutes must be more than 0')
+        .to have_content('The number of minutes must be 0 or more')
         .and have_content('The cost per minute must be more than 0')
 
       fill_in 'Number of minutes', with: 'a'

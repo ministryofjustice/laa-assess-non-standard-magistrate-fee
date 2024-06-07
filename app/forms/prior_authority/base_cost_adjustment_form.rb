@@ -11,12 +11,12 @@ module PriorAuthority
     attribute :cost_per_hour, :gbp
 
     with_options if: :per_item? do
-      validates :items, item_type_dependant: { pluralize: true }
+      validates :items, item_type_dependant: { pluralize: true, allow_zero: true }
       validates :cost_per_item, item_type_dependant: true
     end
 
     with_options if: :per_hour? do
-      validates :period, presence: true, time_period: true
+      validates :period, presence: true, time_period: { allow_zero: true }
       validates :cost_per_hour, presence: true, numericality: { greater_than: 0 }, is_a_number: true
     end
 

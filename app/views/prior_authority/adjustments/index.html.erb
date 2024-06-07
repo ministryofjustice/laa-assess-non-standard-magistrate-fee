@@ -13,7 +13,7 @@
     <%= render 'key_information_card', model: @key_information.key_information_card %>
     <%= render 'service_costs', application_summary:, application:, editable: %>
 
-    <% if application_summary.primary_quote.travel_costs.positive? %>
+    <% if application_summary.primary_quote.travel_costs(original: true).positive? %>
       <%= render 'travel_costs', application_summary:, application:, editable: %>
     <% end %>
 
