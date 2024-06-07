@@ -34,7 +34,7 @@
           <%= t('.comments') %>
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= @decision.comments.presence || t('.no_comments') %>
+          <%= simple_format @decision.comments.presence || t('.no_comments') %>
         </dd>
       </div>
     </dl>
