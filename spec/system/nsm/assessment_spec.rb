@@ -6,6 +6,7 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
 
   before do
     sign_in user
+    create(:assignment, submission: claim, user: user)
     visit '/'
     click_on 'Accept analytics cookies'
   end

@@ -6,7 +6,7 @@ RSpec.describe 'Risk' do
 
   before do
     sign_in user
-    claim
+    create(:assignment, submission: claim, user: user)
     visit open_nsm_claims_path
     click_on claim.data['laa_reference']
     expect(page).to have_content 'Low risk'

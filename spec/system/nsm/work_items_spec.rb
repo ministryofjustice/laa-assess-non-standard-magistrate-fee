@@ -6,6 +6,7 @@ RSpec.describe 'Work items' do
 
   before do
     sign_in user
+    create(:assignment, submission: claim, user: user)
     visit '/'
     click_on 'Accept analytics cookies'
   end

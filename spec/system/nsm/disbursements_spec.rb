@@ -7,7 +7,10 @@ RSpec.describe 'Disbursements' do
     'activemodel.errors.models.nsm/disbursements_form.attributes'
   end
 
-  before { sign_in user }
+  before do
+    create(:assignment, submission: claim, user: user)
+    sign_in user
+  end
 
   it 'refuse disbursement item' do
     visit nsm_claim_disbursements_path(claim)
