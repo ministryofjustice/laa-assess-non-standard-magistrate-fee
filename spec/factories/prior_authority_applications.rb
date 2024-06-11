@@ -76,6 +76,7 @@ FactoryBot.define do
     id { SecureRandom.uuid }
     cost_type { 'per_item' }
     cost_per_hour { nil }
+    cost_multiplier { '1.0' }
     cost_per_item { '3.5' }
     items { 7 }
     item_type { 'page' }
