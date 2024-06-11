@@ -7,7 +7,7 @@
                                 text: t('.items', items: t(".#{form.object.item_type}").pluralize(2)),
                                 size: 's'
                               },
-                              data: { 'cost-multiplier': @details.primary_quote.cost_multiplier }  %>
+                              data: { 'cost-multiplier': item.cost_multiplier }  %>
 
   <%= form.govuk_text_field :cost_per_item,
                             width: 5,

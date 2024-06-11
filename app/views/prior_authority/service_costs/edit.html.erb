@@ -14,7 +14,7 @@
       <%= f.hidden_field(:cost_type, value: item.cost_type) %>
       <%= f.hidden_field(:item_type, value: item.item_type) %>
 
-      <%= render 'cost_fields', form: f %>
+      <%= render 'cost_fields', form: f, item: item %>
 
       <%= govuk_button_link_to(t('.calculate_button_text'), '#',
                                secondary: true,
