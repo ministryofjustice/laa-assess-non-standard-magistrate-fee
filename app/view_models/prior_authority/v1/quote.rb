@@ -61,7 +61,7 @@ module PriorAuthority
       end
 
       def original_total_item_cost
-        original_items * original_cost_per_item
+        original_items * original_cost_per_item * cost_multiplier
       end
 
       def base_units
