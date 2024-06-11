@@ -24,7 +24,7 @@ module PriorAuthority
 
     def requested_service_cost_total
       if cost_type == 'per_item'
-        original_items * original_cost_per_item
+        original_items * original_cost_per_item * cost_multiplier
       else
         (
           (original_period.hours * original_cost_per_hour) +
@@ -88,7 +88,7 @@ module PriorAuthority
     end
 
     def adjusted_item_cost_total
-      items * cost_per_item
+      items * cost_per_item * cost_multiplier
     end
 
     def adjusted_hour_cost_total
