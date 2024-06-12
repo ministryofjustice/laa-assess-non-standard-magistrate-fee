@@ -3,10 +3,10 @@ require 'rails_helper'
 RSpec.describe CostItemTypeDependantValidator do
   subject(:instance) { klass.new(cost_per_item:) }
 
-  let(:items_options) { { pluralize: true } }
+  let(:options) { { pluralize: true } }
   let(:klass) do
     # needs to be a local variable to allow use in class definition block
-    options = items_options
+
 
     Class.new do
       include ActiveModel::Model
@@ -27,6 +27,14 @@ RSpec.describe CostItemTypeDependantValidator do
 
     it 'form object is valid' do
       expect(instance).to be_valid
+    end
+  end
+
+  context 'when attribute is a negative number' do
+    let(:cost_per_item) { -100 }
+
+    it 'form object is valid' do
+      expect(instance).not_to be_valid
     end
   end
 
