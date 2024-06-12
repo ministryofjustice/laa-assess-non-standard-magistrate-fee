@@ -68,10 +68,10 @@ export default class CostAdjustment {
       let multiplier = new Decimal(this.itemsField?.getAttribute('data-cost-multiplier'))
       let unrounded = null;
       if(this.additionalCost){
-        unrounded = unitPrice.times(items).times(multiplier);
+        unrounded = unitPrice.times(items);
       }
       else{
-        unrounded = unitPrice.times(items);
+        unrounded = unitPrice.times(items).times(multiplier);
       }
       return unrounded.toFixed(2);
     }
