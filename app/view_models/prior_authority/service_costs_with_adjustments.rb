@@ -10,7 +10,7 @@ module PriorAuthority
     end
 
     def requested_humanized_cost_per_unit
-      i18n_key = cost_type == 'per_item' ? "per_#{item_type}" : cost_type
+      i18n_key = cost_type == 'per_item' ? "per_#{cost_item_type}" : cost_type
 
       "#{requested_formatted_cost_per_unit} " \
         "#{I18n.t(i18n_key, scope: 'prior_authority.application_details.items.per_unit_descriptions')}"
