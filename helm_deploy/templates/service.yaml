@@ -13,3 +13,18 @@ spec:
       name: http
   selector:
     {{- include "helm_deploy.selectorLabels" . | nindent 4 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "helm_deploy.fullname" . }}-prometheus
+  labels:
+    app: laa-assess-crime-forms-prometheus
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: 9394
+      name: metrics
+      targetPort: 9394
+  selector:
+    {{- include "helm_deploy.selectorLabels" . | nindent 4 }}
