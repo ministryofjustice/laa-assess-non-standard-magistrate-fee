@@ -8,7 +8,8 @@ function init() {
     document.getElementById('prior-authority-service-cost-form-items-field'),
     document.getElementById('prior-authority-service-cost-form-cost-per-item-field'),
     document.getElementById('calculate_change_button'),
-    document.getElementById('adjusted-cost')
+    document.getElementById('adjusted-cost'),
+    false
   ]
 
   const costAdjustment = new CostAdjustment(...fields)
