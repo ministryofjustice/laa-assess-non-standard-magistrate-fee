@@ -139,6 +139,7 @@ RSpec.describe 'View Adjust quote tab' do
                 :primary_quote,
                 cost_type: 'per_item',
                 item_type: 'minute',
+                cost_item_type: 'minute',
                 items: 100,
                 cost_per_item: '2.00',
               ),
