@@ -39,6 +39,7 @@ RSpec.describe CostItemTypeDependantValidator do
 
   context 'options are not pluralized' do
     subject(:instance) { klass.new(cost_per_item:, cost_item_type:) }
+
     let(:options) { { pluralize: false } }
     let(:cost_item_type) { 'word' }
     let(:cost_per_item) { nil }
@@ -62,7 +63,6 @@ RSpec.describe CostItemTypeDependantValidator do
       instance.validate
       expect(instance.errors.details[:cost_per_item].flat_map(&:values)).to include('word')
     end
-
   end
 
   context 'when attribute is nil' do
