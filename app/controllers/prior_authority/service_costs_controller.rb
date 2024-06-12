@@ -21,7 +21,7 @@ module PriorAuthority
         model.id == params[:id]
       end
 
-      form = ServiceCostForm.new(submission:, item:, **form_params)
+      form = ServiceCostForm.new(submission:, item:, **form_params(item))
 
       if form.save
         redirect_to prior_authority_application_adjustments_path(submission)
@@ -45,7 +45,7 @@ module PriorAuthority
 
     private
 
-    def form_params
+    def form_params(item)
       params.require(:prior_authority_service_cost_form).permit(
         :cost_type,
         :period,
@@ -56,6 +56,7 @@ module PriorAuthority
         :explanation,
       ).merge(
         current_user: current_user,
+        cost_item_type: item.cost_item_type,
         id: params[:id]
       )
     end
