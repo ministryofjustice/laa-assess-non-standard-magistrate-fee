@@ -13,7 +13,7 @@ RSpec.describe PriorAuthority::V1::Quote do
     end
 
     context 'when cost is per item and custom cost multiplier' do
-      let(:attributes) { { cost_type: 'per_item', items: 3, cost_per_item: '33.5', cost_multiplier: 0.1 } }
+      let(:attributes) { { cost_type: 'per_item', items: 300, cost_per_item: '33.5', cost_multiplier: 0.001 } }
 
       it 'returns total item cost' do
         expect(subject).to eq 10.05
@@ -182,6 +182,7 @@ RSpec.describe PriorAuthority::V1::Quote do
           {
             cost_type: 'per_item',
             item_type: 'word',
+            cost_item_type: 'word',
             items: 1000,
             cost_per_item: '0.10',
             cost_per_item_original: '0.20'
@@ -198,6 +199,7 @@ RSpec.describe PriorAuthority::V1::Quote do
           {
             cost_type: 'per_item',
             item_type: 'word',
+            cost_item_type: 'word',
             items: 1000,
             cost_per_item: '0.20',
           }
