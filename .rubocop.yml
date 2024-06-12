@@ -81,9 +81,6 @@ RSpec/StubbedMock:
 RSpec/NoExpectationExample:
   Enabled: false
 
-RSpecRails/InferredSpecType:
-  Enabled: false
-
 RSpec/MessageChain:
   Enabled: false
 
@@ -162,9 +159,5 @@ Lint/MissingSuper:
 Rails/ActionControllerFlashBeforeRender:
   Enabled: false
 
-RSpec/FilePath:
-  Enabled: false
-
-# Occasionally it's useful to create big lists
-FactoryBot/ExcessiveCreateList:
+Rails/FilePath:
   Enabled: false
