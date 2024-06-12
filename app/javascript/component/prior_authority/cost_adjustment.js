@@ -65,12 +65,12 @@ export default class CostAdjustment {
       let costPerItemNum = convertCurrencyToNumber(this.costPerItemField?.value)
       let items = parseInt(this.itemsField?.value)
       let unitPrice = new Decimal(costPerItemNum)
-      let multiplier = new Decimal(this.itemsField?.getAttribute('data-cost-multiplier'))
       let unrounded = null;
       if(this.additionalCost){
         unrounded = unitPrice.times(items);
       }
       else{
+        let multiplier = new Decimal(this.itemsField?.getAttribute('data-cost-multiplier'))
         unrounded = unitPrice.times(items).times(multiplier);
       }
       return unrounded.toFixed(2);
