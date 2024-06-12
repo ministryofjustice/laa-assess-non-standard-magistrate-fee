@@ -176,7 +176,7 @@ RSpec.describe PriorAuthority::V1::Quote do
             cost_type: 'per_item',
             item_type: 'word',
             items: 1000,
-            cost_mutliplier: 1,
+            cost_multiplier: 1,
             cost_per_item: '0.10',
             cost_per_item_original: '0.20'
           }
