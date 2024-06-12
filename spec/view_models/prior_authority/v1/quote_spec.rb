@@ -4,11 +4,19 @@ RSpec.describe PriorAuthority::V1::Quote do
   describe '#base_cost' do
     subject(:base_cost) { described_class.new(attributes).base_cost }
 
-    context 'when cost is per item' do
-      let(:attributes) { { cost_type: 'per_item', items: 3, cost_per_item: '33.5', cost_multiplier: '1.0' } }
+    context 'when cost is per item and default cost multiplier' do
+      let(:attributes) { { cost_type: 'per_item', items: 3, cost_per_item: '33.5' } }
 
       it 'returns total item cost' do
         expect(subject).to eq 100.5
+      end
+    end
+
+    context 'when cost is per item and custom cost multiplier' do
+      let(:attributes) { { cost_type: 'per_item', items: 3, cost_per_item: '33.5', cost_multiplier: 0.1} }
+
+      it 'returns total item cost' do
+        expect(subject).to eq 10.05
       end
     end
 
@@ -33,7 +41,7 @@ RSpec.describe PriorAuthority::V1::Quote do
     subject(:base_units) { described_class.new(attributes).base_units }
 
     context 'when cost is per item' do
-      let(:attributes) { { cost_type: 'per_item', items: 3, item_type: 'minute', cost_multiplier: '1.0' } }
+      let(:attributes) { { cost_type: 'per_item', items: 3, item_type: 'minute' } }
 
       it 'returns formatted number of items' do
         expect(subject).to eq '3 minutes'
@@ -111,9 +119,7 @@ RSpec.describe PriorAuthority::V1::Quote do
             cost_type: 'per_item',
             item_type: 'word',
             items: 1000,
-            items_original: 900,
-            cost_multiplier: 1
-          }
+            items_original: 900          }
         end
 
         it 'returns formatted original number of items' do
@@ -176,7 +182,6 @@ RSpec.describe PriorAuthority::V1::Quote do
             cost_type: 'per_item',
             item_type: 'word',
             items: 1000,
-            cost_multiplier: 1,
             cost_per_item: '0.10',
             cost_per_item_original: '0.20'
           }
@@ -192,7 +197,6 @@ RSpec.describe PriorAuthority::V1::Quote do
           {
             cost_type: 'per_item',
             item_type: 'word',
-            cost_multiplier: 1,
             items: 1000,
             cost_per_item: '0.20',
           }
@@ -288,7 +292,6 @@ RSpec.describe PriorAuthority::V1::Quote do
               item_type: 'page',
               cost_per_item: '50.00',
               items: 9,
-              cost_multiplier: 1,
               items_original: 10,
             }
           end
@@ -303,7 +306,6 @@ RSpec.describe PriorAuthority::V1::Quote do
                 cost_type: 'per_item',
                 item_type: 'page',
                 cost_per_item: '50.00',
-                cost_multiplier: 1,
                 items: 11,
               }
             end
@@ -327,7 +329,6 @@ RSpec.describe PriorAuthority::V1::Quote do
             cost_type: 'per_item',
             item_type: 'word',
             items: 1000,
-            cost_multiplier: 1,
             items_original: 900
           }
         end
@@ -343,7 +344,6 @@ RSpec.describe PriorAuthority::V1::Quote do
             cost_type: 'per_item',
             item_type: 'word',
             items: 1000,
-            cost_multiplier: 1,
             cost_per_item_original: '1.00'
           }
         end
@@ -422,7 +422,6 @@ RSpec.describe PriorAuthority::V1::Quote do
             cost_type: 'per_item',
             item_type: 'word',
             items: 1000,
-            cost_multiplier: 1,
             cost_per_item: '0.50',
             cost_per_item_original: '1.00'
           }
@@ -439,7 +438,6 @@ RSpec.describe PriorAuthority::V1::Quote do
             cost_type: 'per_item',
             item_type: 'word',
             items: 1000,
-            cost_multiplier: 1,
             items_original: 1000,
             cost_per_item: '0.50'
           }
@@ -456,7 +454,6 @@ RSpec.describe PriorAuthority::V1::Quote do
             cost_type: 'per_item',
             item_type: 'word',
             items: 1000,
-            cost_multiplier: 1,
             cost_per_item: '0.50'
           }
         end
@@ -551,7 +548,6 @@ RSpec.describe PriorAuthority::V1::Quote do
               item_type: 'page',
               cost_per_item: '50.00',
               items: 9,
-              cost_multiplier: 1,
               items_original: 10,
             }
           end
@@ -566,7 +562,6 @@ RSpec.describe PriorAuthority::V1::Quote do
                 cost_type: 'per_item',
                 item_type: 'page',
                 cost_per_item: '50.00',
-                cost_multiplier: 1,
                 items: 11,
               }
             end
