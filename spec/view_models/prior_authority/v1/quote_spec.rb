@@ -426,6 +426,7 @@ RSpec.describe PriorAuthority::V1::Quote do
         let(:attributes) do
           {
             cost_type: 'per_item',
+            cost_item_type: 'word',
             item_type: 'word',
             items: 1000,
             cost_per_item: '0.50',
@@ -442,6 +443,7 @@ RSpec.describe PriorAuthority::V1::Quote do
         let(:attributes) do
           {
             cost_type: 'per_item',
+            cost_item_type: 'word',
             item_type: 'word',
             items: 1000,
             items_original: 1000,

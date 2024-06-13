@@ -50,7 +50,7 @@ module PriorAuthority
 
       if cost_type == 'per_item'
         "#{items} " \
-          "#{I18n.t("prior_authority.application_details.items.#{cost_item_type}").pluralize(items)}"
+          "#{I18n.t("prior_authority.application_details.items.#{item_type}").pluralize(items)}"
       else
         format_period(period)
       end
@@ -59,7 +59,7 @@ module PriorAuthority
     def adjusted_humanized_cost_per_unit
       return unless any_adjustments?
 
-      i18n_key = cost_type == 'per_item' ? "per_#{item_type}" : cost_type
+      i18n_key = cost_type == 'per_item' ? "per_#{cost_item_type}" : cost_type
 
       "#{adjusted_formatted_cost_per_unit} " \
         "#{I18n.t(i18n_key, scope: 'prior_authority.application_details.items.per_unit_descriptions')}"
