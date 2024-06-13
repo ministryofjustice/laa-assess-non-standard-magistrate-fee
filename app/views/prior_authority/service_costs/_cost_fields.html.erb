@@ -6,14 +6,15 @@
                               label: {
                                 text: t('.items', items: t(".#{form.object.item_type}").pluralize(2)),
                                 size: 's'
-                              } %>
+                              },
+                              data: { 'cost-multiplier': item.cost_multiplier }  %>
 
   <%= form.govuk_text_field :cost_per_item,
                             width: 5,
                             prefix_text: "&pound;".html_safe,
                             inputmode: "decimal",
                             value: gbp_field_value(form.object.cost_per_item),
-                            label: { text: t('.cost_per_item', item: t(".#{form.object.item_type}")), size: 's' } %>
+                            label: { text: t('.cost_per_item', item: t(".#{form.object.cost_item_type}")), size: 's' } %>
 <% else %>
   <%= form.govuk_period_field :period,
                               legend: {

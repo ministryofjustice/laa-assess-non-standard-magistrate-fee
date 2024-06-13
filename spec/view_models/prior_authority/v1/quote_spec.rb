@@ -4,11 +4,19 @@ RSpec.describe PriorAuthority::V1::Quote do
   describe '#base_cost' do
     subject(:base_cost) { described_class.new(attributes).base_cost }
 
-    context 'when cost is per item' do
+    context 'when cost is per item and default cost multiplier' do
       let(:attributes) { { cost_type: 'per_item', items: 3, cost_per_item: '33.5' } }
 
       it 'returns total item cost' do
         expect(subject).to eq 100.5
+      end
+    end
+
+    context 'when cost is per item and custom cost multiplier' do
+      let(:attributes) { { cost_type: 'per_item', items: 300, cost_per_item: '33.5', cost_multiplier: 0.001 } }
+
+      it 'returns total item cost' do
+        expect(subject).to eq 10.05
       end
     end
 
@@ -174,6 +182,7 @@ RSpec.describe PriorAuthority::V1::Quote do
           {
             cost_type: 'per_item',
             item_type: 'word',
+            cost_item_type: 'word',
             items: 1000,
             cost_per_item: '0.10',
             cost_per_item_original: '0.20'
@@ -190,6 +199,7 @@ RSpec.describe PriorAuthority::V1::Quote do
           {
             cost_type: 'per_item',
             item_type: 'word',
+            cost_item_type: 'word',
             items: 1000,
             cost_per_item: '0.20',
           }
@@ -320,6 +330,7 @@ RSpec.describe PriorAuthority::V1::Quote do
         let(:attributes) do
           {
             cost_type: 'per_item',
+            cost_item_type: 'per_item',
             item_type: 'word',
             items: 1000,
             items_original: 900
@@ -335,6 +346,7 @@ RSpec.describe PriorAuthority::V1::Quote do
         let(:attributes) do
           {
             cost_type: 'per_item',
+            cost_item_type: 'per_item',
             item_type: 'word',
             items: 1000,
             cost_per_item_original: '1.00'
@@ -350,6 +362,7 @@ RSpec.describe PriorAuthority::V1::Quote do
         let(:attributes) do
           {
             cost_type: 'per_item',
+            cost_item_type: 'per_item',
             item_type: 'minute',
             items: 120,
             cost_per_item: '5.00'
@@ -413,6 +426,7 @@ RSpec.describe PriorAuthority::V1::Quote do
         let(:attributes) do
           {
             cost_type: 'per_item',
+            cost_item_type: 'word',
             item_type: 'word',
             items: 1000,
             cost_per_item: '0.50',
@@ -429,6 +443,7 @@ RSpec.describe PriorAuthority::V1::Quote do
         let(:attributes) do
           {
             cost_type: 'per_item',
+            cost_item_type: 'word',
             item_type: 'word',
             items: 1000,
             items_original: 1000,

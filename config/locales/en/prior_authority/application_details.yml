@@ -22,6 +22,7 @@ en:
           per_minute: per minute
           per_page: per page
           per_word: per word
+          per_thousand_words: per 1000 words
         item: item
         page: page
         minute: minute

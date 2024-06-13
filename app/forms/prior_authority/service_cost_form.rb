@@ -5,6 +5,7 @@ module PriorAuthority
     attribute :cost_type, :string
     attribute :item_type, :string
     attribute :service_type, :string
+    attribute :cost_item_type, :string
 
     def per_item?
       cost_type == PER_ITEM

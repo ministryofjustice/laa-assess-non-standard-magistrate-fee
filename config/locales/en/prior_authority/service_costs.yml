@@ -3,6 +3,7 @@ en:
     service_costs:
       cost_fields:
         cost_per_item: What is the cost per %{item}?
+        thousand_words: 1000 words
         cost_per_hour: Hourly cost
         items: Number of %{items}
         item: item

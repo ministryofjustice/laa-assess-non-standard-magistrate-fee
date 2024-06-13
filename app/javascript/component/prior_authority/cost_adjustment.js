@@ -2,7 +2,7 @@ import Decimal from 'decimal.js';
 import {invalidCurrencyString, convertCurrencyToNumber} from '../../lib/currencyChecker.js';
 
 export default class CostAdjustment {
-  constructor(hoursField, minutesField, costPerHourField, itemsField, costPerItemField, calculateChangeButton, adjustedCost) {
+  constructor(hoursField, minutesField, costPerHourField, itemsField, costPerItemField, calculateChangeButton, adjustedCost, additionalCost) {
     this.hoursField = hoursField;
     this.minutesField = minutesField;
     this.costPerHourField = costPerHourField;
@@ -10,6 +10,7 @@ export default class CostAdjustment {
     this.costPerItemField = costPerItemField;
     this.calculateChangeButton = calculateChangeButton;
     this.adjustedCost = adjustedCost;
+    this.additionalCost = additionalCost;
   }
 
   calculationType() {
@@ -64,8 +65,14 @@ export default class CostAdjustment {
       let costPerItemNum = convertCurrencyToNumber(this.costPerItemField?.value)
       let items = parseInt(this.itemsField?.value)
       let unitPrice = new Decimal(costPerItemNum)
-
-      let unrounded = unitPrice.times(items);
+      let unrounded = null;
+      if(this.additionalCost){
+        unrounded = unitPrice.times(items);
+      }
+      else{
+        let multiplier = new Decimal(this.itemsField?.getAttribute('data-cost-multiplier'))
+        unrounded = unitPrice.times(items).times(multiplier);
+      }
       return unrounded.toFixed(2);
     }
   }

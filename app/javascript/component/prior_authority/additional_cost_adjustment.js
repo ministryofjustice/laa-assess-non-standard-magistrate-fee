@@ -9,6 +9,7 @@ function init() {
     document.getElementById('prior-authority-additional-cost-form-cost-per-item-field'),
     document.getElementById('calculate_change_button'),
     document.getElementById('adjusted-cost'),
+    true
   ]
 
   const costAdjustment = new CostAdjustment(...fields)

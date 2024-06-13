@@ -10,7 +10,7 @@ module PriorAuthority
     end
 
     def requested_humanized_cost_per_unit
-      i18n_key = cost_type == 'per_item' ? "per_#{item_type}" : cost_type
+      i18n_key = cost_type == 'per_item' ? "per_#{cost_item_type}" : cost_type
 
       "#{requested_formatted_cost_per_unit} " \
         "#{I18n.t(i18n_key, scope: 'prior_authority.application_details.items.per_unit_descriptions')}"
@@ -24,7 +24,7 @@ module PriorAuthority
 
     def requested_service_cost_total
       if cost_type == 'per_item'
-        original_items * original_cost_per_item
+        original_items * original_cost_per_item * cost_multiplier
       else
         (
           (original_period.hours * original_cost_per_hour) +
@@ -59,7 +59,7 @@ module PriorAuthority
     def adjusted_humanized_cost_per_unit
       return unless any_adjustments?
 
-      i18n_key = cost_type == 'per_item' ? "per_#{item_type}" : cost_type
+      i18n_key = cost_type == 'per_item' ? "per_#{cost_item_type}" : cost_type
 
       "#{adjusted_formatted_cost_per_unit} " \
         "#{I18n.t(i18n_key, scope: 'prior_authority.application_details.items.per_unit_descriptions')}"
@@ -88,7 +88,7 @@ module PriorAuthority
     end
 
     def adjusted_item_cost_total
-      items * cost_per_item
+      items * cost_per_item * cost_multiplier
     end
 
     def adjusted_hour_cost_total
