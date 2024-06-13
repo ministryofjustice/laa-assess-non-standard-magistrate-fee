@@ -50,7 +50,7 @@ module PriorAuthority
 
       if cost_type == 'per_item'
         "#{items} " \
-          "#{I18n.t("prior_authority.application_details.items.#{item_type}").pluralize(items)}"
+          "#{I18n.t("prior_authority.application_details.items.#{cost_item_type}").pluralize(items)}"
       else
         format_period(period)
       end
