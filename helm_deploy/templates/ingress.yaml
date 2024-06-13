@@ -20,6 +20,8 @@ metadata:
     {{- include "helm_deploy.labels" . | nindent 4 }}
   {{- with .Values.ingress.annotations }}
   annotations:
+    nginx.ingress.kubernetes.io/default-backend: nginx-errors
+    nginx.ingress.kubernetes.io/custom-http-errors: "403"
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
