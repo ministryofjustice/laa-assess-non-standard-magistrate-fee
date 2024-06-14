@@ -7,7 +7,7 @@ en:
         heading: Send back %{defendant_name}’s claim
         submit: Send back to provider
       update:
-        decision: You send back this claim <a class="govuk-link" href="%{url}">%{ref}</a>
+        decision: You sent back this claim <a class="govuk-link" href="%{url}">%{ref}</a>
 
   helpers:
     legend:
