@@ -19,7 +19,7 @@ module Nsm
       end
 
       def recipient
-        @submission.data['submitter']['email']
+        @submission.data['solicitor']['contact_email'].presence || @submission.data['submitter']['email']
       end
 
       protected
