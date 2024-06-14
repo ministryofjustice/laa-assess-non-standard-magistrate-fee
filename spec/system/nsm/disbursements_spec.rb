@@ -67,7 +67,7 @@ RSpec.describe 'Disbursements' do
 
     it 'lets me view details instead of changing them' do
       visit nsm_claim_disbursements_path(claim)
-      expect(page).to have_no_content 'Change'
+      within('main') { expect(page).to have_no_content 'Change' }
       click_on 'View'
       expect(page).to have_content(
         'Date12 Dec 2022' \

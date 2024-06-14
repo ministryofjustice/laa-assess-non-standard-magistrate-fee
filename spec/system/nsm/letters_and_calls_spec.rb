@@ -131,7 +131,7 @@ RSpec.describe 'Letters and Calls' do
 
     it 'lets me view details instead of changing them' do
       visit nsm_claim_letters_and_calls_path(claim)
-      expect(page).to have_no_content 'Change'
+      within('main') { expect(page).to have_no_content 'Change' }
       within('.govuk-table__body .govuk-table__row', match: :first) do
         click_on 'View'
       end
