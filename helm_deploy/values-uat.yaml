@@ -88,3 +88,7 @@ postgresql:
 # Instead of a temporary redis pod we use Elasticache
 redis:
   enabled: false
+
+metabase:
+  dashboardId: 'TBC'
+  siteUrl: 'https://laa-crime-forms-metabase-uat.apps.live.cloud-platform.service.justice.gov.uk'
