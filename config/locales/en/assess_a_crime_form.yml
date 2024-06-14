@@ -1,7 +1,7 @@
 en:
   assess_a_crime_form:
     service_name: Assess a crime form
-    switch_service: Switch service
+    switch_service: Change service
   home:
     index:
       prior_authority: Assess prior authority to incur disbursements, previously CRM4
