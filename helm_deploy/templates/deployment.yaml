@@ -192,14 +192,14 @@ spec:
             - name: ENABLE_PROMETHEUS_EXPORTER
               value: 'true'
             - name: METABASE_DASHBOARD_ID
-              value: '{{ .Values.metabase.dashboardId}} '
+              value: '{{ .Values.metabase.dashboardId}}'
             - name: METABASE_SECRET_KEY
               valueFrom:
                 secretKeyRef:
                   name: app-secrets
                   key: metabase_secret_key
             - name: METABASE_SITE_URL
-              value: '{{ .Values.metabase.siteUrl}} '
+              value: '{{ .Values.metabase.siteUrl}}'
 
       {{- with .Values.nodeSelector }}
       nodeSelector:
