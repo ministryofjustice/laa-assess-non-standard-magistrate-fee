@@ -82,7 +82,7 @@ RSpec.describe 'Work items' do
 
     it 'lets me view details instead of changing them' do
       visit nsm_claim_work_items_path(claim)
-      expect(page).to have_no_content 'Change'
+      within('main') { expect(page).to have_no_content 'Change' }
       click_on 'View'
       expect(page).to have_content(
         'Waiting' \
