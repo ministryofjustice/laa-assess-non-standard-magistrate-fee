@@ -90,5 +90,5 @@ redis:
   enabled: false
 
 metabase:
-  dashboardId: 'TBC'
+  dashboardIds: 'TBC'
   siteUrl: 'https://laa-crime-forms-metabase-uat.apps.live.cloud-platform.service.justice.gov.uk'

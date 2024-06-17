@@ -191,8 +191,8 @@ spec:
               value: 'true'
             - name: ENABLE_PROMETHEUS_EXPORTER
               value: 'true'
-            - name: METABASE_DASHBOARD_ID
-              value: '{{ .Values.metabase.dashboardId}}'
+            - name: METABASE_DASHBOARD_IDS
+              value: '{{ .Values.metabase.dashboardIds}}'
             - name: METABASE_SECRET_KEY
               valueFrom:
                 secretKeyRef:
