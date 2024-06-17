@@ -4,7 +4,9 @@ en:
       cost_fields:
         cost_per_item: What is the cost per %{item}?
         thousand_words: 1000 words
-        cost_per_hour: Hourly cost
+        cost_per_hour:
+          hint: Costs should be exclusive of VAT
+          label: What is the hourly cost?
         items: Number of %{items}
         item: item
         minute: minute
@@ -19,8 +21,7 @@ en:
         explanation:
           hint: For example, why you made adjustments to the cost or time. We'll share this explanation with the provider.
           label: Explain your decision
-        hourly_cost: What is the hourly cost?
-        hourly_cost_hint: Costs should be exclusive of VAT
+        hourly_cost: Hourly cost
         page_title: Adjust service costs
       confirm_deletion:
         service_type_cost: "%{service_type} costs"
