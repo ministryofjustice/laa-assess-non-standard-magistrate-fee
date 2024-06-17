@@ -7,7 +7,7 @@ class DashboardsController < ApplicationController
       payload = {
         resource: { dashboard: id.to_i },
         params: {},
-        exp: Time.now.to_i + 10 # 10 second expiration to ensure the iframe has time to load
+        exp: Time.now.to_i + (60 * 60) # After an hour, using in-dashboard widgets will stop working
       }
       token = JWT.encode(payload, ENV.fetch('METABASE_SECRET_KEY'))
 
