@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ItemTypeDependantValidator do
   subject(:instance) { klass.new(items:, cost_per_item:) }
 
-  let(:items_options) { { pluralize: true } }
+  let(:items_options) { {} }
   let(:klass) do
     # needs to be a local variable to allow use in class definition block
     options = items_options
@@ -71,7 +71,7 @@ RSpec.describe ItemTypeDependantValidator do
     end
 
     context 'when allow_zero is true' do
-      let(:items_options) { { pluralize: true, allow_zero: true } }
+      let(:items_options) { { allow_zero: true } }
 
       it 'adds no greater_than error to items' do
         expect(instance).not_to be_valid
@@ -98,7 +98,7 @@ RSpec.describe ItemTypeDependantValidator do
         attribute :items
         attribute :cost_per_item, :gbp
 
-        validates :items, item_type_dependant: { pluralize: true }
+        validates :items, item_type_dependant: true
         validates :cost_per_item, item_type_dependant: true
       end
     end
@@ -108,10 +108,10 @@ RSpec.describe ItemTypeDependantValidator do
       let(:cost_per_item) { nil }
       let(:item_type) { 'word' }
 
-      it 'include item type option from model, pluralizing if option set' do
+      it 'include item type option from model' do
         instance.validate
         expect(instance.errors.details[:items].flat_map(&:values)).to include('words')
-        expect(instance.errors.details[:cost_per_item].flat_map(&:values)).to include('word')
+        expect(instance.errors.details[:cost_per_item].flat_map(&:values)).to include('words')
       end
     end
   end
