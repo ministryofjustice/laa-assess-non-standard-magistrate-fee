@@ -13,7 +13,8 @@
                             prefix_text: "&pound;".html_safe,
                             inputmode: "decimal",
                             value: gbp_field_value(form.object.cost_per_item),
-                            label: { text: t('.cost_per_item'), size: 's' } %>
+                            label: { text: t('.cost_per_item.label'), size: 's' },
+                            hint: { text: t('.cost_per_item.hint'), size: 's' } %>
 <% else %>
   <%= form.govuk_period_field :period,
                               legend: {
@@ -28,5 +29,6 @@
                              prefix_text: "&pound;".html_safe,
                              inputmode: "decimal",
                              value: gbp_field_value(form.object.cost_per_hour),
-                             label: { text: t('.cost_per_hour'), size: 's' } %>
+                             label: { text: t('.cost_per_hour.label'), size: 's' },
+                             hint: { text: t('.cost_per_hour.hint'), size: 's' } %>
 <% end %>
