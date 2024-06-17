@@ -2,7 +2,9 @@ en:
   prior_authority:
     service_costs:
       cost_fields:
-        cost_per_item: What is the cost per %{item}?
+        cost_per_item:
+          hint: Costs should be exclusive of VAT
+          label: What is the cost per %{item}?
         thousand_words: 1000 words
         cost_per_hour:
           hint: Costs should be exclusive of VAT
