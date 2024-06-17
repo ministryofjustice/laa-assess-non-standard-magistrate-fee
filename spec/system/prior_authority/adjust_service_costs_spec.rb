@@ -69,7 +69,7 @@ RSpec.describe 'Adjust service costs' do
     end
 
     it 'allows me to adjust the cost per hour' do
-      fill_in 'Hourly cost', with: '5.50'
+      fill_in 'What is the hourly cost?', with: '5.50'
       fill_in 'Explain your decision', with: 'service cost adjustment explanation'
       click_on 'Save changes'
 
@@ -93,7 +93,7 @@ RSpec.describe 'Adjust service costs' do
 
       fill_in 'Hours', with: 20
       fill_in 'Minutes', with: 0
-      fill_in 'Hourly cost', with: '1.50'
+      fill_in 'What is the hourly cost?', with: '1.50'
 
       click_on 'Calculate my changes'
       expect(page).to have_css('#adjusted-cost', text: '30.00')
@@ -115,7 +115,7 @@ RSpec.describe 'Adjust service costs' do
 
     it 'displays erroroneous values with appropriate message' do
       fill_in 'Hours', with: 'a'
-      fill_in 'Hourly cost', with: 'b'
+      fill_in 'What is the hourly cost?', with: 'b'
 
       click_on 'Save changes'
 
@@ -123,7 +123,7 @@ RSpec.describe 'Adjust service costs' do
         .to have_content('The number of hours must be a number')
         .and have_content('The cost per hour must be a number')
         .and have_field('Hours', with: 'a')
-        .and have_field('Hourly cost', with: 'b')
+        .and have_field('What is the hourly cost', with: 'b')
     end
   end
 
