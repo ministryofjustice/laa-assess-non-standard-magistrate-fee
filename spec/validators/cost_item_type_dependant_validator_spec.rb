@@ -3,10 +3,10 @@ require 'rails_helper'
 RSpec.describe CostItemTypeDependantValidator do
   subject(:instance) { klass.new(cost_per_item:) }
 
-  let(:options) { { pluralize: true } }
+  let(:items_options) { {} }
   let(:klass) do
     # needs to be a local variable to allow use in class definition block
-
+    items_options
     Class.new do
       include ActiveModel::Model
       include ActiveModel::Attributes
@@ -34,34 +34,6 @@ RSpec.describe CostItemTypeDependantValidator do
 
     it 'form object is valid' do
       expect(instance).not_to be_valid
-    end
-  end
-
-  context 'options are not pluralized' do
-    subject(:instance) { klass.new(cost_per_item:, cost_item_type:) }
-
-    let(:options) { { pluralize: false } }
-    let(:cost_item_type) { 'word' }
-    let(:cost_per_item) { nil }
-
-    let(:klass) do
-      Class.new do
-        include ActiveModel::Model
-        include ActiveModel::Attributes
-
-        def self.model_name
-          ActiveModel::Name.new(self, nil, 'temp')
-        end
-
-        attribute :cost_item_type, :string
-        attribute :cost_per_item, :gbp
-        validates :cost_per_item, cost_item_type_dependant: true
-      end
-    end
-
-    it 'does not pluralize cost_item_type' do
-      instance.validate
-      expect(instance.errors.details[:cost_per_item].flat_map(&:values)).to include('word')
     end
   end
 
@@ -97,7 +69,7 @@ RSpec.describe CostItemTypeDependantValidator do
     end
 
     context 'when allow_zero is true' do
-      let(:items_options) { { pluralize: true, allow_zero: true } }
+      let(:items_options) { { allow_zero: true } }
 
       it 'adds no greater_than error to cost_per_item' do
         expect(instance).not_to be_valid

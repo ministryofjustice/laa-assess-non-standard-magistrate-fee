@@ -10,6 +10,6 @@ class ItemTypeDependantValidator < ActiveModel::EachValidator
 
   def item_type_for(record)
     basic = record.respond_to?(:item_type) ? record.item_type || 'item' : 'item'
-    options[:pluralize] ? basic.pluralize : basic
+    basic.pluralize
   end
 end

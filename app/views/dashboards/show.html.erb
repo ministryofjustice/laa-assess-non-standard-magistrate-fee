@@ -1,0 +1,15 @@
+<% title t('.title') %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= t('.title') %></h1>
+
+    <% @iframe_urls.each do |url| %>
+      <iframe src="<%= url %>"
+              frameborder="0"
+              width="800"
+              height="600"
+              title="<%= t('.title') %>"
+              allowtransparency></iframe>
+    <% end %>
+  </div>
+</div>

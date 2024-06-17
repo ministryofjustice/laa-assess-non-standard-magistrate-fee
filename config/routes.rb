@@ -123,4 +123,6 @@ Rails.application.routes.draw do
   get "robots.txt", to: "robots#index"
 
   post :app_store_webhook, to: 'sync#sync_individual'
+
+  resource :dashboard, only: :show
 end
