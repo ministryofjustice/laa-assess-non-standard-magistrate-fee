@@ -66,7 +66,7 @@ autoscaling:
 
 variables:
   environment: development
-  appStoreUrl: https://add-created-at-sta-nscc-store-dev.cloud-platform.service.justice.gov.uk
+  appStoreUrl: https://crm457-1621-add-ti-nscc-store-dev.cloud-platform.service.justice.gov.uk
   enableSyncTriggerEndpoint: 'true'
   allowIndexing: 'false'
 
