@@ -19,7 +19,8 @@ en:
         explanation:
           hint: For example, why you made adjustments to the cost or time. We'll share this explanation with the provider.
           label: Explain your decision
-        hourly_cost: Hourly cost
+        hourly_cost: What is the hourly cost?
+        hourly_cost_hint: Costs should be exclusive of VAT
         page_title: Adjust service costs
       confirm_deletion:
         service_type_cost: "%{service_type} costs"
