@@ -2,7 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 2
+replicaCount: 4
 
 image:
   repository: nginx
@@ -57,12 +57,6 @@ resources:
     cpu: 10m
     memory: 500Mi
 
-autoscaling:
-  enabled: true
-  minReplicas: 2
-  maxReplicas: 10
-  targetCPUUtilizationPercentage: 80
-  targetMemoryUtilizationPercentage: 80
 variables:
   environment: production
   appStoreUrl: http://laa-crime-application-store-app.laa-crime-application-store-production.svc.cluster.local
