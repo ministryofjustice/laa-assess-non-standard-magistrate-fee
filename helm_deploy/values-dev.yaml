@@ -129,3 +129,7 @@ redis:
   auth:
     enabled: true
     password: redis
+
+metabase:
+  dashboardIds: 14
+  siteUrl: 'https://laa-crime-forms-metabase-uat.apps.live.cloud-platform.service.justice.gov.uk'
