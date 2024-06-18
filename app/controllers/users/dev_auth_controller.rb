@@ -1,7 +1,5 @@
 module Users
   class DevAuthController < Devise::SessionsController
-    layout 'external'
-
     def new
       raise ActionController::RoutingError, 'dev authentication not available' unless FeatureFlags.dev_auth.enabled?
 
