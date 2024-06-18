@@ -124,5 +124,7 @@ Rails.application.routes.draw do
 
   post :app_store_webhook, to: 'sync#sync_individual'
 
-  resource :dashboard, only: :show
+  if FeatureFlags.insights.enabled?
+    resource :dashboard, only: :show
+  end
 end
