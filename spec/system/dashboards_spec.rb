@@ -2,13 +2,16 @@ require 'rails_helper'
 
 RSpec.describe 'Dashboards' do
   context 'when insights feature flag is enabled' do
-    before { allow(FeatureFlags).to receive(:insights).and_return(double(enabled?: true)) }
+    before do
+      allow(FeatureFlags).to receive(:insights).and_return(double(enabled?: true))
+      Rails.application.reload_routes!
+    end
 
     context 'when I am not a supervisor' do
       before { sign_in create(:caseworker) }
 
       it 'does not let me visit the dashboard path' do
-        visit '/dashboard'
+        visit dashboard_path
         expect(page).to have_current_path(root_path)
       end
     end
@@ -25,7 +28,10 @@ RSpec.describe 'Dashboards' do
   end
 
   context 'when insights feature flag is disabled' do
-    before { allow(FeatureFlags).to receive(:insights).and_return(double(enabled?: false)) }
+    before do
+      allow(FeatureFlags).to receive(:insights).and_return(double(enabled?: false))
+      Rails.application.reload_routes!
+    end
 
     context 'when I am a supervisor' do
       before { sign_in create(:supervisor) }
