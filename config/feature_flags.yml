@@ -11,7 +11,7 @@ feature_flags:
     production: false
   insights:
     local: <%= ENV.fetch("INSIGHTS", false) %>
-    development: false
+    development: true
     uat: false
     production: false
 
