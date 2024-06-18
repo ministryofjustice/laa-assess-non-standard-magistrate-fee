@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Dashboards' do
   context 'when insights feature flag is enabled' do
     before { allow(FeatureFlags).to receive(:insights).and_return(double(enabled?: true)) }
+
     context 'when I am not a supervisor' do
       before { sign_in create(:caseworker) }
 
