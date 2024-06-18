@@ -16,6 +16,6 @@ class DashboardsController < ApplicationController
   end
 
   def authorize_supervisor
-    redirect_to root_path unless current_user.supervisor?
+    redirect_to root_path if !FeatureFlags.insights.enabled? || !current_user.supervisor?
   end
 end
