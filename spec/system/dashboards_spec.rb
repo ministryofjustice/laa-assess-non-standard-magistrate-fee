@@ -7,7 +7,7 @@ RSpec.describe 'Dashboards' do
       before { sign_in create(:caseworker) }
 
       it 'does not let me visit the dashboard path' do
-        visit dashboard_path
+        visit '/dashboard'
         expect(page).to have_current_path(root_path)
       end
     end
@@ -31,7 +31,7 @@ RSpec.describe 'Dashboards' do
 
       it 'does not show link for insights' do
         visit root_path
-        expect(page).not_to include('View insights')
+        expect(page).not_to have_text('View insights')
       end
     end
   end
