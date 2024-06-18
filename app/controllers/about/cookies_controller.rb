@@ -4,6 +4,8 @@ module About
   class CookiesController < ApplicationController
     skip_before_action :authenticate_user!
 
+    layout 'assess_a_crime_form'
+
     def index
       usage_cookie = cookies[:analytics_cookies_set]
       @cookie = Cookie.new(analytics: usage_cookie)
