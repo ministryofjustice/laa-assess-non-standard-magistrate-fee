@@ -84,4 +84,4 @@ redis:
 
 metabase:
   dashboardIds: 'TBC'
-  siteUrl: 'https://laa-crime-forms-metabase.apps.live.cloud-platform.service.justice.gov.uk'
+  siteUrl: 'https://crime-forms-metabase.service.justice.gov.uk'
