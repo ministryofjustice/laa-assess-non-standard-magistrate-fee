@@ -1,5 +1,5 @@
 module Nsm
-  class ChangeRisksController < ApplicationController
+  class ChangeRisksController < Nsm::BaseController
     def edit
       claim = Claim.find(params[:claim_id])
       risk = ChangeRiskForm.new(id: params[:claim_id], risk_level: claim.risk)

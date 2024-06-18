@@ -1,5 +1,5 @@
 module Nsm
-  class AdjustmentsController < ApplicationController
+  class AdjustmentsController < Nsm::BaseController
     def show
       claim = Claim.find(params[:claim_id])
       claim_summary = BaseViewModel.build(:claim_summary, claim)

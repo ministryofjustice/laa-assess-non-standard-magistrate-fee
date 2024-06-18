@@ -1,5 +1,5 @@
 module Nsm
-  class SupportingEvidencesController < ApplicationController
+  class SupportingEvidencesController < Nsm::BaseController
     # 15 min expiry on pre-signed urls to keep evidence download as secure as possible
     PRESIGNED_EXPIRY = 900
 

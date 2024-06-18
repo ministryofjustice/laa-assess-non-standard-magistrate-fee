@@ -14,7 +14,7 @@
 <% end %>
 
 <% content_for(:service_name) do %>
-  <%= link_to t('assess_a_crime_form.service_name'), root_path,
+  <%= link_to service_name, user_signed_in? ? main_app.your_nsm_claims_path : main_app.root_path,
               class: 'govuk-header__link govuk-header__service-name', id: 'header-service-name' %>
 <% end %>
 
@@ -24,6 +24,10 @@
 
 <% content_for(:phase_banner) do %>
   <% render partial: 'layouts/phase_banner' %>
+<% end %>
+
+<% content_for(:primary_navigation) do %>
+  <% render partial: 'layouts/primary_navigation' %>
 <% end %>
 
 <% content_for(:content) do %>

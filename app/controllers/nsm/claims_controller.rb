@@ -1,5 +1,5 @@
 module Nsm
-  class ClaimsController < ApplicationController
+  class ClaimsController < Nsm::BaseController
     before_action :set_default_table_sort_options, only: %i[your open closed]
 
     def your

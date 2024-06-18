@@ -2,8 +2,6 @@
 
 module About
   class FeedbackController < ApplicationController
-    layout 'assess_a_crime_form'
-
     def index
       @feedback = Feedback.new
     end

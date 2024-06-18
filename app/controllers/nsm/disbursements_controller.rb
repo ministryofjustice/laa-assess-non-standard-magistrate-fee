@@ -1,5 +1,5 @@
 module Nsm
-  class DisbursementsController < ApplicationController
+  class DisbursementsController < Nsm::BaseController
     layout nil
 
     def index
