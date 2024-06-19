@@ -1,5 +1,5 @@
 module Nsm
-  class UnassignmentsController < ApplicationController
+  class UnassignmentsController < Nsm::BaseController
     def edit
       unassignment = UnassignmentForm.new(claim:, current_user:)
       render locals: { claim:, unassignment: }

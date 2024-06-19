@@ -1,5 +1,5 @@
 module Nsm
-  class AssignmentsController < PriorAuthority::AssignmentsController
+  class AssignmentsController < Nsm::BaseController
     def new
       @form = AssignmentForm.new
     end

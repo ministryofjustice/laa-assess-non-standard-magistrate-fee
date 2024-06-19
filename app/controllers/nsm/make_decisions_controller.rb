@@ -1,5 +1,5 @@
 module Nsm
-  class MakeDecisionsController < ApplicationController
+  class MakeDecisionsController < Nsm::BaseController
     def edit
       decision = MakeDecisionForm.new(claim:)
       render locals: { claim:, decision: }
