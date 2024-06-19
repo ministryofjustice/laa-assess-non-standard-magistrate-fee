@@ -67,14 +67,14 @@ RSpec.describe CostItemTypeDependantValidator do
       expect(instance).not_to be_valid
       expect(instance.errors.of_kind?(:cost_per_item, :greater_than)).to be(true)
     end
+  end
 
-    context 'when allow_zero is true' do
-      let(:items_options) { { allow_zero: true } }
+  context 'when attribute is less than 1 but positive' do
+    let(:cost_per_item) { 0.3 }
 
-      it 'adds no greater_than error to cost_per_item' do
-        expect(instance).not_to be_valid
-        expect(instance.errors.of_kind?(:cost_per_item, :greater_than)).to be(true)
-      end
+    it 'adds no greater_than error to cost_per_item' do
+      expect(instance).to be_valid
+      expect(instance.errors.of_kind?(:cost_per_item, :greater_than)).to be(false)
     end
   end
 
