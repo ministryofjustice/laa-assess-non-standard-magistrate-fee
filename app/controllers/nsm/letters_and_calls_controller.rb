@@ -1,5 +1,5 @@
 module Nsm
-  class LettersAndCallsController < ApplicationController
+  class LettersAndCallsController < Nsm::BaseController
     layout nil
 
     FORMS = {

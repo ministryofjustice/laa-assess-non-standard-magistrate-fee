@@ -1,5 +1,5 @@
 module Nsm
-  class WorkItemsController < ApplicationController
+  class WorkItemsController < Nsm::BaseController
     layout nil
 
     def index

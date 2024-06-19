@@ -1,6 +1,6 @@
 module Nsm
   module LettersAndCalls
-    class UpliftsController < ApplicationController
+    class UpliftsController < Nsm::BaseController
       def edit
         claim = Claim.find(params[:claim_id])
         form = Uplift::LettersAndCallsForm.new(claim:)
