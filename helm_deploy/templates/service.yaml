@@ -12,7 +12,7 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "helm_deploy.selectorLabels" . | nindent 4 }}
+    appName: {{ include "helm_deploy.fullname" . }}
 ---
 apiVersion: v1
 kind: Service
