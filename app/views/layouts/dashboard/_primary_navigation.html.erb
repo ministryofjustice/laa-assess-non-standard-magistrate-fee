@@ -1,0 +1,16 @@
+<div class="moj-primary-navigation">
+  <div class="moj-primary-navigation__container">
+    <div class="moj-primary-navigation__nav">
+        <nav class="moj-primary-navigation" aria-label="Primary navigation">
+          <ul class="moj-primary-navigation__list">
+              <li class="moj-primary-navigation__item">
+                <%= link_to t('.prior_authority'), your_nsm_claims_path, class: 'moj-primary-navigation__link', 'aria-current': (controller.action_name == 'your' ? 'page' : nil) %>
+              </li>
+              <li class="moj-primary-navigation__item">
+                <%= link_to t('.nsm'), open_nsm_claims_path, class: 'moj-primary-navigation__link', 'aria-current': (controller.action_name == 'open' ? 'page' : nil) %>
+              </li>
+          </ul>
+        </nav>
+    </div>
+  </div>
+</div>

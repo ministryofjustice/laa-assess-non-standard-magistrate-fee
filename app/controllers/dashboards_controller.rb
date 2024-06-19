@@ -1,6 +1,8 @@
 class DashboardsController < ApplicationController
   before_action :authorize_supervisor
 
+  layout 'dashboard'
+
   def show
     ids = ENV.fetch('METABASE_DASHBOARD_IDS').split(',')
     @iframe_urls = ids.map do |id|

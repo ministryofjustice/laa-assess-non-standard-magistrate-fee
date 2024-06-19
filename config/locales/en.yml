@@ -26,6 +26,10 @@ en:
     phase_banner:
       phase: Beta
       phase_description_html: This is a new service – your <a class="govuk-link" href="%{feedback}">feedback</a> will help us to improve it.
+    dashboard:
+      primary_navigation:
+        prior_authority: Prior authority
+        nsm: Non-standard magistrates
 
   shared:
     save_changes: Save changes
