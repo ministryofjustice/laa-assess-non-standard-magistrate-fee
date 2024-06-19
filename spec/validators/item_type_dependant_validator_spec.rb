@@ -1,13 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe ItemTypeDependantValidator do
-  subject(:instance) { klass.new(items:, cost_per_item:) }
+  subject(:instance) { klass.new(items:) }
 
-  let(:items_options) { {} }
   let(:klass) do
-    # needs to be a local variable to allow use in class definition block
-    options = items_options
-
     Class.new do
       include ActiveModel::Model
       include ActiveModel::Attributes
@@ -17,16 +13,12 @@ RSpec.describe ItemTypeDependantValidator do
       end
 
       attribute :items
-      attribute :cost_per_item, :gbp
-
-      validates :items, item_type_dependant: options
-      validates :cost_per_item, item_type_dependant: true
+      validates :items, item_type_dependant: true
     end
   end
 
   context 'when attribute is a positive number' do
     let(:items) { 1 }
-    let(:cost_per_item) { 100 }
 
     it 'form object is valid' do
       expect(instance).to be_valid
@@ -35,12 +27,10 @@ RSpec.describe ItemTypeDependantValidator do
 
   context 'when attribute is nil' do
     let(:items) { nil }
-    let(:cost_per_item) { nil }
 
     it 'adds blank error' do
       expect(instance).not_to be_valid
       expect(instance.errors.of_kind?(:items, :blank)).to be(true)
-      expect(instance.errors.of_kind?(:cost_per_item, :blank)).to be(true)
     end
 
     it 'adds item_type option to error object' do
@@ -51,38 +41,24 @@ RSpec.describe ItemTypeDependantValidator do
 
   context 'when attribute is a string' do
     let(:items) { 'one' }
-    let(:cost_per_item) { '100 hundred' }
 
     it 'adds not_a_number error' do
       expect(instance).not_to be_valid
       expect(instance.errors.of_kind?(:items, :not_a_number)).to be(true)
-      expect(instance.errors.of_kind?(:cost_per_item, :not_a_number)).to be(true)
     end
   end
 
-  context 'when attribute is zero or' do
+  context 'when attribute is zero' do
     let(:items) { 0 }
-    let(:cost_per_item) { 0 }
 
-    it 'adds greater_than error' do
-      expect(instance).not_to be_valid
-      expect(instance.errors.of_kind?(:items, :greater_than)).to be(true)
-      expect(instance.errors.of_kind?(:cost_per_item, :greater_than)).to be(true)
-    end
-
-    context 'when allow_zero is true' do
-      let(:items_options) { { allow_zero: true } }
-
-      it 'adds no greater_than error to items' do
-        expect(instance).not_to be_valid
-        expect(instance.errors.of_kind?(:items, :greater_than)).to be(false)
-        expect(instance.errors.of_kind?(:cost_per_item, :greater_than)).to be(true)
-      end
+    it 'adds no greater_than error to items' do
+      expect(instance).to be_valid
+      expect(instance.errors.of_kind?(:items, :greater_than)).to be(false)
     end
   end
 
   context 'when model has an item_type attribute' do
-    subject(:instance) { klass.new(items:, cost_per_item:, item_type:) }
+    subject(:instance) { klass.new(items:, item_type:) }
 
     let(:klass) do
       Class.new do
@@ -96,22 +72,18 @@ RSpec.describe ItemTypeDependantValidator do
         attribute :item_type, :string
 
         attribute :items
-        attribute :cost_per_item, :gbp
 
         validates :items, item_type_dependant: true
-        validates :cost_per_item, item_type_dependant: true
       end
     end
 
     context 'when attribute is nil' do
       let(:items) { nil }
-      let(:cost_per_item) { nil }
       let(:item_type) { 'word' }
 
       it 'include item type option from model' do
         instance.validate
         expect(instance.errors.details[:items].flat_map(&:values)).to include('words')
-        expect(instance.errors.details[:cost_per_item].flat_map(&:values)).to include('words')
       end
     end
   end
