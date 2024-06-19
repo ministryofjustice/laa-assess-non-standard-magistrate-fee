@@ -4,7 +4,18 @@ class DashboardsController < ApplicationController
   layout 'dashboard'
 
   def show
-    ids = ENV.fetch('METABASE_DASHBOARD_IDS').split(',')
+    @page_title = t(".title.#{@service}")
+    generate_dashboards(service)
+  end
+
+  def generate_dashboards(service)
+    ids = []
+    if service == 'prior_authority'
+      ids = ENV.fetch('METABASE_PA_DASHBOARD_IDS').split(',')
+    elsif service == 'nsm'
+      ids = ENV.fetch('METABASE_NSM_DASHBOARD_IDS').split(',')
+    end
+
     @iframe_urls = ids.map do |id|
       payload = {
         resource: { dashboard: id.to_i },
@@ -15,6 +26,10 @@ class DashboardsController < ApplicationController
 
       "#{ENV.fetch('METABASE_SITE_URL')}/embed/dashboard/#{token}#bordered=true&titled=true"
     end
+  end
+
+  def service
+    @service ||= params.fetch(:service, 'prior_authority')
   end
 
   def authorize_supervisor
