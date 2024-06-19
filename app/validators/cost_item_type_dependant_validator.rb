@@ -5,8 +5,7 @@ class CostItemTypeDependantValidator < ActiveModel::EachValidator
 
     record.errors.add(attribute, :blank, item_type: cost_type_translated) if value.blank?
     record.errors.add(attribute, :not_a_number, item_type: cost_type_translated) if value.is_a?(String)
-    record.errors.add(attribute, :greater_than, item_type: cost_type_translated) if value.to_i.negative?
-    record.errors.add(attribute, :greater_than, item_type: cost_type_translated) if value.to_i.zero? && !options[:allow_zero]
+    record.errors.add(attribute, :greater_than, item_type: cost_type_translated) unless value.to_d.positive?
   end
 
   def cost_item_type_for(record)
