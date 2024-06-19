@@ -1,15 +1,12 @@
 <% title t('.title') %>
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-xl"><%= t(".heading.#{@service}") %></h1>
-
-    <% @iframe_urls.each do |url| %>
-      <iframe src="<%= url %>"
-              frameborder="0"
-              width="800"
-              height="600"
-              title="<%= t('.title') %>"
-              allowtransparency></iframe>
+    <% if @service == 'prior_authority' %>
+      <%= render 'prior_authority_nav' %>
+    <% elsif @service == 'nsm' %>
+      <%= render 'nsm_nav' %>
     <% end %>
+    <%= render 'tab_content' %>
   </div>
 </div>

@@ -4,7 +4,7 @@ class DashboardsController < ApplicationController
   layout 'dashboard'
 
   def show
-    @page_title = t(".title.#{@service}")
+    @current_tab ||= params.fetch(:current_tab, 'overview')
     generate_dashboards(service)
   end
 
@@ -29,8 +29,8 @@ class DashboardsController < ApplicationController
   end
 
   def service
-    service_param = params.fetch(:service, 'prior_authority')
-    @service ||= !FeatureFlags.nsm.enabled? && service_param == 'nsm' ? 'prior_authority' : service_param
+    param = params.fetch(:service, 'prior_authority')
+    @service ||= !FeatureFlags.nsm.enabled? && param == 'nsm' ? 'prior_authority' : param
   end
 
   def authorize_supervisor
