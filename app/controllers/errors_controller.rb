@@ -2,8 +2,6 @@ class ErrorsController < ApplicationController
   skip_before_action :authenticate_user!
   skip_before_action :set_security_headers
 
-  layout 'assess_a_crime_form'
-
   before_action :set_response_format
 
   # The show action is configured as the Rails "exceptions_app" in /config/application.rb

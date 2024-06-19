@@ -1,5 +1,5 @@
 module Nsm
-  class SendBacksController < ApplicationController
+  class SendBacksController < Nsm::BaseController
     include NameConstructable
 
     def edit
