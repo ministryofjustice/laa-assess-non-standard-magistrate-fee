@@ -117,7 +117,7 @@ RSpec.describe Nsm::V1::Disbursement do
     context 'when prior_authority is nil' do
       let(:prior_authority) { nil }
 
-      it 'returns a hash with the correct fields if apply vat is false' do
+      it 'returns a hash excluding prior_authority' do
         expected_fields = {
           date: '01 Jan 2022',
           type: 'Type',
