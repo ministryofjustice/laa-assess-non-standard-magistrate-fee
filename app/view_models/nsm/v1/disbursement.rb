@@ -62,7 +62,7 @@ module Nsm
         table_fields[:type] = type_name.capitalize
         table_fields[:miles] = miles.to_s if miles.present?
         table_fields[:details] = details.capitalize
-        table_fields[:prior_authority] = prior_authority.capitalize
+        table_fields[:prior_authority] = prior_authority.capitalize if prior_authority
         table_fields[:vat] = format_vat_rate(vat_rate)
         table_fields[:total] = NumberTo.pounds(provider_requested_total_cost)
 

@@ -55,12 +55,14 @@ RSpec.describe Nsm::V1::Disbursement do
         'disbursement_date' => Date.new(2022, 1, 1),
         'other_type' => { 'value' => 'type', 'en' => 'Type' },
         'details' => 'details',
-        'prior_authority' => 'prior_authority',
+        'prior_authority' => prior_authority,
         'vat_rate' => 0.2,
         'apply_vat' => apply_vat,
         'miles' => miles
       }
     end
+
+    let(:prior_authority) { 'yes' }
     let(:miles) { nil }
     let(:apply_vat) { 'true' }
 
@@ -69,7 +71,7 @@ RSpec.describe Nsm::V1::Disbursement do
         date: '01 Jan 2022',
         type: 'Type',
         details: 'Details',
-        prior_authority: 'Prior_authority',
+        prior_authority: 'Yes',
         vat: '20%',
         total: '£100.00'
       }
@@ -85,7 +87,7 @@ RSpec.describe Nsm::V1::Disbursement do
           date: '01 Jan 2022',
           type: 'Type',
           details: 'Details',
-          prior_authority: 'Prior_authority',
+          prior_authority: 'Yes',
           vat: '20%',
           miles: '10.0',
           total: '£100.00'
@@ -103,7 +105,23 @@ RSpec.describe Nsm::V1::Disbursement do
           date: '01 Jan 2022',
           type: 'Type',
           details: 'Details',
-          prior_authority: 'Prior_authority',
+          prior_authority: 'Yes',
+          vat: '20%',
+          total: '£100.00'
+        }
+
+        expect(disbursement.disbursement_fields).to eq(expected_fields)
+      end
+    end
+
+    context 'when prior_authority is nil' do
+      let(:prior_authority) { nil }
+
+      it 'returns a hash with the correct fields if apply vat is false' do
+        expected_fields = {
+          date: '01 Jan 2022',
+          type: 'Type',
+          details: 'Details',
           vat: '20%',
           total: '£100.00'
         }
