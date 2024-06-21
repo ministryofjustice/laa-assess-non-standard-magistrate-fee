@@ -196,8 +196,10 @@ spec:
               value: 'true'
             - name: ENABLE_PROMETHEUS_EXPORTER
               value: 'true'
-            - name: METABASE_DASHBOARD_IDS
-              value: '{{ .Values.metabase.dashboardIds}}'
+            - name: METABASE_PA_DASHBOARD_IDS
+              value: '{{ .Values.metabase.priorAuthorityDashboardIds}}'
+            - name: METABASE_NSM_DASHBOARD_IDS
+              value: '{{ .Values.metabase.nsmDashboardIds}}'
             - name: METABASE_SECRET_KEY
               valueFrom:
                 secretKeyRef:

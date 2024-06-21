@@ -128,7 +128,8 @@ redis:
     password: redis
 
 metabase:
-  dashboardIds: 14
+  priorAuthorityDashboardIds: 14
+  nsmDashboardIds: 'TBC'
   siteUrl: 'https://uat.crime-forms-metabase.service.justice.gov.uk'
 
 customErrorService:
