@@ -45,7 +45,7 @@ RSpec.describe 'Dashboards' do
 
         it 'can navigate to nsm analytics' do
           click_on 'Non-standard magistrates'
-          expect(page).to have_current_path(dashboard_path)
+          expect(page).to have_current_path(dashboard_path(service: 'nsm'))
 
           title = find('.govuk-heading-xl')
           expect(title).to have_text('Non-standard magistrates')
@@ -69,7 +69,7 @@ RSpec.describe 'Dashboards' do
           visit dashboard_path(service: 'nsm')
 
           title = find('.govuk-heading-xl')
-          expect(title).to have_text('Non-standard magistrates')
+          expect(title).to have_text('Prior authority')
         end
       end
     end
