@@ -70,6 +70,26 @@ RSpec.describe 'Dashboards' do
           expect(page).to have_css('.govuk-heading-xl', text: 'Prior authority')
         end
       end
+
+      context 'when dashboard ids are not provided' do
+        before do
+          allow(ENV).to receive(:fetch).with('METABASE_PA_DASHBOARD_IDS')
+          .and_return(nil)
+          allow(ENV).to receive(:fetch).with('METABASE_NSM_DASHBOARD_IDS')
+          .and_return(nil)
+          allow(FeatureFlags).to receive(:nsm).and_return(double(enabled?: true))
+        end
+
+        it 'does not show any prior authority dashboards' do
+          visit dashboard_path
+          expect(page).not_to have_css('iframe')
+        end
+
+        it 'does not show any nsm dashboards' do
+          visit dashboard_path(service: 'nsm')
+          expect(page).not_to have_css('iframe')
+        end
+      end
     end
   end
 
