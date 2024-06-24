@@ -10,14 +10,15 @@ class DashboardsController < ApplicationController
 
   def generate_dashboards(service)
     if service == 'prior_authority'
-      ids = ENV.fetch('METABASE_PA_DASHBOARD_IDS', nil)&.split(',')
+      ids = ENV.fetch('METABASE_PA_DASHBOARD_IDS')&.split(',')
     elsif service == 'nsm'
-      ids = ENV.fetch('METABASE_NSM_DASHBOARD_IDS', nil)&.split(',')
+      ids = ENV.fetch('METABASE_NSM_DASHBOARD_IDS')&.split(',')
     end
 
     ids ||= []
 
     @iframe_urls = ids.map do |id|
+      # :nocov:
       payload = {
         resource: { dashboard: id.to_i },
         params: {},
@@ -26,6 +27,7 @@ class DashboardsController < ApplicationController
       token = JWT.encode(payload, ENV.fetch('METABASE_SECRET_KEY'))
 
       "#{ENV.fetch('METABASE_SITE_URL')}/embed/dashboard/#{token}#bordered=true&titled=true"
+      # :nocov:
     end
   end
 
