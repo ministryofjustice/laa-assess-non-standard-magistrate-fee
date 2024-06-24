@@ -2,6 +2,7 @@
 en:
   nsm:
     unassignments:
+      already_unassigned: This claim has already been unassigned.
       edit:
         page_title:
           assigned: Are you sure you want to remove this claim from your list?
