@@ -10,12 +10,10 @@ class DashboardsController < ApplicationController
 
   def generate_dashboards(service)
     ids = []
-    if ids.count > 0
-      if service == 'prior_authority'
-        ids = ENV.fetch('METABASE_PA_DASHBOARD_IDS', nil).split(',')
-      elsif service == 'nsm'
-        ids = ENV.fetch('METABASE_NSM_DASHBOARD_IDS', nil).split(',')
-      end
+    if service == 'prior_authority'
+      ids = ENV.fetch('METABASE_PA_DASHBOARD_IDS', nil)&.split(',')
+    elsif service == 'nsm'
+      ids = ENV.fetch('METABASE_NSM_DASHBOARD_IDS', nil)^.split(',')
     end
 
     @iframe_urls = ids.map do |id|
