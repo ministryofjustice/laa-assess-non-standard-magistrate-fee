@@ -18,7 +18,6 @@ class DashboardsController < ApplicationController
     ids ||= []
 
     @iframe_urls = ids.map do |id|
-      # :nocov:
       payload = {
         resource: { dashboard: id.to_i },
         params: {},
@@ -27,7 +26,6 @@ class DashboardsController < ApplicationController
       token = JWT.encode(payload, ENV.fetch('METABASE_SECRET_KEY'))
 
       "#{ENV.fetch('METABASE_SITE_URL')}/embed/dashboard/#{token}#bordered=true&titled=true"
-      # :nocov:
     end
   end
 
