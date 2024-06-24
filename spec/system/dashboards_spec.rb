@@ -74,9 +74,9 @@ RSpec.describe 'Dashboards' do
       context 'when dashboard ids are not provided' do
         before do
           allow(ENV).to receive(:fetch).with('METABASE_PA_DASHBOARD_IDS')
-          .and_return(nil)
+                                       .and_return(nil)
           allow(ENV).to receive(:fetch).with('METABASE_NSM_DASHBOARD_IDS')
-          .and_return(nil)
+                                       .and_return(nil)
           allow(FeatureFlags).to receive(:nsm).and_return(double(enabled?: true))
         end
 
