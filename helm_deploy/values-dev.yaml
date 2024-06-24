@@ -27,16 +27,7 @@ ingress:
   namespace: laa-assess-crime-forms-dev
   className: modsec
   annotations:
-      nginx.ingress.kubernetes.io/enable-modsecurity: "true"
-      nginx.ingress.kubernetes.io/modsecurity-snippet: |
-        SecRuleEngine On
-        SecRequestBodyNoFilesLimit 524288
-        SecDefaultAction "phase:2,pass,log,tag:github_team=ministryofjustice/laa-crime-forms-team"
-        SecDefaultAction "phase:4,pass,log,tag:github_team=ministryofjustice/laa-crime-forms-team"
-        SecAction "id:900200,phase:1,nolog,pass,t:none,setvar:tx.allowed_methods=GET HEAD POST OPTIONS PUT PATCH DELETE"
-        SecAction "id:900110,phase:1,nolog,pass,t:none,setvar:tx.inbound_anomaly_score_threshold=6"
-      external-dns.alpha.kubernetes.io/set-identifier: laa-assess-crime-forms-app-laa-assess-crime-forms-dev-green
-      external-dns.alpha.kubernetes.io/aws-weight: "100"
+    external-dns.alpha.kubernetes.io/set-identifier: laa-assess-crime-forms-app-laa-assess-crime-forms-dev-green
   hosts:
     - host: dev.assess-crime-forms.service.justice.gov.uk
       paths:
@@ -131,6 +122,3 @@ metabase:
   priorAuthorityDashboardIds: 14
   nsmDashboardIds: 'TBC'
   siteUrl: 'https://uat.crime-forms-metabase.service.justice.gov.uk'
-
-customErrorService:
-  enabled: true
