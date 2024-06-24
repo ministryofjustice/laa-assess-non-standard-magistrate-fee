@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   include CookieConcern
   default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
 
+  before_action :check_maintenance_mode
   before_action :authenticate_user!
   before_action :set_security_headers
   before_action :set_default_cookies
@@ -19,5 +20,11 @@ class ApplicationController < ActionController::Base
   def set_security_headers
     response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
     response.headers['Pragma'] = 'no-cache'
+  end
+
+  def check_maintenance_mode
+    return unless FeatureFlags.maintenance_mode.enabled?
+
+    render file: 'public/maintenance.html', layout: false
   end
 end
