@@ -80,3 +80,6 @@ redis:
 metabase:
   dashboardIds: 'TBC'
   siteUrl: 'https://crime-forms-metabase.service.justice.gov.uk'
+
+customErrorService:
+  enabled: true
