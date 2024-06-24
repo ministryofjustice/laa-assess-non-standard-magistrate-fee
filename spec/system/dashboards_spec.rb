@@ -30,11 +30,9 @@ RSpec.describe 'Dashboards' do
       end
 
       it 'by default lets me view the prior authority analytics' do
-        title = find('.govuk-heading-xl')
-        expect(title).to have_text('Prior authority')
-
-        tab = find('.moj-primary-navigation__link')
-        expect(tab).to have_text('Prior authority')
+        visit dashboard_path
+        expect(page).to have_css('.govuk-heading-xl', text: 'Prior authority')
+        expect(page).to have_css('.moj-primary-navigation__link', text: 'Prior authority')
       end
 
       context 'when nsm feature flag is enabled' do
@@ -44,16 +42,15 @@ RSpec.describe 'Dashboards' do
         end
 
         it 'shows both service navigation tabs' do
-          tabs = find('.moj-primary-navigation__link')
-          expect(tabs).to include(['Non-standard magistrates', 'Prior authority'])
+          expect(page).to have_css('.moj-primary-navigation__link', text: 'Prior authority')
+          expect(page).to have_css('.moj-primary-navigation__link', text: 'Non-standard magistrates')
         end
 
         it 'can navigate to nsm analytics' do
           click_on 'Non-standard magistrates'
           expect(page).to have_current_path(dashboard_path(service: 'nsm'))
 
-          title = find('.govuk-heading-xl')
-          expect(title).to have_text('Non-standard magistrates')
+          expect(page).to have_css('.govuk-heading-xl', text: 'Non-standard magistrates')
         end
       end
 
@@ -70,8 +67,7 @@ RSpec.describe 'Dashboards' do
         it 'cannot navigate to nsm page' do
           visit dashboard_path(service: 'nsm')
 
-          title = find('.govuk-heading-xl')
-          expect(title).to have_text('Prior authority')
+          expect(page).to have_css('.govuk-heading-xl', text: 'Prior authority')
         end
       end
     end
