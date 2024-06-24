@@ -43,15 +43,17 @@ RSpec.describe 'Dashboards' do
           visit dashboard_path
         end
 
+        it 'shows both service navigation tabs' do
+          tabs = find('.moj-primary-navigation__link')
+          expect(tabs).to include(['Non-standard magistrates', 'Prior authority'])
+        end
+
         it 'can navigate to nsm analytics' do
           click_on 'Non-standard magistrates'
           expect(page).to have_current_path(dashboard_path(service: 'nsm'))
 
           title = find('.govuk-heading-xl')
           expect(title).to have_text('Non-standard magistrates')
-
-          tab = find('.moj-primary-navigation__link')
-          expect(tab).to have_text('Non-standard magistrates')
         end
       end
 
