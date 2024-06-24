@@ -9,7 +9,7 @@ module Nsm
     attribute :time_spent, :time_period
 
     validates :uplift, inclusion: { in: [UPLIFT_PROVIDED, UPLIFT_RESET] }, if: -> { item.uplift? }
-    validates :time_spent, allow_nil: true, time_period: true
+    validates :time_spent, allow_nil: true, time_period: { allow_zero: true }
 
     # overwrite uplift setter to allow value to be passed as either string (form)
     # or integer (initial setup) value
