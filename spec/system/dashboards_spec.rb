@@ -7,7 +7,7 @@ RSpec.describe 'Dashboards' do
                                    .and_return('14,6')
       allow(ENV).to receive(:fetch).with('METABASE_NSM_DASHBOARD_IDS')
                                    .and_return('14')
-      allow(FeatureFlags).to receive(:insights_enabled).and_return(double(enabled?: true))
+      allow(FeatureFlags).to receive(:insights).and_return(double(enabled?: true))
     end
 
     context 'when I am not a supervisor' do
@@ -38,7 +38,7 @@ RSpec.describe 'Dashboards' do
 
       context 'when nsm feature flag is enabled' do
         before do
-          allow(FeatureFlags).to receive(:nsm_enabled).and_return(double(enabled?: true))
+          allow(FeatureFlags).to receive(:nsm).and_return(double(enabled?: true))
           visit dashboard_path
         end
 
@@ -56,7 +56,7 @@ RSpec.describe 'Dashboards' do
 
       context 'when nsm feature flag is disabled' do
         before do
-          allow(FeatureFlags).to receive(:nsm_enabled).and_return(double(enabled?: false))
+          allow(FeatureFlags).to receive(:nsm).and_return(double(enabled?: false))
           visit dashboard_path
         end
 
