@@ -120,7 +120,7 @@ redis:
 
 metabase:
   priorAuthorityDashboardIds: 14
-  nsmDashboardIds: 'TBC'
+  nsmDashboardIds: ''
   siteUrl: 'https://uat.crime-forms-metabase.service.justice.gov.uk'
 
 customErrorService:
