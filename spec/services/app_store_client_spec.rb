@@ -173,4 +173,40 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
       end
     end
   end
+
+  describe '#create_event' do
+    let(:application_id) { SecureRandom.uuid }
+    let(:message) { [{ event: :data }] }
+    let(:response) { double(:response, code:) }
+    let(:code) { 201 }
+    let(:username) { nil }
+
+    before do
+      allow(described_class).to receive(:post).and_return(response)
+    end
+
+    it 'puts the message to default localhost url' do
+      expect(described_class).to receive(:post).with("http://localhost:8000/v1/submissions/#{application_id}/events",
+                                                     body: message.to_json,
+                                                     headers: { authorization: 'Bearer test-bearer-token' })
+
+      subject.create_event(application_id, message)
+    end
+
+    context 'when response code is 201 - created' do
+      it 'returns a created status' do
+        expect(subject.create_event(application_id, message)).to eq(:success)
+      end
+    end
+
+    context 'when response code is unexpected (neither 200 or 201)' do
+      let(:code) { 501 }
+
+      it 'raises an error' do
+        expect { subject.create_event(application_id, message) }.to raise_error(
+          'Unexpected response from AppStore - status 501 on create subscription'
+        )
+      end
+    end
+  end
 end

@@ -55,6 +55,10 @@ class Event < ApplicationRecord
 
     private
 
+    def notify(event)
+      NotifyAppStore.perform_later(event)
+    end
+
     def create_dummy_users_if_non_production(params)
       create_dummy_user_if_non_production(params['primary_user_id'])
       create_dummy_user_if_non_production(params['secondary_user_id'])

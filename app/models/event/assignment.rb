@@ -8,7 +8,7 @@ class Event
         details: {
           comment:
         }
-      )
+      ).tap { notify(_1) }
     end
 
     def title
