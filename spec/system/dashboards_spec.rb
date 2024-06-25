@@ -37,7 +37,7 @@ RSpec.describe 'Dashboards' do
 
       context 'when nsm feature flag is enabled' do
         before do
-          allow(FeatureFlags).to receive(:nsm).and_return(double(enabled?: true))
+          allow(FeatureFlags).to receive(:nsm_insights).and_return(double(enabled?: true))
           visit dashboard_path
         end
 
@@ -56,7 +56,7 @@ RSpec.describe 'Dashboards' do
 
       context 'when nsm feature flag is disabled' do
         before do
-          allow(FeatureFlags).to receive(:nsm).and_return(double(enabled?: false))
+          allow(FeatureFlags).to receive(:nsm_insights).and_return(double(enabled?: false))
           visit dashboard_path
         end
 
@@ -77,7 +77,7 @@ RSpec.describe 'Dashboards' do
                                        .and_return(nil)
           allow(ENV).to receive(:fetch).with('METABASE_NSM_DASHBOARD_IDS')
                                        .and_return(nil)
-          allow(FeatureFlags).to receive(:nsm).and_return(double(enabled?: true))
+          allow(FeatureFlags).to receive(:nsm_insights).and_return(double(enabled?: true))
         end
 
         it 'does not show any prior authority dashboards' do

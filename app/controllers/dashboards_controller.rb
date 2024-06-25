@@ -31,7 +31,7 @@ class DashboardsController < ApplicationController
 
   def service
     param = params.fetch(:service, 'prior_authority')
-    @service ||= !FeatureFlags.nsm.enabled? && param == 'nsm' ? 'prior_authority' : param
+    @service ||= !FeatureFlags.nsm_insights.enabled? && param == 'nsm' ? 'prior_authority' : param
   end
 
   def authorize_supervisor

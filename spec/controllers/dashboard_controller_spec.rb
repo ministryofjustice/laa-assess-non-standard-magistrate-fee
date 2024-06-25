@@ -9,7 +9,7 @@ RSpec.describe DashboardsController do
                                      .and_return(nil)
         allow(ENV).to receive(:fetch).with('METABASE_NSM_DASHBOARD_IDS')
                                      .and_return(nil)
-        allow(FeatureFlags).to receive(:nsm).and_return(double(enabled?: true))
+        allow(FeatureFlags).to receive(:nsm_insights).and_return(double(enabled?: true))
         allow(subject).to receive(:authorize_supervisor).and_return(true)
       end
 
