@@ -11,7 +11,7 @@ class Event
           to: next_state,
           comment: comment
         }
-      ).tap { notify(_1) }
+      )
     end
   end
 end

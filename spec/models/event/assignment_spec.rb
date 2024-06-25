@@ -15,6 +15,14 @@ RSpec.describe Event::Assignment do
     )
   end
 
+  it 'notifies the app store' do
+    event = instance_double(Event)
+    expect(described_class).to receive(:create).and_return(event)
+    expect(NotifyEventAppStore).to receive(:perform_later).with(event:)
+
+    subject
+  end
+
   it 'has a valid title' do
     expect(subject.title).to eq('Claim allocated to caseworker')
   end

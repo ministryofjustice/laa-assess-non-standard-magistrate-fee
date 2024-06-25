@@ -56,7 +56,7 @@ class Event < ApplicationRecord
     private
 
     def notify(event)
-      NotifyAppStore.perform_later(event)
+      NotifyEventAppStore.perform_later(event:)
     end
 
     def create_dummy_users_if_non_production(params)
