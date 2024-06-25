@@ -1,7 +1,6 @@
 # The below is heavily cribbed from ministryofjustice/laa-apply-for-criminal-legal-aid
 return unless ENV.fetch("ENABLE_PROMETHEUS_EXPORTER", "false") == "true"
 
-# require 'prometheus_exporter/client'
 require "prometheus_exporter/server"
 require "prometheus_exporter/instrumentation"
 require "prometheus_exporter/middleware"
