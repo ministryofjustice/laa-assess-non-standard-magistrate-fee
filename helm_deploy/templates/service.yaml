@@ -17,17 +17,18 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "helm_deploy.fullname" . }}-prometheus
+  name: {{ include "helm_deploy.fullname" . }}-metrics-svc
   labels:
-    app: laa-assess-crime-forms-prometheus
+    service: {{ include "helm_deploy.fullname" . }}-metrics-svc
 spec:
   type: {{ .Values.service.type }}
   ports:
     - port: 9394
       name: metrics
-      targetPort: 9394
+      protocol: TCP
   selector:
     {{- include "helm_deploy.selectorLabels" . | nindent 4 }}
+    metrics-target: {{ include "helm_deploy.fullname" . }}-metrics-target
 {{ if .Values.customErrorService.enabled }}
 ---
 apiVersion: v1

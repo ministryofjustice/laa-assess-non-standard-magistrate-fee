@@ -25,6 +25,7 @@ spec:
         {{- include "helm_deploy.selectorLabels" . | nindent 8 }}
         app: laa-assess-crime-forms-app
         appName: {{ include "helm_deploy.fullname" . }}
+        metrics-target: {{ include "helm_deploy.fullname" . }}-metrics-target
     spec:
       serviceAccountName: {{ .Values.service_account.name }}
       {{- with .Values.imagePullSecrets }}
