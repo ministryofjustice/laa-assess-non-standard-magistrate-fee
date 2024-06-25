@@ -1,0 +1,5 @@
+<% if @current_tab == 'overview' %>
+  <%= render partial: 'overview' %>
+<% elsif @service == 'prior_authority' && @current_tab == 'caseworkers' %>
+  <%= render partial: 'caseworkers' %>
+<% end %>

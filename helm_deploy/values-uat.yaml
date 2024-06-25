@@ -78,7 +78,8 @@ redis:
   enabled: false
 
 metabase:
-  dashboardIds: 'TBC'
+  priorAuthorityDashboardIds: ''
+  nsmDashboardIds: ''
   siteUrl: 'https://uat.crime-forms-metabase.service.justice.gov.uk'
 
 customErrorService:

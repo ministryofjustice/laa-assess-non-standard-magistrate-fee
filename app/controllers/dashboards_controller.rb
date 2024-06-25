@@ -1,8 +1,22 @@
 class DashboardsController < ApplicationController
   before_action :authorize_supervisor
 
+  layout 'dashboard'
+
   def show
-    ids = ENV.fetch('METABASE_DASHBOARD_IDS').split(',')
+    @current_tab ||= params.fetch(:current_tab, 'overview')
+    generate_dashboards(service)
+  end
+
+  def generate_dashboards(service)
+    if service == 'prior_authority'
+      ids = ENV.fetch('METABASE_PA_DASHBOARD_IDS')&.split(',')
+    elsif service == 'nsm'
+      ids = ENV.fetch('METABASE_NSM_DASHBOARD_IDS')&.split(',')
+    end
+
+    ids ||= []
+
     @iframe_urls = ids.map do |id|
       payload = {
         resource: { dashboard: id.to_i },
@@ -13,6 +27,11 @@ class DashboardsController < ApplicationController
 
       "#{ENV.fetch('METABASE_SITE_URL')}/embed/dashboard/#{token}#bordered=true&titled=true"
     end
+  end
+
+  def service
+    param = params.fetch(:service, 'prior_authority')
+    @service ||= !FeatureFlags.nsm_insights.enabled? && param == 'nsm' ? 'prior_authority' : param
   end
 
   def authorize_supervisor
