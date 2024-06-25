@@ -16,7 +16,7 @@ RSpec.describe Nsm::V1::ClaimJustification do
             'en' => 'Enhanced rates claimed',
           },
           {
-            'value' => 'councel_or_agent_assigned',
+            'value' => 'counsel_or_agent_assigned',
             'en' => 'Counsel or agent assigned',
           },
         ]
@@ -35,7 +35,7 @@ RSpec.describe Nsm::V1::ClaimJustification do
           'en' => 'Enhanced rates claimed',
         },
         {
-          'value' => 'councel_or_agent_assigned',
+          'value' => 'counsel_or_agent_assigned',
           'en' => 'Counsel or agent assigned',
         },
       ]

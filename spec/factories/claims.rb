@@ -27,8 +27,8 @@ FactoryBot.define do
         'remitted_to_magistrate' => 'no',
         'reasons_for_claim' => [
           {
-            'value' => 'councel_or_agent_assigned',
-            'en' => 'Councel or agent assigned'
+            'value' => 'counsel_or_agent_assigned',
+            'en' => 'Counsel or agent assigned'
           }
         ],
         'supplemental_claim' => 'no',
