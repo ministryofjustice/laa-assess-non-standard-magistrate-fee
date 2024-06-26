@@ -40,6 +40,17 @@ class AppStoreClient
     end
   end
 
+  def create_events(submission_id, payload)
+    response = self.class.post("#{host}/v1/submissions/#{submission_id}/events", **options(payload))
+
+    case response.code
+    when 200..204
+      :success
+    else
+      raise "Unexpected response from AppStore - status #{response.code} on create events"
+    end
+  end
+
   private
 
   def options(payload = nil)
