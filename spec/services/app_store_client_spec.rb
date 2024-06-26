@@ -174,7 +174,7 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
     end
   end
 
-  describe '#create_event' do
+  describe '#create_events' do
     let(:application_id) { SecureRandom.uuid }
     let(:message) { [{ event: :data }] }
     let(:response) { double(:response, code:) }
@@ -190,12 +190,12 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
                                                      body: message.to_json,
                                                      headers: { authorization: 'Bearer test-bearer-token' })
 
-      subject.create_event(application_id, message)
+      subject.create_events(application_id, message)
     end
 
     context 'when response code is 201 - created' do
       it 'returns a created status' do
-        expect(subject.create_event(application_id, message)).to eq(:success)
+        expect(subject.create_events(application_id, message)).to eq(:success)
       end
     end
 
@@ -203,8 +203,8 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
       let(:code) { 501 }
 
       it 'raises an error' do
-        expect { subject.create_event(application_id, message) }.to raise_error(
-          'Unexpected response from AppStore - status 501 on create subscription'
+        expect { subject.create_events(application_id, message) }.to raise_error(
+          'Unexpected response from AppStore - status 501 on create events'
         )
       end
     end

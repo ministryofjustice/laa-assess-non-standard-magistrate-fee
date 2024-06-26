@@ -4,6 +4,6 @@ class NotifyEventAppStore < ApplicationJob
 
   def perform(event:)
     client = AppStoreClient.new
-    client.create_event(event.submission_id, events: [event.as_json])
+    client.create_events(event.submission_id, events: [event.as_json])
   end
 end

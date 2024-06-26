@@ -55,10 +55,6 @@ class Event < ApplicationRecord
 
     private
 
-    def notify(event)
-      NotifyEventAppStore.perform_later(event:)
-    end
-
     def create_dummy_users_if_non_production(params)
       create_dummy_user_if_non_production(params['primary_user_id'])
       create_dummy_user_if_non_production(params['secondary_user_id'])
@@ -109,6 +105,10 @@ class Event < ApplicationRecord
         public: PUBLIC_EVENTS.include?(event_type),
         event_type: event_type.demodulize.underscore
       )
+  end
+
+  def notify
+    NotifyEventAppStore.perform_later(event: self)
   end
 
   private

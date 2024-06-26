@@ -21,7 +21,7 @@ RSpec.describe Event::Unassignment do
     end
 
     it 'notifies the app store' do
-      event = instance_double(Event)
+      event = Event.send(:new)
       expect(described_class).to receive(:create).and_return(event)
       expect(NotifyEventAppStore).to receive(:perform_later).with(event:)
 
@@ -48,7 +48,7 @@ RSpec.describe Event::Unassignment do
     end
 
     it 'notifies the app store' do
-      event = instance_double(Event)
+      event = Event.send(:new)
       expect(described_class).to receive(:create).and_return(event)
       expect(NotifyEventAppStore).to receive(:perform_later).with(event:)
 

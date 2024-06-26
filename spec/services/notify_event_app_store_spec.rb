@@ -8,7 +8,7 @@ RSpec.describe NotifyEventAppStore do
   let(:as_json) { { event: :json } }
 
   describe '#perform' do
-    let(:http_notifier) { instance_double(AppStoreClient, create_event: true) }
+    let(:http_notifier) { instance_double(AppStoreClient, create_events: true) }
 
     before do
       allow(AppStoreClient).to receive(:new).and_return(http_notifier)
@@ -21,14 +21,14 @@ RSpec.describe NotifyEventAppStore do
     end
 
     it 'sends a HTTP message' do
-      expect(http_notifier).to receive(:create_event).with(submission_id, events: [as_json])
+      expect(http_notifier).to receive(:create_events).with(submission_id, events: [as_json])
 
       subject.perform(event:)
     end
 
     describe 'when error during notify process' do
       before do
-        allow(http_notifier).to receive(:create_event).and_raise('annoying_error')
+        allow(http_notifier).to receive(:create_events).and_raise('annoying_error')
       end
 
       it 'allows the error to be raised - should reset the sidekiq job' do
