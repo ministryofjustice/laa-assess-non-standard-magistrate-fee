@@ -60,7 +60,7 @@ RSpec.describe 'View applications' do
       visit prior_authority_application_path(application)
       expect(page).to have_content 'Requested: £356.50'
       click_on 'Adjust quote'
-      expect(page).to have_content 'Time1 hour 0 minutesCost£32.00 per hour'
+      expect(page).to have_content 'Amount1 hour 0 minutesRate£32.00 per hour'
       click_on cost_adjustment_button_label
       fill_in 'Minutes', with: '30'
       fill_in 'Explain your decision', with: 'Feeling generous'

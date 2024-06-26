@@ -57,8 +57,8 @@ RSpec.describe 'Adjust additional costs' do
     it 'allows me to adjust the first additional cost (items)' do
       within('.govuk-table#additional_cost_1') do
         expect(page)
-          .to have_content('Item110 items')
-          .and have_content('Cost£3.50 per item')
+          .to have_content('Amount110 items')
+          .and have_content('Rate£3.50 per item')
           .and have_content('Total£385.00')
       end
 
@@ -69,7 +69,7 @@ RSpec.describe 'Adjust additional costs' do
         .and have_content("Adjust the providers' costs by changing the values.")
 
       fill_in 'Number of items', with: 100
-      fill_in 'What is the cost per item?', with: '3.00'
+      fill_in 'Cost per item', with: '3.00'
       fill_in 'Explain your decision', with: 'additional cost 1 explanation'
       click_on 'Save changes'
 
@@ -78,8 +78,8 @@ RSpec.describe 'Adjust additional costs' do
 
       within('.govuk-table#additional_cost_1') do
         expect(page)
-          .to have_content('Item110 items100 items')
-          .and have_content('Cost£3.50 per item£3.00 per item')
+          .to have_content('Amount110 items100 items')
+          .and have_content('Rate£3.50 per item£3.00 per item')
           .and have_content('Total£385.00£300.00')
       end
     end
@@ -87,8 +87,8 @@ RSpec.describe 'Adjust additional costs' do
     it 'allows me to adjust the second additional cost (time)' do
       within('.govuk-table#additional_cost_2') do
         expect(page)
-          .to have_content('Time2 hours 0 minutes')
-          .and have_content('Cost£50.00 per hour')
+          .to have_content('Amount2 hours 0 minutes')
+          .and have_content('Rate£50.00 per hour')
           .and have_content('Total£100.00')
       end
 
@@ -100,7 +100,7 @@ RSpec.describe 'Adjust additional costs' do
 
       fill_in 'Hours', with: 1
       fill_in 'Minutes', with: 30
-      fill_in 'What is the hourly cost?', with: '40.00'
+      fill_in 'Cost per hour', with: '40.00'
       fill_in 'Explain your decision', with: 'additional cost 2 explanation'
       click_on 'Save changes'
 
@@ -109,8 +109,8 @@ RSpec.describe 'Adjust additional costs' do
 
       within('.govuk-table#additional_cost_2') do
         expect(page)
-          .to have_content('Time2 hours 0 minutes1 hour 30 minutes')
-          .and have_content('Cost£50.00 per hour£40.00 per hour')
+          .to have_content('Amount2 hours 0 minutes1 hour 30 minutes')
+          .and have_content('Rate£50.00 per hour£40.00 per hour')
           .and have_content('Total£100.00£60.00')
       end
     end
@@ -122,12 +122,12 @@ RSpec.describe 'Adjust additional costs' do
 
       expect(page).to have_css('#adjusted-cost', text: '0.00')
       fill_in 'Number of items', with: 'a'
-      fill_in 'What is the cost per item?', with: 'a'
+      fill_in 'Cost per item', with: 'a'
       click_on 'Calculate my changes'
       expect(page).to have_css('#adjusted-cost', text: '--')
 
       fill_in 'Number of items', with: 100
-      fill_in 'What is the cost per item?', with: '3.00'
+      fill_in 'Cost per item', with: '3.00'
 
       click_on 'Calculate my changes'
       expect(page).to have_css('#adjusted-cost', text: '300.00')
@@ -137,7 +137,7 @@ RSpec.describe 'Adjust additional costs' do
       click_on 'Adjust additional cost', match: :first
 
       fill_in 'Number of items', with: ''
-      fill_in 'What is the cost per item?', with: ''
+      fill_in 'Cost per item', with: ''
 
       click_on 'Save changes'
       expect(page)
@@ -145,7 +145,7 @@ RSpec.describe 'Adjust additional costs' do
         .and have_content('Enter the cost per item')
 
       fill_in 'Number of items', with: '-1'
-      fill_in 'What is the cost per item?', with: 0
+      fill_in 'Cost per item', with: 0
 
       click_on 'Save changes'
       expect(page)
@@ -153,14 +153,14 @@ RSpec.describe 'Adjust additional costs' do
         .and have_content('The cost per item must be more than 0')
 
       fill_in 'Number of items', with: 'a'
-      fill_in 'What is the cost per item?', with: 'a'
+      fill_in 'Cost per item', with: 'a'
 
       click_on 'Save changes'
       expect(page)
         .to have_content('The number of items must be a number, like 25')
         .and have_content('The cost per item must be a number, like 25')
         .and have_field('Number of items', with: 'a')
-        .and have_field('What is the cost per item?', with: 'a')
+        .and have_field('Cost per item', with: 'a')
     end
 
     it 'allows me to recalculate the time cost on the page', :javascript do
@@ -170,7 +170,7 @@ RSpec.describe 'Adjust additional costs' do
 
       fill_in 'Hours', with: 1
       fill_in 'Minutes', with: 30
-      fill_in 'What is the hourly cost?', with: '40.00'
+      fill_in 'Cost per hour', with: '40.00'
 
       expect(page).to have_css('#adjusted-cost', text: '0.00')
       click_on 'Calculate my changes'
@@ -182,7 +182,7 @@ RSpec.describe 'Adjust additional costs' do
 
       fill_in 'Hours', with: 'a'
       fill_in 'Minutes', with: 'b'
-      fill_in 'What is the hourly cost?', with: 'c'
+      fill_in 'Cost per hour', with: 'c'
 
       click_on 'Save changes'
 
@@ -191,7 +191,7 @@ RSpec.describe 'Adjust additional costs' do
         .and have_content('The cost per hour must be a number, like 25')
         .and have_field('Hours', with: 'a')
         .and have_field('Minutes', with: 'b')
-        .and have_field('What is the hourly cost?', with: 'c')
+        .and have_field('Cost per hour', with: 'c')
     end
 
     it 'warns me that I have not made any changes' do
