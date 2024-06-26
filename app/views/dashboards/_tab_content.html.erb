@@ -2,4 +2,6 @@
   <%= render partial: 'overview' %>
 <% elsif @service == 'prior_authority' && @current_tab == 'caseworkers' %>
   <%= render partial: 'caseworkers' %>
+<% elsif @service == 'prior_authority' && @current_tab == 'autogrant' %>
+  <%= render partial: 'autogrant' %>
 <% end %>
