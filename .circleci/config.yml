@@ -10,6 +10,7 @@ orbs:
   aws-cli: circleci/aws-cli@4.1.3
   aws-ecr: circleci/aws-ecr@9.0.2
   crime-forms-end-to-end-tests: ministryofjustice/crime-forms-end-to-end-tests@volatile
+  slack: circleci/slack@4.13.3
 
 # ------------------
 # EXECUTORS
@@ -314,6 +315,10 @@ jobs:
     executor: crime-forms-end-to-end-tests/e2e-test-executor
     steps:
       - crime-forms-end-to-end-tests/run-e2e-tests
+      - slack/notify:
+          channel: laa-non-standard-crime-claims-prod-alerts
+          event: fail
+          template: basic_fail_1
 
   deploy-dev:
     executor: cloud-platform-executor
@@ -326,12 +331,20 @@ jobs:
     steps:
       - deploy-to-environment:
           environment: uat
+      - slack/notify:
+          channel: laa-non-standard-crime-claims-preprod-alerts
+          event: fail
+          template: basic_fail_1
 
   deploy-prod:
     executor: cloud-platform-executor
     steps:
       - deploy-to-environment:
           environment: prod
+      - slack/notify:
+          channel: laa-non-standard-crime-claims-prod-alerts
+          event: fail
+          template: basic_fail_1
 
 # ------------------
 # WORKFLOWS
@@ -401,7 +414,9 @@ workflows:
             - linter-tests
             - rspec-tests
       - e2e-test-main:
-          context: laa-crime-forms-e2e-tests
+          context:
+            - laa-non-standard-crime-claims-alerting
+            - laa-crime-forms-e2e-tests
           requires:
             - build-to-ecr
           filters:
@@ -413,7 +428,9 @@ workflows:
           requires:
             - e2e-test-main
       - deploy-uat:
-          context: laa-assess-crime-forms-uat
+          context:
+            - laa-non-standard-crime-claims-alerting
+            - laa-assess-crime-forms-uat
           requires:
             - e2e-test-main
           filters:
@@ -421,7 +438,9 @@ workflows:
               only:
                 - main
       - deploy-prod:
-          context: laa-assess-crime-forms-production
+          context:
+            - laa-non-standard-crime-claims-alerting
+            - laa-assess-crime-forms-production
           requires:
             - deploy-uat
           filters:
