@@ -11,6 +11,7 @@ module Nsm
     ].freeze
 
     attribute :state
+    attribute :grant_comment
     attribute :partial_comment
     attribute :reject_comment
     attribute :current_user
@@ -40,6 +41,8 @@ module Nsm
 
     def comment
       case state
+      when GRANTED
+        grant_comment
       when PART_GRANT
         partial_comment
       when REJECTED

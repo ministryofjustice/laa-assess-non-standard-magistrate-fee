@@ -29,7 +29,7 @@ module Nsm
 
     def decision_params
       params.require(:nsm_make_decision_form).permit(
-        :state, :partial_comment, :reject_comment
+        :state, :grant_comment, :partial_comment, :reject_comment
       ).merge(current_user:)
     end
   end
