@@ -9,6 +9,8 @@ RSpec.describe DashboardsController do
                                      .and_return(nil)
         allow(ENV).to receive(:fetch).with('METABASE_NSM_DASHBOARD_IDS')
                                      .and_return(nil)
+        allow(ENV).to receive(:fetch).with('METABASE_PA_AUTOGRANT_DASHBOARD_IDS')
+                                     .and_return(nil)
         allow(FeatureFlags).to receive(:nsm_insights).and_return(double(enabled?: true))
         allow(subject).to receive(:authorize_supervisor).and_return(true)
       end
@@ -21,6 +23,7 @@ RSpec.describe DashboardsController do
 
           it 'returns no urls' do
             expect(subject.instance_variable_get(:@iframe_urls)).to eq([])
+            expect(subject.instance_variable_get(:@autogrant_urls)).to eq([])
           end
         end
 
@@ -31,6 +34,7 @@ RSpec.describe DashboardsController do
 
           it 'returns no urls' do
             expect(subject.instance_variable_get(:@iframe_urls)).to eq([])
+            expect(subject.instance_variable_get(:@autogrant_urls)).to eq([])
           end
         end
 
@@ -41,6 +45,7 @@ RSpec.describe DashboardsController do
 
           it 'returns no ids' do
             expect(subject.instance_variable_get(:@iframe_urls)).to eq([])
+            expect(subject.instance_variable_get(:@autogrant_urls)).to eq([])
           end
         end
       end

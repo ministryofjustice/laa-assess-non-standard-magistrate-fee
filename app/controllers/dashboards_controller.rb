@@ -10,17 +10,15 @@ class DashboardsController < ApplicationController
 
   def generate_dashboards(service)
     if service == 'prior_authority'
-      ids = ENV.fetch('METABASE_PA_DASHBOARD_IDS')&.split(',')
+      overview_ids = ENV.fetch('METABASE_PA_DASHBOARD_IDS')&.split(',')
     elsif service == 'nsm'
-      ids = ENV.fetch('METABASE_NSM_DASHBOARD_IDS')&.split(',')
+      overview_ids = ENV.fetch('METABASE_NSM_DASHBOARD_IDS')&.split(',')
     end
 
-    ids ||= []
-
-    @iframe_urls = generate_metabase_urls(ids)
-
-    ids = ENV.fetch('METABASE_PA_AUTOGRANT_DASHBOARD_IDS')&.split(',')
-    @autogrant_urls = generate_metabase_urls(ids)
+    overview_ids ||= []
+    @iframe_urls = generate_metabase_urls(overview_ids)
+    autogrant_ids = ENV.fetch('METABASE_PA_AUTOGRANT_DASHBOARD_IDS')&.split(',') || []
+    @autogrant_urls = generate_metabase_urls(autogrant_ids)
   end
 
   def service
