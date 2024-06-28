@@ -410,14 +410,17 @@ workflows:
             - rspec-tests
       - build-to-ecr:
           context: laa-assess-crime-forms-dev
-          requires:
-            - linter-tests
-            - rspec-tests
+          filters:
+            branches:
+              only:
+                - main
       - e2e-test-main:
           context:
             - laa-non-standard-crime-claims-alerting
             - laa-crime-forms-e2e-tests
           requires:
+            - linter-tests
+            - rspec-tests
             - build-to-ecr
           filters:
             branches:
