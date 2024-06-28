@@ -133,7 +133,7 @@ RSpec.describe 'View applications' do
       it 'lets me view associated files' do
         click_on 'test.pdf'
         expect(page).to have_current_path(
-          %r{/123123123\?response-content-disposition=attachment%3B%20filename%3Dtest\.pdf}
+          %r{/123123123\?response-content-disposition=attachment%3B%20filename%3D%22test\.pdf%22}
         )
       end
     end

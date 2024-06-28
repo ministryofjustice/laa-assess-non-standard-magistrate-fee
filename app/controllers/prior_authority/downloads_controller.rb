@@ -7,7 +7,7 @@ module PriorAuthority
       download_url = S3_BUCKET.object(params[:id])
                               .presigned_url(:get,
                                              expires_in: PRESIGNED_EXPIRY,
-                                             response_content_disposition: "attachment; filename=#{params[:file_name]}")
+                                             response_content_disposition: "attachment; filename=\"#{params[:file_name]}\"")
       redirect_to download_url, allow_other_host: true
     end
   end
