@@ -1,7 +1,7 @@
 <%= govuk_summary_card(title: t('.primary_quote'), html_attributes: { id: 'primary-quote' }) do %>
   <%= render 'amended' if @details.section_amended?('primary_quote') %>
   <%= govuk_summary_list(rows: model.card_rows, classes: 'govuk-!-margin-bottom-6') %>
-  <%= govuk_table(head: [t('.cost_type'), t('.amount'), t('.requested'), t('.total')],
+  <%= govuk_table(head: [t('.cost_type'), t('.amount'), t('.rate'), t('.total')],
                   rows: model.table_rows,) %>
 
   <% if editable %>

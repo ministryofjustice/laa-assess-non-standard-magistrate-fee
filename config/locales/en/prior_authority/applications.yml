@@ -59,8 +59,8 @@ en:
         primary_quote: Primary quote
         cost_type: Cost type
         amount: Amount
-        requested: Requested
-        total: Total
+        rate: Rate
+        total: Total requested
         adjust: Adjust quote figures
       reason_why_card:
         reason_for_prior_authority: Reason for prior authority

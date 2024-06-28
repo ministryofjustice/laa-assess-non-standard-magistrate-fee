@@ -22,7 +22,7 @@
 
         table.with_body do |body|
           body.with_row do |row|
-            row.with_cell(text: additional_cost.unit_label)
+            row.with_cell(text: t('.amount'))
             row.with_cell(text: additional_cost.requested_humanized_units)
             row.with_cell(text: additional_cost.adjusted_humanized_units)
           end

@@ -8,11 +8,11 @@ en:
         explanation:
           hint: For example, why you made adjustments to the cost or time. We'll share this explanation with the provider.
           label: Explain your decision
-        hourly_cost: Hourly cost
+        hourly_cost: Cost per hour
         page_title: Adjust additional cost %{n}
       cost_fields:
-        cost_per_hour: What is the hourly cost?
-        cost_per_item: What is the cost per item?
+        cost_per_hour: Cost per hour
+        cost_per_item: Cost per item
         items: Number of items
         period: Time
       confirm_deletion:

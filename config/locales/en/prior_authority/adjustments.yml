@@ -10,17 +10,18 @@ en:
         additional_cost: Additional cost %{n}
         adjust_additional_cost: Adjust additional cost
         adjusted: Caseworker adjusted
-        cost: Cost
+        cost: Rate
         cost_description: "Cost description: %{name}"
         details: Details
         requested: Requested
-        time: Time
+        time: Amount
+        amount: Amount
         total: Total
         delete: Delete additional cost adjustment
       service_costs:
         adjusted: Caseworker adjusted
         adjust_service_cost: Adjust service costs
-        cost: Cost
+        cost: Rate
         details: Details
         requested: Requested
         amount: Amount
@@ -29,11 +30,11 @@ en:
       travel_costs:
         adjusted: Caseworker adjusted
         adjust_travel_cost: Adjust travel costs
-        cost: Cost
+        cost: Rate
         cost_description: "Reason for travel cost:"
         details: Details
         requested: Requested
-        time: Time
+        time: Amount
         total: Total
         travel_cost: Travel cost
         delete: Delete travel cost adjustment
