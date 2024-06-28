@@ -16,10 +16,14 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
       visit nsm_claim_claim_details_path(claim)
       click_link_or_button 'Make a decision'
       choose 'Grant it'
+      fill_in 'nsm-make-decision-form-grant-comment-field', with: 'Test Data'
 
       expect do
         click_link_or_button 'Submit decision'
       end.to have_enqueued_job(NotifyAppStore)
+
+      visit nsm_claim_history_path(claim)
+      expect(page).to have_content 'Test Data'
     end
   end
 
