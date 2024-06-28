@@ -21,6 +21,7 @@ module Nsm
     validates :state, inclusion: { in: STATES }
     validates :partial_comment, presence: true, if: -> { state == PART_GRANT }
     validates :reject_comment, presence: true, if: -> { state == REJECTED }
+    validate :check_adjustments_made
 
     def save
       return false unless valid?
@@ -48,6 +49,18 @@ module Nsm
       when REJECTED
         reject_comment
       end
+    end
+
+    def check_adjustments_made
+      if state == PART_GRANT && !adjustments_made?
+        errors.add(:state, :no_adjustments)
+      elsif adjustments_made?
+        errors.add(:state, :"adjustments_when_#{state}")
+      end
+    end
+
+    def adjustments_made?
+      claim.formatted_claimed_total != claim.formatted_allowed_total
     end
   end
 end
