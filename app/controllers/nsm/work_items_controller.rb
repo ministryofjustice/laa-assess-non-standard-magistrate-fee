@@ -57,7 +57,7 @@ module Nsm
         model.id == params[:id]
       end
 
-      form = WorkItemForm.new(claim:, item:, **form_params)
+      form = WorkItemForm.new(claim:, item:, **form_params(item))
 
       if form.save
         redirect_to nsm_claim_work_items_path(claim)
@@ -68,14 +68,16 @@ module Nsm
 
     private
 
-    def form_params
+    def form_params(work_item)
       params.require(:nsm_work_item_form).permit(
         :uplift,
         :time_spent,
-        :explanation
+        :explanation,
+        :change_work_type,
       ).merge(
         current_user: current_user,
-        id: params[:id]
+        id: params[:id],
+        work_type: work_item.work_type,
       )
     end
 

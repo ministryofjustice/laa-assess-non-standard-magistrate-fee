@@ -30,6 +30,18 @@
           <%= f.govuk_radio_button :uplift, 'no' %>
         <% end %>
       <% end %>
+
+      <% if form.offer_to_change_work_type? %>
+        <%= f.govuk_collection_radio_buttons(
+            :change_work_type,
+            form.change_work_type_options,
+            :value,
+            :label,
+            :hint,
+            legend: { text: t('.change_work_type.label'), size: 's' }
+          ) %>
+      <% end %>
+
       <%= f.govuk_period_field :time_spent, legend: { size: 's', class: 'govuk-!-font-weight-bold' }, width: 'one-third' %>
       <%= govuk_button_link_to(t('.calculate_button_text'), '#',
         secondary: true ,

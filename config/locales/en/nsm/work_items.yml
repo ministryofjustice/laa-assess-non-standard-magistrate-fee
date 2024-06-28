@@ -67,6 +67,11 @@ en:
             inc_vat: Caseworker allowed (including VAT)
             exc_vat: "Caseworker allowed"
           header_three: "Uplift allowed"
+        change_work_type:
+          label: Do you want to change the work type to attendance with counsel assigned?
+          'yes': Yes, change it
+          yes_hint: You must explain your decision
+          'no': No, do not change it
       show:
         page_title: "Your claims"
         heading:
@@ -129,3 +134,5 @@ en:
               no_change: The new time cannot be the same as the cost submitted by the provider
             explanation:
               blank: Add an explanation for your decision
+            change_work_type:
+              inclusion: Select yes if you want to change the work type to attendance with counsel assigned

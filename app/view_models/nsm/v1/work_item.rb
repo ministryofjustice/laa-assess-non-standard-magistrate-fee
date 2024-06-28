@@ -7,7 +7,7 @@ module Nsm
       # used to guess position when value not set in JSON blob when position is blank
       attribute :submission
       attribute :position, :integer
-      attribute :work_type, :translated
+      adjustable_attribute :work_type, :translated
       adjustable_attribute :time_spent, :time_period
       attribute :completed_on, :date
 
@@ -73,7 +73,7 @@ module Nsm
       end
 
       def form_attributes
-        attributes.slice('time_spent', 'uplift').merge(
+        attributes.slice('time_spent', 'uplift', 'work_type').merge(
           'explanation' => adjustment_comment
         )
       end

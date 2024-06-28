@@ -18,6 +18,8 @@ module Type
     private
 
     def cast_value(value)
+      return value if value.is_a?(TranslationObject)
+
       raise "Invalid Type for #{value.inspect}" unless value.is_a?(Hash)
 
       TranslationObject.new(value)

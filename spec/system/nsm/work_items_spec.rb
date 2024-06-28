@@ -106,4 +106,78 @@ RSpec.describe 'Work items' do
       )
     end
   end
+
+  context 'when there is an attendance without counsel work item' do
+    let(:claim) do
+      create(
+        :claim,
+        work_items: [
+          {
+            'id' => 'cf5e303e-98dd-4b0f-97ea-3560c4c5f137',
+            'uplift' => 95,
+            'pricing' => 24.0,
+            'work_type' => {
+              'en' => 'Attendance without counsel',
+              'value' => 'attendance_without_counsel'
+            },
+            'fee_earner' => 'aaa',
+            'time_spent' => 161,
+            'completed_on' => '2022-12-12'
+          }
+        ]
+      )
+    end
+
+    it 'does not change the work type if I ask it not to when making other adjustments' do
+      visit nsm_claim_work_items_path(claim)
+
+      within('.govuk-table__row', text: 'Attendance without counsel') do
+        expect(page).to have_content('95%')
+        click_on 'Change'
+      end
+
+      choose 'Yes, remove uplift'
+      choose 'No, do not change it'
+      fill_in 'Explain your decision', with: 'Testing'
+
+      click_on 'Save changes'
+      visit nsm_claim_work_items_path(claim)
+
+      expect(page).to have_content('Attendance without counsel')
+    end
+
+    it 'changes the work type if I ask it to' do
+      visit nsm_claim_work_items_path(claim)
+
+      within('.govuk-table__row', text: 'Attendance without counsel') do
+        click_on 'Change'
+      end
+
+      choose 'Yes, change it'
+      fill_in 'Explain your decision', with: 'Testing'
+
+      click_on 'Save changes'
+      visit nsm_claim_work_items_path(claim)
+
+      expect(page).to have_content('Attendance with counsel')
+
+      page.find('.govuk-details__summary-text').click
+      within('.govuk-details__text') do
+        expect(page).to have_content('Attendance with counsel')
+      end
+    end
+
+    it 'shows a validation error if I do not specify' do
+      visit nsm_claim_work_items_path(claim)
+
+      within('.govuk-table__row', text: 'Attendance without counsel') do
+        click_on 'Change'
+      end
+
+      fill_in 'Explain your decision', with: 'Testing'
+
+      click_on 'Save changes'
+      expect(page).to have_content('Select yes if you want to change the work type to attendance with counsel assigned')
+    end
+  end
 end

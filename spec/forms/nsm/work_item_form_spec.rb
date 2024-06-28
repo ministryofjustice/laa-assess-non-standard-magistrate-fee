@@ -4,7 +4,7 @@ RSpec.describe Nsm::WorkItemForm do
   subject { described_class.new(params) }
 
   let(:claim) { create(:claim) }
-  let(:params) { { claim:, id:, time_spent:, uplift:, item:, explanation:, current_user: } }
+  let(:params) { { claim:, id:, time_spent:, uplift:, item:, explanation:, current_user:, work_type:, change_work_type: } }
   let(:id) { 'cf5e303e-98dd-4b0f-97ea-3560c4c5f137' }
   let(:time_spent) { 95 }
   let(:uplift) { 'yes' }
@@ -22,6 +22,8 @@ RSpec.describe Nsm::WorkItemForm do
   let(:original_uplift) { 95 }
   let(:explanation) { 'change to work items' }
   let(:current_user) { instance_double(User) }
+  let(:work_type) { TranslationObject.new('en' => 'Waiting', 'value' => 'waiting') }
+  let(:change_work_type) { nil }
 
   describe '#validations' do
     context 'uplift' do
@@ -78,6 +80,40 @@ RSpec.describe Nsm::WorkItemForm do
         it 'is not valid' do
           expect(subject).not_to be_valid
           expect(subject.errors.of_kind?(:explanation, :blank)).to be(false)
+        end
+      end
+
+      context 'when the change work item question needs answering' do
+        let(:work_type) { TranslationObject.new('en' => 'Anything', 'value' => 'attendance_without_counsel') }
+
+        it 'shows blank question error in preference to no change error' do
+          expect(subject).not_to be_valid
+          expect(subject.errors.of_kind?(:change_work_type, :inclusion)).to be(true)
+          expect(subject.errors.of_kind?(:base, :no_change)).to be(false)
+        end
+      end
+    end
+
+    context 'change_item_type' do
+      before { subject.valid? }
+
+      it 'does not error by default' do
+        expect(subject.errors.of_kind?(:change_work_type, :inclusion)).to be(false)
+      end
+
+      context 'when the work type is attendance_without_counsel' do
+        let(:work_type) { TranslationObject.new('en' => 'Anything', 'value' => 'attendance_without_counsel') }
+
+        it 'errors if change work type blank' do
+          expect(subject.errors.of_kind?(:change_work_type, :inclusion)).to be(true)
+        end
+
+        context 'when change work type is not blank' do
+          let(:change_work_type) { true }
+
+          it 'does not error' do
+            expect(subject.errors.of_kind?(:change_work_type, :inclusion)).to be(false)
+          end
         end
       end
     end

@@ -248,7 +248,8 @@ RSpec.describe Nsm::V1::WorkItem do
       expect(subject.form_attributes).to eq(
         'explanation' => nil,
         'time_spent' => 161,
-        'uplift' => 0
+        'uplift' => 0,
+        'work_type' => TranslationObject.new('value' => 'waiting', 'en' => 'Waiting'),
       )
     end
 
@@ -267,7 +268,8 @@ RSpec.describe Nsm::V1::WorkItem do
         expect(subject.form_attributes).to eq(
           'explanation' => 'second adjustment',
           'time_spent' => 161,
-          'uplift' => 0
+          'uplift' => 0,
+          'work_type' => TranslationObject.new('value' => 'waiting', 'en' => 'Waiting'),
         )
       end
     end
