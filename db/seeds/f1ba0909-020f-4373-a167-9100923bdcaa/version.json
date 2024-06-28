@@ -35,7 +35,7 @@
             "contact_email": null,
             "reference_number": "jj",
             "contact_first_name": null,
-            "contact_last_name": null,
+            "contact_last_name": null
         },
         "claim_type": {
             "value": "non_standard_magistrate",

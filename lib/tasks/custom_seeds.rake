@@ -40,15 +40,13 @@ namespace :custom_seeds do
       auth_subject_id: SecureRandom.uuid,
     )
 
-    Dir[Rails.root.join("db/seeds/*")].each do |path|
+    Dir[Rails.root.join("db/seeds/**/*.json")].map{ |d| File.dirname(d) }.uniq.each do |path|
       claim_id = path.split('/').last
       puts "Processing import for claim: #{claim_id}"
 
       begin
         claim_hash = JSON.parse(File.read("#{path}/claim.json"))
         version_hash = JSON.parse(File.read("#{path}/version.json"))
-
-
 
         claim = Claim.find_by(id: claim_id)
 
