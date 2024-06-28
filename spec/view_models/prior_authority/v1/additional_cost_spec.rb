@@ -23,28 +23,6 @@ RSpec.describe PriorAuthority::V1::AdditionalCost do
     end
   end
 
-  describe '#unit_label' do
-    subject(:unit_label) { described_class.new(unit_type:).unit_label }
-
-    context 'with per_hour' do
-      let(:unit_type) { 'per_hour' }
-
-      it { is_expected.to eq('Time') }
-    end
-
-    context 'with per_item' do
-      let(:unit_type) { 'per_item' }
-
-      it { is_expected.to eq('Item') }
-    end
-
-    context 'with nil' do
-      let(:unit_type) { nil }
-
-      it { is_expected.to be_nil }
-    end
-  end
-
   describe '#original_cost_per_unit' do
     it 'translates a period into something sensible' do
       cost = described_class.new(unit_type: 'per_hour', cost_per_hour: 50.3)

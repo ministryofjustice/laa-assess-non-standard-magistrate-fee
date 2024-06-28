@@ -13,9 +13,6 @@ en:
       travel_cost_reason: Why travel costs are required
       service: Service
       items:
-        unit_description:
-          per_item: Item
-          per_hour: Time
         per_unit_descriptions:
           per_hour: per hour
           per_item: per item

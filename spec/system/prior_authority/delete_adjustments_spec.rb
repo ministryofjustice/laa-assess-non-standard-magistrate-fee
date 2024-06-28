@@ -45,7 +45,7 @@ RSpec.describe 'Delete adjustments' do
     before do
       click_on 'Adjust additional cost'
       fill_in 'Number of items', with: 100
-      fill_in 'What is the cost per item?', with: '3.26'
+      fill_in 'Cost per item', with: '3.26'
       fill_in 'Explain your decision', with: 'additional cost 1 explanation'
       click_on 'Save changes'
 
