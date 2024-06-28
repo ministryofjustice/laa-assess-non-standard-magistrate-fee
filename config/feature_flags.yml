@@ -16,7 +16,7 @@ feature_flags:
     production: false
   nsm_insights:
     local: <%= ENV.fetch("NSM_INSIGHTS_ENABLED", false) %>
-    development: false
+    development: true
     uat: false
     production: false
   maintenance_mode:
