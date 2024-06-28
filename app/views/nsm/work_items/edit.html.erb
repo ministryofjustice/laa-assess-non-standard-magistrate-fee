@@ -47,7 +47,8 @@
         secondary: true ,
         id: 'calculate_change_button',
         data: {
-          'unit-price': item.pricing,
+          'unit-price': item.original_pricing,
+          'alternate-type-price': item.attendance_with_counsel_pricing,
           'uplift-amount': item.uplift,
           'provider-time-spent': item.time_spent,
           'vat-multiplier': item.vat_registered? ? (1.0 + item.vat_rate) : 1.0,

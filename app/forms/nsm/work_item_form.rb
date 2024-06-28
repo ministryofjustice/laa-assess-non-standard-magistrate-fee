@@ -12,6 +12,7 @@ module Nsm
     attribute :time_spent, :time_period
     attribute :work_type, :translated
     attribute :change_work_type, :boolean
+    attribute :attendance_with_counsel_pricing, :decimal
 
     validates :uplift, inclusion: { in: [UPLIFT_PROVIDED, UPLIFT_RESET] }, if: -> { item.uplift? }
     validates :change_work_type, inclusion: { in: [true, false] }, if: :offer_to_change_work_type?
@@ -34,7 +35,10 @@ module Nsm
       Claim.transaction do
         process_field(value: time_spent.to_i, field: 'time_spent') if time_spent.present?
         process_field(value: new_uplift, field: 'uplift') if item.uplift?
-        process_field(value: ATTENDANCE_WITH_COUNSEL, field: 'work_type') if change_work_type
+        if change_work_type
+          process_field(value: ATTENDANCE_WITH_COUNSEL, field: 'work_type')
+          process_field(value: attendance_with_counsel_pricing, field: 'pricing')
+        end
 
         claim.save
       end

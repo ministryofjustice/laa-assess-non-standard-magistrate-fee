@@ -116,6 +116,7 @@ RSpec.describe 'Work items' do
             'id' => 'cf5e303e-98dd-4b0f-97ea-3560c4c5f137',
             'uplift' => 95,
             'pricing' => 24.0,
+            'attendance_with_counsel_pricing' => 12,
             'work_type' => {
               'en' => 'Attendance without counsel',
               'value' => 'attendance_without_counsel'
@@ -146,8 +147,9 @@ RSpec.describe 'Work items' do
       expect(page).to have_content('Attendance without counsel')
     end
 
-    it 'changes the work type if I ask it to' do
+    it 'changes the work type and associated pricing if I ask it to' do
       visit nsm_claim_work_items_path(claim)
+      expect(page).to have_content 'Total£125.58'
 
       within('.govuk-table__row', text: 'Attendance without counsel') do
         click_on 'Change'
@@ -161,6 +163,7 @@ RSpec.describe 'Work items' do
 
       expect(page).to have_content('Attendance with counsel')
 
+      expect(page).to have_content 'Total£125.58£62.79'
       page.find('.govuk-details__summary-text').click
       within('.govuk-details__text') do
         expect(page).to have_content('Attendance with counsel')
