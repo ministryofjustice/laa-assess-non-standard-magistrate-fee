@@ -13,10 +13,10 @@
         'aria-current': (@current_tab == 'autogrant' ? "page" : nil) %>
     </li>
     <li class="moj-sub-navigation__item">
-      <%= link_to t('dashboards.show.nav.caseworkers'),
-        dashboard_path(service:'prior_authority', current_tab: 'caseworkers'),
+      <%= link_to t('dashboards.show.nav.allocation'),
+        dashboard_path(service:'prior_authority', current_tab: 'allocation'),
         class: 'moj-sub-navigation__link',
-        'aria-current': (@current_tab == 'caseworkers' ? "page" : nil) %>
+        'aria-current': (@current_tab == 'allocation' ? "page" : nil) %>
     </li>
   </ul>
 </nav>
