@@ -16,7 +16,6 @@ en:
       menu_button: Menu
       nav_aria_label: Menu
       button_aria_label: Show or hide menu
-      view_insights: View insights
       sign_in: Sign in
       sign_out: Sign out
     primary_navigation:
