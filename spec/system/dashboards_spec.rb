@@ -27,7 +27,7 @@ RSpec.describe 'Dashboards' do
 
       it 'lets me visit the dashboard path' do
         visit root_path
-        click_on 'View insights'
+        click_on 'Analytics dashboard'
         expect(page).to have_current_path(dashboard_path)
       end
 
@@ -105,7 +105,7 @@ RSpec.describe 'Dashboards' do
 
       it 'does not show link for insights' do
         visit root_path
-        expect(page).not_to have_text('View insights')
+        expect(page).not_to have_text('Analytics dashboard')
       end
 
       it 'does not let me visit the dashboard path' do
