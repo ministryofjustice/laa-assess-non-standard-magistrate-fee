@@ -11,7 +11,7 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
   let(:application_total) { '£324.50' }
   let(:date) { DateTime.now.to_fs(:stamp) }
 
-  let(:application) do
+  let(:submission) do
     create(
       :prior_authority_application,
       state: state,
@@ -48,7 +48,7 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
        application_total:, date:]
     end
 
-    include_examples 'creates a prior authority feedback mailer'
+    include_examples 'creates a feedback mailer'
   end
 
   context 'with auto_grant state' do
@@ -61,13 +61,13 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
        application_total:, date:]
     end
 
-    include_examples 'creates a prior authority feedback mailer'
+    include_examples 'creates a feedback mailer'
   end
 
   context 'with part granted state' do
     let(:state) { 'part_grant' }
 
-    let(:application) do
+    let(:submission) do
       create(
         :prior_authority_application,
         state: state,
@@ -110,7 +110,7 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
        caseworker_decision_explanation:, date:]
     end
 
-    include_examples 'creates a prior authority feedback mailer'
+    include_examples 'creates a feedback mailer'
   end
 
   context 'with rejected state' do
@@ -125,7 +125,7 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
       date:]
     end
 
-    include_examples 'creates a prior authority feedback mailer'
+    include_examples 'creates a feedback mailer'
   end
 
   context 'with further information state' do
@@ -139,7 +139,7 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
         'Please correct this information...' \
     end
 
-    let(:application) do
+    let(:submission) do
       create(
         :prior_authority_application,
         state: 'sent_back',
@@ -170,11 +170,11 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
        caseworker_information_requested:, date:]
     end
 
-    include_examples 'creates a prior authority feedback mailer'
+    include_examples 'creates a feedback mailer'
   end
 
   context 'with an unhandled state' do
-    let(:application) do
+    let(:submission) do
       create(
         :prior_authority_application,
         state: 'submitted',
@@ -193,20 +193,24 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
     end
 
     it 'raises the error' do
-      expect { described_class.notify(application).deliver_now }
+      expect { described_class.notify(submission).deliver_now }
         .to raise_error(
           described_class::InvalidState,
-          "submission with id '#{application.id}' has unhandlable state '#{application.state}'"
+          "submission with id '#{submission.id}' has unhandlable state '#{submission.state}'"
         )
     end
 
     it 'captures the message' do
-      described_class.notify(application).deliver_now
+      described_class.notify(submission).deliver_now
     rescue described_class::InvalidState
       expect(Sentry)
         .to have_received(:capture_message)
-        .with("submission with id '#{application.id}' has unhandlable state '#{application.state}'")
+        .with("submission with id '#{submission.id}' has unhandlable state '#{submission.state}'")
     end
+  end
+
+  it_behaves_like 'notification client error handler' do
+    let(:submission) { build(:prior_authority_application, state: 'granted') }
   end
 end
 # rubocop:enable RSpec/MultipleMemoizedHelpers
