@@ -16,7 +16,7 @@
     </p>
     <% if current_user.supervisor? && FeatureFlags.insights.enabled? %>
       <p>
-        <%= link_to t('.analytics'), dashboard_path, class: 'govuk-header__link' %>
+        <%= link_to t('.analytics'), dashboard_path, class: 'govuk-link--no-visited-state' %>
       </p>
     <% end %>
   </div>
