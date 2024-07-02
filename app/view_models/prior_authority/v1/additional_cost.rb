@@ -40,10 +40,6 @@ module PriorAuthority
         attributes.slice('id', 'unit_type', 'period', 'cost_per_hour', 'items', 'cost_per_item')
       end
 
-      def unit_label
-        I18n.t(unit_type, scope: 'prior_authority.application_details.items.unit_description')
-      end
-
       def original_unit_description
         if unit_type == 'per_item'
           "#{original_items} #{I18n.t('prior_authority.application_details.items.item').pluralize(original_items)}"

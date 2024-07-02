@@ -111,13 +111,15 @@ RSpec.describe Nsm::MakeDecisionForm do
   end
 
   describe '#comment' do
-    let(:params) { { state: state, partial_comment: 'part comment', reject_comment: 'reject comment' } }
+    let(:params) do
+      { state: state, partial_comment: 'part comment', reject_comment: 'reject comment', grant_comment: 'grant comment' }
+    end
 
     context 'when state is granted' do
       let(:state) { 'granted' }
 
-      it 'ignores all comment fields' do
-        expect(subject.comment).to be_nil
+      it 'uses the grant comment' do
+        expect(subject.comment).to eq('grant comment')
       end
     end
 
@@ -134,6 +136,14 @@ RSpec.describe Nsm::MakeDecisionForm do
 
       it 'uses the reject_comment field' do
         expect(subject.comment).to eq('reject comment')
+      end
+    end
+
+    context 'when state is not set' do
+      let(:state) { nil }
+
+      it 'returns nil' do
+        expect(subject.comment).to be_nil
       end
     end
   end

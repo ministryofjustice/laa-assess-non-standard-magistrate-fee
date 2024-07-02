@@ -58,14 +58,14 @@ RSpec.describe 'Adjust travel costs' do
 
     within('.govuk-table#travel_costs') do
       expect(page)
-        .to have_content('Time1 hour 30 minutes1 hour 0 minutes')
-        .and have_content('Cost£100.00 per hour£100.00 per hour')
+        .to have_content('Amount1 hour 30 minutes1 hour 0 minutes')
+        .and have_content('Rate£100.00 per hour£100.00 per hour')
         .and have_content('Total£150.00£100.0')
     end
   end
 
   it 'allows me to adjust the cost per hour' do
-    fill_in 'Hourly cost', with: '90.00'
+    fill_in 'Cost per hour', with: '90.00'
     fill_in 'Explain your decision', with: 'travel cost adjustment explanation'
     click_on 'Save changes'
 
@@ -74,8 +74,8 @@ RSpec.describe 'Adjust travel costs' do
 
     within('.govuk-table#travel_costs') do
       expect(page)
-        .to have_content('Time1 hour 30 minutes1 hour 30 minutes')
-        .and have_content('Cost£100.00 per hour£90.00 per hour')
+        .to have_content('Amount1 hour 30 minutes1 hour 30 minutes')
+        .and have_content('Rate£100.00 per hour£90.00 per hour')
         .and have_content('Total£150.00£135.0')
     end
   end
@@ -97,7 +97,7 @@ RSpec.describe 'Adjust travel costs' do
   it 'allows me to recalculate the values on the page', :javascript do
     fill_in 'Hours', with: 2
     fill_in 'Minutes', with: 0
-    fill_in 'Hourly cost', with: '100.00'
+    fill_in 'Cost per hour', with: '100.00'
 
     expect(page).to have_css('#adjusted-cost', text: '0.00')
     click_on 'Calculate my changes'

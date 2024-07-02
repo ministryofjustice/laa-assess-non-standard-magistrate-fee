@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Nsm::UnassignmentsController do
   context 'edit' do
-    let(:claim) { build(:claim, id: claim_id) }
+    let(:claim) { create(:claim, id: claim_id) }
     let(:claim_id) { SecureRandom.uuid }
     let(:unassignment) { instance_double(Nsm::UnassignmentForm) }
     let(:defendant_name) { 'Tracy Linklater' }
@@ -12,13 +12,22 @@ RSpec.describe Nsm::UnassignmentsController do
       allow(Nsm::UnassignmentForm).to receive(:new).and_return(unassignment)
     end
 
-    it 'renders successfully with claims' do
-      allow(controller).to receive(:render)
+    it 'redirects to the claim details page' do
       get :edit, params: { claim_id: }
+      expect(response).to redirect_to(nsm_claim_claim_details_path(claim))
+    end
 
-      expect(controller).to have_received(:render)
-                        .with(locals: { claim:, unassignment: })
-      expect(response).to be_successful
+    context 'when the claim has an assignment' do
+      before { create(:assignment, submission: claim) }
+
+      it 'renders successfully with claims' do
+        allow(controller).to receive(:render)
+        get :edit, params: { claim_id: }
+
+        expect(controller).to have_received(:render)
+                          .with(locals: { claim:, unassignment: })
+        expect(response).to be_successful
+      end
     end
   end
 

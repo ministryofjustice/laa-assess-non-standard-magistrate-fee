@@ -1,5 +1,7 @@
 module Nsm
   class UnassignmentsController < Nsm::BaseController
+    before_action :check_claim_assigned
+
     def edit
       unassignment = UnassignmentForm.new(claim:, current_user:)
       render locals: { claim:, unassignment: }
@@ -16,6 +18,12 @@ module Nsm
     end
 
     private
+
+    def check_claim_assigned
+      return if claim.assignments.any?
+
+      redirect_to nsm_claim_claim_details_path(claim), flash: { notice: t('nsm.unassignments.already_unassigned') }
+    end
 
     def claim
       @claim ||= Claim.find(params[:claim_id])

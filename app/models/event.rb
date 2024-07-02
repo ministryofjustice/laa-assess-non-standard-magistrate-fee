@@ -107,6 +107,10 @@ class Event < ApplicationRecord
       )
   end
 
+  def notify
+    NotifyEventAppStore.perform_later(event: self)
+  end
+
   private
 
   def title_options

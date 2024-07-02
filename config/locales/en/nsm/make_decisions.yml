@@ -21,10 +21,12 @@ en:
           granted: Grant it
           part_grant: Part grant it
           rejected: Reject it
+        grant_comment: Additional comments (optional)
         partial_comment: Explain your decision
         reject_comment: Explain your decision
     hint:
       nsm_make_decision_form:
+        grant_comment: We’ll share this information with the provider
         partial_comment: We’ll share this information with the provider
         reject_comment: We’ll share this information with the provider
 

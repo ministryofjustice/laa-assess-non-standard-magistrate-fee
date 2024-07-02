@@ -11,7 +11,7 @@ class Event
         details: {
           comment:
         }
-      )
+      ).tap(&:notify)
     end
 
     def title

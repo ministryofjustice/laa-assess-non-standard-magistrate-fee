@@ -77,7 +77,7 @@ RSpec.describe 'View applications' do
                                        "Service detailsABC DEFABC, HIJ, SW1 1AA\n" \
                                        "Quote uploadtest.pdf\n" \
                                        'Existing prior authority grantedYes'
-          expect(page).to have_content 'Cost typeAmountRequestedTotal' \
+          expect(page).to have_content 'Cost typeAmountRateTotal requested' \
                                        'Service3 hours 0 minutes£3.50£10.50' \
                                        'ABC2 items£35.00£70.00'
         end
@@ -133,7 +133,7 @@ RSpec.describe 'View applications' do
       it 'lets me view associated files' do
         click_on 'test.pdf'
         expect(page).to have_current_path(
-          %r{/123123123\?response-content-disposition=attachment%3B%20filename%3Dtest\.pdf}
+          %r{/123123123\?response-content-disposition=attachment%3B%20filename%3D%22test\.pdf%22}
         )
       end
     end
@@ -211,7 +211,7 @@ RSpec.describe 'View applications' do
       within('#primary-quote.govuk-summary-card') do
         within('.govuk-table') do
           expect(page)
-            .to have_content('Cost typeAmountRequestedTotal')
+            .to have_content('Cost typeAmountRateTotal requested')
             .and have_content('Service4 hours 0 minutes£70.00£280.00')
             .and have_content('Travel2 hours 0 minutes£30.00£60.00')
             .and have_content('Mileage100 items£3.50£350.00')

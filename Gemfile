@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby File.read('.ruby-version').strip
 
 gem 'activerecord-postgis-adapter'
-gem 'aws-sdk-s3', '~> 1.152'
+gem 'aws-sdk-s3', '~> 1.154'
 gem 'bootsnap', require: false
 gem 'cssbundling-rails'
 gem 'devise', '>= 4.9.4'
@@ -27,7 +27,7 @@ gem 'propshaft'
 gem 'puma', '~> 6.4'
 gem 'rails', '~> 7.1.3'
 gem 'redis'
-gem 'sidekiq', '~> 7.2'
+gem 'sidekiq', '~> 7.3', '>= 7.3.0'
 gem 'sidekiq_alive', '~> 2.4'
 gem 'sidekiq-cron'
 gem 'stimulus-rails'
@@ -61,7 +61,7 @@ group :test do
   gem 'rspec-html-matchers'
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
-  gem 'rubocop-rails', '>= 2.24.1', require: false
+  gem 'rubocop-rails', '>= 2.25.1', require: false
   gem 'rubocop-rspec', require: false
   gem 'selenium-webdriver'
   gem 'simplecov'
