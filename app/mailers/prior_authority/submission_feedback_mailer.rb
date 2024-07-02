@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module PriorAuthority
-  class SubmissionFeedbackMailer < GovukNotifyRails::Mailer
+  class SubmissionFeedbackMailer < NotifyMailer
     class InvalidState < StandardError; end
 
     FEEDBACK_MESSAGE_KLASSES = {

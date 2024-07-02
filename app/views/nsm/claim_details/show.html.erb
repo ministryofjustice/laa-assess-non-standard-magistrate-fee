@@ -5,6 +5,18 @@
 <%= render partial: 'nsm/claims/claim_nav', locals: { claim: claim, current_page: 'claim_details' } %>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
+    <h2 class="govuk-heading-l"><%= t('.overview') %></h2>
+
+    <% if claim_summary.assessment_comment.present? %>
+      <div class="govuk-inset-text">
+        <p><strong><%= t(".assessed_statuses.#{claim.state}") %></strong></p>
+        <p> <%= simple_format claim_summary.assessment_comment %></p>
+        <% if claim.part_grant? %>
+          <p> <%= link_to t('.review_adjustments'), nsm_claim_adjustments_path(claim) %></p>
+        <% end %>
+      </div>
+    <% end %>
+
     <% claim_details.table.each do |section| %>
       <%= govuk_summary_list(card: { title: section[:title] }) do |table|
               section[:data].each do | field |
