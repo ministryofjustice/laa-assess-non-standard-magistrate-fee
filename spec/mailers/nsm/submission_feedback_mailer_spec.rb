@@ -13,7 +13,7 @@ RSpec.describe Nsm::SubmissionFeedbackMailer, type: :mailer do
 
   describe 'granted' do
     context 'with maat id' do
-      let(:claim) { build(:claim, state: 'granted') }
+      let(:submission) { build(:claim, state: 'granted') }
       let(:feedback_template) { '80c0dcd2-597b-4c82-8c94-f6e26af71a40' }
       let(:personalisation) do
         [laa_case_reference:, ufn:, main_defendant_name:, defendant_reference:, claim_total:, date:]
@@ -24,7 +24,7 @@ RSpec.describe Nsm::SubmissionFeedbackMailer, type: :mailer do
 
     context 'with cntp id' do
       let(:defendant_reference) { "Client's CNTP number: CNTP12345" }
-      let(:claim) do
+      let(:submission) do
         build(:claim, state: 'granted').tap do |claim|
           claim.data['cntp_order'] = 'CNTP12345'
           claim.data['defendants'].first['maat'] = nil
@@ -41,7 +41,7 @@ RSpec.describe Nsm::SubmissionFeedbackMailer, type: :mailer do
   end
 
   describe 'part granted' do
-    let(:claim) { build(:claim, state: 'part_grant') }
+    let(:submission) { build(:claim, state: 'part_grant') }
     let(:feedback_template) { '9df38f19-f76b-42f9-a4e1-da36a65d6aca' }
     let(:part_grant_total) { '£325.97' }
     let(:caseworker_decision_explanation) { '' }
@@ -55,7 +55,7 @@ RSpec.describe Nsm::SubmissionFeedbackMailer, type: :mailer do
   end
 
   describe 'rejected' do
-    let(:claim) { build(:claim, state: 'rejected') }
+    let(:submission) { build(:claim, state: 'rejected') }
     let(:feedback_template) { '7e807120-b661-452c-95a6-1ae46f411cfe' }
     let(:caseworker_decision_explanation) { '' }
     let(:personalisation) do
@@ -67,7 +67,7 @@ RSpec.describe Nsm::SubmissionFeedbackMailer, type: :mailer do
   end
 
   describe 'further information' do
-    let(:claim) { build(:claim, state: 'further_information') }
+    let(:submission) { build(:claim, state: 'further_information') }
     let(:feedback_template) { '9ecdec30-83d7-468d-bec2-cf770a2c9828' }
     let(:date_to_respond_by) { 7.days.from_now.to_fs(:stamp) }
     let(:caseworker_information_requested) { '' }
@@ -81,7 +81,7 @@ RSpec.describe Nsm::SubmissionFeedbackMailer, type: :mailer do
   end
 
   describe 'provider requested' do
-    let(:claim) { build(:claim, state: 'provider_requested') }
+    let(:submission) { build(:claim, state: 'provider_requested') }
     let(:feedback_template) { 'bfd28bd8-b9d8-4b18-8ce0-3fb763123573' }
     let(:personalisation) do
       [laa_case_reference:, ufn:, main_defendant_name:, defendant_reference:, claim_total:, date:]
@@ -91,7 +91,7 @@ RSpec.describe Nsm::SubmissionFeedbackMailer, type: :mailer do
   end
 
   describe 'other status' do
-    let(:claim) { build(:claim, state: 'fake') }
+    let(:submission) { build(:claim, state: 'fake') }
     let(:feedback_template) { '9ecdec30-83d7-468d-bec2-cf770a2c9828' }
     let(:date_to_respond_by) { 7.days.from_now.to_fs(:stamp) }
     let(:caseworker_information_requested) { '' }
@@ -102,5 +102,9 @@ RSpec.describe Nsm::SubmissionFeedbackMailer, type: :mailer do
     end
 
     include_examples 'creates a feedback mailer'
+  end
+
+  it_behaves_like 'notification client error handler' do
+    let(:submission) { build(:claim, state: 'granted') }
   end
 end
