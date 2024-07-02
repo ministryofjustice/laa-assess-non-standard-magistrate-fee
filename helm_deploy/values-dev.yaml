@@ -120,7 +120,7 @@ redis:
 
 metabase:
   priorAuthorityDashboardIds: 14
-  nsmDashboardIds: ''
+  nsmDashboardIds: 25
   priorAuthorityAutograntDashboardIds: 19
   siteUrl: 'https://uat.crime-forms-metabase.service.justice.gov.uk'
 

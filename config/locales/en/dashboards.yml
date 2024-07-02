@@ -9,3 +9,6 @@ en:
         overview: Overview
         allocation: Allocation
         autogrant: Auto grant
+    allocation:
+      prototype_dashboard: Link to prototype (Dashboard)
+      prototype_search: Link to prototype (Search & Filter)
