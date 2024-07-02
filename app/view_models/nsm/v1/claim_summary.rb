@@ -19,6 +19,10 @@ module Nsm
         submission.events.where(event_type: 'Event::Decision').order(created_at: :desc).first&.created_at
       end
 
+      def assessment_comment
+        @assessment_comment ||= submission.latest_decision_event&.details&.dig('comment')
+      end
+
       def claimed_total
         submission.formatted_claimed_total
       end
