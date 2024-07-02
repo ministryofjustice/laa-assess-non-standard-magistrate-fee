@@ -7,6 +7,12 @@
         'aria-current': (@current_tab == 'overview' ? "page" : nil) %>
     </li>
     <li class="moj-sub-navigation__item">
+      <%= link_to t('dashboards.show.nav.autogrant'),
+        dashboard_path(service:'prior_authority', current_tab: 'autogrant'),
+        class: 'moj-sub-navigation__link',
+        'aria-current': (@current_tab == 'autogrant' ? "page" : nil) %>
+    </li>
+    <li class="moj-sub-navigation__item">
       <%= link_to t('dashboards.show.nav.caseworkers'),
         dashboard_path(service:'prior_authority', current_tab: 'caseworkers'),
         class: 'moj-sub-navigation__link',
