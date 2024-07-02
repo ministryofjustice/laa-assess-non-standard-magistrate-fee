@@ -636,7 +636,7 @@ DEPENDENCIES
   with_advisory_lock
 
 RUBY VERSION
-   ruby 3.3.2p78
+   ruby 3.3.3
 
 BUNDLED WITH
    2.5.11
