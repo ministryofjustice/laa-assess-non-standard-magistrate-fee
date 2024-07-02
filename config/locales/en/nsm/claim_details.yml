@@ -4,6 +4,12 @@ en:
     claim_details:
       show:
         page_title: Assess a non-standard magistrates’ court payment
+        overview: Overview
+        assessed_statuses:
+          granted: Granted
+          part_grant: Part granted
+          rejected: Rejected
+        review_adjustments: Review quote adjustments
       details_of_claim:
         title: Claim summary
         ufn: Unique file number
