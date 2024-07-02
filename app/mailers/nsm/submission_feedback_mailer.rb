@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Nsm
-  class SubmissionFeedbackMailer < GovukNotifyRails::Mailer
+  class SubmissionFeedbackMailer < NotifyMailer
     def notify(submission)
       feedback_template = feedback_message(submission)
       set_template(feedback_template.template)
