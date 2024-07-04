@@ -81,20 +81,21 @@ RSpec.describe PriorAuthority::FakeAssess do
       end
 
       it 'specifies corrections needed' do
-        expect(application.reload.events.last['details']['updates_needed']).to include('incorrect_information')
+        send_back_event = application.reload.events.find_by(event_type: 'PriorAuthority::Event::SendBack')
+        expect(send_back_event['details']['updates_needed']).to include('incorrect_information')
       end
 
       it 'notifies the app store' do
         expect(NotifyAppStore).to have_received(:perform_later).with(submission: application)
       end
     end
-  end
 
-  context 'when randomness goes wrong' do
-    before { allow(SecureRandom).to receive(:rand).and_return 5 }
+    context 'when leaving as-is' do
+      let(:random_choice) { 5 }
 
-    it 'raises an error' do
-      expect { subject.perform([application.id]) }.to raise_error StandardError
+      it 'does not modify application' do
+        expect(application.reload).to be_submitted
+      end
     end
   end
 end
