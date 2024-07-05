@@ -1,15 +1,16 @@
 module PriorAuthority
   class UnassignmentsController < PriorAuthority::BaseController
+    before_action :set_application, only: %i[new create]
+
     def new
-      @form = UnassignmentForm.new application_id: params[:application_id]
+      @form = UnassignmentForm.new(application_id: application.id)
     end
 
     def create
-      @form = UnassignmentForm.new(params.require(:prior_authority_unassignment_form).permit(:comment).merge(
-                                     application_id: params[:application_id]
-                                   ))
+      @form = UnassignmentForm.new(params.require(:prior_authority_unassignment_form)
+                                         .permit(:comment)
+                                         .merge(application_id: application.id))
       if @form.valid?
-        application = PriorAuthorityApplication.find(params[:application_id])
         assignment = application.assignments.first
         process_unassignment(@form.comment, application, assignment)
       else
@@ -31,6 +32,14 @@ module PriorAuthority
       else
         redirect_to prior_authority_application_path(application), flash: { notice: t('.not_assigned') }
       end
+    end
+
+    def set_application
+      application
+    end
+
+    def application
+      @application ||= PriorAuthorityApplication.find(params[:application_id])
     end
   end
 end
