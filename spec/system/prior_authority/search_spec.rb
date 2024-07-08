@@ -19,7 +19,8 @@ RSpec.describe 'Search', :stub_oauth_token do
         query_string,
       ).to_return(
         status: 200,
-        body: { metadata: { total_results: 1 }, data: [{ application_id: application.id }] }.to_json
+        body: { metadata: { total_results: 1 },
+                data: [{ application_id: application.id, application: application.data }] }.to_json
       )
     end
 
@@ -71,7 +72,7 @@ RSpec.describe 'Search', :stub_oauth_token do
     end
 
     it 'imports records it did not have yet' do
-      visit prior_authority_search_path(search: { query: 'QUERY' })
+      visit prior_authority_search_path(search_form: { query: 'QUERY' })
       expect(PriorAuthorityApplication.find_by(id:)).not_to be_nil
     end
   end
@@ -95,7 +96,7 @@ RSpec.describe 'Search', :stub_oauth_token do
     end
 
     it 'tells me if there are no results' do
-      visit prior_authority_search_path(search: { query: 'QUERY' })
+      visit prior_authority_search_path(search_form: { query: 'QUERY' })
       expect(page).to have_content 'There are no results that match the search criteria'
     end
   end
@@ -112,7 +113,7 @@ RSpec.describe 'Search', :stub_oauth_token do
 
     it 'notifies sentry' do
       expect(Sentry).to receive(:capture_exception)
-      visit prior_authority_search_path(search: { query: 'QUERY' })
+      visit prior_authority_search_path(search_form: { query: 'QUERY' })
     end
   end
 
@@ -129,7 +130,8 @@ RSpec.describe 'Search', :stub_oauth_token do
     let(:stubs) do
       query_strings.map do |query_string|
         stub_request(:get, "https://appstore.example.com/v1/submissions/search?#{query_string}").to_return(
-          status: 200, body: { metadata: { total_results: 21 }, data: applications.map { { application_id: _1.id } } }.to_json
+          status: 200, body: { metadata: { total_results: 21 },
+                               data: applications.map { { application_id: _1.id, application: _1.data } } }.to_json
         )
       end
     end
@@ -137,7 +139,7 @@ RSpec.describe 'Search', :stub_oauth_token do
     before { stubs }
 
     it 'lets me sort and paginate' do
-      visit prior_authority_search_path(search: { query: 'QUERY' })
+      visit prior_authority_search_path(search_form: { query: 'QUERY' })
       within('.govuk-table__head') { click_link 'LAA reference' }
       within('.govuk-pagination__list') { click_on '2' }
       expect(stubs).to all have_been_requested

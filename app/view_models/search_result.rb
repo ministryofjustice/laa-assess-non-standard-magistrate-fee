@@ -3,25 +3,25 @@ class SearchResult
   include SubmissionTagHelper
 
   def initialize(data)
-    @data = data
+    @data = data.deep_stringify_keys
   end
 
   delegate :id, to: :submission
 
   def submission
-    @submission ||= Submission.find_by(id: @data[:application_id]) || UpdateSubmission.call(@data.deep_stringify_keys)
+    @submission ||= Submission.find_by(id: @data['application_id']) || UpdateSubmission.call(@data)
   end
 
   def laa_reference
-    submission.data['laa_reference']
+    @data.dig('application', 'laa_reference')
   end
 
   def firm_name
-    submission.data['firm_name']
+    @data.dig('application', 'firm_name')
   end
 
   def client_name
-    defendant = submission.data['defendant'] || submission.data['defendants'].find { _1['main'] }
+    defendant = @data.dig('application', 'defendant') || @data.dig('application', 'defendants').find { _1['main'] }
     construct_name(defendant)
   end
 
