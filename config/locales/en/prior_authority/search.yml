@@ -42,7 +42,7 @@ en:
   activemodel:
     errors:
       models:
-        search:
+        search_form:
           attributes:
             base:
               nothing_specified: You must enter at least one search criterion
