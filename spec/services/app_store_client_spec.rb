@@ -30,7 +30,7 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
 
     context 'when APP_STORE_URL is not present' do
       it 'get the claims to default localhost url' do
-        expect(described_class).to receive(:get).with('http://localhost:8000/v1/applications?since=1',
+        expect(described_class).to receive(:get).with('https://appstore.example.com/v1/applications?since=1',
                                                       headers: { authorization: 'Bearer test-bearer-token' })
 
         subject.get_all_submissions(1)
@@ -97,7 +97,7 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
 
     context 'when APP_STORE_URL is not present' do
       it 'puts the message to default localhost url' do
-        expect(described_class).to receive(:put).with("http://localhost:8000/v1/application/#{application_id}",
+        expect(described_class).to receive(:put).with("https://appstore.example.com/v1/application/#{application_id}",
                                                       body: message.to_json,
                                                       headers: { authorization: 'Bearer test-bearer-token' })
 
@@ -150,7 +150,7 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
     end
 
     it 'posts the message to host url' do
-      expect(described_class).to receive(:post).with('http://localhost:8000/v1/subscriber',
+      expect(described_class).to receive(:post).with('https://appstore.example.com/v1/subscriber',
                                                      body: message.to_json,
                                                      headers: { authorization: 'Bearer test-bearer-token' })
 
@@ -158,7 +158,7 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
     end
 
     it 'uses delete if a destroy action is specified' do
-      expect(described_class).to receive(:delete).with('http://localhost:8000/v1/subscriber',
+      expect(described_class).to receive(:delete).with('https://appstore.example.com/v1/subscriber',
                                                        body: message.to_json,
                                                        headers: { authorization: 'Bearer test-bearer-token' })
 
@@ -194,7 +194,7 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
     end
 
     it 'puts the message to default localhost url' do
-      expect(described_class).to receive(:post).with("http://localhost:8000/v1/submissions/#{application_id}/events",
+      expect(described_class).to receive(:post).with("https://appstore.example.com/v1/submissions/#{application_id}/events",
                                                      body: message.to_json,
                                                      headers: { authorization: 'Bearer test-bearer-token' })
 
