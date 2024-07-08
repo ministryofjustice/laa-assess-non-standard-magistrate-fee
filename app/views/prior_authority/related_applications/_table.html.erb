@@ -2,12 +2,12 @@
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
       <% columns.keys.each_with_index do |column_key, index| %>
-        <%= table_header(column_key,
-                        "prior_authority.applications.table.header",
-                        index,
-                        path,
-                        @sort_by,
-                        @sort_direction) %>
+        <%= table_header_with_form(column_key,
+                                   "prior_authority.applications.table.header",
+                                   index,
+                                   path,
+                                   @sort_by,
+                                   @sort_direction) %>
       <% end %>
     </tr>
   </thead>

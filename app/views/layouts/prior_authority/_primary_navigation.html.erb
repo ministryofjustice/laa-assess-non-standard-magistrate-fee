@@ -13,6 +13,9 @@
               <li class="moj-primary-navigation__item">
                 <%= link_to t('prior_authority.closed_applications'), closed_prior_authority_applications_path, class: 'moj-primary-navigation__link', 'aria-current': (current == :assessed ? 'page' : nil) %>
               </li>
+              <li class="moj-primary-navigation__item">
+                <%= link_to t('prior_authority.search'), new_prior_authority_search_path, class: 'moj-primary-navigation__link', 'aria-current': (current == :search ? 'page' : nil) %>
+              </li>
           </ul>
         </nav>
     </div>
