@@ -10,6 +10,7 @@ module Nsm
       attribute :wasted_costs
       attribute :work_before_date
       attribute :work_after_date
+      attribute :work_completed_date
       attribute :preparation_time
       attribute :time_spent
 
@@ -76,6 +77,10 @@ module Nsm
                value:  wasted_costs.capitalize
              }
            end),
+          {
+            title: I18n.t(".nsm.claim_details.#{key}.work_completed_date"),
+            value: format_in_zone(work_completed_date)
+          }
         ].compact
       end
       # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
