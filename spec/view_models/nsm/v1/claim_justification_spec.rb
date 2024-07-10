@@ -68,7 +68,7 @@ RSpec.describe Nsm::V1::ClaimJustification do
               value: 'Enhanced rates claimed<br>Other'
             },
             {
-              title: "Other details aboutwhy a non-standard magistrates' court paymentis being claimed",
+              title: "Other details about why a non-standard magistrates' court paymentis being claimed",
               value: 'Other reasons for test'
             }
           ]
