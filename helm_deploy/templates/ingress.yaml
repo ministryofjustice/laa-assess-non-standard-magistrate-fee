@@ -18,7 +18,6 @@ metadata:
   name: {{ $fullName }}
   labels:
     {{- include "helm_deploy.labels" . | nindent 4 }}
-  {{- with .Values.ingress.annotations }}
   annotations:
     nginx.ingress.kubernetes.io/default-backend: nginx-errors
     nginx.ingress.kubernetes.io/custom-http-errors: "423"
@@ -35,6 +34,7 @@ metadata:
       SecAction "id:900200,phase:1,nolog,pass,t:none,setvar:tx.allowed_methods=GET HEAD POST OPTIONS PUT PATCH DELETE"
       SecAction "id:900110,phase:1,nolog,pass,t:none,setvar:tx.inbound_anomaly_score_threshold=6"
     external-dns.alpha.kubernetes.io/aws-weight: "100"
+  {{- with .Values.ingress.annotations }}
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
