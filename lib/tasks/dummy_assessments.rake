@@ -1,5 +1,5 @@
 namespace :dummy_assessments do
-  desc 'assess all pending assessments randomly'
+  desc 'assess most pending assessments randomly'
 
   task create: :environment do
     PriorAuthorityApplication.where(state: PriorAuthorityApplication::ASSESSABLE_STATES)

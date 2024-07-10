@@ -80,13 +80,13 @@ RSpec.describe Nsm::FakeAssess do
         expect(NotifyAppStore).to have_received(:perform_later).with(submission: claim)
       end
     end
-  end
 
-  context 'when randomness goes wrong' do
-    before { allow(SecureRandom).to receive(:rand).and_return 5 }
+    context 'when leaving as-is' do
+      let(:random_choice) { 5 }
 
-    it 'raises an error' do
-      expect { subject.perform([claim.id]) }.to raise_error StandardError
+      it 'does not modify claim' do
+        expect(claim.reload.state).to eq 'submitted'
+      end
     end
   end
 end

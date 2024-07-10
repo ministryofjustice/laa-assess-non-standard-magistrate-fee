@@ -12,18 +12,29 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
   end
 
   context 'granted' do
-    it 'sends a granted notification' do
+    before do
       visit nsm_claim_claim_details_path(claim)
       click_link_or_button 'Make a decision'
       choose 'Grant it'
       fill_in 'nsm-make-decision-form-grant-comment-field', with: 'Test Data'
+    end
 
-      expect do
-        click_link_or_button 'Submit decision'
-      end.to have_enqueued_job(NotifyAppStore)
+    it 'sends a granted notification' do
+      expect { click_link_or_button 'Submit decision' }.to have_enqueued_job(NotifyAppStore)
+    end
 
-      visit nsm_claim_history_path(claim)
-      expect(page).to have_content 'Test Data'
+    context 'when a claim has been granted' do
+      before { click_link_or_button 'Submit decision' }
+
+      it 'shows comment on overview page' do
+        visit nsm_claim_claim_details_path(claim)
+        expect(page).to have_content 'Test Data'
+      end
+
+      it 'shows comment on history page' do
+        visit nsm_claim_history_path(claim)
+        expect(page).to have_content 'Test Data'
+      end
     end
   end
 
