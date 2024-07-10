@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Nsm::V1::ClaimJustification do
   subject { described_class.new(data) }
+
   let(:data) do
     {
       'reasons_for_claim' => [
@@ -55,7 +56,7 @@ RSpec.describe Nsm::V1::ClaimJustification do
               'en' => 'Other',
             },
           ],
-          "reason_for_claim_other_details" => 'Other reasons for test'
+          'reason_for_claim_other_details' => 'Other reasons for test'
         }
       end
 

@@ -24,10 +24,12 @@ module Nsm
             value: reasons_for_claim_list
           },
           (
-            {
-              title: I18n.t(".nsm.claim_details.#{key}.other_details"),
-              value: reason_for_claim_other_details
-            } if reasons_for_claim.detect { _1['value'] == 'other' }
+            if reasons_for_claim.detect { _1['value'] == 'other' }
+              {
+                title: I18n.t(".nsm.claim_details.#{key}.other_details"),
+                value: reason_for_claim_other_details
+              }
+            end
           )
         ].compact
       end
