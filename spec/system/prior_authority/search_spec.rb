@@ -2,9 +2,16 @@ require 'rails_helper'
 
 RSpec.describe 'Search', :stub_oauth_token do
   let(:caseworker) { create(:caseworker, first_name: 'John', last_name: 'Everyman') }
-  let(:query_string) do
-    'https://appstore.example.com/v1/submissions/search?application_type=crm4&' \
-      'page=1&per_page=20&query=QUERY&sort_by=last_updated&sort_direction=descending'
+  let(:endpoint) { 'https://appstore.example.com/v1/submissions/searches' }
+  let(:payload) do
+    {
+      application_type: 'crm4',
+      page: 1,
+      per_page: 20,
+      query: 'QUERY',
+      sort_by: 'last_updated',
+      sort_direction: 'descending',
+    }
   end
 
   before do
@@ -14,11 +21,8 @@ RSpec.describe 'Search', :stub_oauth_token do
   context 'when I search for an application that has already been imported' do
     let(:application) { create :prior_authority_application }
     let(:stub) do
-      stub_request(
-        :get,
-        query_string,
-      ).to_return(
-        status: 200,
+      stub_request(:post, endpoint).with(body: payload).to_return(
+        status: 201,
         body: { metadata: { total_results: 1 },
                 data: [{ application_id: application.id, application: application.data }] }.to_json
       )
@@ -62,11 +66,8 @@ RSpec.describe 'Search', :stub_oauth_token do
     end
 
     before do
-      stub_request(
-        :get,
-        query_string
-      ).to_return(
-        status: 200,
+      stub_request(:post, endpoint).with(body: payload).to_return(
+        status: 201,
         body: { metadata: { total_results: 1 }, data: [record] }.to_json
       )
     end
@@ -86,11 +87,8 @@ RSpec.describe 'Search', :stub_oauth_token do
 
   context 'if I search for something with no matches' do
     before do
-      stub_request(
-        :get,
-        query_string,
-      ).to_return(
-        status: 200,
+      stub_request(:post, endpoint).with(body: payload).to_return(
+        status: 201,
         body: { metadata: { total_results: 0 }, data: [] }.to_json
       )
     end
@@ -103,10 +101,7 @@ RSpec.describe 'Search', :stub_oauth_token do
 
   context 'when the app store has an error' do
     before do
-      stub_request(
-        :get,
-        query_string,
-      ).to_return(
+      stub_request(:post, endpoint).with(body: payload).to_return(
         status: 502
       )
     end
@@ -119,18 +114,21 @@ RSpec.describe 'Search', :stub_oauth_token do
 
   context 'when there are multiple results' do
     let(:applications) { create_list(:prior_authority_application, 20) }
-    let(:query_strings) do
+    let(:payloads) do
       [
-        'application_type=crm4&page=1&per_page=20&query=QUERY&sort_by=last_updated&sort_direction=descending',
-        'application_type=crm4&page=1&per_page=20&query=QUERY&sort_by=laa_reference&sort_direction=ascending',
-        'application_type=crm4&page=2&per_page=20&query=QUERY&sort_by=laa_reference&sort_direction=ascending',
+        { application_type: 'crm4', page: 1, per_page: 20, query: 'QUERY', sort_by: 'last_updated',
+sort_direction: 'descending' },
+        { application_type: 'crm4', page: 1, per_page: 20, query: 'QUERY', sort_by: 'laa_reference',
+sort_direction: 'ascending' },
+        { application_type: 'crm4', page: 2, per_page: 20, query: 'QUERY', sort_by: 'laa_reference',
+sort_direction: 'ascending' },
       ]
     end
 
     let(:stubs) do
-      query_strings.map do |query_string|
-        stub_request(:get, "https://appstore.example.com/v1/submissions/search?#{query_string}").to_return(
-          status: 200, body: { metadata: { total_results: 21 },
+      payloads.map do |payload|
+        stub_request(:post, endpoint).with(body: payload).to_return(
+          status: 201, body: { metadata: { total_results: 21 },
                                data: applications.map { { application_id: _1.id, application: _1.data } } }.to_json
         )
       end
@@ -147,18 +145,24 @@ RSpec.describe 'Search', :stub_oauth_token do
   end
 
   context 'when searching with filters' do
-    let(:query_string) do
-      'https://appstore.example.com/v1/submissions/search?application_type=crm4&' \
-        "caseworker_id=#{caseworker.id}&page=1&per_page=20&sort_by=last_updated" \
-        '&sort_direction=descending&status_with_assignment=rejected&submitted_from=2023-04-20&' \
-        'submitted_to=2023-04-21&updated_from=2023-04-22&updated_to=2023-04-23'
+    let(:payload) do
+      {
+        application_type: 'crm4',
+        caseworker_id: caseworker.id,
+        page: 1,
+        per_page: 20,
+        sort_by: 'last_updated',
+        sort_direction: 'descending',
+        status_with_assignment: 'rejected',
+        submitted_from: '2023-04-20',
+        submitted_to: '2023-04-21',
+        updated_from: '2023-04-22',
+        updated_to: '2023-04-23'
+      }
     end
     let(:stub) do
-      stub_request(
-        :get,
-        query_string,
-      ).to_return(
-        status: 200,
+      stub_request(:post, endpoint).with(body: payload).to_return(
+        status: 201,
         body: { metadata: { total_results: 0 }, data: [] }.to_json
       )
     end

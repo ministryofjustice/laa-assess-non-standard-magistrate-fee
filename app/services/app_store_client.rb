@@ -66,10 +66,10 @@ class AppStoreClient
     end
   end
 
-  def search(params)
-    response = self.class.get("#{host}/v1/submissions/search?#{params.to_query}", **options)
+  def search(payload)
+    response = self.class.post("#{host}/v1/submissions/searches", **options(payload))
     case response.code
-    when 200
+    when 201
       JSON.parse(response.body)
     else
       raise "Unexpected response from AppStore - status #{response.code} for '#{url}':\n#{response.body}"
