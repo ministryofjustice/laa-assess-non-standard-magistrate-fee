@@ -106,9 +106,10 @@ RSpec.describe 'Search', :stub_oauth_token do
       )
     end
 
-    it 'notifies sentry' do
+    it 'notifies sentry and shows an error' do
       expect(Sentry).to receive(:capture_exception)
       visit prior_authority_search_path(search_form: { query: 'QUERY' })
+      expect(page).to have_content 'Something went wrong trying to perform this search'
     end
   end
 
