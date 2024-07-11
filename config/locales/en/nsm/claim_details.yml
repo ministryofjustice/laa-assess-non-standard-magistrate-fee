@@ -75,7 +75,8 @@ en:
         work_before: Work done before order was granted
         work_before_date: Date of work before order was granted
         work_after: Work was done after last hearing
-        work_after_date: Date of work after last hearing
+        work_after_date: Date of last hearing
+        work_completed_date: Date work was completed
         wasted_costs: Have wasted costs been applied to this case?
       equality_details:
         title: Equality monitoring
