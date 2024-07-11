@@ -57,7 +57,8 @@ resources:
 
 variables:
   environment: development
-  appStoreUrl: https://main-nscc-store-dev.cloud-platform.service.justice.gov.uk
+  # TODO: REVERT BEFORE MERGE
+  appStoreUrl: https://crm457-1715-add-se-nscc-store-dev.cloud-platform.service.justice.gov.uk
   enableSyncTriggerEndpoint: 'true'
   allowIndexing: 'false'
 
