@@ -35,6 +35,7 @@ en:
       claim_justification:
         title: Claim justification
         reasons_for_claim: Why are you claiming a non-standard magistrates' payment?
+        other_details: Other details about why a non-standard magistrates' court paymentis being claimed
       hearing_details:
         title: Hearing details
         first_hearing_date: Date of first hearing
