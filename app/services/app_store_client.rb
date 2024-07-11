@@ -29,8 +29,9 @@ class AppStoreClient
     end
   end
 
-  def create_subscription(payload)
-    response = self.class.post("#{host}/v1/subscriber", **options(payload))
+  def trigger_subscription(payload, action: :create)
+    method = action == :create ? :post : :delete
+    response = self.class.send(method, "#{host}/v1/subscriber", **options(payload))
 
     case response.code
     when 200..204

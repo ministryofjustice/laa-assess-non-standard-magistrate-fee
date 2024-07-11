@@ -138,7 +138,7 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
     end
   end
 
-  describe '#create_subscription' do
+  describe '#trigger_subscription' do
     let(:application_id) { SecureRandom.uuid }
     let(:message) { { application_id: } }
     let(:response) { double(:response, code:) }
@@ -146,20 +146,28 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
     let(:username) { nil }
 
     before do
-      allow(described_class).to receive(:post).and_return(response)
+      allow(described_class).to receive_messages(post: response, delete: response)
     end
 
-    it 'puts the message to default localhost url' do
+    it 'posts the message to host url' do
       expect(described_class).to receive(:post).with('http://localhost:8000/v1/subscriber',
                                                      body: message.to_json,
                                                      headers: { authorization: 'Bearer test-bearer-token' })
 
-      subject.create_subscription(message)
+      subject.trigger_subscription(message)
+    end
+
+    it 'uses delete if a destroy action is specified' do
+      expect(described_class).to receive(:delete).with('http://localhost:8000/v1/subscriber',
+                                                       body: message.to_json,
+                                                       headers: { authorization: 'Bearer test-bearer-token' })
+
+      subject.trigger_subscription(message, action: :destroy)
     end
 
     context 'when response code is 201 - created' do
       it 'returns a created status' do
-        expect(subject.create_subscription(message)).to eq(:success)
+        expect(subject.trigger_subscription(message)).to eq(:success)
       end
     end
 
@@ -167,7 +175,7 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
       let(:code) { 501 }
 
       it 'raises an error' do
-        expect { subject.create_subscription(message) }.to raise_error(
+        expect { subject.trigger_subscription(message) }.to raise_error(
           'Unexpected response from AppStore - status 501 on create subscription'
         )
       end
