@@ -14,6 +14,18 @@ class AppStoreClient
     end
   end
 
+  def get_submission(submission)
+    url = "/v1/submissions/#{submission.id}"
+    response = self.class.get "#{host}#{url}", **options
+
+    case response.code
+    when 200
+      JSON.parse(response.body)
+    else
+      raise "Unexpected response from AppStore - status #{response.code} for '#{url}'"
+    end
+  end
+
   def update_submission(payload)
     response = self.class.put("#{host}/v1/application/#{payload[:application_id]}", **options(payload))
 
@@ -47,6 +59,8 @@ class AppStoreClient
     case response.code
     when 200..204
       :success
+    when 403
+      :forbidden
     else
       raise "Unexpected response from AppStore - status #{response.code} on create events"
     end
