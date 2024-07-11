@@ -46,3 +46,4 @@ en:
           attributes:
             base:
               nothing_specified: You must enter at least one search criterion
+              search_error: Something went wrong trying to perform this search

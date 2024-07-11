@@ -72,7 +72,7 @@ class AppStoreClient
     when 201
       JSON.parse(response.body)
     else
-      raise "Unexpected response from AppStore - status #{response.code} for '#{url}':\n#{response.body}"
+      raise "Unexpected response from AppStore - status #{response.code} for search:\n#{response.body}"
     end
   end
 

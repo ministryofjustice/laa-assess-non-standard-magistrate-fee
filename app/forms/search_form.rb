@@ -78,6 +78,7 @@ class SearchForm
     AppStoreClient.new.search(search_params).deep_symbolize_keys
   rescue StandardError => e
     Sentry.capture_exception(e)
+    errors.add(:base, :search_error)
     {
       metadata: {
         total_results: 0
