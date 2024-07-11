@@ -37,7 +37,7 @@ class AppStoreClient
     when 200..204
       :success
     else
-      raise "Unexpected response from AppStore - status #{response.code} on create subscription"
+      raise "Unexpected response from AppStore - status #{response.code} on #{action} subscription"
     end
   end
 
