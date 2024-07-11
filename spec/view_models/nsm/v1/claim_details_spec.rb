@@ -20,7 +20,8 @@ RSpec.describe Nsm::V1::ClaimDetails do
           'work_before' => 'yes',
           'work_before_date' => '2023-01-20',
           'work_after' => 'yes',
-          'work_after_date' => '2023-02-02'
+          'work_after_date' => '2023-02-02',
+          'work_completed_date' => '2023-02-03'
         }
       )
 
@@ -43,6 +44,7 @@ RSpec.describe Nsm::V1::ClaimDetails do
           'work_before_date' => '2023-01-20',
           'work_after' => 'yes',
           'work_after_date' => '2023-02-02',
+          'work_completed_date' => '2023-02-03',
           'wasted_costs' => 'yes'
         }
       )
@@ -58,8 +60,9 @@ RSpec.describe Nsm::V1::ClaimDetails do
                                      { title: 'Work done before order was granted', value: 'Yes' },
                                      { title: 'Date of work before order was granted', value: '20 January 2023' },
                                      { title: 'Work was done after last hearing', value: 'Yes' },
-                                     { title: 'Date of work after last hearing', value: '2 February 2023' },
-                                     { title: 'Have wasted costs been applied to this case?', value: 'Yes' }
+                                     { title: 'Date of last hearing', value: '2 February 2023' },
+                                     { title: 'Have wasted costs been applied to this case?', value: 'Yes' },
+                                     { title: 'Date work was completed', value: '3 February 2023' }
                                    ])
       end
     end
@@ -74,7 +77,8 @@ RSpec.describe Nsm::V1::ClaimDetails do
           'preparation_time' => 'no',
           'time_spent' => 110,
           'work_before' => 'no',
-          'work_after' => 'no'
+          'work_after' => 'no',
+          'work_completed_date' => '2023-02-03'
         }
       )
 
@@ -86,7 +90,8 @@ RSpec.describe Nsm::V1::ClaimDetails do
                                      { title: 'Supplemental claim', value: 'No' },
                                      { title: 'Recorded evidence', value: 'No' },
                                      { title: 'Work done before order was granted', value: 'No' },
-                                     { title: 'Work was done after last hearing', value: 'No' }
+                                     { title: 'Work was done after last hearing', value: 'No' },
+                                     { title: 'Date work was completed', value: '3 February 2023' }
                                    ])
       end
     end

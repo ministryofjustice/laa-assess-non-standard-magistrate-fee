@@ -35,6 +35,7 @@ FactoryBot.define do
         'preparation_time' => 'no',
         'work_before' => 'no',
         'work_after' => 'no',
+        'work_completed_date' => '2024-01-01',
         'has_disbursements' => 'no',
         'is_other_info' => 'no',
         'in_area' => 'yes',
