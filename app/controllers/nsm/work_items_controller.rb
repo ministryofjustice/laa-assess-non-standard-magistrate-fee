@@ -63,7 +63,6 @@ module Nsm
       )
     end
 
-
     def set_default_table_sort_options
       default = 'item'
       @sort_by = params.fetch(:sort_by, default)
