@@ -17,7 +17,7 @@ class SearchResult
   end
 
   def firm_name
-    @data.dig('application', 'firm_name')
+    @data.dig('application', 'firm_office', 'name')
   end
 
   def client_name
