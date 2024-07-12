@@ -6,54 +6,20 @@ RSpec.describe Nsm::SendBackForm do
   let(:claim) { create(:claim) }
 
   describe '#validations' do
-    context 'when state is not set' do
-      let(:params) { {} }
+    let(:params) { { claim:, comment: } }
 
-      it 'is invalid' do
-        expect(subject).not_to be_valid
-        expect(subject.errors.of_kind?(:state, :inclusion)).to be(true)
-      end
-    end
-
-    context 'when state is invalid' do
-      let(:params) { { claim: claim, state: 'other' } }
-
-      it 'is invalid' do
-        expect(subject).not_to be_valid
-        expect(subject.errors.of_kind?(:state, :inclusion)).to be(true)
-      end
-    end
-
-    context 'when state is further_info' do
-      let(:params) { { claim: claim, state: 'further_info', comment: comment } }
+    context 'when comment is set' do
       let(:comment) { 'some comment' }
 
       it { expect(subject).to be_valid }
-
-      context 'when comment is blank' do
-        let(:comment) { nil }
-
-        it 'is invalid' do
-          expect(subject).not_to be_valid
-          expect(subject.errors.of_kind?(:comment, :blank)).to be(true)
-        end
-      end
     end
 
-    context 'when state is provider_requested' do
-      context 'when comment is blank' do
-        let(:params) { { claim: claim, state: 'provider_requested', comment: nil } }
+    context 'when comment is blank' do
+      let(:comment) { nil }
 
-        it 'is invalid' do
-          expect(subject).not_to be_valid
-          expect(subject.errors.of_kind?(:comment, :blank)).to be(true)
-        end
-      end
-
-      context 'when comment is set' do
-        let(:params) { { claim: claim, state: 'provider_requested', comment: 'part grant comment' } }
-
-        it { expect(subject).to be_valid }
+      it 'is invalid' do
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:comment, :blank)).to be(true)
       end
     end
   end
@@ -61,7 +27,7 @@ RSpec.describe Nsm::SendBackForm do
   describe '#persistance' do
     let(:user) { instance_double(User) }
     let(:claim) { create(:claim) }
-    let(:params) { { claim: claim, state: 'further_info', comment: 'some comment', current_user: user } }
+    let(:params) { { claim: claim, comment: 'some comment', current_user: user } }
 
     before do
       allow(Nsm::Event::SendBack).to receive(:build)

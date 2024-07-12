@@ -9,10 +9,6 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_with model: send_back, url: nsm_claim_send_back_path(claim_id: claim.id), method: :put do |f| %>
-      <%= f.govuk_radio_buttons_fieldset :state, legend: { size: 's' } do %>
-        <%= f.govuk_radio_button :state, Nsm::SendBackForm::FURTHER_INFO %>
-        <%= f.govuk_radio_button :state, Nsm::SendBackForm::PROVIDER_REQUESTED %>
-      <% end %>
       <%= f.govuk_text_area :comment, width: 'one-third', autocomplete: 'off', label: { size: 'm' } %>
 
       <%= f.govuk_submit(t('.submit')) do %>

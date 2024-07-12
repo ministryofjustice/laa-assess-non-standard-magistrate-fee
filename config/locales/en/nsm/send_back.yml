@@ -10,15 +10,9 @@ en:
         decision: You sent back this claim <a class="govuk-link" href="%{url}">%{ref}</a>
 
   helpers:
-    legend:
-      nsm_send_back_form:
-        state: Why are you sending this claim back?
     label:
       nsm_send_back_form:
         comment: Explain your decision
-        state_options:
-          further_info: Further information request
-          provider_requested: Provider request
     hint:
       nsm_send_back_form:
         comment: We’ll share this information with the provider
@@ -28,8 +22,5 @@ en:
       models:
         nsm/send_back_form:
           attributes:
-            state:
-              blank: Select why you are sending this claim back
-              inclusion: Select why you are sending this claim back
             comment:
               blank: Add an explanation for your decision

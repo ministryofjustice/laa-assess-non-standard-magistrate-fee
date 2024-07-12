@@ -37,7 +37,7 @@ RSpec.describe Nsm::SendBacksController do
   end
 
   context 'update' do
-    let(:send_back) { instance_double(Nsm::SendBackForm, save: save, state: 'further_info') }
+    let(:send_back) { instance_double(Nsm::SendBackForm, save:) }
     let(:user) { instance_double(User) }
     let(:claim) { build(:claim, id: SecureRandom.uuid) }
     let(:laa_reference_class) do
@@ -56,10 +56,10 @@ RSpec.describe Nsm::SendBacksController do
     it 'builds a decision object' do
       put :update, params: {
         claim_id: claim.id,
-        nsm_send_back_form: { state: 'further_info', comment: 'some commment' }
+        nsm_send_back_form: { comment: 'some commment' }
       }
       expect(Nsm::SendBackForm).to have_received(:new).with(
-        'state' => 'further_info', 'comment' => 'some commment', :claim => claim, 'current_user' => user
+        'comment' => 'some commment', :claim => claim, 'current_user' => user
       )
     end
 
@@ -67,7 +67,7 @@ RSpec.describe Nsm::SendBacksController do
       it 'redirects to claim page' do
         put :update, params: {
           claim_id: claim.id,
-          nsm_send_back_form: { state: 'further_info', comment: nil, id: claim.id }
+          nsm_send_back_form: { comment: nil, id: claim.id }
         }
 
         expect(response).to redirect_to(your_nsm_claims_path)
@@ -85,7 +85,7 @@ RSpec.describe Nsm::SendBacksController do
         allow(controller).to receive(:render)
         put :update, params: {
           claim_id: claim.id,
-          nsm_send_back_form: { state: 'further_info', comment: nil, id: claim.id }
+          nsm_send_back_form: { comment: nil, id: claim.id }
         }
 
         expect(controller).to have_received(:render)
