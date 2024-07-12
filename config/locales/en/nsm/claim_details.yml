@@ -35,6 +35,7 @@ en:
       claim_justification:
         title: Claim justification
         reasons_for_claim: Why are you claiming a non-standard magistrates' payment?
+        other_details: Other details about why a non-standard magistrates' court paymentis being claimed
       hearing_details:
         title: Hearing details
         first_hearing_date: Date of first hearing
@@ -75,7 +76,8 @@ en:
         work_before: Work done before order was granted
         work_before_date: Date of work before order was granted
         work_after: Work was done after last hearing
-        work_after_date: Date of work after last hearing
+        work_after_date: Date of last hearing
+        work_completed_date: Date work was completed
         wasted_costs: Have wasted costs been applied to this case?
       equality_details:
         title: Equality monitoring
