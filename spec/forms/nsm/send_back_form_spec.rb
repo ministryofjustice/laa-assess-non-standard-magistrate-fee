@@ -26,7 +26,7 @@ RSpec.describe Nsm::SendBackForm do
 
   describe '#persistance' do
     let(:user) { instance_double(User) }
-    let(:claim) { create(:claim) }
+    let(:claim) { create(:claim, assignments: [build(:assignment)]) }
     let(:params) { { claim: claim, comment: 'some comment', current_user: user } }
 
     before do
@@ -39,6 +39,10 @@ RSpec.describe Nsm::SendBackForm do
     it 'updates the claim' do
       subject.save
       expect(claim.reload).to have_attributes(state: 'further_info')
+    end
+
+    it 'removes the assignment' do
+      expect { subject.save }.to change { claim.assignments.count }.from(1).to(0)
     end
 
     it 'creates a Decision event' do

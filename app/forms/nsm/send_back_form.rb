@@ -20,6 +20,7 @@ module Nsm
       Claim.transaction do
         claim.data['status'] = FURTHER_INFO
         claim.update!(state: FURTHER_INFO)
+        claim.assignments.destroy_all
         Nsm::Event::SendBack.build(submission: claim, comment: comment, previous_state: previous_state,
                                    current_user: current_user)
         NotifyAppStore.perform_later(submission: claim)
