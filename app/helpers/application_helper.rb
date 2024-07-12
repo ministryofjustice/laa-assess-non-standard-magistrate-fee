@@ -31,7 +31,7 @@ module ApplicationHelper
 
   def format_period(period, style: :short)
     return period if period.blank?
-    return "#{period / 60}:#{"%02d" % (period % 60)}" if style == :minimal
+    return "#{period / 60}:#{format('%02d', (period % 60))}" if style == :minimal
 
     t("helpers.time_period.hours.#{style}", count: period / 60) +
       t("helpers.time_period.minutes.#{style}", count: period % 60)

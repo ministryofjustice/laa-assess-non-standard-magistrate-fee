@@ -9,7 +9,7 @@ module Sorters
       'claimed_uplift' => -> { _1.uplift.to_f },
       'claimed_net_cost' => :provider_requested_amount,
       'allowed_net_cost' => -> { _1.any_adjustments? ? _1.caseworker_amount : 0 }
-  }.freeze
+    }.freeze
 
     class << self
       def call(items, sort_by, sort_direction)
