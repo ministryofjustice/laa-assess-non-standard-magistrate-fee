@@ -4,6 +4,7 @@ module Nsm
       LINKED_TYPE = 'work_items'.freeze
 
       attribute :id, :string
+      attribute :position, :integer
       attribute :work_type, :translated
       adjustable_attribute :time_spent, :time_period
       attribute :completed_on, :date
@@ -14,25 +15,20 @@ module Nsm
       attribute :vat_rate, :decimal
       attribute :firm_office
 
+      # used to guess position when value not set in JSON blob
+      attribute :submission
+
       class << self
         def headers
-          [
-            t('item', width: 'govuk-!-width-one-fifth', numeric: false),
-            t('claimed_time'),
-            t('claimed_uplift'),
-            t('claimed_net_cost'),
-            t('allowed_time'),
-            t('allowed_uplift'),
-            t('allowed_net_cost'),
-            t('action')
-          ]
-        end
-
-        def t(key, width: nil, numeric: true)
           {
-            text: I18n.t("nsm.work_items.index.#{key}"),
-            numeric: numeric,
-            width: width
+            'item' => [],
+            'cost' => [],
+            'date' => [],
+            'fee_earner' => [],
+            'claimed_time' => ['govuk-table__header--numeric'],
+            'claimed_uplift' => ['govuk-table__header--numeric'],
+            'claimed_net_cost' => ['govuk-table__header--numeric'],
+            'allowed_net_cost' => ['govuk-table__header--numeric'],
           }
         end
       end
@@ -71,16 +67,34 @@ module Nsm
         )
       end
 
-      def table_fields
-        [
-          work_type.to_s,
-          format(original_time_spent, as: :time),
-          format(original_uplift.to_i, as: :percentage),
-          format(provider_requested_amount),
-          format(any_adjustments? && time_spent, as: :time),
-          format(any_adjustments? && uplift.to_i, as: :percentage),
-          format(any_adjustments? && caseworker_amount)
-        ]
+      def position
+        super ||
+          (
+            submission.data['work_items']
+              .sort_by { [_1['completed_on'], _1['id']] }
+              .index { _1['id'] == id }
+            + 1
+          )
+      end
+
+      def formatted_completed_on
+        format(completed_on, as: :date)
+      end
+
+      def formatted_time_spent
+        format(original_time_spent, as: :time)
+      end
+
+      def formatted_uplift
+        format(original_uplift.to_i, as: :percentage)
+      end
+
+      def formatted_requested_amount
+        format(provider_requested_amount)
+      end
+
+      def formatted_allowed_amount
+        format(any_adjustments? && caseworker_amount)
       end
 
       def attendance?
@@ -122,9 +136,10 @@ module Nsm
         return '' if value.nil? || value == false
 
         case as
-        when :percentage then { text: NumberTo.percentage(value, multiplier: 1), numeric: true }
-        when :time then { text: ApplicationController.helpers.format_period(value, style: :long_html), numeric: true }
-        else { text: NumberTo.pounds(value), numeric: true }
+        when :percentage then NumberTo.percentage(value, multiplier: 1)
+        when :time then format_period(value, style: :minimal)
+        when :date then format_in_zone(value)
+        else NumberTo.pounds(value)
         end
       end
     end

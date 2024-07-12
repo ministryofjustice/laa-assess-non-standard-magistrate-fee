@@ -4,7 +4,7 @@ RSpec.describe Nsm::WorkItemsController do
   context 'index' do
     let(:claim) { instance_double(Claim, id: claim_id) }
     let(:claim_id) { SecureRandom.uuid }
-    let(:work_items) { [instance_double(Nsm::V1::WorkItem, completed_on: Time.zone.today)] }
+    let(:work_items) { [instance_double(Nsm::V1::WorkItem, completed_on: Time.zone.today, position: 1)] }
     let(:work_item_summary) { instance_double(Nsm::V1::WorkItemSummary) }
 
     before do
@@ -72,11 +72,11 @@ form_attributes: {})
     let(:waiting_id) { SecureRandom.uuid }
     let(:waiting) do
       instance_double(Nsm::V1::WorkItem, id: waiting_id, work_type: double(value: 'waiting'),
-form_attributes: {})
+form_attributes: {}, position: 1)
     end
     let(:travel) do
       instance_double(Nsm::V1::WorkItem, id: travel_id, work_type: double(value: 'travel'),
-form_attributes: {})
+form_attributes: {}, position: 2)
     end
     let(:work_items) { [waiting, travel] }
 
@@ -102,11 +102,11 @@ form_attributes: {})
     let(:travel_id) { SecureRandom.uuid }
     let(:waiting) do
       instance_double(Nsm::V1::WorkItem, id: waiting_id, work_type: double(value: 'waiting'),
-form_attributes: {})
+form_attributes: {}, position: 1)
     end
     let(:travel) do
       instance_double(Nsm::V1::WorkItem, id: travel_id, work_type: double(value: 'travel'),
-form_attributes: {})
+form_attributes: {}, position: 2)
     end
     let(:work_items) { [waiting, travel] }
     let(:form) { instance_double(Nsm::WorkItemForm, save:) }
