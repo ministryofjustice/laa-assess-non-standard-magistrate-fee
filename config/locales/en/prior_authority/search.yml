@@ -36,7 +36,7 @@ en:
             firm_name: Firm name
             client_name: Client
             caseworker: Caseworker
-            last_updated: Last updated
+            date_updated: Last updated
             status_with_assignment: Status
         result: result
   activemodel:
