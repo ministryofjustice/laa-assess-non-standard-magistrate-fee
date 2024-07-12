@@ -71,7 +71,7 @@
         <table class="govuk-table" data-module="moj-sortable-table" aria-describedby="page-title">
           <thead class="govuk-table__head">
             <tr class="govuk-table__row">
-              <% %i[laa_reference firm_name client_name caseworker last_updated status_with_assignment].each do |key| %>
+              <% %i[laa_reference firm_name client_name caseworker date_updated status_with_assignment].each do |key| %>
                 <% if key == :caseworker %>
                   <th scope='col' class='govuk-table__header'><%= t('prior_authority.searches.show.table.header.caseworker') %></th>
                 <% else %>

@@ -15,14 +15,14 @@ class SearchForm
   attribute :status_with_assignment, :string
   attribute :caseworker_id, :string
   attribute :page, :integer, default: 1
-  attribute :sort_by, :string, default: 'last_updated'
+  attribute :sort_by, :string, default: 'date_updated'
   attribute :sort_direction, :string, default: 'descending'
   attribute :application_type, :string
 
   validate :at_least_one_field_set
 
   def results
-    @search_response[:data].map { SearchResult.new(_1) }
+    @search_response[:raw_data].map { SearchResult.new(_1) }
   end
 
   def pagy
@@ -79,12 +79,7 @@ class SearchForm
   rescue StandardError => e
     Sentry.capture_exception(e)
     errors.add(:base, :search_error)
-    {
-      metadata: {
-        total_results: 0
-      },
-      data: []
-    }
+    nil
   end
 
   def show_all

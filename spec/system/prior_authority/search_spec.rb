@@ -9,7 +9,7 @@ RSpec.describe 'Search', :stub_oauth_token do
       page: 1,
       per_page: 20,
       query: 'QUERY',
-      sort_by: 'last_updated',
+      sort_by: 'date_updated',
       sort_direction: 'descending',
     }
   end
@@ -24,7 +24,7 @@ RSpec.describe 'Search', :stub_oauth_token do
       stub_request(:post, endpoint).with(body: payload).to_return(
         status: 201,
         body: { metadata: { total_results: 1 },
-                data: [{ application_id: application.id, application: application.data }] }.to_json
+                raw_data: [{ application_id: application.id, application: application.data }] }.to_json
       )
     end
 
@@ -68,7 +68,7 @@ RSpec.describe 'Search', :stub_oauth_token do
     before do
       stub_request(:post, endpoint).with(body: payload).to_return(
         status: 201,
-        body: { metadata: { total_results: 1 }, data: [record] }.to_json
+        body: { metadata: { total_results: 1 }, raw_data: [record] }.to_json
       )
     end
 
@@ -89,7 +89,7 @@ RSpec.describe 'Search', :stub_oauth_token do
     before do
       stub_request(:post, endpoint).with(body: payload).to_return(
         status: 201,
-        body: { metadata: { total_results: 0 }, data: [] }.to_json
+        body: { metadata: { total_results: 0 }, raw_data: [] }.to_json
       )
     end
 
@@ -117,7 +117,7 @@ RSpec.describe 'Search', :stub_oauth_token do
     let(:applications) { create_list(:prior_authority_application, 20) }
     let(:payloads) do
       [
-        { application_type: 'crm4', page: 1, per_page: 20, query: 'QUERY', sort_by: 'last_updated',
+        { application_type: 'crm4', page: 1, per_page: 20, query: 'QUERY', sort_by: 'date_updated',
 sort_direction: 'descending' },
         { application_type: 'crm4', page: 1, per_page: 20, query: 'QUERY', sort_by: 'laa_reference',
 sort_direction: 'ascending' },
@@ -130,7 +130,7 @@ sort_direction: 'ascending' },
       payloads.map do |payload|
         stub_request(:post, endpoint).with(body: payload).to_return(
           status: 201, body: { metadata: { total_results: 21 },
-                               data: applications.map { { application_id: _1.id, application: _1.data } } }.to_json
+                               raw_data: applications.map { { application_id: _1.id, application: _1.data } } }.to_json
         )
       end
     end
@@ -152,7 +152,7 @@ sort_direction: 'ascending' },
         caseworker_id: caseworker.id,
         page: 1,
         per_page: 20,
-        sort_by: 'last_updated',
+        sort_by: 'date_updated',
         sort_direction: 'descending',
         status_with_assignment: 'rejected',
         submitted_from: '2023-04-20',
@@ -164,7 +164,7 @@ sort_direction: 'ascending' },
     let(:stub) do
       stub_request(:post, endpoint).with(body: payload).to_return(
         status: 201,
-        body: { metadata: { total_results: 0 }, data: [] }.to_json
+        body: { metadata: { total_results: 0 }, raw_data: [] }.to_json
       )
     end
 
