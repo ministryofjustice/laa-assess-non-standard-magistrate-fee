@@ -27,11 +27,11 @@ module Nsm
         work_type, requested_cost, requested_time, allowed_cost, allowed_time = *data
         result = [
           work_type,
-          { text: format_period(requested_time, style: :line_html), numeric: true },
+          { text: format_period(requested_time, style: :minimal), numeric: true },
           { text: NumberTo.pounds(requested_cost), numeric: true },
         ]
         if show_allowed?
-          result << { text: format_period(allowed_time, style: :line_html), numeric: true }
+          result << { text: format_period(allowed_time, style: :minimal), numeric: true }
           result << { text: NumberTo.pounds(allowed_cost), numeric: true }
         else
           result << '' << ''

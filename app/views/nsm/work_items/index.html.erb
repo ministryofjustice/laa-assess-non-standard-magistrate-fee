@@ -19,27 +19,54 @@
     <%= govuk_button_link_to(t(".remove_uplift_all"), edit_nsm_claim_work_items_uplift_path(claim), secondary: true, data: { turbo: 'false' }) %>
   <% end %>
 
-  <% head = Nsm::V1::WorkItem.headers %>
-  <% work_items.group_by(&:completed_on).each do |completed_on, work_items_for_date| %>
-    <%=
-      rows = work_items_for_date.map do |work_item|
-        link = if claim.editable_by?(current_user)
-                  link_to(t('.change'), edit_nsm_claim_work_item_path(claim_id: claim.id, id: work_item.id), data: { turbo: 'false' })
-                else
-                  link_to(t('.view'), nsm_claim_work_item_path(claim_id: claim.id, id: work_item.id), data: { turbo: 'false' })
-                end
-        [
-          *work_item.table_fields,
-          link
-        ]
-      end
+  <table class="govuk-table" data-module="moj-sortable-table" aria-describedby="page-title">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <% Nsm::V1::WorkItem.headers.each_with_index do |(column_key, additional_classes), index| %>
+          <%= table_header_with_form(column_key,
+                                     "nsm.work_items.index",
+                                     index,
+                                     nsm_claim_work_items_path(claim),
+                                     @sort_by,
+                                     @sort_direction,
+                                     additional_classes: ) %>
+        <% end %>
+      </tr>
+    </thead>
 
-      govuk_table do |table|
-        table.with_caption(text: completed_on.strftime('%-d %B %Y'), size: 's')
-        table.with_head(rows: [head])
-        table.with_body(rows: rows, first_cell_is_header: true)
-      end
-    %>
-  <% end %>
+    <tbody class="govuk-table__body app-task-list__items">
+      <% work_items.each do |work_item| %>
+        <tr class="govuk-table__row app-task-list__item">
+          <th class="govuk-table__header"><%= work_item.position %></th>
+          <td class="govuk-table__cell">
+            <%=
+              if claim.editable_by?(current_user)
+                link_to(work_item.work_type, edit_nsm_claim_work_item_path(claim_id: claim.id, id: work_item.id), data: { turbo: 'false' })
+              else
+                link_to(work_item.work_type, nsm_claim_work_item_path(claim_id: claim.id, id: work_item.id), data: { turbo: 'false' })
+              end
+            %>
+          </td>
+
+          <td class="govuk-table__cell"><%= work_item.formatted_completed_on %></td>
+          <td class="govuk-table__cell"><%= work_item.fee_earner %></td>
+
+          <td class="govuk-table__cell govuk-table__cell--numeric">
+            <%= work_item.formatted_time_spent %>
+          </td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">
+            <%= work_item.formatted_uplift %>
+          </td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">
+            <%= work_item.formatted_requested_amount %>
+          </td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">
+            <%= work_item.formatted_allowed_amount %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
   <%= render 'shared/pagination', pagy: pagy, item: t(".table_info_item") %>
 </turbo-frame>

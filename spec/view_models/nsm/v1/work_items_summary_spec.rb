@@ -53,7 +53,7 @@ RSpec.describe Nsm::V1::WorkItemSummary do
           [
             [
               'Travel',
-              { numeric: true, text: '<nobr>0 hours 20 minutes</nobr>' },
+              { numeric: true, text: '0:20' },
               { numeric: true, text: '£100.00' },
               '', ''
             ]
@@ -73,9 +73,9 @@ RSpec.describe Nsm::V1::WorkItemSummary do
           [
             [
               'Travel',
-              { numeric: true, text: '<nobr>0 hours 40 minutes</nobr>' },
+              { numeric: true, text: '0:40' },
               { numeric: true, text: '£200.00' },
-              { numeric: true, text: '<nobr>0 hours 20 minutes</nobr>' },
+              { numeric: true, text: '0:20' },
               { numeric: true, text: '£100.00' }
             ]
           ]
@@ -96,12 +96,12 @@ RSpec.describe Nsm::V1::WorkItemSummary do
           [
             [
               'Travel',
-              { numeric: true, text: '<nobr>0 hours 20 minutes</nobr>' },
+              { numeric: true, text: '0:20' },
               { numeric: true, text: '£100.00' },
               '', ''
             ], [
               'Waiting',
-              { numeric: true, text: '<nobr>0 hours 30 minutes</nobr>' },
+              { numeric: true, text: '0:30' },
               { numeric: true, text: '£100.00' },
               '', ''
             ]
@@ -121,7 +121,7 @@ RSpec.describe Nsm::V1::WorkItemSummary do
           [
             [
               'preparation',
-              { numeric: true, text: '<nobr>0 hours 30 minutes</nobr>' },
+              { numeric: true, text: '0:30' },
               { numeric: true, text: '£150.00' },
               '', ''
             ]
@@ -143,7 +143,7 @@ RSpec.describe Nsm::V1::WorkItemSummary do
           [
             [
               'Travel',
-              { numeric: true, text: '<nobr>0 hours 50 minutes</nobr>' },
+              { numeric: true, text: '0:50' },
               { numeric: true, text: '£200.00' },
               '', ''
             ]

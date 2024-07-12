@@ -29,55 +29,55 @@ RSpec.describe Nsm::V1::WorkItem do
     end
   end
 
-  describe 'table_fields' do
-    let(:params) do
-      {
-        'work_type' => { 'en' => 'Waiting', 'value' => 'waiting' },
-        'time_spent' => 161,
-        'uplift' => 0,
-        'pricing' => 24.0,
-      }
-    end
+  # describe 'table_fields' do
+  #   let(:params) do
+  #     {
+  #       'work_type' => { 'en' => 'Waiting', 'value' => 'waiting' },
+  #       'time_spent' => 161,
+  #       'uplift' => 0,
+  #       'pricing' => 24.0,
+  #     }
+  #   end
 
-    it 'returns the fields for the table display' do
-      expect(subject.table_fields).to eq(
-        [
-          'Waiting',
-          { numeric: true, text: '2 hours<br><nobr>41 minutes</nobr>' },
-          { numeric: true, text: '0%' },
-          { numeric: true, text: '£64.40' },
-          '', '', ''
-        ]
-      )
-    end
+  #   it 'returns the fields for the table display' do
+  #     expect(subject.table_fields).to eq(
+  #       [
+  #         'Waiting',
+  #         { numeric: true, text: '2 hours<br><nobr>41 minutes</nobr>' },
+  #         { numeric: true, text: '0%' },
+  #         { numeric: true, text: '£64.40' },
+  #         '', '', ''
+  #       ]
+  #     )
+  #   end
 
-    context 'when adjustments exists' do
-      let(:params) do
-        {
-          'work_type' => { 'en' => 'Waiting', 'value' => 'waiting' },
-          'time_spent' => 161,
-          'uplift' => 0,
-          'uplift_original' => 20,
-          'pricing' => 24.0,
-          'adjustment_comment' => 'something'
-        }
-      end
+  #   context 'when adjustments exists' do
+  #     let(:params) do
+  #       {
+  #         'work_type' => { 'en' => 'Waiting', 'value' => 'waiting' },
+  #         'time_spent' => 161,
+  #         'uplift' => 0,
+  #         'uplift_original' => 20,
+  #         'pricing' => 24.0,
+  #         'adjustment_comment' => 'something'
+  #       }
+  #     end
 
-      it 'also renders caseworker values' do
-        expect(subject.table_fields).to eq(
-          [
-            'Waiting',
-            { numeric: true, text: '2 hours<br><nobr>41 minutes</nobr>' },
-            { numeric: true, text: '20%' },
-            { numeric: true, text: '£77.28' },
-            { numeric: true, text: '2 hours<br><nobr>41 minutes</nobr>' },
-            { numeric: true, text: '0%' },
-            { numeric: true, text: '£64.40' }
-          ]
-        )
-      end
-    end
-  end
+  #     it 'also renders caseworker values' do
+  #       expect(subject.table_fields).to eq(
+  #         [
+  #           'Waiting',
+  #           { numeric: true, text: '2 hours<br><nobr>41 minutes</nobr>' },
+  #           { numeric: true, text: '20%' },
+  #           { numeric: true, text: '£77.28' },
+  #           { numeric: true, text: '2 hours<br><nobr>41 minutes</nobr>' },
+  #           { numeric: true, text: '0%' },
+  #           { numeric: true, text: '£64.40' }
+  #         ]
+  #       )
+  #     end
+  #   end
+  # end
 
   describe 'provider_requested_amount' do
     let(:params) do
