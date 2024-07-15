@@ -99,6 +99,20 @@ RSpec.describe ApplicationHelper, type: :helper do
         expect(helper.format_period(120, style: :line_html)).to eq('<nobr>2 hours 0 minutes</nobr>')
       end
     end
+
+    context 'when period is not nil and minimal style specified' do
+      it 'formats the value in hours and minutes' do
+        expect(helper.format_period(62, style: :minimal_html)).to eq(
+          '1<span class="govuk-visually-hidden"> hour</span>:02<span class="govuk-visually-hidden"> minutes</span>'
+        )
+        expect(helper.format_period(1, style: :minimal_html)).to eq(
+          '0<span class="govuk-visually-hidden"> hours</span>:01<span class="govuk-visually-hidden"> minute</span>'
+        )
+        expect(helper.format_period(120, style: :minimal_html)).to eq(
+          '2<span class="govuk-visually-hidden"> hours</span>:00<span class="govuk-visually-hidden"> minutes</span>'
+        )
+      end
+    end
   end
 
   describe '#format_in_zone' do

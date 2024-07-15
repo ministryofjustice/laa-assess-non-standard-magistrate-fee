@@ -20,7 +20,7 @@ RSpec.describe 'Work items' do
         'Waiting ' \
         '12 December 2022 ' \
         'aaa ' \
-        '2:41 ' \
+        '2 hours:41 minutes ' \
         '95% ' \
         '£125.58'
       )
@@ -43,7 +43,7 @@ RSpec.describe 'Work items' do
         'Waiting ' \
         '12 December 2022 ' \
         'aaa ' \
-        '2:41 ' \
+        '2 hours:41 minutes ' \
         '95% ' \
         '£125.58 ' \
         '£263.60'
@@ -69,7 +69,7 @@ RSpec.describe 'Work items' do
         'Waiting ' \
         '12 December 2022 ' \
         'aaa ' \
-        '2:41 ' \
+        '2 hours:41 minutes ' \
         '95% ' \
         '£125.58 ' \
         '£64.40'

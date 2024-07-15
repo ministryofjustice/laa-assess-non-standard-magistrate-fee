@@ -31,10 +31,11 @@ module ApplicationHelper
 
   def format_period(period, style: :short)
     return period if period.blank?
-    return "#{period / 60}:#{format('%02d', (period % 60))}" if style == :minimal
+
+    minutes = style == :minimal_html ? format('%02d', (period % 60)) : (period % 60)
 
     t("helpers.time_period.hours.#{style}", count: period / 60) +
-      t("helpers.time_period.minutes.#{style}", count: period % 60)
+      t("helpers.time_period.minutes.#{style}", count: period % 60, minutes: minutes)
   end
 
   def format_in_zone(time_or_string, format: Date::DATE_FORMATS[:stamp])
