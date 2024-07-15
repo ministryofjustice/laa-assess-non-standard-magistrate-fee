@@ -80,16 +80,6 @@ RSpec.describe Nsm::SubmissionFeedbackMailer, type: :mailer do
     include_examples 'creates a feedback mailer'
   end
 
-  describe 'provider requested' do
-    let(:submission) { build(:claim, state: 'provider_requested') }
-    let(:feedback_template) { 'bfd28bd8-b9d8-4b18-8ce0-3fb763123573' }
-    let(:personalisation) do
-      [laa_case_reference:, ufn:, main_defendant_name:, defendant_reference:, claim_total:, date:]
-    end
-
-    include_examples 'creates a feedback mailer'
-  end
-
   describe 'other status' do
     let(:submission) { build(:claim, state: 'fake') }
     let(:feedback_template) { '9ecdec30-83d7-468d-bec2-cf770a2c9828' }

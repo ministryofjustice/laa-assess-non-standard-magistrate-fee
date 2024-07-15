@@ -39,7 +39,7 @@ class Claim < Submission
   end
 
   def sent_back?
-    Nsm::SendBackForm::STATES.include?(state)
+    state == Nsm::SendBackForm::FURTHER_INFO
   end
 
   def display_state?
