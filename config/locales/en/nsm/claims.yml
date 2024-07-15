@@ -56,3 +56,10 @@ en:
         waiting: Waiting
         total: Total
         work_items: Work items
+        accessible:
+          net_cost: "Sum of net cost claimed: "
+          vat: "Sum of VAT on claimed: "
+          gross_cost: "Sum of net cost and VAT on claimed: "
+          allowed_net_cost: 'Sum of net cost allowed: '
+          allowed_vat: "Sum of VAT on allowed: "
+          allowed_gross_cost: "Sum of net cost and VAT on allowed: "

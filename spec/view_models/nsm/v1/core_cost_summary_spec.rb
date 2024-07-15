@@ -105,7 +105,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
       end
 
       it 'they are returned' do
-        expect(subject.table_fields[1]).to eq(
+        expect(subject.table_fields[3]).to eq(
           {
             allowed_gross_cost: { numeric: true, text: '£80.00' }, allowed_net_cost: { numeric: true, text: '£80.00' },
             allowed_vat: { numeric: true, text: '£0.00' }, gross_cost: { numeric: true, text: '£100.00' },
@@ -161,7 +161,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
       end
 
       it 'summs them all together in profit costs' do
-        expect(subject.table_fields[3]).to eq(
+        expect(subject.table_fields[1]).to eq(
           {
             allowed_gross_cost: { numeric: true, text: '£0.00' },
             allowed_net_cost: { numeric: true, text: '£0.00' }, allowed_vat: { numeric: true, text: '£0.00' },
@@ -174,7 +174,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
 
     context 'when disbursements exists - without adjustments' do
       it 'summs them all together in profit costs' do
-        expect(subject.table_fields[3]).to eq(
+        expect(subject.table_fields[1]).to eq(
           {
             allowed_gross_cost: '', allowed_net_cost: '', allowed_vat: '',
             gross_cost: { numeric: true, text: '£100.00' }, name: { numeric: false, text: 'Disbursements', width: nil },
