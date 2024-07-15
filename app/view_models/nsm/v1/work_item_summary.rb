@@ -1,6 +1,15 @@
 module Nsm
   module V1
     class WorkItemSummary < BaseViewModel
+      WORK_TYPE_ORDER = {
+        'travel' => 0,
+        'waiting' => 1,
+        'attendance_with_counsel' => 2,
+        'attendance_without_counsel' => 3,
+        'preparation' => 4,
+        'advocacy' => 5
+      }.freeze
+
       attribute :submission
 
       def header
@@ -60,6 +69,7 @@ module Nsm
 
       def work_items
         @work_items ||= BaseViewModel.build(:work_item, submission, 'work_items')
+                          .sort_by { WORK_TYPE_ORDER[_1.work_type.value] }
       end
 
       def summed_values(work_items, periods: true)
