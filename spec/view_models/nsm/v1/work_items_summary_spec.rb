@@ -53,7 +53,10 @@ RSpec.describe Nsm::V1::WorkItemSummary do
           [
             [
               'Travel',
-              { numeric: true, text: "0<span class=\"govuk-visually-hidden\"> hours</span>:20<span class=\"govuk-visually-hidden\"> minutes</span>" },
+              {
+                numeric: true,
+                text: '0<span class="govuk-visually-hidden"> hours</span>:20<span class="govuk-visually-hidden"> minutes</span>'
+              },
               { numeric: true, text: '£100.00' },
               '', ''
             ]
@@ -73,9 +76,15 @@ RSpec.describe Nsm::V1::WorkItemSummary do
           [
             [
               'Travel',
-              { numeric: true, text: "0<span class=\"govuk-visually-hidden\"> hours</span>:40<span class=\"govuk-visually-hidden\"> minutes</span>" },
+              {
+                numeric: true,
+                text: '0<span class="govuk-visually-hidden"> hours</span>:40<span class="govuk-visually-hidden"> minutes</span>'
+              },
               { numeric: true, text: '£200.00' },
-              { numeric: true, text: "0<span class=\"govuk-visually-hidden\"> hours</span>:20<span class=\"govuk-visually-hidden\"> minutes</span>" },
+              {
+                numeric: true,
+                text: '0<span class="govuk-visually-hidden"> hours</span>:20<span class="govuk-visually-hidden"> minutes</span>'
+              },
               { numeric: true, text: '£100.00' }
             ]
           ]
@@ -93,19 +102,21 @@ RSpec.describe Nsm::V1::WorkItemSummary do
 
       it 'returns a single table field row' do
         expect(subject.table_fields).to eq(
-          [
-            [
-              'Travel',
-              { numeric: true, text: "0<span class=\"govuk-visually-hidden\"> hours</span>:20<span class=\"govuk-visually-hidden\"> minutes</span>" },
-              { numeric: true, text: '£100.00' },
-              '', ''
-            ], [
-              'Waiting',
-              { numeric: true, text: "0<span class=\"govuk-visually-hidden\"> hours</span>:30<span class=\"govuk-visually-hidden\"> minutes</span>" },
-              { numeric: true, text: '£100.00' },
-              '', ''
-            ]
-          ]
+          [[
+            'Travel',
+            {
+              numeric: true,
+              text: '0<span class="govuk-visually-hidden"> hours</span>:20<span class="govuk-visually-hidden"> minutes</span>'
+            },
+            { numeric: true, text: '£100.00' }, '', ''
+          ], [
+            'Waiting',
+            {
+              numeric: true,
+              text: '0<span class="govuk-visually-hidden"> hours</span>:30<span class="govuk-visually-hidden"> minutes</span>'
+            },
+            { numeric: true, text: '£100.00' }, '', ''
+          ]]
         )
       end
     end
@@ -121,7 +132,10 @@ RSpec.describe Nsm::V1::WorkItemSummary do
           [
             [
               'preparation',
-              { numeric: true, text: "0<span class=\"govuk-visually-hidden\"> hours</span>:30<span class=\"govuk-visually-hidden\"> minutes</span>" },
+              {
+                numeric: true,
+                text: '0<span class="govuk-visually-hidden"> hours</span>:30<span class="govuk-visually-hidden"> minutes</span>'
+              },
               { numeric: true, text: '£150.00' },
               '', ''
             ]
@@ -143,7 +157,10 @@ RSpec.describe Nsm::V1::WorkItemSummary do
           [
             [
               'Travel',
-              { numeric: true, text: "0<span class=\"govuk-visually-hidden\"> hours</span>:50<span class=\"govuk-visually-hidden\"> minutes</span>" },
+              {
+                numeric: true,
+                text: '0<span class="govuk-visually-hidden"> hours</span>:50<span class="govuk-visually-hidden"> minutes</span>'
+              },
               { numeric: true, text: '£200.00' },
               '', ''
             ]
