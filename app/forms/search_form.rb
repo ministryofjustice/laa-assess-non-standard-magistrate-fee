@@ -37,7 +37,6 @@ class SearchForm
   end
 
   def execute
-    puts attributes
     @search_response = conduct_search
   end
 
