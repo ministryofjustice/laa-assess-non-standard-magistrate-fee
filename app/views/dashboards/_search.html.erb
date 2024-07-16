@@ -1,3 +1,111 @@
-<div>
-  Placeholder
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= govuk_error_summary(@search_form) %>
+    <div class="search-panel govuk-!-margin-bottom-6">
+      <%= form_with(url: dashboard_path(nav_select: 'search'), method: :get, model: @search_form) do |f| %>
+        <div class="govuk-form-group govuk-!-width-two-thirds" role="search">
+          <%= f.govuk_text_field :query, label: { size: 'm', text: t('.query.label') }, hint: { text: t('.query.hint') } %>
+        </div>
+        <h2 class="govuk-heading-m"><%= t('.filter_results') %></h2>
+        <div>
+          <div class="govuk-date-input__item">
+            <div class="govuk-form-group">
+              <%= f.govuk_date_field :submitted_from, legend: { size: 's', text: t('.submitted_from') } %>
+            </div>
+          </div>
+          <div class="govuk-date-input__item">
+            <div class="govuk-form-group">
+              <%= f.govuk_date_field :submitted_to, legend: { size: 's', text: t('.submitted_to') } %>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="govuk-date-input__item">
+            <div class="govuk-form-group">
+              <%= f.govuk_date_field :updated_from, legend: { size: 's', text: t('.updated_from', class: 'xs-legend') } %>
+            </div>
+          </div>
+          <div class="govuk-date-input__item">
+            <div class="govuk-form-group">
+              <%= f.govuk_date_field :updated_to, legend: { size: 's', text: t('.updated_to') } %>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="govuk-date-input__item">
+            <div class="govuk-form-group">
+              <%= f.govuk_collection_select :status_with_assignment,
+                                            @search_form.statuses,
+                                            :value,
+                                            :label,
+                                            label: { text: t('.status') } %>
+            </div>
+          </div>
+          <div class="govuk-date-input__item">
+            <div class="govuk-form-group">
+              <%= f.govuk_collection_select :caseworker_id,
+                                            @search_form.caseworkers,
+                                            :value,
+                                            :label,
+                                            label: { text: t('.caseworker') } %>
+            </div>
+          </div>
+        </div>
+
+        <%= f.govuk_submit(t('.search'), name: 'nav_select', value: 'search') do %>
+          <%= govuk_link_to t('.clear_all'), new_dashboard_path(nav_select: 'search') %>
+        <% end %>
+      <% end %>
+    </div>
+
+    <% if @search_form.executed? %>
+      <h2 class="govuk-heading-m"><%= t('.search_results') %></h1>
+      <% if @search_form.results.any? %>
+        <table class="govuk-table" data-module="moj-sortable-table" aria-describedby="page-title">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <% %i[laa_reference firm_name client_name caseworker date_updated status_with_assignment].each do |key| %>
+                <% if key == :caseworker %>
+                  <th scope='col' class='govuk-table__header'><%= t('prior_authority.searches.show.table.header.caseworker') %></th>
+                <% else %>
+                  <%= table_header_with_link(key,
+                                            'prior_authority.searches.show.table.header',
+                                            { controller: 'prior_authority/searches', action: 'show', search_form: @search_form.attributes },
+                                            @search_form.sort_by, @search_form.sort_direction, :search_form) %>
+                <% end %>
+              <% end %>
+            </tr>
+          </thead>
+
+          <tbody class="govuk-table__body app-task-list__items">
+            <% @search_form.results.each do |search_result| %>
+              <tr class="govuk-table__row app-task-list__item">
+                <td class="govuk-table__cell">
+                  <%= link_to search_result.laa_reference, prior_authority_application_path(search_result.id), data: { turbo: false } %>
+                </td>
+                <td class="govuk-table__cell">
+                  <%= search_result.firm_name %>
+                </td>
+                <td class="govuk-table__cell">
+                  <%= search_result.client_name %>
+                </td>
+                <td class="govuk-table__cell">
+                  <%= search_result.caseworker %>
+                </td>
+                <td class="govuk-table__cell">
+                  <%= search_result.date_updated %>
+                </td>
+                <td class="govuk-table__cell">
+                  <%= search_result.state_tag %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p class="govuk-text"><%= t('.none') %></p>
+      <% end %>
+      <%= render 'shared/pagination', pagy: @search_form.pagy, item: t(".result") %>
+    <% end %>
+  </div>
 </div>

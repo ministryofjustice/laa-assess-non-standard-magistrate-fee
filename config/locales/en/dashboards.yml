@@ -6,3 +6,17 @@ en:
         prior_authority: Prior authority
         nsm: Non-standard magistrates
         search: Search for an application
+    search:
+      filter_results: Filter results (optional)
+      submitted_from: Date submitted from
+      submitted_to: Date submitted to
+      updated_from: Last updated from
+      updated_to: Last updated to
+      status: Status
+      caseworker: Caseworker
+      search: Search
+      clear_all: Clear all
+      search_results: Search results
+      query:
+        label: Application details
+        hint: You can search by client/ defendant name, firm name, UFN or LAA reference
