@@ -70,7 +70,7 @@
                 <% else %>
                   <%= table_header_with_link(key,
                                             'prior_authority.searches.show.table.header',
-                                            { controller: 'prior_authority/searches', action: 'show', search_form: @search_form.attributes },
+                                            { controller: 'dashboards', action: 'show', search_form: @search_form.attributes },
                                             @search_form.sort_by, @search_form.sort_direction, :search_form) %>
                 <% end %>
               <% end %>
