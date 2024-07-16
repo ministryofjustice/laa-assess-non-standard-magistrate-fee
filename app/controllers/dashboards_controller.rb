@@ -4,7 +4,6 @@ class DashboardsController < ApplicationController
   layout 'dashboard'
 
   def show
-    @current_tab ||= params.fetch(:current_tab, 'overview')
     dashboard_ids = get_dashboard_ids(nav_select)
     @iframe_urls = generate_metabase_urls(dashboard_ids)
   end
