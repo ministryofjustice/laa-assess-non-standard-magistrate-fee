@@ -5,9 +5,4 @@ en:
       heading:
         prior_authority: Prior authority
         nsm: Non-standard magistrates
-      nav:
-        overview: Overview
-        allocation: Allocation
-        autogrant: Auto grant
-    allocation:
-      prototype: Link to prototype (Dashboard)
+        search: Search for an application

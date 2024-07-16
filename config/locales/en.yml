@@ -29,6 +29,7 @@ en:
       primary_navigation:
         prior_authority: Prior authority
         nsm: Non-standard magistrates
+        search: Search
 
   shared:
     save_changes: Save changes

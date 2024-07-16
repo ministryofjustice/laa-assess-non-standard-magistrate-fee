@@ -24,7 +24,7 @@ module Nsm
 
       if assignment
         Claim.transaction do
-          ::Event::Unassignment.build(submission: claim,
+          :: ::Unassignment.build(submission: claim,
                                       user: user,
                                       current_user: current_user,
                                       comment: comment)
