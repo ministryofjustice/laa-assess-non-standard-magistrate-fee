@@ -6,8 +6,6 @@ RSpec.describe 'Dashboards' do
       allow(ENV).to receive(:fetch).and_call_original
       allow(ENV).to receive(:fetch).with('METABASE_PA_DASHBOARD_IDS')
                                    .and_return('14,6')
-      allow(ENV).to receive(:fetch).with('METABASE_PA_AUTOGRANT_DASHBOARD_IDS')
-                                   .and_return('19')
       allow(ENV).to receive(:fetch).with('METABASE_NSM_DASHBOARD_IDS')
                                    .and_return('14')
       allow(FeatureFlags).to receive(:insights).and_return(double(enabled?: true))
@@ -50,7 +48,7 @@ RSpec.describe 'Dashboards' do
 
         it 'can navigate to nsm analytics' do
           click_on 'Non-standard magistrates'
-          expect(page).to have_current_path(dashboard_path(service: 'nsm'))
+          expect(page).to have_current_path(dashboard_path(nav_select: 'nsm'))
 
           expect(page).to have_css('.govuk-heading-xl', text: 'Non-standard magistrates')
         end
@@ -67,7 +65,7 @@ RSpec.describe 'Dashboards' do
         end
 
         it 'cannot navigate to nsm page' do
-          visit dashboard_path(service: 'nsm')
+          visit dashboard_path(nav_select: 'nsm')
 
           expect(page).to have_css('.govuk-heading-xl', text: 'Prior authority')
         end
@@ -88,7 +86,7 @@ RSpec.describe 'Dashboards' do
         end
 
         it 'does not show any nsm dashboards' do
-          visit dashboard_path(service: 'nsm')
+          visit dashboard_path(nav_select: 'nsm')
           expect(page).not_to have_css('iframe')
         end
       end
