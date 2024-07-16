@@ -1,7 +1,5 @@
-<% if @current_tab == 'overview' %>
+<% if @nav_select == 'prior_authority' || @nav_select == 'nsm' %>
   <%= render partial: 'overview' %>
-<% elsif @service == 'prior_authority' && @current_tab == 'caseworkers' %>
-  <%= render partial: 'caseworkers' %>
-<% elsif @service == 'prior_authority' && @current_tab == 'autogrant' %>
-  <%= render partial: 'autogrant' %>
+<% else %>
+  <%= render partial: 'search' %>
 <% end %>

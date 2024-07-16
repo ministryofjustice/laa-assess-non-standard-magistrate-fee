@@ -16,36 +16,33 @@ RSpec.describe DashboardsController do
       end
 
       context 'show' do
-        context 'service is prior authority' do
+        context 'selected tab is prior authority' do
           before do
-            get :show, params: { service: 'prior_authority' }
+            get :show, params: { nav_select: 'prior_authority' }
           end
 
           it 'returns no urls' do
             expect(subject.instance_variable_get(:@iframe_urls)).to eq([])
-            expect(subject.instance_variable_get(:@autogrant_urls)).to eq([])
           end
         end
 
         context 'service is nsm' do
           before do
-            get :show, params: { service: 'nsm' }
+            get :show, params: { nav_select: 'nsm' }
           end
 
           it 'returns no urls' do
             expect(subject.instance_variable_get(:@iframe_urls)).to eq([])
-            expect(subject.instance_variable_get(:@autogrant_urls)).to eq([])
           end
         end
 
         context 'invalid service provided' do
           before do
-            get :show, params: { service: 'random' }
+            get :show, params: { nav_select: 'random' }
           end
 
           it 'returns no ids' do
             expect(subject.instance_variable_get(:@iframe_urls)).to eq([])
-            expect(subject.instance_variable_get(:@autogrant_urls)).to eq([])
           end
         end
       end
