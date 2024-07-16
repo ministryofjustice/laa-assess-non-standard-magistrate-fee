@@ -36,4 +36,58 @@ RSpec.describe NotifyEventAppStore do
       end
     end
   end
+
+  context 'when App Store returns a forbidden response', :stub_oauth_token do
+    let(:event) { create(:event, submission:) }
+    let(:submission) { create(:claim) }
+
+    before do
+      allow(ENV).to receive(:fetch).and_call_original
+      allow(ENV).to receive(:fetch).with('APP_STORE_URL', 'http://localhost:8000')
+                                   .and_return('http://appstore.example.com')
+      stub_request(:post, "http://appstore.example.com/v1/submissions/#{submission.id}/events").to_return(status: 403)
+    end
+
+    context 'when event is already in the app store' do
+      before do
+        stub_request(:get, "http://appstore.example.com/v1/submissions/#{submission.id}").to_return(
+          status: 200,
+          body: { events: [event] }.to_json
+        )
+      end
+
+      it "doesn't raise an error" do
+        expect { subject.perform(event:) }.not_to raise_error
+      end
+    end
+
+    context 'when event is not already in the app store' do
+      before do
+        stub_request(:get, "http://appstore.example.com/v1/submissions/#{submission.id}").to_return(
+          status: 200,
+          body: { events: [] }.to_json
+        )
+      end
+
+      it 'raises an error' do
+        expect { subject.perform(event:) }.to raise_error(
+          "Cannot sync event #{event.id} to submission #{submission.id} in App Store: Forbidden"
+        )
+      end
+    end
+
+    context 'when it cannot check event status in app store' do
+      before do
+        stub_request(:get, "http://appstore.example.com/v1/submissions/#{submission.id}").to_return(
+          status: 500
+        )
+      end
+
+      it 'raises an error' do
+        expect { subject.perform(event:) }.to raise_error(
+          "Unexpected response from AppStore - status 500 for '/v1/submissions/#{submission.id}'"
+        )
+      end
+    end
+  end
 end

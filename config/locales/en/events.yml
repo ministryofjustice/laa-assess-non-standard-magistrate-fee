@@ -20,7 +20,6 @@ en:
   nsm/event/send_back:
     title:
       further_info: Claim sent back to provider
-      provider_requested: Claim sent back to provider
   event/unassignment:
     title:
       self: Caseworker removed self from claim
