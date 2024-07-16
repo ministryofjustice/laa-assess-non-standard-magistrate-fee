@@ -17,6 +17,8 @@ en:
       search: Search
       clear_all: Clear all
       search_results: Search results
+      application_type:
+        label: Which service do you want to search?
       query:
         label: Application details
         hint: You can search by client/ defendant name, firm name, UFN or LAA reference

@@ -4,6 +4,11 @@ class SearchForm
   include ActiveRecord::AttributeAssignment
 
   Option = Struct.new(:value, :label)
+  ApplicationType = Struct.new(:id, :name)
+  APPLICATION_TYPES = [
+    ApplicationType.new('crm4', 'Prior authority'),
+    ApplicationType.new('crm7', 'Non-standard magistrates')
+  ].freeze
 
   PER_PAGE = 20
 
@@ -32,6 +37,7 @@ class SearchForm
   end
 
   def execute
+    puts attributes
     @search_response = conduct_search
   end
 
@@ -57,13 +63,19 @@ class SearchForm
     ].map { Option.new(_1, I18n.t("search.statuses.#{_1}")) }
   end
 
+  def application_types
+    self.class::APPLICATION_TYPES
+  end
+
   private
 
   def at_least_one_field_set
     field_set = [:query, :submitted_from,
                  :submitted_to, :updated_from,
                  :updated_to, :status_with_assignment,
-                 :caseworker_id].any? do |field|
+                 :caseworker_id]
+
+    field_set.any? do |field|
       send(field).present?
     end
 
