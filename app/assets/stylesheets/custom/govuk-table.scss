@@ -23,3 +23,7 @@
 .govuk-table .govuk-table__foot .govuk-table__row .govuk-table__footer:last-child {
   padding-right: 0;
 }
+
+.govuk-table__cell--nowrap {
+  text-wrap: nowrap;
+}

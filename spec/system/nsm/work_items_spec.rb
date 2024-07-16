@@ -18,7 +18,7 @@ RSpec.describe 'Work items' do
       expect(page).to have_content(
         '1 ' \
         'Waiting ' \
-        '12 December 2022 ' \
+        '12 Dec 2022 ' \
         'aaa ' \
         '2 hours:41 minutes ' \
         '95% ' \
@@ -41,7 +41,7 @@ RSpec.describe 'Work items' do
       expect(page).to have_content(
         '1 ' \
         'Waiting ' \
-        '12 December 2022 ' \
+        '12 Dec 2022 ' \
         'aaa ' \
         '2 hours:41 minutes ' \
         '95% ' \
@@ -67,7 +67,7 @@ RSpec.describe 'Work items' do
       expect(page).to have_content(
         '1 ' \
         'Waiting ' \
-        '12 December 2022 ' \
+        '12 Dec 2022 ' \
         'aaa ' \
         '2 hours:41 minutes ' \
         '95% ' \

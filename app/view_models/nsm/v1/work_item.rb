@@ -138,7 +138,7 @@ module Nsm
         case as
         when :percentage then NumberTo.percentage(value, multiplier: 1)
         when :time then format_period(value, style: :minimal_html)
-        when :date then format_in_zone(value)
+        when :date then format_in_zone(value, format: '%-d %b %Y')
         else NumberTo.pounds(value)
         end
       end

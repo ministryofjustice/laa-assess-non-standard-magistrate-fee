@@ -18,10 +18,7 @@ module Nsm
             t('.number'),
             t('.uplift_requested'),
             t('.provider_requested'),
-            t('.number_allowed'),
-            t('.uplift_allowed'),
-            t('.caseworker_allowed'),
-            t('.action')
+            t('.caseworker_allowed')
           ]
         end
 
@@ -84,8 +81,6 @@ module Nsm
           format(original_count.to_s, as: :number),
           format(original_uplift.to_i, as: :percentage),
           format(provider_requested_amount),
-          format(any_adjustments? && count.to_s, as: :number),
-          format(any_adjustments? && uplift.to_i, as: :percentage),
           format(any_adjustments? && caseworker_amount)
         ]
       end

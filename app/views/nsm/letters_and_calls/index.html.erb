@@ -24,18 +24,16 @@
       rows = letters_and_calls.rows.map do |letter_and_call|
         next if letter_and_call.original_count.zero?
 
-        link = if claim.editable_by?(current_user)
-                  link_to(t('.change'), edit_nsm_claim_letters_and_call_path(claim_id: claim.id, id: letter_and_call.type.value), data: { turbo: 'false' })
-                else
-                  link_to(t('.view'), nsm_claim_letters_and_call_path(claim_id: claim.id, id: letter_and_call.type.value), data: { turbo: 'false' })
-                end
-
-        [
-          *letter_and_call.table_fields,
-          link
-        ]
+        fields = letter_and_call.table_fields.dup
+        destination = if claim.editable_by?(current_user)
+                        edit_nsm_claim_letters_and_call_path(claim_id: claim.id, id: letter_and_call.type.value)
+                      else
+                        nsm_claim_letters_and_call_path(claim_id: claim.id, id: letter_and_call.type.value)
+                      end
+        fields[0] = link_to(fields[0], destination, data: { turbo: 'false' })
+        fields
       end
-      govuk_table(head:, rows:)
+      govuk_table(head: head, rows: rows, first_cell_is_header: true)
       %>
     <% end %>
   </div>

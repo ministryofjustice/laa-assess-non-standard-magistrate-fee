@@ -19,10 +19,9 @@ RSpec.describe 'Letters and Calls' do
         'Letters' \
         '12' \
         '95%' \
-        '£83.30' \
-        'Change'
+        '£83.30'
       )
-      click_on 'Change'
+      click_on 'Letters'
     end
 
     choose 'Yes, remove uplift'
@@ -40,10 +39,7 @@ RSpec.describe 'Letters and Calls' do
         '12' \
         '95%' \
         '£83.30' \
-        '22' \
-        '0%' \
-        '£78.32' \
-        'Change'
+        '£78.32'
       )
     end
   end
@@ -56,10 +52,9 @@ RSpec.describe 'Letters and Calls' do
         'Calls' \
         '4' \
         '20%' \
-        '£17.09' \
-        'Change'
+        '£17.09'
       )
-      click_on 'Change'
+      click_on 'Calls'
     end
 
     choose 'Yes, remove uplift'
@@ -77,10 +72,7 @@ RSpec.describe 'Letters and Calls' do
         '4' \
         '20%' \
         '£17.09' \
-        '22' \
-        '0%' \
-        '£78.32' \
-        'Change'
+        '£78.32'
       )
     end
   end
@@ -103,10 +95,7 @@ RSpec.describe 'Letters and Calls' do
         '12' \
         '95%' \
         '£83.30' \
-        '12' \
-        '0%' \
-        '£42.72' \
-        'Change'
+        '£42.72'
       )
     end
 
@@ -116,10 +105,7 @@ RSpec.describe 'Letters and Calls' do
         '4' \
         '20%' \
         '£17.09' \
-        '4' \
-        '0%' \
-        '£14.24' \
-        'Change'
+        '£14.24'
       )
     end
 
@@ -133,7 +119,7 @@ RSpec.describe 'Letters and Calls' do
       visit nsm_claim_letters_and_calls_path(claim)
       within('main') { expect(page).to have_no_content 'Change' }
       within('.govuk-table__body .govuk-table__row', match: :first) do
-        click_on 'View'
+        click_on 'Letters'
       end
       expect(page).to have_content(
         'Number of letters12' \
