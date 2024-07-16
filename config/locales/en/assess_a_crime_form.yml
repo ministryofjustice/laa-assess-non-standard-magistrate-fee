@@ -6,3 +6,4 @@ en:
     index:
       prior_authority: Assess prior authority to incur disbursements, previously CRM4
       nsm: Assess a non-standard magistrates' court payment, previously CRM7
+      analytics: Analytics dashboard

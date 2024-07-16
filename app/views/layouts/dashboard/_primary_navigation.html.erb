@@ -4,13 +4,16 @@
         <nav class="moj-primary-navigation" aria-label="Primary navigation">
           <ul class="moj-primary-navigation__list">
               <li class="moj-primary-navigation__item">
-                <%= link_to t('.prior_authority'), dashboard_path(service: 'prior_authority'), class: 'moj-primary-navigation__link', 'aria-current': (@service == 'prior_authority' ? 'page' : nil) %>
+                <%= link_to t('.prior_authority'), dashboard_path(nav_select: 'prior_authority'), class: 'moj-primary-navigation__link', 'aria-current': (@nav_select == 'prior_authority' ? 'page' : nil) %>
               </li>
-              <% if FeatureFlags.nsm_insights.enabled?%>
+              <% if FeatureFlags.nsm_insights.enabled? %>
                 <li class="moj-primary-navigation__item">
-                  <%= link_to t('.nsm'), dashboard_path(service: 'nsm'), class: 'moj-primary-navigation__link', 'aria-current': (@service == 'nsm' ? 'page' :nil) %>
+                  <%= link_to t('.nsm'), dashboard_path(nav_select: 'nsm'), class: 'moj-primary-navigation__link', 'aria-current': (@nav_select == 'nsm' ? 'page' :nil) %>
                 </li>
               <% end %>
+              <li class="moj-primary-navigation__item">
+                  <%= link_to t('.search'), dashboard_path(nav_select: 'search'), class: 'moj-primary-navigation__link', 'aria-current': (@nav_select == 'search' ? 'page' :nil) %>
+              </li>
           </ul>
         </nav>
     </div>

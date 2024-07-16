@@ -69,20 +69,8 @@ RSpec.describe Nsm::FakeAssess do
       end
     end
 
-    context 'when sending back claims as provider requested' do
-      let(:random_choice) { 4 }
-
-      it 'marks as sent back' do
-        expect(claim.reload.state).to eq 'provider_requested'
-      end
-
-      it 'notifies the app store' do
-        expect(NotifyAppStore).to have_received(:perform_later).with(submission: claim)
-      end
-    end
-
     context 'when leaving as-is' do
-      let(:random_choice) { 5 }
+      let(:random_choice) { 4 }
 
       it 'does not modify claim' do
         expect(claim.reload.state).to eq 'submitted'

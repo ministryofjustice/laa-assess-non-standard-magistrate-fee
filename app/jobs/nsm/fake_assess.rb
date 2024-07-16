@@ -9,7 +9,7 @@ module Nsm
     end
 
     def assess(claim)
-      case SecureRandom.rand(6)
+      case SecureRandom.rand(5)
       when 0
         grant(claim)
       when 1
@@ -18,8 +18,6 @@ module Nsm
         reject(claim)
       when 3
         request_further_info(claim)
-      when 4
-        mark_provider_requested(claim)
       else
         leave_unassessed(claim)
       end
@@ -75,17 +73,6 @@ module Nsm
       Nsm::SendBackForm.new(
         claim: claim,
         current_user: claim.assignments.first.user,
-        state: 'further_info',
-        comment: Faker::Lorem.paragraph
-      ).save
-    end
-
-    def mark_provider_requested(claim)
-      assign(claim)
-      Nsm::SendBackForm.new(
-        claim: claim,
-        current_user: claim.assignments.first.user,
-        state: 'provider_requested',
         comment: Faker::Lorem.paragraph
       ).save
     end

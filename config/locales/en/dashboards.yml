@@ -5,7 +5,4 @@ en:
       heading:
         prior_authority: Prior authority
         nsm: Non-standard magistrates
-      nav:
-        overview: Overview
-        caseworkers: Caseworkers
-        autogrant: Auto grant
+        search: Search for an application

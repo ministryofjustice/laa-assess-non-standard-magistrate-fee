@@ -28,14 +28,6 @@ RSpec.describe Nsm::Event::SendBack do
     expect(subject.title).to eq('Claim sent back to provider')
   end
 
-  context 'when provider_requested' do
-    let(:state) { 'provider_requested' }
-
-    it 'has a valid title' do
-      expect(subject.title).to eq('Claim sent back to provider')
-    end
-  end
-
   it 'body is set to comment' do
     expect(subject.body).to eq('decison was made')
   end
