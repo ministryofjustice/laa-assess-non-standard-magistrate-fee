@@ -32,10 +32,6 @@ class DashboardsController < ApplicationController
     @iframe_urls = generate_metabase_urls(dashboard_ids)
   end
 
-  def application_type_options
-
-  end
-
   private
 
   def search_params
@@ -55,6 +51,7 @@ class DashboardsController < ApplicationController
 
   def default_params
     {
+      form_context: 'analytics',
       page: params.fetch(:page, '1')
     }
   end
