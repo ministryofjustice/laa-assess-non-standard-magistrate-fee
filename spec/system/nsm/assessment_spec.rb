@@ -64,33 +64,10 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
     end
   end
 
-  context 'provider requested' do
-    context 'when claim is already sent back' do
-      before { claim.update(state: 'provider_requested') }
-
-      it 'does not give the option to send back again' do
-        visit nsm_claim_claim_details_path(claim)
-        expect(page).to have_no_content 'Send back to provider'
-      end
-    end
-
-    it 'sends a notification' do
-      visit nsm_claim_claim_details_path(claim)
-      click_link_or_button 'Send back to provider'
-      choose 'Provider request'
-      fill_in 'Explain your decision', with: 'Test Data'
-
-      expect do
-        click_link_or_button 'Send back to provider'
-      end.to have_enqueued_job(NotifyAppStore)
-    end
-  end
-
   context 'further information required' do
     it 'sends a notification' do
       visit nsm_claim_claim_details_path(claim)
       click_link_or_button 'Send back to provider'
-      choose 'Further information request'
       fill_in 'Explain your decision', with: 'Test Data'
 
       expect do

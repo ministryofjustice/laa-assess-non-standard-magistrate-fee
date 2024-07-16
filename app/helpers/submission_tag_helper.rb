@@ -24,7 +24,6 @@ module SubmissionTagHelper
       'rejected' => 'red',
       'auto_grant' => 'green',
       'expired' => 'red',
-      'provider_requested' => 'yellow',
       'further_info' => 'yellow',
     }.fetch(augmented_state(submission))
   end

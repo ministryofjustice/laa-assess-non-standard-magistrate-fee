@@ -24,7 +24,11 @@ RSpec.describe 'View applications' do
             period: 180,
             cost_per_hour: '3.50',
             travel_time: nil,
-            travel_cost_per_hour: nil
+            travel_cost_per_hour: nil,
+            document: {
+              'file_name' => 'test – with odd-char.pdf',
+              'file_path' => '123123123'
+            }
           ),
           build(:alternative_quote)
         ]
@@ -75,7 +79,7 @@ RSpec.describe 'View applications' do
         within('#primary-quote.govuk-summary-card') do
           expect(page).to have_content "Service requiredPathologist report\n" \
                                        "Service detailsABC DEFABC, HIJ, SW1 1AA\n" \
-                                       "Quote uploadtest.pdf\n" \
+                                       "Quote uploadtest – with odd-char.pdf\n" \
                                        'Existing prior authority grantedYes'
           expect(page).to have_content 'Cost typeAmountRateTotal requested' \
                                        'Service3 hours 0 minutes£3.50£10.50' \
@@ -131,9 +135,9 @@ RSpec.describe 'View applications' do
       end
 
       it 'lets me view associated files' do
-        click_on 'test.pdf'
+        click_on 'test – with odd-char.pdf'
         expect(page).to have_current_path(
-          %r{/123123123\?response-content-disposition=attachment%3B%20filename%3D%22test\.pdf%22}
+          %r{/123123123\?response-content-disposition=attachment%3B%20filename%3D%22test%20%20with%20odd-char\.pdf}
         )
       end
     end

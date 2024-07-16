@@ -14,6 +14,18 @@ class AppStoreClient
     end
   end
 
+  def get_submission(submission)
+    url = "/v1/submissions/#{submission.id}"
+    response = self.class.get "#{host}#{url}", **options
+
+    case response.code
+    when 200
+      JSON.parse(response.body)
+    else
+      raise "Unexpected response from AppStore - status #{response.code} for '#{url}'"
+    end
+  end
+
   def update_submission(payload)
     response = self.class.put("#{host}/v1/application/#{payload[:application_id]}", **options(payload))
 
@@ -29,14 +41,15 @@ class AppStoreClient
     end
   end
 
-  def create_subscription(payload)
-    response = self.class.post("#{host}/v1/subscriber", **options(payload))
+  def trigger_subscription(payload, action: :create)
+    method = action == :create ? :post : :delete
+    response = self.class.send(method, "#{host}/v1/subscriber", **options(payload))
 
     case response.code
     when 200..204
       :success
     else
-      raise "Unexpected response from AppStore - status #{response.code} on create subscription"
+      raise "Unexpected response from AppStore - status #{response.code} on #{action} subscription"
     end
   end
 
@@ -46,6 +59,8 @@ class AppStoreClient
     case response.code
     when 200..204
       :success
+    when 403
+      :forbidden
     else
       raise "Unexpected response from AppStore - status #{response.code} on create events"
     end
