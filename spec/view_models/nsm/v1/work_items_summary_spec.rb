@@ -34,7 +34,7 @@ RSpec.describe Nsm::V1::WorkItemSummary do
         [
           { numeric: false, text: 'Total' },
           { numeric: true, text: '' },
-          { numeric: true, text: '£200.00' },
+          { numeric: true, text: '<span class="govuk-visually-hidden">Sum of net cost claimed: </span>£200.00' },
           '', ''
         ]
       )

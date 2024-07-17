@@ -8,10 +8,16 @@
 
   <%= govuk_details(summary_text: t('.check_totals')) do %>
     <%=
+      caption = t('.summary_table_caption')
       head = work_item_summary.header
       rows = work_item_summary.table_fields
       foot = work_item_summary.footer
-      govuk_table(first_cell_is_header: true, head:, rows:, foot:)
+      govuk_table(first_cell_is_header: true) do |t|
+        t.with_caption(text: caption, classes: ['govuk-visually-hidden'])
+        t.with_head(rows: [head])
+        t.with_body(rows: rows, first_cell_is_header: true)
+        t.with_foot(rows: foot, first_cell_is_header: true)
+      end
     %>
   <% end %>
 
@@ -19,7 +25,8 @@
     <%= govuk_button_link_to(t(".remove_uplift_all"), edit_nsm_claim_work_items_uplift_path(claim), secondary: true, data: { turbo: 'false' }) %>
   <% end %>
 
-  <table class="govuk-table" data-module="moj-sortable-table" aria-describedby="page-title">
+  <table class="govuk-table" data-module="moj-sortable-table">
+    <caption class="govuk-visually-hidden"><%= t('.table_caption') %></caption>
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
         <% Nsm::V1::WorkItem.headers.each_with_index do |(column_key, additional_classes), index| %>
@@ -38,7 +45,7 @@
       <% work_items.each do |work_item| %>
         <tr class="govuk-table__row app-task-list__item">
           <th class="govuk-table__header"><%= work_item.position %></th>
-          <td class="govuk-table__cell">
+          <th class="govuk-table__header">
             <%=
               if claim.editable_by?(current_user)
                 link_to(work_item.work_type, edit_nsm_claim_work_item_path(claim_id: claim.id, id: work_item.id), data: { turbo: 'false' })
