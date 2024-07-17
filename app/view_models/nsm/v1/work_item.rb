@@ -92,7 +92,7 @@ module Nsm
           '.date' => format_in_zone(completed_on),
           '.time_spent' => format_period(original_time_spent),
           '.fee_earner' => fee_earner.to_s,
-          '.uplift_claimed' => "#{original_uplift}%",
+          '.uplift_claimed' => "#{original_uplift.to_i}%",
         }
         if vat_registered?
           rows['.vat'] = NumberTo.percentage(vat_rate)
