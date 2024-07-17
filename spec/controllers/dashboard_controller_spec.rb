@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe DashboardsController do
-  describe '#generate_dashboards' do
+  describe '#show' do
     context 'dashboard ids not set' do
       before do
         allow(ENV).to receive(:fetch).and_call_original
@@ -13,37 +13,31 @@ RSpec.describe DashboardsController do
                                      .and_return(nil)
         allow(FeatureFlags).to receive(:nsm_insights).and_return(double(enabled?: true))
         allow(subject).to receive(:authorize_supervisor).and_return(true)
+
+        get :show, params: { nav_select: }
       end
 
-      context 'show' do
-        context 'selected tab is prior authority' do
-          before do
-            get :show, params: { nav_select: 'prior_authority' }
-          end
+      context 'selected tab is prior authority' do
+        let(:nav_select) { 'prior_authority' }
 
-          it 'returns no urls' do
-            expect(subject.instance_variable_get(:@iframe_urls)).to eq([])
-          end
+        it 'returns no urls' do
+          expect(subject.instance_variable_get(:@iframe_urls)).to eq([])
         end
+      end
 
-        context 'service is nsm' do
-          before do
-            get :show, params: { nav_select: 'nsm' }
-          end
+      context 'selected tab is nsm' do
+        let(:nav_select) { 'nsm' }
 
-          it 'returns no urls' do
-            expect(subject.instance_variable_get(:@iframe_urls)).to eq([])
-          end
+        it 'returns no urls' do
+          expect(subject.instance_variable_get(:@iframe_urls)).to eq([])
         end
+      end
 
-        context 'invalid service provided' do
-          before do
-            get :show, params: { nav_select: 'random' }
-          end
+      context 'invalid service provided' do
+        let(:nav_select) { 'random' }
 
-          it 'returns no ids' do
-            expect(subject.instance_variable_get(:@iframe_urls)).to eq([])
-          end
+        it 'returns no ids' do
+          expect(subject.instance_variable_get(:@iframe_urls)).to eq([])
         end
       end
     end

@@ -14,7 +14,6 @@ class DashboardsController < ApplicationController
 
   def new
     @search_form = SearchForm.new(default_params)
-    load_overview unless nav_select == 'search'
     render :show
   end
 
