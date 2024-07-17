@@ -66,7 +66,7 @@ RSpec.describe 'Dashboards' do
         end
 
         it 'cannot navigate to nsm page' do
-          visit dashboard_path(nav_select: 'nsm')
+          visit new_dashboard_path(nav_select: 'nsm')
 
           expect(page).to have_css('.govuk-heading-xl', text: 'Prior authority')
         end
