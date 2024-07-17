@@ -15,6 +15,15 @@ module Nsm
       render locals: { claim:, work_items:, work_item_summary:, pagy: }
     end
 
+    def adjusted
+      claim = Claim.find(params[:claim_id])
+      items = BaseViewModel.build(:work_item, claim, 'work_items').filter(&:any_adjustments?)
+      sorted_items = Sorters::WorkItemsSorter.call(items, @sort_by, @sort_direction)
+      pagy, work_items = pagy_array(sorted_items, items: ITEM_COUNT_OVERRIDE)
+
+      render locals: { claim:, work_items:, pagy: }
+    end
+
     def show
       claim = Claim.find(params[:claim_id])
       item = BaseViewModel.build(:work_item, claim, 'work_items').detect do |model|

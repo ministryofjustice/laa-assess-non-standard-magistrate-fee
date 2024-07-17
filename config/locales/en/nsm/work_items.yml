@@ -33,6 +33,18 @@ en:
         accessible:
           claimed: 'Sum of net cost claimed: '
           allowed: 'Sum of net cost allowed: '
+      adjusted:
+        adjusted_work_items: Adjusted work items
+        page_title: "Review criminal legal aid applications"
+        item: Line item
+        cost: Cost type
+        reason: Reason for adjustment
+        allowed_time: Time allowed
+        allowed_uplift: Uplift allowed
+        allowed_net_cost: Net cost allowed
+        table_caption: Adjusted work items
+        table_info_item: work item
+
       edit:
         page_title: "Your claims"
         heading: "Adjust a work item"

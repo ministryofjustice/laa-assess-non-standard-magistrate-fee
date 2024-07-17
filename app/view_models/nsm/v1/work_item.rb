@@ -16,6 +16,7 @@ module Nsm
       attribute :fee_earner, :string
       attribute :vat_rate, :decimal
       attribute :firm_office
+      attribute :adjustment_comment
 
       class << self
         def headers
@@ -29,6 +30,18 @@ module Nsm
             'claimed_net_cost' => ['govuk-table__header--numeric'],
             'allowed_net_cost' => ['govuk-table__header--numeric'],
           }
+        end
+
+        def adjusted_headers
+          {
+            'item' => [],
+            'cost' => [],
+            'reason' => [],
+            'allowed_time' => ['govuk-table__header--numeric'],
+            'allowed_uplift' => ['govuk-table__header--numeric'],
+            'allowed_net_cost' => ['govuk-table__header--numeric'],
+          }
+
         end
       end
 
@@ -75,6 +88,10 @@ module Nsm
         end
       end
 
+      def reason
+        adjustment_comment
+      end
+
       def formatted_completed_on
         format(completed_on, as: :date)
       end
@@ -89,6 +106,14 @@ module Nsm
 
       def formatted_requested_amount
         format(provider_requested_amount)
+      end
+
+      def formatted_allowed_time_spent
+        format(time_spent, as: :time)
+      end
+
+      def formatted_allowed_uplift
+        format(uplift.to_i, as: :percentage)
       end
 
       def formatted_allowed_amount

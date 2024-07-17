@@ -62,7 +62,9 @@ Rails.application.routes.draw do
       namespace :work_items do
         resource :uplift, only: [:edit, :update], path_names: { edit: '' }
       end
-      resources :work_items, only: [:index, :show, :edit, :update]
+      resources :work_items, only: [:index, :show, :edit, :update] do
+        collection { get :adjusted }
+      end
       resources :letters_and_calls, only: [:index, :show, :edit, :update], constraints: { id: /(letters|calls)/ }
       resources :disbursements, only: [:index, :show, :edit, :update]
       resource :supporting_evidences, only: [:show] do
