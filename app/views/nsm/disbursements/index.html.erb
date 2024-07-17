@@ -6,7 +6,7 @@
   </h3>
 
 
-  <table class="govuk-table" data-module="moj-sortable-table" aria-describedby="page-title">
+  <table class="govuk-table" data-module="moj-sortable-table">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
         <% Nsm::V1::Disbursement.headers.each_with_index do |(column_key, additional_classes), index| %>
@@ -23,8 +23,8 @@
     <tbody class="govuk-table__body app-task-list__items">
       <% disbursements.each do |disbursement| %>
         <tr class="govuk-table__row app-task-list__item">
-          <th class="govuk-table__header"><%= disbursement.position %></th>
-          <td class="govuk-table__cell">
+          <th class="govuk-table__header" scope="row"><%= disbursement.position %></th>
+          <th class="govuk-table__header" scope="row">
             <%=
               if claim.editable_by?(current_user)
                 link_to(disbursement.type_name, edit_nsm_claim_disbursement_path(claim_id: claim.id, id: disbursement.id), data: { turbo: 'false' })
@@ -32,7 +32,7 @@
                 link_to(disbursement.type_name, nsm_claim_disbursement_path(claim_id: claim.id, id: disbursement.id), data: { turbo: 'false' })
               end
             %>
-          </td>
+          </th>
 
           <td class="govuk-table__cell govuk-table__cell--nowrap"><%= disbursement.date %></td>
 
