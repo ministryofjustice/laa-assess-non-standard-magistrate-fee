@@ -68,10 +68,10 @@ module Nsm
       end
 
       def position
-        result = super || begin
+        super || begin
           pos = submission.data['disbursements']
-            .sort_by { [_1['disbursement_date'], _1['id']] }
-            .index { _1['id'] == id }
+                          .sort_by { [_1['disbursement_date'], _1['id']] }
+                          .index { _1['id'] == id }
           pos + 1
         end
       end

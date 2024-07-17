@@ -69,8 +69,8 @@ module Nsm
       def position
         super || begin
           pos = submission.data['work_items']
-            .sort_by { [_1['completed_on'], _1['id']] }
-            .index { _1['id'] == id }
+                          .sort_by { [_1['completed_on'], _1['id']] }
+                          .index { _1['id'] == id }
           pos + 1
         end
       end
