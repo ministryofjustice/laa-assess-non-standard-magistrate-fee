@@ -1,11 +1,15 @@
 module Nsm
   class DisbursementsController < Nsm::BaseController
+    ITEM_COUNT_OVERRIDE = 100
     layout nil
+
+    before_action :set_default_table_sort_options
 
     def index
       claim = Claim.find(params[:claim_id])
       items = BaseViewModel.build(:disbursement, claim, 'disbursements')
-      pagy, disbursements = pagy_array(items.sort_by(&:disbursement_date))
+      sorted_items = Sorters::DisbursementsSorter.call(items, @sort_by, @sort_direction)
+      pagy, disbursements = pagy_array(sorted_items, items: ITEM_COUNT_OVERRIDE)
       render locals: { claim:, disbursements:, pagy: }
     end
 
@@ -52,6 +56,12 @@ module Nsm
       ).merge(
         current_user:
       )
+    end
+
+    def set_default_table_sort_options
+      default = 'item'
+      @sort_by = params.fetch(:sort_by, default)
+      @sort_direction = params.fetch(:sort_direction, 'ascending')
     end
   end
 end

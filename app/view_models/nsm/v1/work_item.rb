@@ -4,6 +4,8 @@ module Nsm
       LINKED_TYPE = 'work_items'.freeze
 
       attribute :id, :string
+      # used to guess position when value not set in JSON blob when position is blank
+      attribute :submission
       attribute :position, :integer
       attribute :work_type, :translated
       adjustable_attribute :time_spent, :time_period
@@ -14,9 +16,6 @@ module Nsm
       attribute :fee_earner, :string
       attribute :vat_rate, :decimal
       attribute :firm_office
-
-      # used to guess position when value not set in JSON blob
-      attribute :submission
 
       class << self
         def headers

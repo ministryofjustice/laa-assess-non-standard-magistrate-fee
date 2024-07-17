@@ -3,6 +3,10 @@ module Nsm
     class Disbursement < BaseWithAdjustments
       LINKED_TYPE = 'disbursements'.freeze
 
+      attribute :id
+      # used to guess position when value not set in JSON blob when position is blank
+      attribute :submission
+      attribute :position, :integer
       attribute :disbursement_type, :translated
       attribute :other_type, :translated
       adjustable_attribute :miles, :decimal, precision: 10, scale: 3
@@ -18,25 +22,14 @@ module Nsm
 
       class << self
         def headers
-          [
-            t('.item', width: 'govuk-!-width-one-fifth', numeric: false),
-            t('.claimed_net'),
-            t('.claimed_vat'),
-            t('.claimed_gross'),
-            t('.allowed_net'),
-            t('.allowed_vat'),
-            t('.allowed_gross'),
-            t('.action')
-          ]
-        end
-
-        private
-
-        def t(key, width: nil, numeric: true)
           {
-            text: I18n.t("nsm.disbursements.index.#{key}"),
-            numeric: numeric,
-            width: width
+            'item' => [],
+            'cost' => [],
+            'date' => [],
+            'claimed_net' => ['govuk-table__header--numeric'],
+            'claimed_vat' => ['govuk-table__header--numeric'],
+            'claimed_gross' => ['govuk-table__header--numeric'],
+            'allowed_gross' => ['govuk-table__header--numeric']
           }
         end
       end
@@ -74,26 +67,43 @@ module Nsm
         "#{(rate * 100).to_i}%"
       end
 
+      def position
+        result = super || begin
+          pos = submission.data['disbursements']
+            .sort_by { [_1['disbursement_date'], _1['id']] }
+            .index { _1['id'] == id }
+          pos + 1
+        end
+      end
+
       def type_name
         other_type.to_s.presence || disbursement_type.to_s
       end
 
-      def table_fields
-        [
-          type_name,
-          format(original_total_cost_without_vat),
-          format(original_vat_amount),
-          format(provider_requested_total_cost),
-          format(any_adjustments? && total_cost_without_vat),
-          format(any_adjustments? && vat_amount),
-          format(any_adjustments? && caseworker_total_cost)
-        ]
+      def date
+        disbursement_date.strftime('%-d %b %Y')
+      end
+
+      def claimed_net
+        format(original_total_cost_without_vat)
+      end
+
+      def claimed_vat
+        format(original_vat_amount)
+      end
+
+      def claimed_gross
+        format(provider_requested_total_cost)
+      end
+
+      def allowed_gross
+        format(any_adjustments? && caseworker_total_cost)
       end
 
       def format(value)
         return '' if value.nil? || value == false
 
-        { text: NumberTo.pounds(value), numeric: true }
+        NumberTo.pounds(value)
       end
 
       def changed?

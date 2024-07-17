@@ -20,7 +20,7 @@ RSpec.describe 'Overview', type: :system do
   context 'when I have made a change' do
     before do
       visit nsm_claim_disbursements_path(claim)
-      click_on 'Change'
+      click_on 'Apples'
       fill_in 'Change disbursement cost', with: '0'
       fill_in 'Explain your decision', with: 'Testing'
       click_on 'Save changes'

@@ -130,47 +130,4 @@ RSpec.describe Nsm::V1::Disbursement do
       end
     end
   end
-
-  describe 'table_fields' do
-    let(:adjustment_comment) { nil }
-    let(:args) do
-      {
-        'adjustment_comment' => adjustment_comment,
-        'other_type' => { 'value' => 'type', 'en' => 'Type' },
-        'total_cost_without_vat_original' => 100,
-        'vat_amount_original' => 0,
-        'total_cost_without_vat' => 0,
-        'vat_amount' => 0,
-      }
-    end
-
-    it 'returns the fields for the table display if no adjustments' do
-      expect(disbursement.table_fields).to eq(
-        [
-          'Type',
-          { numeric: true, text: '£100.00' },
-          { numeric: true, text: '£0.00' },
-          { numeric: true, text: '£100.00' },
-          '', '', ''
-        ]
-      )
-    end
-
-    context 'when there are adjustments' do
-      let(:adjustment_comment) { 'something' }
-
-      it 'returns an array with the correct fields' do
-        expected_fields = [
-          'Type',
-          { numeric: true, text: '£100.00' },
-          { numeric: true, text: '£0.00' },
-          { numeric: true, text: '£100.00' },
-          { numeric: true, text: '£0.00' },
-          { numeric: true, text: '£0.00' },
-          { numeric: true, text: '£0.00' },
-        ]
-        expect(disbursement.table_fields).to eq(expected_fields)
-      end
-    end
-  end
 end

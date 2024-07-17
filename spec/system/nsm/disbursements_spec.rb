@@ -16,14 +16,15 @@ RSpec.describe 'Disbursements' do
     visit nsm_claim_disbursements_path(claim)
     within('.govuk-table__row', text: 'Apples') do
       expect(page).to have_content(
-        'Apples' \
-        '£100.00' \
-        '£0.00' \
-        '£100.00' \
-        'Change'
+        '1 ' \
+        'Apples ' \
+        '12 Dec 2022 ' \
+        '£100.00 ' \
+        '£0.00 ' \
+        '£100.00'
       )
     end
-    click_on 'Change'
+    click_on 'Apples'
     fill_in 'Change disbursement cost', with: '0'
     fill_in 'Explain your decision', with: 'Testing'
     click_on 'Save changes'
@@ -32,14 +33,13 @@ RSpec.describe 'Disbursements' do
 
     within('.govuk-table__row', text: 'Apples') do
       expect(page).to have_content(
-        'Apples' \
-        '£100.00' \
-        '£0.00' \
-        '£100.00' \
-        '£0.00' \
-        '£0.00' \
-        '£0.00' \
-        'Change'
+        '1 ' \
+        'Apples ' \
+        '12 Dec 2022 ' \
+        '£100.00 ' \
+        '£0.00 ' \
+        '£100.00 ' \
+        '£0.00'
       )
     end
   end
@@ -48,14 +48,15 @@ RSpec.describe 'Disbursements' do
     visit nsm_claim_disbursements_path(claim)
     within('.govuk-table__row', text: 'Apples') do
       expect(page).to have_content(
-        'Apples' \
-        '£100.00' \
-        '£0.00' \
-        '£100.00' \
-        'Change'
+        '1 ' \
+        'Apples ' \
+        '12 Dec 2022 ' \
+        '£100.00 ' \
+        '£0.00 ' \
+        '£100.00'
       )
     end
-    click_on 'Change'
+    click_on 'Apples'
     fill_in 'Change disbursement cost', with: '100'
     click_on 'Save changes'
     expect(page).to have_css('.govuk-error-summary__body',
@@ -68,7 +69,7 @@ RSpec.describe 'Disbursements' do
     it 'lets me view details instead of changing them' do
       visit nsm_claim_disbursements_path(claim)
       within('main') { expect(page).to have_no_content 'Change' }
-      click_on 'View'
+      click_on 'Apples'
       expect(page).to have_content(
         'Date12 Dec 2022' \
         'Disbursement typeApples' \

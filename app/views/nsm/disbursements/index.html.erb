@@ -5,31 +5,53 @@
     <%= t('.disbursements') %>
   </h3>
 
-  <% head = Nsm::V1::Disbursement.headers %>
-  <% if disbursements.size.zero? %>
-    <p><%= t('.no_data') %></p>
-  <% else %>
-    <% disbursements.group_by(&:disbursement_date).each do |disbursement_date, disbursements_for_date| %>
-      <%=
-        rows = disbursements_for_date.map do |disbursement|
-          link = if claim.editable_by?(current_user)
-                  link_to(t('.change'), edit_nsm_claim_disbursement_path(claim_id: claim.id, id: disbursement.id), data: { turbo: 'false' })
-                else
-                  link_to(t('.view'), nsm_claim_disbursement_path(claim_id: claim.id, id: disbursement.id), data: { turbo: 'false' })
-                end
 
-          [
-            *disbursement.table_fields,
-            link
-          ]
-        end
-        govuk_table do |table|
-          table.with_caption(text: disbursement_date.strftime('%-d %B %Y'), size: 's')
-          table.with_head(rows: [head])
-          table.with_body(rows: rows, first_cell_is_header: true)
-        end
-      %>
-    <% end %>
-    <%= render 'shared/pagination', pagy: pagy, item: t(".table_info_item") %>
-  <% end %>
+  <table class="govuk-table" data-module="moj-sortable-table" aria-describedby="page-title">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <% Nsm::V1::Disbursement.headers.each_with_index do |(column_key, additional_classes), index| %>
+          <%= table_header(column_key,
+                          "nsm.disbursements.index",
+                          index,
+                          nsm_claim_disbursements_path(claim),
+                          @sort_by,
+                          @sort_direction,
+                          additional_classes:) %>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body app-task-list__items">
+      <% disbursements.each do |disbursement| %>
+        <tr class="govuk-table__row app-task-list__item">
+          <th class="govuk-table__header"><%= disbursement.position %></th>
+          <td class="govuk-table__cell">
+            <%=
+              if claim.editable_by?(current_user)
+                link_to(disbursement.type_name, edit_nsm_claim_disbursement_path(claim_id: claim.id, id: disbursement.id), data: { turbo: 'false' })
+              else
+                link_to(disbursement.type_name, nsm_claim_disbursement_path(claim_id: claim.id, id: disbursement.id), data: { turbo: 'false' })
+              end
+            %>
+          </td>
+
+          <td class="govuk-table__cell govuk-table__cell--nowrap"><%= disbursement.date %></td>
+
+          <td class="govuk-table__cell govuk-table__cell--numeric">
+            <%= disbursement.claimed_net %>
+          </td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">
+            <%= disbursement.claimed_vat %>
+          </td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">
+            <%= disbursement.claimed_gross %>
+          </td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">
+            <%= disbursement.allowed_gross %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= render 'shared/pagination', pagy: pagy, item: t(".table_info_item") %>
 </turbo-frame>
