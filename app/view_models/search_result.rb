@@ -42,9 +42,9 @@ class SearchResult
   def application_path
     case submission.application_type
     when 'crm4'
-      prior_authority_application_path(submission.id)
+      Rails.application.routes.url_helpers.prior_authority_application_path(submission.id)
     when 'crm7'
-      nsm_application_path(submission.id)
+      Rails.application.routes.url_helpers.nsm_application_path(submission.id)
     end
   end
 end

@@ -84,7 +84,7 @@ class SearchForm
   end
 
   def search_params
-    attributes.merge(per_page: PER_PAGE).compact_blank
+    attributes.except('form_context').merge(per_page: PER_PAGE).compact_blank
   end
 
   def conduct_search
