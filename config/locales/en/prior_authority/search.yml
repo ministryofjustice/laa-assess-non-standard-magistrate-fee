@@ -18,7 +18,7 @@ en:
         page_title: Search for an application
         query:
           label: Application details
-          hint: You can search by client name, firm name, UFN or LAA reference
+          hint: Search for a client name, firm name, UFN or LAA reference
         filter_results: Filter results (optional)
         submitted_from: Date submitted from
         submitted_to: Date submitted to

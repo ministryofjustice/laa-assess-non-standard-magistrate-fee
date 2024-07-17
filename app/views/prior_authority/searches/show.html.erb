@@ -109,10 +109,10 @@
             <% end %>
           </tbody>
         </table>
+        <%= render 'shared/pagination', pagy: @search_form.pagy, item: t(".result") %>
       <% else %>
         <p class="govuk-text"><%= t('.none') %></p>
       <% end %>
-      <%= render 'shared/pagination', pagy: @search_form.pagy, item: t(".result") %>
     <% end %>
   </div>
 </div>
