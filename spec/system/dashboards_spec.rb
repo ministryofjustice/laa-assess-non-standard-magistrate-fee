@@ -26,7 +26,7 @@ RSpec.describe 'Dashboards' do
       it 'lets me visit the dashboard path' do
         visit root_path
         click_on 'Analytics dashboard'
-        expect(page).to have_current_path(dashboard_path)
+        expect(page).to have_current_path(new_dashboard_path)
       end
 
       it 'by default lets me view the prior authority analytics' do
@@ -41,9 +41,10 @@ RSpec.describe 'Dashboards' do
           visit dashboard_path
         end
 
-        it 'shows both service navigation tabs' do
+        it 'shows both service navigation tabs and search tab' do
           expect(page).to have_css('.moj-primary-navigation__link', text: 'Prior authority')
           expect(page).to have_css('.moj-primary-navigation__link', text: 'Non-standard magistrates')
+          expect(page).to have_css('.moj-primary-navigation__link', text: 'Search')
         end
 
         it 'can navigate to nsm analytics' do
