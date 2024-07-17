@@ -1,0 +1,49 @@
+en:
+  search:
+    show_all: Show all
+    statuses:
+      not_assigned: Not assigned
+      in_progress: In progress
+      provider_updated: Provider updated
+      sent_back: Sent back
+      granted: Granted
+      auto_grant: Auto-granted
+      part_grant: Part granted
+      rejected: Rejected
+      expired: Expired
+    unassigned: Unassigned
+  prior_authority:
+    searches:
+      show:
+        page_title: Search for an application
+        query:
+          label: Application details
+          hint: Search for a client name, firm name, UFN or LAA reference
+        filter_results: Filter your search criteria
+        submitted_from: Date submitted from
+        submitted_to: Date submitted to
+        updated_from: Last updated from
+        updated_to: Last updated to
+        status: Status
+        caseworker: Caseworker
+        search: Search
+        clear_all: Clear all
+        search_results: Search results
+        none: There are no results that match the search criteria
+        table:
+          header:
+            laa_reference: LAA reference
+            firm_name: Firm name
+            client_name: Client
+            caseworker: Caseworker
+            last_updated: Last updated
+            status_with_assignment: Status
+        result: result
+  activemodel:
+    errors:
+      models:
+        search_form:
+          attributes:
+            base:
+              nothing_specified: Enter some application details or filter your search criteria
+              search_error: Something went wrong trying to perform this search
