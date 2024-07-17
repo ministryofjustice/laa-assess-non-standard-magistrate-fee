@@ -91,6 +91,16 @@ RSpec.describe 'Dashboards' do
           expect(page).not_to have_css('iframe')
         end
       end
+
+      context 'search analytics available' do
+        it 'can navigate to search analytics' do
+          visit dashboard_path
+          click 'Search'
+
+          expect(page).to have_css('.govuk-heading-xl', text: 'Search')
+          expect(page).to have_css('.govuk-label', text: 'Claim or application details')
+        end
+      end
     end
   end
 
