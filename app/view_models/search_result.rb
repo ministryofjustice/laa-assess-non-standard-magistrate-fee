@@ -37,9 +37,7 @@ class SearchResult
     submission_state_tag(submission)
   end
 
-  def application_type
-    submission.application_type
-  end
+  delegate :application_type, to: :submission
 
   def application_path
     case submission.application_type
@@ -47,8 +45,6 @@ class SearchResult
       prior_authority_application_path(submission.id)
     when 'crm7'
       nsm_application_path(submission.id)
-    else
-      nil
     end
   end
 end

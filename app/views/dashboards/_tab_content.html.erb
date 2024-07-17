@@ -1,5 +1,5 @@
 <% if @nav_select == 'prior_authority' || @nav_select == 'nsm' %>
   <%= render partial: 'overview' %>
 <% else %>
-  <%= render partial: 'search' %>
+  <%= render partial: 'shared/search', locals: { form_url: dashboard_path(nav_select: 'search'), title: false, analytics: true, translation_prefix: 'dashboards.search'} %>
 <% end %>
