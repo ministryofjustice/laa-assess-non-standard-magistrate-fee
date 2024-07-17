@@ -44,8 +44,8 @@
     <tbody class="govuk-table__body app-task-list__items">
       <% work_items.each do |work_item| %>
         <tr class="govuk-table__row app-task-list__item">
-          <th class="govuk-table__header"><%= work_item.position %></th>
-          <th class="govuk-table__header">
+          <th class="govuk-table__header" scope="row"><%= work_item.position %></th>
+          <th class="govuk-table__header" scope="row">
             <%=
               if claim.editable_by?(current_user)
                 link_to(work_item.work_type, edit_nsm_claim_work_item_path(claim_id: claim.id, id: work_item.id), data: { turbo: 'false' })
@@ -53,7 +53,7 @@
                 link_to(work_item.work_type, nsm_claim_work_item_path(claim_id: claim.id, id: work_item.id), data: { turbo: 'false' })
               end
             %>
-          </td>
+          </th>
 
           <td class="govuk-table__cell"><%= work_item.formatted_completed_on %></td>
           <td class="govuk-table__cell"><%= work_item.fee_earner %></td>
