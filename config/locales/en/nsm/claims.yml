@@ -7,6 +7,7 @@ en:
       claim_nav:
         claim_details: Overview
         review_and_adjust: Review and adjust
+        adjustments: Adjustments
         supporting_evidence: Supporting evidence
         claim_history: Claim history
       claim_summary:
@@ -38,7 +39,7 @@ en:
           caseworker: "Caseworker"
           status: Status
           risk: Risk
-    adjustments:
+    review_and_adjusts:
       show:
         cost_summary: Costs summary
         disbursements: Disbursements

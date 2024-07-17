@@ -147,7 +147,7 @@ module Nsm
 
       def t(key, numeric: true, width: nil)
         {
-          text: I18n.t("nsm.adjustments.show.#{key}"),
+          text: I18n.t("nsm.review_and_adjusts.show.#{key}"),
           numeric: numeric,
           width: width
         }
