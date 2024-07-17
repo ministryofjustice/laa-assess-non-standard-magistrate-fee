@@ -203,8 +203,6 @@ spec:
               value: '{{ .Values.metabase.priorAuthorityDashboardIds}}'
             - name: METABASE_NSM_DASHBOARD_IDS
               value: '{{ .Values.metabase.nsmDashboardIds}}'
-            - name: METABASE_PA_AUTOGRANT_DASHBOARD_IDS
-              value: '{{ .Values.metabase.priorAuthorityAutograntDashboardIds}}'
             - name: METABASE_SECRET_KEY
               valueFrom:
                 secretKeyRef:
