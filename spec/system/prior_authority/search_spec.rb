@@ -9,7 +9,7 @@ RSpec.describe 'Search', :stub_oauth_token do
       page: 1,
       per_page: 20,
       query: 'QUERY',
-      sort_by: 'date_updated',
+      sort_by: 'last_updated',
       sort_direction: 'descending',
     }
   end
@@ -82,7 +82,7 @@ RSpec.describe 'Search', :stub_oauth_token do
     visit prior_authority_root_path
     click_on 'Search'
     within('main') { click_on 'Search' }
-    expect(page).to have_content 'You must enter at least one search criterion'
+    expect(page).to have_content 'Enter some application details or filter your search criteria'
   end
 
   context 'if I search for something with no matches' do
@@ -117,7 +117,7 @@ RSpec.describe 'Search', :stub_oauth_token do
     let(:applications) { create_list(:prior_authority_application, 20) }
     let(:payloads) do
       [
-        { application_type: 'crm4', page: 1, per_page: 20, query: 'QUERY', sort_by: 'date_updated',
+        { application_type: 'crm4', page: 1, per_page: 20, query: 'QUERY', sort_by: 'last_updated',
 sort_direction: 'descending' },
         { application_type: 'crm4', page: 1, per_page: 20, query: 'QUERY', sort_by: 'laa_reference',
 sort_direction: 'ascending' },
@@ -152,7 +152,7 @@ sort_direction: 'ascending' },
         caseworker_id: caseworker.id,
         page: 1,
         per_page: 20,
-        sort_by: 'date_updated',
+        sort_by: 'last_updated',
         sort_direction: 'descending',
         status_with_assignment: 'rejected',
         submitted_from: '2023-04-20',
