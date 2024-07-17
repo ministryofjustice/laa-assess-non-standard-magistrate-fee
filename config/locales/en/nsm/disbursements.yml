@@ -15,6 +15,7 @@ en:
         allowed_gross: Total allowed
         table_info_item: disbursement
         no_data: You do not have any disbursements
+        table_caption: Clained disbursements
       disbursements_total:
         link_title: View disbursement total
         provider_total: Requested (including any VAT)

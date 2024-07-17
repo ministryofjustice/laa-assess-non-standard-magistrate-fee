@@ -67,13 +67,12 @@ module Nsm
       end
 
       def position
-        super ||
-          (
-            submission.data['work_items']
-              .sort_by { [_1['completed_on'], _1['id']] }
-              .index { _1['id'] == id }
-            + 1
-          )
+        super || begin
+          pos = submission.data['work_items']
+            .sort_by { [_1['completed_on'], _1['id']] }
+            .index { _1['id'] == id }
+          pos + 1
+        end
       end
 
       def formatted_completed_on

@@ -19,8 +19,8 @@
       <p><%= t('.no_data') %></p>
     <% else %>
       <%=
+      caption = t('.table_caption')
       head = Nsm::V1::LetterAndCall.headers
-
       rows = letters_and_calls.rows.map do |letter_and_call|
         next if letter_and_call.original_count.zero?
 
@@ -33,7 +33,11 @@
         fields[0] = link_to(fields[0], destination, data: { turbo: 'false' })
         fields
       end
-      govuk_table(head: head, rows: rows, first_cell_is_header: true)
+      govuk_table(first_cell_is_header: true) do |t|
+        t.with_caption(text: caption, classes: ['govuk-visually-hidden'])
+        t.with_head(rows: [head])
+        t.with_body(rows: rows, first_cell_is_header: true)
+      end
       %>
     <% end %>
   </div>
