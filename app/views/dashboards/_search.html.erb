@@ -82,7 +82,7 @@
             <% @search_form.results.each do |search_result| %>
               <tr class="govuk-table__row app-task-list__item">
                 <td class="govuk-table__cell">
-                  <%= link_to search_result.laa_reference, prior_authority_application_path(search_result.id), data: { turbo: false } %>
+                  <%= link_to search_result.laa_reference, search_result.application_path, data: { turbo: false } %>
                 </td>
                 <td class="govuk-table__cell">
                   <%= search_result.firm_name %>

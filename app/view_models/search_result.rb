@@ -36,4 +36,19 @@ class SearchResult
   def state_tag
     submission_state_tag(submission)
   end
+
+  def application_type
+    submission.application_type
+  end
+
+  def application_path
+    case submission.application_type
+    when 'crm4'
+      prior_authority_application_path(submission.id)
+    when 'crm7'
+      nsm_application_path(submission.id)
+    else
+      nil
+    end
+  end
 end
