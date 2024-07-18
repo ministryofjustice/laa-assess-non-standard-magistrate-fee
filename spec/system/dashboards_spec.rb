@@ -49,7 +49,7 @@ RSpec.describe 'Dashboards' do
 
         it 'can navigate to nsm analytics' do
           click_on 'Non-standard magistrates'
-          expect(page).to have_current_path(dashboard_path(nav_select: 'nsm'))
+          expect(page).to have_current_path(new_dashboard_path(nav_select: 'nsm'))
 
           expect(page).to have_css('.govuk-heading-xl', text: 'Non-standard magistrates')
         end
