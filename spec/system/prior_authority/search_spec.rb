@@ -78,13 +78,6 @@ RSpec.describe 'Search', :stub_oauth_token do
     end
   end
 
-  it 'validates' do
-    visit prior_authority_root_path
-    click_on 'Search'
-    within('main') { click_on 'Search' }
-    expect(page).to have_content 'Enter some application details or filter your search criteria'
-  end
-
   context 'if I search for something with no matches' do
     before do
       stub_request(:post, endpoint).with(body: payload).to_return(
@@ -118,11 +111,11 @@ RSpec.describe 'Search', :stub_oauth_token do
     let(:payloads) do
       [
         { application_type: 'crm4', page: 1, per_page: 20, query: 'QUERY', sort_by: 'last_updated',
-sort_direction: 'descending' },
+          sort_direction: 'descending' },
         { application_type: 'crm4', page: 1, per_page: 20, query: 'QUERY', sort_by: 'laa_reference',
-sort_direction: 'ascending' },
+          sort_direction: 'ascending' },
         { application_type: 'crm4', page: 2, per_page: 20, query: 'QUERY', sort_by: 'laa_reference',
-sort_direction: 'ascending' },
+          sort_direction: 'ascending' },
       ]
     end
 
@@ -199,5 +192,43 @@ sort_direction: 'ascending' },
 
       expect(stub).to have_been_requested
     end
+  end
+
+  context 'when searching specifically for nsm claims' do
+    let(:application) { create :claim }
+    let(:stub) do
+      stub_request(:post, endpoint).with(body: payload).to_return(
+        status: 201,
+        body: { metadata: { total_results: 1 },
+                raw_data: [{ application_id: application.id, application: application.data }] }.to_json
+      )
+    end
+
+    before do
+      stub
+      application.assignments.create user: caseworker
+    end
+
+    it 'lets me search and shows me a result' do
+      visit prior_authority_root_path
+      click_on 'Search'
+      fill_in 'Application details', with: 'QUERY'
+      within 'main' do
+        click_on 'Search'
+      end
+
+      expect(stub).to have_been_requested
+
+      click_on application.data['laa_reference']
+
+      expect(page).to have_current_path nsm_application_path(application)
+    end
+  end
+
+  it 'validates that search criteria should exist' do
+    visit prior_authority_root_path
+    click_on 'Search'
+    within('main') { click_on 'Search' }
+    expect(page).to have_content 'Enter some application details or filter your search criteria'
   end
 end
