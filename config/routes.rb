@@ -68,7 +68,9 @@ Rails.application.routes.draw do
       resources :letters_and_calls, only: [:index, :show, :edit, :update], constraints: { id: /(letters|calls)/ } do
         collection { get :adjusted }
       end
-      resources :disbursements, only: [:index, :show, :edit, :update]
+      resources :disbursements, only: [:index, :show, :edit, :update] do
+        collection { get :adjusted }
+      end
       resource :supporting_evidences, only: [:show] do
         resources :downloads, only: :show
       end

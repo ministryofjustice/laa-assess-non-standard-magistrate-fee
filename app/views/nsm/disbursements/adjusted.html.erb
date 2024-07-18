@@ -1,57 +1,57 @@
 <% title t('.page_title') %>
 
-<turbo-frame id="work_items">
+<turbo-frame id="disbursements">
   <h3 class="govuk-heading-m">
-    <%= t('.adjusted_work_items') %>
+    <%= t('.disbursements') %>
   </h3>
 
-  <% if work_items.size.zero? %>
+
+  <% if disbursements.size.zero? %>
     <p><%= t('.no_data') %></p>
   <% else %>
     <table class="govuk-table" data-module="moj-sortable-table">
       <caption class="govuk-visually-hidden"><%= t('.table_caption') %></caption>
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-          <% Nsm::V1::WorkItem.adjusted_headers.each_with_index do |(column_key, additional_classes), index| %>
+          <% Nsm::V1::Disbursement.adjusted_headers.each_with_index do |(column_key, additional_classes), index| %>
             <% if column_key == 'reason' %>
               <th class="govuk-table__header" scope="col"><%= t(".#{column_key}") %></th>
             <% else %>
               <%= table_header(column_key,
-                              "nsm.work_items.adjusted",
+                              "nsm.disbursements.adjusted",
                               index,
-                              adjusted_nsm_claim_work_items_path(claim),
+                              adjusted_nsm_claim_disbursements_path(claim),
                               @sort_by,
                               @sort_direction,
-                              additional_classes: ) %>
+                              additional_classes:) %>
             <% end %>
           <% end %>
         </tr>
       </thead>
-
       <tbody class="govuk-table__body app-task-list__items">
-        <% work_items.each do |work_item| %>
+        <% disbursements.each do |disbursement| %>
           <tr class="govuk-table__row app-task-list__item">
-            <th class="govuk-table__header" scope="row"><%= work_item.position %></th>
+            <th class="govuk-table__header" scope="row"><%= disbursement.position %></th>
             <th class="govuk-table__header" scope="row">
               <%=
                 if claim.editable_by?(current_user)
-                  link_to(work_item.work_type, edit_nsm_claim_work_item_path(claim_id: claim.id, id: work_item.id), data: { turbo: 'false' })
+                  link_to(disbursement.type_name, edit_nsm_claim_disbursement_path(claim_id: claim.id, id: disbursement.id), data: { turbo: 'false' })
                 else
-                  link_to(work_item.work_type, nsm_claim_work_item_path(claim_id: claim.id, id: work_item.id), data: { turbo: 'false' })
+                  link_to(disbursement.type_name, nsm_claim_disbursement_path(claim_id: claim.id, id: disbursement.id), data: { turbo: 'false' })
                 end
               %>
             </th>
 
-            <td class="govuk-table__cell"><%= work_item.reason %></td>
+            <td class="govuk-table__cell govuk-table__cell--nowrap"><%= disbursement.reason %></td>
 
             <td class="govuk-table__cell govuk-table__cell--numeric">
-              <%= work_item.formatted_allowed_time_spent %>
+              <%= disbursement.allowed_net %>
             </td>
             <td class="govuk-table__cell govuk-table__cell--numeric">
-              <%= work_item.formatted_allowed_uplift %>
+              <%= disbursement.allowed_vat %>
             </td>
             <td class="govuk-table__cell govuk-table__cell--numeric">
-              <%= work_item.formatted_allowed_amount %>
+              <%= disbursement.allowed_gross %>
             </td>
           </tr>
         <% end %>

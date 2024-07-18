@@ -42,6 +42,19 @@ RSpec.describe 'Disbursements' do
         '£0.00'
       )
     end
+
+    visit adjusted_nsm_claim_disbursements_path(claim)
+
+    within('.govuk-table__row', text: 'Apples') do
+      expect(page).to have_content(
+        '1 ' \
+        'Apples ' \
+        'Testing ' \
+        '£0.00 ' \
+        '£0.00 ' \
+        '£0.00'
+      )
+    end
   end
 
   it 'shows error if no changes made to an item' do

@@ -3,7 +3,7 @@ module Nsm
     ITEM_COUNT_OVERRIDE = 100
     layout nil
 
-    before_action :set_default_table_sort_options
+    before_action :set_default_table_sort_options, only: %i[index adjusted]
 
     def index
       claim = Claim.find(params[:claim_id])

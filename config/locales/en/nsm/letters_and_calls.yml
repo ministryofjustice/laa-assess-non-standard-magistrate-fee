@@ -15,7 +15,7 @@ en:
         total: "Total"
         remove_uplift_all: "Remove uplifts for all items"
         no_data: You do not have any letters or calls
-        table_caption: Clained disbursements Claimed letters and calls
+        table_caption: Claimed letters and calls
       adjusted:
         page_title: "Your claims"
         heading: "Letters and calls"
@@ -25,7 +25,7 @@ en:
         uplift_allowed: "Uplift allowed"
         caseworker_allowed: "Net cost allowed"
         no_data: You do not have any adjusted letters or calls
-        table_caption: Clained disbursements Claimed letters and calls
+        table_caption: Adjusted letters and calls
       edit:
         page_title: "Your claims"
         heading: "Adjust %{type} total"

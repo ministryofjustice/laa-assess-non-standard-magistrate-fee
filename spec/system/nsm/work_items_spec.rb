@@ -49,6 +49,19 @@ RSpec.describe 'Work items' do
         '£263.60'
       )
     end
+
+    visit adjusted_nsm_claim_work_items_path(claim)
+
+    within('.govuk-table__row', text: 'Waiting') do
+      expect(page).to have_content(
+        '1 ' \
+        'Waiting ' \
+        'Testing ' \
+        '10 hours:59 minutes ' \
+        '0% ' \
+        '£263.60'
+      )
+    end
   end
 
   it 'can remove all uplift' do
