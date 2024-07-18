@@ -20,7 +20,7 @@ class SearchForm
   attribute :status_with_assignment, :string
   attribute :caseworker_id, :string
   attribute :page, :integer, default: 1
-  attribute :sort_by, :string, default: 'date_updated'
+  attribute :sort_by, :string, default: 'last_updated'
   attribute :sort_direction, :string, default: 'descending'
   attribute :application_type, :string
   attribute :form_context, :string

@@ -7,8 +7,6 @@ en:
         nsm: Non-standard magistrates
         search: Search
     search:
-      status: Status
-      caseworker: Caseworker
       application_type:
         label: Which service do you want to search?
       query:

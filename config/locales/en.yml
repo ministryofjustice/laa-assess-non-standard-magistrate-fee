@@ -70,7 +70,7 @@ en:
           firm_name: Firm name
           client_name: Client
           caseworker: Caseworker
-          date_updated: Last updated
+          last_updated: Last updated
           status_with_assignment: Status
 
   generic:
