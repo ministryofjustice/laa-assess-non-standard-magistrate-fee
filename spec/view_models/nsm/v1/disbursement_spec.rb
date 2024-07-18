@@ -145,35 +145,35 @@ RSpec.describe Nsm::V1::Disbursement do
       }
     end
 
-    context '#date' do
+    describe '#date' do
       it { expect(disbursement.date).to eq('1 Jan 2022') }
     end
 
-    context '#reason' do
+    describe '#reason' do
       it { expect(disbursement.reason).to eq('something') }
     end
 
-    context '#claimed_net' do
+    describe '#claimed_net' do
       it { expect(disbursement.claimed_net).to eq('£74.00') }
     end
 
-    context '#claimed_vat' do
+    describe '#claimed_vat' do
       it { expect(disbursement.claimed_vat).to eq('£16.60') }
     end
 
-    context '#claimed_gross' do
+    describe '#claimed_gross' do
       it { expect(disbursement.claimed_gross).to eq('£90.60') }
     end
 
-    context '#allowed_net' do
+    describe '#allowed_net' do
       it { expect(disbursement.allowed_net).to eq('£83.00') }
     end
 
-    context '#allowed_vat' do
+    describe '#allowed_vat' do
       it { expect(disbursement.allowed_vat).to eq('£0.00') }
     end
 
-    context '#allowed_gross' do
+    describe '#allowed_gross' do
       it { expect(disbursement.allowed_gross).to eq('£83.00') }
     end
   end

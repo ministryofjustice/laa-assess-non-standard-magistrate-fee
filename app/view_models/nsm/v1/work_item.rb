@@ -41,7 +41,6 @@ module Nsm
             'allowed_uplift' => ['govuk-table__header--numeric'],
             'allowed_net_cost' => ['govuk-table__header--numeric'],
           }
-
         end
       end
 

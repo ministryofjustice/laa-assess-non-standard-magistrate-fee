@@ -52,9 +52,11 @@ RSpec.describe Nsm::V1::WorkItem do
     end
 
     describe '#formatted_time_spent' do
-      it { expect(subject.formatted_time_spent).to eq(
-        "2<span class=\"govuk-visually-hidden\"> hours</span>:41<span class=\"govuk-visually-hidden\"> minutes</span>"
-      ) }
+      it {
+        expect(subject.formatted_time_spent).to eq(
+          '2<span class="govuk-visually-hidden"> hours</span>:41<span class="govuk-visually-hidden"> minutes</span>'
+        )
+      }
     end
 
     describe '#formatted_uplift' do
@@ -66,9 +68,11 @@ RSpec.describe Nsm::V1::WorkItem do
     end
 
     describe '#formatted_allowed_time_spent' do
-      it { expect(subject.formatted_allowed_time_spent).to eq(
-        "2<span class=\"govuk-visually-hidden\"> hours</span>:41<span class=\"govuk-visually-hidden\"> minutes</span>"
-      ) }
+      it {
+        expect(subject.formatted_allowed_time_spent).to eq(
+          '2<span class="govuk-visually-hidden"> hours</span>:41<span class="govuk-visually-hidden"> minutes</span>'
+        )
+      }
     end
 
     describe '#formatted_allowed_uplift' do
@@ -80,6 +84,7 @@ RSpec.describe Nsm::V1::WorkItem do
 
       context 'when no adjustments' do
         let(:adjustment_comment) { nil }
+
         it { expect(subject.formatted_allowed_amount).to eq('') }
       end
     end
