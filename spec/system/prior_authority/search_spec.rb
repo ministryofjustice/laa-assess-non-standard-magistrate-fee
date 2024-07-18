@@ -221,7 +221,7 @@ RSpec.describe 'Search', :stub_oauth_token do
 
       click_on application.data['laa_reference']
 
-      expect(page).to have_current_path nsm_application_path(application)
+      expect(page).to have_current_path nsm_claim_path(application)
     end
   end
 
