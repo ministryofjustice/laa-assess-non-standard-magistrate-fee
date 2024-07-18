@@ -44,7 +44,7 @@ class SearchResult
     when 'crm4'
       Rails.application.routes.url_helpers.prior_authority_application_path(submission.id)
     when 'crm7'
-      Rails.application.routes.url_helpers.nsm_claim_path(submission.id)
+      Rails.application.routes.url_helpers.nsm_claim_claim_details_path(submission.id)
     end
   end
 end
