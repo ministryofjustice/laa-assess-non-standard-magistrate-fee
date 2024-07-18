@@ -44,7 +44,7 @@ en:
         allowed_net_cost: Net cost allowed
         table_caption: Adjusted work items
         table_info_item: work item
-
+        no_data: You do not have any adjusted work items
       edit:
         page_title: "Your claims"
         heading: "Adjust a work item"

@@ -53,7 +53,7 @@ module Nsm
       form = WorkItemForm.new(claim:, item:, **form_params)
 
       if form.save
-        redirect_to nsm_claim_adjustments_path(claim, anchor: 'work-items-tab')
+        redirect_to nsm_claim_review_and_adjusts_path(claim, anchor: 'work-items-tab')
       else
         render :edit, locals: { claim:, item:, form: }
       end

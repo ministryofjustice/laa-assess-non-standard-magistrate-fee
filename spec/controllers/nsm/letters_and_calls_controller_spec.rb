@@ -159,7 +159,7 @@ form_attributes: {})
 nsm_letters_calls_form_letters: { some: :data } }
 
           expect(controller).to redirect_to(
-            nsm_claim_adjustments_path(claim,
+            nsm_claim_review_and_adjusts_path(claim,
                                        anchor: 'letters-and-calls-tab')
           )
           expect(response).to have_http_status(:found)
@@ -193,7 +193,7 @@ nsm_letters_calls_form_letters: { some: :data } }
 nsm_letters_calls_form_calls: { some: :data } }
 
           expect(controller).to redirect_to(
-            nsm_claim_adjustments_path(claim,
+            nsm_claim_review_and_adjusts_path(claim,
                                        anchor: 'letters-and-calls-tab')
           )
           expect(response).to have_http_status(:found)

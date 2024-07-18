@@ -39,7 +39,7 @@ module Nsm
       end
       form = DisbursementsForm.new(claim:, item:, **form_params)
       if form.save
-        redirect_to nsm_claim_adjustments_path(claim, anchor: 'disbursements-tab')
+        redirect_to nsm_claim_review_and_adjusts_path(claim, anchor: 'disbursements-tab')
       else
         render :edit, locals: { claim:, item:, form: }
       end
