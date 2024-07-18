@@ -3,6 +3,9 @@ require 'rails_helper'
 RSpec.describe DashboardsController do
   describe '#show' do
     context 'dashboard ids not set' do
+      let(:search_form) { nil }
+      let(:search_form_instance) { instance_double(SearchForm) }
+
       before do
         allow(ENV).to receive(:fetch).and_call_original
         allow(ENV).to receive(:fetch).with('METABASE_PA_DASHBOARD_IDS')
@@ -11,8 +14,19 @@ RSpec.describe DashboardsController do
                                      .and_return(nil)
         allow(FeatureFlags).to receive(:nsm_insights).and_return(double(enabled?: true))
         allow(subject).to receive(:authorize_supervisor).and_return(true)
+        allow(SearchForm).to receive(:new).and_return(search_form_instance)
+        allow(SearchForm).to receive_message_chain(:new, :valid?).and_return(true)
+        allow(SearchForm).to receive_message_chain(:new, :execute).and_return({})
+        get :show, params: { nav_select:, search_form: }
+      end
 
-        get :show, params: { nav_select: }
+      context 'selected tab is search and user has executed a valid search' do
+        let(:nav_select) { 'search' }
+        let(:search_form) { { query: 'query' }}
+
+        it 'generates a SearchForm' do
+          expect(subject.instance_variable_get(:@search_form)).to eq(search_form_instance)
+        end
       end
 
       context 'selected tab is prior authority' do
