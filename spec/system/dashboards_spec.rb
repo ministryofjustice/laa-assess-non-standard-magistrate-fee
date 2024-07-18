@@ -95,7 +95,7 @@ RSpec.describe 'Dashboards' do
       context 'search analytics available' do
         it 'can navigate to search analytics' do
           visit dashboard_path
-          click 'Search'
+          click_on 'Search'
 
           expect(page).to have_css('.govuk-heading-xl', text: 'Search')
           expect(page).to have_css('.govuk-label', text: 'Claim or application details')
