@@ -22,7 +22,7 @@ RSpec.describe DashboardsController do
 
       context 'selected tab is search and user has executed a valid search' do
         let(:nav_select) { 'search' }
-        let(:search_form) { { query: 'query' }}
+        let(:search_form) { { query: 'query' } }
 
         it 'generates a SearchForm' do
           expect(subject.instance_variable_get(:@search_form)).to eq(search_form_instance)
