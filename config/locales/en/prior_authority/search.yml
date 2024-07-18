@@ -25,5 +25,5 @@ en:
         search_form:
           attributes:
             base:
-              nothing_specified: You must enter at least one search criterion
+              nothing_specified: Enter some application details or filter your search criteria
               search_error: Something went wrong trying to perform this search

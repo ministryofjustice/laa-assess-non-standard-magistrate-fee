@@ -39,7 +39,7 @@ en:
     claim_button_group:
       make_decision: Make a decision
       send_back: Send back to provider
-      save_and_come_back: Save and comeback later
+      save_and_come_back: Save and come back later
     statuses:
       submitted: Not assigned
       auto_grant: Auto granted
