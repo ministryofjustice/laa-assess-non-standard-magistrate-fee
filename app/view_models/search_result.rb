@@ -2,8 +2,9 @@ class SearchResult
   include NameConstructable
   include SubmissionTagHelper
 
-  def initialize(data)
-    @data = data.deep_stringify_keys
+  def initialize(view_data, raw_data)
+    @view_data = view_data.deep_stringify_keys
+    @data = raw_data.deep_stringify_keys
   end
 
   delegate :id, to: :submission
@@ -29,8 +30,8 @@ class SearchResult
     submission.assignments.first&.display_name || I18n.t('search.unassigned')
   end
 
-  def date_updated
-    submission.updated_at.to_fs(:stamp)
+  def last_updated
+    @view_data['last_updated'].to_time.to_fs(:stamp)
   end
 
   def state_tag

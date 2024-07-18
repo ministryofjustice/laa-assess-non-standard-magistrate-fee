@@ -20,10 +20,12 @@ RSpec.describe 'Search', :stub_oauth_token do
 
   context 'when I search for an application that has already been imported' do
     let(:application) { create :prior_authority_application }
+
     let(:stub) do
       stub_request(:post, endpoint).with(body: payload).to_return(
         status: 201,
         body: { metadata: { total_results: 1 },
+                data: [{ last_updated: Time.current.iso8601 }],
                 raw_data: [{ application_id: application.id, application: application.data }] }.to_json
       )
     end
@@ -51,6 +53,8 @@ RSpec.describe 'Search', :stub_oauth_token do
 
   context 'when the app store has unsynced records' do
     let(:id) { SecureRandom.uuid }
+    let(:view_record) { { last_updated: Time.current.iso8601 } }
+
     let(:record) do
       {
         application: build(:prior_authority_data),
@@ -68,7 +72,7 @@ RSpec.describe 'Search', :stub_oauth_token do
     before do
       stub_request(:post, endpoint).with(body: payload).to_return(
         status: 201,
-        body: { metadata: { total_results: 1 }, raw_data: [record] }.to_json
+        body: { metadata: { total_results: 1 }, data: [view_record], raw_data: [record] }.to_json
       )
     end
 
@@ -89,7 +93,7 @@ RSpec.describe 'Search', :stub_oauth_token do
     before do
       stub_request(:post, endpoint).with(body: payload).to_return(
         status: 201,
-        body: { metadata: { total_results: 0 }, raw_data: [] }.to_json
+        body: { metadata: { total_results: 0 }, data: [], raw_data: [] }.to_json
       )
     end
 
@@ -130,6 +134,7 @@ sort_direction: 'ascending' },
       payloads.map do |payload|
         stub_request(:post, endpoint).with(body: payload).to_return(
           status: 201, body: { metadata: { total_results: 21 },
+                               data: applications.map { { last_updated: Time.current.iso8601 } },
                                raw_data: applications.map { { application_id: _1.id, application: _1.data } } }.to_json
         )
       end
@@ -161,10 +166,11 @@ sort_direction: 'ascending' },
         updated_to: '2023-04-23'
       }
     end
+
     let(:stub) do
       stub_request(:post, endpoint).with(body: payload).to_return(
         status: 201,
-        body: { metadata: { total_results: 0 }, raw_data: [] }.to_json
+        body: { metadata: { total_results: 0 }, data: [], raw_data: [] }.to_json
       )
     end
 

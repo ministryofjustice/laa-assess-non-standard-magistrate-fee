@@ -22,7 +22,9 @@ class SearchForm
   validate :at_least_one_field_set
 
   def results
-    @search_response[:raw_data].map { SearchResult.new(_1) }
+    @search_response[:data].each_with_object([]).with_index do |(view_data, results), i|
+      results << SearchResult.new(view_data, @search_response[:raw_data][i])
+    end
   end
 
   def pagy
