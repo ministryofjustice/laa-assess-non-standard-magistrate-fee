@@ -87,13 +87,10 @@ module Nsm
         end
       end
 
-<<<<<<< HEAD
       def reason
         adjustment_comment
       end
 
-=======
->>>>>>> main
       def formatted_completed_on
         format(completed_on, as: :date)
       end
@@ -110,7 +107,6 @@ module Nsm
         format(provider_requested_amount)
       end
 
-<<<<<<< HEAD
       def formatted_allowed_time_spent
         format(time_spent, as: :time)
       end
@@ -119,8 +115,6 @@ module Nsm
         format(uplift.to_i, as: :percentage)
       end
 
-=======
->>>>>>> main
       def formatted_allowed_amount
         format(any_adjustments? && caseworker_amount)
       end

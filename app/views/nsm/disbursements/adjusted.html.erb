@@ -17,13 +17,13 @@
             <% if column_key == 'reason' %>
               <th class="govuk-table__header" scope="col"><%= t(".#{column_key}") %></th>
             <% else %>
-              <%= table_header(column_key,
-                              "nsm.disbursements.adjusted",
-                              index,
-                              adjusted_nsm_claim_disbursements_path(claim),
-                              @sort_by,
-                              @sort_direction,
-                              additional_classes:) %>
+              <%= table_header_with_form(column_key,
+                                         "nsm.disbursements.adjusted",
+                                         index,
+                                         adjusted_nsm_claim_disbursements_path(claim),
+                                         @sort_by,
+                                         @sort_direction,
+                                         additional_classes:) %>
             <% end %>
           <% end %>
         </tr>
