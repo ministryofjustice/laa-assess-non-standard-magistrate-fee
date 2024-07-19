@@ -4,6 +4,11 @@ class SearchForm
   include ActiveRecord::AttributeAssignment
 
   Option = Struct.new(:value, :label)
+  ApplicationType = Struct.new(:id, :name)
+  APPLICATION_TYPES = [
+    ApplicationType.new('crm4', 'Prior authority'),
+    ApplicationType.new('crm7', 'Non-standard magistrates')
+  ].freeze
 
   PER_PAGE = 20
 
@@ -56,6 +61,10 @@ class SearchForm
       rejected
       expired
     ].map { Option.new(_1, I18n.t("search.statuses.#{_1}")) }
+  end
+
+  def application_types
+    self.class::APPLICATION_TYPES
   end
 
   private
