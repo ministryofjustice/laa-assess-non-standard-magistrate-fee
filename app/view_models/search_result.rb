@@ -36,4 +36,21 @@ class SearchResult
   def state_tag
     submission_state_tag(submission)
   end
+
+  delegate :application_type, to: :submission
+
+  # assuming all submissions have an application_type as this has to
+  # be a valid value (i.e. not blank) - testing it is both arduous and redundant
+  def application_path
+    case submission.application_type
+    when 'crm4'
+      Rails.application.routes.url_helpers.prior_authority_application_path(submission.id)
+    when 'crm7'
+      Rails.application.routes.url_helpers.nsm_claim_claim_details_path(submission.id)
+    # :nocov:
+    else
+      false
+    end
+    # :nocov:
+  end
 end
