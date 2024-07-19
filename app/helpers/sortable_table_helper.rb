@@ -1,6 +1,6 @@
 module SortableTableHelper
   def table_header_with_form(column, i18n_stem, index, path, sort_by, sort_direction, additional_classes: [])
-    table_header(column, sort_by, sort_direction, additional_classes) do |next_direction|
+    table_header(column, sort_by, sort_direction, additional_classes:) do |next_direction|
       reorder_form(path, column, next_direction, i18n_stem, index)
     end
   end
