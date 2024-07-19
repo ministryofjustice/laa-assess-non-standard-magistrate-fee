@@ -8,7 +8,7 @@ en:
         remove_uplift_all: Remove uplifts for all items
         page_title: "Review criminal legal aid applications"
         item: Line item
-        cost: Cost
+        cost: Cost type
         date: Date
         fee_earner: Fee earner
         claimed_time: Time claimed
@@ -30,6 +30,11 @@ en:
         allowed_cost: Net cost allowed
         total: Total
         table_info_item: work item
+        summary_table_caption: Summary of claimed work items
+        table_caption: Claimed work items
+        accessible:
+          claimed: 'Sum of net cost claimed: '
+          allowed: 'Sum of net cost allowed: '
       edit:
         page_title: "Your claims"
         heading: "Adjust a work item"

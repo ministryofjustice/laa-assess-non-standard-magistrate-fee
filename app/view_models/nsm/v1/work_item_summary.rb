@@ -1,6 +1,8 @@
 module Nsm
   module V1
     class WorkItemSummary < BaseViewModel
+      include ActionView::Helpers::TagHelper
+
       WORK_TYPE_ORDER = {
         'travel' => 0,
         'waiting' => 1,
@@ -29,19 +31,22 @@ module Nsm
       end
 
       def footer
-        format_row([t('total', numeric: false)] + summed_values(work_items, periods: false))
+        format_row(
+          [t('total', numeric: false)] + summed_values(work_items, periods: false),
+          accessibility_text: true
+        )
       end
 
-      def format_row(data)
+      def format_row(data, accessibility_text: false)
         work_type, requested_cost, requested_time, allowed_cost, allowed_time = *data
         result = [
           work_type,
           { text: format_period(requested_time, style: :minimal_html), numeric: true },
-          { text: NumberTo.pounds(requested_cost), numeric: true },
+          { text: prefix('claimed', accessibility_text:) + NumberTo.pounds(requested_cost), numeric: true },
         ]
         if show_allowed?
           result << { text: format_period(allowed_time, style: :minimal_html), numeric: true }
-          result << { text: NumberTo.pounds(allowed_cost), numeric: true }
+          result << { text: prefix('allowed', accessibility_text:) + NumberTo.pounds(allowed_cost), numeric: true }
         else
           result << '' << ''
         end
@@ -62,6 +67,12 @@ module Nsm
       end
 
       private
+
+      def prefix(key, accessibility_text:)
+        return '' unless accessibility_text
+
+        tag.span(I18n.t("nsm.work_items.index.accessible.#{key}"), class: 'govuk-visually-hidden')
+      end
 
       def show_allowed?
         submission.part_grant? || work_items.any?(&:changed?)
