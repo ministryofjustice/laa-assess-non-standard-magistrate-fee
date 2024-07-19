@@ -6,9 +6,11 @@
     <li class="moj-sub-navigation__item">
       <%= link_to t('.review_and_adjust'), nsm_claim_review_and_adjusts_path(claim), class: 'moj-sub-navigation__link', 'aria-current': (current_page == 'review_and_adjust' ? "page" : nil), data: { turbo: 'false' } %>
     </li>
-    <li class="moj-sub-navigation__item">
-      <%= link_to t('.adjustments'), nsm_claim_adjustments_path(claim), class: 'moj-sub-navigation__link', 'aria-current': (current_page == 'adjustments' ? "page" : nil), data: { turbo: 'false' } %>
-    </li>
+    <% if claim.any_adjustments? %>
+      <li class="moj-sub-navigation__item">
+        <%= link_to t('.adjustments'), nsm_claim_adjustments_path(claim), class: 'moj-sub-navigation__link', 'aria-current': (current_page == 'adjustments' ? "page" : nil), data: { turbo: 'false' } %>
+      </li>
+    <% end %>
     <li class="moj-sub-navigation__item">
       <%= link_to t('.supporting_evidence'), nsm_claim_supporting_evidences_path(claim), class: 'moj-sub-navigation__link', 'aria-current': (current_page == 'supporting_evidences' ? "page" : nil) %>
     </li>

@@ -40,8 +40,6 @@ module Nsm
         }
       end
 
-      private
-
       def show_allowed?
         return @show_allowed unless @show_allowed.nil?
 
@@ -49,6 +47,8 @@ module Nsm
           submission.part_grant? ||
           [disbursements, letters_calls, *work_items.values].any? { |rows| rows.any?(&:changed?) }
       end
+
+      private
 
       def sum_allowed(data, field)
         return nil if data.none? { _1[:"allowed_#{field}"] }
