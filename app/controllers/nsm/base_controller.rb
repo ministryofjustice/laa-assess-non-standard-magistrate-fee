@@ -6,7 +6,7 @@ module Nsm
       if params[:page]
         session["#{scope}_tab"] = 'work_items'
         session["#{scope}_page"] = params[:page]
-      elsif session["#{scope}_tab"] == 'work_items'
+      elsif session["#{scope}_tab"] == tab
         params[:page] = session["#{scope}_page"]
       else
         session["#{scope}_tab"] = nil
