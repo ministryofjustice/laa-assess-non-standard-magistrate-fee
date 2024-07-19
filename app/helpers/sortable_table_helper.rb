@@ -1,6 +1,6 @@
 module SortableTableHelper
-  def table_header_with_form(column, i18n_stem, index, path, sort_by, sort_direction)
-    table_header(column, sort_by, sort_direction) do |next_direction|
+  def table_header_with_form(column, i18n_stem, index, path, sort_by, sort_direction, additional_classes: [])
+    table_header(column, sort_by, sort_direction, additional_classes:) do |next_direction|
       reorder_form(path, column, next_direction, i18n_stem, index)
     end
   end
@@ -15,7 +15,7 @@ module SortableTableHelper
     end
   end
 
-  def table_header(column, sort_by, sort_direction)
+  def table_header(column, sort_by, sort_direction, additional_classes: [])
     if sort_by == column.to_s
       aria_sort = sort_direction
       next_direction = sort_direction == 'ascending' ? 'descending' : 'ascending'
@@ -24,7 +24,7 @@ module SortableTableHelper
       next_direction = 'ascending'
     end
 
-    tag.th(scope: 'col', class: 'govuk-table__header', 'aria-sort': aria_sort) do
+    tag.th(scope: 'col', class: ['govuk-table__header'] + additional_classes, 'aria-sort': aria_sort) do
       yield next_direction
     end
   end

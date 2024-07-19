@@ -1,6 +1,15 @@
 module Nsm
   module V1
     class WorkItemSummary < BaseViewModel
+      WORK_TYPE_ORDER = {
+        'travel' => 0,
+        'waiting' => 1,
+        'attendance_with_counsel' => 2,
+        'attendance_without_counsel' => 3,
+        'preparation' => 4,
+        'advocacy' => 5
+      }.freeze
+
       attribute :submission
 
       def header
@@ -27,11 +36,11 @@ module Nsm
         work_type, requested_cost, requested_time, allowed_cost, allowed_time = *data
         result = [
           work_type,
-          { text: format_period(requested_time, style: :line_html), numeric: true },
+          { text: format_period(requested_time, style: :minimal_html), numeric: true },
           { text: NumberTo.pounds(requested_cost), numeric: true },
         ]
         if show_allowed?
-          result << { text: format_period(allowed_time, style: :line_html), numeric: true }
+          result << { text: format_period(allowed_time, style: :minimal_html), numeric: true }
           result << { text: NumberTo.pounds(allowed_cost), numeric: true }
         else
           result << '' << ''
@@ -60,6 +69,7 @@ module Nsm
 
       def work_items
         @work_items ||= BaseViewModel.build(:work_item, submission, 'work_items')
+                                     .sort_by { WORK_TYPE_ORDER[_1.work_type.value] }
       end
 
       def summed_values(work_items, periods: true)

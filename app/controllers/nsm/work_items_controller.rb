@@ -1,11 +1,15 @@
 module Nsm
   class WorkItemsController < Nsm::BaseController
+    ITEM_COUNT_OVERRIDE = 100
     layout nil
+
+    before_action :set_default_table_sort_options
 
     def index
       claim = Claim.find(params[:claim_id])
       items = BaseViewModel.build(:work_item, claim, 'work_items')
-      pagy, work_items = pagy_array(items.sort_by(&:completed_on))
+      sorted_items = Sorters::WorkItemsSorter.call(items, @sort_by, @sort_direction)
+      pagy, work_items = pagy_array(sorted_items, items: ITEM_COUNT_OVERRIDE)
       work_item_summary = BaseViewModel.build(:work_item_summary, claim)
 
       render locals: { claim:, work_items:, work_item_summary:, pagy: }
@@ -57,6 +61,12 @@ module Nsm
         current_user: current_user,
         id: params[:id]
       )
+    end
+
+    def set_default_table_sort_options
+      default = 'item'
+      @sort_by = params.fetch(:sort_by, default)
+      @sort_direction = params.fetch(:sort_direction, 'ascending')
     end
   end
 end

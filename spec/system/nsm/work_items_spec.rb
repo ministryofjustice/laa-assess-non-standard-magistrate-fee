@@ -16,13 +16,15 @@ RSpec.describe 'Work items' do
 
     within('.govuk-table__row', text: 'Waiting') do
       expect(page).to have_content(
-        'Waiting' \
-        '2 hours41 minutes' \
-        '95%' \
-        '£125.58' \
-        'Change'
+        '1 ' \
+        'Waiting ' \
+        '12 December 2022 ' \
+        'aaa ' \
+        '2 hours:41 minutes ' \
+        '95% ' \
+        '£125.58'
       )
-      click_on 'Change'
+      click_on 'Waiting'
     end
 
     choose 'Yes, remove uplift'
@@ -37,14 +39,14 @@ RSpec.describe 'Work items' do
 
     within('.govuk-table__row', text: 'Waiting') do
       expect(page).to have_content(
-        'Waiting' \
-        '2 hours41 minutes' \
-        '95%' \
-        '£125.58' \
-        '10 hours59 minutes' \
-        '0%' \
-        '£263.60' \
-        'Change'
+        '1 ' \
+        'Waiting ' \
+        '12 December 2022 ' \
+        'aaa ' \
+        '2 hours:41 minutes ' \
+        '95% ' \
+        '£125.58 ' \
+        '£263.60'
       )
     end
   end
@@ -63,14 +65,14 @@ RSpec.describe 'Work items' do
 
     within('.govuk-table__row', text: 'Waiting') do
       expect(page).to have_content(
-        'Waiting' \
-        '2 hours41 minutes' \
-        '95%' \
-        '£125.58' \
-        '2 hours41 minutes' \
-        '0%' \
-        '£64.40' \
-        'Change'
+        '1 ' \
+        'Waiting ' \
+        '12 December 2022 ' \
+        'aaa ' \
+        '2 hours:41 minutes ' \
+        '95% ' \
+        '£125.58 ' \
+        '£64.40'
       )
     end
 
@@ -83,7 +85,7 @@ RSpec.describe 'Work items' do
     it 'lets me view details instead of changing them' do
       visit nsm_claim_work_items_path(claim)
       within('main') { expect(page).to have_no_content 'Change' }
-      click_on 'View'
+      click_on 'Waiting'
       expect(page).to have_content(
         'Waiting' \
         'Date12 December 2022' \
