@@ -67,6 +67,6 @@ class Claim < Submission
   end
 
   def core_cost_summary
-    @core_cost_summary ||=BaseViewModel.build(:core_cost_summary, self)
+    @core_cost_summary ||= BaseViewModel.build(:core_cost_summary, self)
   end
 end

@@ -112,7 +112,7 @@ RSpec.describe 'Work items' do
 
   context 'when multiple pages of data' do
     let(:work_items) do
-      110.times.map do |i|
+      Array.new(110) do |i|
         {
           'id' => SecureRandom.uuid,
           'uplift' => 95,
@@ -129,7 +129,7 @@ RSpec.describe 'Work items' do
     end
     let(:claim) { create(:claim, work_items:) }
 
-    it "returns the the same page on reload" do
+    it 'returns the the same page on reload' do
       visit nsm_claim_work_items_path(claim, page: 2)
 
       expect(page.all('tbody tr').count).to eq(10)
@@ -139,7 +139,7 @@ RSpec.describe 'Work items' do
       expect(page.all('tbody tr').count).to eq(10)
     end
 
-    it "resets after visiting a diffrerent page" do
+    it 'resets after visiting a diffrerent page' do
       visit nsm_claim_work_items_path(claim, page: 2)
 
       expect(page.all('tbody tr').count).to eq(10)
@@ -150,5 +150,4 @@ RSpec.describe 'Work items' do
       expect(page.all('tbody tr').count).to eq(100)
     end
   end
-
 end
