@@ -4,7 +4,7 @@ RSpec.describe DashboardsController do
   describe '#show' do
     context 'dashboard ids not set' do
       let(:search_form) { nil }
-      let(:search_form_instance) { instance_double(SearchForm, valid?: true) }
+      let(:search_form_instance) { instance_double(SearchForm, valid?: true, execute: true) }
 
       before do
         allow(ENV).to receive(:fetch).and_call_original
