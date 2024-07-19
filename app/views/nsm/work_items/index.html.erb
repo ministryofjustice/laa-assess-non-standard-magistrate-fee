@@ -43,7 +43,7 @@
 
     <tbody class="govuk-table__body app-task-list__items">
       <% work_items.each do |work_item| %>
-        <tr class="govuk-table__row app-task-list__item">
+        <tr class="govuk-table__row app-task-list__item <%= 'scroll-to-location' if params[:selected_id] == work_item.id %>">
           <th class="govuk-table__header" scope="row"><%= work_item.position %></th>
           <th class="govuk-table__header" scope="row">
             <%=

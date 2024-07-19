@@ -6,6 +6,8 @@ module Nsm
     before_action :set_default_table_sort_options, only: %i[index adjusted]
 
     def index
+      remember_page('review', 'disbursements')
+
       claim = Claim.find(params[:claim_id])
       items = BaseViewModel.build(:disbursement, claim, 'disbursements')
       sorted_items = Sorters::DisbursementsSorter.call(items, @sort_by, @sort_direction)
@@ -14,6 +16,8 @@ module Nsm
     end
 
     def adjusted
+      remember_page('adjusted', 'disbursements')
+
       claim = Claim.find(params[:claim_id])
       items = BaseViewModel.build(:disbursement, claim, 'disbursements').filter(&:any_adjustments?)
       sorted_items = Sorters::DisbursementsSorter.call(items, @sort_by, @sort_direction)
@@ -22,6 +26,8 @@ module Nsm
     end
 
     def show
+      remember_location('disbursements', params[:id])
+
       claim = Claim.find(params[:claim_id])
       item = BaseViewModel.build(:disbursement, claim, 'disbursements').detect do |model|
         model.id == params[:id]
@@ -31,6 +37,8 @@ module Nsm
     end
 
     def edit
+      remember_location('disbursements', params[:id])
+
       claim = Claim.find(params[:claim_id])
       item = BaseViewModel.build(:disbursement, claim, 'disbursements').detect do |model|
         model.id == params[:id]

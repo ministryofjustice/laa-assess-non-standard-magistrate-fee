@@ -13,3 +13,11 @@ import { initAll } from 'govuk-frontend'
 initAll()
 
 Turbo.setFormMode("off")
+
+document.addEventListener('turbo:frame-render', (event) => {
+  let selected = event.target.querySelector('.scroll-to-location')
+  if (!selected) {
+    return;
+  }
+  selected.scrollIntoView();
+});
