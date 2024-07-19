@@ -23,23 +23,19 @@ class Submission < ApplicationRecord
   end
 
   def last_updated_at
-    # This method will always¹ return the same value as the app store
-    # 'last_updated' value in its search results provided the following
-    # always hold true:
+    # This method will attempts to return the same value as the app store
+    # 'last_updated' attribute in its search results payload.
 
-    # - all and only Event::NOTIFYING_EVENTS trigger an app store update
-    #   that is not accompanied by sending a new version to the app store
-    # - the provider app never sends any events to the app store without
-    #   also sending a new version
-    # - any time a new version is synced from the app store, this triggers a
-    #   NewVersion event which then gets sent BACK to the app store
-
-    # The fallback to `updated_at` is for the edge case where somehow a submission
-    # gets created without an accompanying NewVersion event
-
-    # ¹ The exceptions are in the brief window between the app store receiving a new
-    # version from the provider and the caseworker completing sending a NewVersion
-    # event _back_ to the app store.
-    events.notifying.maximum(:created_at) || updated_at
+    # The app store last_updated is incremented every time an event is sent to the app store.
+    # (It is also incremented when a new version is sent, but those are always accompanied by
+    # new events so we can effectively ignore that.)
+    # Some events created in the caseworker app are not synced immediately, so we ignore them,
+    # safe in the knowledge that when they are eventually synced to the app store, so too
+    # will be some other events that will be more recent.
+    # E.g. a Note event will never be sent to the app store except once a noted
+    # submission has been assessed or sent back, which will trigger its own events.
+    # So we can guarantee that the latest event in the app store will never be a Note event,
+    # meaning we can disregard those when calculating the last_updated value
+    events.non_local.maximum(:created_at) || updated_at
   end
 end

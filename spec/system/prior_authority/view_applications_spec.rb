@@ -255,8 +255,12 @@ RSpec.describe 'View applications' do
 
   context 'when application has been assessed' do
     before do
-      application.update(state: 'rejected', updated_at: DateTime.new(2023, 6, 5, 4, 3, 2))
-      create(:event, :decision, submission: application, details: { comment: 'Not good use of money' })
+      application.update(state: 'rejected')
+      create(:event,
+             :decision,
+             submission: application,
+             details: { comment: 'Not good use of money' },
+             created_at: DateTime.new(2023, 6, 5, 4, 3, 2))
       click_on 'LAA-1234'
     end
 
@@ -306,11 +310,12 @@ RSpec.describe 'View applications' do
           sections_changed: %w[ufn alternative_quote_1],
           requested_at: DateTime.new(2023, 5, 2, 4, 3, 2), },
       ]
-      application.update!(state: 'provider_updated', updated_at: DateTime.new(2023, 6, 5, 4, 3, 2))
+      application.update!(state: 'provider_updated')
       create(:event, :provider_updated,
              submission: application,
              details: { comment: 'Added more info',
-                        corrected_info: %w[ufn alternative_quote_1] })
+                        corrected_info: %w[ufn alternative_quote_1] },
+             created_at: DateTime.new(2023, 6, 5, 4, 3, 2))
       application.assignments.destroy_all
       click_on 'LAA-1234'
     end
