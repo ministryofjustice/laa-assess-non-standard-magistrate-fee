@@ -31,7 +31,7 @@ gem 'sidekiq', '~> 7.3', '>= 7.3.0'
 gem 'sidekiq_alive', '~> 2.4'
 gem 'sidekiq-cron'
 gem 'stimulus-rails'
-gem 'turbo-rails'
+gem 'turbo-rails', '>= 2.0.6'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 # Pagination
 gem 'pagy'
