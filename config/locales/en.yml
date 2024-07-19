@@ -51,6 +51,27 @@ en:
       provider_updated: Provider updated
       expired: Expired
       further_info: Sent back
+    search:
+      search: Search
+      clear_all: Clear all
+      filter_results: Filter results (optional)
+      submitted_from: Date submitted from
+      submitted_to: Date submitted to
+      updated_from: Last updated from
+      updated_to: Last updated to
+      search_results: Search results
+      none: There are no results that match the search criteria
+      result: result
+      status: Status
+      caseworker: Caseworker
+      table:
+        header:
+          laa_reference: LAA reference
+          firm_name: Firm name
+          client_name: Client
+          caseworker: Caseworker
+          last_updated: Last updated
+          status_with_assignment: Status
 
   generic:
     cost: cost

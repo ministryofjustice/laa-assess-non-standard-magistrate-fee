@@ -5,4 +5,10 @@ en:
       heading:
         prior_authority: Prior authority
         nsm: Non-standard magistrates
-        search: Search for an application
+        search: Search
+    search:
+      application_type:
+        label: Which service do you want to search?
+      query:
+        label: Claim or application details
+        hint: Search for a client/ defendant name, firm name, UFN or LAA reference
