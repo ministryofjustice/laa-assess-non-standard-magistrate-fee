@@ -19,7 +19,7 @@ module PriorAuthority
       end
 
       def date_updated_str
-        submission.updated_at.to_fs(:stamp)
+        submission.last_updated_at.to_fs(:stamp)
       end
 
       def service_name

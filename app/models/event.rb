@@ -20,7 +20,16 @@ class Event < ApplicationRecord
     'PriorAuthority::Event::DraftSendBack',
     'PriorAuthority::Event::SendBack',
   ].freeze
+
+  NOTIFYING_EVENTS = [
+    'Event::Assignment',
+    'Event::Unassignment',
+    'Event::NewVersion',
+  ].freeze
+
   scope :history, -> { where(event_type: HISTORY_EVENTS).order(created_at: :desc) }
+
+  scope :notifying, -> { where(event_type: NOTIFYING_EVENTS) }
 
   # simplifies the rehydrate process
   attribute :public

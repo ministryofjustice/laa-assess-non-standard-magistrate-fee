@@ -30,7 +30,7 @@ class SearchResult
   end
 
   def date_updated
-    submission.updated_at.to_fs(:stamp)
+    submission.last_updated_at.to_fs(:stamp)
   end
 
   def state_tag
