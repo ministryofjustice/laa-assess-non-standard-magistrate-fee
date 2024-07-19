@@ -23,6 +23,7 @@ class SearchForm
   attribute :sort_by, :string, default: 'last_updated'
   attribute :sort_direction, :string, default: 'descending'
   attribute :application_type, :string
+  attribute :form_context, :string
 
   validate :at_least_one_field_set
 
@@ -70,10 +71,13 @@ class SearchForm
   private
 
   def at_least_one_field_set
-    field_set = [:query, :submitted_from,
-                 :submitted_to, :updated_from,
-                 :updated_to, :status_with_assignment,
-                 :caseworker_id].any? do |field|
+    fields = [:query, :submitted_from,
+              :submitted_to, :updated_from,
+              :updated_to, :status_with_assignment,
+              :caseworker_id]
+
+    fields.append(:application_type) if form_context == 'analytics'
+    field_set = fields.any? do |field|
       send(field).present?
     end
 
@@ -81,7 +85,7 @@ class SearchForm
   end
 
   def search_params
-    attributes.merge(per_page: PER_PAGE).compact_blank
+    attributes.except('form_context').merge(per_page: PER_PAGE).compact_blank
   end
 
   def conduct_search
