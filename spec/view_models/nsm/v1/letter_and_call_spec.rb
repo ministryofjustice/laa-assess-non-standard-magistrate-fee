@@ -206,7 +206,7 @@ RSpec.describe Nsm::V1::LetterAndCall do
           { numeric: true, text: '12' },
           { numeric: true, text: '0%' },
           { numeric: true, text: '£42.72' },
-          '', '', ''
+          ''
         ]
       )
     end
@@ -231,8 +231,6 @@ RSpec.describe Nsm::V1::LetterAndCall do
             { numeric: true, text: '15' },
             { numeric: true, text: '95%' },
             { numeric: true, text: '£104.13' },
-            { numeric: true, text: '12' },
-            { numeric: true, text: '0%' },
             { numeric: true, text: '£42.72' }
           ]
         )

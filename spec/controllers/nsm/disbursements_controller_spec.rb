@@ -5,7 +5,7 @@ RSpec.describe Nsm::DisbursementsController do
     let(:claim) { instance_double(Claim, id: claim_id) }
     let(:claim_id) { SecureRandom.uuid }
     let(:disbursements) do
-      [instance_double(Nsm::V1::Disbursement, disbursement_date: Time.zone.today)]
+      [instance_double(Nsm::V1::Disbursement, disbursement_date: Time.zone.today, position: 1)]
     end
 
     before do
@@ -36,7 +36,7 @@ RSpec.describe Nsm::DisbursementsController do
     let(:disbursement_id) { SecureRandom.uuid }
     let(:disbursement) do
       instance_double(Nsm::V1::Disbursement, id: disbursement_id, attributes: attributes,
-form_attributes: {})
+form_attributes: {}, position: 1)
     end
     let(:attributes) do
       {
@@ -85,7 +85,7 @@ form_attributes: {})
     let(:disbursement_id) { SecureRandom.uuid }
     let(:disbursement) do
       instance_double(Nsm::V1::Disbursement, id: disbursement_id, attributes: attributes,
-form_attributes: {})
+form_attributes: {}, position: 1)
     end
     let(:attributes) do
       {
@@ -143,6 +143,7 @@ form_attributes: {})
         original_total_cost_without_vat: original_total_cost_without_vat,
         total_cost_without_vat: current_total_cost_without_vat,
         vat_amount: 20.0,
+        position: 1,
       )
     end
     let(:current_total_cost_without_vat) { 100.0 }

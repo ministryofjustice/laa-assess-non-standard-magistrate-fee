@@ -4,6 +4,8 @@ module Nsm
       LINKED_TYPE = 'work_items'.freeze
 
       attribute :id, :string
+      # used to guess position when value not set in JSON blob when position is blank
+      attribute :submission
       attribute :position, :integer
       attribute :work_type, :translated
       adjustable_attribute :time_spent, :time_period
@@ -14,9 +16,6 @@ module Nsm
       attribute :fee_earner, :string
       attribute :vat_rate, :decimal
       attribute :firm_office
-
-      # used to guess position when value not set in JSON blob
-      attribute :submission
 
       class << self
         def headers
@@ -68,13 +67,12 @@ module Nsm
       end
 
       def position
-        super ||
-          (
-            submission.data['work_items']
-              .sort_by { [_1['completed_on'], _1['id']] }
-              .index { _1['id'] == id }
-            + 1
-          )
+        super || begin
+          pos = submission.data['work_items']
+                          .sort_by { [_1['completed_on'], _1['id']] }
+                          .index { _1['id'] == id }
+          pos + 1
+        end
       end
 
       def formatted_completed_on
@@ -138,7 +136,7 @@ module Nsm
         case as
         when :percentage then NumberTo.percentage(value, multiplier: 1)
         when :time then format_period(value, style: :minimal_html)
-        when :date then format_in_zone(value)
+        when :date then format_in_zone(value, format: '%-d %b %Y')
         else NumberTo.pounds(value)
         end
       end
