@@ -19,13 +19,7 @@
           value[:text] = (tag.span(t(".accessible.#{key}"), class: 'govuk-visually-hidden') + value[:text]) if key != :name && value.present?
           value
         end
-        govuk_table(
-          first_cell_is_header: true,
-          caption:,
-          head:,
-          rows:,
-          foot:
-        )
+        govuk_table(first_cell_is_header: true, caption:, head:, rows:, foot:)
       %>
 
       <ul class="govuk-tabs__list">

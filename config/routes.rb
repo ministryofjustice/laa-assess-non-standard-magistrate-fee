@@ -115,6 +115,7 @@ Rails.application.routes.draw do
     end
     resources :auto_assignments, only: [:create]
     resources :downloads, only: :show
+    resource :search, only: %i[new show]
   end
 
   if ENV.fetch("ENABLE_SYNC_TRIGGER_ENDPOINT", false) == "true"
