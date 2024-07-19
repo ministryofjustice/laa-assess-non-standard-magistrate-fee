@@ -26,6 +26,7 @@ en:
         caseworker_allowed: "Net cost allowed"
         no_data: You do not have any adjusted letters or calls
         table_caption: Adjusted letters and calls
+        table_caption: Clained disbursements Claimed letters and calls
       edit:
         page_title: "Your claims"
         heading: "Adjust %{type} total"

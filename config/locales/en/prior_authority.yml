@@ -4,6 +4,7 @@ en:
     your_applications: Your applications
     open_applications: Open applications
     closed_applications: Closed applications
+    search: Search
     shared:
       application_nav:
         requested: 'Requested:'

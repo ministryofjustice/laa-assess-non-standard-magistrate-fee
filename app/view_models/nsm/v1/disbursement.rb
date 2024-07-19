@@ -96,10 +96,13 @@ module Nsm
         disbursement_date.strftime('%-d %b %Y')
       end
 
+<<<<<<< HEAD
       def reason
         adjustment_comment
       end
 
+=======
+>>>>>>> main
       def claimed_net
         format(original_total_cost_without_vat)
       end
@@ -112,6 +115,7 @@ module Nsm
         format(provider_requested_total_cost)
       end
 
+<<<<<<< HEAD
       def allowed_net
         format(total_cost_without_vat)
       end
@@ -120,6 +124,8 @@ module Nsm
         format(vat_amount)
       end
 
+=======
+>>>>>>> main
       def allowed_gross
         format(any_adjustments? && caseworker_total_cost)
       end

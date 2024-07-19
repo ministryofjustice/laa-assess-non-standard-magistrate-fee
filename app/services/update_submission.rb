@@ -25,6 +25,8 @@ class UpdateSubmission
       autogrant if cached_autograntable
       Event::NewVersion.build(submission:) if new_version_appropriate? && version_changed
     end
+
+    submission
   end
 
   def new_version_appropriate?

@@ -87,10 +87,13 @@ module Nsm
         end
       end
 
+<<<<<<< HEAD
       def reason
         adjustment_comment
       end
 
+=======
+>>>>>>> main
       def formatted_completed_on
         format(completed_on, as: :date)
       end
@@ -107,6 +110,7 @@ module Nsm
         format(provider_requested_amount)
       end
 
+<<<<<<< HEAD
       def formatted_allowed_time_spent
         format(time_spent, as: :time)
       end
@@ -115,6 +119,8 @@ module Nsm
         format(uplift.to_i, as: :percentage)
       end
 
+=======
+>>>>>>> main
       def formatted_allowed_amount
         format(any_adjustments? && caseworker_amount)
       end
@@ -128,7 +134,7 @@ module Nsm
           '.date' => format_in_zone(completed_on),
           '.time_spent' => format_period(original_time_spent),
           '.fee_earner' => fee_earner.to_s,
-          '.uplift_claimed' => "#{original_uplift}%",
+          '.uplift_claimed' => "#{original_uplift.to_i}%",
         }
         if vat_registered?
           rows['.vat'] = NumberTo.percentage(vat_rate)
