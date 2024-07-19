@@ -27,8 +27,6 @@ module Nsm
 
     private
 
-
-
     def restore_location(tab)
       return unless tab == session['location']
 
