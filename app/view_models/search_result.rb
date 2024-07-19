@@ -50,6 +50,5 @@ class SearchResult
       false
     end
     # :nocov:
-
   end
 end
