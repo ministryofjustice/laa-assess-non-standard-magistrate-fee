@@ -75,4 +75,28 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
       end.to have_enqueued_job(NotifyAppStore)
     end
   end
+
+  context 'Review and Adjust' do
+    it 'correctly scrolls to a selected row', :javascript do
+      page_index = 3
+      row_index = 95
+      visit nsm_claim_adjustments_path(claim)
+      page.execute_script('document.querySelector("turbo-frame").scrollIntoView()')
+
+      click_link_or_button 'Work items'
+      find(".govuk-pagination a[href$='page=#{page_index}']", wait: 5).click
+      find("tr.govuk-table__row:nth-child(#{row_index}) .govuk-table__header a").click
+
+      expect(page).to have_current_path edit_nsm_claim_work_item_path(claim, claim.data['work_items'][0]['id'])
+      sleep(0.5)
+      expect(page.evaluate_script("window.sessionStorage.getItem('jumpPage') == '#{page_index}'")).to be true
+      expect(page.evaluate_script("window.sessionStorage.getItem('jumpIndex') == '#{row_index}'")).to be true
+
+      click_link_or_button 'Back'
+      expect(page).to have_current_path nsm_claim_adjustments_path(claim)
+      sleep(0.5)
+      expect(page.evaluate_script("window.sessionStorage.getItem('jumpPage') == null")).to be true
+      expect(page.evaluate_script("window.sessionStorage.getItem('jumpIndex') == null")).to be true
+    end
+  end
 end
