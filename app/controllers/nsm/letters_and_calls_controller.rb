@@ -14,6 +14,13 @@ module Nsm
       render locals: { claim:, letters_and_calls: }
     end
 
+    def adjusted
+      claim = Claim.find(params[:claim_id])
+      letters_and_calls = BaseViewModel.build(:letters_and_calls_summary, claim)
+
+      render locals: { claim:, letters_and_calls: }
+    end
+
     def show
       claim = Claim.find(params[:claim_id])
       item = BaseViewModel.build(:letter_and_call, claim, 'letters_and_calls').detect do |model|
@@ -41,7 +48,7 @@ module Nsm
       form = form_class.new(claim:, item:, **form_params)
 
       if form.save
-        redirect_to nsm_claim_adjustments_path(claim, anchor: 'letters-and-calls-tab')
+        redirect_to nsm_claim_review_and_adjusts_path(claim, anchor: 'letters-and-calls-tab')
       else
         render :edit, locals: { claim:, item:, form: }
       end

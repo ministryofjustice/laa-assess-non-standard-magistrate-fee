@@ -3,11 +3,19 @@ module Nsm
     ITEM_COUNT_OVERRIDE = 100
     layout nil
 
-    before_action :set_default_table_sort_options
+    before_action :set_default_table_sort_options, only: %i[index adjusted]
 
     def index
       claim = Claim.find(params[:claim_id])
       items = BaseViewModel.build(:disbursement, claim, 'disbursements')
+      sorted_items = Sorters::DisbursementsSorter.call(items, @sort_by, @sort_direction)
+      pagy, disbursements = pagy_array(sorted_items, items: ITEM_COUNT_OVERRIDE)
+      render locals: { claim:, disbursements:, pagy: }
+    end
+
+    def adjusted
+      claim = Claim.find(params[:claim_id])
+      items = BaseViewModel.build(:disbursement, claim, 'disbursements').filter(&:any_adjustments?)
       sorted_items = Sorters::DisbursementsSorter.call(items, @sort_by, @sort_direction)
       pagy, disbursements = pagy_array(sorted_items, items: ITEM_COUNT_OVERRIDE)
       render locals: { claim:, disbursements:, pagy: }
@@ -39,7 +47,7 @@ module Nsm
       end
       form = DisbursementsForm.new(claim:, item:, **form_params)
       if form.save
-        redirect_to nsm_claim_adjustments_path(claim, anchor: 'disbursements-tab')
+        redirect_to nsm_claim_review_and_adjusts_path(claim, anchor: 'disbursements-tab')
       else
         render :edit, locals: { claim:, item:, form: }
       end

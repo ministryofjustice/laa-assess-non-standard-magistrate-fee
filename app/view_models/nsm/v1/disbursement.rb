@@ -19,6 +19,7 @@ module Nsm
       attribute :prior_authority, :string
       adjustable_attribute :apply_vat, :string
       adjustable_attribute :vat_amount, :decimal, precision: 10, scale: 2
+      attribute :adjustment_comment
 
       class << self
         def headers
@@ -29,6 +30,17 @@ module Nsm
             'claimed_net' => ['govuk-table__header--numeric'],
             'claimed_vat' => ['govuk-table__header--numeric'],
             'claimed_gross' => ['govuk-table__header--numeric'],
+            'allowed_gross' => ['govuk-table__header--numeric']
+          }
+        end
+
+        def adjusted_headers
+          {
+            'item' => [],
+            'cost' => [],
+            'reason' => [],
+            'allowed_net' => ['govuk-table__header--numeric'],
+            'allowed_vat' => ['govuk-table__header--numeric'],
             'allowed_gross' => ['govuk-table__header--numeric']
           }
         end
@@ -84,6 +96,10 @@ module Nsm
         disbursement_date.strftime('%-d %b %Y')
       end
 
+      def reason
+        adjustment_comment
+      end
+
       def claimed_net
         format(original_total_cost_without_vat)
       end
@@ -94,6 +110,14 @@ module Nsm
 
       def claimed_gross
         format(provider_requested_total_cost)
+      end
+
+      def allowed_net
+        format(total_cost_without_vat)
+      end
+
+      def allowed_vat
+        format(vat_amount)
       end
 
       def allowed_gross

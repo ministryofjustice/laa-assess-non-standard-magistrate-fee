@@ -15,6 +15,22 @@ en:
         allowed_gross: Total allowed
         table_info_item: disbursement
         no_data: You do not have any disbursements
+        table_caption: Claimed disbursements
+      adjusted:
+        page_title: "Your claims"
+        disbursements: Adjusted disbursements
+        item: Item
+        cost: Cost
+        reason: Reason for adjustment
+        allowed_net: Net cost allowed
+        allowed_vat: VAT on allowed
+        allowed_gross: Total allowed
+        table_info_item: disbursement
+        no_data: You do not have any adjusted disbursements
+        table_caption: Adjusted disbursements
+        allowed_gross: Total allowed
+        table_info_item: disbursement
+        no_data: You do not have any disbursements
         table_caption: Clained disbursements
       disbursements_total:
         link_title: View disbursement total
