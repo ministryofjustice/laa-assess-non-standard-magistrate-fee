@@ -8,8 +8,7 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
                                    .and_return('14,6')
       allow(ENV).to receive(:fetch).with('METABASE_NSM_DASHBOARD_IDS')
                                    .and_return('14')
-      allow(FeatureFlags).to receive(:insights).and_return(double(enabled?: true))
-      allow(FeatureFlags).to receive(:nsm_insights).and_return(double(enabled?: true))
+      allow(FeatureFlags).to receive_messages(insights: double(enabled?: true), nsm_insights: double(enabled?: true))
     end
 
     context 'when I am not a supervisor' do
