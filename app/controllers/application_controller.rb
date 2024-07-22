@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  # These are needed otherwise turbo frames don't render in tests
+  helper Turbo::FramesHelper if Rails.env.test?
+  helper Turbo::StreamsHelper if Rails.env.test?
+
   include Pagy::Backend
   include ApplicationHelper
   include CookieConcern
