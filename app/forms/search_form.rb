@@ -76,7 +76,7 @@ class SearchForm
               :updated_to, :status_with_assignment,
               :caseworker_id]
 
-    fields.append(:application_type) if form_context == 'analytics'
+    fields.append(:application_type) if form_context == 'analytics' && FeatureFlags.nsm_insights.enabled?
     field_set = fields.any? do |field|
       send(field).present?
     end

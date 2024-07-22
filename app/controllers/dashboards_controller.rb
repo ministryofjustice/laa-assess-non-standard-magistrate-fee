@@ -50,10 +50,18 @@ class DashboardsController < ApplicationController
   end
 
   def default_params
-    {
-      form_context: 'analytics',
-      page: params.fetch(:page, '1')
-    }
+    if FeatureFlags.nsm_insights.enabled?
+      {
+        form_context: 'analytics',
+        page: params.fetch(:page, '1')
+      }
+    else
+      {
+        application_type: Submission::APPLICATION_TYPES[:prior_authority],
+        form_context: 'analytics',
+        page: params.fetch(:page, '1')
+      }
+    end
   end
 
   def get_dashboard_ids(nav_select)

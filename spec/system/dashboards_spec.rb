@@ -9,6 +9,7 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
       allow(ENV).to receive(:fetch).with('METABASE_NSM_DASHBOARD_IDS')
                                    .and_return('14')
       allow(FeatureFlags).to receive(:insights).and_return(double(enabled?: true))
+      allow(FeatureFlags).to receive(:nsm_insights).and_return(double(enabled?: true))
     end
 
     context 'when I am not a supervisor' do
@@ -69,6 +70,44 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
           visit new_dashboard_path(nav_select: 'nsm')
 
           expect(page).to have_css('.govuk-heading-xl', text: 'Prior authority')
+        end
+
+        context 'using search' do
+          let(:endpoint) { 'https://appstore.example.com/v1/submissions/searches' }
+          let(:payload) do
+            {
+              application_type: 'crm4',
+              page: 1,
+              query: 'LAA-ABCDEF',
+              per_page: 20,
+              sort_by: 'last_updated',
+              sort_direction: 'descending',
+            }
+          end
+
+          let(:stub) do
+            stub_request(:post, endpoint).with(body: payload).to_return(
+              status: 200,
+              body: { metadata: { total_results: 0 }, raw_data: [] }.to_json
+            )
+          end
+
+          before do
+            stub
+            visit dashboard_path
+            click_on 'Search'
+          end
+
+          it 'automatically defaults to CRM4 search' do
+            within('.search-panel') do
+              fill_in 'Claim or application details', with: 'LAA-ABCDEF'
+              click_on 'Search'
+            end
+          end
+
+          it 'does not show options for application type' do
+            expect(page).not_to have_text('Which service do you want to search?')
+          end
         end
       end
 

@@ -9,8 +9,14 @@
         <div class="govuk-form-group govuk-!-width-two-thirds" role="search">
           <%= f.govuk_text_field :query, label: { size: 'm', text: t("#{translation_prefix}.query.label") }, hint: { text: t("#{translation_prefix}.query.hint") } %>
         </div>
-        <% if analytics %>
-          <%= f.govuk_collection_radio_buttons :application_type, @search_form.application_types, :id, :name, inline: true, legend: { text: t("#{translation_prefix}.application_type.label") } %>
+        <% if analytics && FeatureFlags.nsm_insights.enabled? %>
+          <%= f.govuk_collection_radio_buttons :application_type,
+            @search_form.application_types,
+            :id,
+            :name,
+            inline: true,
+            legend: { text: t("#{translation_prefix}.application_type.label") }
+          %>
         <% end %>
         <h2 class="govuk-heading-m"><%= t('.filter_results') %></h2>
         <div>
