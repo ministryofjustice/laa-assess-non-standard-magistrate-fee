@@ -21,7 +21,7 @@ RSpec.describe 'Accessibility', :accessibility do
 
   context 'when viewing claim-specific screens' do
     %i[nsm_claim_claim_details
-       nsm_claim_review_and_adjust
+       nsm_claim_review_and_adjusts
        nsm_claim_adjustments
        nsm_claim_supporting_evidences
        nsm_claim_history
