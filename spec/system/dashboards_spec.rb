@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Dashboards' do
+RSpec.describe 'Dashboards', :stub_oauth_token do
   context 'when insights feature flag is enabled' do
     before do
       allow(ENV).to receive(:fetch).and_call_original
@@ -93,12 +93,42 @@ RSpec.describe 'Dashboards' do
       end
 
       context 'search analytics available' do
-        it 'can navigate to search analytics' do
+        let(:endpoint) { 'https://appstore.example.com/v1/submissions/searches' }
+        let(:payload) do
+          {
+            application_type: 'crm4',
+            page: 1,
+            per_page: 20,
+            sort_by: 'last_updated',
+            sort_direction: 'descending',
+          }
+        end
+
+        let(:stub) do
+          stub_request(:post, endpoint).with(body: payload).to_return(
+            status: 200,
+            body: { metadata: { total_results: 0 }, raw_data: [] }.to_json
+          )
+        end
+
+        before do
+          stub
           visit dashboard_path
           click_on 'Search'
+        end
 
+        it 'can navigate to search analytics' do
           expect(page).to have_css('.govuk-heading-xl', text: 'Search')
           expect(page).to have_css('.govuk-label', text: 'Claim or application details')
+        end
+
+        it 'can search for submissions' do
+          within('.search-panel') do
+            choose 'Prior authority'
+            click_on 'Search'
+          end
+
+          expect(stub).to have_been_requested
         end
       end
     end
