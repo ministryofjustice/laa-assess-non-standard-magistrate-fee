@@ -15,7 +15,8 @@ module Nsm
       summary = nil
       scope = :disbursements
 
-      render 'nsm/review_and_adjusts/show', locals: { claim:, records:, summary:, claim_summary:, core_cost_summary:, pagy:, scope:  }
+      render 'nsm/review_and_adjusts/show',
+             locals: { claim:, records:, summary:, claim_summary:, core_cost_summary:, pagy:, scope: }
     end
 
     def adjusted

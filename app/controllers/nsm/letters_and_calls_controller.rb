@@ -16,7 +16,8 @@ module Nsm
       scope = :letters_and_calls
       pagy = nil
 
-      render 'nsm/review_and_adjusts/show', locals: { claim:, records:, summary:, claim_summary:, core_cost_summary:, pagy:, scope:  }
+      render 'nsm/review_and_adjusts/show',
+             locals: { claim:, records:, summary:, claim_summary:, core_cost_summary:, pagy:, scope: }
     end
 
     def adjusted
@@ -24,11 +25,10 @@ module Nsm
       records = BaseViewModel.build(:letters_and_calls_summary, claim)
       claim_summary = BaseViewModel.build(:claim_summary, claim)
       core_cost_summary = BaseViewModel.build(:core_cost_summary, claim)
-      summary = nil
       scope = :letters_and_calls
       pagy = nil
 
-      render 'nsm/adjustments/show', locals: { claim:, records:, claim_summary:, core_cost_summary:, pagy:, scope:  }
+      render 'nsm/adjustments/show', locals: { claim:, records:, claim_summary:, core_cost_summary:, pagy:, scope: }
     end
 
     def show

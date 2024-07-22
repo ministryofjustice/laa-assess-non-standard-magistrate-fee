@@ -23,7 +23,7 @@ RSpec.describe Nsm::DisbursementsController do
     it 'renders successfully with claims' do
       allow(controller).to receive(:render).and_call_original
       get :index, params: { claim_id: }
-      pagy = anything
+      anything
 
       expect(controller).to have_received(:render)
       expect(response).to be_successful

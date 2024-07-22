@@ -11,7 +11,6 @@ RSpec.describe Nsm::WorkItemsController do
       allow(Claim).to receive(:find).and_return(claim)
     end
 
-
     it 'renders successfully with claims' do
       allow(controller).to receive(:render).and_call_original
       get :index, params: { claim_id: }
