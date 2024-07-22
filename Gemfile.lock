@@ -250,6 +250,12 @@ GEM
       addressable (~> 2.8)
       childprocess (~> 5.0)
     logger (1.6.0)
+    lograge (0.14.0)
+      actionpack (>= 4)
+      activesupport (>= 4)
+      railties (>= 4)
+      request_store (~> 1.0)
+    logstash-event (1.2.02)
     logstasher (2.1.5)
       activesupport (>= 5.2)
       request_store
@@ -597,6 +603,8 @@ DEPENDENCIES
   jbuilder
   jsbundling-rails
   launchy
+  lograge
+  logstash-event
   logstasher (~> 2.1)
   oauth2 (~> 2.0)
   omniauth-rails_csrf_protection (>= 1.0.2)
