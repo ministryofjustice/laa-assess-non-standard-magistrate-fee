@@ -130,4 +130,51 @@ RSpec.describe Nsm::V1::Disbursement do
       end
     end
   end
+
+  describe 'table fields' do
+    let(:adjustment_comment) { 'something' }
+    let(:args) do
+      {
+        'total_cost_without_vat_original' => 74,
+        'total_cost_without_vat' => 83,
+        'disbursement_date' => Date.new(2022, 1, 1),
+        'vat_amount_original' => 16.6,
+        'vat_amount' => 0.0,
+        'adjustment_comment' => adjustment_comment
+
+      }
+    end
+
+    describe '#date' do
+      it { expect(disbursement.date).to eq('1 Jan 2022') }
+    end
+
+    describe '#reason' do
+      it { expect(disbursement.reason).to eq('something') }
+    end
+
+    describe '#claimed_net' do
+      it { expect(disbursement.claimed_net).to eq('£74.00') }
+    end
+
+    describe '#claimed_vat' do
+      it { expect(disbursement.claimed_vat).to eq('£16.60') }
+    end
+
+    describe '#claimed_gross' do
+      it { expect(disbursement.claimed_gross).to eq('£90.60') }
+    end
+
+    describe '#allowed_net' do
+      it { expect(disbursement.allowed_net).to eq('£83.00') }
+    end
+
+    describe '#allowed_vat' do
+      it { expect(disbursement.allowed_vat).to eq('£0.00') }
+    end
+
+    describe '#allowed_gross' do
+      it { expect(disbursement.allowed_gross).to eq('£83.00') }
+    end
+  end
 end

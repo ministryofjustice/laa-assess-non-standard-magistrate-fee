@@ -29,55 +29,66 @@ RSpec.describe Nsm::V1::WorkItem do
     end
   end
 
-  # describe 'table_fields' do
-  #   let(:params) do
-  #     {
-  #       'work_type' => { 'en' => 'Waiting', 'value' => 'waiting' },
-  #       'time_spent' => 161,
-  #       'uplift' => 0,
-  #       'pricing' => 24.0,
-  #     }
-  #   end
+  describe 'table fields' do
+    let(:adjustment_comment) { 'something' }
+    let(:params) do
+      {
+        'work_type' => { 'en' => 'Waiting', 'value' => 'waiting' },
+        'completed_on' => Date.new(2024, 1, 1),
+        'time_spent' => 161,
+        'uplift' => 0,
+        'uplift_original' => 20,
+        'pricing' => 24.0,
+        'adjustment_comment' => adjustment_comment
+      }
+    end
 
-  #   it 'returns the fields for the table display' do
-  #     expect(subject.table_fields).to eq(
-  #       [
-  #         'Waiting',
-  #         { numeric: true, text: '2 hours<br><nobr>41 minutes</nobr>' },
-  #         { numeric: true, text: '0%' },
-  #         { numeric: true, text: '£64.40' },
-  #         '', '', ''
-  #       ]
-  #     )
-  #   end
+    describe '#reason' do
+      it { expect(subject.reason).to eq('something') }
+    end
 
-  #   context 'when adjustments exists' do
-  #     let(:params) do
-  #       {
-  #         'work_type' => { 'en' => 'Waiting', 'value' => 'waiting' },
-  #         'time_spent' => 161,
-  #         'uplift' => 0,
-  #         'uplift_original' => 20,
-  #         'pricing' => 24.0,
-  #         'adjustment_comment' => 'something'
-  #       }
-  #     end
+    describe '#formatted_completed_on' do
+      it { expect(subject.formatted_completed_on).to eq('1 Jan 2024') }
+    end
 
-  #     it 'also renders caseworker values' do
-  #       expect(subject.table_fields).to eq(
-  #         [
-  #           'Waiting',
-  #           { numeric: true, text: '2 hours<br><nobr>41 minutes</nobr>' },
-  #           { numeric: true, text: '20%' },
-  #           { numeric: true, text: '£77.28' },
-  #           { numeric: true, text: '2 hours<br><nobr>41 minutes</nobr>' },
-  #           { numeric: true, text: '0%' },
-  #           { numeric: true, text: '£64.40' }
-  #         ]
-  #       )
-  #     end
-  #   end
-  # end
+    describe '#formatted_time_spent' do
+      it {
+        expect(subject.formatted_time_spent).to eq(
+          '2<span class="govuk-visually-hidden"> hours</span>:41<span class="govuk-visually-hidden"> minutes</span>'
+        )
+      }
+    end
+
+    describe '#formatted_uplift' do
+      it { expect(subject.formatted_uplift).to eq('20%') }
+    end
+
+    describe '#formatted_requested_amount' do
+      it { expect(subject.formatted_requested_amount).to eq('£77.28') }
+    end
+
+    describe '#formatted_allowed_time_spent' do
+      it {
+        expect(subject.formatted_allowed_time_spent).to eq(
+          '2<span class="govuk-visually-hidden"> hours</span>:41<span class="govuk-visually-hidden"> minutes</span>'
+        )
+      }
+    end
+
+    describe '#formatted_allowed_uplift' do
+      it { expect(subject.formatted_allowed_uplift).to eq('0%') }
+    end
+
+    describe '#formatted_allowed_amount' do
+      it { expect(subject.formatted_allowed_amount).to eq('£64.40') }
+
+      context 'when no adjustments' do
+        let(:adjustment_comment) { nil }
+
+        it { expect(subject.formatted_allowed_amount).to eq('') }
+      end
+    end
+  end
 
   describe 'provider_requested_amount' do
     let(:params) do

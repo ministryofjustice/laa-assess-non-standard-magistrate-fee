@@ -42,6 +42,18 @@ RSpec.describe 'Letters and Calls' do
         '£78.32'
       )
     end
+
+    visit adjusted_nsm_claim_letters_and_calls_path(claim)
+
+    within('.govuk-table__row', text: 'Letters') do
+      expect(page).to have_content(
+        'Letters' \
+        'Testing' \
+        '22' \
+        '0%' \
+        '£78.32'
+      )
+    end
   end
 
   it 'can adjust a call record' do

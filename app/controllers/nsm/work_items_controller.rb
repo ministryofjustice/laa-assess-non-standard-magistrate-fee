@@ -3,7 +3,7 @@ module Nsm
     ITEM_COUNT_OVERRIDE = 100
     layout nil
 
-    before_action :set_default_table_sort_options
+    before_action :set_default_table_sort_options, only: %i[index adjusted]
 
     def index
       claim = Claim.find(params[:claim_id])
@@ -13,6 +13,15 @@ module Nsm
       work_item_summary = BaseViewModel.build(:work_item_summary, claim)
 
       render locals: { claim:, work_items:, work_item_summary:, pagy: }
+    end
+
+    def adjusted
+      claim = Claim.find(params[:claim_id])
+      items = BaseViewModel.build(:work_item, claim, 'work_items').filter(&:any_adjustments?)
+      sorted_items = Sorters::WorkItemsSorter.call(items, @sort_by, @sort_direction)
+      pagy, work_items = pagy_array(sorted_items, items: ITEM_COUNT_OVERRIDE)
+
+      render locals: { claim:, work_items:, pagy: }
     end
 
     def show
@@ -44,7 +53,7 @@ module Nsm
       form = WorkItemForm.new(claim:, item:, **form_params)
 
       if form.save
-        redirect_to nsm_claim_adjustments_path(claim, anchor: 'work-items-tab')
+        redirect_to nsm_claim_review_and_adjusts_path(claim, anchor: 'work-items-tab')
       else
         render :edit, locals: { claim:, item:, form: }
       end

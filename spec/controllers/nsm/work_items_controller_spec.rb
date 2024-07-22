@@ -127,8 +127,8 @@ form_attributes: {}, position: 2)
 nsm_work_item_form: { some: :data } }
 
         expect(controller).to redirect_to(
-          nsm_claim_adjustments_path(claim,
-                                     anchor: 'work-items-tab')
+          nsm_claim_review_and_adjusts_path(claim,
+                                            anchor: 'work-items-tab')
         )
         expect(response).to have_http_status(:found)
       end
