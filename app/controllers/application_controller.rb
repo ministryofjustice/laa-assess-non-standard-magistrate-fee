@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  helper Turbo::FramesHelper if Rails.env.test?
+  helper Turbo::StreamsHelper if Rails.env.test?
   include Pagy::Backend
   include ApplicationHelper
   include CookieConcern
