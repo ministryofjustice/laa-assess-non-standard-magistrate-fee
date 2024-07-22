@@ -28,5 +28,5 @@ feature_flags:
     local: <%= ENV.fetch("SEARCH", true) %>
     development: true
     uat: true
-    production: false
+    production: true
 
