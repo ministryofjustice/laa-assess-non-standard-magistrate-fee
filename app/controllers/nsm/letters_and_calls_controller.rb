@@ -8,8 +8,6 @@ module Nsm
     }.freeze
 
     def index
-      remember_page('review', 'letters_and_calls')
-
       claim = Claim.find(params[:claim_id])
       letters_and_calls = BaseViewModel.build(:letters_and_calls_summary, claim)
 
@@ -17,8 +15,6 @@ module Nsm
     end
 
     def adjusted
-      remember_page('adjusted', 'letters_and_calls')
-
       claim = Claim.find(params[:claim_id])
       letters_and_calls = BaseViewModel.build(:letters_and_calls_summary, claim)
 
@@ -26,8 +22,6 @@ module Nsm
     end
 
     def show
-      remember_location('letters_and_calls', params[:id])
-
       claim = Claim.find(params[:claim_id])
       item = BaseViewModel.build(:letter_and_call, claim, 'letters_and_calls').detect do |model|
         model.type.value == params[:id]
@@ -37,8 +31,6 @@ module Nsm
     end
 
     def edit
-      remember_location('letters_and_calls', params[:id])
-
       claim = Claim.find(params[:claim_id])
       item = BaseViewModel.build(:letter_and_call, claim, 'letters_and_calls').detect do |model|
         model.type.value == params[:id]
