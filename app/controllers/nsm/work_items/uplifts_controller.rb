@@ -13,7 +13,7 @@ module Nsm
         form = Uplift::WorkItemsForm.new(claim:, **form_params)
 
         if form.save
-          redirect_to nsm_claim_review_and_adjusts_path(claim, anchor: 'work-items-tab'),
+          redirect_to nsm_claim_work_items_path(claim),
                       flash: { success: t('.uplift_removed') }
         else
           render :edit, locals: { claim:, form: }

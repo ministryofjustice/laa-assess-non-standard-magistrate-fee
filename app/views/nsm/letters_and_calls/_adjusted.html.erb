@@ -1,10 +1,3 @@
-<% title t('.page_title') %>
-<%# headers needed here to pass accibility tests (not sure why this doesn't affect work items screen) %>
-<%# headers do not appear in the screen as only the page inside 'turbo-frame' is rendered %>
-<h1><%= t('.page_title') %></h1>
-<h2><%= t('.page_title') %></h1>
-
-<turbo-frame id="letters_and_calls">
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
     <h3 class="govuk-heading-m">
@@ -12,13 +5,13 @@
     </h3>
   </div>
   <div class="govuk-grid-column-full">
-    <% if letters_and_calls.rows.none? { _1.any_adjustments? } %>
+    <% if records.rows.none? { _1.any_adjustments? } %>
       <p><%= t('.no_data') %></p>
     <% else %>
       <%=
       caption = t('.table_caption')
       head = Nsm::V1::LetterAndCall.adjusted_headers
-      rows = letters_and_calls.rows.map do |letter_and_call|
+      rows = records.rows.map do |letter_and_call|
         next unless letter_and_call.any_adjustments?
 
         fields = letter_and_call.adjusted_table_fields.dup

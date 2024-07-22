@@ -9,16 +9,26 @@ module Nsm
 
     def index
       claim = Claim.find(params[:claim_id])
-      letters_and_calls = BaseViewModel.build(:letters_and_calls_summary, claim)
+      records = BaseViewModel.build(:letters_and_calls_summary, claim)
+      claim_summary = BaseViewModel.build(:claim_summary, claim)
+      core_cost_summary = BaseViewModel.build(:core_cost_summary, claim)
+      summary = nil
+      scope = :letters_and_calls
+      pagy = nil
 
-      render locals: { claim:, letters_and_calls: }
+      render 'nsm/review_and_adjusts/show', locals: { claim:, records:, summary:, claim_summary:, core_cost_summary:, pagy:, scope:  }
     end
 
     def adjusted
       claim = Claim.find(params[:claim_id])
-      letters_and_calls = BaseViewModel.build(:letters_and_calls_summary, claim)
+      records = BaseViewModel.build(:letters_and_calls_summary, claim)
+      claim_summary = BaseViewModel.build(:claim_summary, claim)
+      core_cost_summary = BaseViewModel.build(:core_cost_summary, claim)
+      summary = nil
+      scope = :letters_and_calls
+      pagy = nil
 
-      render locals: { claim:, letters_and_calls: }
+      render 'nsm/adjustments/show', locals: { claim:, records:, claim_summary:, core_cost_summary:, pagy:, scope:  }
     end
 
     def show
@@ -48,7 +58,7 @@ module Nsm
       form = form_class.new(claim:, item:, **form_params)
 
       if form.save
-        redirect_to nsm_claim_review_and_adjusts_path(claim, anchor: 'letters-and-calls-tab')
+        redirect_to nsm_claim_letters_and_calls_path(claim)
       else
         render :edit, locals: { claim:, item:, form: }
       end

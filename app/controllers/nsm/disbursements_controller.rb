@@ -7,18 +7,27 @@ module Nsm
 
     def index
       claim = Claim.find(params[:claim_id])
+      claim_summary = BaseViewModel.build(:claim_summary, claim)
+      core_cost_summary = BaseViewModel.build(:core_cost_summary, claim)
       items = BaseViewModel.build(:disbursement, claim, 'disbursements')
       sorted_items = Sorters::DisbursementsSorter.call(items, @sort_by, @sort_direction)
-      pagy, disbursements = pagy_array(sorted_items, items: ITEM_COUNT_OVERRIDE)
-      render locals: { claim:, disbursements:, pagy: }
+      pagy, records = pagy_array(sorted_items, items: ITEM_COUNT_OVERRIDE)
+      summary = nil
+      scope = :disbursements
+
+      render 'nsm/review_and_adjusts/show', locals: { claim:, records:, summary:, claim_summary:, core_cost_summary:, pagy:, scope:  }
     end
 
     def adjusted
       claim = Claim.find(params[:claim_id])
+      claim_summary = BaseViewModel.build(:claim_summary, claim)
+      core_cost_summary = BaseViewModel.build(:core_cost_summary, claim)
       items = BaseViewModel.build(:disbursement, claim, 'disbursements').filter(&:any_adjustments?)
       sorted_items = Sorters::DisbursementsSorter.call(items, @sort_by, @sort_direction)
-      pagy, disbursements = pagy_array(sorted_items, items: ITEM_COUNT_OVERRIDE)
-      render locals: { claim:, disbursements:, pagy: }
+      pagy, records = pagy_array(sorted_items, items: ITEM_COUNT_OVERRIDE)
+      scope = :disbursements
+
+      render 'nsm/adjustments/show', locals: { claim:, records:, claim_summary:, core_cost_summary:, pagy:, scope: }
     end
 
     def show
@@ -47,7 +56,7 @@ module Nsm
       end
       form = DisbursementsForm.new(claim:, item:, **form_params)
       if form.save
-        redirect_to nsm_claim_review_and_adjusts_path(claim, anchor: 'disbursements-tab')
+        redirect_to nsm_claim_disbursements_path(claim)
       else
         render :edit, locals: { claim:, item:, form: }
       end
