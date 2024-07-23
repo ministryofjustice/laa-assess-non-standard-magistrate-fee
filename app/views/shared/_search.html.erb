@@ -63,13 +63,13 @@
             </div>
           </div>
         </div>
-        <% if analytics %>
-          <%= f.govuk_submit(t('.search'), name: 'nav_select', value: 'search') do %>
-            <%= govuk_link_to t('.clear_all'), new_dashboard_path(nav_select: 'search') %>
+        <% if additional_param %>
+          <%= f.govuk_submit t('.search'), name: additional_param[:name], value: additional_param[:value] do %>
+            <%= govuk_link_to t('.clear_all'), clear_all_path %>
           <% end %>
         <% else %>
           <%= f.govuk_submit t('.search') do %>
-            <%= govuk_link_to t('.clear_all'), new_prior_authority_search_path %>
+            <%= govuk_link_to t('.clear_all'), clear_all_path %>
           <% end %>
         <% end %>
       <% end %>
