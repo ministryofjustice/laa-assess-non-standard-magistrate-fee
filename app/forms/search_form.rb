@@ -4,10 +4,9 @@ class SearchForm
   include ActiveRecord::AttributeAssignment
 
   Option = Struct.new(:value, :label)
-  ApplicationType = Struct.new(:id, :name)
   APPLICATION_TYPES = [
-    ApplicationType.new('crm4', 'Prior authority'),
-    ApplicationType.new('crm7', 'Non-standard magistrates')
+    Option.new('crm4', I18n.t('shared.application_type.crm4')),
+    Option.new('crm7', I18n.t('shared.application_type.crm7'))
   ].freeze
 
   PER_PAGE = 20

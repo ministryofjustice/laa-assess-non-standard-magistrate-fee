@@ -32,6 +32,9 @@ en:
         search: Search
 
   shared:
+    application_type:
+      crm4: 'Prior authority'
+      crm7: 'Non-standard magistrates'
     save_changes: Save changes
     cancel: Cancel
     true: 'Yes'

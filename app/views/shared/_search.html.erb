@@ -12,8 +12,8 @@
         <% if analytics && FeatureFlags.nsm_insights.enabled? %>
           <%= f.govuk_collection_radio_buttons :application_type,
             @search_form.application_types,
-            :id,
-            :name,
+            :value,
+            :label,
             inline: true,
             legend: { text: t("#{translation_prefix}.application_type.label") }
           %>
