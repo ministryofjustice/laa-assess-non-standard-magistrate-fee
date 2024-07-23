@@ -71,9 +71,9 @@ class SearchForm
 
   def at_least_one_field_set
     field_set = [:query, :submitted_from,
-    :submitted_to, :updated_from,
-    :updated_to, :status_with_assignment,
-    :caseworker_id, :application_type].any? do |field|
+                 :submitted_to, :updated_from,
+                 :updated_to, :status_with_assignment,
+                 :caseworker_id, :application_type].any? do |field|
       send(field).present?
     end
 
