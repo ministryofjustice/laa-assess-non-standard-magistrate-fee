@@ -56,9 +56,17 @@ class Claim < Submission
     summed_costs.dig(:allowed_gross_cost, :text)
   end
 
+  def any_adjustments?
+    core_cost_summary.show_allowed?
+  end
+
   private
 
   def summed_costs
-    @summed_costs ||= BaseViewModel.build(:core_cost_summary, self).summed_fields
+    @summed_costs ||= core_cost_summary.summed_fields
+  end
+
+  def core_cost_summary
+    @core_cost_summary ||= BaseViewModel.build(:core_cost_summary, self)
   end
 end

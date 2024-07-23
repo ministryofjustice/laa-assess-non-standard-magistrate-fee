@@ -238,6 +238,32 @@ RSpec.describe Nsm::V1::LetterAndCall do
     end
   end
 
+  describe '#adjusted_table_fields' do
+    let(:params) do
+      {
+        'type' => { 'en' => 'Letters', 'value' => 'letters' },
+        'count' => 12,
+        'uplift' => 0,
+        'pricing' => 3.56,
+        'count_original' => 15,
+        'uplift_original' => 95,
+        'adjustment_comment' => 'something'
+      }
+    end
+
+    it 'also renders caseworker values' do
+      expect(subject.adjusted_table_fields).to eq(
+        [
+          'Letters',
+          'something',
+          { numeric: true, text: '12' },
+          { numeric: true, text: '0%' },
+          { numeric: true, text: '£42.72' }
+        ]
+      )
+    end
+  end
+
   describe '#uplift?' do
     context 'when provider supplied uplift is positive' do
       let(:params) { { uplift: 10 } }

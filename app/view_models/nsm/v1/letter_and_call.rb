@@ -10,6 +10,7 @@ module Nsm
       attribute :pricing, :decimal
       attribute :vat_rate
       attribute :firm_office
+      attribute :adjustment_comment
 
       class << self
         def headers
@@ -22,11 +23,21 @@ module Nsm
           ]
         end
 
+        def adjusted_headers
+          [
+            t('.items', numeric: false, scope: 'nsm.letters_and_calls.adjusted'),
+            t('.reason', numeric: false, scope: 'nsm.letters_and_calls.adjusted'),
+            t('.number_allowed', scope: 'nsm.letters_and_calls.adjusted'),
+            t('.uplift_allowed', scope: 'nsm.letters_and_calls.adjusted'),
+            t('.caseworker_allowed', scope: 'nsm.letters_and_calls.adjusted')
+          ]
+        end
+
         private
 
-        def t(key, width: nil, numeric: true)
+        def t(key, width: nil, numeric: true, scope: 'nsm.letters_and_calls.index')
           {
-            text: I18n.t("nsm.letters_and_calls.index.#{key}"),
+            text: I18n.t(key, scope:),
             numeric: numeric,
             width: width
           }
@@ -81,6 +92,16 @@ module Nsm
           format(original_uplift.to_i, as: :percentage),
           format(provider_requested_amount),
           format(any_adjustments? && caseworker_amount)
+        ]
+      end
+
+      def adjusted_table_fields
+        [
+          type.to_s,
+          adjustment_comment,
+          format(count.to_s, as: :number),
+          format(uplift.to_i, as: :percentage),
+          format(caseworker_amount)
         ]
       end
 

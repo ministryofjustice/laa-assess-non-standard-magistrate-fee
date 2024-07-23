@@ -9,6 +9,8 @@ module Sorters
       'claimed_net' => :original_total_cost_without_vat,
       'claimed_vat' => :original_vat_amount,
       'claimed_gross' => :provider_requested_total_cost,
+      'allowed_net' => :total_cost_without_vat,
+      'allowed_vat' => :vat_amount,
       'allowed_gross' => -> { _1.any_adjustments? ? _1.caseworker_total_cost : 0 }
     }.freeze
   end

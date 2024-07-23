@@ -7,6 +7,7 @@ en:
       claim_nav:
         claim_details: Overview
         review_and_adjust: Review and adjust
+        adjustments: Adjustments
         supporting_evidence: Supporting evidence
         claim_history: Claim history
       claim_summary:
@@ -39,6 +40,12 @@ en:
           status: Status
           risk: Risk
     adjustments:
+      show:
+        adjusted_costs: Adjusted costs
+        work_items: Work items
+        disbursements: Disbursements
+        letters_and_calls: Letters and calls
+    review_and_adjusts:
       show:
         cost_summary: Costs summary
         disbursements: Disbursements

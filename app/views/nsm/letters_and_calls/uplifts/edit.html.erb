@@ -1,7 +1,7 @@
 <% title t('.page_title') %>
 
 <% content_for(:back_link) do %>
-  <%= link_to t('helpers.back_link'), nsm_claim_adjustments_path(claim, anchor: 'letters-and-calls-tab'), class: 'govuk-back-link', data: { turbo: 'false' } %>
+  <%= link_to t('helpers.back_link'), nsm_claim_review_and_adjusts_path(claim, anchor: 'letters-and-calls-tab'), class: 'govuk-back-link', data: { turbo: 'false' } %>
 <% end %>
 
 <div class="govuk-grid-row" id="letters-and-calls-adjustment-container">
@@ -15,7 +15,7 @@
     <%= form_with model: form, url: nsm_claim_letters_and_calls_uplift_path(claim.id), method: :put do |f| %>
       <%= f.govuk_text_area :explanation, label: { size: 'm' }, rows: 5 %>
       <%= f.govuk_submit t('.remove_uplift') do %>
-        <%= link_to t('shared.cancel'), nsm_claim_adjustments_path(claim, anchor: 'letters-and-calls-tab'), class: 'govuk-link', data: { turbo: 'false' } %>
+        <%= link_to t('shared.cancel'), nsm_claim_review_and_adjusts_path(claim, anchor: 'letters-and-calls-tab'), class: 'govuk-link', data: { turbo: 'false' } %>
       <% end %>
     <% end %>
   </div>

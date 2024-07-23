@@ -1,7 +1,7 @@
 <% title t('.page_title') %>
 
 <% content_for(:back_link) do %>
-  <%= govuk_back_link(href: nsm_claim_adjustments_path(claim, anchor: 'disbursements-tab'),html_attributes: {'data-turbo': 'false'}) %>
+  <%= link_to t('helpers.back_link'), :back, class: 'govuk-back-link', data: { turbo: 'false' } %>
 <% end %>
 
 <div class="govuk-grid-row">
@@ -36,6 +36,6 @@
       %>
     <% end %>
 
-    <%= govuk_link_to(t('shared.cancel'), nsm_claim_adjustments_path(claim, anchor: 'disbursements-tab'), data: { turbo: 'false' }) %>
+    <%= govuk_link_to(t('shared.cancel'), :back, data: { turbo: 'false' }) %>
   </div>
 </div>

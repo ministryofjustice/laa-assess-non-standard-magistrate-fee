@@ -58,8 +58,18 @@ sort_field => sort_value_c1),
     it_behaves_like 'a correctly ordered results (both ascending and descending)', %w[C1 A1 B1]
   end
 
-  context 'when sorting by uplift' do
+  context 'when sorting by claimed uplift' do
     let(:sort_by) { 'claimed_uplift' }
+    let(:sort_field) { 'original_uplift' }
+    let(:sort_value_a1) { 100 }
+    let(:sort_value_b1) { nil } # nil treated as 0
+    let(:sort_value_c1) { 100 }
+
+    it_behaves_like 'a correctly ordered results (both ascending and descending)', %w[B1 A1 C1]
+  end
+
+  context 'when sorting by allowed uplift' do
+    let(:sort_by) { 'allowed_uplift' }
     let(:sort_field) { 'uplift' }
     let(:sort_value_a1) { 100 }
     let(:sort_value_b1) { nil } # nil treated as 0
