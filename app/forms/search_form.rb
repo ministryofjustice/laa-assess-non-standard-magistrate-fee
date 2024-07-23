@@ -23,6 +23,7 @@ class SearchForm
   attribute :sort_by, :string, default: 'last_updated'
   attribute :sort_direction, :string, default: 'descending'
   attribute :application_type, :string
+  attribute :explicit_application_type, :boolean, default: false
 
   validate :at_least_one_field_set
 
@@ -70,10 +71,14 @@ class SearchForm
   private
 
   def at_least_one_field_set
-    field_set = [:query, :submitted_from,
-                 :submitted_to, :updated_from,
-                 :updated_to, :status_with_assignment,
-                 :caseworker_id, :application_type].any? do |field|
+    fields = [:query, :submitted_from,
+    :submitted_to, :updated_from,
+    :updated_to, :status_with_assignment,
+    :caseworker_id]
+
+    fields.append(:application_type) if explicit_application_type
+
+    field_set = fields.any? do |field|
       send(field).present?
     end
 

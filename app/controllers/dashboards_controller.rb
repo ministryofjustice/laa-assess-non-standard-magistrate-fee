@@ -52,7 +52,8 @@ class DashboardsController < ApplicationController
   def default_params
     if FeatureFlags.nsm_insights.enabled?
       {
-        page: params.fetch(:page, '1')
+        page: params.fetch(:page, '1'),
+        explicit_application_type: true
       }
     else
       {
