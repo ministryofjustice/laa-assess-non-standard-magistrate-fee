@@ -9,7 +9,7 @@
         <div class="govuk-form-group govuk-!-width-two-thirds" role="search">
           <%= f.govuk_text_field :query, label: { size: 'm', text: t("#{translation_prefix}.query.label") }, hint: { text: t("#{translation_prefix}.query.hint") } %>
         </div>
-        <% if analytics && FeatureFlags.nsm_insights.enabled? %>
+        <% if choose_application_type && FeatureFlags.nsm_insights.enabled? %>
           <%= f.govuk_collection_radio_buttons :application_type,
             @search_form.application_types,
             :value,

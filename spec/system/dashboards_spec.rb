@@ -135,6 +135,7 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
         let(:payload) do
           {
             application_type: 'crm4',
+            explicit_application_type: true,
             page: 1,
             per_page: 20,
             sort_by: 'last_updated',
