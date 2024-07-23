@@ -18,11 +18,6 @@ class DashboardsController < ApplicationController
     render :show
   end
 
-  def load_overview
-    dashboard_ids = get_dashboard_ids(nav_select)
-    @iframe_urls = generate_metabase_urls(dashboard_ids)
-  end
-
   def nav_select
     param = params.fetch(:nav_select, 'prior_authority')
     @nav_select ||= !FeatureFlags.nsm_insights.enabled? && param == 'nsm' ? 'prior_authority' : param
@@ -33,6 +28,11 @@ class DashboardsController < ApplicationController
   end
 
   private
+
+  def load_overview
+    dashboard_ids = get_dashboard_ids(nav_select)
+    @iframe_urls = generate_metabase_urls(dashboard_ids)
+  end
 
   def search_params
     params.require(:search_form).permit(
