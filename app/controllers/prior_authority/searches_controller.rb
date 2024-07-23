@@ -29,7 +29,6 @@ module PriorAuthority
     def default_params
       {
         application_type: Submission::APPLICATION_TYPES[:prior_authority],
-        form_context: 'service',
         page: params.fetch(:page, '1')
       }
     end
