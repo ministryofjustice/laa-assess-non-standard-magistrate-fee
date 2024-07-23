@@ -52,13 +52,11 @@ class DashboardsController < ApplicationController
   def default_params
     if FeatureFlags.nsm_insights.enabled?
       {
-        form_context: 'analytics',
         page: params.fetch(:page, '1')
       }
     else
       {
         application_type: Submission::APPLICATION_TYPES[:prior_authority],
-        form_context: 'analytics',
         page: params.fetch(:page, '1')
       }
     end
