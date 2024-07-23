@@ -72,9 +72,9 @@ class SearchForm
 
   def at_least_one_field_set
     fields = [:query, :submitted_from,
-    :submitted_to, :updated_from,
-    :updated_to, :status_with_assignment,
-    :caseworker_id]
+              :submitted_to, :updated_from,
+              :updated_to, :status_with_assignment,
+              :caseworker_id]
 
     fields.append(:application_type) if explicit_application_type
 
