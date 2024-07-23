@@ -11,4 +11,4 @@ en:
         label: Which service do you want to search?
       query:
         label: Claim or application details
-        hint: Search for a client/ defendant name, firm name, UFN or LAA reference
+        hint: Search for a client/defendant name, firm name, UFN or LAA reference
