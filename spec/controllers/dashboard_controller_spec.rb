@@ -18,12 +18,30 @@ RSpec.describe DashboardsController do
         get :show, params: { nav_select:, search_form: }
       end
 
-      context 'selected tab is search and user has executed a valid search' do
+      context 'selected tab is search' do
         let(:nav_select) { 'search' }
         let(:search_form) { { query: 'query' } }
 
-        it 'generates a SearchForm' do
-          expect(subject.instance_variable_get(:@search_form)).to eq(search_form_instance)
+        context 'user has executed a valid search' do
+          it 'generates a SearchForm' do
+            expect(subject.instance_variable_get(:@search_form)).to eq(search_form_instance)
+          end
+
+          it 'executes a search' do
+            expect(search_form_instance).to have_received(:execute)
+          end
+        end
+
+        context 'user has executed a invalid search' do
+          let(:search_form_instance) { instance_double(SearchForm, valid?: false, execute: true) }
+
+          it 'generates a SearchForm' do
+            expect(subject.instance_variable_get(:@search_form)).to eq(search_form_instance)
+          end
+
+          it 'does not execute a search' do
+            expect(search_form_instance).not_to have_received(:execute)
+          end
         end
       end
 
