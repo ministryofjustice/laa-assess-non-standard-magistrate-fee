@@ -38,5 +38,25 @@ RSpec.describe SearchResult do
         expect(subject.application_path).to eq("/prior_authority/applications/#{application_id}")
       end
     end
+
+    context 'submission has invalid application type' do
+      let(:application) { instance_double(Claim, application_type: 'random', id: application_id) }
+
+      before do
+        allow(Submission).to receive(:find_by).and_return(application)
+      end
+
+      subject = described_class.new(
+        {
+          application_type: 'random',
+          application_id: application_id,
+          version: 1
+        }
+      )
+
+      it 'raises error' do
+        expect { subject.application_path }.to raise_error('Submission must have a valid application type')
+      end
+    end
   end
 end

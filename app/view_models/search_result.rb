@@ -47,10 +47,8 @@ class SearchResult
       Rails.application.routes.url_helpers.prior_authority_application_path(submission.id)
     when 'crm7'
       Rails.application.routes.url_helpers.nsm_claim_claim_details_path(submission.id)
-    # :nocov:
     else
-      false
+      raise 'Submission must have a valid application type'
     end
-    # :nocov:
   end
 end
