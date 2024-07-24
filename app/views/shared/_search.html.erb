@@ -63,8 +63,8 @@
             </div>
           </div>
         </div>
-        <% if additional_param %>
-          <%= f.govuk_submit t('.search'), name: additional_param[:name], value: additional_param[:value] do %>
+        <% if additional_param.present? %>
+          <%= f.govuk_submit t('.search'), name: additional_param[:key], value: additional_param[:value] do %>
             <%= govuk_link_to t('.clear_all'), clear_all_path %>
           <% end %>
         <% else %>
@@ -87,7 +87,7 @@
                 <% else %>
                   <%= table_header_with_link(key,
                                             'shared.search.table.header',
-                                            { controller: controller_path, action: 'show', search_form: @search_form.attributes },
+                                            { 'controller' => controller_path, 'action' => 'show', 'search_form' => @search_form.attributes, additional_param[:key] => (additional_param[:value] if additional_param.present?) }.compact,
                                             @search_form.sort_by, @search_form.sort_direction, :search_form) %>
                 <% end %>
               <% end %>
