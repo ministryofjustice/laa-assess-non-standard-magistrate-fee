@@ -132,5 +132,5 @@ Rails.application.routes.draw do
 
   post :app_store_webhook, to: 'sync#sync_individual'
 
-  resource :dashboard, only: :show
+  resource :dashboard, only: %i[new show]
 end

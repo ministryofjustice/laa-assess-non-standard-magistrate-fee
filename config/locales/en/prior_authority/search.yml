@@ -18,27 +18,7 @@ en:
         page_title: Search for an application
         query:
           label: Application details
-          hint: Search for a client name, firm name, UFN or LAA reference
-        filter_results: Filter your search criteria
-        submitted_from: Date submitted from
-        submitted_to: Date submitted to
-        updated_from: Last updated from
-        updated_to: Last updated to
-        status: Status
-        caseworker: Caseworker
-        search: Search
-        clear_all: Clear all
-        search_results: Search results
-        none: There are no results that match the search criteria
-        table:
-          header:
-            laa_reference: LAA reference
-            firm_name: Firm name
-            client_name: Client
-            caseworker: Caseworker
-            last_updated: Last updated
-            status_with_assignment: Status
-        result: result
+          hint: You can search by client name, firm name, UFN or LAA reference
   activemodel:
     errors:
       models:

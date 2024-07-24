@@ -4,9 +4,18 @@ class DashboardsController < ApplicationController
   layout 'dashboard'
 
   def show
-    @current_tab ||= params.fetch(:current_tab, 'overview')
-    dashboard_ids = get_dashboard_ids(nav_select)
-    @iframe_urls = generate_metabase_urls(dashboard_ids)
+    if nav_select == 'search'
+      @search_form = SearchForm.new(search_params)
+      @search_form.execute if @search_form.valid?
+    else
+      load_overview
+    end
+  end
+
+  def new
+    @search_form = SearchForm.new(default_params)
+    load_overview unless nav_select == 'search'
+    render :show
   end
 
   def nav_select
@@ -19,6 +28,40 @@ class DashboardsController < ApplicationController
   end
 
   private
+
+  def load_overview
+    dashboard_ids = get_dashboard_ids(nav_select)
+    @iframe_urls = generate_metabase_urls(dashboard_ids)
+  end
+
+  def search_params
+    params.require(:search_form).permit(
+      :query,
+      :submitted_from,
+      :submitted_to,
+      :updated_from,
+      :updated_to,
+      :status_with_assignment,
+      :caseworker_id,
+      :sort_by,
+      :sort_direction,
+      :application_type
+    ).merge(default_params)
+  end
+
+  def default_params
+    if FeatureFlags.nsm_insights.enabled?
+      {
+        page: params.fetch(:page, '1'),
+        explicit_application_type: true
+      }
+    else
+      {
+        application_type: Submission::APPLICATION_TYPES[:prior_authority],
+        page: params.fetch(:page, '1')
+      }
+    end
+  end
 
   def get_dashboard_ids(nav_select)
     if nav_select == 'prior_authority'
