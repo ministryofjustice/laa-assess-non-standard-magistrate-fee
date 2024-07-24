@@ -87,7 +87,7 @@
                 <% else %>
                   <%= table_header_with_link(key,
                                             'shared.search.table.header',
-                                            { 'controller' => controller_path, 'action' => 'show', 'search_form' => @search_form.attributes, additional_param[:key] => (additional_param[:value] if additional_param.present?) }.compact,
+                                            { 'controller' => controller_path, 'action' => 'show', 'search_form' => @search_form.attributes, 'nav_select' => (additional_param[:value] if additional_param.present?) }.compact,
                                             @search_form.sort_by, @search_form.sort_direction, :search_form) %>
                 <% end %>
               <% end %>
