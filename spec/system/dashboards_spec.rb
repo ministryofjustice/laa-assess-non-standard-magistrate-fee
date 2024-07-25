@@ -136,16 +136,7 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
                       20) + create_list(:prior_authority_application, 1, state: 'sent_back', updated_at: Date.yesterday - 1)
         end
         let(:endpoint) { 'https://appstore.example.com/v1/submissions/searches' }
-        let(:payload) do
-          {
-            application_type: 'crm4',
-            explicit_application_type: true,
-            page: 1,
-            per_page: 20,
-            sort_by: 'last_updated',
-            sort_direction: 'descending',
-          }
-        end
+        let(:payload) { nil }
 
         let(:stub) do
           stub_request(:post, endpoint).with(body: payload).to_return(
@@ -165,24 +156,50 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
           expect(page).to have_css('.govuk-label', text: 'Claim or application details')
         end
 
-        it 'can search for submissions' do
-          within('.search-panel') do
-            choose 'Prior authority'
-            click_on 'Search'
+        context 'submitting a search' do
+          let(:payload) do
+            {
+              application_type: 'crm4',
+              explicit_application_type: true,
+              page: 1,
+              per_page: 20,
+              sort_by: 'last_updated',
+              sort_direction: 'descending',
+            }
           end
 
-          expect(stub).to have_been_requested
+          it 'can search for submissions' do
+            within('.search-panel') do
+              choose 'Prior authority'
+              click_on 'Search'
+            end
+
+            expect(stub).to have_been_requested
+          end
         end
 
-        it 'can sort results' do
-          within('.search-panel') do
-            choose 'Prior authority'
-            click_on 'Search'
+        context 'sorting a search' do
+          let(:payload) do
+            {
+              application_type: 'crm4',
+              explicit_application_type: true,
+              page: 1,
+              per_page: 20,
+              sort_by: 'status_with_assignment',
+              sort_direction: 'ascending',
+            }
           end
 
-          expect(page).to have_css('.govuk-table')
-          click_link 'Status'
-          expect(page.find('.govuk-table')).to have_text 'Sent back'
+          it 'can sort results' do
+            within('.search-panel') do
+              choose 'Prior authority'
+              click_on 'Search'
+            end
+
+            expect(page).to have_css('.govuk-table')
+            click_link 'Status'
+            expect(page.find('.govuk-table')).to have_text 'Sent back'
+          end
         end
       end
     end
