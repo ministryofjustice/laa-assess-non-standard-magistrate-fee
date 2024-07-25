@@ -89,11 +89,18 @@ class SearchForm
   end
 
   def conduct_search
-    AppStoreClient.new.search(search_params).deep_symbolize_keys
-  rescue StandardError => e
-    Sentry.capture_exception(e)
-    errors.add(:base, :search_error)
-    nil
+    {
+      metadata: { total_results: 21 },
+      raw_data: [
+        { application_id: Submission.first.id, application: Submission.first.data }
+      ]
+    }
+
+  #   # AppStoreClient.new.search(search_params).deep_symbolize_keys
+  # rescue StandardError => e
+  #   Sentry.capture_exception(e)
+  #   errors.add(:base, :search_error)
+  #   nil
   end
 
   def show_all
