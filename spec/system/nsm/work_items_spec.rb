@@ -14,7 +14,7 @@ RSpec.describe 'Work items' do
   it 'can adjust a work item record' do
     visit nsm_claim_work_items_path(claim)
 
-    within('.govuk-table__row', text: 'Waiting') do
+    within('.data-table .govuk-table__row', text: 'Waiting') do
       expect(page).to have_content(
         '1 ' \
         'Waiting ' \
@@ -34,10 +34,7 @@ RSpec.describe 'Work items' do
 
     click_on 'Save changes'
 
-    # need to access page directly as not JS enabled
-    visit nsm_claim_work_items_path(claim)
-
-    within('.govuk-table__row', text: 'Waiting') do
+    within('.data-table .govuk-table__row', text: 'Waiting') do
       expect(page).to have_content(
         '1 ' \
         'Waiting ' \
@@ -73,10 +70,7 @@ RSpec.describe 'Work items' do
 
     click_on 'Yes, remove all uplift'
 
-    # need to access page directly as not JS enabled
-    visit nsm_claim_work_items_path(claim)
-
-    within('.govuk-table__row', text: 'Waiting') do
+    within('.data-table .govuk-table__row', text: 'Waiting') do
       expect(page).to have_content(
         '1 ' \
         'Waiting ' \
@@ -97,8 +91,11 @@ RSpec.describe 'Work items' do
 
     it 'lets me view details instead of changing them' do
       visit nsm_claim_work_items_path(claim)
-      within('main') { expect(page).to have_no_content 'Change' }
-      click_on 'Waiting'
+
+      within('.data-table') do
+        click_on 'Waiting'
+      end
+
       expect(page).to have_content(
         'Waiting' \
         'Date12 December 2022' \

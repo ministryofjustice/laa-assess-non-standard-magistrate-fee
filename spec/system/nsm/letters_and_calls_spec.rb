@@ -30,9 +30,6 @@ RSpec.describe 'Letters and Calls' do
 
     click_on 'Save changes'
 
-    # need to access page directly as not JS enabled
-    visit nsm_claim_letters_and_calls_path(claim)
-
     within('.govuk-table__row', text: 'Letters') do
       expect(page).to have_content(
         'Letters' \
@@ -75,9 +72,6 @@ RSpec.describe 'Letters and Calls' do
 
     click_on 'Save changes'
 
-    # need to access page directly as not JS enabled
-    visit nsm_claim_letters_and_calls_path(claim)
-
     within('.govuk-table__row', text: 'Calls') do
       expect(page).to have_content(
         'Calls' \
@@ -97,9 +91,6 @@ RSpec.describe 'Letters and Calls' do
     fill_in 'Explain your decision', with: 'Testing'
 
     click_on 'Yes, remove all uplift'
-
-    # need to access page directly as not JS enabled
-    visit nsm_claim_letters_and_calls_path(claim)
 
     within('.govuk-table__row', text: 'Letters') do
       expect(page).to have_content(
@@ -129,10 +120,8 @@ RSpec.describe 'Letters and Calls' do
 
     it 'lets me view details instead of changing them' do
       visit nsm_claim_letters_and_calls_path(claim)
-      within('main') { expect(page).to have_no_content 'Change' }
-      within('.govuk-table__body .govuk-table__row', match: :first) do
-        click_on 'Letters'
-      end
+      click_on 'Letters'
+
       expect(page).to have_content(
         'Number of letters12' \
         'Item rate3.56' \

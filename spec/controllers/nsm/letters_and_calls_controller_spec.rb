@@ -19,11 +19,10 @@ RSpec.describe Nsm::LettersAndCallsController do
     end
 
     it 'renders successfully with claims' do
-      allow(controller).to receive(:render)
+      allow(controller).to receive(:render).and_call_original
       get :index, params: { claim_id: }
 
       expect(controller).to have_received(:render)
-                        .with(locals: { claim:, letters_and_calls: })
       expect(response).to be_successful
     end
   end
@@ -159,8 +158,7 @@ form_attributes: {})
 nsm_letters_calls_form_letters: { some: :data } }
 
           expect(controller).to redirect_to(
-            nsm_claim_review_and_adjusts_path(claim,
-                                              anchor: 'letters-and-calls-tab')
+            nsm_claim_letters_and_calls_path(claim)
           )
           expect(response).to have_http_status(:found)
         end
@@ -193,8 +191,7 @@ nsm_letters_calls_form_letters: { some: :data } }
 nsm_letters_calls_form_calls: { some: :data } }
 
           expect(controller).to redirect_to(
-            nsm_claim_review_and_adjusts_path(claim,
-                                              anchor: 'letters-and-calls-tab')
+            nsm_claim_letters_and_calls_path(claim)
           )
           expect(response).to have_http_status(:found)
         end

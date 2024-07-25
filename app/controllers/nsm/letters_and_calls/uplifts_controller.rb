@@ -13,7 +13,7 @@ module Nsm
         form = Uplift::LettersAndCallsForm.new(claim:, **form_params)
 
         if form.save
-          redirect_to nsm_claim_review_and_adjusts_path(claim, anchor: 'letters-and-calls-tab'),
+          redirect_to nsm_claim_letters_and_calls_path(claim),
                       flash: { success: t('.uplift_removed') }
         else
           render :edit, locals: { claim:, form: }

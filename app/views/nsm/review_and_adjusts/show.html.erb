@@ -1,6 +1,9 @@
-<% content_for(:page_title) do %>
-  <%= t('.review_and_adjust') %>
-<% end %>
+<% title t('.page_title') %>
+
+<h3 class="govuk-heading-m">
+  <%= t(".#{scope}") %>
+</h3>
+
 
 <%= render partial: 'nsm/claims/claim_summary', locals: { claim:, claim_summary: } %>
 <%= render partial: 'nsm/claims/claim_nav', locals: { claim: claim, current_page: 'review_and_adjust' } %>
@@ -29,37 +32,19 @@
       %>
 
       <ul class="govuk-tabs__list">
-        <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
-          <a class="govuk-tabs__tab" href="#work-items-tab">
-            <%= t('.work_items') %>
-          </a>
+        <li class="govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if scope == :work_items %>">
+          <%= link_to t('.work_items'), nsm_claim_work_items_path(claim) %>
         </li>
-        <li class="govuk-tabs__list-item">
-          <a class="govuk-tabs__tab" href="#letters-and-calls-tab">
-            <%= t('.letters_and_calls') %>
-          </a>
+        <li class="govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if scope == :letters_and_calls %>">
+          <%= link_to t('.letters_and_calls'), nsm_claim_letters_and_calls_path(claim) %>
         </li>
-        <li class="govuk-tabs__list-item">
-          <a class="govuk-tabs__tab" href="#disbursements-tab">
-            <%= t('.disbursements') %>
-          </a>
+        <li class="govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if scope == :disbursements %>">
+          <%= link_to t('.disbursements'), nsm_claim_disbursements_path(claim) %>
         </li>
       </ul>
 
-      <div class="govuk-tabs__panel" id="work-items-tab">
-        <%= turbo_frame_tag 'work_items', src: nsm_claim_work_items_path(claim), loading: :lazy do %>
-          Loading
-        <% end %>
-      </div>
-      <div class="govuk-tabs__panel" id="letters-and-calls-tab">
-        <%= turbo_frame_tag 'letters_and_calls', src: nsm_claim_letters_and_calls_path(claim), loading: :lazy do %>
-          Loading
-        <% end %>
-      </div>
-      <div class="govuk-tabs__panel" id="disbursements-tab">
-        <%= turbo_frame_tag 'disbursements', src: nsm_claim_disbursements_path(claim), loading: :lazy do %>
-          Loading
-        <% end %>
+      <div class="govuk-tabs__panel">
+        <%= render partial: "nsm/#{scope}/index", locals: { claim:, records:, summary:, pagy: } %>
       </div>
     </div>
     <%= render partial: 'shared/claim_button_group', locals: { claim: claim } %>

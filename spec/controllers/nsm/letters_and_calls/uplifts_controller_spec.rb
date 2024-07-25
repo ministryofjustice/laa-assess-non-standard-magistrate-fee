@@ -41,8 +41,7 @@ RSpec.describe Nsm::LettersAndCalls::UpliftsController do
 nsm_uplift_letters_and_calls_form: { some: :data } }
 
         expect(controller).to redirect_to(
-          nsm_claim_review_and_adjusts_path(claim,
-                                            anchor: 'letters-and-calls-tab')
+          nsm_claim_letters_and_calls_path(claim)
         )
         expect(response).to have_http_status(:found)
       end
