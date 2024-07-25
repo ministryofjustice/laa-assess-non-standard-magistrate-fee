@@ -4,15 +4,12 @@ class DashboardsController < ApplicationController
   layout 'dashboard'
 
   def show
-    # if nav_select == 'search'
-    #   @search_form = SearchForm.new(search_params)
-    #   @search_form.execute if @search_form.valid?
-    # else
-    #   load_overview
-    # end
-
-    @search_form = SearchForm.new(search_params)
-    @search_form.execute if @search_form.valid?
+    if nav_select == 'search'
+      @search_form = SearchForm.new(search_params)
+      @search_form.execute if @search_form.valid?
+    else
+      load_overview
+    end
   end
 
   def new
