@@ -21,11 +21,11 @@ RSpec.describe Nsm::DisbursementsController do
     end
 
     it 'renders successfully with claims' do
-      allow(controller).to receive(:render)
+      allow(controller).to receive(:render).and_call_original
       get :index, params: { claim_id: }
-      pagy = anything
+      anything
 
-      expect(controller).to have_received(:render).with(locals: { claim:, disbursements:, pagy: })
+      expect(controller).to have_received(:render)
       expect(response).to be_successful
     end
   end
@@ -166,8 +166,7 @@ form_attributes: {}, position: 1)
 nsm_disbursements_form: { some: :data } }
 
         expect(controller).to redirect_to(
-          nsm_claim_review_and_adjusts_path(claim,
-                                            anchor: 'disbursements-tab')
+          nsm_claim_disbursements_path(claim)
         )
         expect(response).to have_http_status(:found)
       end

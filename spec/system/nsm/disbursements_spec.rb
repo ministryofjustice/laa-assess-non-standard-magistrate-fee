@@ -29,8 +29,6 @@ RSpec.describe 'Disbursements' do
     fill_in 'Explain your decision', with: 'Testing'
     click_on 'Save changes'
 
-    visit nsm_claim_disbursements_path(claim)
-
     within('.govuk-table__row', text: 'Apples') do
       expect(page).to have_content(
         '1 ' \

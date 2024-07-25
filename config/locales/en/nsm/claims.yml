@@ -41,12 +41,14 @@ en:
           risk: Risk
     adjustments:
       show:
+        page_title: "Review criminal legal aid applications"
         adjusted_costs: Adjusted costs
         work_items: Work items
         disbursements: Disbursements
         letters_and_calls: Letters and calls
     review_and_adjusts:
       show:
+        page_title: "Review criminal legal aid applications"
         cost_summary: Costs summary
         disbursements: Disbursements
         items: Items

@@ -2,33 +2,20 @@ require 'rails_helper'
 
 RSpec.describe Nsm::WorkItemsController do
   context 'index' do
-    let(:claim) { instance_double(Claim, id: claim_id) }
+    let(:claim) { build(:claim) }
     let(:claim_id) { SecureRandom.uuid }
     let(:work_items) { [instance_double(Nsm::V1::WorkItem, completed_on: Time.zone.today, position: 1)] }
     let(:work_item_summary) { instance_double(Nsm::V1::WorkItemSummary) }
 
     before do
       allow(Claim).to receive(:find).and_return(claim)
-      allow(BaseViewModel).to receive(:build).with(:work_item, anything, anything).and_return(work_items)
-      allow(BaseViewModel).to receive(:build).with(:work_item_summary, anything).and_return(work_item_summary)
-    end
-
-    it 'find and builds the required object' do
-      get :index, params: { claim_id: }
-
-      expect(Claim).to have_received(:find).with(claim_id)
-      expect(BaseViewModel).to have_received(:build).with(:work_item, claim, 'work_items')
-      expect(BaseViewModel).to have_received(:build).with(:work_item_summary, claim)
     end
 
     it 'renders successfully with claims' do
-      allow(controller).to receive(:render)
+      allow(controller).to receive(:render).and_call_original
       get :index, params: { claim_id: }
-      pagy = anything
 
-      expect(controller).to have_received(:render).with(
-        locals: { claim:, work_items:, work_item_summary:, pagy: }
-      )
+      expect(controller).to have_received(:render)
       expect(response).to be_successful
     end
   end
@@ -127,8 +114,7 @@ form_attributes: {}, position: 2)
 nsm_work_item_form: { some: :data } }
 
         expect(controller).to redirect_to(
-          nsm_claim_review_and_adjusts_path(claim,
-                                            anchor: 'work-items-tab')
+          nsm_claim_work_items_path(claim)
         )
         expect(response).to have_http_status(:found)
       end

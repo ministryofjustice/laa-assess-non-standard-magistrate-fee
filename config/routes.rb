@@ -54,8 +54,6 @@ Rails.application.routes.draw do
       end
 
       resource :claim_details, only: [:show]
-      resource :review_and_adjusts, only: [:show]
-      resource :adjustments, only:  [:show]
       namespace :letters_and_calls do
         resource :uplift, only: [:edit, :update], path_names: { edit: '' }
       end
