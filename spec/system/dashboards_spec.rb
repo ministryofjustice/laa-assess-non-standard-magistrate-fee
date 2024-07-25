@@ -136,10 +136,36 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
                       20) + create_list(:prior_authority_application, 1, state: 'sent_back', updated_at: Date.yesterday - 1)
         end
         let(:endpoint) { 'https://appstore.example.com/v1/submissions/searches' }
-        let(:payload) { nil }
+        let(:search_payload) do
+          {
+            application_type: 'crm4',
+            explicit_application_type: true,
+            page: 1,
+            per_page: 20,
+            sort_by: 'last_updated',
+            sort_direction: 'descending',
+          }
+        end
+        let(:sort_payload) do
+          {
+            application_type: 'crm4',
+            explicit_application_type: true,
+            page: 1,
+            per_page: 20,
+            sort_by: 'status_with_assignment',
+            sort_direction: 'ascending',
+          }
+        end
 
-        let(:stub) do
-          stub_request(:post, endpoint).with(body: payload).to_return(
+        let(:stub_search) do
+          stub_request(:post, endpoint).with(body: search_payload).to_return(
+            status: 201, body: { metadata: { total_results: 21 },
+                                 raw_data: applications.map { { application_id: _1.id, application: _1.data } } }.to_json
+          )
+        end
+
+        let(:stub_sort) do
+          stub_request(:post, endpoint).with(body: sortpayload).to_return(
             status: 201, body: { metadata: { total_results: 21 },
                                  raw_data: applications.map { { application_id: _1.id, application: _1.data } } }.to_json
           )
@@ -156,50 +182,24 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
           expect(page).to have_css('.govuk-label', text: 'Claim or application details')
         end
 
-        context 'submitting a search' do
-          let(:payload) do
-            {
-              application_type: 'crm4',
-              explicit_application_type: true,
-              page: 1,
-              per_page: 20,
-              sort_by: 'last_updated',
-              sort_direction: 'descending',
-            }
+        it 'can search for submissions' do
+          within('.search-panel') do
+            choose 'Prior authority'
+            click_on 'Search'
           end
 
-          it 'can search for submissions' do
-            within('.search-panel') do
-              choose 'Prior authority'
-              click_on 'Search'
-            end
-
-            expect(stub).to have_been_requested
-          end
+          expect(stub).to have_been_requested
         end
 
-        context 'sorting a search' do
-          let(:payload) do
-            {
-              application_type: 'crm4',
-              explicit_application_type: true,
-              page: 1,
-              per_page: 20,
-              sort_by: 'status_with_assignment',
-              sort_direction: 'ascending',
-            }
+        it 'can sort results' do
+          within('.search-panel') do
+            choose 'Prior authority'
+            click_on 'Search'
           end
 
-          it 'can sort results' do
-            within('.search-panel') do
-              choose 'Prior authority'
-              click_on 'Search'
-            end
-
-            expect(page).to have_css('.govuk-table')
-            click_link 'Status'
-            expect(page.find('.govuk-table')).to have_text 'Sent back'
-          end
+          expect(page).to have_css('.govuk-table')
+          click_link 'Status'
+          expect(page.find('.govuk-table')).to have_text 'Sent back'
         end
       end
     end
