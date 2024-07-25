@@ -165,7 +165,7 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
         end
 
         let(:stub_sort) do
-          stub_request(:post, endpoint).with(body: sortpayload).to_return(
+          stub_request(:post, endpoint).with(body: sort_payload).to_return(
             status: 201, body: { metadata: { total_results: 21 },
                                  raw_data: applications.map { { application_id: _1.id, application: _1.data } } }.to_json
           )
