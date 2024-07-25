@@ -22,7 +22,7 @@
     </thead>
     <tbody class="govuk-table__body app-task-list__items">
       <% records.each do |disbursement| %>
-        <tr class="govuk-table__row app-task-list__item">
+        <tr id="<%= disbursement.id %>" class="govuk-table__row app-task-list__item">
           <th class="govuk-table__header" scope="row"><%= disbursement.position %></th>
           <th class="govuk-table__header" scope="row">
             <%=
