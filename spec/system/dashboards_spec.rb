@@ -157,14 +157,14 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
           }
         end
 
-        let(:stub_search) do
+        let(:search_stub) do
           stub_request(:post, endpoint).with(body: search_payload).to_return(
             status: 201, body: { metadata: { total_results: 21 },
                                  raw_data: applications.map { { application_id: _1.id, application: _1.data } } }.to_json
           )
         end
 
-        let(:stub_sort) do
+        let(:sort_stub) do
           stub_request(:post, endpoint).with(body: sort_payload).to_return(
             status: 201, body: { metadata: { total_results: 21 },
                                  raw_data: applications.map { { application_id: _1.id, application: _1.data } } }.to_json
@@ -172,8 +172,8 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
         end
 
         before do
-          stub_search
-          stub_sort
+          search_stub
+          sort_stub
           visit dashboard_path
           click_on 'Search'
         end
