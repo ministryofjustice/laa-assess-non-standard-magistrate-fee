@@ -189,7 +189,7 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
             click_on 'Search'
           end
 
-          expect(stub).to have_been_requested
+          expect(search_stub).to have_been_requested
         end
 
         it 'can sort results' do
@@ -200,6 +200,7 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
 
           expect(page).to have_css('.govuk-table')
           click_link 'Status'
+          expect(sort_stub).to have_been_requested
           expect(page.find('.govuk-table')).to have_text 'Sent back'
         end
       end
