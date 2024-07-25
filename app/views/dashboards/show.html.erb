@@ -2,6 +2,6 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-xl"><%= t(".heading.#{@nav_select}") %></h1>
-    <%= render 'tab_content' %>
+    <%= render partial: 'shared/search', locals: { form_url: dashboard_path(nav_select: 'search', anchor: 'search-results'), title: false, choose_application_type: true, clear_all_path: new_dashboard_path(nav_select: 'search'), additional_param: { key: 'nav_select', value: 'search'}, translation_prefix: 'dashboards.search', controller_path: 'dashboards' }  %>
   </div>
 </div>
