@@ -172,7 +172,8 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
         end
 
         before do
-          stub
+          stub_search
+          stub_sort
           visit dashboard_path
           click_on 'Search'
         end
