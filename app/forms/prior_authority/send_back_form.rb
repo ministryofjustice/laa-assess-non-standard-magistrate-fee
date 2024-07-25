@@ -30,6 +30,7 @@ module PriorAuthority
       return false unless valid?
 
       PriorAuthorityApplication.transaction do
+        discard_all_adjustments
         stash(add_draft_send_back_event: false)
         update_local_records
         NotifyAppStore.perform_later(submission:)
@@ -50,6 +51,11 @@ module PriorAuthority
                                                  updates_needed:,
                                                  comments:,
                                                  current_user:)
+    end
+
+    def discard_all_adjustments
+      app_store_record = AppStoreClient.new.get_submission(submission)
+      submission.update!(data: app_store_record['application'])
     end
 
     def update_local_records
