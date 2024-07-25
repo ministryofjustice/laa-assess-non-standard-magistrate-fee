@@ -132,7 +132,8 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
 
       context 'search analytics available' do
         let(:applications) do
-          create_list(:prior_authority_application, 20) + create_list(:prior_authority_application, 1, state: 'sent_back', updated_at: Date.yesterday - 1 )
+          create_list(:prior_authority_application,
+                      20) + create_list(:prior_authority_application, 1, state: 'sent_back', updated_at: Date.yesterday - 1)
         end
         let(:endpoint) { 'https://appstore.example.com/v1/submissions/searches' }
         let(:payload) do
