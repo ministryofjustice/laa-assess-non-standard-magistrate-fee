@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Dashboards' do
+RSpec.describe 'Dashboards', :stub_oauth_token do
   context 'when insights feature flag is enabled' do
     before do
       allow(ENV).to receive(:fetch).and_call_original
@@ -8,7 +8,7 @@ RSpec.describe 'Dashboards' do
                                    .and_return('14,6')
       allow(ENV).to receive(:fetch).with('METABASE_NSM_DASHBOARD_IDS')
                                    .and_return('14')
-      allow(FeatureFlags).to receive(:insights).and_return(double(enabled?: true))
+      allow(FeatureFlags).to receive_messages(insights: double(enabled?: true), nsm_insights: double(enabled?: true))
     end
 
     context 'when I am not a supervisor' do
@@ -26,7 +26,7 @@ RSpec.describe 'Dashboards' do
       it 'lets me visit the dashboard path' do
         visit root_path
         click_on 'Analytics dashboard'
-        expect(page).to have_current_path(dashboard_path)
+        expect(page).to have_current_path(new_dashboard_path)
       end
 
       it 'by default lets me view the prior authority analytics' do
@@ -41,14 +41,15 @@ RSpec.describe 'Dashboards' do
           visit dashboard_path
         end
 
-        it 'shows both service navigation tabs' do
+        it 'shows both service navigation tabs and search tab' do
           expect(page).to have_css('.moj-primary-navigation__link', text: 'Prior authority')
           expect(page).to have_css('.moj-primary-navigation__link', text: 'Non-standard magistrates')
+          expect(page).to have_css('.moj-primary-navigation__link', text: 'Search')
         end
 
         it 'can navigate to nsm analytics' do
           click_on 'Non-standard magistrates'
-          expect(page).to have_current_path(dashboard_path(nav_select: 'nsm'))
+          expect(page).to have_current_path(new_dashboard_path(nav_select: 'nsm'))
 
           expect(page).to have_css('.govuk-heading-xl', text: 'Non-standard magistrates')
         end
@@ -65,9 +66,47 @@ RSpec.describe 'Dashboards' do
         end
 
         it 'cannot navigate to nsm page' do
-          visit dashboard_path(nav_select: 'nsm')
+          visit new_dashboard_path(nav_select: 'nsm')
 
           expect(page).to have_css('.govuk-heading-xl', text: 'Prior authority')
+        end
+
+        context 'using search' do
+          let(:endpoint) { 'https://appstore.example.com/v1/submissions/searches' }
+          let(:payload) do
+            {
+              application_type: 'crm4',
+              page: 1,
+              query: 'LAA-ABCDEF',
+              per_page: 20,
+              sort_by: 'last_updated',
+              sort_direction: 'descending',
+            }
+          end
+
+          let(:stub) do
+            stub_request(:post, endpoint).with(body: payload).to_return(
+              status: 200,
+              body: { metadata: { total_results: 0 }, raw_data: [] }.to_json
+            )
+          end
+
+          before do
+            stub
+            visit dashboard_path
+            click_on 'Search'
+          end
+
+          it 'automatically defaults to CRM4 search' do
+            within('.search-panel') do
+              fill_in 'Claim or application details', with: 'LAA-ABCDEF'
+              click_on 'Search'
+            end
+          end
+
+          it 'does not show options for application type' do
+            expect(page).not_to have_text('Which service do you want to search?')
+          end
         end
       end
 
@@ -88,6 +127,47 @@ RSpec.describe 'Dashboards' do
         it 'does not show any nsm dashboards' do
           visit dashboard_path(nav_select: 'nsm')
           expect(page).not_to have_css('iframe')
+        end
+      end
+
+      context 'search analytics available' do
+        let(:endpoint) { 'https://appstore.example.com/v1/submissions/searches' }
+        let(:payload) do
+          {
+            application_type: 'crm4',
+            explicit_application_type: true,
+            page: 1,
+            per_page: 20,
+            sort_by: 'last_updated',
+            sort_direction: 'descending',
+          }
+        end
+
+        let(:stub) do
+          stub_request(:post, endpoint).with(body: payload).to_return(
+            status: 200,
+            body: { metadata: { total_results: 0 }, raw_data: [] }.to_json
+          )
+        end
+
+        before do
+          stub
+          visit dashboard_path
+          click_on 'Search'
+        end
+
+        it 'can navigate to search analytics' do
+          expect(page).to have_css('.govuk-heading-xl', text: 'Search')
+          expect(page).to have_css('.govuk-label', text: 'Claim or application details')
+        end
+
+        it 'can search for submissions' do
+          within('.search-panel') do
+            choose 'Prior authority'
+            click_on 'Search'
+          end
+
+          expect(stub).to have_been_requested
         end
       end
     end

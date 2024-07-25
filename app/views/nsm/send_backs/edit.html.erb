@@ -13,7 +13,7 @@
 
       <%= f.govuk_submit(t('.submit')) do %>
         <%= f.hidden_field :id %>
-        <%= link_to 'Cancel', nsm_claim_claim_details_path(claim), class: 'govuk-button__secondary' %>
+        <%= link_to t('shared.cancel'), nsm_claim_claim_details_path(claim), class: 'govuk-link' %>
       <% end %>
 
     <% end %>

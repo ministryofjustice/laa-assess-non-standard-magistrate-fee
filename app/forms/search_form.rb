@@ -4,6 +4,10 @@ class SearchForm
   include ActiveRecord::AttributeAssignment
 
   Option = Struct.new(:value, :label)
+  APPLICATION_TYPES = [
+    Option.new('crm4', I18n.t('shared.application_type.crm4')),
+    Option.new('crm7', I18n.t('shared.application_type.crm7'))
+  ].freeze
 
   PER_PAGE = 20
 
@@ -18,6 +22,7 @@ class SearchForm
   attribute :sort_by, :string, default: 'last_updated'
   attribute :sort_direction, :string, default: 'descending'
   attribute :application_type, :string
+  attribute :explicit_application_type, :boolean, default: false
 
   validate :at_least_one_field_set
 
@@ -58,13 +63,21 @@ class SearchForm
     ].map { Option.new(_1, I18n.t("search.statuses.#{_1}")) }
   end
 
+  def application_types
+    self.class::APPLICATION_TYPES
+  end
+
   private
 
   def at_least_one_field_set
-    field_set = [:query, :submitted_from,
-                 :submitted_to, :updated_from,
-                 :updated_to, :status_with_assignment,
-                 :caseworker_id].any? do |field|
+    fields = [:query, :submitted_from,
+              :submitted_to, :updated_from,
+              :updated_to, :status_with_assignment,
+              :caseworker_id]
+
+    fields.append(:application_type) if explicit_application_type
+
+    field_set = fields.any? do |field|
       send(field).present?
     end
 
