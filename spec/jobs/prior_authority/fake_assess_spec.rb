@@ -6,9 +6,13 @@ RSpec.describe PriorAuthority::FakeAssess do
   let(:application) { create(:prior_authority_application, state: :submitted) }
 
   context 'when harnessing the power of randomness' do
+    let(:client) { instance_double(AppStoreClient, get_submission: app_store_record) }
+    let(:app_store_record) { { 'application' => application.data } }
+
     before do
       create(:caseworker)
       allow(NotifyAppStore).to receive(:perform_later)
+      allow(AppStoreClient).to receive(:new).and_return(client)
       allow(SecureRandom).to receive(:rand).and_return random_choice
       subject.perform([application.id])
     end

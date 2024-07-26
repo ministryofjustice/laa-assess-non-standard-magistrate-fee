@@ -51,9 +51,22 @@ RSpec.describe PriorAuthority::SendBackForm do
   describe '#save' do
     let(:fixed_arbitrary_date) { DateTime.new(2023, 12, 3, 12, 3, 12) }
     let(:user) { create(:caseworker) }
+    let(:client) { instance_double(AppStoreClient, get_submission: app_store_record) }
+    let(:app_store_record) do
+      {
+        'version' => 1,
+        'json_schema_version' => 1,
+        'application_state' => 'submitted',
+        'application_type' => 'crm4',
+        'application' => submission.data.merge('clean' => true),
+        'events' => [],
+        'application_id' => submission.id,
+      }
+    end
 
     before do
       allow(NotifyAppStore).to receive(:perform_later)
+      allow(AppStoreClient).to receive(:new).and_return(client)
       travel_to fixed_arbitrary_date
       create(:assignment, submission:, user:)
     end
@@ -110,6 +123,10 @@ RSpec.describe PriorAuthority::SendBackForm do
 
         it 'adds an event' do
           expect(submission.events.first).to be_a(PriorAuthority::Event::SendBack)
+        end
+
+        it 'pulls a clean version of the data from the app store to remove all adjustments' do
+          expect(submission.reload.data['clean']).to be true
         end
 
         it 'notifies the app store' do
