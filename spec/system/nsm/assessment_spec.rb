@@ -115,21 +115,28 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
     it 'includes the disbursement ID when navigating back' do
       visit nsm_claim_disbursements_path(claim)
 
-      find('tbody tr:nth-child(8) a').click
+      expect(evaluate_script('window.scrollY')).to eq 0
+
+      find('tbody tr:nth-child(9) a').click
 
       click_link_or_button 'Back'
 
       expect(current_url).to end_with "##{claim.data['disbursements'][0]['id']}"
+      sleep(0.1) # Wait for the anchor jump to happen
+      expect(evaluate_script('window.scrollY')).to be > 0
     end
 
     it 'includes the work item ID when navigating back' do
       visit nsm_claim_work_items_path(claim)
 
+      expect(evaluate_script('window.scrollY')).to eq 0
       find('tbody tr:nth-child(8) a').click
 
       click_link_or_button 'Back'
 
       expect(current_url).to end_with "##{claim.data['work_items'][0]['id']}"
+      sleep(0.1) # Wait for the anchor jump to happen
+      expect(evaluate_script('window.scrollY')).to be > 0
     end
   end
 end
