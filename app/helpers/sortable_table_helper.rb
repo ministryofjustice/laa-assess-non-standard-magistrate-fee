@@ -7,7 +7,7 @@ module SortableTableHelper
 
   def table_header_with_link(column, i18n_stem, params, sort_by, sort_direction, prefix)
     table_header(column, sort_by, sort_direction) do |next_direction|
-      link_to url_for(params.deep_merge(prefix => { 'sort_by' => column, 'sort_direction' => next_direction })) do
+      link_to url_for(params.symbolize_keys.deep_merge(prefix => { 'sort_by' => column, 'sort_direction' => next_direction })) do
         tag.button do
           I18n.t(column, scope: i18n_stem)
         end
