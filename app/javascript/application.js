@@ -6,6 +6,7 @@ import "./component/nsm/disbursement_adjustment"
 import "./component/prior_authority/service_cost_adjustment"
 import "./component/prior_authority/travel_cost_adjustment"
 import "./component/prior_authority/additional_cost_adjustment"
+import "./lib/table-item-anchors.js"
 
 // https://frontend.design-system.service.gov.uk/importing-css-assets-and-javascript/#javascript
 import { initAll } from 'govuk-frontend'

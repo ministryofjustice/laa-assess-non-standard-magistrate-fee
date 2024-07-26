@@ -5,6 +5,11 @@ RSpec.describe 'Send an application back', :stub_oauth_token do
   let(:application) { create(:prior_authority_application, state: 'submitted') }
 
   before do
+    stub_request(:get, "https://appstore.example.com/v1/submissions/#{application.id}").to_return(
+      status: 200,
+      body: { 'application' => application.data }.to_json,
+    )
+
     sign_in caseworker
     create(:assignment, submission: application, user: caseworker)
     visit '/'

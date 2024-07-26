@@ -1,7 +1,7 @@
 <% title t('.page_title') %>
 
 <% content_for(:back_link) do %>
-  <%= link_to t('helpers.back_link'), :back, class: 'govuk-back-link', data: { turbo: 'false' } %>
+  <%= link_to t('helpers.back_link'), "", id: "back-button", class: 'govuk-back-link', data: { turbo: 'false' } %>
 <% end %>
 
 <div class="govuk-grid-row" id="work-items-adjustment-container">
@@ -63,7 +63,7 @@
       </div>
       <%= f.govuk_text_area :explanation, label: { size: 's' }, rows: 5 %>
       <%= f.govuk_submit t('shared.save_changes') do %>
-        <%= link_to t('shared.cancel'), :back, class: 'govuk-link', data: { turbo: 'false' } %>
+        <%= link_to t('shared.cancel'), "", id: "back-button", class: 'govuk-link', data: { turbo: 'false' } %>
       <% end %>
     <% end %>
   </div>
