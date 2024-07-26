@@ -1,12 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
-  [...document.querySelectorAll("a#back-button")].map(function (btn) {
+  [...document.querySelectorAll("a#back-button")].forEach(function (btn) {
     btn.addEventListener("click", function (evt) {
       evt.preventDefault();
       history.back();
     });
     return btn;
   });
-  [...document.querySelectorAll("table.govuk-table tr[id] a")].map(
+  [...document.querySelectorAll("table[data-anchor-rows] tr[id] a")].forEach(
     function (link) {
       link.addEventListener("click", function () {
         const nearestRow = link.closest("tr");
