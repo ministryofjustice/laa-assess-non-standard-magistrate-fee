@@ -59,14 +59,15 @@ module PriorAuthority
     end
 
     def update_local_records
-      submission.data['resubmission_deadline'] = resubmission_deadline
-      submission.data['updated_at'] = Time.current
-
       # ordering is important here so we can order by date later and have Further info first
-      append_incorrect_information_object if updates_needed.include?(INCORRECT_INFORMATION)
-      append_further_information_object if updates_needed.include?(FURTHER_INFORMATION)
+      append_explanation(INCORRECT_INFORMATION, incorrect_information_explanation)
+      append_explanation(FURTHER_INFORMATION, further_information_explanation)
 
-      submission.data['status'] = PriorAuthorityApplication::SENT_BACK
+      submission.data.merge!(
+        'resubmission_deadline' => resubmission_deadline,
+        'updated_at' => Time.current,
+        'status' => PriorAuthorityApplication::SENT_BACK
+      )
       submission.update!(state: PriorAuthorityApplication::SENT_BACK)
       submission.assignments.destroy_all
       save_event
@@ -76,22 +77,14 @@ module PriorAuthority
       Rails.application.config.x.rfi.resubmission_window.from_now
     end
 
-    def append_further_information_object
-      submission.data['further_information'] ||= []
+    def append_explanation(type, explanation)
+      return unless updates_needed.include?(type)
 
-      submission.data['further_information'] << {
+      submission.data[type] ||= []
+
+      submission.data[type] << {
         caseworker_id: current_user.id,
-        information_requested: further_information_explanation,
-        requested_at: DateTime.current
-      }
-    end
-
-    def append_incorrect_information_object
-      submission.data['incorrect_information'] ||= []
-
-      submission.data['incorrect_information'] << {
-        caseworker_id: current_user.id,
-        information_requested: incorrect_information_explanation,
+        information_requested: explanation,
         requested_at: DateTime.current
       }
     end

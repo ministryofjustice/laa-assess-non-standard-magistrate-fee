@@ -33,8 +33,7 @@ module PriorAuthority
         stash(add_draft_decision_event: false)
         previous_state = submission.state
 
-        submission.data['status'] = pending_decision
-        submission.data['updated_at'] = Time.current
+        submission.data.merge!('status' => pending_decision, 'updated_at' => Time.current)
         submission.update!(state: pending_decision)
         ::Event::Decision.build(submission: submission,
                                 comment: explanation,
