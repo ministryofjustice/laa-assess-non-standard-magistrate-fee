@@ -2,16 +2,14 @@ module RetryUntilPassed
   def retry_until_passed(attempts = 10)
     failed = 0
     loop do
-      begin
-        yield
+      yield
 
-        break
-      rescue
-        failed += 1
-        raise if failed > attempts
+      break
+    rescue StandardError
+      failed += 1
+      raise if failed > attempts
 
-        sleep(0.1) # Wait for the anchor jump to happen
-      end
+      sleep(0.1) # Wait for the anchor jump to happen
     end
   end
 end

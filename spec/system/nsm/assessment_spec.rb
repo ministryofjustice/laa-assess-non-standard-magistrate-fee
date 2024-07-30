@@ -78,7 +78,7 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
 
   context 'navigation', :javascript do
     let(:claim) do
-      disbursements = 100.times.map do |i|
+      disbursements = Array.new(100) do |i|
         {
           'id' => SecureRandom.uuid,
           'details' => 'Details',
@@ -99,7 +99,7 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
           'total_cost_without_vat' => 100.0
         }
       end
-      work_items = 200.times.map do |i|
+      work_items = Array.new(200) do |i|
         {
           'id' => SecureRandom.uuid,
           'uplift' => 95,
@@ -129,7 +129,6 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
       expect(page).not_to have_content('Adjust a disbursement')
       # this is checking the anchor tag
       expect(current_url).to end_with "##{clicked_id}"
-
 
       retry_until_passed do
         expect(evaluate_script('window.scrollY')).to be > 0
