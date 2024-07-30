@@ -91,6 +91,7 @@ postgresql:
     persistence:
       enabled: true
     containerSecurityContext:
+      readOnlyRootFilesystem: true
       runAsNonRoot: true
       allowPrivilegeEscalation: false
       seccompProfile:
