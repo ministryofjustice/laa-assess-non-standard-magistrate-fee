@@ -60,6 +60,7 @@ module PriorAuthority
 
     def update_local_records
       submission.data['resubmission_deadline'] = resubmission_deadline
+      submission.data['updated_at'] = Time.current
 
       # ordering is important here so we can order by date later and have Further info first
       append_incorrect_information_object if updates_needed.include?(INCORRECT_INFORMATION)

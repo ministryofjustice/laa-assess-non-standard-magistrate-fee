@@ -19,6 +19,7 @@ module Nsm
       previous_state = claim.state
       Claim.transaction do
         claim.data['status'] = FURTHER_INFO
+        claim.data['updated_at'] = Time.current
         claim.update!(state: FURTHER_INFO)
         claim.assignments.destroy_all
         Nsm::Event::SendBack.build(submission: claim, comment: comment, previous_state: previous_state,

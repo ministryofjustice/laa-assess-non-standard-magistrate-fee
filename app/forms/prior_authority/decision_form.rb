@@ -34,6 +34,7 @@ module PriorAuthority
         previous_state = submission.state
 
         submission.data['status'] = pending_decision
+        submission.data['updated_at'] = Time.current
         submission.update!(state: pending_decision)
         ::Event::Decision.build(submission: submission,
                                 comment: explanation,
