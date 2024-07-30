@@ -78,27 +78,30 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
 
   context 'navigation', :javascript do
     let(:claim) do
-      disbursement = {
-        'id' => '1c0f36fd-fd39-498a-823b-0a3837454563',
-        'details' => 'Details',
-        'pricing' => 1.0,
-        'vat_rate' => 0.2,
-        'apply_vat' => 'false',
-        'other_type' => {
-          'en' => 'Apples',
-          'value' => 'Apples'
-        },
-        'vat_amount' => 0.0,
-        'prior_authority' => 'yes',
-        'disbursement_date' => '2022-12-12',
-        'disbursement_type' => {
-          'en' => 'Other',
-          'value' => 'other'
-        },
-        'total_cost_without_vat' => 100.0
-      }
-      work_item = {
-        'id' => 'cf5e303e-98dd-4b0f-97ea-3560c4c5f137',
+      disbursements = Array.new(100) do |i|
+        {
+          'id' => SecureRandom.uuid,
+          'details' => 'Details',
+          'pricing' => 1.0,
+          'vat_rate' => 0.2,
+          'apply_vat' => 'false',
+          'other_type' => {
+            'en' => 'Apples',
+            'value' => 'Apples'
+          },
+          'vat_amount' => 0.0,
+          'prior_authority' => 'yes',
+          'disbursement_date' => Date.new(2022, 12, 12) + i,
+          'disbursement_type' => {
+            'en' => 'Other',
+            'value' => 'other'
+          },
+          'total_cost_without_vat' => 100.0
+        }
+      end
+      work_items = Array.new(200) do |i|
+        {
+          'id' => SecureRandom.uuid,
           'uplift' => 95,
           'pricing' => 24.0,
           'work_type' => {
@@ -107,36 +110,47 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
           },
           'fee_earner' => 'aaa',
           'time_spent' => 161,
-          'completed_on' => '2022-12-12'
-      }
-      create(:claim, disbursements: Array.new(200, disbursement), work_items: Array.new(200, work_item))
+          'completed_on' => Date.new(2022, 12, 12) + i
+        }
+      end
+      create(:claim, disbursements:, work_items:)
     end
 
     it 'includes the disbursement ID when navigating back' do
       visit nsm_claim_disbursements_path(claim)
 
+      clicked_id = claim.data['disbursements'][57]['id']
       expect(evaluate_script('window.scrollY')).to eq 0
 
-      find('tbody tr:nth-child(9) a').click
+      find("tbody tr[id=\"#{clicked_id}\"] a").click
 
       click_link_or_button 'Back'
 
-      expect(current_url).to end_with "##{claim.data['disbursements'][0]['id']}"
-      sleep(0.1) # Wait for the anchor jump to happen
-      expect(evaluate_script('window.scrollY')).to be > 0
+      expect(page).not_to have_content('Adjust a disbursement')
+      # this is checking the anchor tag
+      expect(current_url).to end_with "##{clicked_id}"
+
+      retry_until_passed do
+        expect(evaluate_script('window.scrollY')).to be > 0
+      end
     end
 
     it 'includes the work item ID when navigating back' do
       visit nsm_claim_work_items_path(claim)
 
+      clicked_id = claim.data['work_items'][53]['id']
       expect(evaluate_script('window.scrollY')).to eq 0
-      find('tbody tr:nth-child(8) a').click
+      find("tbody tr[id=\"#{clicked_id}\"] a").click
 
       click_link_or_button 'Back'
 
-      expect(current_url).to end_with "##{claim.data['work_items'][0]['id']}"
-      sleep(0.1) # Wait for the anchor jump to happen
-      expect(evaluate_script('window.scrollY')).to be > 0
+      expect(page).not_to have_content('Adjust a work item')
+      # this is checking the anchor tag
+      expect(current_url).to end_with "##{clicked_id}"
+
+      retry_until_passed do
+        expect(evaluate_script('window.scrollY')).to be > 0
+      end
     end
   end
 end
