@@ -43,6 +43,18 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
 {{/*
+Default Security Context
+*/}}
+{{- define "helm_deploy.defaultSecurityContext" -}}
+runAsNonRoot: true
+allowPrivilegeEscalation: false
+seccompProfile:
+  type: RuntimeDefault
+capabilities:
+  drop: [ "ALL" ]
+{{- end }}
+
+{{/*
 Selector labels
 */}}
 {{- define "helm_deploy.selectorLabels" -}}
