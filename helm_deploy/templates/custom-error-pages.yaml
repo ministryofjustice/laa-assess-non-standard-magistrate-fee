@@ -6,7 +6,7 @@ kind: ConfigMap
 metadata:
   name: custom-error-pages
   labels:
-    {{- include "helm_deploy.labels" . | nindent 4 }}
+    {{- include "laa-assess-crime-forms.labels" . | nindent 4 }}
 data:
   5xx: |
     <!DOCTYPE html>

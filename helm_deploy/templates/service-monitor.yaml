@@ -1,12 +1,12 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ include "helm_deploy.fullname" . }}-monitor
+  name: {{ include "laa-assess-crime-forms.fullname" . }}-monitor
   namespace: {{ .Release.Namespace }}
 spec:
   selector:
     matchLabels:
-      service: {{ include "helm_deploy.fullname" . }}-metrics-svc
+      service: {{ include "laa-assess-crime-forms.fullname" . }}-metrics-svc
   endpoints:
   - port: metrics
     interval: 15s
