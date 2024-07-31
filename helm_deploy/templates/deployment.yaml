@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "helm_deploy.fullname" . }}
+  name: {{ include "laa-assess-crime-forms.fullname" . }}
   labels:
-    {{- include "helm_deploy.labels" . | nindent 4 }}
+    {{- include "laa-assess-crime-forms.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount.app }}
   strategy:
@@ -13,8 +13,8 @@ spec:
       maxSurge: 100%
   selector:
     matchLabels:
-      {{- include "helm_deploy.selectorLabels" . | nindent 6 }}
-      appName: {{ include "helm_deploy.fullname" . }}
+      {{- include "laa-assess-crime-forms.selectorLabels" . | nindent 6 }}
+      appName: {{ include "laa-assess-crime-forms.fullname" . }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -22,10 +22,10 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "helm_deploy.selectorLabels" . | nindent 8 }}
+        {{- include "laa-assess-crime-forms.selectorLabels" . | nindent 8 }}
         app: laa-assess-crime-forms-app
-        appName: {{ include "helm_deploy.fullname" . }}
-        metrics-target: {{ include "helm_deploy.fullname" . }}-metrics-target
+        appName: {{ include "laa-assess-crime-forms.fullname" . }}
+        metrics-target: {{ include "laa-assess-crime-forms.fullname" . }}-metrics-target
     spec:
       serviceAccountName: {{ .Values.service_account.name }}
       {{- with .Values.imagePullSecrets }}
@@ -35,7 +35,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
-            {{- toYaml .Values.securityContext | nindent 1 }}
+            {{- include "laa-assess-crime-forms.defaultSecurityContext" . | nindent 1 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -62,7 +62,7 @@ spec:
             - name: REDIS_PROTOCOL
               value: "redis"
             - name: REDIS_HOST
-              value: {{ template "helm_deploy.redisUatHost" . }}
+              value: {{ template "laa-assess-crime-forms.redisUatHost" . }}
             - name: REDIS_PASSWORD
               value: {{ .Values.redis.auth.password }}
           {{ else }}
@@ -190,7 +190,7 @@ spec:
             - name: HOSTS
               value: {{ range $index, $hostObject := .Values.ingress.hosts }}{{ if ne $index 0 }},{{ end }}{{ $hostObject.host }}{{ end }}
             - name: INTERNAL_HOST_NAME
-              value: {{ template "helm_deploy.internalHostName" . }}
+              value: {{ template "laa-assess-crime-forms.internalHostName" . }}
             - name: ENABLE_SYNC_TRIGGER_ENDPOINT
               value: '{{ .Values.variables.enableSyncTriggerEndpoint }}'
             - name: ALLOW_INDEXING

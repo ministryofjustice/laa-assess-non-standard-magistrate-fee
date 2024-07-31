@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "helm_deploy.fullname" . }}
+  name: {{ include "laa-assess-crime-forms.fullname" . }}
   labels:
-    {{- include "helm_deploy.labels" . | nindent 4 }}
+    {{- include "laa-assess-crime-forms.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -12,14 +12,14 @@ spec:
       protocol: TCP
       name: http
   selector:
-    appName: {{ include "helm_deploy.fullname" . }}
+    appName: {{ include "laa-assess-crime-forms.fullname" . }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "helm_deploy.fullname" . }}-metrics-svc
+  name: {{ include "laa-assess-crime-forms.fullname" . }}-metrics-svc
   labels:
-    service: {{ include "helm_deploy.fullname" . }}-metrics-svc
+    service: {{ include "laa-assess-crime-forms.fullname" . }}-metrics-svc
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -27,8 +27,8 @@ spec:
       name: metrics
       protocol: TCP
   selector:
-    {{- include "helm_deploy.selectorLabels" . | nindent 4 }}
-    metrics-target: {{ include "helm_deploy.fullname" . }}-metrics-target
+    {{- include "laa-assess-crime-forms.selectorLabels" . | nindent 4 }}
+    metrics-target: {{ include "laa-assess-crime-forms.fullname" . }}-metrics-target
 {{ if .Values.customErrorService.enabled }}
 ---
 apiVersion: v1
