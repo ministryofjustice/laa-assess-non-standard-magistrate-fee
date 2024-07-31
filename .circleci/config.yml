@@ -123,7 +123,10 @@ commands:
           name: Run rubocop
           command: bundle exec rubocop
 
-  lint-helm-env:
+  # using a more recent version of yamllink so we can use the key_duplicates rule
+  # https://yamllint.readthedocs.io/en/stable/rules.html#module-yamllint.rules.key_duplicates
+
+  lint-and-verify-helm-config:
       description:
       parameters:
         environment:
@@ -242,11 +245,11 @@ jobs:
       - checkout
       - install-gems
       - rubocop
-      - lint-helm-env:
+      - lint-and-verify-helm-config:
           environment: dev
-      - lint-helm-env:
+      - lint-and-verify-helm-config:
           environment: uat
-      - lint-helm-env:
+      - lint-and-verify-helm-config:
           environment: prod
 
   rspec-tests:
