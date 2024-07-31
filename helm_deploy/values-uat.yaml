@@ -16,6 +16,12 @@ imagePullSecrets: []
 nameOverride: "laa-assess-crime-forms-app"
 fullnameOverride: "laa-assess-crime-forms-app"
 
+service:
+  type: ClusterIP
+  port: 80
+  internalPort: 3000
+  workerPort: 7433
+
 ingress:
   enabled: true
   namespace: laa-assess-crime-forms-uat
