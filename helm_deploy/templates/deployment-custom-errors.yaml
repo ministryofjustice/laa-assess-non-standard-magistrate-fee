@@ -27,7 +27,7 @@ spec:
         - name: custom-error-pages
           mountPath: /www
         securityContext:
-          {{- include "laa-assess-crime-forms.defaultSecurityContext" . | nindent 8 }}
+          {{- include "laa-assess-crime-forms.defaultSecurityContext" . | nindent 10 }}
           runAsUser: 999
 
       # Mount custom error page from configMap
