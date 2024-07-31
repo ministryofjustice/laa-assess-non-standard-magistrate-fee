@@ -1,14 +1,14 @@
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
-  name: {{ include "helm_deploy.fullname" . }}-allow-prometheus-scraping-netpol
+  name: {{ include "laa-assess-crime-forms.fullname" . }}-allow-prometheus-scraping-netpol
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "helm_deploy.labels" . | nindent 4 }}
+    {{- include "laa-assess-crime-forms.labels" . | nindent 4 }}
 spec:
   podSelector:
     matchLabels:
-      metrics-target: {{ include "helm_deploy.fullname" . }}-metrics-target
+      metrics-target: {{ include "laa-assess-crime-forms.fullname" . }}-metrics-target
   policyTypes:
     - Ingress
   ingress:
