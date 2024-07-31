@@ -88,6 +88,14 @@ references:
     attach_workspace:
       at: ~/repo/tmp
 
+  _install-yamllint: &install-yamllint
+    run:
+      name: Install yamllint to use to check yaml formatting issues
+      command: |
+        sudo apt update
+        sudo apt install -y python3-pip
+        pip install yamllint
+
 # ------------------
 # COMMANDS
 # ------------------
@@ -124,24 +132,13 @@ commands:
       steps:
         - helm/install_helm_client:
             version: 3.7.2
+        - *install-yamllint
         - run:
             name: Lint helm chart for <<parameters.environment>>
             command: helm lint ./helm_deploy --values ./helm_deploy/values-<<parameters.environment>>.yaml
         - run:
             name: Check helm template for <<parameters.environment>>
-            command: helm template --debug  ./helm_deploy --values ./helm_deploy/values-<<parameters.environment>>.yaml
-
-  check-helm-templates:
-      parameters:
-        environment:
-          description: Name of environment to check helm template of
-          type: string
-      steps:
-        - helm/install_helm_client:
-            version: 3.7.2
-        - run:
-            name: Check helm template for <<parameters.environment>>
-            command: helm template --debug  ./helm_deploy --values ./helm_deploy/values-<<parameters.environment>>.yaml
+            command: helm template --debug  ./helm_deploy --values ./helm_deploy/values-<<parameters.environment>>.yaml | yamllint
 
   db-setup:
     steps:
