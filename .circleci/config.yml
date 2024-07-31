@@ -237,13 +237,13 @@ jobs:
       - checkout
       - install-gems
       - rubocop
-      - helm-lint
       - check-env-helm-template:
           environment: dev
       - check-env-helm-template:
           environment: uat
       - check-env-helm-template:
           environment: prod
+      - helm-lint
 
   rspec-tests:
     parallelism: 2
