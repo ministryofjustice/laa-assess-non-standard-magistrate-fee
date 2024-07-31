@@ -118,10 +118,10 @@ commands:
   helm-lint:
     steps:
       - helm/install_helm_client:
-        version: 3.7.2
+          version: 3.7.2
       - run:
-        name: Lint helm chart
-        command: helm lint ./helm_deploy --setFile=key1=./helm_deploy/values-dev.yaml,key2=./helm_deploy/values-uat.yaml,key3=./helm_deploy/values-prod.yaml
+          name: Lint helm chart
+          command: helm lint ./helm_deploy --values ./helm_deploy/values-dev.yaml --values ./helm_deploy/values-uat.yaml --values ./helm_deploy/values-prod.yaml
 
   db-setup:
     steps:
