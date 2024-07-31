@@ -84,6 +84,7 @@ en:
           miles: Miles
         refuse: Refuse disbursement
         explanation: Adjustment reason
+        laa_adjustments: LAA Adjustments
         refuse_status:
           'true': 'Yes'
           'false': 'No'

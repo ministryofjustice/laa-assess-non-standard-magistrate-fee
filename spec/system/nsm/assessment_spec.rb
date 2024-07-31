@@ -123,16 +123,13 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
       expect(evaluate_script('window.scrollY')).to eq 0
 
       find("tbody tr[id=\"#{clicked_id}\"] a").click
+      expect(page).to have_content('Adjust a disbursement')
 
-      click_link_or_button 'Back'
+      click_on 'Back'
 
       expect(page).not_to have_content('Adjust a disbursement')
-      # this is checking the anchor tag
-      expect(current_url).to end_with "##{clicked_id}"
-
-      retry_until_passed do
-        expect(evaluate_script('window.scrollY')).to be > 0
-      end
+      expect(current_url).to end_with("##{clicked_id}")
+      expect(evaluate_script('window.scrollY')).to be > 0
     end
 
     it 'includes the work item ID when navigating back' do
@@ -141,16 +138,13 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
       clicked_id = claim.data['work_items'][53]['id']
       expect(evaluate_script('window.scrollY')).to eq 0
       find("tbody tr[id=\"#{clicked_id}\"] a").click
+      expect(page).to have_content('Adjust a work item')
 
-      click_link_or_button 'Back'
+      click_on 'Back'
 
       expect(page).not_to have_content('Adjust a work item')
-      # this is checking the anchor tag
-      expect(current_url).to end_with "##{clicked_id}"
-
-      retry_until_passed do
-        expect(evaluate_script('window.scrollY')).to be > 0
-      end
+      expect(current_url).to end_with("##{clicked_id}")
+      expect(evaluate_script('window.scrollY')).to be > 0
     end
   end
 end
