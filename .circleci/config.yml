@@ -138,7 +138,7 @@ commands:
             command: helm lint helm_deploy --values helm_deploy/values-<<parameters.environment>>.yaml
         - run:
             name: Check helm template for <<parameters.environment>>
-            command: helm template --debug helm_deploy --values helm_deploy/values-<<parameters.environment>>.yaml | yamllint
+            command: helm template --debug helm_deploy --values helm_deploy/values-<<parameters.environment>>.yaml | yamllint -
 
   db-setup:
     steps:
