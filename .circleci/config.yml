@@ -123,6 +123,18 @@ commands:
           name: Lint helm chart
           command: helm lint ./helm_deploy --values ./helm_deploy/values-dev.yaml --values ./helm_deploy/values-uat.yaml --values ./helm_deploy/values-prod.yaml
 
+  check-env-helm-template:
+      parameters:
+        environment:
+          description: Name of environment to check helm template of
+          type: string
+      steps:
+        - helm/install_helm_client:
+            version: 3.7.2
+        - run:
+            name: Check helm template for <<parameters.environment>>
+            command: helm template --debug  ./helm_deploy --values ./helm_deploy/values-<<parameters.environment>>.yaml
+
   db-setup:
     steps:
       - run:
@@ -226,6 +238,12 @@ jobs:
       - install-gems
       - rubocop
       - helm-lint
+      - check-env-helm-template:
+          environment: dev
+      - check-env-helm-template:
+          environment: uat
+      - check-env-helm-template:
+          environment: prod
 
   rspec-tests:
     parallelism: 2
