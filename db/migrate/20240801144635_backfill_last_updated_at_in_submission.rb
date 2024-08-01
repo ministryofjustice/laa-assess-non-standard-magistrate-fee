@@ -8,8 +8,8 @@ class BackfillLastUpdatedAtInSubmission < ActiveRecord::Migration[7.1]
       # or, if no events exist, then the latest application version created_at date.
       #
 
-      # default to created_at of current verions
-      last_updated_at = submission.latest_version.created_at
+      # default to created_at of current verion
+      last_updated_at = submission.created_at
 
       # Events may not exist or dirty data means some may not have certain expected fields
       if submission.events
