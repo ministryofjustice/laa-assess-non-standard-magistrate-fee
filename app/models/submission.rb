@@ -4,7 +4,17 @@ class Submission < ApplicationRecord
     prior_authority: 'crm4',
   }.freeze
 
-  has_many :events, dependent: :destroy
+  has_many :events, dependent: :destroy do
+    def build(*args)
+      Submission.transaction do
+        event = super
+        event_submission = event.submission
+        event_submission.update(last_updated_at: event.created_at)
+        event
+      end
+    end
+  end
+
   has_many :assignments, dependent: :destroy
 
   validates :current_version, numericality: { only_integer: true, greater_than: 0 }
