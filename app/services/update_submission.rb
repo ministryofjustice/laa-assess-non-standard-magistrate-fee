@@ -65,6 +65,17 @@ class UpdateSubmission
 
   def update_submission
     submission.save!
+    last_updated_at = submission.created_at
+    # Events may not exist or dirty data means some may not have certain expected fields
+    if @record['events']
+      usable_events = @record['events'].select {|ev| ev['created_at'].present? }
+
+      if usable_events.any?
+        latest_event = usable_events.max_by { |ev| ev["created_at"].to_time }
+        last_updated_at = latest_event['created_at'].to_time
+      end
+    end
+    submission.update_columns(last_updated_at:)
 
     @record['events']&.each do |event|
       submission.events.rehydrate!(event, submission.application_type)

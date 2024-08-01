@@ -9,7 +9,7 @@ class Submission < ApplicationRecord
       Submission.transaction do
         event = super
         event_submission = event.submission
-        event_submission.update(last_updated_at: event.created_at)
+        event_submission.update_columns(last_updated_at: event.created_at)
         event
       end
     end
