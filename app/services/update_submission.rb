@@ -22,8 +22,9 @@ class UpdateSubmission
 
     PriorAuthorityApplication.transaction do
       update_submission
-      autogrant if cached_autograntable
+      # ensure new_version happens before the Autogrant
       Event::NewVersion.build(submission:) if new_version_appropriate? && version_changed
+      autogrant if cached_autograntable
     end
 
     submission
@@ -73,6 +74,7 @@ class UpdateSubmission
 
   def autogrant
     previous_state = submission.state
+    submission.data.merge!('updated_at' => Time.current, 'status' => PriorAuthorityApplication::AUTO_GRANT)
     submission.update!(state: PriorAuthorityApplication::AUTO_GRANT)
 
     Event::AutoDecision.build(submission:, previous_state:)
