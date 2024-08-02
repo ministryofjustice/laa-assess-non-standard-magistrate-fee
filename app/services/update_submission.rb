@@ -65,7 +65,7 @@ class UpdateSubmission
 
   def update_submission
     submission.save!
-    last_updated_at = get_last_event_date ? get_last_event_date : submission.created_at
+    last_updated_at = get_last_event_date || submission.created_at
     submission.update(last_updated_at:)
 
     @record['events']&.each do |event|
@@ -81,9 +81,7 @@ class UpdateSubmission
     NotifyAppStore.perform_later(submission:)
   end
 
-  private
-
-  def get_last_event_date
+  def last_event_date
     last_updated_at = nil
     # Events may not exist or dirty data means some may not have certain expected fields
     if @record['events']
