@@ -73,7 +73,7 @@ redis:
   enabled: false
 
 metabase:
-  priorAuthorityDashboardIds: ''
+  priorAuthorityDashboardIds: '3,2'
   nsmDashboardIds: ''
   siteUrl: 'https://crime-forms-metabase.service.justice.gov.uk'
 
