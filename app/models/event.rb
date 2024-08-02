@@ -20,7 +20,19 @@ class Event < ApplicationRecord
     'PriorAuthority::Event::DraftSendBack',
     'PriorAuthority::Event::SendBack',
   ].freeze
+
+  LOCAL_EVENTS = [
+    'Event::ChangeRisk',
+    'Event::DraftDecision',
+    'Event::Edit',
+    'Event::Note',
+    'Event::UndoEdit',
+    'PriorAuthority::Event::DraftSendBack',
+  ].freeze
+
   scope :history, -> { where(event_type: HISTORY_EVENTS).order(created_at: :desc) }
+
+  scope :non_local, -> { where.not(event_type: LOCAL_EVENTS) }
 
   # simplifies the rehydrate process
   attribute :public

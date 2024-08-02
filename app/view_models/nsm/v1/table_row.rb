@@ -8,7 +8,7 @@ module Nsm
       attribute :firm_office
       attribute :submission
       attribute :risk
-      delegate :updated_at, to: :submission
+      delegate :last_updated_at, to: :submission
 
       def main_defendant_name
         main_defendant = defendants.detect { |defendant| defendant['main'] }
@@ -20,7 +20,7 @@ module Nsm
       end
 
       def date_updated
-        updated_at.to_fs(:stamp)
+        last_updated_at.to_fs(:stamp)
       end
 
       def case_worker_name
