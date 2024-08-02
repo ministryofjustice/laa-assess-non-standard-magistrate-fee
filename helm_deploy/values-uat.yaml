@@ -27,7 +27,7 @@ ingress:
   namespace: laa-assess-crime-forms-uat
   className: modsec
   modsec:
-    ruleState: "DetectionOnly"
+    ruleState: "On"
     auditState: "On"
   annotations:
     external-dns.alpha.kubernetes.io/set-identifier: laa-assess-crime-forms-app-laa-assess-crime-forms-uat-green
