@@ -45,7 +45,7 @@ gem 'with_advisory_lock'
 group :development, :test do
   gem 'debug', platforms: %i[mri windows]
   gem 'dotenv-rails'
-  gem 'erb_lint', require: false
+  gem 'erb_lint', '>= 0.6.0', require: false
   gem 'overcommit'
   gem 'pry'
   gem 'rspec-expectations'
@@ -61,7 +61,7 @@ group :test do
   gem 'launchy'
   gem 'rails-controller-testing'
   gem 'rspec-html-matchers'
-  gem 'rubocop', require: false
+  gem 'rubocop', '>= 1.65.1', require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', '>= 2.25.1', require: false
   gem 'rubocop-rspec', require: false
