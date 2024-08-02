@@ -65,16 +65,7 @@ class UpdateSubmission
 
   def update_submission
     submission.save!
-    last_updated_at = submission.created_at
-    # Events may not exist or dirty data means some may not have certain expected fields
-    if @record['events']
-      usable_events = @record['events'].select { |ev| ev['created_at'].present? }
-
-      if usable_events.any?
-        latest_event = usable_events.max_by { |ev| ev['created_at'].to_time }
-        last_updated_at = latest_event['created_at'].to_time
-      end
-    end
+    last_updated_at = get_last_event_date ? get_last_event_date : submission.created_at
     submission.update(last_updated_at:)
 
     @record['events']&.each do |event|
@@ -88,5 +79,21 @@ class UpdateSubmission
 
     Event::AutoDecision.build(submission:, previous_state:)
     NotifyAppStore.perform_later(submission:)
+  end
+
+  private
+
+  def get_last_event_date
+    last_updated_at = nil
+    # Events may not exist or dirty data means some may not have certain expected fields
+    if @record['events']
+      usable_events = @record['events'].select { |ev| ev['created_at'].present? }
+
+      if usable_events.any?
+        latest_event = usable_events.max_by { |ev| ev['created_at'].to_time }
+        last_updated_at = latest_event['created_at'].to_time
+      end
+    end
+    last_updated_at
   end
 end
