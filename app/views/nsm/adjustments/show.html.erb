@@ -1,9 +1,5 @@
 <% title t('.page_title') %>
 
-<h3 class="govuk-heading-m">
-  <%= t(".#{scope}") %>
-</h3>
-
 <%= render partial: 'nsm/claims/claim_summary', locals: { claim:, claim_summary: } %>
 <%= render partial: 'nsm/claims/claim_nav', locals: { claim: claim, current_page: 'adjustments' } %>
 <div class="govuk-grid-row">
@@ -26,6 +22,10 @@
       </ul>
 
       <div class="govuk-tabs__panel">
+        <h3 class="govuk-heading-m">
+          <%= t(".#{scope}") %>
+        </h3>
+
         <%= render partial: "nsm/#{scope}/adjusted", locals: { claim:, records:, pagy: } %>
       </div>
     </div>

@@ -131,8 +131,12 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
       end
 
       context 'search analytics available' do
+        let(:applications) do
+          create_list(:prior_authority_application,
+                      20) + create_list(:prior_authority_application, 1, state: 'sent_back', updated_at: Date.yesterday - 1)
+        end
         let(:endpoint) { 'https://appstore.example.com/v1/submissions/searches' }
-        let(:payload) do
+        let(:search_payload) do
           {
             application_type: 'crm4',
             explicit_application_type: true,
@@ -142,16 +146,34 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
             sort_direction: 'descending',
           }
         end
+        let(:sort_payload) do
+          {
+            application_type: 'crm4',
+            explicit_application_type: true,
+            page: 1,
+            per_page: 20,
+            sort_by: 'status_with_assignment',
+            sort_direction: 'ascending',
+          }
+        end
 
-        let(:stub) do
-          stub_request(:post, endpoint).with(body: payload).to_return(
-            status: 200,
-            body: { metadata: { total_results: 0 }, raw_data: [] }.to_json
+        let(:search_stub) do
+          stub_request(:post, endpoint).with(body: search_payload).to_return(
+            status: 201, body: { metadata: { total_results: 21 },
+                                 raw_data: applications.map { { application_id: _1.id, application: _1.data } } }.to_json
+          )
+        end
+
+        let(:sort_stub) do
+          stub_request(:post, endpoint).with(body: sort_payload).to_return(
+            status: 201, body: { metadata: { total_results: 21 },
+                                 raw_data: applications.map { { application_id: _1.id, application: _1.data } } }.to_json
           )
         end
 
         before do
-          stub
+          search_stub
+          sort_stub
           visit dashboard_path
           click_on 'Search'
         end
@@ -167,7 +189,19 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
             click_on 'Search'
           end
 
-          expect(stub).to have_been_requested
+          expect(search_stub).to have_been_requested
+        end
+
+        it 'can sort results' do
+          within('.search-panel') do
+            choose 'Prior authority'
+            click_on 'Search'
+          end
+
+          expect(page).to have_css('.govuk-table')
+          click_link 'Status'
+          expect(sort_stub).to have_been_requested
+          expect(page.find('.govuk-table')).to have_text 'Sent back'
         end
       end
     end

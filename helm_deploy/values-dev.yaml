@@ -64,14 +64,6 @@ variables:
 service_account:
   name: laa-assess-crime-forms-dev-irsa
 
-securityContext:
-  runAsNonRoot: true
-  allowPrivilegeEscalation: false
-  seccompProfile:
-    type: RuntimeDefault
-  capabilities:
-    drop: [ "ALL" ]
-
 # This is used to configure the temporary non-RDS postgres DB
 postgresql:
   enabled: true

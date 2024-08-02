@@ -111,6 +111,18 @@ FactoryBot.define do
       end
     end
 
+    trait :part_granted do
+      event_type { Event::Decision.to_s }
+      details do
+        {
+          field: 'state',
+          from: 'submitted',
+          to: 'part_grant',
+          comment: 'Allowing in part'
+        }
+      end
+    end
+
     trait :provider_updated do
       event_type { Event::ProviderUpdated.to_s }
       details do

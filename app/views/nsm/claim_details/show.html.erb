@@ -12,7 +12,7 @@
         <p><strong><%= t(".assessed_statuses.#{claim.state}") %></strong></p>
         <p> <%= simple_format claim_summary.assessment_comment %></p>
         <% if claim.part_grant? %>
-          <p> <%= link_to t('.review_adjustments'), nsm_claim_adjustments_path(claim) %></p>
+          <p> <%= link_to t('.review_adjustments'), adjusted_nsm_claim_work_items_path(claim) %></p>
         <% end %>
       </div>
     <% end %>

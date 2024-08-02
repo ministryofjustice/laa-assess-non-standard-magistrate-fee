@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.shared_examples 'a correctly ordered results (both ascending and descending)' do |results|
+RSpec.shared_examples 'correctly ordered work item results (both ascending and descending)' do |results|
   it { expect(subject).to eq(results) }
 
   context 'when descending order' do
@@ -36,7 +36,7 @@ sort_field => sort_value_c1),
     let(:sort_by) { 'item' }
     let(:sort_field) { 'uplift' }
 
-    it_behaves_like 'a correctly ordered results (both ascending and descending)', %w[A1 B1 C1]
+    it_behaves_like 'correctly ordered work item results (both ascending and descending)', %w[A1 B1 C1]
   end
 
   context 'when sorting by work_type' do
@@ -45,7 +45,7 @@ sort_field => sort_value_c1),
     let(:sort_value_a1) { 'Waiting' }
     let(:sort_value_b1) { 'Travel' }
 
-    it_behaves_like 'a correctly ordered results (both ascending and descending)', %w[B1 C1 A1]
+    it_behaves_like 'correctly ordered work item results (both ascending and descending)', %w[B1 C1 A1]
   end
 
   context 'when sorting by completed_on' do
@@ -55,7 +55,7 @@ sort_field => sort_value_c1),
     let(:sort_value_b1) { Date.new(2023, 1, 4) }
     let(:sort_value_c1) { Date.new(2023, 1, 1) }
 
-    it_behaves_like 'a correctly ordered results (both ascending and descending)', %w[C1 A1 B1]
+    it_behaves_like 'correctly ordered work item results (both ascending and descending)', %w[C1 A1 B1]
   end
 
   context 'when sorting by claimed uplift' do
@@ -65,7 +65,7 @@ sort_field => sort_value_c1),
     let(:sort_value_b1) { nil } # nil treated as 0
     let(:sort_value_c1) { 100 }
 
-    it_behaves_like 'a correctly ordered results (both ascending and descending)', %w[B1 A1 C1]
+    it_behaves_like 'correctly ordered work item results (both ascending and descending)', %w[B1 A1 C1]
   end
 
   context 'when sorting by allowed uplift' do
@@ -75,7 +75,7 @@ sort_field => sort_value_c1),
     let(:sort_value_b1) { nil } # nil treated as 0
     let(:sort_value_c1) { 100 }
 
-    it_behaves_like 'a correctly ordered results (both ascending and descending)', %w[B1 A1 C1]
+    it_behaves_like 'correctly ordered work item results (both ascending and descending)', %w[B1 A1 C1]
   end
 
   context 'when sorting allowed_net_cost uplift' do
@@ -85,12 +85,12 @@ sort_field => sort_value_c1),
     let(:sort_value_b1) { 100 } # nil treated as 0
     let(:sort_value_c1) { 50 }
 
-    it_behaves_like 'a correctly ordered results (both ascending and descending)', %w[C1 A1 B1]
+    it_behaves_like 'correctly ordered work item results (both ascending and descending)', %w[C1 A1 B1]
 
     context 'when no adjustments exists on some records' do
       let(:adjustments_b1) { false }
 
-      it_behaves_like 'a correctly ordered results (both ascending and descending)', %w[B1 C1 A1]
+      it_behaves_like 'correctly ordered work item results (both ascending and descending)', %w[B1 C1 A1]
     end
   end
 end
