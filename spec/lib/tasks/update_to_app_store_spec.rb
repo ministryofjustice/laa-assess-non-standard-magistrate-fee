@@ -19,7 +19,7 @@ describe 'update_to_app_store:', type: :task do
     end
 
     it 'runs only for submissions with autogrant events' do
-      arguments = [autogrant_submission, non_autogrant_submission].map{ _1.id }.join(",")
+      arguments = [autogrant_submission, non_autogrant_submission].map(&:id).join(',')
 
       Rake::Task['update_to_app_store:sync_autogrant_events'].invoke(arguments)
       expect(NotifyEventAppStore).to have_received(:perform_later).once
