@@ -5,8 +5,9 @@ namespace :update_to_app_store do
     id_array.each do |submission_id| do
       working_submission = Submission.find(submission_id)
       if working_submission.present?
-        print "Syncing events to app store for submission: #{submission_id}"
-        NotifyAppStore.notify(MessageBuilder.new(submission: working_submission))
+        autogrant_event = working_submission.events.find_by(event_type: 'auto_decision')
+        print "Syncing events to app store for Submission: #{submission_id}"
+        NotifyEventAppStore.perform_later(event: autogrant_event)
       end
     end
   end
