@@ -22,6 +22,7 @@ en:
       your_claims: Your claims
       all_claims: Open claims
       assessed_claims: Closed claims
+      search: Search
     phase_banner:
       phase: Beta
       phase_description_html: This is a new service – your <a class="govuk-link" href="%{feedback}">feedback</a> will help us to improve it.

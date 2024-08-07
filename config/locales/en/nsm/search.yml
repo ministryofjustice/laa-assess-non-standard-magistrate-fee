@@ -1,0 +1,30 @@
+---
+en:
+  search:
+    show_all: Show all
+    statuses:
+      not_assigned: Not assigned
+      in_progress: In progress
+      provider_updated: Provider updated
+      sent_back: Sent back
+      granted: Granted
+      auto_grant: Auto-granted
+      part_grant: Part granted
+      rejected: Rejected
+      expired: Expired
+    unassigned: Unassigned
+  nsm:
+    searches:
+      show:
+        page_title: Search for an claim
+        query:
+          label: Claim details
+          hint: Search for a client name, firm name, UFN or LAA reference
+  activemodel:
+    errors:
+      models:
+        search_form:
+          attributes:
+            base:
+              nothing_specified: Enter some application details or filter your search criteria
+              search_error: Something went wrong trying to perform this search
