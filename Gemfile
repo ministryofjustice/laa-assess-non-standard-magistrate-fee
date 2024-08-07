@@ -40,6 +40,7 @@ gem 'pagy'
 # Exception monitoring
 gem 'sentry-rails', '>= 5.17.3'
 gem 'sentry-ruby'
+gem 'sentry-sidekiq'
 gem 'with_advisory_lock'
 
 group :development, :test do
