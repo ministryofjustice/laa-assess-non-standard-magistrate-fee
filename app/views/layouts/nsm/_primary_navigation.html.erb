@@ -1,3 +1,4 @@
+<% current ||= :your %>
 <div class="moj-primary-navigation">
   <div class="moj-primary-navigation__container">
     <div class="moj-primary-navigation__nav">
@@ -14,7 +15,7 @@
               </li>
               <% if FeatureFlags.search.enabled? %>
                 <li class="moj-primary-navigation__item">
-                  <%= link_to t('layouts.primary_navigation.search'), new_nsm_search_path, class: 'moj-primary-navigation__link', 'aria-current': (controller.action_name == 'new' ? 'page' : nil) %>
+                  <%= link_to t('layouts.primary_navigation.search'), new_nsm_search_path, class: 'moj-primary-navigation__link', 'aria-current': (controller.controller_name == 'searches' ? 'page' : nil) %>
                 </li>
               <% end %>
           </ul>
