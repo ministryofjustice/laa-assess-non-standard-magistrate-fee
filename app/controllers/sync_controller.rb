@@ -9,6 +9,7 @@ class SyncController < ApplicationController
   end
 
   def sync_individual
+    Rails.logger.info("SYNCING SUBMISSION")
     UpdateSubmission.call(params[:data].permit!.to_h)
     head :ok
   end

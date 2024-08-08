@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
 
   def check_maintenance_mode
     return unless FeatureFlags.maintenance_mode.enabled?
-
+    Rails.logger.info "ACTION TRIGGERED WHILST IN MAINTENANCE MODE"
     render file: 'public/maintenance.html', layout: false
   end
 end
