@@ -25,6 +25,7 @@ class SearchForm
   attribute :explicit_application_type, :boolean, default: false
 
   validate :at_least_one_field_set
+  validate :application_type_check
 
   def results
     @search_response[:raw_data].map { SearchResult.new(_1) }
@@ -82,6 +83,10 @@ class SearchForm
     end
 
     errors.add(:base, :nothing_specified) unless field_set
+  end
+
+  def application_type_check
+    errors.add(:application_type, :nothing_specified) if explicit_application_type && send(:application_type).blank?
   end
 
   def search_params
