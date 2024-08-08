@@ -21,7 +21,6 @@
           "value": "m"
         },
         "status": "completed",
-        "in_area": "no",
         "submitter": {
             "email": "provider@example.com",
             "description": null
