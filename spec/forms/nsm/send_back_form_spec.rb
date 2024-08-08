@@ -38,7 +38,7 @@ RSpec.describe Nsm::SendBackForm do
 
     it 'updates the claim' do
       subject.save
-      expect(claim.reload).to have_attributes(state: 'further_info')
+      expect(claim.reload).to have_attributes(state: 'sent_back')
     end
 
     it 'removes the assignment' do

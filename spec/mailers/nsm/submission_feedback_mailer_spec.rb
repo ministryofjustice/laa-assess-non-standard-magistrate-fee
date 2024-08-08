@@ -67,7 +67,7 @@ RSpec.describe Nsm::SubmissionFeedbackMailer, type: :mailer do
   end
 
   describe 'further information' do
-    let(:submission) { build(:claim, state: 'further_information') }
+    let(:submission) { build(:claim, state: 'sent_back') }
     let(:feedback_template) { '9ecdec30-83d7-468d-bec2-cf770a2c9828' }
     let(:date_to_respond_by) { 7.days.from_now.to_fs(:stamp) }
     let(:caseworker_information_requested) { '' }
