@@ -136,8 +136,6 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
                       20) + create_list(:prior_authority_application, 1, state: 'sent_back', updated_at: Date.yesterday - 1)
         end
         let(:endpoint) { 'https://appstore.example.com/v1/submissions/searches' }
-        let(:search_payload) { {} }
-        let(:sort_payload) { {} }
         let(:search_stub) do
           stub_request(:post, endpoint).with(body: search_payload).to_return(
             status: 201, body: { metadata: { total_results: 21 },
