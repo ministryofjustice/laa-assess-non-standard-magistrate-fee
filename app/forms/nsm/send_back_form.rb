@@ -4,7 +4,7 @@ module Nsm
     include ActiveModel::Attributes
     include ActiveRecord::AttributeAssignment
 
-    FURTHER_INFO = 'further_info'.freeze
+    SENT_BACK = 'sent_back'.freeze
 
     attribute :comment
     attribute :current_user
@@ -18,8 +18,8 @@ module Nsm
 
       previous_state = claim.state
       Claim.transaction do
-        claim.data.merge!('status' => FURTHER_INFO, 'updated_at' => Time.current)
-        claim.update!(state: FURTHER_INFO)
+        claim.data.merge!('status' => SENT_BACK, 'updated_at' => Time.current)
+        claim.update!(state: SENT_BACK)
         claim.assignments.destroy_all
         Nsm::Event::SendBack.build(submission: claim, comment: comment, previous_state: previous_state,
                                    current_user: current_user)

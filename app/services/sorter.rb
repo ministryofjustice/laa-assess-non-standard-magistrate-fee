@@ -5,7 +5,6 @@ class Sorter
   CASE WHEN state = 'submitted' THEN
          CASE WHEN users.id IS NULL THEN  'not_assigned'
          ELSE 'in_progress' END
-       WHEN state = 'further_info' THEN 'sent_back'
        ELSE state END ?
   SQL
 
