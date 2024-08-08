@@ -77,7 +77,7 @@ RSpec.describe Nsm::UnassignmentsController do
         it 'redirects to claim page' do
           put :update, params: {
             claim_id: claim.id,
-            nsm_unassignment_form: { state: 'further_info', comment: nil, id: claim.id }
+            nsm_unassignment_form: { state: 'sent_back', comment: nil, id: claim.id }
           }
 
           expect(response).to redirect_to(nsm_claim_claim_details_path(claim))

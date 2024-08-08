@@ -53,7 +53,6 @@ en:
       sent_back: Sent back
       provider_updated: Provider updated
       expired: Expired
-      further_info: Sent back
     search:
       search: Search
       clear_all: Clear all

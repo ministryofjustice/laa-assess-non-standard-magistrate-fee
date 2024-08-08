@@ -23,11 +23,11 @@ RSpec.describe 'History events' do
     Event::ChangeRisk.build(submission: claim, explanation: 'Risk change test', previous_risk_level: 'high',
                             current_user: caseworker)
     Event::Note.build(submission: claim, current_user: caseworker, note: 'User test note')
-    claim.state = 'further_info'
+    claim.state = 'sent_back'
     Nsm::Event::SendBack.build(submission: claim, current_user: caseworker, previous_state: 'submitted',
                                comment: 'Send Back test')
     claim.state = 'granted'
-    Event::Decision.build(submission: claim, current_user: caseworker, previous_state: 'further_info',
+    Event::Decision.build(submission: claim, current_user: caseworker, previous_state: 'sent_back',
                           comment: 'Decision test')
     Event::Unassignment.build(submission: claim, user: caseworker, current_user: supervisor,
                               comment: 'unassignment 2')
