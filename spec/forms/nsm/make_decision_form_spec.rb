@@ -77,9 +77,14 @@ RSpec.describe Nsm::MakeDecisionForm do
 
     it { expect(subject.save).to be_truthy }
 
-    it 'updates the claim' do
+    it 'updates the state' do
       subject.save
       expect(claim.reload).to have_attributes(state: 'part_grant')
+    end
+
+    it 'adds an assessment comment' do
+      subject.save
+      expect(claim.reload.data).to include('assessment_comment' => 'part comment')
     end
 
     it 'creates a Decision event' do

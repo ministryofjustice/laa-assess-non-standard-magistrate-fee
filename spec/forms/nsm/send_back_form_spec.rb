@@ -36,9 +36,14 @@ RSpec.describe Nsm::SendBackForm do
 
     it { expect(subject.save).to be_truthy }
 
-    it 'updates the claim' do
+    it 'updates the state' do
       subject.save
       expect(claim.reload).to have_attributes(state: 'sent_back')
+    end
+
+    it 'adds the comment' do
+      subject.save
+      expect(claim.reload.data).to include('assessment_comment' => 'some comment')
     end
 
     it 'removes the assignment' do
