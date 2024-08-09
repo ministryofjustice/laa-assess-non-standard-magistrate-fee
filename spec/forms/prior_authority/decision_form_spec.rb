@@ -114,4 +114,22 @@ RSpec.describe PriorAuthority::DecisionForm do
       end
     end
   end
+
+  describe '#save' do
+    let(:params) do
+      {
+        pending_decision: 'granted',
+        pending_granted_explanation: 'granted_explanation',
+        submission: submission,
+        current_user: current_user
+      }
+    end
+    let(:current_user) { create(:caseworker) }
+
+    before { subject.save }
+
+    it 'adds an assessment comment to the payload' do
+      expect(submission.reload.data).to include('assessment_comment' => 'granted_explanation')
+    end
+  end
 end

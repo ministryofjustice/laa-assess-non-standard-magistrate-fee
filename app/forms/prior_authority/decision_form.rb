@@ -46,7 +46,7 @@ module PriorAuthority
     end
 
     def stash(add_draft_decision_event: true)
-      submission.data.merge!(attributes.except('submission', 'current_user'))
+      submission.data.merge!(attributes.except('submission', 'current_user').merge('assessment_comment' => explanation))
       submission.save!
 
       return unless add_draft_decision_event

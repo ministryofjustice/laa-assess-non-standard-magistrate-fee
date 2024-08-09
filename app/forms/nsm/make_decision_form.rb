@@ -27,7 +27,7 @@ module Nsm
 
       previous_state = claim.state
       Claim.transaction do
-        claim.data.merge!('status' => state, 'updated_at' => Time.current)
+        claim.data.merge!('status' => state, 'updated_at' => Time.current, 'assessment_comment' => comment)
         claim.update!(state:)
         ::Event::Decision.build(submission: claim,
                                 comment: comment,
