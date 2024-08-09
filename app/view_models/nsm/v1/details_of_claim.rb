@@ -4,6 +4,9 @@ module Nsm
       attribute :ufn
       attribute :claim_type, :translated
       attribute :rep_order_date
+      attribute :cntp_order
+      attribute :cntp_date
+      attribute :stage_reached
 
       def key
         'details_of_claim'
@@ -14,6 +17,10 @@ module Nsm
       end
 
       def data
+        first_rows + middle_rows + final_rows
+      end
+
+      def first_rows
         [
           {
             title: I18n.t(".nsm.claim_details.#{key}.ufn"),
@@ -23,9 +30,44 @@ module Nsm
             title: I18n.t(".nsm.claim_details.#{key}.claim_type"),
             value:  claim_type.to_s
           },
+        ]
+      end
+
+      def middle_rows
+        if claim_type.value == 'breach_of_injunction'
+          breach_rows
+        else
+          magistrates_rows
+        end
+      end
+
+      def magistrates_rows
+        [
           {
             title: I18n.t(".nsm.claim_details.#{key}.rep_order_date"),
             value: format_in_zone(rep_order_date)
+          },
+        ]
+      end
+
+      def breach_rows
+        [
+          {
+            title: I18n.t(".nsm.claim_details.#{key}.cntp_order"),
+            value: cntp_order
+          },
+          {
+            title: I18n.t(".nsm.claim_details.#{key}.cntp_date"),
+            value: format_in_zone(cntp_date)
+          }
+        ]
+      end
+
+      def final_rows
+        [
+          {
+            title: I18n.t(".nsm.claim_details.#{key}.stage_reached"),
+            value: I18n.t(".nsm.claim_details.#{key}.stages.#{stage_reached}")
           }
         ]
       end

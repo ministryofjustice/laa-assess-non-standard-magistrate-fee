@@ -7,7 +7,6 @@ RSpec.describe Nsm::V1::HearingDetails do
     end
   end
 
-  # rubocop:disable RSpec/ExampleLength
   describe '#rows' do
     it 'has correct structure' do
       subject = described_class.new(
@@ -15,7 +14,6 @@ RSpec.describe Nsm::V1::HearingDetails do
           'first_hearing_date' => '2023-01-02',
           'number_of_hearing' => 3,
           'court' => 'A Mag Court',
-          'in_area' => 'yes',
           'youth_court' => 'no',
           'hearing_outcome' => {
             'value' => 'CP01',
@@ -32,7 +30,6 @@ RSpec.describe Nsm::V1::HearingDetails do
       expect(subject.rows).to have_key(:data)
     end
   end
-  # rubocop:enable RSpec/ExampleLength
 
   describe '#data' do
     subject = described_class.new(
@@ -40,7 +37,6 @@ RSpec.describe Nsm::V1::HearingDetails do
         'first_hearing_date' => '2023-01-02',
         'number_of_hearing' => 3,
         'court' => 'A Mag Court',
-        'in_area' => 'yes',
         'youth_court' => 'no',
         'hearing_outcome' => {
           'value' => 'CP01',
@@ -59,7 +55,6 @@ RSpec.describe Nsm::V1::HearingDetails do
           { title: 'Date of first hearing', value: '2 January 2023' },
           { title: 'Number of hearings', value: 3 },
           { title: "Magistrates' court", value: 'A Mag Court' },
-          { title: 'Court is in designated area of the firm', value: 'Yes' },
           { title: 'Youth court', value: 'No' },
           { title: 'Hearing outcome', value: 'CP01 - Hearing Done' },
           { title: 'Matter type', value: '2 - A Simple Matter' },
