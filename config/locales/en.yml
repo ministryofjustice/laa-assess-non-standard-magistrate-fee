@@ -36,6 +36,9 @@ en:
     application_type:
       crm4: 'Prior authority'
       crm7: 'Non-standard magistrates'
+    submission_noun:
+      crm4: 'application'
+      crm7: 'claim'
     save_changes: Save changes
     cancel: Cancel
     true: 'Yes'
