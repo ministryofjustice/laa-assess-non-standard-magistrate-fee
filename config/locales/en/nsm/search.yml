@@ -16,15 +16,7 @@ en:
   nsm:
     searches:
       show:
-        page_title: Search for an claim
+        page_title: Search for a claim
         query:
           label: Claim details
           hint: Search for a client name, firm name, UFN or LAA reference
-  activemodel:
-    errors:
-      models:
-        search_form:
-          attributes:
-            base:
-              nothing_specified: Enter some application details or filter your search criteria
-              search_error: Something went wrong trying to perform this search

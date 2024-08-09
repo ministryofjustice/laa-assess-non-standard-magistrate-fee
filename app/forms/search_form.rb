@@ -82,7 +82,9 @@ class SearchForm
       send(field).present?
     end
 
-    errors.add(:base, :nothing_specified) unless field_set
+    search_type = { crm7: 'claim', crm4: 'application' }
+
+    errors.add(:base, :nothing_specified, value: search_type[application_type.to_sym]) unless field_set
   end
 
   def application_type_check
