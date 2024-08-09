@@ -1,4 +1,6 @@
 class BackfillAssessmentComments < ActiveRecord::Migration[7.1]
+  disable_ddl_transaction!
+
   def up
     Submission.where(state: %w[granted rejected part_grant]).find_each do |submission|
       event = submission.events.find_by(event_type: 'Event::Decision')
