@@ -1,5 +1,7 @@
 module Nsm
   class SearchesController < BaseController
+    before_action :set_current_section
+
     def show
       @search_form = SearchForm.new(search_params)
       @search_form.execute if @search_form.valid?
@@ -31,6 +33,10 @@ module Nsm
         application_type: Submission::APPLICATION_TYPES[:nsm],
         page: params.fetch(:page, '1')
       }
+    end
+
+    def set_current_section
+      @current_section = :search
     end
   end
 end

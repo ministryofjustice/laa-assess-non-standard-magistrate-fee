@@ -3,6 +3,7 @@ module Nsm
     before_action :set_default_table_sort_options, only: %i[your open closed]
 
     def your
+      @current_section = :your
       pagy, filtered_claims = order_and_paginate(Claim.pending_and_assigned_to(current_user))
       your_claims = filtered_claims.map { |claim| BaseViewModel.build(:table_row, claim) }
 
@@ -10,11 +11,13 @@ module Nsm
     end
 
     def open
+      @current_section = :open
       @pagy, claims = order_and_paginate(Claim.pending_decision)
       @claims = claims.map { |claim| BaseViewModel.build(:table_row, claim) }
     end
 
     def closed
+      @current_section = :closed
       @pagy, claims = order_and_paginate(Claim.decision_made)
       @claims = claims.map { |claim| BaseViewModel.build(:table_row, claim) }
     end
