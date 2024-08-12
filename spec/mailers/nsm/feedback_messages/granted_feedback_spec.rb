@@ -11,7 +11,7 @@ RSpec.describe Nsm::FeedbackMessages::GrantedFeedback do
   let(:laa_case_reference) { 'LAA-FHaMVK' }
   let(:ufn) { '123456/001' }
   let(:main_defendant_name) { 'Tracy Linklater' }
-  let(:defendant_reference) { 'MAAT ID: AB12123' }
+  let(:defendant_reference) { 'MAAT ID number: AB12123' }
   let(:claim_total) { '£325.97' }
   let(:date) { DateTime.now.to_fs(:stamp) }
 
