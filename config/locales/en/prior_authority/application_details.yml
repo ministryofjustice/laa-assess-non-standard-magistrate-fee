@@ -37,7 +37,7 @@ en:
       not_known: Not known
       main_offence: Main offence
       rep_order_date_string: Date of representation order
-      maat: MAAT number
+      maat: MAAT ID number
       client_detained_string: Client detained
       prison: Where client is detained
       subject_to_poca_string: Subject to POCA
