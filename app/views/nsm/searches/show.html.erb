@@ -1,0 +1,2 @@
+<% title t('.page_title') %>
+<%= render partial: 'shared/search', locals: { form_url: nsm_search_path(anchor: 'search-results'), title: true, choose_application_type: false, clear_all_path: new_nsm_search_path, additional_param: nil, translation_prefix: 'nsm.searches.show', controller_path: 'nsm/searches'} %>

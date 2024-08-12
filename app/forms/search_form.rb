@@ -82,7 +82,7 @@ class SearchForm
       send(field).present?
     end
 
-    errors.add(:base, :nothing_specified) unless field_set
+    errors.add(:base, :nothing_specified, value: I18n.t("shared.submission_noun.#{application_type}")) unless field_set
   end
 
   def application_type_check

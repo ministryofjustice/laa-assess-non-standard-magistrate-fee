@@ -80,6 +80,7 @@ Rails.application.routes.draw do
       resources :assignments, only: %i[new create]
     end
 
+    resource :search, only: %i[new show]
     get 'claims/:claim', to: redirect('claims/%{claim}/claim_details')
   end
 

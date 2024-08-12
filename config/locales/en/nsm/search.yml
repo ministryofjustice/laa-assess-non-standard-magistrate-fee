@@ -1,3 +1,4 @@
+---
 en:
   search:
     show_all: Show all
@@ -12,10 +13,10 @@ en:
       rejected: Rejected
       expired: Expired
     unassigned: Unassigned
-  prior_authority:
+  nsm:
     searches:
       show:
-        page_title: Search for an application
+        page_title: Search for a claim
         query:
-          label: Application details
+          label: Claim details
           hint: Search for a client name, firm name, UFN or LAA reference
