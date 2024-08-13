@@ -230,4 +230,37 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
     end
   end
+
+  describe '#infer_claim_section' do
+    it 'returns nothing if there is no relevant param' do
+      expect(helper.infer_claim_section).to be_nil
+    end
+
+    context 'when there is a claim param' do
+      before do
+        allow(helper).to receive_messages(params: { claim_id: claim.id }, current_user: user)
+      end
+
+      let(:claim) { create :claim }
+      let(:user) { create :caseworker }
+
+      it { expect(helper.infer_claim_section).to eq :open }
+
+      context 'when the claim is assessed' do
+        let(:claim) do
+          create :claim, state: 'granted'
+        end
+
+        it { expect(helper.infer_claim_section).to eq :closed }
+      end
+
+      context 'when the claim is assigned to current user' do
+        before do
+          claim.assignments.create(user:)
+        end
+
+        it { expect(helper.infer_claim_section).to eq :your }
+      end
+    end
+  end
 end
