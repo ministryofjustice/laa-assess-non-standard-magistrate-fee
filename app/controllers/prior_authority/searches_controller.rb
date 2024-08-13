@@ -1,19 +1,19 @@
 module PriorAuthority
   class SearchesController < BaseController
     def show
-      @search_form = SearchForm.new(search_params)
+      @search_form = PriorAuthority::SearchForm.new(search_params)
       @search_form.execute if @search_form.valid?
     end
 
     def new
-      @search_form = SearchForm.new(default_params)
+      @search_form = PriorAuthority::SearchForm.new(default_params)
       render :show
     end
 
     private
 
     def search_params
-      params.require(:search_form).permit(
+      params.require(:prior_authority_search_form).permit(
         :query,
         :submitted_from,
         :submitted_to,

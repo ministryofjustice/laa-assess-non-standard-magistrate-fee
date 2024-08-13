@@ -73,7 +73,7 @@ RSpec.describe 'Search', :stub_oauth_token do
     end
 
     it 'imports records it did not have yet' do
-      visit prior_authority_search_path(search_form: { query: 'QUERY' })
+      visit prior_authority_search_path(prior_authority_search_form: { query: 'QUERY' })
       expect(PriorAuthorityApplication.find_by(id:)).not_to be_nil
     end
   end
@@ -94,7 +94,7 @@ RSpec.describe 'Search', :stub_oauth_token do
     end
 
     it 'tells me if there are no results' do
-      visit prior_authority_search_path(search_form: { query: 'QUERY' })
+      visit prior_authority_search_path(prior_authority_search_form: { query: 'QUERY' })
       expect(page).to have_content 'There are no results that match the search criteria'
     end
   end
@@ -108,7 +108,7 @@ RSpec.describe 'Search', :stub_oauth_token do
 
     it 'notifies sentry and shows an error' do
       expect(Sentry).to receive(:capture_exception)
-      visit prior_authority_search_path(search_form: { query: 'QUERY' })
+      visit prior_authority_search_path(prior_authority_search_form: { query: 'QUERY' })
       expect(page).to have_content 'Something went wrong trying to perform this search'
     end
   end
@@ -138,7 +138,7 @@ sort_direction: 'ascending' },
     before { stubs }
 
     it 'lets me sort and paginate' do
-      visit prior_authority_search_path(search_form: { query: 'QUERY' })
+      visit prior_authority_search_path(prior_authority_search_form: { query: 'QUERY' })
       within('.govuk-table__head') { click_link 'LAA reference' }
       within('.govuk-pagination__list') { click_on '2' }
       expect(stubs).to all have_been_requested
