@@ -33,8 +33,8 @@ module Nsm
                                 comment: comment,
                                 previous_state: previous_state,
                                 current_user: current_user)
-        NotifyAppStore.perform_later(submission: claim)
       end
+      NotifyAppStore.perform_later(submission: claim)
 
       true
     end

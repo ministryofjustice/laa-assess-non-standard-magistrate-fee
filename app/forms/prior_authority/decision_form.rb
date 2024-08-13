@@ -39,8 +39,9 @@ module PriorAuthority
                                 comment: explanation,
                                 previous_state: previous_state,
                                 current_user: current_user)
-        NotifyAppStore.perform_later(submission:)
       end
+
+      NotifyAppStore.perform_later(submission:)
 
       true
     end
