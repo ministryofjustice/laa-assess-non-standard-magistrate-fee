@@ -18,8 +18,9 @@ module Nsm
 
       Claim.transaction do
         update_local_data
-        NotifyAppStore.perform_later(submission: claim)
       end
+
+      NotifyAppStore.perform_later(submission: claim)
 
       true
     end

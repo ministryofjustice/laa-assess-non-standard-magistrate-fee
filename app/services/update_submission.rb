@@ -27,6 +27,8 @@ class UpdateSubmission
       autogrant if cached_autograntable
     end
 
+    NotifyAppStore.perform_later(submission:) if cached_autograntable
+
     submission
   end
 
@@ -78,6 +80,5 @@ class UpdateSubmission
     submission.update!(state: PriorAuthorityApplication::AUTO_GRANT)
 
     Event::AutoDecision.build(submission:, previous_state:)
-    NotifyAppStore.perform_later(submission:)
   end
 end
