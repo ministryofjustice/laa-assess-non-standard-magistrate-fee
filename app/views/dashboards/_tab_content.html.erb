@@ -1,5 +1,13 @@
 <% if @nav_select == 'prior_authority' || @nav_select == 'nsm' %>
   <%= render partial: 'overview' %>
 <% else %>
-  <%= render partial: 'shared/search', locals: { form_url: dashboard_path(nav_select: 'search', anchor: 'search-results'), title: false, choose_application_type: true, clear_all_path: new_dashboard_path(nav_select: 'search'), additional_param: { key: 'nav_select', value: 'search'}, translation_prefix: 'dashboards.search', controller_path: 'dashboards' }  %>
+  <%= render partial: 'shared/search', locals: { form_url: dashboard_path(nav_select: 'search', anchor: 'search-results'),
+                                                 title: false,
+                                                 choose_application_type: true,
+                                                 clear_all_path: new_dashboard_path(nav_select: 'search'),
+                                                 additional_param: { key: 'nav_select', value: 'search'},
+                                                 translation_prefix: 'dashboards.search',
+                                                 controller_path: 'dashboards',
+                                                 search_form_type: :search_form} %>
+
 <% end %>
