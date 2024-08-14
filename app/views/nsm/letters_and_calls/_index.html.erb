@@ -1,37 +1,29 @@
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-three-quarters">
-    <h3 class="govuk-heading-m">
-      <%= t('.heading') %>
-    </h3>
-    <% if claim.editable_by?(current_user) && records.uplift? %>
-      <%= govuk_button_link_to(t(".remove_uplift_all"), edit_nsm_claim_letters_and_calls_uplift_path(claim), secondary: true, data: { turbo: 'false' }) %>
-    <% end %>
-  </div>
-  <div class="govuk-grid-column-full">
-    <% if records.rows.all? { _1.original_count.zero? } %>
-      <p><%= t('.no_data') %></p>
-    <% else %>
-      <%=
-      caption = t('.table_caption')
-      head = Nsm::V1::LetterAndCall.headers
-      rows = records.rows.map do |letter_and_call|
-        next if letter_and_call.original_count.zero?
+<% if claim.editable_by?(current_user) && records.uplift? %>
+  <%= govuk_button_link_to(t(".remove_uplift_all"), edit_nsm_claim_letters_and_calls_uplift_path(claim), secondary: true, data: { turbo: 'false' }) %>
+<% end %>
 
-        fields = letter_and_call.table_fields.dup
-        destination = if claim.editable_by?(current_user)
-                        edit_nsm_claim_letters_and_call_path(claim_id: claim.id, id: letter_and_call.type.value)
-                      else
-                        nsm_claim_letters_and_call_path(claim_id: claim.id, id: letter_and_call.type.value)
-                      end
-        fields[0] = link_to(fields[0], destination, data: { turbo: 'false' })
-        fields
-      end
-      govuk_table(first_cell_is_header: true) do |t|
-        t.with_caption(text: caption, classes: ['govuk-visually-hidden'])
-        t.with_head(rows: [head])
-        t.with_body(rows: rows, first_cell_is_header: true)
-      end
-      %>
-    <% end %>
-  </div>
-</div>
+<% if records.rows.all? { _1.original_count.zero? } %>
+  <p><%= t('.no_data') %></p>
+<% else %>
+  <%=
+  caption = t('.table_caption')
+  head = Nsm::V1::LetterAndCall.headers
+  rows = records.rows.map do |letter_and_call|
+    next if letter_and_call.original_count.zero?
+
+    fields = letter_and_call.table_fields.dup
+    destination = if claim.editable_by?(current_user)
+                    edit_nsm_claim_letters_and_call_path(claim_id: claim.id, id: letter_and_call.type.value)
+                  else
+                    nsm_claim_letters_and_call_path(claim_id: claim.id, id: letter_and_call.type.value)
+                  end
+    fields[0] = link_to(fields[0], destination, data: { turbo: 'false' })
+    fields
+  end
+  govuk_table(first_cell_is_header: true) do |t|
+    t.with_caption(text: caption, classes: ['govuk-visually-hidden'])
+    t.with_head(rows: [head])
+    t.with_body(rows: rows, first_cell_is_header: true)
+  end
+  %>
+<% end %>
