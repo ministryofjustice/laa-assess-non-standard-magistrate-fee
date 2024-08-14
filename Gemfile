@@ -25,7 +25,7 @@ gem 'omniauth_openid_connect', '0.8.0'
 gem 'omniauth-rails_csrf_protection', '>= 1.0.2'
 gem 'pg'
 gem 'prometheus_exporter'
-gem 'propshaft'
+gem 'propshaft', '>= 0.9.1'
 gem 'puma', '~> 6.4'
 gem 'rails', '~> 7.1.3'
 gem 'redis'
@@ -38,7 +38,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 # Pagination
 gem 'pagy'
 # Exception monitoring
-gem 'sentry-rails', '>= 5.17.3'
+gem 'sentry-rails', '>= 5.19.0'
 gem 'sentry-ruby'
 gem 'with_advisory_lock'
 
