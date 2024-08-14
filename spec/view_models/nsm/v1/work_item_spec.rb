@@ -249,7 +249,7 @@ RSpec.describe Nsm::V1::WorkItem do
         'explanation' => nil,
         'time_spent' => 161,
         'uplift' => 0,
-        'work_type' => TranslationObject.new('value' => 'waiting', 'en' => 'Waiting'),
+        'work_type_value' => 'waiting',
       )
     end
 
@@ -269,7 +269,7 @@ RSpec.describe Nsm::V1::WorkItem do
           'explanation' => 'second adjustment',
           'time_spent' => 161,
           'uplift' => 0,
-          'work_type' => TranslationObject.new('value' => 'waiting', 'en' => 'Waiting'),
+          'work_type_value' => 'waiting',
         )
       end
     end
@@ -312,7 +312,8 @@ RSpec.describe Nsm::V1::WorkItem do
         'pricing' => 24.0,
         'firm_office' => { 'vat_registered' => vat_registered },
         'vat_rate' => 0.2,
-        'fee_earner' => 'JGB'
+        'fee_earner' => 'JGB',
+        'work_type' => { 'value' => 'waiting', 'en' => 'Waiting' },
       }
     end
 
@@ -321,6 +322,7 @@ RSpec.describe Nsm::V1::WorkItem do
 
       it 'calculates the correct provider requested amount' do
         expect(subject.provider_fields).to eq(
+          '.work_type' => 'Waiting',
           '.date' => '14 December 2022',
           '.time_spent' => '2 hours 51 minutes',
           '.fee_earner' => 'JGB',
@@ -336,6 +338,7 @@ RSpec.describe Nsm::V1::WorkItem do
 
       it 'calculates the correct provider requested amount' do
         expect(subject.provider_fields).to eq(
+          '.work_type' => 'Waiting',
           '.date' => '14 December 2022',
           '.time_spent' => '2 hours 51 minutes',
           '.fee_earner' => 'JGB',

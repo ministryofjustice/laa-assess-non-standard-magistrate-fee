@@ -12,7 +12,6 @@ module Nsm
       attribute :completed_on, :date
 
       adjustable_attribute :pricing, :decimal
-      attribute :attendance_with_counsel_pricing, :decimal
       adjustable_attribute :uplift, :integer
       attribute :fee_earner, :string
       attribute :vat_rate, :decimal
@@ -74,8 +73,9 @@ module Nsm
       end
 
       def form_attributes
-        attributes.slice('time_spent', 'uplift', 'work_type').merge(
-          'explanation' => adjustment_comment
+        attributes.slice('time_spent', 'uplift').merge(
+          'explanation' => adjustment_comment,
+          'work_type_value' => work_type.value,
         )
       end
 
@@ -125,12 +125,7 @@ module Nsm
       end
 
       def provider_fields
-        rows = {
-          '.date' => format_in_zone(completed_on),
-          '.time_spent' => format_period(original_time_spent),
-          '.fee_earner' => fee_earner.to_s,
-          '.uplift_claimed' => "#{original_uplift.to_i}%",
-        }
+        rows = build_basic_rows
         if vat_registered?
           rows['.vat'] = NumberTo.percentage(vat_rate)
           rows['.total_claimed_inc_vate'] = NumberTo.pounds(provider_requested_amount_inc_vat)
@@ -146,6 +141,16 @@ module Nsm
       end
 
       private
+
+      def build_basic_rows
+        {
+          '.work_type' => original_work_type.translated,
+          '.date' => format_in_zone(completed_on),
+          '.time_spent' => format_period(original_time_spent),
+          '.fee_earner' => fee_earner.to_s,
+          '.uplift_claimed' => "#{original_uplift.to_i}%",
+        }
+      end
 
       def calculate_cost(original: false)
         scoped_uplift, scoped_time_spent, scoped_pricing = if original

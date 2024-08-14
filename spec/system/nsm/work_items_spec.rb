@@ -116,7 +116,6 @@ RSpec.describe 'Work items' do
             'id' => 'cf5e303e-98dd-4b0f-97ea-3560c4c5f137',
             'uplift' => 95,
             'pricing' => 24.0,
-            'attendance_with_counsel_pricing' => 12,
             'work_type' => {
               'en' => 'Attendance without counsel',
               'value' => 'attendance_without_counsel'
@@ -134,11 +133,10 @@ RSpec.describe 'Work items' do
 
       within('.govuk-table__row', text: 'Attendance without counsel') do
         expect(page).to have_content('95%')
-        click_on 'Change'
+        click_on 'Attendance without counsel'
       end
 
       choose 'Yes, remove uplift'
-      choose 'No, do not change it'
       fill_in 'Explain your decision', with: 'Testing'
 
       click_on 'Save changes'
@@ -149,38 +147,27 @@ RSpec.describe 'Work items' do
 
     it 'changes the work type and associated pricing if I ask it to' do
       visit nsm_claim_work_items_path(claim)
-      expect(page).to have_content 'Total£125.58'
+      expect(page).to have_content 'Sum of net cost claimed: £125.58'
 
       within('.govuk-table__row', text: 'Attendance without counsel') do
-        click_on 'Change'
+        click_on 'Attendance without counsel'
       end
 
-      choose 'Yes, change it'
+      choose 'Preparation'
       fill_in 'Explain your decision', with: 'Testing'
 
       click_on 'Save changes'
       visit nsm_claim_work_items_path(claim)
 
-      expect(page).to have_content('Attendance with counsel')
+      expect(page).to have_content('Preparation *')
 
-      expect(page).to have_content 'Total£125.58£62.79'
+      expect(page).to have_content('Sum of net cost claimed: £125.58').and have_content 'Sum of net cost allowed: £121.39'
       page.find('.govuk-details__summary-text').click
       within('.govuk-details__text') do
-        expect(page).to have_content('Attendance with counsel')
+        expect(page).to have_content('Preparation *').and have_content(
+          '* denotes that a work item has been adjusted from one type to another'
+        )
       end
-    end
-
-    it 'shows a validation error if I do not specify' do
-      visit nsm_claim_work_items_path(claim)
-
-      within('.govuk-table__row', text: 'Attendance without counsel') do
-        click_on 'Change'
-      end
-
-      fill_in 'Explain your decision', with: 'Testing'
-
-      click_on 'Save changes'
-      expect(page).to have_content('Select yes if you want to change the work type to attendance with counsel assigned')
     end
   end
 end

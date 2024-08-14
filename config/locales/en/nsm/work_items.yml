@@ -49,6 +49,7 @@ en:
         page_title: "Your claims"
         heading: "Adjust a work item"
         provider_submission: Provider submission
+        work_type: Work type
         date: Date
         time_spent: Time spent
         fee_earner: Fee earner initials
@@ -58,6 +59,7 @@ en:
         total_claimed_inc_vate: Claim cost (including VAT)
         laa_adjustments: LAA Adjustments
         calculate_button_text: Calculate my changes
+        work_type_hint: '%{value} per hour'
         claim_cost_table:
           title: "Claim cost"
           header_one:
@@ -67,11 +69,6 @@ en:
             inc_vat: Caseworker allowed (including VAT)
             exc_vat: "Caseworker allowed"
           header_three: "Uplift allowed"
-        change_work_type:
-          label: Do you want to change the work type to attendance with counsel assigned?
-          'yes': Yes, change it
-          yes_hint: You must explain your decision
-          'no': No, do not change it
       show:
         page_title: "Your claims"
         heading:
@@ -95,9 +92,18 @@ en:
       uplifts:
         update:
           uplift_removed: All uplifts have been removed
+      work_types:
+        preparation: Preparation
+        advocacy: Advocacy
+        attendance_with_counsel: Attendance with counsel
+        attendance_without_counsel: Attendance without counsel
+        travel: Travel
+        waiting: Waiting
+      type_change_explanation: '* denotes that a work item has been adjusted from one type to another'
   helpers:
     legend:
       nsm_work_item_form:
+        work_type_value: Change work item (optional)
         uplift: Remove the uplift for this item
         time_spent: Change time spent (optional)
     label:
@@ -134,5 +140,3 @@ en:
               no_change: The new time cannot be the same as the cost submitted by the provider
             explanation:
               blank: Add an explanation for your decision
-            change_work_type:
-              inclusion: Select yes if you want to change the work type to attendance with counsel assigned

@@ -5,7 +5,6 @@ function init() {
   const hoursField = document.getElementById('nsm_work_item_form_time_spent_1');
   const minutesField = document.getElementById('nsm_work_item_form_time_spent_2');
   const upliftRemovedYesField = document.getElementById('nsm-work-item-form-uplift-yes-field');
-  const changeWorkTypeTrueField = document.getElementById('nsm-work-item-form-change-work-type-true-field');
   const upliftRemovedNoField = document.getElementById('nsm-work-item-form-uplift-no-field');
   const calculateChangeButton = document.getElementById('calculate_change_button');
   const caseworkerAdjustedValue = document.getElementById('work_item_caseworker_allowed_amount');
@@ -29,8 +28,8 @@ function init() {
   }
 
   function calculateAdjustedAmount() {
-    const priceAttribute = changeWorkTypeTrueField?.checked ? 'data-alternate-type-price' : 'data-unit-price';
-    const unitPrice = new Decimal(calculateChangeButton?.getAttribute(priceAttribute));
+    const chosenWorkTypeRadio = document.querySelector('input[name="nsm_work_item_form[work_type_value]"]:checked');
+    const unitPrice = new Decimal(chosenWorkTypeRadio.dataset.value);
     var upliftAmount = getProviderUplift();
     const vatMultiplier = new Decimal(calculateChangeButton?.getAttribute('data-vat-multiplier'));
 

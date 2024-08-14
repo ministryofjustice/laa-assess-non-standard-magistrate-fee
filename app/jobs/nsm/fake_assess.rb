@@ -53,7 +53,9 @@ module Nsm
         time_spent: Faker::Number.between(from: 1, to: 300),
         explanation: Faker::Lorem.paragraph,
         current_user: claim.assignments.first.user,
-        id: item.id
+        id: item.id,
+        work_item_pricing: claim.data['work_item_pricing'],
+        work_type_value: item.work_type.value,
       )
       form.save
     end

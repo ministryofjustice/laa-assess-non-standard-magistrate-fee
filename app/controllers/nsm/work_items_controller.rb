@@ -46,7 +46,8 @@ module Nsm
         model.id == params[:id]
       end
 
-      form = WorkItemForm.new(claim:, item:, **item.form_attributes)
+      form = WorkItemForm.new(**common_form_attributes(claim, item),
+                              **item.form_attributes)
 
       render locals: { claim:, item:, form: }
     end
@@ -57,7 +58,7 @@ module Nsm
         model.id == params[:id]
       end
 
-      form = WorkItemForm.new(claim:, item:, **form_params(item))
+      form = WorkItemForm.new(**common_form_attributes(claim, item), **form_params)
 
       if form.save
         redirect_to nsm_claim_work_items_path(claim)
@@ -68,17 +69,23 @@ module Nsm
 
     private
 
-    def form_params(work_item)
+    def common_form_attributes(claim, item)
+      {
+        claim: claim,
+        item: item,
+        work_item_pricing: claim.data['work_item_pricing'],
+      }
+    end
+
+    def form_params
       params.require(:nsm_work_item_form).permit(
         :uplift,
         :time_spent,
         :explanation,
-        :change_work_type,
+        :work_type_value,
       ).merge(
         current_user: current_user,
-        id: params[:id],
-        work_type: work_item.work_type,
-        attendance_with_counsel_pricing: work_item.attendance_with_counsel_pricing,
+        id: params[:id]
       )
     end
 

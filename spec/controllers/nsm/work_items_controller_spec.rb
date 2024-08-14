@@ -21,17 +21,17 @@ RSpec.describe Nsm::WorkItemsController do
   end
 
   context 'edit' do
-    let(:claim) { instance_double(Claim, id: claim_id) }
+    let(:claim) { instance_double(Claim, id: claim_id, data: {}) }
     let(:claim_id) { SecureRandom.uuid }
     let(:travel_id) { SecureRandom.uuid }
     let(:waiting_id) { SecureRandom.uuid }
     let(:waiting) do
       instance_double(Nsm::V1::WorkItem, id: waiting_id, work_type: double(value: 'waiting'),
-form_attributes: {})
+                     form_attributes: {})
     end
     let(:travel) do
       instance_double(Nsm::V1::WorkItem, id: travel_id, work_type: double(value: 'travel'),
-form_attributes: {})
+                      form_attributes: {})
     end
     let(:work_items) { [waiting, travel] }
     let(:form) { instance_double(Nsm::WorkItemForm) }
@@ -59,11 +59,11 @@ form_attributes: {})
     let(:waiting_id) { SecureRandom.uuid }
     let(:waiting) do
       instance_double(Nsm::V1::WorkItem, id: waiting_id, work_type: double(value: 'waiting'),
-form_attributes: {}, position: 1)
+                      form_attributes: {}, position: 1)
     end
     let(:travel) do
       instance_double(Nsm::V1::WorkItem, id: travel_id, work_type: double(value: 'travel'),
-form_attributes: {}, position: 2)
+                      form_attributes: {}, position: 2)
     end
     let(:work_items) { [waiting, travel] }
 
@@ -83,17 +83,17 @@ form_attributes: {}, position: 2)
   end
 
   context 'update' do
-    let(:claim) { instance_double(Claim, id: claim_id) }
+    let(:claim) { instance_double(Claim, id: claim_id, data: {}) }
     let(:claim_id) { SecureRandom.uuid }
     let(:waiting_id) { SecureRandom.uuid }
     let(:travel_id) { SecureRandom.uuid }
     let(:waiting) do
       instance_double(Nsm::V1::WorkItem, id: waiting_id, work_type: double(value: 'waiting'),
-form_attributes: {}, position: 1, attendance_with_counsel_pricing: 1.0)
+                      form_attributes: {}, position: 1)
     end
     let(:travel) do
       instance_double(Nsm::V1::WorkItem, id: travel_id, work_type: double(value: 'travel'),
-form_attributes: {}, position: 2, attendance_with_counsel_pricing: 1.0)
+                      form_attributes: {}, position: 2)
     end
     let(:work_items) { [waiting, travel] }
     let(:form) { instance_double(Nsm::WorkItemForm, save:) }

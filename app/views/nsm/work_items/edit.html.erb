@@ -17,13 +17,21 @@
       rows = item.provider_fields.map do |key, value|
         [{ text: t(key), width: 'govuk-!-width-one-half' }, value]
       end
-      govuk_table(head: '', first_cell_is_header: true, rows:) do |tab|
-        tab.with_caption(text: item.work_type.to_s, size: 'm')
-      end
+      govuk_table(head: '', first_cell_is_header: true, rows:)
     %>
 
     <h2 class="govuk-heading-l"><%= t('.laa_adjustments') %></h2>
     <%= form_with model: form, url: nsm_claim_work_item_path(claim.id, item.id), method: :put do |f| %>
+
+      <%= f.govuk_radio_buttons_fieldset(:work_type_value, legend: { size: 's' }) do %>
+        <% form.work_item_pricing.each do |key, amount| %>
+          <%= f.govuk_radio_button :work_type_value, key,
+                                   label: { text: t("nsm.work_items.work_types.#{key}") },
+                                   hint: { text: t(".work_type_hint", value: NumberTo.pounds(amount)) },
+                                   'data-value' => amount %>
+        <% end %>
+      <% end %>
+
       <% if item.uplift? %>
         <%= f.govuk_radio_buttons_fieldset(:uplift, legend: { size: 's' }) do %>
           <%= f.govuk_radio_button :uplift, 'yes' %>
@@ -31,24 +39,11 @@
         <% end %>
       <% end %>
 
-      <% if form.offer_to_change_work_type? %>
-        <%= f.govuk_collection_radio_buttons(
-            :change_work_type,
-            form.change_work_type_options,
-            :value,
-            :label,
-            :hint,
-            legend: { text: t('.change_work_type.label'), size: 's' }
-          ) %>
-      <% end %>
-
       <%= f.govuk_period_field :time_spent, legend: { size: 's', class: 'govuk-!-font-weight-bold' }, width: 'one-third' %>
       <%= govuk_button_link_to(t('.calculate_button_text'), '#',
         secondary: true ,
         id: 'calculate_change_button',
         data: {
-          'unit-price': item.original_pricing,
-          'alternate-type-price': item.attendance_with_counsel_pricing,
           'uplift-amount': item.uplift,
           'provider-time-spent': item.time_spent,
           'vat-multiplier': item.vat_registered? ? (1.0 + item.vat_rate) : 1.0,
