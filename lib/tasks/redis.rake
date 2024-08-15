@@ -5,9 +5,9 @@ namespace :redis do
     if redis_conn.present?
       print "Sidekiq was able to establish connection with Redis server"
     else
-      print "Sidekiq unable able to establish connection with Redis server"
+      print "Sidekiq unable to establish connection with Redis server"
     end
   rescue Redis::CannotConnectError, RedisClient::CannotConnectError
-    print "Sidekiq unable able to establish connection with Redis server"
+    print "Sidekiq unable to establish connection with Redis server"
   end
 end
