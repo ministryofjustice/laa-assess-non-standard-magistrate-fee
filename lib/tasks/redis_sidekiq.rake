@@ -19,7 +19,7 @@ namespace :redis_sidekiq do
     end
 
     ds = Sidekiq::DeadSet.new
-    print "#{ds.size} jobs found"
+    print "#{ds.size} jobs found\n"
     if ds.size == 0
       return
     else
@@ -27,7 +27,7 @@ namespace :redis_sidekiq do
       ds.each do |job|
         #for each dead job, if it died after the downtime was set, retry it
         if job.at  >= time_from
-          print job
+          print "#{job}\n"
           job.retry
         end
       end
