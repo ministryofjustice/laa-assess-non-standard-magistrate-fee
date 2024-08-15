@@ -26,6 +26,14 @@ class Claim < Submission
     state == Nsm::MakeDecisionForm::PART_GRANT
   end
 
+  def rejected?
+    state == Nsm::MakeDecisionForm::REJECTED
+  end
+
+  def granted?
+    state == Nsm::MakeDecisionForm::GRANTED
+  end
+
   def editable_by?(user)
     !assessed? && assigned_to?(user)
   end
@@ -51,7 +59,7 @@ class Claim < Submission
   end
 
   def formatted_allowed_total
-    return formatted_claimed_total if summed_costs[:allowed_gross_cost].blank?
+    return formatted_claimed_total if summed_costs[:allowed_gross_cost].blank? && !rejected?
 
     summed_costs.dig(:allowed_gross_cost, :text)
   end
