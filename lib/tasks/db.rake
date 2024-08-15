@@ -10,7 +10,7 @@ namespace :db do
       else
         print "ActiveRecord unable to establish connection with DB"
       end
-    rescue PG::ConnectionBad
+    rescue PG::ConnectionBad, ActiveRecord::ConnectionNotEstablished
       print "ActiveRecord unable to establish connection with DB"
     end
   end
