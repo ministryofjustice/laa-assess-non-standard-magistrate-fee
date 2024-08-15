@@ -28,7 +28,7 @@ module Dashboard; end
 Rails.logger.info("[Sidekiq] Application config initialising...")
 
 Sidekiq.configure_client do |config|
-  redis_url = 'redis://localhost:6379/2' if HostEnv.local?
+  redis_url = 'www.garbage.com' if HostEnv.local?
 
   Rails.logger.info("[SidekiqClient] configuring sidekiq client...")
   config.redis = { url: redis_url } if redis_url
