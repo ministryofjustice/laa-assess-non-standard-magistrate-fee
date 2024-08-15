@@ -12,7 +12,7 @@ namespace :redis_sidekiq do
   end
 
   desc "Retry dead jobs created from now to x days ago"
-  task retry_dead_jobs:, [:days_from_now] => [:environment] do |t, args|
+  task :retry_dead_jobs, [:days_from_now] => [:environment] do |t, args|
     days_from_now = args[:days_from_now].to_i
     if days_from_now == 0
       raise StandardError.new "You must enter a valid integer greater than 0"
