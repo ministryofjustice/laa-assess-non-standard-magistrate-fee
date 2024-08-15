@@ -7,7 +7,7 @@ namespace :redis do
     else
       print "Sidekiq unable able to establish connection with Redis server"
     end
-  rescue Redis::CannotConnectError
+  rescue Redis::CannotConnectError, RedisClient::CannotConnectError
     print "Sidekiq unable able to establish connection with Redis server"
   end
 end
