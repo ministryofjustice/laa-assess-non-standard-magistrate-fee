@@ -5,3 +5,8 @@ expiry_job:
   cron: "16 21 * * *"
   class: "ExpireSendbacks"
   queue: pooling
+
+dead_job:
+  cron: "*/30 * * * * *"
+  class: "ForceDeadJob"
+  queue: pooling
