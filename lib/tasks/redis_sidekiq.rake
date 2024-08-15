@@ -21,9 +21,7 @@ namespace :redis_sidekiq do
 
     ds = Sidekiq::DeadSet.new
 
-    if ds.size == 0
-      return
-    else
+    if ds.size > 0
       job_counter = 0
       retry_counter = 0
       time_from = days_from_now.days.ago
