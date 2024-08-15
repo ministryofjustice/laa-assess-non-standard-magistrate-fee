@@ -15,22 +15,33 @@ namespace :redis_sidekiq do
   task :retry_dead_jobs, [:days_from_now] => [:environment] do |t, args|
     days_from_now = args[:days_from_now].to_i
     if days_from_now == 0
-      raise StandardError.new "You must enter a valid integer greater than 0"
+      print "You must enter a valid integer greater than 0"
+      return
     end
 
     ds = Sidekiq::DeadSet.new
-    print "#{ds.size} jobs found\n"
+
     if ds.size == 0
       return
     else
+      job_counter = 0
+      retry_counter = 0
       time_from = days_from_now.days.ago
       ds.each do |job|
+        job_counter += 1
         #for each dead job, if it died after the downtime was set, retry it
         if job.at  >= time_from
-          print "#{job}\n"
-          job.retry
+          if job.retry
+            retry_counter += 1
+            print "Retried #{job}\n"
+          else
+            print "Failed to retry #{job}\n"
+          end
         end
       end
     end
+
+    print "#{ds.size} jobs found\n"
+    print "#{retry_counter} jobs retried"
   end
 end
