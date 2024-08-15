@@ -17,7 +17,9 @@
       rows = item.provider_fields.map do |key, value|
         [{ text: t(key), width: 'govuk-!-width-one-half' }, value]
       end
-      govuk_table(head: '', first_cell_is_header: true, rows:)
+      govuk_table(head: '', first_cell_is_header: true, rows:) do |table|
+        table.with_caption(text: t('.claimed_costs_summary'), classes: 'govuk-visually-hidden')
+      end
     %>
 
     <h2 class="govuk-heading-l"><%= t('.laa_adjustments') %></h2>
@@ -32,6 +34,8 @@
         <% end %>
       <% end %>
 
+      <%= f.govuk_period_field :time_spent, legend: { size: 's', class: 'govuk-!-font-weight-bold' }, width: 'one-third' %>
+
       <% if item.uplift? %>
         <%= f.govuk_radio_buttons_fieldset(:uplift, legend: { size: 's' }) do %>
           <%= f.govuk_radio_button :uplift, 'yes' %>
@@ -39,7 +43,6 @@
         <% end %>
       <% end %>
 
-      <%= f.govuk_period_field :time_spent, legend: { size: 's', class: 'govuk-!-font-weight-bold' }, width: 'one-third' %>
       <%= govuk_button_link_to(t('.calculate_button_text'), '#',
         secondary: true ,
         id: 'calculate_change_button',
@@ -55,16 +58,16 @@
           <%= table.with_head do |head| %>
             <%= head.with_row do |row| %>
               <%= row.with_cell(text: t(".claim_cost_table.header_one.#{item.vat_registered? ? 'inc_vat' : 'exc_vat'}")) %>
-              <%= row.with_cell(text: t(".claim_cost_table.header_two.#{item.vat_registered? ? 'inc_vat' : 'exc_vat'}")) %>
-              <%= row.with_cell(text: t('.claim_cost_table.header_three')) %>
+              <%= row.with_cell(text: t('.claim_cost_table.header_two')) %>
+              <%= row.with_cell(text: t(".claim_cost_table.header_three.#{item.vat_registered? ? 'inc_vat' : 'exc_vat'}")) %>
             <% end %>
           <% end %>
 
           <%= table.with_body do |body| %>
             <%= body.with_row do |row| %>
               <%= row.with_cell(text: NumberTo.pounds(item.provider_requested_amount_inc_vat), html_attributes: { id: 'work_item_provider_requested_amount' }) %>
-              <%= row.with_cell(text: '--',html_attributes: { id: 'work_item_caseworker_allowed_amount' }) %>
               <%= row.with_cell(text: "#{item.uplift? ? item.uplift : '0' }%",html_attributes: { id: 'work_item_uplift_allowed_amount' }) %>
+              <%= row.with_cell(text: '--',html_attributes: { id: 'work_item_caseworker_allowed_amount' }) %>
             <% end %>
           <% end %>
         <% end %>

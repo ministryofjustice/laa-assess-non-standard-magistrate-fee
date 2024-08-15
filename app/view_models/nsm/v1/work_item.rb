@@ -146,8 +146,8 @@ module Nsm
         {
           '.work_type' => original_work_type.translated,
           '.date' => format_in_zone(completed_on),
-          '.time_spent' => format_period(original_time_spent),
           '.fee_earner' => fee_earner.to_s,
+          '.time_spent' => format_period(original_time_spent),
           '.uplift_claimed' => "#{original_uplift.to_i}%",
         }
       end

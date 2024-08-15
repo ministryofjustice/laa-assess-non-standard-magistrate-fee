@@ -99,10 +99,10 @@ RSpec.describe 'Work items' do
       expect(page).to have_content(
         'Waiting' \
         'Date12 December 2022' \
-        'Time spent2 hours 41 minutes' \
-        'Fee earner initialsaaa' \
+        'Fee earneraaa' \
+        'Time claimed2 hours 41 minutes' \
         'Uplift claimed95%' \
-        'Claim cost£125.58'
+        'Cost claimed£125.58'
       )
     end
   end

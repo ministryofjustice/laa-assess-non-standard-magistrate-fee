@@ -49,26 +49,27 @@ en:
         page_title: "Your claims"
         heading: "Adjust a work item"
         provider_submission: Provider submission
-        work_type: Work type
+        claimed_costs_summary: Claimed cost summary
+        work_type: Work item
         date: Date
-        time_spent: Time spent
-        fee_earner: Fee earner initials
+        time_spent: Time claimed
+        fee_earner: Fee earner
         uplift_claimed: Uplift claimed
-        total_claimed: Claim cost
+        total_claimed: Cost claimed
         vat: VAT
-        total_claimed_inc_vate: Claim cost (including VAT)
-        laa_adjustments: LAA Adjustments
+        total_claimed_inc_vate: Cost claimed (including VAT)
+        laa_adjustments: LAA adjustments
         calculate_button_text: Calculate my changes
         work_type_hint: '%{value} per hour'
         claim_cost_table:
-          title: "Claim cost"
+          title: "Allowed cost"
           header_one:
-            inc_vat: Provider requested (including VAT)
-            exc_vat: "Provider requested"
-          header_two:
-            inc_vat: Caseworker allowed (including VAT)
-            exc_vat: "Caseworker allowed"
-          header_three: "Uplift allowed"
+            inc_vat: Cost claimed (including VAT)
+            exc_vat: "Cost claimed"
+          header_two: "Uplift allowed"
+          header_three:
+            inc_vat: Cost allowed (including VAT)
+            exc_vat: "Cost allowed"
       show:
         page_title: "Your claims"
         heading:
@@ -76,13 +77,14 @@ en:
           one: 'Adjusted work item'
           other: 'Adjusted work item'
         provider_submission: Provider submission
+        claimed_costs_summary: Claimed cost summary
         date: Date
-        time_spent: Time spent
-        fee_earner: Fee earner initials
+        time_spent: Time claimed
+        fee_earner: Fee earner
         uplift_claimed: Uplift claimed
-        total_claimed: Claim cost
+        total_claimed: Cost claimed
         vat: VAT
-        total_claimed_inc_vate: Claim cost (including VAT)
+        total_claimed_inc_vate: Cost claimed (including VAT)
         laa_adjustments: LAA Adjustments
         uplift_allowed: Uplift allowed
         work_type: Work type
@@ -105,7 +107,7 @@ en:
       nsm_work_item_form:
         work_type_value: Change work item (optional)
         uplift: Remove the uplift for this item
-        time_spent: Change time spent (optional)
+        time_spent: Change time claimed (optional)
     label:
       nsm_work_item_form:
         uplift_options:
@@ -119,7 +121,7 @@ en:
         time_spent: For example, 1 hour and 30 minutes
         uplift: You must explain your decision
         explanation: |
-          For example, why you made adjustments to the work type rate, removed an uplift or changed the time spent.
+          For example, why you made adjustments to the work type, removed an uplift or changed the time spent.
           We'll share this explanation with the provider.
 
   activemodel:
@@ -128,7 +130,7 @@ en:
         nsm/work_item_form:
           attributes:
             base:
-              no_change: The new time cannot be the same as the cost submitted by the provider
+              no_change: The new values cannot be the same as the values submitted by the provider
             uplift:
               inclusion: Select to include uplift or not
             time_spent:
@@ -137,6 +139,5 @@ en:
               positive_minutes: Number of minutes must be 0 or more
               positive_hours: Number of hours must be 0 or more
               invalid: Something went wrong
-              no_change: The new time cannot be the same as the cost submitted by the provider
             explanation:
               blank: Add an explanation for your decision

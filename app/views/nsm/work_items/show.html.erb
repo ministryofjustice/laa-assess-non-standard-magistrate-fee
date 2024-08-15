@@ -18,7 +18,7 @@
         [{ text: t(key), width: 'govuk-!-width-one-half' }, value]
       end
       govuk_table(head: '', first_cell_is_header: true, rows:) do |tab|
-        tab.with_caption(text: item.original_work_type.to_s, size: 'm')
+        tab.with_caption(text: t('.claimed_costs_summary'), classes: 'govuk-visually-hidden')
       end
     %>
 
