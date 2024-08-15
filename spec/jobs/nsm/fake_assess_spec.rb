@@ -61,7 +61,7 @@ RSpec.describe Nsm::FakeAssess do
       let(:random_choice) { 3 }
 
       it 'marks as sent back' do
-        expect(claim.reload.state).to eq 'further_info'
+        expect(claim.reload.state).to eq 'sent_back'
       end
 
       it 'notifies the app store' do

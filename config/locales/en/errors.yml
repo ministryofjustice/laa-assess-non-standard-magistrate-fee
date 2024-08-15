@@ -109,3 +109,10 @@ en:
           attributes:
             note:
               blank: Enter what information you want added to the application history
+        search_form:
+          attributes:
+            base:
+              nothing_specified: Enter some %{value} details or filter your search criteria
+              search_error: Something went wrong trying to perform this search
+            application_type:
+              nothing_specified: Select a service to search

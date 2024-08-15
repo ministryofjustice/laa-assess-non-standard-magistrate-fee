@@ -39,14 +39,15 @@ module PriorAuthority
                                 comment: explanation,
                                 previous_state: previous_state,
                                 current_user: current_user)
-        NotifyAppStore.perform_later(submission:)
       end
+
+      NotifyAppStore.perform_later(submission:)
 
       true
     end
 
     def stash(add_draft_decision_event: true)
-      submission.data.merge!(attributes.except('submission', 'current_user'))
+      submission.data.merge!(attributes.except('submission', 'current_user').merge('assessment_comment' => explanation))
       submission.save!
 
       return unless add_draft_decision_event

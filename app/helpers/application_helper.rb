@@ -67,4 +67,18 @@ module ApplicationHelper
 
     number_with_precision(value, precision: 2, delimiter: ',')
   end
+
+  def infer_claim_section
+    claim_id = params.fetch(:claim_id, params.fetch(:id, nil))
+    return unless claim_id
+
+    current_claim = Claim.find(claim_id)
+    if current_claim.assessed? || current_claim.sent_back?
+      :closed
+    elsif current_claim.assigned_to?(current_user)
+      :your
+    else
+      :open
+    end
+  end
 end

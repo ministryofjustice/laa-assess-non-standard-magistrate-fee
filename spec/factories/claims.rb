@@ -38,11 +38,14 @@ FactoryBot.define do
         'work_completed_date' => '2024-01-01',
         'has_disbursements' => 'no',
         'is_other_info' => 'no',
-        'in_area' => 'yes',
         'youth_court' => 'no',
         'hearing_outcome' => {
           'value' => 'CP05',
           'en' => 'CP01 - Arrest warrant issued/adjourned indefinitely'
+        },
+        'claim_type' => {
+          'en' => "Non-standard magistrates' court payment",
+          'value' => 'non_standard_magistrate'
         },
         'matter_type' => {
           'value' => '10',
@@ -62,6 +65,7 @@ FactoryBot.define do
           'value' => 'no',
           'en' => 'No, skip the equality questions'
         },
+        'stage_reached' => 'prog',
       }
     end
 

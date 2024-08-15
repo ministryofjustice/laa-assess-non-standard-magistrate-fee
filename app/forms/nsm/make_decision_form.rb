@@ -27,14 +27,14 @@ module Nsm
 
       previous_state = claim.state
       Claim.transaction do
-        claim.data.merge!('status' => state, 'updated_at' => Time.current)
+        claim.data.merge!('status' => state, 'updated_at' => Time.current, 'assessment_comment' => comment)
         claim.update!(state:)
         ::Event::Decision.build(submission: claim,
                                 comment: comment,
                                 previous_state: previous_state,
                                 current_user: current_user)
-        NotifyAppStore.perform_later(submission: claim)
       end
+      NotifyAppStore.perform_later(submission: claim)
 
       true
     end

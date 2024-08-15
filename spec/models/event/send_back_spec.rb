@@ -4,7 +4,7 @@ RSpec.describe Nsm::Event::SendBack do
   subject { described_class.build(submission:, previous_state:, comment:, current_user:) }
 
   let(:submission) { create(:claim, state:) }
-  let(:state) { 'further_info' }
+  let(:state) { 'sent_back' }
   let(:current_user) { create(:caseworker) }
   let(:previous_state) { 'submitted' }
   let(:comment) { 'decison was made' }
@@ -18,7 +18,7 @@ RSpec.describe Nsm::Event::SendBack do
       details: {
         'field' => 'state',
         'from' => 'submitted',
-        'to' => 'further_info',
+        'to' => 'sent_back',
         'comment' => 'decison was made'
       }
     )

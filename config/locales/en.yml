@@ -22,6 +22,7 @@ en:
       your_claims: Your claims
       all_claims: Open claims
       assessed_claims: Closed claims
+      search: Search
     phase_banner:
       phase: Beta
       phase_description_html: This is a new service – your <a class="govuk-link" href="%{feedback}">feedback</a> will help us to improve it.
@@ -35,6 +36,9 @@ en:
     application_type:
       crm4: 'Prior authority'
       crm7: 'Non-standard magistrates'
+    submission_noun:
+      crm4: 'application'
+      crm7: 'claim'
     save_changes: Save changes
     cancel: Cancel
     true: 'Yes'
@@ -53,7 +57,6 @@ en:
       sent_back: Sent back
       provider_updated: Provider updated
       expired: Expired
-      further_info: Sent back
     search:
       search: Search
       clear_all: Clear all

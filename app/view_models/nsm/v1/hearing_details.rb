@@ -4,7 +4,6 @@ module Nsm
       attribute :first_hearing_date
       attribute :number_of_hearing
       attribute :court
-      attribute :in_area
       attribute :youth_court
       attribute :hearing_outcome, :translated
       attribute :matter_type, :translated
@@ -31,10 +30,6 @@ module Nsm
           {
             title: I18n.t(".nsm.claim_details.#{key}.court"),
             value: court
-          },
-          {
-            title: I18n.t(".nsm.claim_details.#{key}.in_area"),
-            value: in_area.capitalize
           },
           {
             title: I18n.t(".nsm.claim_details.#{key}.youth_court"),

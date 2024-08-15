@@ -22,7 +22,7 @@ en:
           high: "High"
         status:
           heading: Status
-          further_info: |
+          sent_back: |
             Further
             information
             requested

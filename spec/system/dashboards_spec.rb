@@ -136,27 +136,6 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
                       20) + create_list(:prior_authority_application, 1, state: 'sent_back', updated_at: Date.yesterday - 1)
         end
         let(:endpoint) { 'https://appstore.example.com/v1/submissions/searches' }
-        let(:search_payload) do
-          {
-            application_type: 'crm4',
-            explicit_application_type: true,
-            page: 1,
-            per_page: 20,
-            sort_by: 'last_updated',
-            sort_direction: 'descending',
-          }
-        end
-        let(:sort_payload) do
-          {
-            application_type: 'crm4',
-            explicit_application_type: true,
-            page: 1,
-            per_page: 20,
-            sort_by: 'status_with_assignment',
-            sort_direction: 'ascending',
-          }
-        end
-
         let(:search_stub) do
           stub_request(:post, endpoint).with(body: search_payload).to_return(
             status: 201, body: { metadata: { total_results: 21 },
@@ -171,37 +150,88 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
           )
         end
 
-        before do
-          search_stub
-          sort_stub
-          visit dashboard_path
-          click_on 'Search'
-        end
+        context 'valid search' do
+          let(:search_payload) do
+            {
+              application_type: 'crm4',
+              explicit_application_type: true,
+              page: 1,
+              per_page: 20,
+              sort_by: 'last_updated',
+              sort_direction: 'descending',
+            }
+          end
+          let(:sort_payload) do
+            {
+              application_type: 'crm4',
+              explicit_application_type: true,
+              page: 1,
+              per_page: 20,
+              sort_by: 'status_with_assignment',
+              sort_direction: 'ascending',
+            }
+          end
 
-        it 'can navigate to search analytics' do
-          expect(page).to have_css('.govuk-heading-xl', text: 'Search')
-          expect(page).to have_css('.govuk-label', text: 'Claim or application details')
-        end
-
-        it 'can search for submissions' do
-          within('.search-panel') do
-            choose 'Prior authority'
+          before do
+            search_stub
+            sort_stub
+            visit dashboard_path
             click_on 'Search'
           end
 
-          expect(search_stub).to have_been_requested
+          it 'can navigate to search analytics' do
+            expect(page).to have_css('.govuk-heading-xl', text: 'Search')
+            expect(page).to have_css('.govuk-label', text: 'Claim or application details')
+          end
+
+          it 'can search for submissions' do
+            within('.search-panel') do
+              choose 'Prior authority'
+              click_on 'Search'
+            end
+
+            expect(search_stub).to have_been_requested
+          end
+
+          it 'can sort results' do
+            within('.search-panel') do
+              choose 'Prior authority'
+              click_on 'Search'
+            end
+
+            expect(page).to have_css('.govuk-table')
+            click_link 'Status'
+            expect(sort_stub).to have_been_requested
+            expect(page.find('.govuk-table')).to have_text 'Sent back'
+          end
         end
 
-        it 'can sort results' do
-          within('.search-panel') do
-            choose 'Prior authority'
+        context 'application_type missing' do
+          let(:search_payload) do
+            {
+              explicit_application_type: true,
+              query: 'test',
+              page: 1,
+              per_page: 20,
+              sort_by: 'last_updated',
+              sort_direction: 'descending',
+            }
+          end
+
+          before do
+            search_stub
+            visit dashboard_path
             click_on 'Search'
           end
 
-          expect(page).to have_css('.govuk-table')
-          click_link 'Status'
-          expect(sort_stub).to have_been_requested
-          expect(page.find('.govuk-table')).to have_text 'Sent back'
+          it 'shows validation error' do
+            within('.search-panel') do
+              fill_in 'Claim or application details', with: 'test'
+              click_on 'Search'
+            end
+
+            expect(page.find('.govuk-error-message')).to have_text 'Select a service to search'
+          end
         end
       end
     end

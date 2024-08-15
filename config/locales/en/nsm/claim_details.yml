@@ -15,12 +15,18 @@ en:
         ufn: Unique file number
         claim_type: Type of claim
         rep_order_date: Representation order date
+        stage_reached: Stage reached
+        cntp_order: CNTP (contempt) number
+        cntp_date: Date of CNTP representation order
+        stages:
+          prog: PROG
+          prom: PROM
       defendant_details:
         title: Defendant details
         main_defendant_name: Main defendant full name
-        main_defendant_maat: Main defendant MAAT ID
+        main_defendant_maat: Main defendant MAAT ID number
         defendant_name: Additional defendant %{count} full name
-        defendant_maat: Additional defendant %{count} MAAT ID
+        defendant_maat: Additional defendant %{count} MAAT ID number
       case_details:
         title: Case details
         main_offence: Main offence name
@@ -41,7 +47,6 @@ en:
         first_hearing_date: Date of first hearing
         number_of_hearing: Number of hearings
         court: Magistrates' court
-        in_area: Court is in designated area of the firm
         youth_court: Youth court
         hearing_outcome: Hearing outcome
         matter_type: Matter type

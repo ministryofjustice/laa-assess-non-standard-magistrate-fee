@@ -22,7 +22,7 @@ RSpec.describe 'NSM tables' do
   end
   let(:assigned_to_someone_else) do
     create(:claim,
-           state: 'further_info',
+           state: 'sent_back',
            laa_reference: 'LAA-assigned-to-someone-else',
            defendants: [
              {

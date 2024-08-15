@@ -172,7 +172,7 @@ RSpec.describe PriorAuthority::V1::ApplicationDetails do
       [{ key: { text: 'Main offence' }, value: { text: 'Robbery' } },
        { key: { text: 'Date of representation order' },
         value: { text: '1 February 2023' } },
-       { key: { text: 'MAAT number' }, value: { text: '123123' } },
+       { key: { text: 'MAAT ID number' }, value: { text: '123123' } },
        { key: { text: 'Client detained' }, value: { text: 'No' } },
        { key: { text: 'Subject to POCA' }, value: { text: 'No' } }]
     end
