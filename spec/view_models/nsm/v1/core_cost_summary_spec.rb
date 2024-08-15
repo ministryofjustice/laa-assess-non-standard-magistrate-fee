@@ -383,7 +383,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
       it 'returns the summed time and cost' do
         expect(subject.summed_fields).to eq(
           {
-            allowed_gross_cost: { numeric: true, text: '£0.00' } , allowed_net_cost: { numeric: true, text: '£0.00' },
+            allowed_gross_cost: { numeric: true, text: '£0.00' }, allowed_net_cost: { numeric: true, text: '£0.00' },
             allowed_vat: { numeric: true, text: '£0.00' }, gross_cost: { numeric: true, text: '£180.00' },
             name: { numeric: false, text: 'Total', width: nil }, net_cost: { numeric: true, text: '£180.00' },
             vat: { numeric: true, text: '£0.00' }

@@ -59,7 +59,7 @@ class Claim < Submission
   end
 
   def formatted_allowed_total
-    return formatted_claimed_total if summed_costs[:allowed_gross_cost].blank? && !rejected?
+    return formatted_claimed_total if summed_costs[:allowed_gross_cost].blank?
 
     summed_costs.dig(:allowed_gross_cost, :text)
   end
