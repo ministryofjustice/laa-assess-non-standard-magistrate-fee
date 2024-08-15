@@ -22,12 +22,9 @@ namespace :redis_sidekiq do
     ds = Sidekiq::DeadSet.new
 
     if ds.size > 0
-      job_counter = 0
       retry_counter = 0
       time_from = days_from_now.days.ago
       ds.each do |job|
-        job_counter += 1
-        #for each dead job, if it died after the downtime was set, retry it
         if job.at  >= time_from
           if job.retry
             retry_counter += 1
