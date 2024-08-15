@@ -20,8 +20,9 @@ namespace :redis_sidekiq do
     end
 
     ds = Sidekiq::DeadSet.new
-
-    if ds.size > 0
+    # Enumerable#count used instead of SortedSet#size because we need all jobs in the set
+    # not just the jobs that are already enqueued.
+    if ds.count > 0
       retry_counter = 0
       time_from = days_from_now.days.ago
       ds.each do |job|
@@ -36,7 +37,7 @@ namespace :redis_sidekiq do
       end
     end
 
-    print "#{ds.size} jobs found\n"
+    print "#{ds.count} jobs found\n"
     print "#{retry_counter} jobs retried"
   end
 end
