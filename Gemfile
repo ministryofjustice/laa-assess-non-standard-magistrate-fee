@@ -29,7 +29,7 @@ gem 'propshaft'
 gem 'puma', '~> 6.4'
 gem 'rails', '~> 7.1.3'
 gem 'redis'
-gem 'sidekiq', '~> 7.3', '>= 7.3.0'
+gem 'sidekiq', '~> 7.3', '>= 7.3.1'
 gem 'sidekiq_alive', '~> 2.4'
 gem 'sidekiq-cron'
 gem 'stimulus-rails'
@@ -50,7 +50,7 @@ group :development, :test do
   gem 'pry'
   gem 'rspec-expectations'
   gem 'rspec_junit_formatter', require: false
-  gem 'rspec-rails'
+  gem 'rspec-rails', '>= 6.1.4'
 end
 
 group :test do
