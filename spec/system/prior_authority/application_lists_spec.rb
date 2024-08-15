@@ -6,21 +6,25 @@ RSpec.describe 'Prior authority list views' do
   let(:assigned_to_me) do
     create(:prior_authority_application,
            state: 'submitted',
+           updated_at: 4.days.ago,
            data: build(:prior_authority_data, laa_reference: 'LAA-111'))
   end
   let(:assigned_to_someone_else) do
     create(:prior_authority_application,
            state: 'submitted',
+           updated_at: 3.days.ago,
            data: build(:prior_authority_data, laa_reference: 'LAA-222'))
   end
   let(:unassigned) do
     create(:prior_authority_application,
            state: 'submitted',
+           updated_at: 2.days.ago,
            data: build(:prior_authority_data, laa_reference: 'LAA-333'))
   end
   let(:assessed) do
     create(:prior_authority_application,
            state: 'granted',
+           updated_at: 1.day.ago,
            data: build(:prior_authority_data, laa_reference: 'LAA-444'))
   end
 
@@ -52,6 +56,21 @@ RSpec.describe 'Prior authority list views' do
       expect(page).to have_content 'LAA-2'
       expect(page).to have_content 'LAA-3'
       expect(page).to have_no_content 'LAA-4'
+    end
+
+    it 'shows in descending date updated order' do
+      expect(page.body).to match(/333.*222.*111/m)
+    end
+
+    context 'when an application has a recent event attached to it' do
+      before do
+        create(:event, event_type: 'Event::Assignment', submission: assigned_to_me, created_at: 1.hour.ago)
+        visit open_prior_authority_applications_path
+      end
+
+      it 'takes that into account in the ordering' do
+        expect(page.body).to match(/111.*333.*222/m)
+      end
     end
 
     it 'lets me sort applications' do
