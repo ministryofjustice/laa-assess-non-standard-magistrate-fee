@@ -39,6 +39,7 @@ en:
     submission_noun:
       crm4: 'application'
       crm7: 'claim'
+      generic: 'claim or application'
     save_changes: Save changes
     cancel: Cancel
     true: 'Yes'

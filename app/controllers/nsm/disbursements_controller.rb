@@ -11,7 +11,7 @@ module Nsm
       core_cost_summary = BaseViewModel.build(:core_cost_summary, claim)
       items = BaseViewModel.build(:disbursement, claim, 'disbursements')
       sorted_items = Sorters::DisbursementsSorter.call(items, @sort_by, @sort_direction)
-      pagy, records = pagy_array(sorted_items, items: ITEM_COUNT_OVERRIDE)
+      pagy, records = pagy_array(sorted_items, limit: ITEM_COUNT_OVERRIDE)
       summary = nil
       scope = :disbursements
 
@@ -25,7 +25,7 @@ module Nsm
       core_cost_summary = BaseViewModel.build(:core_cost_summary, claim)
       items = BaseViewModel.build(:disbursement, claim, 'disbursements').filter(&:any_adjustments?)
       sorted_items = Sorters::DisbursementsSorter.call(items, @sort_by, @sort_direction)
-      pagy, records = pagy_array(sorted_items, items: ITEM_COUNT_OVERRIDE)
+      pagy, records = pagy_array(sorted_items, limit: ITEM_COUNT_OVERRIDE)
       scope = :disbursements
 
       render 'nsm/adjustments/show', locals: { claim:, records:, claim_summary:, core_cost_summary:, pagy:, scope: }

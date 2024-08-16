@@ -154,7 +154,7 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
           let(:search_payload) do
             {
               application_type: 'crm4',
-              explicit_application_type: true,
+              query: 'Foo',
               page: 1,
               per_page: 20,
               sort_by: 'last_updated',
@@ -164,7 +164,7 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
           let(:sort_payload) do
             {
               application_type: 'crm4',
-              explicit_application_type: true,
+              query: 'Foo',
               page: 1,
               per_page: 20,
               sort_by: 'status_with_assignment',
@@ -187,6 +187,7 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
           it 'can search for submissions' do
             within('.search-panel') do
               choose 'Prior authority'
+              fill_in 'Claim or application details', with: 'Foo'
               click_on 'Search'
             end
 
@@ -196,6 +197,7 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
           it 'can sort results' do
             within('.search-panel') do
               choose 'Prior authority'
+              fill_in 'Claim or application details', with: 'Foo'
               click_on 'Search'
             end
 
@@ -209,7 +211,6 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
         context 'application_type missing' do
           let(:search_payload) do
             {
-              explicit_application_type: true,
               query: 'test',
               page: 1,
               per_page: 20,
