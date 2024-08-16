@@ -22,10 +22,9 @@ class SearchForm
   attribute :sort_by, :string, default: 'last_updated'
   attribute :sort_direction, :string, default: 'descending'
   attribute :application_type, :string
-  attribute :explicit_application_type, :boolean, default: false
 
   validate :at_least_one_field_set
-  validate :application_type_check
+  validates :application_type, presence: true
 
   def results
     @search_response[:raw_data].map { SearchResult.new(_1) }
@@ -76,17 +75,14 @@ class SearchForm
               :updated_to, :status_with_assignment,
               :caseworker_id]
 
-    fields.append(:application_type) if explicit_application_type
-
     field_set = fields.any? do |field|
       send(field).present?
     end
 
-    errors.add(:base, :nothing_specified, value: I18n.t("shared.submission_noun.#{application_type}")) unless field_set
-  end
+    return if field_set
 
-  def application_type_check
-    errors.add(:application_type, :nothing_specified) if explicit_application_type && send(:application_type).blank?
+    noun = application_type.presence || 'generic'
+    errors.add(:base, :nothing_specified, value: I18n.t("shared.submission_noun.#{noun}"))
   end
 
   def search_params
