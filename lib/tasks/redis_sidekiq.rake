@@ -20,18 +20,16 @@ namespace :redis_sidekiq do
     end
 
     ds = Sidekiq::DeadSet.new
-    # Enumerable#count used instead of SortedSet#size because Sidekiq stats not always accurate
-    if ds.count > 0
-      retry_counter = 0
-      time_from = days_from_now.days.ago
-      ds.each do |job|
-        if job.at  >= time_from
-          if job.retry
-            retry_counter += 1
-            print "Retried #{job}\n"
-          else
-            print "Failed to retry #{job}\n"
-          end
+    retry_counter = 0
+    time_from = days_from_now.days.ago
+
+    ds.each do |job|
+      if job.at  >= time_from
+        if job.retry
+          retry_counter += 1
+          print "Retried #{job}\n"
+        else
+          print "Failed to retry #{job}\n"
         end
       end
     end
