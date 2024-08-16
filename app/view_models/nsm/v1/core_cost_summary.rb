@@ -53,7 +53,7 @@ module Nsm
       def sum_allowed(data, field)
         return 0 if submission.rejected?
 
-        return nil if submission.granted? || data.none? { _1[:"allowed_#{field}"] }
+        return nil if data.none? { _1[:"allowed_#{field}"] }
 
         data.sum { _1[:"allowed_#{field}"] || _1[field] }
       end
