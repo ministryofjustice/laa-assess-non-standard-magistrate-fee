@@ -32,7 +32,7 @@ class SearchForm
 
   def pagy
     Pagy.new(count: @search_response.dig(:metadata, :total_results),
-             items: PER_PAGE,
+             limit: PER_PAGE,
              page: page,
              fragment: '#search-results')
   end
