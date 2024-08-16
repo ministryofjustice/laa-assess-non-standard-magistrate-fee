@@ -27,6 +27,7 @@ namespace :redis_sidekiq do
       if job.at  >= time_from
         if job.retry
           retry_counter += 1
+          print "#{job.class.name}"
           print "Retried #{job}\n"
         else
           print "Failed to retry #{job}\n"
