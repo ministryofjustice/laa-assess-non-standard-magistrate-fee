@@ -21,21 +21,22 @@ namespace :redis_sidekiq do
 
     ds = Sidekiq::DeadSet.new
     retry_counter = 0
+    job_counter = 0
     time_from = days_from_now.days.ago
 
     ds.each do |job|
       if job.at  >= time_from
+        job_counter += 1
         if job.retry
           retry_counter += 1
-          print "#{job.class.name}"
-          print "Retried #{job}\n"
+          print "Retried job with jid: #{job.jid}\n"
         else
-          print "Failed to retry #{job}\n"
+          print "Failed to retry job with jid: #{job.jid}\n"
         end
       end
     end
 
-    print "#{ds.count} jobs found\n"
-    print "#{retry_counter} jobs retried"
+    print "#{job_counter} job(s) found\n"
+    print "#{retry_counter} job(s) retried"
   end
 end
