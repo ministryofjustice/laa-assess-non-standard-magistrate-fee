@@ -16,7 +16,7 @@ namespace :redis_sidekiq do
     days_from_now = args[:days_from_now].to_i
     if days_from_now == 0
       print "You must enter a valid integer greater than 0"
-      exit
+      next
     end
 
     ds = Sidekiq::DeadSet.new

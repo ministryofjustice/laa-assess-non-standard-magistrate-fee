@@ -4,6 +4,9 @@ describe 'redis_sidekiq:', type: :task do
   describe 'retry_dead_jobs' do
     subject { Rake::Task['redis_sidekiq:retry_dead_jobs'] }
 
+    let(:days_from) { '1' }
+    let(:expected_output) { nil }
+
     before do
       Rails.application.load_tasks if Rake::Task.tasks.empty?
     end
@@ -13,8 +16,7 @@ describe 'redis_sidekiq:', type: :task do
     end
 
     context 'valid value for days_from_now arg' do
-      days_from = '1'
-      expected_output = "Retried job with jid: 1\nFailed to retry job with jid: 2\n2 job(s) found\n1 job(s) retried"
+      let(:expected_output) { "Retried job with jid: 1\nFailed to retry job with jid: 2\n2 job(s) found\n1 job(s) retried" }
 
       before do
         dead_jobs = [
@@ -31,10 +33,10 @@ describe 'redis_sidekiq:', type: :task do
     end
 
     context 'inputs invalid value for days_from_now arg' do
-      days_from = 'garbage'
+      let(:days_from) { 'garbage' }
+      let(:expected_output) { 'You must enter a valid integer greater than 0' }
 
       it 'prints out an error' do
-        expected_output = 'You must enter a valid integer greater than 0'
         expect { Rake::Task['redis_sidekiq:retry_dead_jobs'].invoke(days_from) }.to output(expected_output).to_stdout
       end
     end
