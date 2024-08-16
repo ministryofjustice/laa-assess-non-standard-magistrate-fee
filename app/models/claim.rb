@@ -59,7 +59,7 @@ class Claim < Submission
   end
 
   def formatted_allowed_total
-    return formatted_claimed_total if summed_costs[:allowed_gross_cost].blank?
+    return formatted_claimed_total if summed_costs[:allowed_gross_cost].blank? || granted_and_allowed_less_than_claim
 
     summed_costs.dig(:allowed_gross_cost, :text)
   end
@@ -69,6 +69,13 @@ class Claim < Submission
   end
 
   private
+
+  def granted_and_allowed_less_than_claim
+    allowed_gross_cost = summed_costs.dig(:allowed_gross_cost, :text).gsub(/[^\d\.]/, '').to_f
+    gross_cost = summed_costs.dig(:gross_cost, :text).gsub(/[^\d\.]/, '').to_f
+
+    granted? && allowed_gross_cost < gross_cost
+  end
 
   def summed_costs
     @summed_costs ||= core_cost_summary.summed_fields
