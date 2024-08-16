@@ -197,5 +197,65 @@ FactoryBot.define do
         claim.assignments << build(:assignment, submission: claim)
       end
     end
+
+    trait :increase_adjustment do
+      disbursements do
+        [
+          {
+            'id' => '1c0f36fd-fd39-498a-823b-0a3837454563',
+            'details' => 'Details',
+            'pricing' => 1.0,
+            'vat_rate' => 0.2,
+            'apply_vat' => 'false',
+            'other_type' => {
+              'en' => 'Apples',
+              'value' => 'Apples'
+            },
+            'original_vat_amount' => 1.0,
+            'vat_amount' => 0.0,
+            'original_total_cost' => 130.0,
+            'total_cost' => 140.0,
+            'original_total_cost_without_vat' => 100.0,
+            'total_cost_without_vat' => 130.0,
+            'prior_authority' => 'yes',
+            'disbursement_date' => '2022-12-23',
+            'disbursement_type' => {
+              'en' => 'Other',
+              'value' => 'other'
+            }
+          }
+        ]
+      end
+    end
+
+    trait :decrease_adjustment do
+      disbursements do
+        [
+          {
+            'id' => '1c0f36fd-fd39-498a-823b-0a3837454563',
+            'details' => 'Details',
+            'pricing' => 1.0,
+            'vat_rate' => 0.2,
+            'apply_vat' => 'false',
+            'other_type' => {
+              'en' => 'Apples',
+              'value' => 'Apples'
+            },
+            'original_vat_amount' => 1.0,
+            'vat_amount' => 0.0,
+            'original_total_cost' => 130.0,
+            'total_cost' => 110.0,
+            'original_total_cost_without_vat' => 100.0,
+            'total_cost_without_vat' => 80.0,
+            'prior_authority' => 'yes',
+            'disbursement_date' => '2022-12-12',
+            'disbursement_type' => {
+              'en' => 'Other',
+              'value' => 'other'
+            }
+          }
+        ]
+      end
+    end
   end
 end
