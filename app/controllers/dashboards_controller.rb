@@ -53,7 +53,6 @@ class DashboardsController < ApplicationController
     if FeatureFlags.nsm_insights.enabled?
       {
         page: params.fetch(:page, '1'),
-        explicit_application_type: true
       }
     else
       {
