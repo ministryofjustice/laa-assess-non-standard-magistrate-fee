@@ -7,7 +7,7 @@ namespace :redis_sidekiq do
     else
       print "Sidekiq unable to establish connection with Redis server"
     end
-  rescue Redis::CannotConnectError, RedisClient::CannotConnectError
+  rescue Redis::CannotConnectError, RedisClient::CannotConnectError, Redis::ConnectionError
     print "Sidekiq unable to establish connection with Redis server"
   end
 
@@ -16,7 +16,7 @@ namespace :redis_sidekiq do
     days_from_now = args[:days_from_now].to_i
     if days_from_now == 0
       print "You must enter a valid integer greater than 0"
-      return
+      exit
     end
 
     ds = Sidekiq::DeadSet.new
