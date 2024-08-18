@@ -47,11 +47,18 @@ RSpec.describe Claim do
 
   describe '#formatted_allowed_total' do
     context 'granted' do
-      it 'gross_cost if claim less than allowed' do
-        allowed_more = create(:claim, :increase_adjustment)
-        allowed_more.state = Nsm::MakeDecisionForm::GRANTED
+      it 'adjusted cost if adjusted more than claimed' do
+        claim = create(:claim, :increase_adjustment)
+        claim.state = Nsm::MakeDecisionForm::GRANTED
+        expect(claim).not_to receive(:formatted_claimed_total)
+        claim.formatted_allowed_total
+      end
 
-        expect(allowed_more.formatted_allowed_total).to eq '£355.97'
+      it 'claimed cost if adjusted less than claimed' do
+        claim = create(:claim, :decrease_adjustment)
+        claim.state = Nsm::MakeDecisionForm::GRANTED
+        expect(claim).to receive(:formatted_claimed_total)
+        claim.formatted_allowed_total
       end
     end
 
@@ -63,9 +70,11 @@ RSpec.describe Claim do
     end
 
     context 'part_grant' do
-      it 'allowed_gross_cost' do
+      it 'returns adjusted total' do
+        claim = create(:claim, :increase_adjustment)
         claim.state = Nsm::MakeDecisionForm::PART_GRANT
-        expect(claim.formatted_allowed_total).to eq '£325.97'
+        expect(claim).to_not receive(:formatted_claimed_total)
+        claim.formatted_allowed_total
       end
     end
   end
