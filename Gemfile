@@ -32,7 +32,7 @@ gem 'redis'
 gem 'sidekiq', '~> 7.3', '>= 7.3.0'
 gem 'sidekiq_alive', '~> 2.4'
 gem 'sidekiq-cron'
-gem 'stimulus-rails'
+gem 'stimulus-rails', '>= 1.3.4'
 gem 'turbo-rails'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 # Pagination
