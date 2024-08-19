@@ -38,9 +38,9 @@ module Nsm
       end
 
       def format_row(data, accessibility_text: false)
-        work_type, requested_cost, requested_time, allowed_cost, allowed_time = *data
+        work_type, requested_cost, requested_time, allowed_cost, allowed_time, any_changed_types = *data
         result = [
-          work_type,
+          (work_type.is_a?(String) && any_changed_types ? "#{work_type} *" : work_type),
           { text: format_period(requested_time, style: :minimal_html), numeric: true },
           { text: prefix('claimed', accessibility_text:) + NumberTo.pounds(requested_cost), numeric: true },
         ]
@@ -66,6 +66,10 @@ module Nsm
           end
       end
 
+      def any_type_changes?
+        work_items.any? { _1.work_type_original.present? }
+      end
+
       private
 
       def prefix(key, accessibility_text:)
@@ -89,6 +93,7 @@ module Nsm
           periods ? work_items.sum(&:original_time_spent) : '',
           work_items.sum(&:caseworker_amount),
           periods ? work_items.sum(&:time_spent) : '',
+          work_items.any? { _1.work_type_original.present? }
         ]
       end
 

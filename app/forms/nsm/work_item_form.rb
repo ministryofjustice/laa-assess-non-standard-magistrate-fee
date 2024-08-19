@@ -7,6 +7,8 @@ module Nsm
     attribute :id, :string
     attribute :uplift, :string
     attribute :time_spent, :time_period
+    attribute :work_type_value
+    attribute :work_item_pricing
 
     validates :uplift, inclusion: { in: [UPLIFT_PROVIDED, UPLIFT_RESET] }, if: -> { item.uplift? }
     validates :time_spent, allow_nil: true, time_period: { allow_zero: true }
@@ -26,10 +28,7 @@ module Nsm
       return false unless valid?
 
       Claim.transaction do
-        process_field(value: time_spent.to_i, field: 'time_spent') if time_spent.present?
-        process_field(value: new_uplift, field: 'uplift') if item.uplift?
-
-        claim.save
+        process_fields
       end
 
       true
@@ -37,10 +36,18 @@ module Nsm
 
     private
 
-    def no_change_field
-      return super if item.uplift?
+    def process_fields
+      process_field(value: time_spent.to_i, field: 'time_spent') if time_spent.present?
+      process_field(value: new_uplift, field: 'uplift') if item.uplift?
+      process_work_item_fields if work_type_changed?
 
-      :time_spent
+      claim.save
+    end
+
+    def process_work_item_fields
+      process_field(value: { value: work_type_value, en: I18n.t("nsm.work_items.work_types.#{work_type_value}") },
+                    field: 'work_type')
+      process_field(value: work_item_pricing[work_type_value], field: 'pricing')
     end
 
     def selected_record
@@ -55,7 +62,12 @@ module Nsm
 
     def data_has_changed?
       time_spent != item.time_spent ||
+        work_type_changed? ||
         (item.uplift? && item.uplift.zero? != (uplift == UPLIFT_RESET))
+    end
+
+    def work_type_changed?
+      work_type_value != item.work_type.value
     end
   end
 end

@@ -66,6 +66,11 @@ FactoryBot.define do
           'en' => 'No, skip the equality questions'
         },
         'stage_reached' => 'prog',
+        'work_item_pricing' => {
+          'waiting' => 45.5,
+          'preparation' => 23.2,
+          'attendance_without_counsel' => 10.17,
+        }
       }
     end
 

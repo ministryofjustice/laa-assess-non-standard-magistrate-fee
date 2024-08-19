@@ -1,6 +1,5 @@
 require 'rails_helper'
 
-# rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe Nsm::DisbursementsForm do
   let(:claim) do
     create(
@@ -93,4 +92,3 @@ RSpec.describe Nsm::DisbursementsForm do
     end
   end
 end
-# rubocop:enable RSpec/MultipleMemoizedHelpers

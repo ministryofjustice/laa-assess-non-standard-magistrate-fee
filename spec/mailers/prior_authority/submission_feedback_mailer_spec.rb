@@ -2,7 +2,6 @@
 
 require 'rails_helper'
 
-# rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
   let(:recipient) { 'solicitor-contact@example.com' }
   let(:laa_case_reference) { 'LAA-FHaMVK' }
@@ -213,4 +212,3 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
     let(:submission) { build(:prior_authority_application, state: 'granted') }
   end
 end
-# rubocop:enable RSpec/MultipleMemoizedHelpers

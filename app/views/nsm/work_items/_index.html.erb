@@ -11,6 +11,9 @@
       t.with_foot(rows: foot, first_cell_is_header: true)
     end
   %>
+  <% if summary.any_type_changes? %>
+    <p><%= t('nsm.work_items.type_change_explanation') %></p>
+  <% end %>
 <% end %>
 
 <% if claim.editable_by?(current_user) && records.any? { |work_item| work_item.uplift&.positive? } %>
@@ -45,6 +48,9 @@
               link_to(work_item.work_type, nsm_claim_work_item_path(claim_id: claim.id, id: work_item.id), data: { turbo: 'false' })
             end
           %>
+          <% if work_item.work_type_original.present? %>
+            *
+          <% end %>
         </th>
 
         <td class="govuk-table__cell govuk-table__cell--nowrap"><%= work_item.formatted_completed_on %></td>
@@ -66,5 +72,9 @@
     <% end %>
   </tbody>
 </table>
+
+<% if records.any? { _1.work_type_original.present? } %>
+  <p><%= t('nsm.work_items.type_change_explanation') %></p>
+<% end %>
 
 <%= render 'shared/pagination', pagy: pagy, item: t(".table_info_item") %>
