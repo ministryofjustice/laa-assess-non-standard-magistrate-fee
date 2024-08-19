@@ -71,7 +71,6 @@ class Claim < Submission
   private
 
   def granted_and_allowed_less_than_claim
-    # TODO: refactor this to summed_costs.dig(:allowed_gross_cost, :text, :value)
     allowed_gross_cost = summed_costs.dig(:allowed_gross_cost, :text).gsub(/[^\d\.]/, '').to_f
     gross_cost = summed_costs.dig(:gross_cost, :text).gsub(/[^\d\.]/, '').to_f
 
