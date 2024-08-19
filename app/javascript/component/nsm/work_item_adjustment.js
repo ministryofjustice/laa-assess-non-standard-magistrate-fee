@@ -31,7 +31,6 @@ function init() {
     const chosenWorkTypeRadio = document.querySelector('input[name="nsm_work_item_form[work_type_value]"]:checked');
     const unitPrice = new Decimal(chosenWorkTypeRadio.dataset.value);
     var upliftAmount = getProviderUplift();
-    const vatMultiplier = new Decimal(calculateChangeButton?.getAttribute('data-vat-multiplier'));
 
     checkMinutesThreshold();
 
@@ -51,7 +50,7 @@ function init() {
 
     const upliftFactor = new Decimal(upliftAmount).dividedBy(100).plus(1);
 
-    const unrounded = unitPrice.times(minutes).dividedBy(60).times(upliftFactor).times(vatMultiplier);
+    const unrounded = unitPrice.times(minutes).dividedBy(60).times(upliftFactor);
     return (`£${unrounded.toFixed(2)}`);
   }
 

@@ -49,7 +49,6 @@
         data: {
           'uplift-amount': item.uplift,
           'provider-time-spent': item.time_spent,
-          'vat-multiplier': item.vat_registered? ? (1.0 + item.vat_rate) : 1.0,
         }
       ) %>
       <div id='claim-cost-table'>
@@ -57,15 +56,15 @@
           <%= table.with_caption(size: 'm', text: t('.claim_cost_table.title')) %>
           <%= table.with_head do |head| %>
             <%= head.with_row do |row| %>
-              <%= row.with_cell(text: t(".claim_cost_table.header_one.#{item.vat_registered? ? 'inc_vat' : 'exc_vat'}")) %>
+              <%= row.with_cell(text: t(".claim_cost_table.header_one")) %>
               <%= row.with_cell(text: t('.claim_cost_table.header_two')) %>
-              <%= row.with_cell(text: t(".claim_cost_table.header_three.#{item.vat_registered? ? 'inc_vat' : 'exc_vat'}")) %>
+              <%= row.with_cell(text: t(".claim_cost_table.header_three")) %>
             <% end %>
           <% end %>
 
           <%= table.with_body do |body| %>
             <%= body.with_row do |row| %>
-              <%= row.with_cell(text: NumberTo.pounds(item.provider_requested_amount_inc_vat), html_attributes: { id: 'work_item_provider_requested_amount' }) %>
+              <%= row.with_cell(text: NumberTo.pounds(item.provider_requested_amount), html_attributes: { id: 'work_item_provider_requested_amount' }) %>
               <%= row.with_cell(text: "#{item.uplift? ? item.uplift : '0' }%",html_attributes: { id: 'work_item_uplift_allowed_amount' }) %>
               <%= row.with_cell(text: '--',html_attributes: { id: 'work_item_caseworker_allowed_amount' }) %>
             <% end %>

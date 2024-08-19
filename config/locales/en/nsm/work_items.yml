@@ -57,19 +57,14 @@ en:
         uplift_claimed: Uplift claimed
         total_claimed: Cost claimed
         vat: VAT
-        total_claimed_inc_vate: Cost claimed (including VAT)
         laa_adjustments: LAA adjustments
         calculate_button_text: Calculate my changes
         work_type_hint: '%{value} per hour'
         claim_cost_table:
           title: "Allowed cost"
-          header_one:
-            inc_vat: Cost claimed (including VAT)
-            exc_vat: "Cost claimed"
+          header_one: Cost claimed
           header_two: "Uplift allowed"
-          header_three:
-            inc_vat: Cost allowed (including VAT)
-            exc_vat: "Cost allowed"
+          header_three: Cost allowed
       show:
         page_title: "Your claims"
         heading:
