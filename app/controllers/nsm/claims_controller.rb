@@ -22,7 +22,7 @@ module Nsm
       @claims = claims.map { |claim| BaseViewModel.build(:table_row, claim) }
     end
 
-    def new
+    def create
       claim = Claim.unassigned(current_user).order(created_at: :asc).first
 
       if claim

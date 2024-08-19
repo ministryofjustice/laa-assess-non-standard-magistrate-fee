@@ -19,20 +19,20 @@ RSpec.describe Nsm::ClaimsController do
     end
   end
 
-  describe '#new' do
+  describe '#create' do
     context 'when a claim is available to assign' do
       it 'creates an assignment and event' do
         create(:claim)
 
         expect do
-          expect { get :new }.to change(Assignment, :count).by(1)
+          expect { post :create }.to change(Assignment, :count).by(1)
         end.to change(Event::Assignment, :count).by(1)
       end
 
       it 'redirects to the assigned claim' do
         claim = create(:claim)
 
-        get :new
+        post :create
 
         expect(response).to redirect_to(nsm_claim_claim_details_path(claim))
       end
@@ -40,7 +40,7 @@ RSpec.describe Nsm::ClaimsController do
 
     context 'when a claim is not available to assign' do
       it 'redirects to Your Claims with a flash notice' do
-        get :new
+        post :create
 
         expect(response).to redirect_to(your_nsm_claims_path)
         expect(flash[:notice]).to eq('There are no claims waiting to be allocated.')
