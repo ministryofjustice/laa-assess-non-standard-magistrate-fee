@@ -138,7 +138,7 @@ Layout/LineLength:
 
 # TODO: adjust these values towards the rubocop defaults
 RSpec/MultipleMemoizedHelpers:
-  Max: 12
+  Max: 20
 
 RSpec/MultipleExpectations:
   Max: 7

@@ -33,6 +33,9 @@
                 link_to(work_item.work_type, nsm_claim_work_item_path(claim_id: claim.id, id: work_item.id), data: { turbo: 'false' })
               end
             %>
+            <% if work_item.work_type_original.present? %>
+              *
+            <% end %>
           </th>
 
           <td class="govuk-table__cell"><%= work_item.reason %></td>
@@ -50,6 +53,10 @@
       <% end %>
     </tbody>
   </table>
+
+  <% if records.any? { _1.work_type_original.present? } %>
+    <p><%= t('nsm.work_items.type_change_explanation') %></p>
+  <% end %>
 
   <%= render 'shared/pagination', pagy: pagy, item: t(".table_info_item") %>
 <% end %>

@@ -99,11 +99,75 @@ RSpec.describe 'Work items' do
       expect(page).to have_content(
         'Waiting' \
         'Date12 December 2022' \
-        'Time spent2 hours 41 minutes' \
-        'Fee earner initialsaaa' \
+        'Fee earneraaa' \
+        'Time claimed2 hours 41 minutes' \
         'Uplift claimed95%' \
-        'Claim cost£125.58'
+        'Cost claimed£125.58'
       )
+    end
+  end
+
+  context 'when there is an attendance without counsel work item' do
+    let(:claim) do
+      create(
+        :claim,
+        work_items: [
+          {
+            'id' => 'cf5e303e-98dd-4b0f-97ea-3560c4c5f137',
+            'uplift' => 95,
+            'pricing' => 24.0,
+            'work_type' => {
+              'en' => 'Attendance without counsel',
+              'value' => 'attendance_without_counsel'
+            },
+            'fee_earner' => 'aaa',
+            'time_spent' => 161,
+            'completed_on' => '2022-12-12'
+          }
+        ]
+      )
+    end
+
+    it 'does not change the work type if I ask it not to when making other adjustments' do
+      visit nsm_claim_work_items_path(claim)
+
+      within('.govuk-table__row', text: 'Attendance without counsel') do
+        expect(page).to have_content('95%')
+        click_on 'Attendance without counsel'
+      end
+
+      choose 'Yes, remove uplift'
+      fill_in 'Explain your decision', with: 'Testing'
+
+      click_on 'Save changes'
+      visit nsm_claim_work_items_path(claim)
+
+      expect(page).to have_content('Attendance without counsel')
+    end
+
+    it 'changes the work type and associated pricing if I ask it to' do
+      visit nsm_claim_work_items_path(claim)
+      expect(page).to have_content 'Sum of net cost claimed: £125.58'
+
+      within('.govuk-table__row', text: 'Attendance without counsel') do
+        click_on 'Attendance without counsel'
+      end
+
+      choose 'Preparation'
+      fill_in 'Explain your decision', with: 'Testing'
+
+      click_on 'Save changes'
+      visit nsm_claim_work_items_path(claim)
+
+      expect(page).to have_content('Preparation *')
+
+      expect(page).to have_content('Sum of net cost claimed: £125.58').and have_content 'Sum of net cost allowed: £121.39'
+      page.find('.govuk-details__summary-text').click
+      within('.govuk-details__text') do
+        expect(page).to have_content('Preparation *').and have_content(
+          '* denotes that a work item has been adjusted from one type to another'
+        )
+      end
     end
   end
 end

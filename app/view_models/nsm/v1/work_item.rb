@@ -7,11 +7,11 @@ module Nsm
       # used to guess position when value not set in JSON blob when position is blank
       attribute :submission
       attribute :position, :integer
-      attribute :work_type, :translated
+      adjustable_attribute :work_type, :translated
       adjustable_attribute :time_spent, :time_period
       attribute :completed_on, :date
 
-      attribute :pricing, :decimal
+      adjustable_attribute :pricing, :decimal
       adjustable_attribute :uplift, :integer
       attribute :fee_earner, :string
       attribute :vat_rate, :decimal
@@ -74,7 +74,8 @@ module Nsm
 
       def form_attributes
         attributes.slice('time_spent', 'uplift').merge(
-          'explanation' => adjustment_comment
+          'explanation' => adjustment_comment,
+          'work_type_value' => work_type.value,
         )
       end
 
@@ -124,12 +125,7 @@ module Nsm
       end
 
       def provider_fields
-        rows = {
-          '.date' => format_in_zone(completed_on),
-          '.time_spent' => format_period(original_time_spent),
-          '.fee_earner' => fee_earner.to_s,
-          '.uplift_claimed' => "#{original_uplift.to_i}%",
-        }
+        rows = build_basic_rows
         if vat_registered?
           rows['.vat'] = NumberTo.percentage(vat_rate)
           rows['.total_claimed_inc_vate'] = NumberTo.pounds(provider_requested_amount_inc_vat)
@@ -146,12 +142,26 @@ module Nsm
 
       private
 
+      def build_basic_rows
+        {
+          '.work_type' => original_work_type.translated,
+          '.date' => format_in_zone(completed_on),
+          '.fee_earner' => fee_earner.to_s,
+          '.time_spent' => format_period(original_time_spent),
+          '.uplift_claimed' => "#{original_uplift.to_i}%",
+        }
+      end
+
       def calculate_cost(original: false)
-        scoped_uplift, scoped_time_spent = original ? [original_uplift, original_time_spent] : [uplift, time_spent]
+        scoped_uplift, scoped_time_spent, scoped_pricing = if original
+                                                             [original_uplift, original_time_spent, original_pricing]
+                                                           else
+                                                             [uplift, time_spent, pricing]
+                                                           end
         # We need to use a Rational because some numbers divided by 60 cannot be accurately represented as a decimal,
         # and when summing up multiple work items with sub-penny precision, those small inaccuracies can lead to
         # a larger inaccuracy when the total is eventually rounded to 2 decimal places.
-        Rational(pricing * scoped_time_spent * (100 + scoped_uplift.to_i), 100 * 60)
+        Rational(scoped_pricing * scoped_time_spent * (100 + scoped_uplift.to_i), 100 * 60)
       end
 
       def format(value, as: :pounds)
