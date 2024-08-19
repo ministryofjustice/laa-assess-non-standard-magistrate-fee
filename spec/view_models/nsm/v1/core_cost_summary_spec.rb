@@ -9,7 +9,8 @@ RSpec.describe Nsm::V1::CoreCostSummary do
       work_items: work_items.map(&:deep_stringify_keys),
       letters_and_calls: letters_and_calls,
       disbursements: disbursements.map(&:deep_stringify_keys),
-      vat_registered: vat_registered
+      vat_registered: vat_registered,
+      state: state
     )
   end
   let(:vat_registered) { 'no' }
@@ -18,6 +19,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
     [{ total_cost_without_vat: 100.0, vat_amount: 0.0 }]
   end
   let(:work_items) { [] }
+  let(:state) { 'submitted' }
 
   describe '#headers' do
     it 'retruns the translated headers' do
@@ -361,6 +363,51 @@ RSpec.describe Nsm::V1::CoreCostSummary do
             gross_cost: { numeric: true, text: '£160.00' },
             name: { numeric: false, text: 'Total', width: nil },
             net_cost: { numeric: true, text: '£160.00' },
+            vat: { numeric: true, text: '£0.00' }
+          }
+        )
+      end
+    end
+
+    context 'when claim submission rejected' do
+      let(:work_items) do
+        [
+          {
+            work_type: { value: 'advocacy', en: 'Advocacy' },
+            pricing: 10.0, time_spent: 480,
+          }
+        ]
+      end
+      let(:state) { 'rejected' }
+
+      it 'returns the summed time and cost' do
+        expect(subject.summed_fields).to eq(
+          {
+            allowed_gross_cost: { numeric: true, text: '£0.00' }, allowed_net_cost: { numeric: true, text: '£0.00' },
+            allowed_vat: { numeric: true, text: '£0.00' }, gross_cost: { numeric: true, text: '£180.00' },
+            name: { numeric: false, text: 'Total', width: nil }, net_cost: { numeric: true, text: '£180.00' },
+            vat: { numeric: true, text: '£0.00' }
+          }
+        )
+      end
+    end
+
+    context 'when claim submission granted' do
+      let(:work_items) do
+        [
+          {
+            work_type: { value: 'advocacy', en: 'Advocacy' },
+            pricing: 10.0, time_spent: 480,
+          }
+        ]
+      end
+      let(:state) { 'granted' }
+
+      it 'returns the summed time and cost' do
+        expect(subject.summed_fields).to eq(
+          {
+            allowed_gross_cost: '', allowed_net_cost: '', allowed_vat: '', gross_cost: { numeric: true, text: '£180.00' },
+            name: { numeric: false, text: 'Total', width: nil }, net_cost: { numeric: true, text: '£180.00' },
             vat: { numeric: true, text: '£0.00' }
           }
         )
