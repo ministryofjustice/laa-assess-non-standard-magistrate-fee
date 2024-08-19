@@ -6,7 +6,7 @@
     <% if your_claims.none? %>
       <h2 class="govuk-body-l"><%= t('.no_claims') %></h2>
     <% end %>
-    <div data-turbo-prefetch="false" class="govuk-button-group">
+    <div class="govuk-button-group">
       <%= govuk_button_link_to(t('.next_claim'), new_nsm_claim_path) %>
     </div>
     <% if your_claims.any? %>
