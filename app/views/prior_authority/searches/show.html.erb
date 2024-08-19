@@ -2,4 +2,11 @@
   <% render 'layouts/prior_authority/primary_navigation', current: :search %>
 <% end %>
 <% title t('.page_title') %>
-<%= render partial: 'shared/search', locals: { form_url: prior_authority_search_path(anchor: 'search-results'), title: true, choose_application_type: false, clear_all_path: new_prior_authority_search_path, additional_param: nil, translation_prefix: 'prior_authority.searches.show', controller_path: 'prior_authority/searches'} %>
+<%= render partial: 'shared/search', locals: { form_url: prior_authority_search_path(anchor: 'search-results'),
+                                               title: true,
+                                               choose_application_type: false,
+                                               clear_all_path: new_prior_authority_search_path,
+                                               additional_param: nil,
+                                               translation_prefix: 'prior_authority.searches.show',
+                                               controller_path: 'prior_authority/searches',
+                                               search_form_type: :prior_authority_search_form } %>

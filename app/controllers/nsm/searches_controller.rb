@@ -3,19 +3,19 @@ module Nsm
     before_action :set_current_section
 
     def show
-      @search_form = SearchForm.new(search_params)
+      @search_form = Nsm::SearchForm.new(search_params)
       @search_form.execute if @search_form.valid?
     end
 
     def new
-      @search_form = SearchForm.new(default_params)
+      @search_form = Nsm::SearchForm.new(default_params)
       render :show
     end
 
     private
 
     def search_params
-      params.require(:search_form).permit(
+      params.require(:nsm_search_form).permit(
         :query,
         :submitted_from,
         :submitted_to,
