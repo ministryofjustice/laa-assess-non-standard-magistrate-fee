@@ -98,7 +98,7 @@ Metrics/MethodLength:
   Max: 15
 
 Metrics/ClassLength:
-  Max: 140
+  Max: 150
 
 # To be tweaked until we find the right balance
 Metrics/AbcSize:

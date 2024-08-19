@@ -120,10 +120,6 @@ module Nsm
         format(any_adjustments? && caseworker_amount)
       end
 
-      def attendance?
-        %w[attendance_with_counsel attendance_without_counsel].include?(work_type.value)
-      end
-
       def provider_fields
         rows = build_basic_rows
         if vat_registered?

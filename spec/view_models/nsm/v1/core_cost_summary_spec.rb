@@ -152,6 +152,46 @@ RSpec.describe Nsm::V1::CoreCostSummary do
       end
     end
 
+    context 'when a work item has changed type' do
+      let(:work_items) do
+        [
+          {
+            work_type: { value: 'advocacy', en: 'Advocacy' },
+            work_type_original: { value: 'waiting', en: 'Waiting' },
+            pricing: 10.0,
+            pricing_original: 12.0,
+            time_spent: 480,
+          },
+        ]
+      end
+
+      it 'includes shows something sensible for profit costs' do
+        expect(subject.table_fields).to include(
+          {
+            allowed_gross_cost: { numeric: true, text: '£80.00' },
+            allowed_net_cost: { numeric: true, text: '£80.00' }, allowed_vat: { numeric: true, text: '£0.00' },
+            gross_cost: { numeric: true, text: '£0.00' }, name: { numeric: false, text: 'Profit costs', width: nil },
+            net_cost: { numeric: true, text: '£0.00' }, vat: { numeric: true, text: '£0.00' }
+          }
+        )
+      end
+
+      it 'includes shows something sensible for waiting' do
+        name_html = '<span title="One or more of these items were adjusted to be a different work item type.">' \
+                    'Waiting</span><sup><a href="#fn*">[*]</a></sup>'
+        expect(subject.table_fields).to include(
+          {
+            allowed_gross_cost: { numeric: true, text: '£0.00' },
+            allowed_net_cost: { numeric: true, text: '£0.00' },
+            allowed_vat: { numeric: true, text: '£0.00' },
+            gross_cost: { numeric: true, text: '£96.00' },
+            name: { numeric: false, text: name_html },
+            net_cost: { numeric: true, text: '£96.00' }, vat: { numeric: true, text: '£0.00' }
+          }
+        )
+      end
+    end
+
     context 'when disbursements exists - with adjustments' do
       let(:disbursements) do
         [

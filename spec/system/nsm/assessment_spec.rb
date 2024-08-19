@@ -137,7 +137,7 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
 
       clicked_id = claim.data['work_items'][53]['id']
       expect(evaluate_script('window.scrollY')).to eq 0
-      find("tbody tr[id=\"#{clicked_id}\"] a").click
+      find("tbody tr[id=\"#{clicked_id}\"] a", text: 'Waiting').click
       expect(page).to have_content('Adjust a work item')
 
       click_on 'Back'

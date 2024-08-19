@@ -159,14 +159,13 @@ RSpec.describe 'Work items' do
       click_on 'Save changes'
       visit nsm_claim_work_items_path(claim)
 
-      expect(page).to have_content('Preparation *')
-
-      expect(page).to have_content('Sum of net cost claimed: £125.58').and have_content 'Sum of net cost allowed: £121.39'
+      expect(page).to have_content('Preparation [1]')
+                  .and have_content('Sum of net cost claimed: £125.58')
+                  .and have_content('Sum of net cost allowed: £121.39')
+                  .and have_content('This item was adjusted to be a different work item type')
       page.find('.govuk-details__summary-text').click
       within('.govuk-details__text') do
-        expect(page).to have_content('Preparation *').and have_content(
-          '* denotes that a work item has been adjusted from one type to another'
-        )
+        expect(page).to have_content('Attendance without counsel[*]')
       end
     end
   end

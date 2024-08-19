@@ -1,6 +1,10 @@
 module Nsm
   module V1
     class CoreCostSummary < BaseViewModel
+      include ActionView::Helpers::UrlHelper
+      include ActionView::Helpers::TagHelper
+      include ActionView::Helpers::OutputSafetyHelper
+
       PROFIT_COSTS = 'profit_costs'.freeze
 
       attribute :submission
@@ -50,7 +54,7 @@ module Nsm
 
         @show_allowed ||=
           submission.part_grant? ||
-          [disbursements, letters_calls, *work_items.values].any? { |rows| rows.any?(&:changed?) }
+          [disbursements, letters_calls, work_items].any? { |rows| rows.any?(&:changed?) }
       end
 
       private
@@ -64,15 +68,15 @@ module Nsm
       end
 
       def calculate_profit_costs(formatted:)
-        calculate_row((work_items[PROFIT_COSTS] || []) + letters_calls, 'profit_costs', formatted:)
+        calculate_work_items_row(PROFIT_COSTS, 'profit_costs', extra_rows: letters_calls, formatted: formatted)
       end
 
       def calculate_waiting(formatted:)
-        calculate_row(work_items['Waiting'] || [], 'waiting', formatted:)
+        calculate_work_items_row('Waiting', 'waiting', formatted:)
       end
 
       def calculate_travel(formatted:)
-        calculate_row(work_items['Travel'] || [], 'travel', formatted:)
+        calculate_work_items_row('Travel', 'travel', formatted:)
       end
 
       def calculate_disbursements(formatted:)
@@ -82,7 +86,7 @@ module Nsm
         allowed_vat = show_allowed? ? disbursements.sum(&:vat_amount) : nil
 
         build_hash(
-          name: 'disbursements',
+          name: t('disbursements', numeric: false),
           net_cost: net_cost,
           vat: vat,
           allowed_net_cost: allowed_net_cost,
@@ -91,12 +95,22 @@ module Nsm
         )
       end
 
-      def calculate_row(rows, name, formatted:)
-        net_cost = rows.sum(&:provider_requested_amount)
-        allowed_net_cost = show_allowed? ? rows.sum(&:caseworker_amount) : nil
+      def calculate_work_items_row(type, name, formatted:, extra_rows: [])
+        claimed_rows = work_items_of_type(type, type_type: :claimed)
+        net_cost = claimed_rows.sum(&:provider_requested_amount) + extra_rows.sum(&:provider_requested_amount)
+        if show_allowed?
+          allowed_rows = work_items_of_type(type, type_type: :allowed)
+          allowed_net_cost = allowed_rows.sum(&:caseworker_amount) + extra_rows.sum(&:caseworker_amount)
+        end
+
+        calculate_hash(name, claimed_rows, allowed_rows, net_cost, allowed_net_cost, formatted)
+      end
+
+      def calculate_hash(name, claimed_rows, allowed_rows, net_cost, allowed_net_cost, formatted)
+        any_changed_type = show_allowed? && claimed_rows.any? { !_1.in?(allowed_rows) }
 
         build_hash(
-          name: name,
+          name: build_work_item_row_name(name, any_changed_type),
           net_cost: net_cost,
           vat: net_cost * vat_rate,
           allowed_net_cost: allowed_net_cost,
@@ -107,7 +121,7 @@ module Nsm
 
       def build_hash(name:, net_cost:, vat:, allowed_net_cost:, allowed_vat:, formatted:)
         {
-          name: t(name, numeric: false),
+          name: name,
           net_cost: format(net_cost, formatted:),
           vat: format(vat, formatted:),
           gross_cost: format(net_cost + vat, formatted:),
@@ -117,9 +131,13 @@ module Nsm
         }
       end
 
+      def work_items_of_type(type, type_type:)
+        field = type_type == :claimed ? :original_work_type : :work_type
+        work_items.select { group_type(_1.send(field).to_s) == type }
+      end
+
       def work_items
         @work_items ||= BaseViewModel.build(:work_item, submission, 'work_items')
-                                     .group_by { |work_item| group_type(work_item.work_type.to_s) }
       end
 
       def letters_calls
@@ -157,6 +175,19 @@ module Nsm
           text: I18n.t("nsm.review_and_adjusts.show.#{key}"),
           numeric: numeric,
           width: width
+        }
+      end
+
+      def build_work_item_row_name(name_key, any_changed_type)
+        return t(name_key, numeric: false) unless any_changed_type
+
+        title_tag = tag.span(I18n.t("nsm.review_and_adjusts.show.#{name_key}"),
+                             title: I18n.t('nsm.work_items.type_changes.explanation'))
+        asterisk_tag = tag.sup { link_to(I18n.t('nsm.work_items.type_changes.asterisk'), '#fn*') }
+
+        {
+          text: safe_join([title_tag, asterisk_tag]),
+          numeric: false,
         }
       end
     end

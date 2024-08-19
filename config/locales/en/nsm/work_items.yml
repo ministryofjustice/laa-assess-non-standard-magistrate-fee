@@ -96,7 +96,12 @@ en:
         attendance_without_counsel: Attendance without counsel
         travel: Travel
         waiting: Waiting
-      type_change_explanation: '* denotes that a work item has been adjusted from one type to another'
+      type_changes:
+        explanation: 'One or more of these items were adjusted to be a different work item type.'
+        asterisk: '[*]'
+        see: 'See:'
+        item: Item %{position}
+        item_type_adjusted: This item was adjusted to be a different work item type.
   helpers:
     legend:
       nsm_work_item_form:

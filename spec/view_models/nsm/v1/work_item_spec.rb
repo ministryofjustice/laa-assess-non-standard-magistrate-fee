@@ -275,33 +275,6 @@ RSpec.describe Nsm::V1::WorkItem do
     end
   end
 
-  describe 'attendance' do
-    context 'when work type is attendance' do
-      it 'is true' do
-        expect(with_work_type('attendance_with_counsel')).to be_attendance
-        expect(with_work_type('attendance_without_counsel')).to be_attendance
-      end
-    end
-
-    context 'when work type is not attendance' do
-      it 'is false' do
-        expect(with_work_type('preparation')).not_to be_attendance
-        expect(with_work_type('advocacy')).not_to be_attendance
-        expect(with_work_type('travel')).not_to be_attendance
-        expect(with_work_type('waiting')).not_to be_attendance
-      end
-    end
-
-    def with_work_type(work_type)
-      described_class.new(
-        'work_type' => {
-          'value' => work_type,
-          'en' => work_type.capitalize
-        }
-      )
-    end
-  end
-
   describe '#provider_fields' do
     let(:params) do
       {
