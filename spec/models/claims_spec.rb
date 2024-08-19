@@ -73,7 +73,7 @@ RSpec.describe Claim do
       it 'returns adjusted total' do
         claim = create(:claim, :increase_adjustment)
         claim.state = Nsm::MakeDecisionForm::PART_GRANT
-        expect(claim).to_not receive(:formatted_claimed_total)
+        expect(claim).not_to receive(:formatted_claimed_total)
         claim.formatted_allowed_total
       end
     end
