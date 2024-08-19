@@ -50,15 +50,13 @@ RSpec.describe Claim do
       it 'adjusted cost if adjusted more than claimed' do
         claim = create(:claim, :increase_adjustment)
         claim.state = Nsm::MakeDecisionForm::GRANTED
-        expect(claim).not_to receive(:formatted_claimed_total)
-        claim.formatted_allowed_total
+        expect(claim.formatted_allowed_total).to be > claim.formatted_claimed_total
       end
 
       it 'claimed cost if adjusted less than claimed' do
         claim = create(:claim, :decrease_adjustment)
         claim.state = Nsm::MakeDecisionForm::GRANTED
-        expect(claim).to receive(:formatted_claimed_total)
-        claim.formatted_allowed_total
+        expect(claim.formatted_allowed_total).to eq claim.formatted_claimed_total
       end
     end
 
@@ -73,8 +71,7 @@ RSpec.describe Claim do
       it 'returns adjusted total' do
         claim = create(:claim, :increase_adjustment)
         claim.state = Nsm::MakeDecisionForm::PART_GRANT
-        expect(claim).not_to receive(:formatted_claimed_total)
-        claim.formatted_allowed_total
+        expect(claim.formatted_allowed_total).to be > claim.formatted_claimed_total
       end
     end
   end
