@@ -46,7 +46,7 @@ Rails.application.routes.draw do
 
   namespace :nsm do
     root to: "claims#your"
-    resources :claims, only: [:new] do
+    resources :claims, only: [:new, :create] do
       collection do
         get :your
         get :open
