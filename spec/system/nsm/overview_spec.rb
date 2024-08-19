@@ -49,7 +49,7 @@ RSpec.describe 'Overview', type: :system do
 
   context 'when claim has been assessed as part granted' do
     let(:claim) { create(:claim, state: 'part_grant') }
-    let(:part_grant_event) { create(:event, :part_granted, claim:) }
+    let(:part_grant_event) { create(:event, :part_granted, claim: claim, details: { comment: 'Part grant reason' }) }
 
     before do
       part_grant_event
