@@ -7,7 +7,7 @@
       <h2 class="govuk-body-l"><%= t('.no_claims') %></h2>
     <% end %>
     <div class="govuk-button-group">
-      <%= govuk_button_link_to(t('.next_claim'), new_nsm_claim_path) %>
+      <%= govuk_button_to(t('.next_claim'), new_nsm_claim_path) %>
     </div>
     <% if your_claims.any? %>
       <%= render 'table',
