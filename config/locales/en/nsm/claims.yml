@@ -2,7 +2,7 @@
 en:
   nsm:
     claims:
-      new:
+      create:
         no_pending_claims: There are no claims waiting to be allocated.
       claim_nav:
         claim_details: Overview
