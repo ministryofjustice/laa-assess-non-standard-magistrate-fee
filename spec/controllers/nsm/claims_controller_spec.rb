@@ -32,7 +32,7 @@ RSpec.describe Nsm::ClaimsController do
       it 'redirects to the assigned claim' do
         claim = create(:claim)
 
-        get :new
+        post :create
 
         expect(response).to redirect_to(nsm_claim_claim_details_path(claim))
       end
@@ -42,7 +42,7 @@ RSpec.describe Nsm::ClaimsController do
       it 'redirects to Your Claims with a flash notice' do
         post :create
 
-        expect(response).to redirect_to(nsm_claims_path)
+        expect(response).to redirect_to(your_nsm_claims_path)
         expect(flash[:notice]).to eq('There are no claims waiting to be allocated.')
       end
     end
