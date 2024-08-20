@@ -27,11 +27,9 @@
         <tr id="<%= work_item.id %>" class="govuk-table__row app-task-list__item">
           <th class="govuk-table__header" scope="row"><%= work_item.position %></th>
           <th class="govuk-table__header" scope="row">
-            <% link = if claim.editable_by?(current_user)
-                        edit_nsm_claim_work_item_path(claim_id: claim.id, id: work_item.id)
-                      else
-                        nsm_claim_work_item_path(claim_id: claim.id, id: work_item.id)
-                      end %>
+            <% link = url_for(controller: 'nsm/work_items',
+                              action: claim.editable_by?(current_user) ? :edit : :show,
+                              claim_id: claim.id, id: work_item.id, only_path: true) %>
 
             <% if work_item.original_work_type != work_item.work_type %>
               <% type_changed_records << work_item %>

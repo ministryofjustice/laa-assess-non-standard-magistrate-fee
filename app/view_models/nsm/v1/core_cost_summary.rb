@@ -101,14 +101,13 @@ module Nsm
         if show_allowed?
           allowed_rows = work_items_of_type(type, type_type: :allowed)
           allowed_net_cost = allowed_rows.sum(&:caseworker_amount) + extra_rows.sum(&:caseworker_amount)
+          any_changed_type = claimed_rows.any? { !_1.in?(allowed_rows) }
         end
 
-        calculate_hash(name, claimed_rows, allowed_rows, net_cost, allowed_net_cost, formatted)
+        calculate_hash(name, any_changed_type, net_cost, allowed_net_cost, formatted)
       end
 
-      def calculate_hash(name, claimed_rows, allowed_rows, net_cost, allowed_net_cost, formatted)
-        any_changed_type = show_allowed? && claimed_rows.any? { !_1.in?(allowed_rows) }
-
+      def calculate_hash(name, any_changed_type, net_cost, allowed_net_cost, formatted)
         build_hash(
           name: build_work_item_row_name(name, any_changed_type),
           net_cost: net_cost,

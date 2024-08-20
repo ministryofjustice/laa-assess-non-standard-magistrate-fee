@@ -34,7 +34,7 @@ module Nsm
 
       def footer
         format_row(
-          [t('total', numeric: false)] + summed_values(work_items, work_items, periods: false),
+          [t('total', numeric: false)] + summed_values(claimed_work_items: work_items, periods: false),
           accessibility_text: true
         )
       end
@@ -61,7 +61,7 @@ module Nsm
         allowed_work_items = work_items.select { _1.work_type.value == work_type }
         [
           I18n.t("nsm.work_items.work_types.#{work_type}"),
-          *summed_values(claimed_work_items, allowed_work_items)
+          *summed_values(claimed_work_items:, allowed_work_items:)
         ]
       end
 
@@ -81,7 +81,7 @@ module Nsm
         @work_items ||= BaseViewModel.build(:work_item, submission, 'work_items')
       end
 
-      def summed_values(claimed_work_items, allowed_work_items, periods: true)
+      def summed_values(claimed_work_items:, allowed_work_items: claimed_work_items, periods: true)
         [
           claimed_work_items.sum(&:provider_requested_amount),
           periods ? claimed_work_items.sum(&:original_time_spent) : '',
