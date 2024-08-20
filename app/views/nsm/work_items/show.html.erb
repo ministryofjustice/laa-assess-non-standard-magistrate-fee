@@ -7,7 +7,7 @@
 <div class="govuk-grid-row" id="work-items-adjustment-container">
   <div class="govuk-grid-column-three-quarters">
     <h1 class="govuk-heading-xl">
-        <%= t('.heading', count: item.any_adjustments? ? 1 : 0) %>
+        <%= t('.heading') %>
     </h1>
   </div>
   <div class="govuk-grid-column-two-thirds">
@@ -17,7 +17,7 @@
       rows = item.provider_fields.map do |key, value|
         [{ text: t(key), width: 'govuk-!-width-one-half' }, value]
       end
-      govuk_table(head: '', first_cell_is_header: true, rows:) do |tab|
+      govuk_table(head: '', rows:) do |tab|
         tab.with_caption(text: t('.claimed_costs_summary'), classes: 'govuk-visually-hidden')
       end
     %>
@@ -27,17 +27,15 @@
 
       <%=
         rows = [
-          [{ text: t('.uplift_allowed'), width: 'govuk-!-width-one-half' }, "#{item.uplift}%"],
-          [t('.work_type'), item.work_type.to_s],
+          [{ text: t('.work_type'), width: 'govuk-!-width-one-half' }, item.work_type.to_s],
           [t('.time_spent_changed'), format_period(item.time_spent)],
+          [{ text: t('.uplift_allowed'), width: 'govuk-!-width-one-half' }, "#{item.uplift}%"],
           [t('.caseworker_allowed'), NumberTo.pounds(item.caseworker_amount)],
           [t('.explanation'), item.adjustment_comment],
         ]
 
-        govuk_table(head: '', first_cell_is_header: true, rows:)
+        govuk_table(head: '', rows:)
       %>
     <% end %>
-
-    <%= link_to t('shared.cancel'), :back, class: 'govuk-link', data: { turbo: 'false' } %>
   </div>
 </div>

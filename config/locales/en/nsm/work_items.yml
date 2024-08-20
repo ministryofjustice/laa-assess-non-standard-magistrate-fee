@@ -67,25 +67,22 @@ en:
           header_three: Cost allowed
       show:
         page_title: "Your claims"
-        heading:
-          zero: 'Work item'
-          one: 'Adjusted work item'
-          other: 'Adjusted work item'
+        heading: 'Work item'
         provider_submission: Provider submission
         claimed_costs_summary: Claimed cost summary
         date: Date
         time_spent: Time claimed
-        fee_earner: Fee earner
+        fee_earner: Fee earner initials
         uplift_claimed: Uplift claimed
-        total_claimed: Cost claimed
+        total_claimed: Net cost claimed
         vat: VAT
         total_claimed_inc_vate: Cost claimed (including VAT)
-        laa_adjustments: LAA Adjustments
+        laa_adjustments: LAA adjustments
         uplift_allowed: Uplift allowed
         work_type: Work type
-        time_spent_changed: Time spent changed
-        caseworker_allowed: Caseworker allowed
-        explanation: Adjustment reason
+        time_spent_changed: Time allowed
+        caseworker_allowed: Net cost allowed
+        explanation: Reason for adjustment
       uplifts:
         update:
           uplift_removed: All uplifts have been removed
