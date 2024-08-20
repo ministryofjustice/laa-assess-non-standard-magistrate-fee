@@ -124,20 +124,20 @@ en:
         nsm/letters_calls_form/letters:
           attributes:
             base:
-              no_change: The new number of letters cannot be the same as the number submitted by the provider
+              no_change: You cannot save changes as you have not changed anything. You can make a change and save it, or select cancel.
             count:
               blank: Enter the number of letters you want to change the total to
-              no_change: The new number of letters cannot be the same as the number submitted by the provider
+              no_change: You cannot save changes as you have not changed anything. You can make a change and save it, or select cancel.
               greater_than_or_equal_to: The number of letters must be 0 or more
               not_a_number: The number of letters must be a number
               not_an_integer: The number of letters must be a whole number
         nsm/letters_calls_form/calls:
           attributes:
             base:
-              no_change: The new number of calls cannot be the same as the number submitted by the provider
+              no_change: You cannot save changes as you have not changed anything. You can make a change and save it, or select cancel.
             count:
               blank: Enter the number of calls you want to change the total to
-              no_change: The new number of calls cannot be the same as the number submitted by the provider
+              no_change: You cannot save changes as you have not changed anything. You can make a change and save it, or select cancel.
               greater_than_or_equal_to: The number of calls must be 0 or more
               not_a_number: The number of calls must be a number
               not_an_integer: The number of calls must be a whole number
