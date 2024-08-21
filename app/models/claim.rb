@@ -55,13 +55,13 @@ class Claim < Submission
   end
 
   def formatted_claimed_total
-    summed_costs.dig(:gross_cost, :text)
+    formatted_summed_costs.dig(:gross_cost, :text)
   end
 
   def formatted_allowed_total
-    return formatted_claimed_total if summed_costs[:allowed_gross_cost].blank? || granted_and_allowed_less_than_claim
+    return formatted_claimed_total if formatted_summed_costs[:allowed_gross_cost].blank? || granted_and_allowed_less_than_claim
 
-    summed_costs.dig(:allowed_gross_cost, :text)
+    formatted_summed_costs.dig(:allowed_gross_cost, :text)
   end
 
   def any_adjustments?
@@ -71,15 +71,14 @@ class Claim < Submission
   private
 
   def granted_and_allowed_less_than_claim
-    # TODO: https://dsdmoj.atlassian.net/browse/CRM457-1895
-    allowed_gross_cost = summed_costs.dig(:allowed_gross_cost, :text).gsub(/[^\d\.]/, '').to_f
-    gross_cost = summed_costs.dig(:gross_cost, :text).gsub(/[^\d\.]/, '').to_f
+    allowed_gross_cost = core_cost_summary.summed_fields[:allowed_gross_cost]
+    gross_cost = core_cost_summary.summed_fields[:gross_cost]
 
     granted? && allowed_gross_cost < gross_cost
   end
 
-  def summed_costs
-    @summed_costs ||= core_cost_summary.summed_fields
+  def formatted_summed_costs
+    @formatted_summed_costs ||= core_cost_summary.formatted_summed_fields
   end
 
   def core_cost_summary

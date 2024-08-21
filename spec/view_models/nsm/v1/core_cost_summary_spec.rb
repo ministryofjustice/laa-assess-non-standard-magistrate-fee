@@ -228,7 +228,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
     end
   end
 
-  describe '#summed_fields' do
+  describe '#formatted_summed_fields' do
     context 'when a single work item exists' do
       let(:work_items) do
         [
@@ -240,7 +240,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
       end
 
       it 'returns the summed time and cost' do
-        expect(subject.summed_fields).to eq(
+        expect(subject.formatted_summed_fields).to eq(
           {
             allowed_gross_cost: { numeric: true, text: '£180.00' }, allowed_net_cost: { numeric: true, text: '£180.00' },
             allowed_vat: { numeric: true, text: '£0.00' }, gross_cost: { numeric: true, text: '£200.00' },
@@ -262,7 +262,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
       end
 
       it 'returns the summed time and cost' do
-        expect(subject.summed_fields).to eq(
+        expect(subject.formatted_summed_fields).to eq(
           {
             allowed_gross_cost: '', allowed_net_cost: '', allowed_vat: '', gross_cost: { numeric: true, text: '£180.00' },
             name: { numeric: false, text: 'Total', width: nil }, net_cost: { numeric: true, text: '£180.00' },
@@ -284,7 +284,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
       end
 
       it 'returns the summed time and cost' do
-        expect(subject.summed_fields).to eq(
+        expect(subject.formatted_summed_fields).to eq(
           {
             allowed_gross_cost: '', allowed_net_cost: '', allowed_vat: '', gross_cost: { numeric: true, text: '£196.00' },
             name: { numeric: false, text: 'Total', width: nil }, net_cost: { numeric: true, text: '£180.00' },
@@ -309,7 +309,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
       end
 
       it 'returns the summed cost' do
-        expect(subject.summed_fields).to eq(
+        expect(subject.formatted_summed_fields).to eq(
           {
             allowed_gross_cost: { numeric: true, text: '£260.00' }, allowed_net_cost: { numeric: true, text: '£260.00' },
             allowed_vat: { numeric: true, text: '£0.00' }, gross_cost: { numeric: true, text: '£300.00' },
@@ -335,7 +335,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
       end
 
       it 'returns the summed cost' do
-        expect(subject.summed_fields).to eq(
+        expect(subject.formatted_summed_fields).to eq(
           {
             allowed_gross_cost: { numeric: true, text: '£260.00' }, allowed_net_cost: { numeric: true, text: '£260.00' },
             allowed_vat: { numeric: true, text: '£0.00' }, gross_cost: { numeric: true, text: '£300.00' },
@@ -355,7 +355,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
       end
 
       it 'returns the summed cost' do
-        expect(subject.summed_fields).to eq(
+        expect(subject.formatted_summed_fields).to eq(
           {
             allowed_gross_cost: '',
             allowed_net_cost: '',
@@ -381,7 +381,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
       let(:state) { 'rejected' }
 
       it 'returns the summed time and cost' do
-        expect(subject.summed_fields).to eq(
+        expect(subject.formatted_summed_fields).to eq(
           {
             allowed_gross_cost: { numeric: true, text: '£0.00' }, allowed_net_cost: { numeric: true, text: '£0.00' },
             allowed_vat: { numeric: true, text: '£0.00' }, gross_cost: { numeric: true, text: '£180.00' },
@@ -404,7 +404,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
       let(:state) { 'granted' }
 
       it 'returns the summed time and cost' do
-        expect(subject.summed_fields).to eq(
+        expect(subject.formatted_summed_fields).to eq(
           {
             allowed_gross_cost: '', allowed_net_cost: '', allowed_vat: '', gross_cost: { numeric: true, text: '£180.00' },
             name: { numeric: false, text: 'Total', width: nil }, net_cost: { numeric: true, text: '£180.00' },
