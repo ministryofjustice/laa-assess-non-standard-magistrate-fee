@@ -133,7 +133,7 @@ module Nsm
       end
 
       def changed?
-        provider_requested_amount != caseworker_amount
+        adjustment_comment.present?
       end
 
       private

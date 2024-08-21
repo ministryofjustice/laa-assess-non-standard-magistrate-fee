@@ -44,7 +44,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
           {
             work_type: { value: 'advocacy', en: 'Advocacy' },
             pricing: 10.0, time_spent_original: 600,
-            time_spent: 480,
+            time_spent: 480, adjustment_comment: 'Foo',
           }
         ]
       end
@@ -67,11 +67,11 @@ RSpec.describe Nsm::V1::CoreCostSummary do
           {
 
             work_type: { value: 'advocacy', en: 'Advocacy' },
-            pricing: 10.0, time_spent_original: 600, time_spent: 480,
+            pricing: 10.0, time_spent_original: 600, time_spent: 480, adjustment_comment: 'Foo',
           },
           {
             work_type: { value: 'preparation', en: 'Preparation' },
-            pricing: 10.0, time_spent_original: 660, time_spent: 540,
+            pricing: 10.0, time_spent_original: 660, time_spent: 540, adjustment_comment: 'Foo',
           }
         ]
       end
@@ -93,15 +93,15 @@ RSpec.describe Nsm::V1::CoreCostSummary do
         [
           {
             work_type: { value: 'travel', en: 'Travel' },
-            pricing: 10.0, time_spent_original: 600, time_spent: 480,
+            pricing: 10.0, time_spent_original: 600, time_spent: 480, adjustment_comment: 'Foo',
           },
           {
             work_type: { value: 'waiting', en: 'Waiting' },
-            pricing: 10.0, time_spent_original: 600, time_spent: 480,
+            pricing: 10.0, time_spent_original: 600, time_spent: 480, adjustment_comment: 'Foo',
           },
           {
             work_type: { value: 'preparation', en: 'Preparation' },
-            pricing: 10.0, time_spent_original: 660, time_spent: 540,
+            pricing: 10.0, time_spent_original: 660, time_spent: 540, adjustment_comment: 'Foo',
           }
         ]
       end
@@ -131,11 +131,11 @@ RSpec.describe Nsm::V1::CoreCostSummary do
         [
           {
             work_type: { value: 'advocacy', en: 'Advocacy' },
-            pricing: 10.0, time_spent_original: 600, time_spent: 480,
+            pricing: 10.0, time_spent_original: 600, time_spent: 480, adjustment_comment: 'Foo',
           },
           {
             work_type: { value: 'advocacy', en: 'Advocacy' },
-            pricing: 10.0, time_spent_original: 660, time_spent: 540,
+            pricing: 10.0, time_spent_original: 660, time_spent: 540, adjustment_comment: 'Foo',
           }
         ]
       end
@@ -160,7 +160,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
             work_type_original: { value: 'waiting', en: 'Waiting' },
             pricing: 10.0,
             pricing_original: 12.0,
-            time_spent: 480,
+            time_spent: 480, adjustment_comment: 'Foo',
           },
         ]
       end
@@ -274,7 +274,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
         [
           {
             work_type: { value: 'advocacy', en: 'Advocacy' },
-            pricing: 10.0, time_spent_original: 600, time_spent: 480,
+            pricing: 10.0, time_spent_original: 600, time_spent: 480, adjustment_comment: 'Foo',
           }
         ]
       end
@@ -339,11 +339,11 @@ RSpec.describe Nsm::V1::CoreCostSummary do
         [
           {
             work_type: { value: 'advocacy', en: 'Advocacy' },
-            pricing: 10.0, time_spent_original: 600, time_spent: 480,
+            pricing: 10.0, time_spent_original: 600, time_spent: 480, adjustment_comment: 'Foo',
           },
           {
             work_type: { value: 'travel', en: 'Travel' },
-            pricing: 10.0, time_spent_original: 600, time_spent: 480,
+            pricing: 10.0, time_spent_original: 600, time_spent: 480, adjustment_comment: 'Foo',
           }
         ]
       end
@@ -365,11 +365,11 @@ RSpec.describe Nsm::V1::CoreCostSummary do
         [
           {
             work_type: { value: 'advocacy', en: 'Advocacy' },
-                          pricing: 10.0, time_spent_original: 600, time_spent: 480,
+                          pricing: 10.0, time_spent_original: 600, time_spent: 480, adjustment_comment: 'Foo',
           },
           {
             work_type: { value: 'advocacy', en: 'Advocacy' },
-                           pricing: 10.0, time_spent_original: 600, time_spent: 480,
+                           pricing: 10.0, time_spent_original: 600, time_spent: 480, adjustment_comment: 'Foo',
           }
         ]
       end

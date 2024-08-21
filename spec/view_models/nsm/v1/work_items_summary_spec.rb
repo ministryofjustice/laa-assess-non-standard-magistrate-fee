@@ -65,7 +65,7 @@ RSpec.describe Nsm::V1::WorkItemSummary do
 
     context 'when a work item has an adjustments' do
       let(:work_items) do
-        [{ 'work_type' => { 'en' => 'Travel', 'value' => 'travel' },
+        [{ 'work_type' => { 'en' => 'Travel', 'value' => 'travel' }, 'adjustment_comment' => 'Foo',
            'time_spent_original' => 40, 'time_spent' => 20, 'vat_rate' => 0.2, 'pricing' => 300.0 }]
       end
 

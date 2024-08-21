@@ -69,8 +69,10 @@
           <%= link_to "[#{index + 1}]", "##{work_item.id}" %>
           <%= t('nsm.work_items.type_changes.item_type_adjusted') %>
           <%= t('nsm.work_items.type_changes.see') %>
-          <%= link_to(t('nsm.work_items.type_changes.item', position: work_item.position),
-                      nsm_claim_work_item_path(claim_id: claim.id, id: work_item.id)) %>
+          <% link = url_for(controller: 'nsm/work_items',
+                              action: claim.editable_by?(current_user) ? :edit : :show,
+                              claim_id: claim.id, id: work_item.id, only_path: true) %>
+          <%= link_to(t('nsm.work_items.type_changes.item', position: work_item.position), link, data: { turbo: 'false' }) %>
         </p>
       <% end %>
     </section>

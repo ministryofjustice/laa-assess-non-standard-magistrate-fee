@@ -84,8 +84,11 @@
       <%= t('nsm.work_items.type_changes.explanation') %>
       <%= t('nsm.work_items.type_changes.see') %>
       <% type_changed_records.each_with_index do |work_item, index| %>
+        <% link = url_for(controller: 'nsm/work_items',
+                          action: claim.editable_by?(current_user) ? :edit : :show,
+                          claim_id: claim.id, id: work_item.id, only_path: true) %>
         <%= link_to(t('nsm.work_items.type_changes.item', position: work_item.position),
-                    nsm_claim_work_item_path(claim_id: claim.id, id: work_item.id)) %><% if index < type_changed_records.length - 1 %>,<% end %>
+                    link, data: { turbo: 'false' }) %><% if index < type_changed_records.length - 1 %>,<% end %>
       <% end %>
     </p>
     <% type_changed_records.each_with_index do |work_item, index| %>
@@ -93,8 +96,11 @@
         <%= link_to "[#{index + 1}]", "##{work_item.id}" %>
         <%= t('nsm.work_items.type_changes.item_type_adjusted') %>
         <%= t('nsm.work_items.type_changes.see') %>
+        <% link = url_for(controller: 'nsm/work_items',
+                          action: claim.editable_by?(current_user) ? :edit : :show,
+                          claim_id: claim.id, id: work_item.id, only_path: true) %>
         <%= link_to(t('nsm.work_items.type_changes.item', position: work_item.position),
-                    nsm_claim_work_item_path(claim_id: claim.id, id: work_item.id)) %>
+                    link, data: { turbo: 'false' }) %>
       </p>
     <% end %>
   </section>
