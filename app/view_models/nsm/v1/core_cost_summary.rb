@@ -27,17 +27,22 @@ module Nsm
       end
 
       def summed_fields
-        data = table_fields(formatted: false)
+        @summed_fields ||= begin
+          data = table_fields(formatted: false)
 
-        {
-          name: t('total', numeric: false),
-          net_cost: format(data.sum { _1[:net_cost] }),
-          vat: format(data.sum { _1[:vat] }),
-          gross_cost: format(data.sum { _1[:gross_cost] }),
-          allowed_net_cost: format(sum_allowed(data, :net_cost)),
-          allowed_vat: format(sum_allowed(data, :vat)),
-          allowed_gross_cost: format(sum_allowed(data, :gross_cost)),
-        }
+          {
+            net_cost: data.sum { _1[:net_cost] },
+            vat: data.sum { _1[:vat] },
+            gross_cost: data.sum { _1[:gross_cost] },
+            allowed_net_cost: sum_allowed(data, :net_cost),
+            allowed_vat: sum_allowed(data, :vat),
+            allowed_gross_cost: sum_allowed(data, :gross_cost),
+          }
+        end
+      end
+
+      def formatted_summed_fields
+        { name: t('total', numeric: false) }.merge(summed_fields.transform_values { format(_1) })
       end
 
       def show_allowed?

@@ -13,7 +13,7 @@
         caption = t('.cost_summary')
         head = core_cost_summary.headers
         rows = core_cost_summary.table_fields.map(&:values)
-        foot = core_cost_summary.summed_fields.map do |key, value|
+        foot = core_cost_summary.formatted_summed_fields.map do |key, value|
           value[:text] = (tag.span(t(".accessible.#{key}"), class: 'govuk-visually-hidden') + value[:text]) if key != :name && value.present?
           value
         end
