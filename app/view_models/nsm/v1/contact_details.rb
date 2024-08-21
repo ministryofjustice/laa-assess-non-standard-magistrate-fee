@@ -17,10 +17,6 @@ module Nsm
         firm_office['name']
       end
 
-      def firm_account_number
-        firm_office['account_number']
-      end
-
       def solicitor_full_name
         construct_name(solicitor)
       end
@@ -61,10 +57,6 @@ module Nsm
           {
             title: I18n.t(".nsm.claim_details.#{key}.firm_name"),
             value: firm_name
-          },
-          {
-            title: I18n.t(".nsm.claim_details.#{key}.firm_account_number"),
-            value: firm_account_number
           },
           {
             title: I18n.t(".nsm.claim_details.#{key}.firm_address"),
