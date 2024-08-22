@@ -28,7 +28,7 @@ module Nsm
     def update_local_data
       previous_state = claim.state
       claim.data.merge!('status' => SENT_BACK, 'updated_at' => Time.current, 'assessment_comment' => comment)
-      claim.update!(state: SENT_BACK)
+      claim.sent_back!
       claim.assignments.destroy_all
       Nsm::Event::SendBack.build(submission: claim,
                                  comment: comment,

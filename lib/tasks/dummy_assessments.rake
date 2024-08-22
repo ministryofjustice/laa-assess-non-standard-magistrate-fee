@@ -7,7 +7,7 @@ namespace :dummy_assessments do
       PriorAuthority::FakeAssess.perform_later(batch.map(&:id))
     end
 
-    Claim.where.not(state: Nsm::MakeDecisionForm::STATES)
+    Claim.pending_decision
          .find_in_batches(batch_size: 100) do |batch|
       Nsm::FakeAssess.perform_later(batch.map(&:id))
     end

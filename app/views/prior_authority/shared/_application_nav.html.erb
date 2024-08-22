@@ -11,7 +11,7 @@
     <%= application_summary.formatted_original_total_cost %><br>
     <% if application_summary.adjustments_made? || application_summary.assessed? %>
       <strong><%= t('.allowed') %></strong>
-      <% if application_summary.submission.state == 'rejected' %>
+      <% if application_summary.submission.rejected? %>
         <%= NumberTo.pounds(0) %><br>
       <% else %>
         <%= application_summary.formatted_total_cost %><br>

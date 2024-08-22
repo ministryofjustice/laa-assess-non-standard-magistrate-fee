@@ -69,7 +69,7 @@ module PriorAuthority
         'updated_at' => Time.current,
         'status' => PriorAuthorityApplication::SENT_BACK
       )
-      submission.update!(state: PriorAuthorityApplication::SENT_BACK)
+      submission.sent_back!
       submission.assignments.destroy_all
       save_event
     end

@@ -31,9 +31,9 @@ RSpec.describe UpdateSubmission do
   end
 
   context 'when submission already exists' do
-    let(:submission) { create(:claim) }
+    let(:submission) { create(:claim, state:) }
     let(:submission_id) { submission.id }
-    let(:state) { 're-submitted' }
+    let(:state) { 'granted' }
     let(:current_version) { 2 }
 
     before { submission }
@@ -52,7 +52,7 @@ RSpec.describe UpdateSubmission do
         risk: 'high',
         current_version: 2,
         received_on: Date.yesterday,
-        state: 're-submitted',
+        state: 'granted',
       )
     end
 

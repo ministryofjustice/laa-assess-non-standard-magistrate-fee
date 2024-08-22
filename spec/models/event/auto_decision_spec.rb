@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Event::AutoDecision do
   subject { described_class.build(submission:, previous_state:) }
 
-  let(:submission) { create(:claim, state:) }
+  let(:submission) { create(:prior_authority_application, state:) }
   let(:state) { PriorAuthorityApplication::AUTO_GRANT }
   let(:previous_state) { 'submitted' }
 
