@@ -165,7 +165,7 @@ RSpec.describe 'Work items' do
                   .and have_content('This item was adjusted to be a different work item type')
       page.find('.govuk-details__summary-text').click
       within('.govuk-details__text') do
-        expect(page).to have_content('Attendance without counsel[*]')
+        expect(page).to have_content('Attendance without counsel [*]')
       end
     end
   end

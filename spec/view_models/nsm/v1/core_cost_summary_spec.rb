@@ -178,7 +178,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
 
       it 'includes shows something sensible for waiting' do
         name_html = '<span title="One or more of these items were adjusted to be a different work item type.">' \
-                    'Waiting</span><sup><a href="#fn*">[*]</a></sup>'
+                    'Waiting</span> <sup><a href="#fn*">[*]</a></sup>'
         expect(subject.table_fields).to include(
           {
             allowed_gross_cost: { numeric: true, text: '£0.00' },

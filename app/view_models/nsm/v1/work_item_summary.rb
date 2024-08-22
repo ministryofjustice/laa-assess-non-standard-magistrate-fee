@@ -105,7 +105,7 @@ module Nsm
           link_to(I18n.t('nsm.work_items.type_changes.asterisk'), '#fn*')
         end
 
-        safe_join([title_tag, asterisk_tag])
+        safe_join([title_tag, ' ', asterisk_tag])
       end
     end
   end

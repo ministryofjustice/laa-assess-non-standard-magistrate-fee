@@ -185,7 +185,7 @@ module Nsm
         asterisk_tag = tag.sup { link_to(I18n.t('nsm.work_items.type_changes.asterisk'), '#fn*') }
 
         {
-          text: safe_join([title_tag, asterisk_tag]),
+          text: safe_join([title_tag, ' ', asterisk_tag]),
           numeric: false,
         }
       end
