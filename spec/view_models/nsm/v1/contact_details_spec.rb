@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Nsm::V1::ContactDetails do
   describe '#title' do
     it 'shows correct title' do
-      expect(subject.title).to eq('Contact details')
+      expect(subject.title).to eq('Firm details')
     end
   end
 
@@ -69,7 +69,7 @@ RSpec.describe Nsm::V1::ContactDetails do
             { title: 'Firm VAT registered', value: 'No' },
             { title: 'Solicitor full name', value: 'Daniel Treaty' },
             { title: 'Solicitor reference number', value: '1212333' },
-            { title: 'Alternative contact details', value: 'Not provided' },
+            { title: 'Contact details', value: 'Not provided' },
             { title: 'Provider email address', value: 'test@test.com' }
           ]
         )
@@ -108,7 +108,7 @@ RSpec.describe Nsm::V1::ContactDetails do
             { title: 'Firm VAT registered', value: 'No' },
             { title: 'Solicitor full name', value: 'Daniel Treaty' },
             { title: 'Solicitor reference number', value: '1212333' },
-            { title: 'Alternative contact details', value: 'Not provided' },
+            { title: 'Contact details', value: 'Not provided' },
             { title: 'Provider email address', value: 'test@test.com' }
           ]
         )
@@ -150,8 +150,8 @@ RSpec.describe Nsm::V1::ContactDetails do
             { title: 'Firm VAT registered', value: 'No' },
             { title: 'Solicitor full name', value: 'Daniel Treaty' },
             { title: 'Solicitor reference number', value: '1212333' },
-            { title: 'Alternative contact full name', value: 'Jim Bob' },
-            { title: 'Alternative contact email address', value: 'jim@bob.com' },
+            { title: 'Contact full name', value: 'Jim Bob' },
+            { title: 'Contact email address', value: 'jim@bob.com' },
             { title: 'Provider email address', value: 'test@test.com' }
           ]
         )
@@ -194,8 +194,8 @@ RSpec.describe Nsm::V1::ContactDetails do
             { title: 'Firm VAT registered', value: '20%' },
             { title: 'Solicitor full name', value: 'Daniel Treaty' },
             { title: 'Solicitor reference number', value: '1212333' },
-            { title: 'Alternative contact full name', value: 'Jim Bob' },
-            { title: 'Alternative contact email address', value: 'jim@bob.com' },
+            { title: 'Contact full name', value: 'Jim Bob' },
+            { title: 'Contact email address', value: 'jim@bob.com' },
             { title: 'Provider email address', value: 'test@test.com' }
           ]
         )

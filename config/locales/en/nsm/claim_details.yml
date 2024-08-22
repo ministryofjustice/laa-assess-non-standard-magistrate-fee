@@ -57,17 +57,17 @@ en:
         concluded: Proceedings concluded over 3 months ago
         conclusion: Reason for not claiming within 3 months
       contact_details:
-        title: Contact details
+        title: Firm details
         firm_name: Firm name
         firm_account_number: Firm account number
         firm_address: Firm address
         vat_registered: Firm VAT registered
         solicitor_full_name: Solicitor full name
         solicitor_ref_number: Solicitor reference number
-        contact_full_name: Alternative contact full name
-        contact_email: Alternative contact email address
+        contact_full_name: Contact full name
+        contact_email: Contact email address
         contact_details:
-          title: Alternative contact details
+          title: Contact details
           value: Not provided
         provider_email: Provider email address
       claim_details:
