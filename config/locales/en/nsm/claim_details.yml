@@ -69,7 +69,6 @@ en:
         contact_details:
           title: Contact details
           value: Not provided
-        provider_email: Provider email address
       claim_details:
         title: Claim details
         prosecution_evidence: Number of pages of prosecution evidence
