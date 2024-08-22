@@ -22,19 +22,24 @@
     </thead>
 
     <tbody class="govuk-table__body app-task-list__items">
+      <% type_changed_records = [] %>
       <% records.each do |work_item| %>
         <tr id="<%= work_item.id %>" class="govuk-table__row app-task-list__item">
           <th class="govuk-table__header" scope="row"><%= work_item.position %></th>
           <th class="govuk-table__header" scope="row">
-            <%=
-              if claim.editable_by?(current_user)
-                link_to(work_item.work_type, edit_nsm_claim_work_item_path(claim_id: claim.id, id: work_item.id), data: { turbo: 'false' })
-              else
-                link_to(work_item.work_type, nsm_claim_work_item_path(claim_id: claim.id, id: work_item.id), data: { turbo: 'false' })
-              end
-            %>
-            <% if work_item.work_type_original.present? %>
-              *
+            <% link = url_for(controller: 'nsm/work_items',
+                              action: claim.editable_by?(current_user) ? :edit : :show,
+                              claim_id: claim.id, id: work_item.id, only_path: true) %>
+
+            <% if work_item.original_work_type != work_item.work_type %>
+              <% type_changed_records << work_item %>
+              <span title="<%= t('nsm.work_items.type_changes.item_type_adjusted') %>">
+                <%= link_to(work_item.work_type, link, data: { turbo: 'false' }) %>
+              </span>
+              <sup><a href="#fn<%= type_changed_records.length %>">[<%= type_changed_records.length %>]</a></sup>
+
+            <% else %>
+              <%= link_to(work_item.work_type, link, data: { turbo: 'false' }) %>
             <% end %>
           </th>
 
@@ -54,10 +59,22 @@
     </tbody>
   </table>
 
-  <% if records.any? { _1.work_type_original.present? } %>
-    <p><%= t('nsm.work_items.type_change_explanation') %></p>
-  <% end %>
-
   <%= render 'shared/pagination', pagy: pagy, item: t(".table_info_item") %>
-<% end %>
 
+  <% if type_changed_records.any? %>
+    <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+    <section>
+      <% type_changed_records.each_with_index do |work_item, index| %>
+        <p id="fn<%= index + 1 %>">
+          <%= link_to "[#{index + 1}]", "##{work_item.id}" %>
+          <%= t('nsm.work_items.type_changes.item_type_adjusted') %>
+          <%= t('nsm.work_items.type_changes.see') %>
+          <% link = url_for(controller: 'nsm/work_items',
+                              action: claim.editable_by?(current_user) ? :edit : :show,
+                              claim_id: claim.id, id: work_item.id, only_path: true) %>
+          <%= link_to(t('nsm.work_items.type_changes.item', position: work_item.position), link, data: { turbo: 'false' }) %>
+        </p>
+      <% end %>
+    </section>
+  <% end %>
+<% end %>

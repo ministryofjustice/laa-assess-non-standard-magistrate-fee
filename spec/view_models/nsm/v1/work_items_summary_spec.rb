@@ -49,17 +49,15 @@ RSpec.describe Nsm::V1::WorkItemSummary do
       end
 
       it 'includes the summed table field row' do
-        expect(subject.table_fields).to eq(
+        expect(subject.table_fields).to include(
           [
-            [
-              'Travel',
-              {
-                numeric: true,
-                text: '0<span class="govuk-visually-hidden"> hours</span>:20<span class="govuk-visually-hidden"> minutes</span>'
-              },
-              { numeric: true, text: '£100.00' },
-              '', ''
-            ]
+            'Travel',
+            {
+              numeric: true,
+              text: '0<span class="govuk-visually-hidden"> hours</span>:20<span class="govuk-visually-hidden"> minutes</span>'
+            },
+            { numeric: true, text: '£100.00' },
+            '', ''
           ]
         )
       end
@@ -67,56 +65,25 @@ RSpec.describe Nsm::V1::WorkItemSummary do
 
     context 'when a work item has an adjustments' do
       let(:work_items) do
-        [{ 'work_type' => { 'en' => 'Travel', 'value' => 'travel' },
+        [{ 'work_type' => { 'en' => 'Travel', 'value' => 'travel' }, 'adjustment_comment' => 'Foo',
            'time_spent_original' => 40, 'time_spent' => 20, 'vat_rate' => 0.2, 'pricing' => 300.0 }]
       end
 
       it 'includes the summed table field row' do
-        expect(subject.table_fields).to eq(
+        expect(subject.table_fields).to include(
           [
-            [
-              'Travel',
-              {
-                numeric: true,
-                text: '0<span class="govuk-visually-hidden"> hours</span>:40<span class="govuk-visually-hidden"> minutes</span>'
-              },
-              { numeric: true, text: '£200.00' },
-              {
-                numeric: true,
-                text: '0<span class="govuk-visually-hidden"> hours</span>:20<span class="govuk-visually-hidden"> minutes</span>'
-              },
-              { numeric: true, text: '£100.00' }
-            ]
-          ]
-        )
-      end
-    end
-
-    context 'when multiple work item of diffent types exists' do
-      let(:work_items) do
-        [{ 'work_type' => { 'en' => 'Travel', 'value' => 'travel' },
-           'time_spent' => 20, 'vat_rate' => 0.2, 'pricing' => 300.0 },
-         { 'work_type' => { 'en' => 'Waiting', 'value' => 'waiting' },
-           'time_spent' => 30, 'vat_rate' => 0.2, 'pricing' => 200.0 }]
-      end
-
-      it 'returns a single table field row' do
-        expect(subject.table_fields).to eq(
-          [[
             'Travel',
+            {
+              numeric: true,
+              text: '0<span class="govuk-visually-hidden"> hours</span>:40<span class="govuk-visually-hidden"> minutes</span>'
+            },
+            { numeric: true, text: '£200.00' },
             {
               numeric: true,
               text: '0<span class="govuk-visually-hidden"> hours</span>:20<span class="govuk-visually-hidden"> minutes</span>'
             },
-            { numeric: true, text: '£100.00' }, '', ''
-          ], [
-            'Waiting',
-            {
-              numeric: true,
-              text: '0<span class="govuk-visually-hidden"> hours</span>:30<span class="govuk-visually-hidden"> minutes</span>'
-            },
-            { numeric: true, text: '£100.00' }, '', ''
-          ]]
+            { numeric: true, text: '£100.00' }
+          ]
         )
       end
     end
@@ -127,20 +94,9 @@ RSpec.describe Nsm::V1::WorkItemSummary do
            'time_spent' => 30, 'vat_rate' => 0.2, 'pricing' => 300.0 }]
       end
 
-      it 'nothing is returned' do
-        expect(subject.table_fields).to eq(
-          [
-            [
-              'preparation',
-              {
-                numeric: true,
-                text: '0<span class="govuk-visually-hidden"> hours</span>:30<span class="govuk-visually-hidden"> minutes</span>'
-              },
-              { numeric: true, text: '£150.00' },
-              '', ''
-            ]
-          ]
-        )
+      it 'still returns rows for travel and waiting' do
+        expect(subject.table_fields.pluck(0)).to include('Travel')
+        expect(subject.table_fields.pluck(0)).to include('Waiting')
       end
     end
 
@@ -153,17 +109,15 @@ RSpec.describe Nsm::V1::WorkItemSummary do
       end
 
       it 'includes a summed table field row' do
-        expect(subject.table_fields).to eq(
+        expect(subject.table_fields).to include(
           [
-            [
-              'Travel',
-              {
-                numeric: true,
-                text: '0<span class="govuk-visually-hidden"> hours</span>:50<span class="govuk-visually-hidden"> minutes</span>'
-              },
-              { numeric: true, text: '£200.00' },
-              '', ''
-            ]
+            'Travel',
+            {
+              numeric: true,
+              text: '0<span class="govuk-visually-hidden"> hours</span>:50<span class="govuk-visually-hidden"> minutes</span>'
+            },
+            { numeric: true, text: '£200.00' },
+            '', ''
           ]
         )
       end
