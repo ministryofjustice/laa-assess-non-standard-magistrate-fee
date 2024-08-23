@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     return btn;
   });
-  [...document.querySelectorAll("table[data-anchor-rows] tr[id] a")].forEach(
+  [...document.querySelectorAll("table[data-anchor-rows] tr[id] a:not([href^='#'])")].forEach(
     function (link) {
       link.addEventListener("click", function () {
         const nearestRow = link.closest("tr");
