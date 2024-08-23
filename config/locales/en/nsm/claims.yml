@@ -22,6 +22,7 @@ en:
         unassigned: Unassigned
         date_received: "Date received:"
         date_assessed: "Date assessed:"
+        date_sent_back: "Date sent back to provider:"
         remove_from_list: Remove from list
         add_to_my_list: Add to my list
       table:

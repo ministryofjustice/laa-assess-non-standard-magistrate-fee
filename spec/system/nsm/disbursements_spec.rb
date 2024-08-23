@@ -82,7 +82,7 @@ RSpec.describe 'Disbursements' do
       within('main') { expect(page).to have_no_content 'Change' }
       click_on 'Apples'
       expect(page).to have_content(
-        'Date12 Dec 2022' \
+        'Date12 December 2022' \
         'Disbursement typeApples' \
         'Details of disbursementDetails' \
         'Prior authority grantedYes' \

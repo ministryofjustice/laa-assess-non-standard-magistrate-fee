@@ -48,10 +48,6 @@ class Claim < Submission
     ASSESSED_STATES.include?(state)
   end
 
-  def display_state?
-    sent_back? || assessed?
-  end
-
   def formatted_claimed_total
     formatted_summed_costs.dig(:gross_cost, :text)
   end
