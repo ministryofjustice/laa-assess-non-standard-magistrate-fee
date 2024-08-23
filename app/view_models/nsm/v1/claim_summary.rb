@@ -36,7 +36,7 @@ module Nsm
       end
 
       def display_allowed_total?
-        claimed_total != allowed_total || submission.display_state?
+        claimed_total != allowed_total || submission.assessed?
       end
     end
   end
