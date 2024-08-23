@@ -54,9 +54,9 @@ module Nsm
     end
 
     def data_has_changed?
-      return true if apply_vat != item.original_apply_vat
+      return true if apply_vat != item.apply_vat
 
-      mileage_based? ? miles != item.original_miles : total_cost_without_vat != item.original_total_cost_without_vat
+      mileage_based? ? miles != item.miles : total_cost_without_vat != item.total_cost_without_vat
     end
 
     def explanation_required?

@@ -127,7 +127,7 @@ en:
         nsm/work_item_form:
           attributes:
             base:
-              no_change: The new values cannot be the same as the values submitted by the provider
+              no_change: You cannot save changes as you have not changed anything. You can make a change and save it, or select cancel.
             uplift:
               inclusion: Select to include uplift or not
             time_spent:
