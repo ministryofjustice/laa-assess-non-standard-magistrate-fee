@@ -18,6 +18,7 @@ en:
         stage_reached: Stage reached
         cntp_order: CNTP (contempt) number
         cntp_date: Date of CNTP representation order
+        firm_account_number: Firm office account number
         stages:
           prog: PROG
           prom: PROM
@@ -59,7 +60,6 @@ en:
       contact_details:
         title: Firm details
         firm_name: Firm name
-        firm_account_number: Firm account number
         firm_address: Firm address
         vat_registered: Firm VAT registered
         solicitor_full_name: Solicitor full name

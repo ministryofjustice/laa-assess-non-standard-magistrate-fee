@@ -7,7 +7,6 @@ RSpec.describe Nsm::V1::ContactDetails do
     end
   end
 
-  # rubocop:disable RSpec/ExampleLength
   describe '#rows' do
     it 'has correct structure' do
       subject = described_class.new(
@@ -16,7 +15,6 @@ RSpec.describe Nsm::V1::ContactDetails do
             'name' => 'Blundon Solicitor Firm',
             'town' => 'Stoke Newington',
             'postcode' => 'NE10 4AB',
-            'account_number' => '121234',
             'address_line_1' => '1 Princess Road',
             'address_line_2' => nil
           },
@@ -32,7 +30,6 @@ RSpec.describe Nsm::V1::ContactDetails do
       expect(subject.rows).to have_key(:data)
     end
   end
-  # rubocop:enable RSpec/ExampleLength
 
   describe '#data' do
     context 'One line in firm address' do
@@ -42,7 +39,6 @@ RSpec.describe Nsm::V1::ContactDetails do
             'name' => 'Blundon Solicitor Firm',
             'town' => 'Stoke Newington',
             'postcode' => 'NE10 4AB',
-            'account_number' => '121234',
             'address_line_1' => '1 Princess Road',
             'address_line_2' => nil
           },
@@ -58,7 +54,6 @@ RSpec.describe Nsm::V1::ContactDetails do
         expect(subject.data).to eq(
           [
             { title: 'Firm name', value: 'Blundon Solicitor Firm' },
-            { title: 'Firm account number', value: '121234' },
             { title: 'Firm address', value: '1 Princess Road<br>Stoke Newington<br>NE10 4AB' },
             { title: 'Firm VAT registered', value: 'No' },
             { title: 'Solicitor full name', value: 'Daniel Treaty' },
@@ -76,7 +71,6 @@ RSpec.describe Nsm::V1::ContactDetails do
             'name' => 'Blundon Solicitor Firm',
             'town' => 'Stoke Newington',
             'postcode' => 'NE10 4AB',
-            'account_number' => '121234',
             'address_line_1' => 'Suite 3',
             'address_line_2' => '5 Princess Road',
             'vat_registered' => 'no'
@@ -93,7 +87,6 @@ RSpec.describe Nsm::V1::ContactDetails do
         expect(subject.data).to eq(
           [
             { title: 'Firm name', value: 'Blundon Solicitor Firm' },
-            { title: 'Firm account number', value: '121234' },
             { title: 'Firm address', value: 'Suite 3<br>5 Princess Road<br>Stoke Newington<br>NE10 4AB' },
             { title: 'Firm VAT registered', value: 'No' },
             { title: 'Solicitor full name', value: 'Daniel Treaty' },
@@ -111,7 +104,6 @@ RSpec.describe Nsm::V1::ContactDetails do
             'name' => 'Blundon Solicitor Firm',
             'town' => 'Stoke Newington',
             'postcode' => 'NE10 4AB',
-            'account_number' => '121234',
             'address_line_1' => 'Suite 3',
             'address_line_2' => '5 Princess Road',
             'vat_registered' => 'no'
@@ -131,7 +123,6 @@ RSpec.describe Nsm::V1::ContactDetails do
         expect(subject.data).to eq(
           [
             { title: 'Firm name', value: 'Blundon Solicitor Firm' },
-            { title: 'Firm account number', value: '121234' },
             { title: 'Firm address', value: 'Suite 3<br>5 Princess Road<br>Stoke Newington<br>NE10 4AB' },
             { title: 'Firm VAT registered', value: 'No' },
             { title: 'Solicitor full name', value: 'Daniel Treaty' },
@@ -150,7 +141,6 @@ RSpec.describe Nsm::V1::ContactDetails do
             'name' => 'Blundon Solicitor Firm',
             'town' => 'Stoke Newington',
             'postcode' => 'NE10 4AB',
-            'account_number' => '121234',
             'address_line_1' => 'Suite 3',
             'address_line_2' => '5 Princess Road',
             'vat_registered' => 'yes'
@@ -171,7 +161,6 @@ RSpec.describe Nsm::V1::ContactDetails do
         expect(subject.data).to eq(
           [
             { title: 'Firm name', value: 'Blundon Solicitor Firm' },
-            { title: 'Firm account number', value: '121234' },
             { title: 'Firm address', value: 'Suite 3<br>5 Princess Road<br>Stoke Newington<br>NE10 4AB' },
             { title: 'Firm VAT registered', value: '20%' },
             { title: 'Solicitor full name', value: 'Daniel Treaty' },

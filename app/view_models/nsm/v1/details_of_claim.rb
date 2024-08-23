@@ -7,6 +7,7 @@ module Nsm
       attribute :cntp_order
       attribute :cntp_date
       attribute :stage_reached
+      attribute :firm_office
 
       def key
         'details_of_claim'
@@ -14,6 +15,10 @@ module Nsm
 
       def title
         I18n.t(".nsm.claim_details.#{key}.title")
+      end
+
+      def firm_account_number
+        firm_office['account_number']
       end
 
       def data
@@ -68,7 +73,11 @@ module Nsm
           {
             title: I18n.t(".nsm.claim_details.#{key}.stage_reached"),
             value: I18n.t(".nsm.claim_details.#{key}.stages.#{stage_reached}")
-          }
+          },
+          {
+            title: I18n.t(".nsm.claim_details.#{key}.firm_account_number"),
+            value: firm_account_number
+          },
         ]
       end
 
