@@ -55,7 +55,7 @@ RSpec.describe Nsm::V1::DetailsOfClaim do
                                  { title: 'Type of claim', value: 'Non-standard fee - magistrate' },
                                  { title: 'Representation order date', value: '1 February 2023' },
                                  { title: 'Stage reached', value: 'PROM' },
-                                 { title: 'Firm account number', value: '121234' },
+                                 { title: 'Firm office account number', value: '121234' },
                                ])
     end
 
@@ -85,7 +85,7 @@ RSpec.describe Nsm::V1::DetailsOfClaim do
                                    { title: 'CNTP (contempt) number', value: '123456' },
                                    { title: 'Date of CNTP representation order', value: '1 February 2023' },
                                    { title: 'Stage reached', value: 'PROG' },
-                                   { title: 'Firm account number', value: '121234' },
+                                   { title: 'Firm office account number', value: '121234' },
                                  ])
       end
     end

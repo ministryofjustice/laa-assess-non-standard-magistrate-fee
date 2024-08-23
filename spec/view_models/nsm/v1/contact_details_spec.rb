@@ -7,7 +7,6 @@ RSpec.describe Nsm::V1::ContactDetails do
     end
   end
 
-  # rubocop:disable RSpec/ExampleLength
   describe '#rows' do
     it 'has correct structure' do
       subject = described_class.new(
@@ -31,7 +30,6 @@ RSpec.describe Nsm::V1::ContactDetails do
       expect(subject.rows).to have_key(:data)
     end
   end
-  # rubocop:enable RSpec/ExampleLength
 
   describe '#data' do
     context 'One line in firm address' do
