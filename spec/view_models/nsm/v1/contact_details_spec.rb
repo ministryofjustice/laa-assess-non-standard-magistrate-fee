@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Nsm::V1::ContactDetails do
   describe '#title' do
     it 'shows correct title' do
-      expect(subject.title).to eq('Contact details')
+      expect(subject.title).to eq('Firm details')
     end
   end
 
@@ -25,9 +25,6 @@ RSpec.describe Nsm::V1::ContactDetails do
             'last_name' => 'Treaty',
             'reference_number' => '1212333',
           },
-          'submitter' => {
-            'email' => 'test@test.com'
-          }
         }
       )
 
@@ -54,9 +51,6 @@ RSpec.describe Nsm::V1::ContactDetails do
             'last_name' => 'Treaty',
             'reference_number' => '1212333',
           },
-          'submitter' => {
-            'email' => 'test@test.com'
-          }
         }
       )
 
@@ -69,8 +63,7 @@ RSpec.describe Nsm::V1::ContactDetails do
             { title: 'Firm VAT registered', value: 'No' },
             { title: 'Solicitor full name', value: 'Daniel Treaty' },
             { title: 'Solicitor reference number', value: '1212333' },
-            { title: 'Alternative contact details', value: 'Not provided' },
-            { title: 'Provider email address', value: 'test@test.com' }
+            { title: 'Contact details', value: 'Not provided' },
           ]
         )
       end
@@ -93,9 +86,6 @@ RSpec.describe Nsm::V1::ContactDetails do
             'last_name' => 'Treaty',
             'reference_number' => '1212333',
           },
-          'submitter' => {
-            'email' => 'test@test.com'
-          }
         }
       )
 
@@ -108,8 +98,7 @@ RSpec.describe Nsm::V1::ContactDetails do
             { title: 'Firm VAT registered', value: 'No' },
             { title: 'Solicitor full name', value: 'Daniel Treaty' },
             { title: 'Solicitor reference number', value: '1212333' },
-            { title: 'Alternative contact details', value: 'Not provided' },
-            { title: 'Provider email address', value: 'test@test.com' }
+            { title: 'Contact details', value: 'Not provided' },
           ]
         )
       end
@@ -135,9 +124,6 @@ RSpec.describe Nsm::V1::ContactDetails do
             'contact_last_name' => 'Bob',
             'contact_email' => 'jim@bob.com'
           },
-          'submitter' => {
-            'email' => 'test@test.com'
-          }
         }
       )
 
@@ -150,9 +136,8 @@ RSpec.describe Nsm::V1::ContactDetails do
             { title: 'Firm VAT registered', value: 'No' },
             { title: 'Solicitor full name', value: 'Daniel Treaty' },
             { title: 'Solicitor reference number', value: '1212333' },
-            { title: 'Alternative contact full name', value: 'Jim Bob' },
-            { title: 'Alternative contact email address', value: 'jim@bob.com' },
-            { title: 'Provider email address', value: 'test@test.com' }
+            { title: 'Contact full name', value: 'Jim Bob' },
+            { title: 'Contact email address', value: 'jim@bob.com' },
           ]
         )
       end
@@ -178,9 +163,6 @@ RSpec.describe Nsm::V1::ContactDetails do
             'contact_last_name' => 'Bob',
             'contact_email' => 'jim@bob.com'
           },
-          'submitter' => {
-            'email' => 'test@test.com'
-          },
           'vat_rate' => 0.2
         }
       )
@@ -194,9 +176,8 @@ RSpec.describe Nsm::V1::ContactDetails do
             { title: 'Firm VAT registered', value: '20%' },
             { title: 'Solicitor full name', value: 'Daniel Treaty' },
             { title: 'Solicitor reference number', value: '1212333' },
-            { title: 'Alternative contact full name', value: 'Jim Bob' },
-            { title: 'Alternative contact email address', value: 'jim@bob.com' },
-            { title: 'Provider email address', value: 'test@test.com' }
+            { title: 'Contact full name', value: 'Jim Bob' },
+            { title: 'Contact email address', value: 'jim@bob.com' },
           ]
         )
       end
