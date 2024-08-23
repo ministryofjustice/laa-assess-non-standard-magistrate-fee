@@ -42,12 +42,17 @@
       </p>
       <p class="govuk-body-m govuk-!-margin-bottom-2">
         <span class="govuk-!-font-weight-bold"><%= t(".date_received") %></span>
-        <%= format_in_zone(claim.received_on, format:'%d %b %Y') %>
+        <%= format_in_zone(claim.received_on) %>
       </p>
-      <% unless claim.editable_by?(current_user) %>
+      <% if claim.assessed? %>
         <p class="govuk-body-m govuk-!-margin-bottom-2">
           <span class="govuk-!-font-weight-bold"><%= t(".date_assessed") %></span>
-          <%= format_in_zone(claim_summary.assessed_on, format:'%d %b %Y') %>
+          <%= format_in_zone(claim_summary.assessed_on) %>
+        </p>
+      <% elsif claim.sent_back? %>
+        <p class="govuk-body-m govuk-!-margin-bottom-2">
+          <span class="govuk-!-font-weight-bold"><%= t(".date_sent_back") %></span>
+          <%= format_in_zone(claim_summary.sent_back_on) %>
         </p>
       <% end %>
     </div>

@@ -63,7 +63,7 @@ module Nsm
       # rubocop:disable Metrics/AbcSize
       def disbursement_fields
         table_fields = {}
-        table_fields[:date] = disbursement_date.strftime('%d %b %Y')
+        table_fields[:date] = disbursement_date.to_fs(:stamp)
         table_fields[:type] = type_name.capitalize
         table_fields[:miles] = miles.to_s if miles.present?
         table_fields[:details] = details.capitalize
