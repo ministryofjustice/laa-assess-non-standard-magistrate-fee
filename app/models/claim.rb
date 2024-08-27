@@ -16,8 +16,9 @@ class Claim < Submission
       .where(assignments: { user_id: user.id })
   }
 
-  scope :unassigned, lambda { |user|
+  scope :auto_assignable, lambda { |user|
     pending_decision
+      .where.not(risk: :high)
       .where.missing(:assignments)
       .where.not(id: Event::Unassignment.where(primary_user_id: user.id).select(:submission_id))
   }
