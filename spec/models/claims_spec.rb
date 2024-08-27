@@ -27,6 +27,12 @@ RSpec.describe Claim do
 
       expect(described_class.auto_assignable(user)).to eq([])
     end
+
+    it 'does not include sent back claims' do
+      claim.sent_back!
+
+      expect(described_class.auto_assignable(user)).to eq([])
+    end
   end
 
   describe 'claim assignment' do
