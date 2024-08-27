@@ -321,4 +321,32 @@ RSpec.describe Nsm::V1::WorkItem do
       end
     end
   end
+
+  describe 'backlink_path' do
+    context 'when a change has been made' do
+      let(:claim) { create(:claim) }
+      let(:params) do
+        { 'adjustment_comment' => 'test' }
+      end
+
+      it 'returns the expected path' do
+        expected_path = Rails.application.routes.url_helpers.adjusted_nsm_claim_work_items_path(claim,
+                                                                                                anchor: subject.id)
+        expect(subject.backlink_path(claim)).to eq(expected_path)
+      end
+    end
+
+    context 'when no change has been made' do
+      let(:claim) { create(:claim) }
+      let(:params) do
+        {}
+      end
+
+      it 'returns the expected path' do
+        expected_path = Rails.application.routes.url_helpers.nsm_claim_work_items_path(claim,
+                                                                                       anchor: subject.id)
+        expect(subject.backlink_path(claim)).to eq(expected_path)
+      end
+    end
+  end
 end

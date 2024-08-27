@@ -133,6 +133,14 @@ module Nsm
       def changed?
         original_total_cost_without_vat != total_cost_without_vat
       end
+
+      def backlink_path(claim)
+        if any_adjustments?
+          Rails.application.routes.url_helpers.adjusted_nsm_claim_disbursements_path(claim, anchor: id)
+        else
+          Rails.application.routes.url_helpers.nsm_claim_disbursements_path(claim, anchor: id)
+        end
+      end
     end
   end
 end

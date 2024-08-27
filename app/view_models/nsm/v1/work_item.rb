@@ -136,6 +136,14 @@ module Nsm
         adjustment_comment.present?
       end
 
+      def backlink_path(claim)
+        if any_adjustments?
+          Rails.application.routes.url_helpers.adjusted_nsm_claim_work_items_path(claim, anchor: id)
+        else
+          Rails.application.routes.url_helpers.nsm_claim_work_items_path(claim, anchor: id)
+        end
+      end
+
       private
 
       def build_basic_rows

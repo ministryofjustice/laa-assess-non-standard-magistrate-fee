@@ -1,7 +1,22 @@
 <% title t('.page_title') %>
 
 <% content_for(:back_link) do %>
-  <%= link_to t('helpers.back_link'), "", id: "back-button", class: 'govuk-back-link', data: { turbo: 'false' } %>
+  <%=# Did we come from a page in the app?
+  has_referrer = @referrer.nil?
+
+  # Did we just reload the same page?
+  came_from_current_path =
+    url_for == nsm_claim_disbursement_path(claim.id, item.id)
+
+  link_to t("helpers.back_link"),
+  (
+    if has_referrer || came_from_current_path
+      item.backlink_path(claim)
+    else
+      "#{@referrer}##{item.id}"
+    end
+  ),
+  class: "govuk-back-link" %>
 <% end %>
 
 <div class="govuk-grid-row">
@@ -87,10 +102,24 @@
 
           <%= f.govuk_text_area :explanation, label: { text: t('.explain'), size: 's' }, hint: { text: t('.explain_hint')}, rows: 5 %>
 
-          <%= f.govuk_submit t('shared.save_changes') do %>
-            <%= govuk_link_to(t('shared.cancel'), "", id: "back-button", data: { turbo: 'false' }) %>
-          <% end %>
+        <%= f.govuk_submit t('shared.save_changes') do %>
+          <%=# Did we come from a page in the app?
+          has_referrer = @referrer.nil?
+
+          # Did we just reload the same page?
+          came_from_current_path =
+            url_for == nsm_claim_disbursement_path(claim.id, item.id)
+
+          govuk_link_to t("shared.cancel"),
+          (
+            if has_referrer || came_from_current_path
+              item.backlink_path(claim)
+            else
+              "#{@referrer}##{item.id}"
+            end
+          ) %>
         <% end %>
+      <% end %>
     </div>
   </div>
 </div>

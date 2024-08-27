@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :set_security_headers
   before_action :set_default_cookies
+  before_action :set_referrer
 
   private
 
@@ -26,5 +27,10 @@ class ApplicationController < ActionController::Base
     return unless FeatureFlags.maintenance_mode.enabled?
 
     render file: 'public/maintenance.html', layout: false
+  end
+
+  def set_referrer
+    referrer = request.env['HTTP_REFERER']
+    @referrer = referrer if referrer && URI(referrer).scheme != 'javascript'
   end
 end
