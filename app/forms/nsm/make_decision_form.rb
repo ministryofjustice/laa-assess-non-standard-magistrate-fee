@@ -4,12 +4,6 @@ module Nsm
     include ActiveModel::Attributes
     include ActiveRecord::AttributeAssignment
 
-    STATES = [
-      GRANTED = 'granted'.freeze,
-      PART_GRANT = 'part_grant'.freeze,
-      REJECTED = 'rejected'.freeze
-    ].freeze
-
     attribute :state
     attribute :grant_comment
     attribute :partial_comment
@@ -18,9 +12,9 @@ module Nsm
     attribute :claim
 
     validates :claim, presence: true
-    validates :state, inclusion: { in: STATES }
-    validates :partial_comment, presence: true, if: -> { state == PART_GRANT }
-    validates :reject_comment, presence: true, if: -> { state == REJECTED }
+    validates :state, inclusion: { in: Claim::ASSESSED_STATES }
+    validates :partial_comment, presence: true, if: -> { state == Claim::PART_GRANT }
+    validates :reject_comment, presence: true, if: -> { state == Claim::REJECTED }
 
     def save
       return false unless valid?
@@ -41,11 +35,11 @@ module Nsm
 
     def comment
       case state
-      when GRANTED
+      when Claim::GRANTED
         grant_comment
-      when PART_GRANT
+      when Claim::PART_GRANT
         partial_comment
-      when REJECTED
+      when Claim::REJECTED
         reject_comment
       end
     end

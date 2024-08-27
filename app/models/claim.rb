@@ -4,10 +4,10 @@ class Claim < Submission
   default_scope -> { where(application_type: APPLICATION_TYPES[:nsm]) }
 
   # open
-  scope :pending_decision, -> { where.not(state: Nsm::MakeDecisionForm::STATES) }
+  scope :pending_decision, -> { where.not(state: ASSESSED_STATES) }
 
   # closed
-  scope :decision_made, -> { where(state: Nsm::MakeDecisionForm::STATES) }
+  scope :decision_made, -> { where(state: ASSESSED_STATES) }
 
   # your
   scope :pending_and_assigned_to, lambda { |user|
@@ -22,17 +22,19 @@ class Claim < Submission
       .where.not(id: Event::Unassignment.where(primary_user_id: user.id).select(:submission_id))
   }
 
-  def part_grant?
-    state == Nsm::MakeDecisionForm::PART_GRANT
-  end
+  STATES = (
+    [
+      SUBMITTED = 'submitted'.freeze,
+      SENT_BACK = 'sent_back'.freeze
+    ] +
+      (ASSESSED_STATES = [
+        GRANTED = 'granted'.freeze,
+        PART_GRANT = 'part_grant'.freeze,
+        REJECTED = 'rejected'.freeze
+      ].freeze)
+  ).freeze
 
-  def rejected?
-    state == Nsm::MakeDecisionForm::REJECTED
-  end
-
-  def granted?
-    state == Nsm::MakeDecisionForm::GRANTED
-  end
+  enum :state, STATES.to_h { [_1, _1] }
 
   def editable_by?(user)
     !assessed? && assigned_to?(user)
@@ -43,25 +45,17 @@ class Claim < Submission
   end
 
   def assessed?
-    Nsm::MakeDecisionForm::STATES.include?(state)
-  end
-
-  def sent_back?
-    state == Nsm::SendBackForm::SENT_BACK
-  end
-
-  def display_state?
-    sent_back? || assessed?
+    ASSESSED_STATES.include?(state)
   end
 
   def formatted_claimed_total
-    summed_costs.dig(:gross_cost, :text)
+    formatted_summed_costs.dig(:gross_cost, :text)
   end
 
   def formatted_allowed_total
-    return formatted_claimed_total if summed_costs[:allowed_gross_cost].blank? || granted_and_allowed_less_than_claim
+    return formatted_claimed_total if formatted_summed_costs[:allowed_gross_cost].blank? || granted_and_allowed_less_than_claim
 
-    summed_costs.dig(:allowed_gross_cost, :text)
+    formatted_summed_costs.dig(:allowed_gross_cost, :text)
   end
 
   def any_adjustments?
@@ -71,15 +65,14 @@ class Claim < Submission
   private
 
   def granted_and_allowed_less_than_claim
-    # TODO: https://dsdmoj.atlassian.net/browse/CRM457-1895
-    allowed_gross_cost = summed_costs.dig(:allowed_gross_cost, :text).gsub(/[^\d\.]/, '').to_f
-    gross_cost = summed_costs.dig(:gross_cost, :text).gsub(/[^\d\.]/, '').to_f
+    allowed_gross_cost = core_cost_summary.summed_fields[:allowed_gross_cost]
+    gross_cost = core_cost_summary.summed_fields[:gross_cost]
 
     granted? && allowed_gross_cost < gross_cost
   end
 
-  def summed_costs
-    @summed_costs ||= core_cost_summary.summed_fields
+  def formatted_summed_costs
+    @formatted_summed_costs ||= core_cost_summary.formatted_summed_fields
   end
 
   def core_cost_summary

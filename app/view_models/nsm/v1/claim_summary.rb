@@ -19,6 +19,10 @@ module Nsm
         submission.events.where(event_type: 'Event::Decision').order(created_at: :desc).first&.created_at
       end
 
+      def sent_back_on
+        submission.events.where(event_type: 'Nsm::Event::SendBack').order(created_at: :desc).first.created_at
+      end
+
       def assessment_comment
         @assessment_comment ||= submission.latest_decision_event&.details&.dig('comment')
       end
@@ -32,7 +36,7 @@ module Nsm
       end
 
       def display_allowed_total?
-        claimed_total != allowed_total || submission.display_state?
+        claimed_total != allowed_total || submission.assessed?
       end
     end
   end

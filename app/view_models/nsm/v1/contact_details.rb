@@ -3,7 +3,6 @@ module Nsm
     class ContactDetails < BaseViewModel
       attribute :firm_office
       attribute :solicitor
-      attribute :submitter
       attribute :vat_rate
 
       def key
@@ -16,10 +15,6 @@ module Nsm
 
       def firm_name
         firm_office['name']
-      end
-
-      def firm_account_number
-        firm_office['account_number']
       end
 
       def solicitor_full_name
@@ -56,20 +51,12 @@ module Nsm
         end
       end
 
-      def provider_email_address
-        submitter['email']
-      end
-
-      # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+      # rubocop:disable Metrics/MethodLength
       def data
         [
           {
             title: I18n.t(".nsm.claim_details.#{key}.firm_name"),
             value: firm_name
-          },
-          {
-            title: I18n.t(".nsm.claim_details.#{key}.firm_account_number"),
-            value: firm_account_number
           },
           {
             title: I18n.t(".nsm.claim_details.#{key}.firm_address"),
@@ -88,13 +75,9 @@ module Nsm
             value: solicitor_ref_number
           },
           *contact_details,
-          {
-            title: I18n.t(".nsm.claim_details.#{key}.provider_email"),
-            value: provider_email_address
-          }
         ]
       end
-      # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+      # rubocop:enable Metrics/MethodLength
 
       def rows
         { title:, data: }

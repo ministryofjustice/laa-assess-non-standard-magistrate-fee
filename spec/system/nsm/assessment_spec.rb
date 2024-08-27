@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
+  let(:fixed_arbitrary_date) { DateTime.new(2024, 7, 4, 12, 3, 12) }
   let(:user) { create(:caseworker) }
   let(:claim) { create(:claim) }
 
@@ -13,6 +14,7 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
 
   context 'granted' do
     before do
+      travel_to fixed_arbitrary_date
       visit nsm_claim_claim_details_path(claim)
       click_link_or_button 'Make a decision'
       choose 'Grant it'
@@ -29,6 +31,11 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
       it 'shows comment on overview page' do
         visit nsm_claim_claim_details_path(claim)
         expect(page).to have_content 'Test Data'
+      end
+
+      it 'shows assessment date on overview page' do
+        visit nsm_claim_claim_details_path(claim)
+        expect(page).to have_content 'Date assessed: 4 July 2024'
       end
 
       it 'shows comment on history page' do
@@ -65,14 +72,27 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
   end
 
   context 'further information required' do
-    it 'sends a notification' do
+    before do
+      travel_to fixed_arbitrary_date
       visit nsm_claim_claim_details_path(claim)
       click_link_or_button 'Send back to provider'
       fill_in 'Explain your decision', with: 'Test Data'
+    end
 
+    it 'sends a notification' do
       expect do
         click_link_or_button 'Send back to provider'
       end.to have_enqueued_job(NotifyAppStore)
+    end
+
+    context 'when I have sent a claim back' do
+      before { click_link_or_button 'Send back to provider' }
+
+      it 'shows the date on the details page' do
+        visit nsm_claim_claim_details_path(claim)
+
+        expect(page).to have_content 'Date sent back to provider: 4 July 2024'
+      end
     end
   end
 
@@ -137,7 +157,7 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
 
       clicked_id = claim.data['work_items'][53]['id']
       expect(evaluate_script('window.scrollY')).to eq 0
-      find("tbody tr[id=\"#{clicked_id}\"] a").click
+      find("tbody tr[id=\"#{clicked_id}\"] a", text: 'Waiting').click
       expect(page).to have_content('Adjust a work item')
 
       click_on 'Back'

@@ -3,11 +3,10 @@ require 'rails_helper'
 RSpec.describe Nsm::V1::ContactDetails do
   describe '#title' do
     it 'shows correct title' do
-      expect(subject.title).to eq('Contact details')
+      expect(subject.title).to eq('Firm details')
     end
   end
 
-  # rubocop:disable RSpec/ExampleLength
   describe '#rows' do
     it 'has correct structure' do
       subject = described_class.new(
@@ -16,7 +15,6 @@ RSpec.describe Nsm::V1::ContactDetails do
             'name' => 'Blundon Solicitor Firm',
             'town' => 'Stoke Newington',
             'postcode' => 'NE10 4AB',
-            'account_number' => '121234',
             'address_line_1' => '1 Princess Road',
             'address_line_2' => nil
           },
@@ -25,9 +23,6 @@ RSpec.describe Nsm::V1::ContactDetails do
             'last_name' => 'Treaty',
             'reference_number' => '1212333',
           },
-          'submitter' => {
-            'email' => 'test@test.com'
-          }
         }
       )
 
@@ -35,7 +30,6 @@ RSpec.describe Nsm::V1::ContactDetails do
       expect(subject.rows).to have_key(:data)
     end
   end
-  # rubocop:enable RSpec/ExampleLength
 
   describe '#data' do
     context 'One line in firm address' do
@@ -45,7 +39,6 @@ RSpec.describe Nsm::V1::ContactDetails do
             'name' => 'Blundon Solicitor Firm',
             'town' => 'Stoke Newington',
             'postcode' => 'NE10 4AB',
-            'account_number' => '121234',
             'address_line_1' => '1 Princess Road',
             'address_line_2' => nil
           },
@@ -54,9 +47,6 @@ RSpec.describe Nsm::V1::ContactDetails do
             'last_name' => 'Treaty',
             'reference_number' => '1212333',
           },
-          'submitter' => {
-            'email' => 'test@test.com'
-          }
         }
       )
 
@@ -64,13 +54,11 @@ RSpec.describe Nsm::V1::ContactDetails do
         expect(subject.data).to eq(
           [
             { title: 'Firm name', value: 'Blundon Solicitor Firm' },
-            { title: 'Firm account number', value: '121234' },
             { title: 'Firm address', value: '1 Princess Road<br>Stoke Newington<br>NE10 4AB' },
             { title: 'Firm VAT registered', value: 'No' },
             { title: 'Solicitor full name', value: 'Daniel Treaty' },
             { title: 'Solicitor reference number', value: '1212333' },
-            { title: 'Alternative contact details', value: 'Not provided' },
-            { title: 'Provider email address', value: 'test@test.com' }
+            { title: 'Contact details', value: 'Not provided' },
           ]
         )
       end
@@ -83,7 +71,6 @@ RSpec.describe Nsm::V1::ContactDetails do
             'name' => 'Blundon Solicitor Firm',
             'town' => 'Stoke Newington',
             'postcode' => 'NE10 4AB',
-            'account_number' => '121234',
             'address_line_1' => 'Suite 3',
             'address_line_2' => '5 Princess Road',
             'vat_registered' => 'no'
@@ -93,9 +80,6 @@ RSpec.describe Nsm::V1::ContactDetails do
             'last_name' => 'Treaty',
             'reference_number' => '1212333',
           },
-          'submitter' => {
-            'email' => 'test@test.com'
-          }
         }
       )
 
@@ -103,13 +87,11 @@ RSpec.describe Nsm::V1::ContactDetails do
         expect(subject.data).to eq(
           [
             { title: 'Firm name', value: 'Blundon Solicitor Firm' },
-            { title: 'Firm account number', value: '121234' },
             { title: 'Firm address', value: 'Suite 3<br>5 Princess Road<br>Stoke Newington<br>NE10 4AB' },
             { title: 'Firm VAT registered', value: 'No' },
             { title: 'Solicitor full name', value: 'Daniel Treaty' },
             { title: 'Solicitor reference number', value: '1212333' },
-            { title: 'Alternative contact details', value: 'Not provided' },
-            { title: 'Provider email address', value: 'test@test.com' }
+            { title: 'Contact details', value: 'Not provided' },
           ]
         )
       end
@@ -122,7 +104,6 @@ RSpec.describe Nsm::V1::ContactDetails do
             'name' => 'Blundon Solicitor Firm',
             'town' => 'Stoke Newington',
             'postcode' => 'NE10 4AB',
-            'account_number' => '121234',
             'address_line_1' => 'Suite 3',
             'address_line_2' => '5 Princess Road',
             'vat_registered' => 'no'
@@ -135,9 +116,6 @@ RSpec.describe Nsm::V1::ContactDetails do
             'contact_last_name' => 'Bob',
             'contact_email' => 'jim@bob.com'
           },
-          'submitter' => {
-            'email' => 'test@test.com'
-          }
         }
       )
 
@@ -145,14 +123,12 @@ RSpec.describe Nsm::V1::ContactDetails do
         expect(subject.data).to eq(
           [
             { title: 'Firm name', value: 'Blundon Solicitor Firm' },
-            { title: 'Firm account number', value: '121234' },
             { title: 'Firm address', value: 'Suite 3<br>5 Princess Road<br>Stoke Newington<br>NE10 4AB' },
             { title: 'Firm VAT registered', value: 'No' },
             { title: 'Solicitor full name', value: 'Daniel Treaty' },
             { title: 'Solicitor reference number', value: '1212333' },
-            { title: 'Alternative contact full name', value: 'Jim Bob' },
-            { title: 'Alternative contact email address', value: 'jim@bob.com' },
-            { title: 'Provider email address', value: 'test@test.com' }
+            { title: 'Contact full name', value: 'Jim Bob' },
+            { title: 'Contact email address', value: 'jim@bob.com' },
           ]
         )
       end
@@ -165,7 +141,6 @@ RSpec.describe Nsm::V1::ContactDetails do
             'name' => 'Blundon Solicitor Firm',
             'town' => 'Stoke Newington',
             'postcode' => 'NE10 4AB',
-            'account_number' => '121234',
             'address_line_1' => 'Suite 3',
             'address_line_2' => '5 Princess Road',
             'vat_registered' => 'yes'
@@ -178,9 +153,6 @@ RSpec.describe Nsm::V1::ContactDetails do
             'contact_last_name' => 'Bob',
             'contact_email' => 'jim@bob.com'
           },
-          'submitter' => {
-            'email' => 'test@test.com'
-          },
           'vat_rate' => 0.2
         }
       )
@@ -189,14 +161,12 @@ RSpec.describe Nsm::V1::ContactDetails do
         expect(subject.data).to eq(
           [
             { title: 'Firm name', value: 'Blundon Solicitor Firm' },
-            { title: 'Firm account number', value: '121234' },
             { title: 'Firm address', value: 'Suite 3<br>5 Princess Road<br>Stoke Newington<br>NE10 4AB' },
             { title: 'Firm VAT registered', value: '20%' },
             { title: 'Solicitor full name', value: 'Daniel Treaty' },
             { title: 'Solicitor reference number', value: '1212333' },
-            { title: 'Alternative contact full name', value: 'Jim Bob' },
-            { title: 'Alternative contact email address', value: 'jim@bob.com' },
-            { title: 'Provider email address', value: 'test@test.com' }
+            { title: 'Contact full name', value: 'Jim Bob' },
+            { title: 'Contact email address', value: 'jim@bob.com' },
           ]
         )
       end

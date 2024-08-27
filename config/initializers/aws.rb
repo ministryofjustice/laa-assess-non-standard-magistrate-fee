@@ -1,3 +1,5 @@
+return if ENV.fetch('S3_BUCKET', '').empty?
+
 if ENV.fetch('LOCALSTACK', false)
   Aws.config.update(
     region: ENV.fetch('AWS_REGION', 'eu-west-2'),

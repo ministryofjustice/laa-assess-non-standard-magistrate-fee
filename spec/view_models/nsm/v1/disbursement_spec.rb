@@ -68,7 +68,7 @@ RSpec.describe Nsm::V1::Disbursement do
 
     it 'returns a hash with the correct fields if no miles' do
       expected_fields = {
-        date: '01 Jan 2022',
+        date: '1 January 2022',
         type: 'Type',
         details: 'Details',
         prior_authority: 'Yes',
@@ -84,7 +84,7 @@ RSpec.describe Nsm::V1::Disbursement do
 
       it 'returns a hash with the correct fields if miles present' do
         expected_fields = {
-          date: '01 Jan 2022',
+          date: '1 January 2022',
           type: 'Type',
           details: 'Details',
           prior_authority: 'Yes',
@@ -102,7 +102,7 @@ RSpec.describe Nsm::V1::Disbursement do
 
       it 'returns a hash with the correct fields if apply vat is false' do
         expected_fields = {
-          date: '01 Jan 2022',
+          date: '1 January 2022',
           type: 'Type',
           details: 'Details',
           prior_authority: 'Yes',
@@ -119,7 +119,7 @@ RSpec.describe Nsm::V1::Disbursement do
 
       it 'returns a hash excluding prior_authority' do
         expected_fields = {
-          date: '01 Jan 2022',
+          date: '1 January 2022',
           type: 'Type',
           details: 'Details',
           vat: '20%',

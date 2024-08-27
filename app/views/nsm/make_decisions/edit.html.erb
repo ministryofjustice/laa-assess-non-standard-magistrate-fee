@@ -10,13 +10,13 @@
   <div class="govuk-grid-column-two-thirds">
     <%= form_with model: decision, url: nsm_claim_make_decision_path(claim_id: claim.id), method: :put, id: dom_id(decision) do |f| %>
       <%= f.govuk_radio_buttons_fieldset :state, legend: { size: 's' } do %>
-        <%= f.govuk_radio_button :state, Nsm::MakeDecisionForm::GRANTED  do %>
+        <%= f.govuk_radio_button :state, Claim::GRANTED  do %>
           <%= f.govuk_text_area :grant_comment, width: 'one-third', autocomplete: 'off', label: { size: 's' } %>
         <% end %>
-        <%= f.govuk_radio_button :state, Nsm::MakeDecisionForm::PART_GRANT do %>
+        <%= f.govuk_radio_button :state, Claim::PART_GRANT do %>
           <%= f.govuk_text_area :partial_comment, width: 'one-third', autocomplete: 'off', label: { size: 's' } %>
         <% end %>
-        <%= f.govuk_radio_button :state, Nsm::MakeDecisionForm::REJECTED do %>
+        <%= f.govuk_radio_button :state, Claim::REJECTED do %>
           <%= f.govuk_text_area :reject_comment, width: 'one-third', autocomplete: 'off', label: { size: 's' } %>
         <% end %>
       <% end %>

@@ -44,7 +44,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
           {
             work_type: { value: 'advocacy', en: 'Advocacy' },
             pricing: 10.0, time_spent_original: 600,
-            time_spent: 480,
+            time_spent: 480, adjustment_comment: 'Foo',
           }
         ]
       end
@@ -67,11 +67,11 @@ RSpec.describe Nsm::V1::CoreCostSummary do
           {
 
             work_type: { value: 'advocacy', en: 'Advocacy' },
-            pricing: 10.0, time_spent_original: 600, time_spent: 480,
+            pricing: 10.0, time_spent_original: 600, time_spent: 480, adjustment_comment: 'Foo',
           },
           {
             work_type: { value: 'preparation', en: 'Preparation' },
-            pricing: 10.0, time_spent_original: 660, time_spent: 540,
+            pricing: 10.0, time_spent_original: 660, time_spent: 540, adjustment_comment: 'Foo',
           }
         ]
       end
@@ -93,15 +93,15 @@ RSpec.describe Nsm::V1::CoreCostSummary do
         [
           {
             work_type: { value: 'travel', en: 'Travel' },
-            pricing: 10.0, time_spent_original: 600, time_spent: 480,
+            pricing: 10.0, time_spent_original: 600, time_spent: 480, adjustment_comment: 'Foo',
           },
           {
             work_type: { value: 'waiting', en: 'Waiting' },
-            pricing: 10.0, time_spent_original: 600, time_spent: 480,
+            pricing: 10.0, time_spent_original: 600, time_spent: 480, adjustment_comment: 'Foo',
           },
           {
             work_type: { value: 'preparation', en: 'Preparation' },
-            pricing: 10.0, time_spent_original: 660, time_spent: 540,
+            pricing: 10.0, time_spent_original: 660, time_spent: 540, adjustment_comment: 'Foo',
           }
         ]
       end
@@ -131,11 +131,11 @@ RSpec.describe Nsm::V1::CoreCostSummary do
         [
           {
             work_type: { value: 'advocacy', en: 'Advocacy' },
-            pricing: 10.0, time_spent_original: 600, time_spent: 480,
+            pricing: 10.0, time_spent_original: 600, time_spent: 480, adjustment_comment: 'Foo',
           },
           {
             work_type: { value: 'advocacy', en: 'Advocacy' },
-            pricing: 10.0, time_spent_original: 660, time_spent: 540,
+            pricing: 10.0, time_spent_original: 660, time_spent: 540, adjustment_comment: 'Foo',
           }
         ]
       end
@@ -147,6 +147,46 @@ RSpec.describe Nsm::V1::CoreCostSummary do
             allowed_net_cost: { numeric: true, text: '£170.00' }, allowed_vat: { numeric: true, text: '£0.00' },
             gross_cost: { numeric: true, text: '£210.00' }, name: { numeric: false, text: 'Profit costs', width: nil },
             net_cost: { numeric: true, text: '£210.00' }, vat: { numeric: true, text: '£0.00' }
+          }
+        )
+      end
+    end
+
+    context 'when a work item has changed type' do
+      let(:work_items) do
+        [
+          {
+            work_type: { value: 'advocacy', en: 'Advocacy' },
+            work_type_original: { value: 'waiting', en: 'Waiting' },
+            pricing: 10.0,
+            pricing_original: 12.0,
+            time_spent: 480, adjustment_comment: 'Foo',
+          },
+        ]
+      end
+
+      it 'includes shows something sensible for profit costs' do
+        expect(subject.table_fields).to include(
+          {
+            allowed_gross_cost: { numeric: true, text: '£80.00' },
+            allowed_net_cost: { numeric: true, text: '£80.00' }, allowed_vat: { numeric: true, text: '£0.00' },
+            gross_cost: { numeric: true, text: '£0.00' }, name: { numeric: false, text: 'Profit costs', width: nil },
+            net_cost: { numeric: true, text: '£0.00' }, vat: { numeric: true, text: '£0.00' }
+          }
+        )
+      end
+
+      it 'includes shows something sensible for waiting' do
+        name_html = '<span title="One or more of these items were adjusted to be a different work item type.">' \
+                    'Waiting</span> <sup><a href="#fn*">[*]</a></sup>'
+        expect(subject.table_fields).to include(
+          {
+            allowed_gross_cost: { numeric: true, text: '£0.00' },
+            allowed_net_cost: { numeric: true, text: '£0.00' },
+            allowed_vat: { numeric: true, text: '£0.00' },
+            gross_cost: { numeric: true, text: '£96.00' },
+            name: { numeric: false, text: name_html },
+            net_cost: { numeric: true, text: '£96.00' }, vat: { numeric: true, text: '£0.00' }
           }
         )
       end
@@ -228,19 +268,19 @@ RSpec.describe Nsm::V1::CoreCostSummary do
     end
   end
 
-  describe '#summed_fields' do
+  describe '#formatted_summed_fields' do
     context 'when a single work item exists' do
       let(:work_items) do
         [
           {
             work_type: { value: 'advocacy', en: 'Advocacy' },
-            pricing: 10.0, time_spent_original: 600, time_spent: 480,
+            pricing: 10.0, time_spent_original: 600, time_spent: 480, adjustment_comment: 'Foo',
           }
         ]
       end
 
       it 'returns the summed time and cost' do
-        expect(subject.summed_fields).to eq(
+        expect(subject.formatted_summed_fields).to eq(
           {
             allowed_gross_cost: { numeric: true, text: '£180.00' }, allowed_net_cost: { numeric: true, text: '£180.00' },
             allowed_vat: { numeric: true, text: '£0.00' }, gross_cost: { numeric: true, text: '£200.00' },
@@ -262,7 +302,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
       end
 
       it 'returns the summed time and cost' do
-        expect(subject.summed_fields).to eq(
+        expect(subject.formatted_summed_fields).to eq(
           {
             allowed_gross_cost: '', allowed_net_cost: '', allowed_vat: '', gross_cost: { numeric: true, text: '£180.00' },
             name: { numeric: false, text: 'Total', width: nil }, net_cost: { numeric: true, text: '£180.00' },
@@ -284,7 +324,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
       end
 
       it 'returns the summed time and cost' do
-        expect(subject.summed_fields).to eq(
+        expect(subject.formatted_summed_fields).to eq(
           {
             allowed_gross_cost: '', allowed_net_cost: '', allowed_vat: '', gross_cost: { numeric: true, text: '£196.00' },
             name: { numeric: false, text: 'Total', width: nil }, net_cost: { numeric: true, text: '£180.00' },
@@ -299,17 +339,17 @@ RSpec.describe Nsm::V1::CoreCostSummary do
         [
           {
             work_type: { value: 'advocacy', en: 'Advocacy' },
-            pricing: 10.0, time_spent_original: 600, time_spent: 480,
+            pricing: 10.0, time_spent_original: 600, time_spent: 480, adjustment_comment: 'Foo',
           },
           {
             work_type: { value: 'travel', en: 'Travel' },
-            pricing: 10.0, time_spent_original: 600, time_spent: 480,
+            pricing: 10.0, time_spent_original: 600, time_spent: 480, adjustment_comment: 'Foo',
           }
         ]
       end
 
       it 'returns the summed cost' do
-        expect(subject.summed_fields).to eq(
+        expect(subject.formatted_summed_fields).to eq(
           {
             allowed_gross_cost: { numeric: true, text: '£260.00' }, allowed_net_cost: { numeric: true, text: '£260.00' },
             allowed_vat: { numeric: true, text: '£0.00' }, gross_cost: { numeric: true, text: '£300.00' },
@@ -325,17 +365,17 @@ RSpec.describe Nsm::V1::CoreCostSummary do
         [
           {
             work_type: { value: 'advocacy', en: 'Advocacy' },
-                          pricing: 10.0, time_spent_original: 600, time_spent: 480,
+                          pricing: 10.0, time_spent_original: 600, time_spent: 480, adjustment_comment: 'Foo',
           },
           {
             work_type: { value: 'advocacy', en: 'Advocacy' },
-                           pricing: 10.0, time_spent_original: 600, time_spent: 480,
+                           pricing: 10.0, time_spent_original: 600, time_spent: 480, adjustment_comment: 'Foo',
           }
         ]
       end
 
       it 'returns the summed cost' do
-        expect(subject.summed_fields).to eq(
+        expect(subject.formatted_summed_fields).to eq(
           {
             allowed_gross_cost: { numeric: true, text: '£260.00' }, allowed_net_cost: { numeric: true, text: '£260.00' },
             allowed_vat: { numeric: true, text: '£0.00' }, gross_cost: { numeric: true, text: '£300.00' },
@@ -355,7 +395,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
       end
 
       it 'returns the summed cost' do
-        expect(subject.summed_fields).to eq(
+        expect(subject.formatted_summed_fields).to eq(
           {
             allowed_gross_cost: '',
             allowed_net_cost: '',
@@ -381,7 +421,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
       let(:state) { 'rejected' }
 
       it 'returns the summed time and cost' do
-        expect(subject.summed_fields).to eq(
+        expect(subject.formatted_summed_fields).to eq(
           {
             allowed_gross_cost: { numeric: true, text: '£0.00' }, allowed_net_cost: { numeric: true, text: '£0.00' },
             allowed_vat: { numeric: true, text: '£0.00' }, gross_cost: { numeric: true, text: '£180.00' },
@@ -404,7 +444,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
       let(:state) { 'granted' }
 
       it 'returns the summed time and cost' do
-        expect(subject.summed_fields).to eq(
+        expect(subject.formatted_summed_fields).to eq(
           {
             allowed_gross_cost: '', allowed_net_cost: '', allowed_vat: '', gross_cost: { numeric: true, text: '£180.00' },
             name: { numeric: false, text: 'Total', width: nil }, net_cost: { numeric: true, text: '£180.00' },
