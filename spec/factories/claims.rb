@@ -52,15 +52,7 @@ FactoryBot.define do
           'en' => '1 - Offences against the person'
         },
         'concluded' => 'no',
-        'solicitor' => {
-          'first_name' => 'Barry',
-          'last_name' => 'Scott',
-          'reference_number' => '2P314B',
-          'contact_first_name' => nil,
-          'contact_last_name' => nil,
-          'contact_email' => nil,
-          'previous_id' => nil
-        },
+        'solicitor' => solicitor,
         'answer_equality' => {
           'value' => 'no',
           'en' => 'No, skip the equality questions'
@@ -188,6 +180,17 @@ FactoryBot.define do
           'address_line_1' => 'Suite 3',
           'address_line_2' => '5 Princess Road',
           'vat_registered' => vat_registered
+        }
+      end
+      solicitor do
+        {
+          'first_name' => 'Barry',
+          'last_name' => 'Scott',
+          'reference_number' => '2P314B',
+          'contact_first_name' => nil,
+          'contact_last_name' => nil,
+          'contact_email' => nil,
+          'previous_id' => nil
         }
       end
     end
