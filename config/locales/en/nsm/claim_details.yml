@@ -5,6 +5,7 @@ en:
       show:
         page_title: Assess a non-standard magistrates’ court payment
         overview: Overview
+        sent_back: Sent back to provider on %{date}
         assessed_statuses:
           granted: Granted
           part_grant: Part granted

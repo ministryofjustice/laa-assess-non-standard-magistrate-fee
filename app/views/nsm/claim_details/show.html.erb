@@ -7,10 +7,15 @@
   <div class="govuk-grid-column-full">
     <h2 class="govuk-heading-l"><%= t('.overview') %></h2>
 
-    <% if claim_summary.assessment_comment.present? %>
+    <% if claim.sent_back? %>
+      <div class="govuk-inset-text">
+        <p><strong><%= t(".sent_back", date: claim_summary.sent_back_on.to_fs(:stamp)) %></strong></p>
+        <%= simple_format claim_summary.send_back_comment %>
+      </div>
+    <% elsif claim_summary.assessment_comment.present? %>
       <div class="govuk-inset-text">
         <p><strong><%= t(".assessed_statuses.#{claim.state}") %></strong></p>
-        <p> <%= simple_format claim_summary.assessment_comment %></p>
+        <%= simple_format claim_summary.assessment_comment %>
         <% if claim.part_grant? %>
           <p> <%= link_to t('.review_adjustments'), adjusted_nsm_claim_work_items_path(claim) %></p>
         <% end %>
