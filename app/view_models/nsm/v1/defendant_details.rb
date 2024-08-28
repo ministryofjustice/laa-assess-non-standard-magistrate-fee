@@ -12,7 +12,7 @@ module Nsm
       end
 
       def data
-        defendant_rows.flatten
+        defendant_rows.flatten.compact
       end
 
       def defendant_rows
@@ -39,10 +39,12 @@ module Nsm
             title:  I18n.t(".nsm.claim_details.#{key}.main_defendant_name"),
             value: main_defendant_name
           },
-          {
-            title: I18n.t(".nsm.claim_details.#{key}.main_defendant_maat"),
-            value: main_defendant_maat
-          }
+          (if main_defendant_maat.present?
+             {
+               title: I18n.t(".nsm.claim_details.#{key}.main_defendant_maat"),
+              value: main_defendant_maat
+             }
+           end)
         ]
       end
 
@@ -53,10 +55,12 @@ module Nsm
               title: I18n.t(".nsm.claim_details.#{key}.defendant_name", count: index + 1),
               value: construct_name(defendant)
             },
-            {
-              title: I18n.t(".nsm.claim_details.#{key}.defendant_maat", count: index + 1),
-              value: defendant['maat']
-            }
+            (if defendant['maat'].present?
+               {
+                 title: I18n.t(".nsm.claim_details.#{key}.defendant_maat", count: index + 1),
+                value: defendant['maat']
+               }
+             end)
           ]
         end
       end
