@@ -57,6 +57,7 @@ en:
         uplift_claimed: Uplift claimed
         total_claimed: Cost claimed
         vat: VAT
+        total_claimed_inc_vat: Cost claimed (including VAT)
         laa_adjustments: LAA adjustments
         calculate_button_text: Calculate my changes
         work_type_hint: '%{value} per hour'
@@ -76,7 +77,7 @@ en:
         uplift_claimed: Uplift claimed
         total_claimed: Net cost claimed
         vat: VAT
-        total_claimed_inc_vate: Cost claimed (including VAT)
+        total_claimed_inc_vat: Cost claimed (including VAT)
         laa_adjustments: LAA adjustments
         uplift_allowed: Uplift allowed
         work_type: Work type

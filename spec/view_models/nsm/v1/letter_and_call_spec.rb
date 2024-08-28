@@ -306,7 +306,7 @@ RSpec.describe Nsm::V1::LetterAndCall do
           '.rate' => '£3.56',
           '.uplift_requested' => '20%',
           '.vat' => '20%',
-          '.total_claimed_inc_vate' => '£61.52',
+          '.total_claimed_inc_vat' => '£61.52',
         )
       end
     end
