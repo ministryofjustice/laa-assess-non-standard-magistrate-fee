@@ -73,7 +73,7 @@ module ApplicationHelper
     return unless claim_id
 
     current_claim = Claim.find(claim_id)
-    if current_claim.assessed? || current_claim.sent_back?
+    if current_claim.assessed?
       :closed
     elsif current_claim.assigned_to?(current_user)
       :your
