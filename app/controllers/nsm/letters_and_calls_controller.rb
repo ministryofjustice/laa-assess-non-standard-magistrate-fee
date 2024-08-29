@@ -15,9 +15,12 @@ module Nsm
       summary = nil
       scope = :letters_and_calls
       pagy = nil
+      type_changed_records = BaseViewModel.build(:work_item, claim, 'work_items').filter do |work_item|
+        work_item.work_type != work_item.original_work_type
+      end
 
       render 'nsm/review_and_adjusts/show',
-             locals: { claim:, records:, summary:, claim_summary:, core_cost_summary:, pagy:, scope: }
+             locals: { claim:, records:, summary:, claim_summary:, core_cost_summary:, pagy:, scope:, type_changed_records: }
     end
 
     def adjusted

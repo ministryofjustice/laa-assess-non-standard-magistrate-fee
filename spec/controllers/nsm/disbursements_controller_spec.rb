@@ -10,7 +10,10 @@ RSpec.describe Nsm::DisbursementsController do
 
     before do
       allow(Claim).to receive(:find).and_return(claim)
-      allow(BaseViewModel).to receive_messages(build: disbursements)
+      allow(BaseViewModel).to receive(:build).with(:disbursement, claim, 'disbursements').and_return(disbursements)
+      allow(BaseViewModel).to receive(:build).with(:claim_summary, claim).and_return([])
+      allow(BaseViewModel).to receive(:build).with(:core_cost_summary, claim).and_return([])
+      allow(BaseViewModel).to receive(:build).with(:work_item, claim, 'work_items').and_return([])
     end
 
     it 'find and builds the required object' do
@@ -18,6 +21,7 @@ RSpec.describe Nsm::DisbursementsController do
 
       expect(Claim).to have_received(:find).with(claim_id)
       expect(BaseViewModel).to have_received(:build).with(:disbursement, claim, 'disbursements')
+      expect(BaseViewModel).to have_received(:build).with(:work_item, claim, 'work_items')
     end
 
     it 'renders successfully with claims' do

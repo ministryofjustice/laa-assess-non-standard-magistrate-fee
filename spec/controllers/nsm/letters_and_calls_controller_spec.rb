@@ -8,7 +8,10 @@ RSpec.describe Nsm::LettersAndCallsController do
 
     before do
       allow(Claim).to receive(:find).and_return(claim)
-      allow(BaseViewModel).to receive_messages(build: letters_and_calls)
+      allow(BaseViewModel).to receive(:build).with(:letters_and_calls_summary, claim).and_return(letters_and_calls)
+      allow(BaseViewModel).to receive(:build).with(:claim_summary, claim).and_return([])
+      allow(BaseViewModel).to receive(:build).with(:core_cost_summary, claim).and_return([])
+      allow(BaseViewModel).to receive(:build).with(:work_item, claim, 'work_items').and_return([])
     end
 
     it 'find and builds the required object' do
@@ -16,6 +19,9 @@ RSpec.describe Nsm::LettersAndCallsController do
 
       expect(Claim).to have_received(:find).with(claim_id)
       expect(BaseViewModel).to have_received(:build).with(:letters_and_calls_summary, claim)
+      expect(BaseViewModel).to have_received(:build).with(:core_cost_summary, claim)
+      expect(BaseViewModel).to have_received(:build).with(:claim_summary, claim)
+      expect(BaseViewModel).to have_received(:build).with(:work_item, claim, 'work_items')
     end
 
     it 'renders successfully with claims' do
