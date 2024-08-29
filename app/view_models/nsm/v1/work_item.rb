@@ -14,8 +14,6 @@ module Nsm
       adjustable_attribute :pricing, :decimal
       adjustable_attribute :uplift, :integer
       attribute :fee_earner, :string
-      attribute :vat_rate, :decimal
-      attribute :firm_office
       attribute :adjustment_comment
 
       class << self
@@ -44,28 +42,12 @@ module Nsm
         end
       end
 
-      def vat_registered?
-        firm_office['vat_registered'] == 'yes'
-      end
-
       def provider_requested_amount
         @provider_requested_amount ||= calculate_cost(original: true)
       end
 
-      def provider_requested_amount_inc_vat
-        return provider_requested_amount unless vat_registered?
-
-        provider_requested_amount * (1 + vat_rate)
-      end
-
       def caseworker_amount
         @caseworker_amount ||= calculate_cost
-      end
-
-      def caseworker_amount_inc_vat
-        return caseworker_amount unless vat_registered?
-
-        caseworker_amount * (1 + vat_rate)
       end
 
       def uplift?

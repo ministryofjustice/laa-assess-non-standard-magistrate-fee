@@ -27,7 +27,6 @@ function init() {
     const count = parseInt(countField?.value);
     const unitPrice = new Decimal(calculateChangeButton?.getAttribute('data-unit-price'));
     let upliftAmount = calculateChangeButton?.getAttribute('data-uplift-amount');
-    const vatMultiplier = new Decimal(calculateChangeButton?.getAttribute('data-vat-multiplier'));
 
     if (!(upliftAmount && upliftNoField.checked)) {
       upliftAmount = 0
@@ -35,7 +34,7 @@ function init() {
 
     const upliftFactor = new Decimal(upliftAmount).dividedBy(100).plus(1);
 
-    const unrounded = unitPrice.times(count).times(upliftFactor).times(vatMultiplier);
+    const unrounded = unitPrice.times(count).times(upliftFactor);
     return (`£${unrounded.toFixed(2)}`);
   }
 }

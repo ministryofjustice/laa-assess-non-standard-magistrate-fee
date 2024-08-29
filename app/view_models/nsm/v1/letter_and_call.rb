@@ -8,8 +8,6 @@ module Nsm
       adjustable_attribute :count, :integer
       adjustable_attribute :uplift, :integer
       attribute :pricing, :decimal
-      attribute :vat_rate
-      attribute :firm_office
       attribute :adjustment_comment
 
       class << self
@@ -44,28 +42,12 @@ module Nsm
         end
       end
 
-      def vat_registered?
-        firm_office['vat_registered'] == 'yes'
-      end
-
       def provider_requested_amount
         calculate_cost(original: true)
       end
 
-      def provider_requested_amount_inc_vat
-        return provider_requested_amount unless vat_registered?
-
-        provider_requested_amount * (1 + vat_rate)
-      end
-
       def caseworker_amount
         @caseworker_amount ||= calculate_cost
-      end
-
-      def caseworker_amount_inc_vat
-        return caseworker_amount unless vat_registered?
-
-        caseworker_amount * (1 + vat_rate)
       end
 
       def type_name
@@ -78,7 +60,7 @@ module Nsm
 
       def form_attributes
         attributes.except(
-          'pricing', 'adjustment_comment', 'vat_rate', 'firm_office', 'count_original', 'uplift_original'
+          'pricing', 'adjustment_comment', 'count_original', 'uplift_original'
         ).merge(
           'type' => type.value,
           'explanation' => adjustment_comment,
@@ -129,8 +111,6 @@ module Nsm
           Rails.application.routes.url_helpers.nsm_claim_letters_and_calls_path(claim, anchor: id)
         end
       end
-
-      private
 
       def calculate_cost(original: false)
         scoped_count, scoped_uplift = original ? [original_count, original_uplift] : [count, uplift]
