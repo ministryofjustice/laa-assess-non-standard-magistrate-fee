@@ -332,4 +332,37 @@ RSpec.describe Nsm::V1::LetterAndCall do
 
     it { expect(subject.id).to eq 'letters' }
   end
+
+  describe 'backlink_path' do
+    context 'when a change has been made' do
+      let(:claim) { create(:claim) }
+      let(:params) do
+        {
+          'type' => { 'en' => 'Letters', 'value' => 'letters' },
+          'adjustment_comment' => 'test'
+        }
+      end
+
+      it 'returns the expected path' do
+        expected_path = Rails.application.routes.url_helpers.adjusted_nsm_claim_letters_and_calls_path(claim,
+                                                                                                       anchor: subject.id)
+        expect(subject.backlink_path(claim)).to eq(expected_path)
+      end
+    end
+
+    context 'when no change has been made' do
+      let(:claim) { create(:claim) }
+      let(:params) do
+        {
+          'type' => { 'en' => 'Letters', 'value' => 'letters' },
+        }
+      end
+
+      it 'returns the expected path' do
+        expected_path = Rails.application.routes.url_helpers.nsm_claim_letters_and_calls_path(claim,
+                                                                                              anchor: subject.id)
+        expect(subject.backlink_path(claim)).to eq(expected_path)
+      end
+    end
+  end
 end

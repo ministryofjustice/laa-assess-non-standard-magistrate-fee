@@ -129,6 +129,29 @@ RSpec.describe Nsm::V1::Disbursement do
         expect(disbursement.disbursement_fields).to eq(expected_fields)
       end
     end
+
+    context 'when a change has been made' do
+      let(:claim) { create(:claim) }
+      let(:args) do
+        { 'adjustment_comment' => 'test' }
+      end
+
+      it 'returns the expected path' do
+        expected_path = Rails.application.routes.url_helpers.adjusted_nsm_claim_disbursements_path(claim,
+                                                                                                   anchor: disbursement.id)
+        expect(disbursement.backlink_path(claim)).to eq(expected_path)
+      end
+    end
+
+    context 'when no change has been made' do
+      let(:claim) { create(:claim) }
+
+      it 'returns the expected path' do
+        expected_path = Rails.application.routes.url_helpers.nsm_claim_disbursements_path(claim,
+                                                                                          anchor: disbursement.id)
+        expect(disbursement.backlink_path(claim)).to eq(expected_path)
+      end
+    end
   end
 
   describe 'table fields' do
