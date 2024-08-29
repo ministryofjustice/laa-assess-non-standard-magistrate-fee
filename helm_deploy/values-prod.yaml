@@ -74,7 +74,7 @@ redis:
 
 metabase:
   priorAuthorityDashboardIds: '3,2'
-  nsmDashboardIds: ''
+  nsmDashboardIds: '4'
   siteUrl: 'https://crime-forms-metabase.service.justice.gov.uk'
 
 customErrorService:
