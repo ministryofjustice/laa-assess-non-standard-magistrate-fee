@@ -121,15 +121,14 @@ module Nsm
       end
 
       def provider_fields
-        rows = build_basic_rows
-        if vat_registered?
-          rows['.vat'] = NumberTo.percentage(vat_rate)
-          rows['.total_claimed_inc_vate'] = NumberTo.pounds(provider_requested_amount_inc_vat)
-        else
-          rows['.total_claimed'] = NumberTo.pounds(provider_requested_amount)
-        end
-
-        rows
+        {
+          '.work_type' => original_work_type.translated,
+          '.date' => format_in_zone(completed_on),
+          '.fee_earner' => fee_earner.to_s,
+          '.time_spent' => format_period(original_time_spent),
+          '.uplift_claimed' => "#{original_uplift.to_i}%",
+          '.total_claimed' => NumberTo.pounds(provider_requested_amount),
+        }
       end
 
       def changed?
@@ -145,16 +144,6 @@ module Nsm
       end
 
       private
-
-      def build_basic_rows
-        {
-          '.work_type' => original_work_type.translated,
-          '.date' => format_in_zone(completed_on),
-          '.fee_earner' => fee_earner.to_s,
-          '.time_spent' => format_period(original_time_spent),
-          '.uplift_claimed' => "#{original_uplift.to_i}%",
-        }
-      end
 
       def calculate_cost(original: false)
         scoped_uplift, scoped_time_spent, scoped_pricing = if original

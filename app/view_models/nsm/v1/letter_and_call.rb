@@ -106,20 +106,12 @@ module Nsm
       end
 
       def provider_fields
-        rows = {
+        {
           '.number' => original_count.to_s,
           '.rate' => NumberTo.pounds(pricing),
           '.uplift_requested' => "#{original_uplift.to_i}%",
+          '.total_claimed' =>  NumberTo.pounds(provider_requested_amount)
         }
-
-        if vat_registered?
-          rows['.vat'] = NumberTo.percentage(vat_rate)
-          rows['.total_claimed_inc_vate'] = NumberTo.pounds(provider_requested_amount_inc_vat)
-        else
-          rows['.total_claimed'] = NumberTo.pounds(provider_requested_amount)
-        end
-
-        rows
       end
 
       def uplift?

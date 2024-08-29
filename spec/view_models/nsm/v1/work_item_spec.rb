@@ -293,15 +293,14 @@ RSpec.describe Nsm::V1::WorkItem do
     context 'when vat registered' do
       let(:vat_registered) { 'yes' }
 
-      it 'calculates the correct provider requested amount' do
+      it 'only shows vat-exclusive amount' do
         expect(subject.provider_fields).to eq(
           '.work_type' => 'Waiting',
           '.date' => '14 December 2022',
           '.time_spent' => '2 hours 51 minutes',
           '.fee_earner' => 'JGB',
           '.uplift_claimed' => '20%',
-          '.vat' => '20%',
-          '.total_claimed_inc_vate' => '£98.50',
+          '.total_claimed' => '£82.08',
         )
       end
     end

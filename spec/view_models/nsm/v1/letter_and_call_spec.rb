@@ -300,13 +300,12 @@ RSpec.describe Nsm::V1::LetterAndCall do
     context 'when vat registered' do
       let(:vat_registered) { 'yes' }
 
-      it 'calculates the correct provider requested amount' do
+      it 'only shows vat-exclusive amount' do
         expect(subject.provider_fields).to eq(
           '.number' => '12',
           '.rate' => '£3.56',
           '.uplift_requested' => '20%',
-          '.vat' => '20%',
-          '.total_claimed_inc_vate' => '£61.52',
+          '.total_claimed' => '£51.26',
         )
       end
     end

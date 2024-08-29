@@ -75,8 +75,6 @@ en:
         fee_earner: Fee earner initials
         uplift_claimed: Uplift claimed
         total_claimed: Net cost claimed
-        vat: VAT
-        total_claimed_inc_vate: Cost claimed (including VAT)
         laa_adjustments: LAA adjustments
         uplift_allowed: Uplift allowed
         work_type: Work type
