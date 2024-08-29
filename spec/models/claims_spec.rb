@@ -3,19 +3,35 @@ require 'rails_helper'
 RSpec.describe Claim do
   let(:claim) { create(:claim) }
 
-  describe '#unassigned' do
+  describe '#auto_assignable' do
     let(:user) { create(:caseworker) }
+
+    it 'assigns the claim to the user' do
+      expect(described_class.auto_assignable(user)).to eq([claim])
+    end
 
     it 'does not include claims which have already been assigned' do
       claim.assignments.create(user: create(:caseworker))
 
-      expect(described_class.unassigned(user)).to eq([])
+      expect(described_class.auto_assignable(user)).to eq([])
     end
 
     it 'does not include claims the user has been unassigned from' do
       Event::Unassignment.build(submission: claim, user: user, current_user: user, comment: 'test')
 
-      expect(described_class.unassigned(user)).to eq([])
+      expect(described_class.auto_assignable(user)).to eq([])
+    end
+
+    it 'does not include high risk claims' do
+      claim.update!(risk: 'high')
+
+      expect(described_class.auto_assignable(user)).to eq([])
+    end
+
+    it 'does not include sent back claims' do
+      claim.sent_back!
+
+      expect(described_class.auto_assignable(user)).to eq([])
     end
   end
 

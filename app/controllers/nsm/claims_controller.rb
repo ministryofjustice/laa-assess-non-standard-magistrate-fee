@@ -23,7 +23,7 @@ module Nsm
     end
 
     def create
-      claim = Claim.unassigned(current_user).order(created_at: :asc).first
+      claim = Claim.auto_assignable(current_user).order(created_at: :asc).first
 
       if claim
         Claim.transaction do
