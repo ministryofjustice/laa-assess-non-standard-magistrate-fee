@@ -54,7 +54,6 @@
             'unit-price': item.pricing,
             'uplift-amount': item.uplift,
             page: item.type.value,
-            'vat-multiplier': item.vat_registered? ? (1.0 + item.vat_rate) : 1.0,
           }
         )
       %>
@@ -71,7 +70,7 @@
 
           <%= table.with_body do |body| %>
             <%= body.with_row do |row| %>
-              <%= row.with_cell(text: NumberTo.pounds(item.provider_requested_amount_inc_vat),html_attributes: { id: 'letters_calls_provider_requested_amount' }) %>
+              <%= row.with_cell(text: NumberTo.pounds(item.provider_requested_amount),html_attributes: { id: 'letters_calls_provider_requested_amount' }) %>
               <%= row.with_cell(text: '--',html_attributes: { id: 'letters_calls_caseworker_allowed_amount' }) %>
               <%= row.with_cell(text: "#{item.uplift ? item.uplift : '0' }%",html_attributes: { id: 'letters_calls_uplift_allowed_amount' }) %>
             <% end %>

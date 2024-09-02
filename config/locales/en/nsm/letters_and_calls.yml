@@ -34,8 +34,6 @@ en:
         rate: Item rate
         uplift_requested: "Uplift requested"
         total_claimed: Total claimed
-        vat: VAT
-        total_claimed_inc_vate: Claim cost (including vat)
         laa_adjustments: LAA adjustments
         calculate_button_text: Calculate my changes
         claim_cost_table:
@@ -55,8 +53,6 @@ en:
         rate: Item rate
         uplift_requested: "Uplift requested"
         total_claimed: Total claimed
-        vat: VAT
-        total_claimed_inc_vate: Claim cost (including VAT)
         laa_adjustments: LAA adjustments
         uplift_allowed: Uplift allowed
         number_allowed: "Number of %{type}"

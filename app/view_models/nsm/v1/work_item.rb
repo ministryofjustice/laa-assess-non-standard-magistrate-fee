@@ -14,8 +14,6 @@ module Nsm
       adjustable_attribute :pricing, :decimal
       adjustable_attribute :uplift, :integer
       attribute :fee_earner, :string
-      attribute :vat_rate, :decimal
-      attribute :firm_office
       attribute :adjustment_comment
 
       class << self
@@ -44,28 +42,12 @@ module Nsm
         end
       end
 
-      def vat_registered?
-        firm_office['vat_registered'] == 'yes'
-      end
-
       def provider_requested_amount
         @provider_requested_amount ||= calculate_cost(original: true)
       end
 
-      def provider_requested_amount_inc_vat
-        return provider_requested_amount unless vat_registered?
-
-        provider_requested_amount * (1 + vat_rate)
-      end
-
       def caseworker_amount
         @caseworker_amount ||= calculate_cost
-      end
-
-      def caseworker_amount_inc_vat
-        return caseworker_amount unless vat_registered?
-
-        caseworker_amount * (1 + vat_rate)
       end
 
       def uplift?
@@ -121,15 +103,14 @@ module Nsm
       end
 
       def provider_fields
-        rows = build_basic_rows
-        if vat_registered?
-          rows['.vat'] = NumberTo.percentage(vat_rate)
-          rows['.total_claimed_inc_vate'] = NumberTo.pounds(provider_requested_amount_inc_vat)
-        else
-          rows['.total_claimed'] = NumberTo.pounds(provider_requested_amount)
-        end
-
-        rows
+        {
+          '.work_type' => original_work_type.translated,
+          '.date' => format_in_zone(completed_on),
+          '.fee_earner' => fee_earner.to_s,
+          '.time_spent' => format_period(original_time_spent),
+          '.uplift_claimed' => "#{original_uplift.to_i}%",
+          '.total_claimed' => NumberTo.pounds(provider_requested_amount),
+        }
       end
 
       def changed?
@@ -145,16 +126,6 @@ module Nsm
       end
 
       private
-
-      def build_basic_rows
-        {
-          '.work_type' => original_work_type.translated,
-          '.date' => format_in_zone(completed_on),
-          '.fee_earner' => fee_earner.to_s,
-          '.time_spent' => format_period(original_time_spent),
-          '.uplift_claimed' => "#{original_uplift.to_i}%",
-        }
-      end
 
       def calculate_cost(original: false)
         scoped_uplift, scoped_time_spent, scoped_pricing = if original
