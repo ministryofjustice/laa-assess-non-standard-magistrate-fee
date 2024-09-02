@@ -78,4 +78,9 @@ RSpec.configure do |config|
   config.after(:each, type: :system) do
     ActiveJob::Base.queue_adapter.enqueued_jobs.clear
   end
+
+  # swallow sdtdout to keep output from rspec clean
+  config.before(:each, type: :task) do
+    allow($stdout).to receive(:write)
+  end
 end
