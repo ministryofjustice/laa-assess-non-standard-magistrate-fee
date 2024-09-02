@@ -26,7 +26,6 @@
     </h1>
   </div>
   <div class="govuk-grid-column-two-thirds">
-    <h2 class="govuk-heading-l"><%= t('.provider_submission') %></h2>
     <div id='disbursement-provider-submission-summary-table'>
       <%=
       rows = item.disbursement_fields.map do |key, value|
@@ -35,19 +34,21 @@
           value,
         ]
       end
-      govuk_table(head: '', first_cell_is_header: true, rows:)
+      govuk_table(head: '', first_cell_is_header: true, rows:) do |table|
+        table.with_caption(text: t('.provider_submission'), size: 'l')
+      end
       %>
     </div>
 
     <% if item.any_adjustments? %>
-      <h2 class="govuk-heading-l"><%= t('.laa_adjustments') %></h2>
-
       <%=
       rows = [
         [{ text: t('.refuse'), width: 'govuk-!-width-one-half' }, t(".refuse_status.#{item.total_cost_without_vat.zero?}")],
         [t('.explanation'), item.adjustment_comment]
       ]
-      govuk_table(head: '', first_cell_is_header: true, rows:)
+      govuk_table(head: '', first_cell_is_header: true, rows:) do |table|
+        table.with_caption(text: t('.laa_adjustments') , size: 'l')
+      end
       %>
     <% end %>
   </div>

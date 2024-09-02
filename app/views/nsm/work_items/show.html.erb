@@ -26,30 +26,29 @@
     </h1>
   </div>
   <div class="govuk-grid-column-two-thirds">
-    <h2 class="govuk-heading-l"><%= t('.provider_submission') %></h2>
-
     <%=
       rows = item.provider_fields.map do |key, value|
         [{ text: t(key), width: 'govuk-!-width-one-half' }, value]
       end
-      govuk_table(head: '', rows:) do |tab|
-        tab.with_caption(text: t('.claimed_costs_summary'), classes: 'govuk-visually-hidden')
+      govuk_table(head: '', rows:, first_cell_is_header: true) do |table|
+        table.with_caption(text:  t('.provider_submission'), size: 'l')
       end
     %>
 
     <% if item.any_adjustments? %>
-      <h2 class="govuk-heading-l"><%= t('.laa_adjustments') %></h2>
-
       <%=
         rows = [
           [{ text: t('.work_type'), width: 'govuk-!-width-one-half' }, item.work_type.to_s],
           [t('.time_spent_changed'), format_period(item.time_spent)],
-          [{ text: t('.uplift_allowed'), width: 'govuk-!-width-one-half' }, "#{item.uplift}%"],
+          [t('.item_rate_allowed'), NumberTo.pounds(item.pricing)],
+          [{ text: t('.uplift_allowed'), width: 'govuk-!-width-one-half' }, "#{item.uplift.to_i}%"],
           [t('.caseworker_allowed'), NumberTo.pounds(item.caseworker_amount)],
           [t('.explanation'), item.adjustment_comment],
         ]
 
-        govuk_table(head: '', rows:)
+        govuk_table(head: '', rows:, first_cell_is_header: true) do |table|
+          table.with_caption(text:  t('.laa_adjustments'), size: 'l')
+        end
       %>
     <% end %>
   </div>

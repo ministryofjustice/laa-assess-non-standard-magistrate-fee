@@ -86,8 +86,8 @@ RSpec.describe 'Disbursements' do
         'Disbursement typeApples' \
         'Details of disbursementDetails' \
         'Prior authority grantedYes' \
-        'VAT20%' \
-        'Total£100.00'
+        'VAT claimed20%' \
+        'Total cost claimed£100.00'
       )
     end
   end

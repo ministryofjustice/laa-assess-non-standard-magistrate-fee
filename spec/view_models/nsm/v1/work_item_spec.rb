@@ -211,6 +211,7 @@ RSpec.describe Nsm::V1::WorkItem do
         '.work_type' => 'Waiting',
         '.date' => '14 December 2022',
         '.time_spent' => '2 hours 51 minutes',
+        '.item_rate' => '£24.00',
         '.fee_earner' => 'JGB',
         '.uplift_claimed' => '20%',
         '.total_claimed' => '£82.08',

@@ -55,7 +55,8 @@ en:
         time_spent: Time claimed
         fee_earner: Fee earner
         uplift_claimed: Uplift claimed
-        total_claimed: Cost claimed
+        item_rate: Item rate
+        total_claimed: Net cost claimed
         vat: VAT
         laa_adjustments: LAA adjustments
         calculate_button_text: Calculate my changes
@@ -69,7 +70,6 @@ en:
         page_title: "Your claims"
         heading: 'Work item'
         provider_submission: Provider submission
-        claimed_costs_summary: Claimed cost summary
         date: Date
         time_spent: Time claimed
         fee_earner: Fee earner initials
@@ -77,7 +77,9 @@ en:
         total_claimed: Net cost claimed
         laa_adjustments: LAA adjustments
         uplift_allowed: Uplift allowed
-        work_type: Work type
+        work_type: Work item
+        item_rate: Item rate
+        item_rate_allowed: Item rate allowed
         time_spent_changed: Time allowed
         caseworker_allowed: Net cost allowed
         explanation: Reason for adjustment
