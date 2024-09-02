@@ -50,7 +50,7 @@ group :development, :test do
   gem 'pry'
   gem 'rspec-expectations'
   gem 'rspec_junit_formatter', require: false
-  gem 'rspec-rails'
+  gem 'rspec-rails', '>= 6.1.5'
 end
 
 group :test do
