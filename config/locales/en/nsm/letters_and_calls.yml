@@ -14,7 +14,6 @@ en:
         total_cost: "Cost"
         total: "Total"
         remove_uplift_all: "Remove uplifts for all items"
-        no_data: You do not have any letters or calls
         table_caption: Claimed letters and calls
       adjusted:
         page_title: "Your claims"
