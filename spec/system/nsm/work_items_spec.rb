@@ -101,6 +101,7 @@ RSpec.describe 'Work items' do
         'Date12 December 2022' \
         'Fee earner initialsaaa' \
         'Time claimed2 hours 41 minutes' \
+        'Item rate£24.00' \
         'Uplift claimed95%' \
         'Net cost claimed£125.58'
       )

@@ -32,8 +32,8 @@ en:
         provider_submission: "Provider submission"
         number: "Number of %{type}"
         rate: Item rate
-        uplift_requested: "Uplift requested"
-        total_claimed: Total claimed
+        uplift_requested: "Uplift claimed"
+        total_claimed: Net cost claimed
         laa_adjustments: LAA adjustments
         calculate_button_text: Calculate my changes
         claim_cost_table:
@@ -51,8 +51,8 @@ en:
         provider_submission: "Provider submission"
         number: "Number of %{type}"
         rate: Item rate
-        uplift_requested: "Uplift requested"
-        total_claimed: Total claimed
+        uplift_requested: "Uplift claimed"
+        total_claimed: Net cost claimed
         laa_adjustments: LAA adjustments
         uplift_allowed: Uplift allowed
         number_allowed: "Number of %{type}"
