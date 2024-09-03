@@ -9,15 +9,15 @@
         <%= t('.adjusted_costs') %>
       </h2>
 
-      <ul class="govuk-tabs__list">
+      <ul class="govuk-tabs__list" id="tabs">
         <li class="govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if scope == :work_items %>">
-          <%= link_to t('.work_items'), adjusted_nsm_claim_work_items_path(claim) %>
+          <%= link_to t('.work_items'), adjusted_nsm_claim_work_items_path(claim, anchor: :tabs) %>
         </li>
         <li class="govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if scope == :letters_and_calls %>">
-          <%= link_to t('.letters_and_calls'), adjusted_nsm_claim_letters_and_calls_path(claim) %>
+          <%= link_to t('.letters_and_calls'), adjusted_nsm_claim_letters_and_calls_path(claim, anchor: :tabs) %>
         </li>
         <li class="govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if scope == :disbursements %>">
-          <%= link_to t('.disbursements'), adjusted_nsm_claim_disbursements_path(claim) %>
+          <%= link_to t('.disbursements'), adjusted_nsm_claim_disbursements_path(claim, anchor: :tabs) %>
         </li>
       </ul>
 
