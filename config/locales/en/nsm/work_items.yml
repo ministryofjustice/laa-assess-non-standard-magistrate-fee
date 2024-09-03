@@ -49,7 +49,6 @@ en:
         page_title: "Your claims"
         heading: "Adjust a work item"
         provider_submission: Provider submission
-        claimed_costs_summary: Claimed cost summary
         work_type: Work item
         date: Date
         time_spent: Time claimed
