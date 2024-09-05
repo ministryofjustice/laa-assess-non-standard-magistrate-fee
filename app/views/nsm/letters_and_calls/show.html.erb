@@ -26,23 +26,19 @@
     </h1>
   </div>
   <div class="govuk-grid-column-two-thirds">
-    <h2 class="govuk-heading-l"><%= t('.provider_submission') %></h2>
-
     <%=
       rows = [
         [{ text: t('.number', type: item.type_name), width: 'govuk-!-width-one-half' }, item.original_count.to_s],
-        [t('.rate'), item.pricing.to_s],
+        [t('.rate'), NumberTo.pounds(item.pricing)],
         [t('.uplift_requested'), "#{item.original_uplift.to_i}%"],
         [t('.total_claimed'), NumberTo.pounds(item.provider_requested_amount)]
       ]
-      govuk_table(head: '', first_cell_is_header: true, rows:) do |tab|
-        tab.with_caption(text: item.type_name.titlecase, size: 'm')
+      govuk_table(head: '', first_cell_is_header: true, rows:) do |table|
+        table.with_caption(text: t('.provider_submission'), size: 'l')
       end
     %>
 
     <% if item.any_adjustments? %>
-      <h2 class="govuk-heading-l"><%= t('.laa_adjustments') %></h2>
-
       <%=
         rows = [
           [{ text: t('.uplift_allowed'), width: 'govuk-!-width-one-half' }, "#{item.uplift}%"],
@@ -50,7 +46,9 @@
           [t('.casewoker_allowed'), NumberTo.pounds(item.caseworker_amount)],
           [t('.explanation'), item.adjustment_comment],
         ]
-        govuk_table(head: '', first_cell_is_header: true, rows:)
+        govuk_table(head: '', first_cell_is_header: true, rows:) do |table|
+          table.with_caption(text: t('.laa_adjustments'), size: 'l' )
+        end
       %>
     <% end %>
     <%= link_to t('shared.cancel'), :back, class: 'govuk-link', data: { turbo: 'false' } %>

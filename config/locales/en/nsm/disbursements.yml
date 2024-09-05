@@ -46,8 +46,8 @@ en:
           cost: Disbursement cost
           details: Details of disbursement
           prior_authority: Prior authority granted
-          vat: VAT
-          total: Total
+          vat: VAT claimed
+          total: Total cost claimed
           miles: Number of miles
         miles: Miles
         mileage: Change number of miles
@@ -79,9 +79,9 @@ en:
           cost: Disbursement cost
           details: Details of disbursement
           prior_authority: Prior authority granted
-          vat: VAT
-          total: Total
-          miles: Miles
+          vat: VAT claimed
+          total: Total cost claimed
+          miles: Number of miles
         refuse: Refuse disbursement
         explanation: Adjustment reason
         laa_adjustments: LAA Adjustments

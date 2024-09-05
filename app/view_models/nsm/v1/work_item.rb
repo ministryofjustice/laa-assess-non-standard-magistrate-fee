@@ -108,6 +108,7 @@ module Nsm
           '.date' => format_in_zone(completed_on),
           '.fee_earner' => fee_earner.to_s,
           '.time_spent' => format_period(original_time_spent),
+          '.item_rate' => NumberTo.pounds(original_pricing),
           '.uplift_claimed' => "#{original_uplift.to_i}%",
           '.total_claimed' => NumberTo.pounds(provider_requested_amount),
         }

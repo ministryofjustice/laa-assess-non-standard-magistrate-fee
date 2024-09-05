@@ -124,9 +124,9 @@ RSpec.describe 'Letters and Calls' do
 
       expect(page).to have_content(
         'Number of letters12' \
-        'Item rate3.56' \
-        'Uplift requested95%' \
-        'Total claimed£83.30'
+        'Item rate£3.56' \
+        'Uplift claimed95%' \
+        'Net cost claimed£83.30'
       )
     end
   end

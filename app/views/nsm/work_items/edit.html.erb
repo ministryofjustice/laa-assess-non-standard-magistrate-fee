@@ -27,13 +27,12 @@
     </h1>
   </div>
   <div class="govuk-grid-column-two-thirds">
-    <h2 class="govuk-heading-l"><%= t('.provider_submission') %></h2>
     <%=
       rows = item.provider_fields.map do |key, value|
         [{ text: t(key), width: 'govuk-!-width-one-half' }, value]
       end
       govuk_table(head: '', first_cell_is_header: true, rows:) do |table|
-        table.with_caption(text: t('.claimed_costs_summary'), classes: 'govuk-visually-hidden')
+        table.with_caption(text: t('.provider_submission'), size: 'l')
       end
     %>
 
