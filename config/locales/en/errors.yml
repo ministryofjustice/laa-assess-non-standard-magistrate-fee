@@ -77,6 +77,10 @@ en:
   activemodel:
     errors:
       models:
+        nsm/make_decision_form:
+          attributes:
+            state:
+              invalid: You cannot grant an application after making adjustments that reduce any of the provider costs. You can either keep those adjustments and part-grant it, or delete those adjustments to accept it
         prior_authority/additional_cost_form:
           attributes:
             base:

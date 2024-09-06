@@ -71,6 +71,43 @@ class Claim < Submission
     core_cost_summary.show_allowed?
   end
 
+  def any_cost_changes?
+    core_cost_summary.any_changed?
+  end
+
+  def any_cost_reductions?
+    core_cost_summary.any_reduced?
+  end
+
+  def any_cost_increases?
+    core_cost_summary.any_increased?
+  end
+
+  def assessment_direction
+    # OPTIMIZE?: change to return array of all items with up, down, none
+    #
+    return :none unless any_cost_changes?
+
+    if any_cost_reductions?
+      if any_cost_increases?
+        :mixed
+      else
+        :down
+      end
+    elsif any_cost_increases?
+      :up
+    end
+
+    # return :down if !submission.any_cost_increases? && submission.any_cost_reductions?
+    # return :up if submission.any_cost_increases? && !submission.any_cost_reductions?
+
+    # :mixed if submission.any_cost_increases? && submission.any_cost_reductions?
+  end
+
+  def latest_send_back_event
+    events.where(event_type: 'Nsm::Event::SendBack').order(created_at: :desc).first
+  end
+
   private
 
   def granted_and_allowed_less_than_claim
