@@ -134,6 +134,14 @@ module Nsm
         original_total_cost_without_vat != total_cost_without_vat
       end
 
+      def reduced?
+        provider_requested_total_cost > caseworker_total_cost
+      end
+
+      def increased?
+        provider_requested_total_cost < caseworker_total_cost
+      end
+
       def backlink_path(claim)
         if any_adjustments?
           Rails.application.routes.url_helpers.adjusted_nsm_claim_disbursements_path(claim, anchor: id)

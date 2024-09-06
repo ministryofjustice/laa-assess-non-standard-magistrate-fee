@@ -116,6 +116,14 @@ module Nsm
         provider_requested_amount != caseworker_amount
       end
 
+      def reduced?
+        provider_requested_amount > caseworker_amount
+      end
+
+      def increased?
+        provider_requested_amount < caseworker_amount
+      end
+
       def backlink_path(claim)
         if any_adjustments?
           Rails.application.routes.url_helpers.adjusted_nsm_claim_letters_and_calls_path(claim, anchor: id)
