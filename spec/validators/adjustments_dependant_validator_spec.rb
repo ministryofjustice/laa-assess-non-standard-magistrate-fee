@@ -101,4 +101,41 @@ RSpec.describe AdjustmentsDependantValidator do
       end
     end
   end
+
+  context 'when state is rejected' do
+    let(:claim) { create(:claim) }
+    let(:state) { 'rejected' }
+
+    context 'with a :none assessment direction' do
+      let(:direction) { :none }
+
+      it 'form object is valid' do
+        expect(instance).to be_valid
+      end
+    end
+
+    context 'with an :up assessment direction' do
+      let(:direction) { :up }
+
+      it 'form object is valid' do
+        expect(instance).to be_valid
+      end
+    end
+
+    context 'with a :down assessment direction' do
+      let(:direction) { :down }
+
+      it 'form object is valid' do
+        expect(instance).to be_valid
+      end
+    end
+
+    context 'with a :mixed assessment direction' do
+      let(:direction) { :mixed }
+
+      it 'form object is valid' do
+        expect(instance).to be_valid
+      end
+    end
+  end
 end

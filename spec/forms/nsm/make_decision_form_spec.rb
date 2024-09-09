@@ -176,8 +176,8 @@ RSpec.describe Nsm::MakeDecisionForm do
       end
     end
 
-    context 'when state is rejected' do
-      context 'when reject_comment is blank' do
+    context 'when state is rejected with no adjustments' do
+      context 'with blank reject_comment' do
         let(:params) { { claim: claim, state: 'rejected', reject_comment: nil } }
 
         it 'is invalid' do
@@ -186,7 +186,17 @@ RSpec.describe Nsm::MakeDecisionForm do
         end
       end
 
-      context 'when reject_comment is set' do
+      context 'with reject_comment set' do
+        let(:params) { { claim: claim, state: 'rejected', reject_comment: 'reject comment' } }
+
+        it { expect(form).to be_valid }
+      end
+    end
+
+    context 'when state is rejected with any adjustment' do
+      let(:claim) { create(:claim, :with_reduced_work_item) }
+
+      context 'with reject_comment set' do
         let(:params) { { claim: claim, state: 'rejected', reject_comment: 'reject comment' } }
 
         it { expect(form).to be_valid }
