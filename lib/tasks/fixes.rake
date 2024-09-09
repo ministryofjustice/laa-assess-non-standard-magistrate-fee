@@ -16,9 +16,14 @@ namespace :fixes do
 
   desc "Set LAA reference to correct values"
   task fix_mismatched_references: :environment do
+    # retrieved by running app store task fixes:mismatched_references:find 9-09-2024 14:04
     records = [
-      {submission_id: '', laa_reference: ''},
-      {submission_id: '', laa_reference: ''}
+      {submission_id: '814f8d54-51be-4d6d-ae0c-ed46b3b1c2b0', laa_reference: 'LAA-0SuhmF'},
+      {submission_id: '109819f2-0dda-401b-9d5e-e932cbb35092', laa_reference: 'LAA-OxonyX'},
+      {submission_id: '329dc047-0a6e-49d3-a96c-11e1512ac0e5', laa_reference: 'LAA-BdsVzu'},
+      {submission_id: 'f794ffa1-454e-4e69-be3c-e68a925da962', laa_reference: 'LAA-UHvkT8'},
+      {submission_id: '0f704d33-bdfe-43e5-b6a0-953e79b67a1b', laa_reference: 'LAA-36nCj1'},
+      {submission_id: '82bb5f76-7c40-4699-b574-4fa548ccdf16', laa_reference: 'LAA-Hu1r19'}
     ]
 
     records.each do |record|
