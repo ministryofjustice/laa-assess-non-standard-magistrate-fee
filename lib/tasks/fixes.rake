@@ -24,17 +24,21 @@ namespace :fixes do
     records.each do |record|
       id = record['submission_id']
       new_reference = record['laa_reference']
-      submission = Submission.find(id)
-      if submission
-        application_to_fix = submission.application
-        old_reference = application_to_fix['laa_reference']
-        application_to_fix['laa_reference'] = new_reference
-        submission.application = application_to_fix
-        submission.save!(touch: false)
-        puts "Submission: #{id} LAA reference updated from #{old_reference} to #{new_reference}"
-      else
-        puts "Submission: #{id} could not be found"
-      end
+      fix_laa_reference(id, new_reference)
+    end
+  end
+
+  def fix_laa_reference(id, new_reference)
+    submission = Submission.find(id)
+    if submission
+      application_to_fix = submission.application
+      old_reference = application_to_fix['laa_reference']
+      application_to_fix['laa_reference'] = new_reference
+      submission.application = application_to_fix
+      submission.save!(touch: false)
+      puts "Submission: #{id} LAA reference updated from #{old_reference} to #{new_reference}"
+    else
+      puts "Submission: #{id} could not be found"
     end
   end
 end
