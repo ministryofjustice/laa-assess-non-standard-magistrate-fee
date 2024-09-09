@@ -85,12 +85,10 @@ class Claim < Submission
 
   def adjustments_direction
     return :none unless any_cost_changes?
+    return :mixed if any_cost_increases? && any_cost_reductions?
+    return :down if any_cost_reductions?
 
-    if any_cost_reductions?
-      any_cost_increases? ? :mixed : :down
-    elsif any_cost_increases?
-      :up
-    end
+    :up
   end
 
   def latest_send_back_event

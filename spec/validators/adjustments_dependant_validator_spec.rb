@@ -20,18 +20,19 @@ RSpec.describe AdjustmentsDependantValidator do
     end
   end
 
+  let(:claim) { create(:claim) }
+
   before do
     allow(claim).to receive(:adjustments_direction).and_return(direction)
   end
 
   context 'when state is granted' do
-    let(:claim) { create(:claim) }
     let(:state) { 'granted' }
 
     context 'with a :none assessment direction' do
       let(:direction) { :none }
 
-      it 'form object is valid' do
+      it 'object is valid' do
         expect(instance).to be_valid
       end
     end
@@ -39,7 +40,7 @@ RSpec.describe AdjustmentsDependantValidator do
     context 'with an :up assessment direction' do
       let(:direction) { :up }
 
-      it 'form object is valid' do
+      it 'object is valid' do
         expect(instance).to be_valid
       end
     end
@@ -64,13 +65,12 @@ RSpec.describe AdjustmentsDependantValidator do
   end
 
   context 'when state is part grant' do
-    let(:claim) { create(:claim) }
     let(:state) { 'part_grant' }
 
     context 'with a :mixed assessment direction' do
       let(:direction) { :mixed }
 
-      it 'form object is valid' do
+      it 'object is valid' do
         expect(instance).to be_valid
       end
     end
@@ -78,7 +78,7 @@ RSpec.describe AdjustmentsDependantValidator do
     context 'with a :down assessment direction' do
       let(:direction) { :down }
 
-      it 'form object is valid' do
+      it 'object is valid' do
         expect(instance).to be_valid
       end
     end
@@ -103,13 +103,12 @@ RSpec.describe AdjustmentsDependantValidator do
   end
 
   context 'when state is rejected' do
-    let(:claim) { create(:claim) }
     let(:state) { 'rejected' }
 
     context 'with a :none assessment direction' do
       let(:direction) { :none }
 
-      it 'form object is valid' do
+      it 'object is valid' do
         expect(instance).to be_valid
       end
     end
@@ -117,7 +116,7 @@ RSpec.describe AdjustmentsDependantValidator do
     context 'with an :up assessment direction' do
       let(:direction) { :up }
 
-      it 'form object is valid' do
+      it 'object is valid' do
         expect(instance).to be_valid
       end
     end
@@ -125,7 +124,7 @@ RSpec.describe AdjustmentsDependantValidator do
     context 'with a :down assessment direction' do
       let(:direction) { :down }
 
-      it 'form object is valid' do
+      it 'object is valid' do
         expect(instance).to be_valid
       end
     end
@@ -133,7 +132,7 @@ RSpec.describe AdjustmentsDependantValidator do
     context 'with a :mixed assessment direction' do
       let(:direction) { :mixed }
 
-      it 'form object is valid' do
+      it 'object is valid' do
         expect(instance).to be_valid
       end
     end

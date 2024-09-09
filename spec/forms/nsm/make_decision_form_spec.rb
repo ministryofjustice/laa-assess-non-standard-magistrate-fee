@@ -7,7 +7,7 @@ RSpec.describe Nsm::MakeDecisionForm do
 
   describe '#validate' do
     context 'when state is not set' do
-      let(:params) { {} }
+      let(:params) { { claim: } }
 
       it 'is invalid' do
         expect(form).to be_invalid
@@ -256,7 +256,7 @@ RSpec.describe Nsm::MakeDecisionForm do
     end
 
     context 'when not valid' do
-      let(:params) { {} }
+      let(:params) { { claim: } }
 
       it { expect(form.save).to be_falsey }
     end
