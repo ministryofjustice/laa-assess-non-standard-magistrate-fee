@@ -335,6 +335,15 @@ FactoryBot.define do
       end
     end
 
+    trait :with_reduced_work_item do
+      after(:build) do |claim, _context|
+        claim.data['work_items'].first['time_spent_original'] = claim.data['work_items'].first['time_spent']
+        claim.data['work_items'].first['time_spent'] -= 1
+        claim.data['work_items'].first['adjustment_comment'] = 'reducing this work item'
+        claim.save!
+      end
+    end
+
     trait :decrease_adjustment do
       disbursements do
         [

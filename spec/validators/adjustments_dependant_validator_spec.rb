@@ -49,7 +49,7 @@ RSpec.describe AdjustmentsDependantValidator do
 
       it 'adds :invalid error to attributes' do
         expect(instance).to be_invalid
-        expect(instance.errors.of_kind?(:state, :invalid)).to be(true)
+        expect(instance.errors.of_kind?(:state, :'invalid.granted_with_reductions')).to be(true)
       end
     end
 
@@ -58,7 +58,46 @@ RSpec.describe AdjustmentsDependantValidator do
 
       it 'adds :invalid error to attributes' do
         expect(instance).to be_invalid
-        expect(instance.errors.of_kind?(:state, :invalid)).to be(true)
+        expect(instance.errors.of_kind?(:state, :'invalid.granted_with_reductions')).to be(true)
+      end
+    end
+  end
+
+  context 'when state is part grant' do
+    let(:claim) { create(:claim) }
+    let(:state) { 'part_grant' }
+
+    context 'with a :mixed assessment direction' do
+      let(:direction) { :mixed }
+
+      it 'form object is valid' do
+        expect(instance).to be_valid
+      end
+    end
+
+    context 'with a :down assessment direction' do
+      let(:direction) { :down }
+
+      it 'form object is valid' do
+        expect(instance).to be_valid
+      end
+    end
+
+    context 'with a :none assessment direction' do
+      let(:direction) { :none }
+
+      it 'adds :invalid error to attributes' do
+        expect(instance).to be_invalid
+        expect(instance.errors.of_kind?(:state, :'invalid.part_granted_without_changes')).to be(true)
+      end
+    end
+
+    context 'with an :up assessment direction' do
+      let(:direction) { :up }
+
+      it 'adds :invalid error to attributes' do
+        expect(instance).to be_invalid
+        expect(instance.errors.of_kind?(:state, :'invalid.part_granted_with_increases')).to be(true)
       end
     end
   end

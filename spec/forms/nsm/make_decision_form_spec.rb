@@ -59,7 +59,6 @@ RSpec.describe Nsm::MakeDecisionForm do
 
         it 'form object is invalid' do
           expect(form).to be_invalid
-          expect(form.errors.of_kind?(:state, :invalid)).to be(true)
           expect(form.errors.messages[:state]).to include(expected_message)
         end
       end
@@ -89,7 +88,6 @@ RSpec.describe Nsm::MakeDecisionForm do
 
         it 'form object is invalid' do
           expect(form).to be_invalid
-          expect(form.errors.of_kind?(:state, :invalid)).to be(true)
           expect(form.errors.messages[:state]).to include(expected_message)
         end
       end
@@ -119,14 +117,15 @@ RSpec.describe Nsm::MakeDecisionForm do
 
         it 'form object is invalid' do
           expect(form).to be_invalid
-          expect(form.errors.of_kind?(:state, :invalid)).to be(true)
           expect(form.errors.messages[:state]).to include(expected_message)
         end
       end
     end
 
-    context 'when state is part_grant' do
-      context 'when partial_comment is blank' do
+    context 'when state is part_grant with downward adjustments' do
+      let(:claim) { create(:claim, :with_reduced_work_item) }
+
+      context 'with blank partial_comment' do
         let(:params) { { claim: claim, state: 'part_grant', partial_comment: nil } }
 
         it 'is invalid' do
@@ -135,10 +134,45 @@ RSpec.describe Nsm::MakeDecisionForm do
         end
       end
 
-      context 'when partial_comment is set' do
+      context 'with partial_comment set' do
         let(:params) { { claim: claim, state: 'part_grant', partial_comment: 'part grant comment' } }
 
         it { expect(form).to be_valid }
+      end
+    end
+
+    context 'when state is part_grant with only upward adjustments' do
+      let(:params) { { claim: claim, state: 'part_grant', partial_comment: 'part grant comment' } }
+
+      let(:expected_message) do
+        'You can only part-grant an application if you have made adjustments to provider costs where some or all of the ' \
+          'adjustments reduce the costs. If you have made adjustments that increase the claim, you should grant it'
+      end
+
+      before do
+        claim.data['work_items'].first['time_spent_original'] = claim.data['work_items'].first['time_spent']
+        claim.data['work_items'].first['time_spent'] += 60
+        claim.data['work_items'].first['adjustment_comment'] = 'increasing this work item'
+        claim.save!
+      end
+
+      it 'form object is invalid' do
+        expect(form).to be_invalid
+        expect(form.errors.messages[:state]).to include(expected_message)
+      end
+    end
+
+    context 'when state is part_grant with no adjustments' do
+      let(:params) { { claim: claim, state: 'part_grant', partial_comment: 'part grant comment' } }
+
+      let(:expected_message) do
+        'You can only part-grant an application if you have made adjustments to provider costs where some ' \
+          'or all of the adjustments reduce the costs'
+      end
+
+      it 'form object is invalid' do
+        expect(form).to be_invalid
+        expect(form.errors.messages[:state]).to include(expected_message)
       end
     end
 
@@ -162,7 +196,7 @@ RSpec.describe Nsm::MakeDecisionForm do
 
   describe '#save' do
     let(:user) { instance_double(User) }
-    let(:claim) { create(:claim) }
+    let(:claim) { create(:claim, :with_reduced_work_item) }
     let(:params) { { claim: claim, state: 'part_grant', partial_comment: 'part comment', current_user: user } }
 
     before do
@@ -173,13 +207,11 @@ RSpec.describe Nsm::MakeDecisionForm do
     it { expect(form.save).to be_truthy }
 
     it 'updates the state' do
-      form.save
-      expect(claim.reload).to have_attributes(state: 'part_grant')
+      expect { form.save }.to change { claim.reload.state }.from('submitted').to('part_grant')
     end
 
     it 'adds an assessment comment' do
-      form.save
-      expect(claim.reload.data).to include('assessment_comment' => 'part comment')
+      expect { form.save }.to change { claim.reload.data['assessment_comment'] }.from(nil).to('part comment')
     end
 
     it 'creates a Decision event' do
