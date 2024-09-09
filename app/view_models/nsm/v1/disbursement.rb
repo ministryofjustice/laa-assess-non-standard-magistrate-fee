@@ -49,10 +49,12 @@ module Nsm
       def provider_requested_total_cost
         original_total_cost_without_vat + original_vat_amount
       end
+      alias provider_requested_amount provider_requested_total_cost
 
       def caseworker_total_cost
         total_cost_without_vat + vat_amount
       end
+      alias caseworker_amount caseworker_total_cost
 
       def form_attributes
         attributes.slice('total_cost_without_vat', 'miles', 'apply_vat', 'vat_rate').merge(
@@ -132,14 +134,6 @@ module Nsm
 
       def changed?
         original_total_cost_without_vat != total_cost_without_vat
-      end
-
-      def reduced?
-        provider_requested_total_cost > caseworker_total_cost
-      end
-
-      def increased?
-        provider_requested_total_cost < caseworker_total_cost
       end
 
       def backlink_path(claim)
