@@ -36,10 +36,8 @@ namespace :fixes do
   def fix_laa_reference(id, new_reference)
     submission = Submission.find(id)
     if submission
-      application_to_fix = submission.application
-      old_reference = application_to_fix['laa_reference']
-      application_to_fix['laa_reference'] = new_reference
-      submission.application = application_to_fix
+      old_reference = submission.data['laa_reference']
+      submission.data['laa_reference'] = new_reference
       submission.save!(touch: false)
       puts "Submission: #{id} LAA reference updated from #{old_reference} to #{new_reference}"
     else
