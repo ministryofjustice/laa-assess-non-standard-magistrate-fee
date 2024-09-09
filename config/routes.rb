@@ -60,14 +60,17 @@ Rails.application.routes.draw do
       namespace :work_items do
         resource :uplift, only: [:edit, :update], path_names: { edit: '' }
       end
-      resources :work_items, only: [:index, :show, :edit, :update] do
+      resources :work_items, only: [:index, :show, :edit, :update, :destroy] do
         collection { get :adjusted }
+        member { get :confirm_deletion }
       end
-      resources :letters_and_calls, only: [:index, :show, :edit, :update], constraints: { id: /(letters|calls)/ } do
+      resources :letters_and_calls, only: [:index, :show, :edit, :update, :destroy], constraints: { id: /(letters|calls)/ } do
         collection { get :adjusted }
+        member { get :confirm_deletion }
       end
-      resources :disbursements, only: [:index, :show, :edit, :update] do
+      resources :disbursements, only: [:index, :show, :edit, :update, :destroy] do
         collection { get :adjusted }
+        member { get :confirm_deletion }
       end
       resource :supporting_evidences, only: [:show] do
         resources :downloads, only: :show

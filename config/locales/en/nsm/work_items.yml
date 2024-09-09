@@ -45,6 +45,8 @@ en:
         table_caption: Adjusted work items
         table_info_item: work item
         no_data: You do not have any adjusted work items
+        action: Action
+        delete: delete
       edit:
         page_title: "Your claims"
         heading: "Adjust a work item"
@@ -82,6 +84,8 @@ en:
         time_spent_changed: Time allowed
         caseworker_allowed: Net cost allowed
         explanation: Reason for adjustment
+      confirm_deletion:
+        work_item: work item
       uplifts:
         update:
           uplift_removed: All uplifts have been removed

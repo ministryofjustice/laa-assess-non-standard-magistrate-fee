@@ -1,0 +1,8 @@
+en:
+  nsm:
+    shared:
+      confirm_delete_adjustment:
+        page_title: Are you sure you want to delete this adjustment?
+        warning_html: This will delete adjustments made for %{item_name} and cannot be undone.
+        yes_delete: Yes, delete it
+        no_delete: No, do not delete it
