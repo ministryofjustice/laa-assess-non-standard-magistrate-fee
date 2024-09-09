@@ -21,7 +21,7 @@ RSpec.describe AdjustmentsDependantValidator do
   end
 
   before do
-    allow(claim).to receive(:assessment_direction).and_return(direction)
+    allow(claim).to receive(:adjustments_direction).and_return(direction)
   end
 
   context 'when state is granted' do

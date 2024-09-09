@@ -83,25 +83,14 @@ class Claim < Submission
     core_cost_summary.any_increased?
   end
 
-  def assessment_direction
-    # OPTIMIZE?: change to return array of all items with up, down, none
-    #
+  def adjustments_direction
     return :none unless any_cost_changes?
 
     if any_cost_reductions?
-      if any_cost_increases?
-        :mixed
-      else
-        :down
-      end
+      any_cost_increases? ? :mixed : :down
     elsif any_cost_increases?
       :up
     end
-
-    # return :down if !submission.any_cost_increases? && submission.any_cost_reductions?
-    # return :up if submission.any_cost_increases? && !submission.any_cost_reductions?
-
-    # :mixed if submission.any_cost_increases? && submission.any_cost_reductions?
   end
 
   def latest_send_back_event

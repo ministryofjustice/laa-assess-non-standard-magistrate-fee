@@ -52,7 +52,7 @@ RSpec.describe Nsm::MakeDecisionForm do
       context 'with a reduced work item adjustment' do
         before do
           claim.data['work_items'].first['time_spent_original'] = claim.data['work_items'].first['time_spent']
-          claim.data['work_items'].first['time_spent'] = 0
+          claim.data['work_items'].first['time_spent'] -= 1
           claim.data['work_items'].first['adjustment_comment'] = 'reducing this work item'
           claim.save!
         end
@@ -108,6 +108,25 @@ RSpec.describe Nsm::MakeDecisionForm do
 
       context 'with a reduced letter or call adjustment' do
         before do
+          letters = claim.data['letters_and_calls'].find { |ltc| ltc['type']['value'] == 'letters' }
+          letters['count_original'] = letters['count']
+          letters['count'] -= 1
+          letters['adjustment_comment'] = 'reducing letter count'
+          claim.save!
+        end
+
+        it 'form object is invalid' do
+          expect(form).to be_invalid
+          expect(form.errors.messages[:state]).to include(expected_message)
+        end
+      end
+
+      context 'with a mixture of upward and downward adjustments' do
+        before do
+          work_item = claim.data['work_items'].first
+          work_item['time_spent_original'] = work_item['time_spent']
+          work_item['time_spent'] += 1
+          work_item['adjustment_comment'] = 'reducing this work item'
           letters = claim.data['letters_and_calls'].find { |ltc| ltc['type']['value'] == 'letters' }
           letters['count_original'] = letters['count']
           letters['count'] -= 1

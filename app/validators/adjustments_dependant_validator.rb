@@ -1,6 +1,6 @@
 class AdjustmentsDependantValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
-    direction = record&.claim&.assessment_direction
+    direction = record&.claim&.adjustments_direction
 
     if value == Claim::GRANTED
       validate_granted(record, attribute, direction)
