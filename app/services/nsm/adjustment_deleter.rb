@@ -63,7 +63,7 @@ module Nsm
     end
 
     def submission_scope
-      @submission_scope ||= Claim.find(params[:application_id])
+      @submission_scope ||= Claim.find(params[:claim_id])
     end
   end
 end
