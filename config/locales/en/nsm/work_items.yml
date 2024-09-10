@@ -84,8 +84,6 @@ en:
         time_spent_changed: Time allowed
         caseworker_allowed: Net cost allowed
         explanation: Reason for adjustment
-      confirm_deletion:
-        work_item: work item
       uplifts:
         update:
           uplift_removed: All uplifts have been removed

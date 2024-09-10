@@ -1,0 +1,7 @@
+---
+en:
+  nsm:
+    work_item_adjustments:
+      work_item: work item
+      confirm_deletion:
+        work_item: work item

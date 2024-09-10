@@ -62,8 +62,11 @@ Rails.application.routes.draw do
       end
       resources :work_items, only: [:index, :show, :edit, :update] do
         collection { get :adjusted }
+      end
+
+      resources :work_item_adjustments do
         member { get :confirm_deletion }
-        member { delete :delete_work_item}
+        member { delete :destroy}
       end
 
       resources :letters_and_calls, only: [:index, :show, :edit, :update, :destroy], constraints: { id: /(letters|calls)/ } do
