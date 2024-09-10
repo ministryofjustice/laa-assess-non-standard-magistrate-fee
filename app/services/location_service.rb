@@ -3,6 +3,7 @@ class LocationService
   ResponseError = Class.new(LocationError)
   NotFoundError = Class.new(LocationError)
   InvalidFormatError = Class.new(LocationError)
+  UnknowablePartialPostcode = Class.new(LocationError)
 
   class << self
     def inside_m25?(postcode)
@@ -22,7 +23,7 @@ class LocationService
     def process_api_response(payload, postcode)
       raise ResponseError, "OS API returned unexpected format when queried for postcode #{postcode}" unless payload['results']
 
-      matching = payload['results'].find { _1.dig('GAZETTEER_ENTRY', 'ID') == postcode }
+      matching = find_matching_result(payload, postcode)
 
       raise NotFoundError, "OS API returned no matching entry for postcode #{postcode}" unless matching
 
@@ -34,6 +35,24 @@ class LocationService
       end
 
       [easting, northing]
+    end
+
+    def find_matching_result(payload, postcode)
+      exact_match = payload['results'].find { _1.dig('GAZETTEER_ENTRY', 'ID') == postcode }
+
+      return exact_match if exact_match
+
+      # postcode may be an outcode. If so, and it's not an outcode that straddles the M25,
+      # we can extract a representative postcode within that outcode and check if _that_
+      # is inside the M25.
+      if postcode.in?(outcodes_that_straddle_the_m25)
+        raise UnknowablePartialPostcode, "Outcode #{postcode} could be inside or outside the M25"
+      end
+
+      payload['results'].find do |result|
+        result.dig('GAZETTEER_ENTRY', 'NAME1')&.split&.first == postcode &&
+          result.dig('GAZETTEER_ENTRY', 'LOCAL_TYPE') == 'Postcode'
+      end
     end
 
     def prepare_query(easting, northing)
@@ -63,6 +82,10 @@ class LocationService
       # Finally Postgis can only parse _part_ of the KML, so pull out the <LineString> node and everything inside it
       # and discard the rest, then save what you've kept to M25.kml
       Rails.root.join('app/services/location_service/M25.kml').read
+    end
+
+    def outcodes_that_straddle_the_m25
+      YAML.load_file(Rails.root.join('app/services/location_service/outcodes_that_straddle_the_m25.yaml'))
     end
 
     OS_SRID = 27_700
