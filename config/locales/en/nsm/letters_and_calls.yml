@@ -16,6 +16,8 @@ en:
         remove_uplift_all: "Remove uplifts for all items"
         table_caption: Claimed letters and calls
       adjusted:
+        action: Action
+        delete: Delete
         page_title: "Your claims"
         heading: "Letters and calls"
         items: "Item"

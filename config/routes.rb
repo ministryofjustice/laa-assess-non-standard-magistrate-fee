@@ -71,6 +71,10 @@ Rails.application.routes.draw do
         collection { get :adjusted }
         member { get :confirm_deletion }
       end
+      resources :letters_and_calls_adjustments do
+        member { get :confirm_deletion }
+        member { delete :destroy}
+      end
       resources :disbursements, only: [:index, :show, :edit, :update, :destroy] do
         collection { get :adjusted }
         member { get :confirm_deletion }

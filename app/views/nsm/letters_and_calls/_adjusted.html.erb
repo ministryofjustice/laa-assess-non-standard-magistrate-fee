@@ -6,16 +6,22 @@
       <%=
       caption = t('.table_caption')
       head = Nsm::V1::LetterAndCall.adjusted_headers
+      editable = claim.editable_by?(current_user)
+      if editable
+        head << {:text=>t('.action'), :numeric=>false, :width=>nil}
+      end
       rows = records.rows.map do |letter_and_call|
         next unless letter_and_call.any_adjustments?
 
         fields = letter_and_call.adjusted_table_fields.dup
-        destination = if claim.editable_by?(current_user)
+        destination = if editable
                         edit_nsm_claim_letters_and_call_path(claim_id: claim.id, id: letter_and_call.type.value)
                       else
                         nsm_claim_letters_and_call_path(claim_id: claim.id, id: letter_and_call.type.value)
                       end
+        deleteable = confirm_deletion_nsm_claim_letters_and_calls_adjustment_path(claim_id: claim.id, id: letter_and_call.type.value) if editable
         fields[0] = link_to(fields[0], destination, data: { turbo: 'false' })
+        fields << link_to(t('.delete'), deleteable, data: { turbo: 'false' }) if deleteable
         fields
       end
       govuk_table(first_cell_is_header: true) do |t|
