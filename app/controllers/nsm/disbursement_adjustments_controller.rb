@@ -12,10 +12,5 @@ module Nsm
       Nsm::AdjustmentDeleter.new(params, :disbursement, current_user).call
       redirect_to adjusted_nsm_claim_disbursements_path(params[:claim_id])
     end
-
-    private
-
-    def safe_params
-    end
   end
 end
