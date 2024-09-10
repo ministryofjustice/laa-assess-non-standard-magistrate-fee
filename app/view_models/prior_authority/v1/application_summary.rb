@@ -96,15 +96,15 @@ module PriorAuthority
       end
 
       def can_edit?(caseworker)
-        assessable? && submission.assignments.find_by(user: caseworker)
+        assessable? && submission.assignments.find_by(user: caseworker) && !caseworker.viewer?
       end
 
-      def unassignable?
-        assessable? && submission.assignments.any?
+      def unassignable_by?(user)
+        assessable? && submission.assignments.any? && !user.viewer?
       end
 
-      def assignable?
-        assessable? && submission.assignments.none?
+      def self_assignable_by?(user)
+        assessable? && submission.assignments.none? && !user.viewer?
       end
 
       def assessable?
