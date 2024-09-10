@@ -6,10 +6,8 @@ module Nsm
       case adjustment_type
       when :work_item
         delete_work_item_adjustment
-      when :letters
-        delete_letters_adjustment
-      when :calls
-        delete_calls_adjustment
+      when :letters_and_calls
+        delete_letters_and_calls_adjustment
       when :disbursement
         delete_disbursement_adjustment
       else
@@ -25,17 +23,10 @@ module Nsm
       work_item.delete('adjustment_comment')
     end
 
-    def delete_letters_adjustment
+    def delete_letters_and_calls_adjustment
       %w[uplift count].each do |field|
-        revert(letters, field, 'letters')
-        letters.delete('adjustment_comment')
-      end
-    end
-
-    def delete_calls_adjustment
-      %w[uplift count].each do |field|
-        revert(calls, field, 'calls')
-        calls.delete('adjustment_comment')
+        revert(letters_and_calls, field, params[:id])
+        letters_and_calls.delete('adjustment_comment')
       end
     end
 
@@ -46,12 +37,8 @@ module Nsm
       disbursement.delete('adjustment_comment')
     end
 
-    def letters
-      @letters ||= submission.data['letters_and_calls'].find { _1.dig('type', 'value') == 'letters' }
-    end
-
-    def calls
-      @calls ||= submission.data['letters_and_calls'].find { _1.dig('type', 'value') == 'calls' }
+    def letters_and_calls
+      @letters_and_calls ||= submission.data['letters_and_calls'].find { _1.dig('type', 'value') == params[:id] }
     end
 
     def disbursement
