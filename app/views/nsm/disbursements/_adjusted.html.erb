@@ -18,6 +18,7 @@
                                         additional_classes:) %>
           <% end %>
         <% end %>
+        <th class="govuk-table__header" scope="col"><%= t(".action") %></th>
       </tr>
     </thead>
     <tbody class="govuk-table__body app-task-list__items">
@@ -44,6 +45,11 @@
           </td>
           <td class="govuk-table__cell govuk-table__cell--numeric">
             <%= disbursement.allowed_gross %>
+          </td>
+          <td class="govuk-table__cell">
+            <%= link_to t(".delete"),
+              confirm_deletion_nsm_claim_disbursement_adjustment_path(claim, disbursement.id),
+              class: "govuk-link govuk-link--no-visited-state" %>
           </td>
         </tr>
       <% end %>

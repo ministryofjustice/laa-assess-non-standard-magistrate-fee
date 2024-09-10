@@ -1,0 +1,7 @@
+---
+en:
+  nsm:
+    disbursement_adjustments:
+      disbursement: disbursement
+      confirm_deletion:
+        disbursement: disbursement
