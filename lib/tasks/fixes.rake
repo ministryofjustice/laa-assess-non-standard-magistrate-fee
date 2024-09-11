@@ -44,4 +44,23 @@ namespace :fixes do
       puts "Submission: #{id} could not be found"
     end
   end
+
+  desc "Decrement corrupt submission current versions"
+  task fix_corrupt_versions: :environment do
+    submission_ids = [
+      "84fabfe2-844f-4bbe-8460-1be4a18912e3",
+      "88a7bd7b-7cac-4a11-b13c-b6ddc187f4d0",
+      "603c3d9a-2493-40d5-9691-5339c71c801a",
+      "dec31825-1bd1-461e-8857-5ddf9f839992",
+      "6e319bb2-d450-4451-aed5-eeea57d7c329",
+    ]
+
+    submission_ids.each do |id|
+      submission = Submission.find(id)
+      if submission
+        submission.current_version -= 1
+        submission.save!(touch: false)
+      end
+    end
+  end
 end
