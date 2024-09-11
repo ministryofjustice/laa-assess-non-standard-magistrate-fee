@@ -53,6 +53,8 @@ Rails.application.routes.draw do
         get :closed
       end
 
+      resources :adjustments, only: :destroy
+
       resource :claim_details, only: [:show]
       namespace :letters_and_calls do
         resource :uplift, only: [:edit, :update], path_names: { edit: '' }
