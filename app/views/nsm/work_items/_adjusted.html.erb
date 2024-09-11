@@ -62,10 +62,9 @@
   <%= render 'shared/pagination', pagy: pagy, item: t(".table_info_item") %>
 
   <% if type_changed_records.any? %>
-    <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
-    <section>
+    <section class="govuk-!-margin-top-9">
       <% type_changed_records.each_with_index do |work_item, index| %>
-        <p id="fn<%= index + 1 %>">
+        <p id="fn<%= index + 1 %>" class="govuk-body-s">
           <%= link_to "[#{index + 1}]", "##{work_item.id}" %>
           <%= t('nsm.work_items.type_changes.item_type_adjusted') %>
           <%= t('nsm.work_items.type_changes.see') %>
