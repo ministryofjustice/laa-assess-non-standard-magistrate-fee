@@ -46,6 +46,34 @@
         <%= render partial: "nsm/#{scope}/index", locals: { claim:, records:, summary:, pagy: } %>
       </div>
     </div>
+
+    <% if type_changed_records.any? %>
+      <section class="govuk-!-margin-bottom-6">
+        <p id="fn*" class="govuk-body-s">
+          <%= t("nsm.work_items.type_changes.asterisk") %>
+          <%= t("nsm.work_items.type_changes.explanation") %>
+          <%= t("nsm.work_items.type_changes.see") %>
+          <% type_changed_records.each_with_index do |work_item, index| %>
+            <% link =
+              url_for(
+                controller: "nsm/work_items",
+                action: claim.editable_by?(current_user) ? :edit : :show,
+                claim_id: claim.id,
+                id: work_item.id,
+                only_path: true,
+              ) %>
+            <%= link_to(
+              t("nsm.work_items.type_changes.item", position: work_item.position),
+              link,
+              data: {
+                turbo: "false",
+              },
+            ) %><% if index < type_changed_records.length - 1 %>,<% end %>
+          <% end %>
+        </p>
+      </section>
+    <% end %>
+
     <%= render partial: 'shared/claim_button_group', locals: { claim: claim } %>
   </div>
 </div>
