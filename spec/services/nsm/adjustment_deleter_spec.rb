@@ -6,8 +6,8 @@ RSpec.describe Nsm::AdjustmentDeleter do
 
     let(:params) { { claim_id: claim.id, id: item_id } }
     let(:item_id) { '1234-adj' }
-    let(:user) { create(:caseworker) }
-    let(:claim) { create(:claim, :with_adjustments) }
+    let(:user) { User.find_by(email: 'case.worker@test.com') }
+    let(:claim) { create(:claim, :with_adjustments, :with_assignment) }
 
     context 'when adjustment type is unknown' do
       let(:adjustment_type) { :some_new_adjustment }
