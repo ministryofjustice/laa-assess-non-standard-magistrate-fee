@@ -17,3 +17,11 @@ case_worker.update(
   auth_oid: SecureRandom.uuid,
   auth_subject_id: SecureRandom.uuid,
 )
+
+viewer = User.find_or_initialize_by(email: 'viewer@test.com')
+viewer.update(
+  first_name: 'Reid',
+  last_name: "O'Nly",
+  role: 'viewer',
+  auth_subject_id: SecureRandom.uuid,
+)
