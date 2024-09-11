@@ -43,4 +43,29 @@ describe 'fixes:', type: :task do
       end
     end
   end
+
+  describe 'fix_corrupt_versions' do
+    let(:affected_submission) { create(:prior_authority_application, id: '84fabfe2-844f-4bbe-8460-1be4a18912e3', current_version: 3)}
+    let(:unaffected_submission) { create(:prior_authority_application, current_version: 3)}
+
+    before do
+      affected_submission
+      unaffected_submission
+      Rails.application.load_tasks if Rake::Task.tasks.empty?
+    end
+
+    after do
+      Rake::Task["fixes:fix_corrupt_versions"].reenable
+    end
+
+    it 'does not decrement unaffected submission' do
+      Rake::Task["fixes:fix_corrupt_versions"].execute
+      expect { unaffected_submission.current_version }.to eq(3)
+    do
+
+    it 'does decrement affected submission' do
+      Rake::Task["fixes:fix_corrupt_versions"].execute
+      expect { affected_submission.current_version }.to eq(2)
+    end
+  end
 end
