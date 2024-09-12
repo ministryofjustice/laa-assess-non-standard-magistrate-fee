@@ -7,11 +7,11 @@
     <br>
     <%= t('.reason', reason: @adjustment.adjustment_comment) %>
     <br>
-    <%= t('.number_allowed', number_allowed: @adjustment.count) %>
+    <%= t('.number_allowed', number_allowed: @adjustment.formatted_adjusted_count) %>
     <br>
-    <%= t('.uplift_allowed', uplift_allowed: @adjustment.uplift) %>
+    <%= t('.uplift_allowed', uplift_allowed: @adjustment.formatted_adjusted_uplift) %>
     <br>
-    <%= t('.net_cost_allowed', net_cost_allowed: @adjustment.caseworker_amount)%>
+    <%= t('.net_cost_allowed', net_cost_allowed: @adjustment.formatted_adjusted_caseworker_amount)%>
     </p>
     <div class="govuk-warning-text">
       <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
