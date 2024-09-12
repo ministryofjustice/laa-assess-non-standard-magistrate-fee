@@ -1,0 +1,13 @@
+---
+en:
+  nsm:
+    adjustments:
+      confirm_deletion_adjustments:
+        page_title: Delete adjustments
+        heading: Are you sure you want to delete all adjustments?
+        warning: You cannot undo this action
+        yes_delete: Yes, delete it
+        no_delete: No, do not delete it
+        explanation_warning: This will delete all of the adjustments made to this claim
+      show:
+        delete_all_adjustments: Delete all adjustments
