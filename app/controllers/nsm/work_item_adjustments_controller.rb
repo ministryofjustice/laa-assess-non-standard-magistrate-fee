@@ -1,24 +1,31 @@
 module Nsm
   class WorkItemAdjustmentsController < Nsm::BaseController
     def confirm_deletion
-      @adjustment = BaseViewModel
-                    .build(:work_item, claim, 'work_items')
-                    .filter(&:any_adjustments?).find { _1.id == params[:id] }
+      @adjustment = adjustments.find { _1.id == params[:id] }
       render 'nsm/work_items/confirm_delete_adjustment',
              locals: { deletion_path: nsm_claim_work_item_adjustment_path(params[:claim_id],
-                                                                          params[:id]),
-                       nsm_adjustments_path: adjusted_nsm_claim_work_items_path }
+                                                                          params[:id]) }
     end
 
     def destroy
       Nsm::AdjustmentDeleter.new(params, :work_item, current_user).call
-      redirect_to adjusted_nsm_claim_work_items_path(params[:claim_id])
+      redirect_to destroy_redirect, flash: { success: t('.success') }
     end
 
     private
 
     def claim
       @claim ||= Claim.find(params[:claim_id])
+    end
+
+    def destroy_redirect
+      adjustments.any? ? adjusted_nsm_claim_work_items_path : nsm_claim_claim_details_path
+    end
+
+    def adjustments
+      @adjustments ||= BaseViewModel
+                       .build(:work_item, claim, 'work_items')
+                       .filter(&:any_adjustments?)
     end
   end
 end

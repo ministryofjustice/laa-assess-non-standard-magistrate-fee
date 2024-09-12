@@ -7,7 +7,7 @@
     <br>
     <%= t('.reason', reason: @adjustment.reason) %>
     <br>
-    <%=raw t('.time_allowed', time_allowed: @adjustment.formatted_allowed_time_spent) %>
+    <%= raw t('.time_allowed', time_allowed: @adjustment.formatted_allowed_time_spent) %>
     <br>
     <%= t('.uplift_allowed', uplift_allowed: @adjustment.formatted_allowed_uplift) %>
     <br>
@@ -22,7 +22,7 @@
     </div>
     <div class="govuk-button-group govuk-button-group-vertically-centred">
       <%= govuk_button_to t('.yes_delete'), deletion_path, method: :delete, warning: true %>
-      <%= govuk_button_link_to t('.no_delete'), nsm_adjustments_path, secondary: true %>
+      <%= govuk_button_link_to t('.no_delete'), adjusted_nsm_claim_work_items_path, secondary: true %>
     </div>
   </div>
 </div>

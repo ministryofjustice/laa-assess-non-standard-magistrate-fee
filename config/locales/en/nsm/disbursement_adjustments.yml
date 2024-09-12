@@ -5,3 +5,6 @@ en:
       disbursement: disbursement
       confirm_deletion:
         disbursement: disbursement
+      destroy:
+        success: You deleted the adjustment
+

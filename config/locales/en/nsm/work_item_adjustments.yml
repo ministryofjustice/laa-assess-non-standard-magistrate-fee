@@ -5,3 +5,5 @@ en:
       work_item: work item
       confirm_deletion:
         work_item: work item
+      destroy:
+        success: You deleted the adjustment
