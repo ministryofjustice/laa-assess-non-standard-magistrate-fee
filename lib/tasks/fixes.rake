@@ -56,10 +56,11 @@ namespace :fixes do
     ]
 
     submission_ids.each do |id|
-      submission = Submission.find(id)
+      submission = Submission.find_by(id: id)
       if submission
         submission.current_version -= 1
         submission.save!(touch: false)
+        puts "Decremented current_version for Submission with id: #{id}"
       end
     end
   end

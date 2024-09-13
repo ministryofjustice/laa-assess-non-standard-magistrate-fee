@@ -45,10 +45,14 @@ describe 'fixes:', type: :task do
   end
 
   describe 'fix_corrupt_versions' do
+    let(:affected_submission_id) { '84fabfe2-844f-4bbe-8460-1be4a18912e3' }
+    let(:unaffected_submission_id) { SecureRandom.uuid }
     let(:affected_submission) do
-      create(:prior_authority_application, id: '84fabfe2-844f-4bbe-8460-1be4a18912e3', current_version: 3)
+      create(:prior_authority_application, id: affected_submission_id, current_version: 3)
     end
-    let(:unaffected_submission) { create(:prior_authority_application, current_version: 3) }
+    let(:unaffected_submission) do
+      create(:prior_authority_application, id: unaffected_submission_id, current_version: 3)
+    end
 
     before do
       affected_submission
@@ -62,12 +66,12 @@ describe 'fixes:', type: :task do
 
     it 'does not decrement unaffected submission' do
       Rake::Task['fixes:fix_corrupt_versions'].execute
-      expect { unaffected_submission.current_version }.to eq(3)
+      expect(Submission.find(unaffected_submission_id).current_version).to eq(3)
     end
 
     it 'does decrement affected submission' do
       Rake::Task['fixes:fix_corrupt_versions'].execute
-      expect { affected_submission.current_version }.to eq(2)
+      expect(Submission.find(affected_submission_id).current_version).to eq(2)
     end
   end
 end
