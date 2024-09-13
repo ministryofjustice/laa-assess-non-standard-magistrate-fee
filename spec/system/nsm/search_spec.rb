@@ -36,7 +36,7 @@ RSpec.describe 'Search', :stub_oauth_token do
     it 'lets me search and shows me a result' do
       visit nsm_root_path
       click_on 'Search'
-      fill_in 'Claim details', with: 'QUERY'
+      fill_in 'Enter any combination', with: 'QUERY'
       within 'main' do
         click_on 'Search'
       end
@@ -144,26 +144,10 @@ sort_direction: 'ascending' },
     it 'lets me search and shows me a result' do
       visit nsm_root_path
       click_on 'Search'
-      within('.govuk-fieldset', text: 'Date submitted from') do
-        fill_in 'Day', with: '20'
-        fill_in 'Month', with: '4'
-        fill_in 'Year', with: '2023'
-      end
-      within('.govuk-fieldset', text: 'Date submitted to') do
-        fill_in 'Day', with: '21'
-        fill_in 'Month', with: '4'
-        fill_in 'Year', with: '2023'
-      end
-      within('.govuk-fieldset', text: 'Last updated from') do
-        fill_in 'Day', with: '22'
-        fill_in 'Month', with: '4'
-        fill_in 'Year', with: '2023'
-      end
-      within('.govuk-fieldset', text: 'Last updated to') do
-        fill_in 'Day', with: '23'
-        fill_in 'Month', with: '4'
-        fill_in 'Year', with: '2023'
-      end
+      fill_in 'Submission date from', with: '20/4/2023'
+      fill_in 'Submission date to', with: '21/4/2023'
+      fill_in 'Last updated from', with: '22/4/2023'
+      fill_in 'Last updated to', with: '23/4/2023'
       select caseworker.display_name, from: 'Caseworker'
       select 'Rejected', from: 'Status'
       within('main') { click_on 'Search' }

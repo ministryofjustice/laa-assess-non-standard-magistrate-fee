@@ -15,7 +15,7 @@
               </li>
               <% if FeatureFlags.search.enabled? %>
                 <li class="moj-primary-navigation__item">
-                  <%= link_to t('layouts.primary_navigation.search'), new_nsm_search_path, class: 'moj-primary-navigation__link', 'aria-current': (current == :search ? 'page' : nil) %>
+                  <%= link_to t('layouts.primary_navigation.search'), new_nsm_search_path, class: 'moj-primary-navigation__link', 'aria-current': (current == :search ? 'page' : nil), data: { turbo: false } %>
                 </li>
               <% end %>
           </ul>

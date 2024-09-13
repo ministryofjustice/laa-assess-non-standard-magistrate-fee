@@ -61,9 +61,13 @@ en:
     search:
       search: Search
       clear_all: Clear all
-      filter_results:  Filter your search criteria
-      submitted_from: Date submitted from
-      submitted_to: Date submitted to
+      filter_results:  Enter at least one field to search
+      submission_filter_legend: Submission date
+      submission_filter_hint: Enter a start date, end date or both, for example, 17/5/2024
+      submitted_from: Submission date from
+      submitted_to: Submission date to
+      updated_filter_legend: Last updated at
+      updated_filter_hint: Enter a start date, end date or both, for example, 17/5/2024
       updated_from: Last updated from
       updated_to: Last updated to
       search_results: Search results

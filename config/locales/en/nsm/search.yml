@@ -18,5 +18,4 @@ en:
       show:
         page_title: Search for a claim
         query:
-          label: Claim details
-          hint: Search for a client name, firm name, UFN or LAA reference
+          label: Enter any combination of client or firm name, UFN or LAA reference

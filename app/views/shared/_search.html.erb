@@ -4,10 +4,12 @@
     <% if title %>
       <h1 class="govuk-heading-xl"><%= t("#{translation_prefix}.page_title") %></h1>
     <% end %>
+
+    <p><%= t('.filter_results') %></p>
     <div class="search-panel govuk-!-margin-bottom-6">
       <%= form_with(url: form_url, method: :get, model: @search_form) do |f| %>
         <div class="govuk-form-group govuk-!-width-two-thirds" role="search">
-          <%= f.govuk_text_field :query, label: { size: 'm', text: t("#{translation_prefix}.query.label") }, hint: { text: t("#{translation_prefix}.query.hint") } %>
+          <%= f.govuk_text_field :query, label: { size: 's', text: t("#{translation_prefix}.query.label") } %>
         </div>
         <% if choose_application_type && FeatureFlags.nsm_insights.enabled? %>
           <%= f.govuk_collection_radio_buttons :application_type,
@@ -18,40 +20,49 @@
             legend: { text: t("#{translation_prefix}.application_type.label") }
           %>
         <% end %>
-        <h2 class="govuk-heading-m"><%= t('.filter_results') %></h2>
         <div>
-          <div class="govuk-date-input__item">
-            <div class="moj-datepicker" data-module="moj-date-picker">
-              <div class="govuk-form-group">
-                <label class="govuk-label" for="sub-date-from">
-                  Test data picker field
-                </label>
-                <input class="govuk-input moj-js-datepicker-input " id="sub-date-from" name="sub-date-from" type="text" autocomplete="off">
+          <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+              <%= t('.submission_filter_legend') %>
+            </legend>
+            <p><%= t('.submission_filter_hint') %></p>
+            <div class="govuk-date-input__item">
+              <div class="moj-datepicker" data-module="moj-date-picker">
+                <div class="govuk-form-group">
+                  <%= f.govuk_text_field :submitted_from, value: @search_form.submitted_from&.to_fs(:date_picker), label: { text: t('.submitted_from') }, class: 'moj-js-datepicker-input' %>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="govuk-date-input__item">
-            <div class="govuk-form-group">
-              <%= f.govuk_date_field :submitted_from, legend: { size: 's', text: t('.submitted_from') } %>
+            <div class="govuk-date-input__item">
+              <div class="moj-datepicker" data-module="moj-date-picker">
+                <div class="govuk-form-group">
+                  <%= f.govuk_text_field :submitted_to, value: @search_form.submitted_to&.to_fs(:date_picker), label: { text: t('.submitted_to') }, class: 'moj-js-datepicker-input' %>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="govuk-date-input__item">
-            <div class="govuk-form-group">
-              <%= f.govuk_date_field :submitted_to, legend: { size: 's', text: t('.submitted_to') } %>
-            </div>
-          </div>
+            </fieldset>
         </div>
         <div>
-          <div class="govuk-date-input__item">
-            <div class="govuk-form-group">
-              <%= f.govuk_date_field :updated_from, legend: { size: 's', text: t('.updated_from', class: 'xs-legend') } %>
+          <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+              <%= t('.updated_filter_legend') %>
+            </legend>
+            <p><%= t('.updated_filter_hint') %></p>
+            <div class="govuk-date-input__item">
+              <div class="moj-datepicker" data-module="moj-date-picker">
+                <div class="govuk-form-group">
+                  <%= f.govuk_text_field :updated_from, value: @search_form.updated_from&.to_fs(:date_picker), label: { text: t('.updated_from') }, class: 'moj-js-datepicker-input' %>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="govuk-date-input__item">
-            <div class="govuk-form-group">
-              <%= f.govuk_date_field :updated_to, legend: { size: 's', text: t('.updated_to') } %>
+            <div class="govuk-date-input__item">
+              <div class="moj-datepicker" data-module="moj-date-picker">
+                <div class="govuk-form-group">
+                  <%= f.govuk_text_field :updated_to, value: @search_form.updated_to&.to_fs(:date_picker), label: { text: t('.updated_to') }, class: 'moj-js-datepicker-input' %>
+                </div>
+              </div>
             </div>
-          </div>
+          </fieldset>
         </div>
         <div>
           <div class="govuk-date-input__item">
@@ -75,11 +86,11 @@
         </div>
         <% if additional_param.present? %>
           <%= f.govuk_submit t('.search'), name: additional_param[:key], value: additional_param[:value] do %>
-            <%= govuk_link_to t('.clear_all'), clear_all_path %>
+            <%= govuk_link_to t('.clear_all'), clear_all_path, data: { turbo: false } %>
           <% end %>
         <% else %>
           <%= f.govuk_submit t('.search') do %>
-            <%= govuk_link_to t('.clear_all'), clear_all_path %>
+            <%= govuk_link_to t('.clear_all'), clear_all_path, data: { turbo: false } %>
           <% end %>
         <% end %>
       <% end %>
