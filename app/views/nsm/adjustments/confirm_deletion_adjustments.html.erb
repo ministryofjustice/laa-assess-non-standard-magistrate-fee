@@ -19,8 +19,8 @@
           <%= t('.warning') %>
         </strong>
       </div>
-      <%= f.govuk_submit(t('.yes_delete')) do %>
-        <%= link_to t('.no_delete'), adjusted_nsm_claim_work_items_path, class: 'govuk-link' %>
+      <%= f.govuk_submit(t('.yes_delete'), class: 'govuk-button--warning') do %>
+      <%= govuk_button_link_to t('.no_delete'), adjusted_nsm_claim_work_items_path %>
       <% end %>
     <% end %>
   </div>
