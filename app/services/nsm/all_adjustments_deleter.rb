@@ -1,11 +1,17 @@
 module Nsm
   class AllAdjustmentsDeleter < AdjustmentDeleterBase
-    attr_reader :params, :current_user, :submission
+    attr_reader :params, :current_user, :submission, :comment
+
+    def initialize(params, adjustment_type, current_user)
+      super
+      @comment = params[:comment]
+    end
 
     def call
       delete_work_item_adjustments if work_items
       delete_letters_and_calls_adjustments if letters_and_calls
       delete_disbursement_adjustments if disbursements
+      ::Event::DeleteAdjustments.build(submission:, comment:, current_user:)
       submission.save!
     end
 
