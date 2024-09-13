@@ -1,6 +1,5 @@
 module PriorAuthority
   class AdjustmentDeleter < AdjustmentDeleterBase
-
     def call
       case adjustment_type
       when :service_cost

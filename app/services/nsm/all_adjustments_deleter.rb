@@ -47,7 +47,7 @@ module Nsm
     end
 
     def disbursements
-      @disbursements ||= submission.data['disbursements'].filter {_1['adjustment_comment'] }
+      @disbursements ||= submission.data['disbursements'].filter { _1['adjustment_comment'] }
     end
 
     def work_items

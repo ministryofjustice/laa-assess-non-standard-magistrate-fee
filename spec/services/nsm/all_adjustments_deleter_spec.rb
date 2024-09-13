@@ -81,7 +81,7 @@ RSpec.describe Nsm::AllAdjustmentsDeleter do
       end
 
       it 'creates relevant events' do
-        event = claim.events.find { _1['linked_type'] == 'calls' && _1.details['field'] == 'count'}
+        event = claim.events.find { _1['linked_type'] == 'calls' && _1.details['field'] == 'count' }
         expect(event).to be_a Event::UndoEdit
         expect(event).to have_attributes(
           linked_id: nil,
@@ -107,7 +107,7 @@ RSpec.describe Nsm::AllAdjustmentsDeleter do
       end
 
       it 'creates relevant events' do
-        event = claim.events.find { _1['linked_type'] == 'letters' && _1.details['field'] == 'count'}
+        event = claim.events.find { _1['linked_type'] == 'letters' && _1.details['field'] == 'count' }
         expect(event).to be_a Event::UndoEdit
         expect(event).to have_attributes(
           linked_id: nil,
