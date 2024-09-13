@@ -19,7 +19,7 @@ module Nsm
     end
 
     def destroy_redirect
-      adjustments.any? ? adjusted_nsm_claim_disbursements_path : nsm_claim_claim_details_path
+      claim.any_adjustments? ? adjusted_nsm_claim_disbursements_path : nsm_claim_claim_details_path
     end
 
     def adjustments
