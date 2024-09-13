@@ -19,6 +19,7 @@ class Event < ApplicationRecord
     'Nsm::Event::SendBack',
     'PriorAuthority::Event::DraftSendBack',
     'PriorAuthority::Event::SendBack',
+    'Event::DeleteAdjustments',
   ].freeze
 
   LOCAL_EVENTS = [
