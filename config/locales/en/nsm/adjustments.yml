@@ -11,3 +11,5 @@ en:
         explanation_warning: This will delete all of the adjustments made to this claim
       show:
         delete_all_adjustments: Delete all adjustments
+      delete_all:
+        success: Deleted all adjustments

@@ -24,4 +24,4 @@ en:
       self: Caseworker removed self from claim
       secondary: Caseworker removed from claim by %{display_name}
   event/delete_adjustments:
-    title: All adjustments deleted
+    title: Caseworker deleted all adjustments
