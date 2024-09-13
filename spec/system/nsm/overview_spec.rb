@@ -49,17 +49,17 @@ RSpec.describe 'Overview', type: :system do
 
   context 'when claim has been assessed as part granted' do
     let(:claim) { create(:claim, state: 'part_grant') }
-    let(:part_grant_event) { create(:event, :part_granted, claim: claim, details: { comment: 'Part grant reason' }) }
 
     before do
-      part_grant_event
+      claim.data['assessment_comment'] = 'Part grant reason'
+      claim.save!
       visit nsm_claim_claim_details_path(claim)
     end
 
     it 'shows me the decision, comment and review adjustments link' do
       expect(page)
         .to have_selector('strong', text: 'Part granted')
-        .and have_content(part_grant_event.details['comment'])
+        .and have_content('Part grant reason')
         .and have_link('Review quote adjustments')
     end
   end

@@ -41,22 +41,4 @@ RSpec.describe Nsm::V1::ClaimSummary do
       expect(summary.assigned_to).to eq(assignment1)
     end
   end
-
-  describe '#assessed_on' do
-    context 'when a decision has been made' do
-      it 'returns the date from the last Decision event' do
-        decision = create(:event, :decision)
-
-        summary = described_class.new('submission' => decision.submission)
-        expect(summary.assessed_on).to eq(decision.created_at)
-      end
-    end
-
-    context 'when no decision has been made' do
-      it 'returns nil' do
-        summary = described_class.new('submission' => Claim.new)
-        expect(summary.assessed_on).to be_nil
-      end
-    end
-  end
 end

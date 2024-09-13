@@ -255,6 +255,7 @@ RSpec.describe 'View applications' do
 
   context 'when application has been assessed' do
     before do
+      application.data['assessment_comment'] = 'Not good use of money'
       application.update(state: 'rejected')
       create(:event,
              :decision,

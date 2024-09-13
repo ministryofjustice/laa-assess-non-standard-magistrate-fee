@@ -14,17 +14,9 @@ RSpec.describe PriorAuthority::FeedbackMessages::RejectedFeedback do
         ufn: '111111/111',
         solicitor: { 'contact_email' => 'solicitor-contact@example.com' },
         defendant: { 'last_name' => 'Abrahams', 'first_name' => 'Abe' },
+        assessment_comment: 'Caseworker rejected coz...'
       )
-    ).tap do |app|
-      create(
-        :event,
-        event_type: Event::Decision.to_s,
-        details: {
-          comment: 'Caseworker rejected coz...',
-        },
-        submission: app,
-      )
-    end
+    )
   end
 
   let(:feedback_template) { '81e9222e-c6bd-4fba-91ff-d90d3d61af87' }

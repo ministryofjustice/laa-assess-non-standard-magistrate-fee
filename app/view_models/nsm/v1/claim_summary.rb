@@ -5,6 +5,9 @@ module Nsm
       attribute :defendants
       attribute :submission
       attribute :send_by_post
+      attribute :assessment_comment
+
+      delegate :last_updated_at, to: :submission
 
       def main_defendant_name
         main_defendant = defendants.detect { |defendant| defendant['main'] }
@@ -13,22 +16,6 @@ module Nsm
 
       def assigned_to
         @assigned_to ||= submission.assignments.first
-      end
-
-      def assessed_on
-        submission.latest_decision_event&.created_at
-      end
-
-      def sent_back_on
-        submission.latest_send_back_event.created_at
-      end
-
-      def assessment_comment
-        @assessment_comment ||= submission.latest_decision_event&.details&.dig('comment')
-      end
-
-      def send_back_comment
-        submission.latest_send_back_event.details['comment']
       end
 
       def claimed_total

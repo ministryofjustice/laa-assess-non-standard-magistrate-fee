@@ -57,14 +57,6 @@ class Event < ApplicationRecord
       klass.new(params).save!
     end
 
-    def latest_decision
-      where(event_type: 'Event::Decision').order(:created_at).last
-    end
-
-    def latest_provider_update
-      where(event_type: 'Event::ProviderUpdated').order(:created_at).last
-    end
-
     private
 
     def create_dummy_users_if_non_production(params)

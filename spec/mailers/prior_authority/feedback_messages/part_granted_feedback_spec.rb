@@ -16,18 +16,10 @@ RSpec.describe PriorAuthority::FeedbackMessages::PartGrantedFeedback do
         defendant: { 'last_name' => 'Abrahams', 'first_name' => 'Abe' },
         quotes: [
           build(:primary_quote, :with_adjustments),
-        ]
+        ],
+        assessment_comment: 'Caseworker part granted coz...',
       )
-    ).tap do |app|
-      create(
-        :event,
-        event_type: Event::Decision.to_s,
-        details: {
-          comment: 'Caseworker part granted coz...',
-        },
-        submission: app,
-      )
-    end
+    )
   end
 
   let(:feedback_template) { '97c0245f-9fec-4ec1-98cc-c9d392a81254' }
