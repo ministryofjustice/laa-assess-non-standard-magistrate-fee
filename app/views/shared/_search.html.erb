@@ -21,6 +21,16 @@
         <h2 class="govuk-heading-m"><%= t('.filter_results') %></h2>
         <div>
           <div class="govuk-date-input__item">
+            <div class="moj-datepicker" data-module="moj-date-picker">
+              <div class="govuk-form-group">
+                <label class="govuk-label" for="sub-date-from">
+                  Test data picker field
+                </label>
+                <input class="govuk-input moj-js-datepicker-input " id="sub-date-from" name="sub-date-from" type="text" autocomplete="off">
+              </div>
+            </div>
+          </div>
+          <div class="govuk-date-input__item">
             <div class="govuk-form-group">
               <%= f.govuk_date_field :submitted_from, legend: { size: 's', text: t('.submitted_from') } %>
             </div>
