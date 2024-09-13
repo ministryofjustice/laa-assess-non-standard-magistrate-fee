@@ -1,0 +1,27 @@
+<% title t('.page_title') %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(form) %>
+    <h1 class="govuk-heading-xl">
+      <%= t('.heading') %>
+    </h1>
+  </div>
+</div>
+<p><%= t('.explanation_warning') %></p>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: form, url: deletion_path , method: :put do |f| %>
+      <%= f.govuk_text_area :comment, label: { size: 'm' }, rows: 5 %>
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+          <span class="govuk-visually-hidden">Warning</span>
+          <%= t('.warning') %>
+        </strong>
+      </div>
+      <%= f.govuk_submit(t('.yes_delete')) do %>
+        <%= link_to t('.no_delete'), adjusted_nsm_claim_work_items_path, class: 'govuk-link' %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

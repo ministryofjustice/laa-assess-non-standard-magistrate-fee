@@ -53,7 +53,10 @@ Rails.application.routes.draw do
         get :closed
       end
 
-      resources :adjustments, only: :destroy
+      resources :adjustments, only: [] do
+        collection { get :confirm_deletion }
+        collection { put :delete_all }
+      end
 
       resource :claim_details, only: [:show]
       namespace :letters_and_calls do
