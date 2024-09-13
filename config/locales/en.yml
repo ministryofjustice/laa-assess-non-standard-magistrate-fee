@@ -61,7 +61,7 @@ en:
     search:
       search: Search
       clear_all: Clear all
-      filter_results:  Enter at least one field to search
+      filter_hint:  Enter at least one field to search
       submission_filter_legend: Submission date
       submission_filter_hint: Enter a start date, end date or both, for example, 17/5/2024
       submitted_from: Submission date from
