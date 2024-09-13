@@ -97,7 +97,8 @@
     </div>
 
     <% if @search_form.executed? %>
-      <h2 id="search-result" class="govuk-heading-m"><%= t('.search_results') %></h1>
+      <h2 id="search-result" class="govuk-heading-m"><%= t('.search_results', count: @search_form.results.size) %></h2>
+
       <% if @search_form.results.any? %>
         <table class="govuk-table" data-module="moj-sortable-table" aria-describedby="page-title">
           <thead class="govuk-table__head">
@@ -149,7 +150,7 @@
         </table>
         <%= render 'shared/pagination', pagy: @search_form.pagy, item: t(".result") %>
       <% else %>
-        <p class="govuk-text"><%= t('.none') %></p>
+        <p class="govuk-text"><%= t('.search_results.none_para') %></p>
       <% end %>
     <% end %>
   </div>
