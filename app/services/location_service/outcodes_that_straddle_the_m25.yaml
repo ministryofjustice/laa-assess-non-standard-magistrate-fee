@@ -1,4 +1,6 @@
 # Derived from https://www.google.com/maps/d/viewer?mid=1_yZ8LNwwjFuMMKHlThA4khMQDARD-DYl&z=11&ll=51.493316716269405%2C0.12035871093750039
+# Specifically by visually checking which postcode areas the M25 passes through and, where it's not entirely clear or a very close-run
+# thing, defaulting to including contentious postcodes in the list.
 - RM4
 - CM14
 - RM3
