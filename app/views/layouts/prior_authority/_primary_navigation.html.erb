@@ -4,9 +4,11 @@
     <div class="moj-primary-navigation__nav">
         <nav class="moj-primary-navigation" aria-label="Primary navigation">
           <ul class="moj-primary-navigation__list">
-              <li class="moj-primary-navigation__item">
-                <%= link_to t('prior_authority.your_applications'), your_prior_authority_applications_path, class: 'moj-primary-navigation__link', 'aria-current': (current == :your ? 'page' : nil) %>
-              </li>
+              <% unless current_user.viewer? %>
+                <li class="moj-primary-navigation__item">
+                  <%= link_to t('prior_authority.your_applications'), your_prior_authority_applications_path, class: 'moj-primary-navigation__link', 'aria-current': (current == :your ? 'page' : nil) %>
+                </li>
+              <% end %>
               <li class="moj-primary-navigation__item">
                 <%= link_to t('prior_authority.open_applications'), open_prior_authority_applications_path, class: 'moj-primary-navigation__link', 'aria-current': (current == :open ? 'page' : nil) %>
               </li>

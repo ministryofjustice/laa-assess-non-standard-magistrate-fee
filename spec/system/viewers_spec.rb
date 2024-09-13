@@ -16,8 +16,9 @@ RSpec.describe 'Viewers' do
 
     context 'when there is an unassigned claim' do
       it 'does not let me auto-assign a claim to myself' do
-        visit your_nsm_claims_path
+        visit nsm_root_path
         expect(page).to have_no_content 'Assess next claim'
+        expect(page).to have_no_content 'Your claims'
       end
 
       it 'does not let me manually assign a claim' do
@@ -43,6 +44,7 @@ RSpec.describe 'Viewers' do
       it 'does not let me auto-assign' do
         visit prior_authority_root_path
         expect(page).to have_no_content 'Assess next application'
+        expect(page).to have_no_content 'Your applications'
       end
 
       it 'does not let me manually assign' do
