@@ -8,9 +8,6 @@
     <p><%= t('.filter_results') %></p>
     <div class="search-panel govuk-!-margin-bottom-6">
       <%= form_with(url: form_url, method: :get, model: @search_form) do |f| %>
-        <div class="govuk-form-group govuk-!-width-two-thirds" role="search">
-          <%= f.govuk_text_field :query, label: { size: 's', text: t("#{translation_prefix}.query.label") } %>
-        </div>
         <% if choose_application_type && FeatureFlags.nsm_insights.enabled? %>
           <%= f.govuk_collection_radio_buttons :application_type,
             @search_form.application_types,
@@ -20,6 +17,9 @@
             legend: { text: t("#{translation_prefix}.application_type.label") }
           %>
         <% end %>
+        <div class="govuk-form-group govuk-!-width-two-thirds" role="search">
+          <%= f.govuk_text_field :query, label: { size: 's', text: t("#{translation_prefix}.query.label") } %>
+        </div>
         <div>
           <fieldset class="govuk-fieldset">
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
