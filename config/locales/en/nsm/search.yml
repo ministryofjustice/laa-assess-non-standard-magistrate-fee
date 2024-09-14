@@ -19,3 +19,18 @@ en:
         page_title: Search for a claim
         query:
           label: Enter any combination of client or firm name, UFN or LAA reference
+
+
+  activemodel:
+    errors:
+      models:
+        nsm/search_form:
+          attributes:
+            submitted_from:
+              not_a_date: Enter a valid submission date from
+            submitted_to:
+              not_a_date: Enter a valid submission date to
+            updated_from:
+              not_a_date: Enter a valid last updated from
+            updated_to:
+              not_a_date: Enter a valid last updated to
