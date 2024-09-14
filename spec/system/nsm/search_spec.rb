@@ -51,14 +51,33 @@ RSpec.describe 'Search', :stub_oauth_token do
     end
   end
 
-  it 'validates' do
-    visit nsm_root_path
-    click_on 'Search'
-    within('main') { click_on 'Search' }
-    expect(page).to have_content 'Enter some claim details or filter your search criteria'
+  context 'when I search with invalid search criteria' do
+    it 'displays an error when no filters applied' do
+      visit nsm_root_path
+      click_on 'Search'
+      within('main') { click_on 'Search' }
+      expect(page).to have_content 'Enter some claim details or filter your search criteria'
+    end
+
+    it 'displays an error when unparsable date strings used as filters' do
+      visit nsm_root_path
+      click_on 'Search'
+      fill_in 'Submission date from', with: '31/4/2023'
+      fill_in 'Submission date to', with: '31/13/2024'
+      fill_in 'Last updated from', with: 'adaddddd'
+      fill_in 'Last updated to', with: '2024367' # the 367th day of 2024 (a leap year)
+
+      within('main') { click_on 'Search' }
+
+      expect(page)
+        .to have_content('Enter a valid submission date from')
+        .and have_content('Enter a valid submission date to')
+        .and have_content('Enter a valid last updated from')
+        .and have_content('Enter a valid last updated to')
+    end
   end
 
-  context 'if I search for something with no matches' do
+  context 'when I search for something with no matches' do
     before do
       stub_request(:post, endpoint).with(body: payload).to_return(
         status: 201,

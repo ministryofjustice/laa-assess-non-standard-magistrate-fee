@@ -20,11 +20,10 @@ en:
         query:
           label: Enter any combination of client or firm name, UFN or LAA reference
 
-
   activemodel:
     errors:
       models:
-        nsm/search_form:
+        search_form:
           attributes:
             submitted_from:
               not_a_date: Enter a valid submission date from
