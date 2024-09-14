@@ -155,10 +155,10 @@ sort_direction: 'ascending' },
         sort_by: 'last_updated',
         sort_direction: 'descending',
         status_with_assignment: 'rejected',
-        submitted_from: '2023-04-20',
-        submitted_to: '2023-04-21',
-        updated_from: '2023-04-22',
-        updated_to: '2023-04-23'
+        submitted_from: '20/4/2023',
+        submitted_to: '21/4/2023',
+        updated_from: '22/4/2023',
+        updated_to: '23/4/2023'
       }
     end
     let(:stub) do

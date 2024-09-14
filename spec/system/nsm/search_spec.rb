@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Search', :stub_oauth_token do
   let(:caseworker) { create(:caseworker, first_name: 'John', last_name: 'Everyman') }
   let(:endpoint) { 'https://appstore.example.com/v1/submissions/searches' }
+
   let(:payload) do
     {
       application_type: 'crm7',
@@ -20,6 +21,7 @@ RSpec.describe 'Search', :stub_oauth_token do
 
   context 'when I search for an application that has already been imported' do
     let(:claim) { create :claim }
+
     let(:stub) do
       stub_request(:post, endpoint).with(body: payload).to_return(
         status: 201,
@@ -86,14 +88,15 @@ RSpec.describe 'Search', :stub_oauth_token do
 
   context 'when there are multiple results' do
     let(:claims) { create_list(:claim, 20) }
+
     let(:payloads) do
       [
-        { application_type: 'crm7', page: 1, per_page: 20, query: 'QUERY', sort_by: 'last_updated',
-sort_direction: 'descending' },
-        { application_type: 'crm7', page: 1, per_page: 20, query: 'QUERY', sort_by: 'laa_reference',
-sort_direction: 'ascending' },
-        { application_type: 'crm7', page: 2, per_page: 20, query: 'QUERY', sort_by: 'laa_reference',
-sort_direction: 'ascending' },
+        { application_type: 'crm7', page: 1, per_page: 20, query: 'QUERY',
+          sort_by: 'last_updated', sort_direction: 'descending' },
+        { application_type: 'crm7', page: 1, per_page: 20, query: 'QUERY',
+          sort_by: 'laa_reference', sort_direction: 'ascending' },
+        { application_type: 'crm7', page: 2, per_page: 20, query: 'QUERY',
+          sort_by: 'laa_reference', sort_direction: 'ascending' },
       ]
     end
 
@@ -126,12 +129,13 @@ sort_direction: 'ascending' },
         sort_by: 'last_updated',
         sort_direction: 'descending',
         status_with_assignment: 'rejected',
-        submitted_from: '2023-04-20',
-        submitted_to: '2023-04-21',
-        updated_from: '2023-04-22',
-        updated_to: '2023-04-23'
+        submitted_from: '20/4/2023',
+        submitted_to: '21/4/2023',
+        updated_from: '22/4/2023',
+        updated_to: '23/4/2023'
       }
     end
+
     let(:stub) do
       stub_request(:post, endpoint).with(body: payload).to_return(
         status: 201,
