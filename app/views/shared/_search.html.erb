@@ -97,7 +97,7 @@
     </div>
 
     <% if @search_form.executed? %>
-      <h2 id="search-result" class="govuk-heading-m"><%= t('.search_results', count: @search_form.results.size) %></h2>
+      <h2 id="search-result" class="govuk-heading-m"><%= t('.search_results', count: @search_form.pagy.count) %></h2>
 
       <% if @search_form.results.any? %>
         <table class="govuk-table" data-module="moj-sortable-table" aria-describedby="page-title">
