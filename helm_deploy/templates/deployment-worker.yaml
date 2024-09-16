@@ -58,6 +58,9 @@ spec:
             periodSeconds: 30
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+              name: {{ include "laa-assess-crime-forms.fullname" . }}-settings
           env:
           {{ if .Values.redis.enabled }}
             - name: REDIS_PROTOCOL
