@@ -1,9 +1,0 @@
----
-en:
-  nsm:
-    letters_and_calls_adjustments:
-      letters_and_calls: letters and calls
-      confirm_deletion:
-        letters_and_calls: letters and calls
-      destroy:
-        success: You deleted the adjustment

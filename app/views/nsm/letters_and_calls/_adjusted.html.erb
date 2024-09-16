@@ -19,7 +19,7 @@
                       else
                         nsm_claim_letters_and_call_path(claim_id: claim.id, id: letter_and_call.type.value)
                       end
-        deleteable = confirm_deletion_nsm_claim_letters_and_calls_adjustment_path(claim_id: claim.id, id: letter_and_call.type.value) if editable
+        deleteable = confirm_deletion_nsm_claim_letters_and_call_path(claim_id: claim.id, id: letter_and_call.type.value) if editable
         fields[0] = link_to(fields[0], destination, data: { turbo: 'false' })
         fields << link_to(t('.delete'), deleteable, data: { turbo: 'false' }) if deleteable
         fields

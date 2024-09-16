@@ -86,7 +86,7 @@ RSpec.describe Nsm::AdjustmentDeleter do
     end
 
     context 'when deleting calls adjustments' do
-      let(:adjustment_type) { :letters_and_calls }
+      let(:adjustment_type) { :letter_and_call }
       let(:params) { { claim_id: claim.id, id: 'calls' } }
 
       before { service.call }
@@ -115,7 +115,7 @@ RSpec.describe Nsm::AdjustmentDeleter do
     end
 
     context 'when deleting letters adjustments' do
-      let(:adjustment_type) { :letters_and_calls }
+      let(:adjustment_type) { :letter_and_call }
       let(:params) { { claim_id: claim.id, id: 'letters' } }
 
       before { service.call }

@@ -28,7 +28,8 @@ module Nsm
     end
 
     def resource_klass
-      # todo letter_and_call
+      return :letter_and_call if json_search_field == 'letters_and_calls'
+
       @resource_klass ||= controller_name.singularize.to_sym
     end
 

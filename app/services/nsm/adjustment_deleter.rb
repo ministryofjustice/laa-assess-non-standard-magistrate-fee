@@ -6,7 +6,7 @@ module Nsm
       case adjustment_type
       when :work_item
         delete_work_item_adjustment
-      when :letters_and_calls
+      when :letter_and_call
         delete_letters_and_calls_adjustment
       when :disbursement
         delete_disbursement_adjustment

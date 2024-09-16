@@ -2,6 +2,8 @@ module Nsm
   class LettersAndCallsController < Nsm::BaseController
     layout nil
 
+    include Nsm::AdjustmentConcern
+
     FORMS = {
       'letters' => LettersCallsForm::Letters,
       'calls' => LettersCallsForm::Calls
