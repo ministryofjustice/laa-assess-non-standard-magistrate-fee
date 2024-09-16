@@ -47,7 +47,7 @@ class UpdateSubmission
       state: @record['application_state'],
       risk: @record['application_risk'],
       current_version: @record['version'],
-      app_store_updated_at: @record['updated_at'],
+      app_store_updated_at: @record['last_updated_at'],
       application_type: @record['application_type'],
       json_schema_version: @record['json_schema_version'],
       data: @record['application']

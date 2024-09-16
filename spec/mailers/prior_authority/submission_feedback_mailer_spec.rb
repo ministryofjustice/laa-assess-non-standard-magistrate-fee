@@ -20,21 +20,9 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
         ufn: '111111/111',
         solicitor: { 'contact_email' => 'solicitor-contact@example.com' },
         defendant: { 'last_name' => 'Abrahams', 'first_name' => 'Abe' },
+        assessment_comment: caseworker_comment,
       )
-    ).tap do |app|
-      create(
-        :event,
-        event_type: Event::Decision.to_s,
-        details: {
-          field: 'state',
-          from: 'submitted',
-          to: state,
-          comment: caseworker_comment,
-        },
-        submission: app,
-        submission_version: app.current_version
-      )
-    end
+    )
   end
 
   context 'with granted state' do
@@ -78,22 +66,10 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
           defendant: { 'last_name' => 'Abrahams', 'first_name' => 'Abe' },
           quotes: [
             build(:primary_quote, :with_adjustments),
-          ]
+          ],
+          assessment_comment: caseworker_comment
         )
-      ).tap do |app|
-        create(
-          :event,
-          event_type: Event::Decision.to_s,
-          details: {
-            field: 'state',
-            from: 'submitted',
-            to: state,
-            comment: caseworker_comment,
-          },
-          submission: app,
-          submission_version: app.current_version
-        )
-      end
+      )
     end
 
     let(:application_total) { '£300.00' }
@@ -150,17 +126,9 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
           defendant: { 'last_name' => 'Abrahams', 'first_name' => 'Abe' },
           incorrect_information_explanation: 'Please correct this information...',
           further_information_explanation: 'Please provide this further info...',
+          assessment_comment: 'This message is set but not used by the mailer',
         )
-      ).tap do |app|
-        create(
-          :event,
-          event_type: PriorAuthority::Event::SendBack.to_s,
-          details: {
-            comment: 'This message is set but not used by the mailer',
-          },
-          submission: app,
-        )
-      end
+      )
     end
 
     let(:personalisation) do

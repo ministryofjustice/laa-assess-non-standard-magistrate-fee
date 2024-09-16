@@ -14,14 +14,6 @@ class Submission < ApplicationRecord
     Submission::APPLICATION_TYPES.invert[application_type].to_s.camelcase.constantize
   end
 
-  def latest_decision_event
-    events.latest_decision
-  end
-
-  def latest_provider_update_event
-    events.latest_provider_update
-  end
-
   def last_updated_at
     # This method will attempts to return the same value as the app store
     # 'last_updated' attribute in its search results payload.

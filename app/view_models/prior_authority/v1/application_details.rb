@@ -20,6 +20,7 @@ module PriorAuthority
       attribute :further_information_explanation, :string
       attribute :incorrect_information_explanation, :string
       attribute :updates_needed, array: true
+      attribute :assessment_comment
 
       def overview_card
         OverviewCard.new(self)
@@ -62,10 +63,6 @@ module PriorAuthority
         CaseContactCard.new(self)
       end
 
-      def assessment_comment
-        @assessment_comment ||= submission.latest_decision_event&.details&.dig('comment')
-      end
-
       def further_information_requested?
         updates_needed.include?(SendBackForm::FURTHER_INFORMATION)
       end
@@ -74,18 +71,16 @@ module PriorAuthority
         updates_needed.include?(SendBackForm::INCORRECT_INFORMATION)
       end
 
-      delegate :latest_provider_update_event, to: :submission
-
       def provider_added_further_information?
-        latest_provider_update_event.details['comment'].present?
+        submission.data['further_information'].any? { _1['new'] }
       end
 
       def provider_corrected_information?
-        latest_provider_update_event.details['corrected_info'].any?
+        submission.data['incorrect_information'].any? { _1['new'] }
       end
 
       def section_amended?(provider_section_name)
-        latest_provider_update_event&.details&.dig('corrected_info')&.include?(provider_section_name)
+        latest_incorrect_information&.dig('sections_changed')&.include?(provider_section_name)
       end
 
       # NOTES:
@@ -119,6 +114,10 @@ module PriorAuthority
                   .map do |incorrect_information|
           IncorrectInformationCard.new(self, incorrect_information)
         end
+      end
+
+      def latest_incorrect_information
+        submission.data['incorrect_information']&.max_by { DateTime.parse(_1['requested_at']) }
       end
     end
   end

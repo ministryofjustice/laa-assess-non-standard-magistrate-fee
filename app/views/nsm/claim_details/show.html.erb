@@ -9,8 +9,8 @@
 
     <% if claim.sent_back? %>
       <div class="govuk-inset-text">
-        <p><strong><%= t(".sent_back", date: claim_summary.sent_back_on.to_fs(:stamp)) %></strong></p>
-        <%= simple_format claim_summary.send_back_comment %>
+        <p><strong><%= t(".sent_back", date: claim_summary.last_updated_at.to_fs(:stamp)) %></strong></p>
+        <%= simple_format claim_summary.assessment_comment %>
       </div>
     <% elsif claim_summary.assessment_comment.present? %>
       <div class="govuk-inset-text">
