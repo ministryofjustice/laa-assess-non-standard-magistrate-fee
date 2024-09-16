@@ -18,7 +18,7 @@ module Nsm
     end
 
     def destroy_redirect
-      claim.any_adjustments? ? { action: :adjusted } : nsm_claim_claim_details_path
+      claim.any_adjustments? ? { action: :adjusted } : nsm_claim_work_items_path
     end
 
     def adjustments

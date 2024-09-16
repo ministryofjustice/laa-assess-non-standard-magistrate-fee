@@ -28,8 +28,4 @@ class AdjustmentDeleterBase
     details = { field: field, from: from, to: to_field }
     ::Event::UndoEdit.build(submission:, linked:, details:, current_user:)
   end
-
-  def submission_scope
-    raise NotImplementedError, "#{self.class} has not implemented method '#{__method__}'"
-  end
 end
