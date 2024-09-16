@@ -80,7 +80,7 @@ RSpec.describe 'Adjustments' do
         expect(page).to have_content('Are you sure you want to delete this adjustment?')
       end
 
-      it 'delete canceled by user' do
+      it 'delete cancelled by user' do
         visit adjusted_nsm_claim_disbursements_path(claim)
         click_on 'Delete'
         click_on 'No, do not delete it'
