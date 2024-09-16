@@ -17,6 +17,7 @@ en:
     searches:
       show:
         page_title: Search for a claim
+        filter_hint:  Enter details in at least one field to search for a claim
         query:
           label: Enter any combination of client or firm name, UFN or LAA reference
 

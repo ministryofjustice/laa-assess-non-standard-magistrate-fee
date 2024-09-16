@@ -18,6 +18,15 @@ RSpec.describe 'Search', :stub_oauth_token do
     sign_in caseworker
   end
 
+  it 'displays as expected' do
+    visit prior_authority_root_path
+    click_on 'Search'
+
+    expect(page)
+      .to have_title('Search for an application')
+      .and have_content('Enter details in at least one field to search for an application')
+  end
+
   context 'when I search for an application that has already been imported' do
     let(:application) { create :prior_authority_application }
     let(:stub) do

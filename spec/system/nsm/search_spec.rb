@@ -19,6 +19,15 @@ RSpec.describe 'Search', :stub_oauth_token do
     sign_in caseworker
   end
 
+  it 'displays as expected' do
+    visit nsm_root_path
+    click_on 'Search'
+
+    expect(page)
+      .to have_title('Search for a claim')
+      .and have_content('Enter details in at least one field to search for a claim')
+  end
+
   context 'when I search for an application that has already been imported' do
     let(:claim) { create :claim }
 

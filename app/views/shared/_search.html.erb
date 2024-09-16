@@ -5,7 +5,7 @@
       <h1 class="govuk-heading-xl"><%= t("#{translation_prefix}.page_title") %></h1>
     <% end %>
 
-    <p><%= t('.filter_hint') %></p>
+    <p><%= t("#{translation_prefix}.filter_hint") %></p>
     <div class="search-panel govuk-!-margin-bottom-6">
       <%= form_with(url: form_url, method: :get, model: @search_form) do |f| %>
         <% if choose_application_type && FeatureFlags.nsm_insights.enabled? %>

@@ -16,5 +16,6 @@ en:
     searches:
       show:
         page_title: Search for an application
+        filter_hint:  Enter details in at least one field to search for an application
         query:
           label: Enter any combination of client or firm name, UFN or LAA reference
