@@ -148,5 +148,101 @@ RSpec.describe LocationService do
                            'OS API did not provide coordinates in expected format for postcode SOMEPOSTCODE'
       end
     end
+
+    context 'when a partial postcode is provided' do
+      let(:input_postcode) { 'outcode' }
+      let(:sent_postcode) { 'OUTCODE' }
+
+      context 'when the outcode is safely inside London' do
+        let(:payload) do
+          {
+            results: [
+              {
+                'GAZETTEER_ENTRY' => {
+                  'NAME1' => "#{sent_postcode} ABC",
+                  'LOCAL_TYPE' => 'Postcode',
+                  'GEOMETRY_X' => 527_614.0,
+                  'GEOMETRY_Y' => 175_539.0
+                }
+              }
+            ]
+          }
+        end
+
+        it 'returns true' do
+          expect(subject).to be true
+        end
+      end
+
+      context 'when the outcode is safely outside London' do
+        let(:payload) do
+          {
+            results: [
+              {
+                'GAZETTEER_ENTRY' => {
+                  'NAME1' => "#{sent_postcode} ABC",
+                  'LOCAL_TYPE' => 'Postcode',
+                  'GEOMETRY_X' => 613_702.0,
+                  'GEOMETRY_Y' => 284_209.0
+                }
+              }
+            ]
+          }
+        end
+
+        it 'returns true' do
+          expect(subject).to be false
+        end
+      end
+
+      context 'when the outcode straddles the M25' do
+        let(:input_postcode) { 'rm4' }
+        let(:sent_postcode) { 'RM4' }
+        let(:payload) do
+          {
+            results: [
+              {
+                'GAZETTEER_ENTRY' => {
+                  'NAME1' => "#{sent_postcode} ABC",
+                  'LOCAL_TYPE' => 'Postcode',
+                  'GEOMETRY_X' => 613_702.0,
+                  'GEOMETRY_Y' => 284_209.0
+                }
+              }
+            ]
+          }
+        end
+
+        it 'raises an appropriate error' do
+          expect do
+            subject
+          end.to raise_error described_class::UnknowablePartialPostcode,
+                             'Outcode RM4 could be inside or outside the M25'
+        end
+      end
+
+      context 'when the outcode is not recognised as an outcode' do
+        let(:payload) do
+          {
+            results: [
+              {
+                'GAZETTEER_ENTRY' => {
+                  'NAME1' => "#{sent_postcode} ABC",
+                  'LOCAL_TYPE' => 'Town',
+                  'GEOMETRY_X' => 613_702.0,
+                  'GEOMETRY_Y' => 284_209.0
+                }
+              }
+            ]
+          }
+        end
+
+        it 'raises an appropriate error' do
+          expect do
+            subject
+          end.to raise_error described_class::NotFoundError, 'OS API returned no matching entry for postcode OUTCODE'
+        end
+      end
+    end
   end
 end
