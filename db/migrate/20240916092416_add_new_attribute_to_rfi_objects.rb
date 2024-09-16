@@ -19,7 +19,7 @@ class AddNewAttributeToRfiObjects < ActiveRecord::Migration[7.1]
         latest_correction && latest_correction['new'] = true
       end
 
-      paa.save!
+      paa.save!(touch: false)
     end
   end
 end
