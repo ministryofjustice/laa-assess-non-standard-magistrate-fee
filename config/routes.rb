@@ -84,10 +84,6 @@ Rails.application.routes.draw do
         collection { get :adjusted }
         member { get :confirm_deletion }
       end
-      resources :disbursement_adjustments do
-        member { get :confirm_deletion }
-        member { delete :destroy}
-      end
       resource :supporting_evidences, only: [:show] do
         resources :downloads, only: :show
       end

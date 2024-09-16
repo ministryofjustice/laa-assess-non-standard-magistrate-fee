@@ -101,6 +101,8 @@ en:
         warning: "You cannot undo this action"
         yes_delete: Yes, delete it
         no_delete: No, do not delete it
+      destroy:
+        success: You deleted the adjustment
   helpers:
     legend:
       nsm_disbursements_form:

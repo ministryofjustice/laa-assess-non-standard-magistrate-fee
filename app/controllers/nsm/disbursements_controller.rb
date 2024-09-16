@@ -5,6 +5,8 @@ module Nsm
 
     before_action :set_default_table_sort_options, only: %i[index adjusted]
 
+    include Nsm::AdjustmentConcern
+
     def index
       claim = Claim.find(params[:claim_id])
       claim_summary = BaseViewModel.build(:claim_summary, claim)
