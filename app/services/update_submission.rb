@@ -59,7 +59,7 @@ class UpdateSubmission
   def autograntable?
     # performed here to avoid slow transactions as requires API call to the OS API
     Autograntable.new(submission:).grantable?
-  rescue LocationService::NotFoundError
+  rescue LocationService::NotFoundError, LocationService::UnknowablePartialPostcode
     false
   rescue LocationService::LocationError => e
     Sentry.capture_exception(e)
