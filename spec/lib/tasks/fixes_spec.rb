@@ -43,4 +43,35 @@ describe 'fixes:', type: :task do
       end
     end
   end
+
+  describe 'fix_corrupt_versions' do
+    let(:affected_submission_id) { '84fabfe2-844f-4bbe-8460-1be4a18912e3' }
+    let(:unaffected_submission_id) { SecureRandom.uuid }
+    let(:affected_submission) do
+      create(:prior_authority_application, id: affected_submission_id, current_version: 3)
+    end
+    let(:unaffected_submission) do
+      create(:prior_authority_application, id: unaffected_submission_id, current_version: 3)
+    end
+
+    before do
+      affected_submission
+      unaffected_submission
+      Rails.application.load_tasks if Rake::Task.tasks.empty?
+    end
+
+    after do
+      Rake::Task['fixes:fix_corrupt_versions'].reenable
+    end
+
+    it 'does not decrement unaffected submission' do
+      Rake::Task['fixes:fix_corrupt_versions'].execute
+      expect(Submission.find(unaffected_submission_id).current_version).to eq(3)
+    end
+
+    it 'does decrement affected submission' do
+      Rake::Task['fixes:fix_corrupt_versions'].execute
+      expect(Submission.find(affected_submission_id).current_version).to eq(2)
+    end
+  end
 end
