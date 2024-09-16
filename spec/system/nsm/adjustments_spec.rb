@@ -40,34 +40,36 @@ RSpec.describe 'Adjustments' do
       end
     end
 
-    xdescribe 'letters and calls' do
+    describe 'letters and calls' do
       it 'delete redirects to confirmation' do
         visit adjusted_nsm_claim_letters_and_calls_path(claim)
         within('.govuk-table__body') do
+          click_link('Delete', match: :first)
         end
-
-        click_on 'Delete'
         expect(page).to have_content('Are you sure you want to delete this adjustment?')
       end
 
       it 'delete canceled by user' do
         visit adjusted_nsm_claim_letters_and_calls_path(claim)
-        click_on 'Delete'
+        within('.govuk-table__body') do
+          click_link('Delete', match: :first)
+        end
         click_on 'No, do not delete it'
 
         expect(page).to have_content('Adjusted costs')
         within('.govuk-table') do
-          expect(page).to have_content('Waiting')
-            .and have_content('£125.58')
+          expect(page).to have_content('Letters')
+            .and have_content('£83.30')
         end
       end
 
       it 'delete confirmed' do
         visit adjusted_nsm_claim_letters_and_calls_path(claim)
-        click_on 'Delete'
+        within('.govuk-table__body') do
+          click_link('Delete', match: :first)
+        end
         click_on 'Yes, delete it'
-        expect(page).to have_content('Adjusted costs')
-        expect(page).to have_content('You do not have any adjusted letters and calls')
+        expect(page).to have_content('You deleted the adjustment')
       end
     end
 
@@ -114,6 +116,21 @@ RSpec.describe 'Adjustments' do
         click_on 'No, do not delete all'
 
         expect(page).to have_content('Delete all adjustments')
+      end
+
+      it 'delete confirmed expects comment' do
+        visit adjusted_nsm_claim_disbursements_path(claim)
+        click_on 'Delete all adjustments'
+        click_on 'Yes, delete all'
+        expect(page).to have_content('There is a problem on this page')
+      end
+
+      it 'delete confirmed' do
+        visit adjusted_nsm_claim_disbursements_path(claim)
+        click_on 'Delete all adjustments'
+        fill_in 'nsm-delete-adjustments-form-comment-field', with: 'Test Data'
+        click_on 'Yes, delete all'
+        expect(page).to have_content('Deleted all adjustments')
       end
     end
   end
