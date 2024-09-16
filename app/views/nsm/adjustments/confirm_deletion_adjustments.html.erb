@@ -11,7 +11,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_with model: form, url: deletion_path , method: :put do |f| %>
-      <%= f.govuk_text_area :comment, label: { size: 'm' }, rows: 5 %>
+      <%= f.govuk_text_area :comment, label: { size: 'm', text: t('.label') }, rows: 5 %>
       <div class="govuk-warning-text">
         <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
         <strong class="govuk-warning-text__text">
