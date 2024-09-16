@@ -9,21 +9,20 @@ en:
         yes_delete: Yes, delete all
         no_delete: No, do not delete all
         explanation_warning: This will delete all of the adjustments made to this claim
-        label: Explain your decision
       show:
         delete_all_adjustments: Delete all adjustments
       delete_all:
         success: Deleted all adjustments
 
-    helpers:
-      label:
-        nsm_delete_adjustments_form:
-          comment: Explain your decision
+  helpers:
+    label:
+      nsm_delete_adjustments_form:
+        comment: Explain your decision
 
-    activemodel:
-      errors:
-        models:
-          nsm/delete_adjustments_form/:
-            attributes:
-              comment:
-                blank: Add an explanation for your decision
+  activemodel:
+    errors:
+      models:
+        nsm/delete_adjustments_form:
+          attributes:
+            comment:
+              blank: Add an explanation for your decision
