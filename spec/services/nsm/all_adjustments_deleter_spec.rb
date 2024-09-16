@@ -124,5 +124,25 @@ RSpec.describe Nsm::AllAdjustmentsDeleter do
         )
       end
     end
+
+    context 'no adjustments' do
+      it 'wont try to disbursement adjustments if none' do
+        allow(subject).to receive(:work_items).and_return nil
+        expect(subject).not_to receive(:delete_work_item_adjustments)
+        subject.call
+      end
+
+      it 'wont try to work_item adjustments if none' do
+        allow(subject).to receive(:letters_and_calls).and_return nil
+        expect(subject).not_to receive(:delete_letters_and_calls_adjustments)
+        subject.call
+      end
+
+      it 'wont try to letter and call adjustments if none' do
+        allow(subject).to receive(:disbursements).and_return nil
+        expect(subject).not_to receive(:delete_disbursement_adjustments)
+        subject.call
+      end
+    end
   end
 end

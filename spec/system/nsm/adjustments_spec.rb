@@ -102,6 +102,35 @@ RSpec.describe 'Adjustments' do
       end
     end
 
+    describe 'redirect to claim if all adjustments deleted' do
+      it 'redirects' do
+        visit adjusted_nsm_claim_work_items_path(claim)
+        click_on 'Delete'
+        click_on 'Yes, delete it'
+        expect(page).to have_content('You do not have any adjusted work items')
+
+        visit adjusted_nsm_claim_disbursements_path(claim)
+        click_on 'Delete'
+        click_on 'Yes, delete it'
+        expect(page).to have_content('You do not have any disbursements')
+
+        visit adjusted_nsm_claim_letters_and_calls_path(claim)
+        within('.govuk-table__body') do
+          click_link('Delete', match: :first)
+        end
+        click_on 'Yes, delete it'
+
+        expect(page).to have_content('Adjusted costs')
+
+        within('.govuk-table__body') do
+          click_link('Delete', match: :first)
+        end
+        click_on 'Yes, delete it'
+        expect(page).to have_content('You deleted the adjustment')
+        expect(page).to have_content('Review and adjust')
+      end
+    end
+
     describe 'delete all adjustments' do
       it 'asks to confirm delete all adjustments' do
         visit adjusted_nsm_claim_work_items_path(claim)
@@ -131,6 +160,7 @@ RSpec.describe 'Adjustments' do
         fill_in 'nsm-delete-adjustments-form-comment-field', with: 'Test Data'
         click_on 'Yes, delete all'
         expect(page).to have_content('Deleted all adjustments')
+        expect(page).to have_content('Review and adjust')
       end
     end
   end
