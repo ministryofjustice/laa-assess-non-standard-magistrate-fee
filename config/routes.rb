@@ -65,12 +65,9 @@ Rails.application.routes.draw do
       namespace :work_items do
         resource :uplift, only: [:edit, :update], path_names: { edit: '' }
       end
-      resources :work_items, only: [:index, :show, :edit, :update] do
+      resources :work_items, only: [:index, :show, :edit, :update, :destroy] do
         collection { get :adjusted }
-      end
-      resources :work_item_adjustments do
         member { get :confirm_deletion }
-        member { delete :destroy}
       end
       resources :letters_and_calls, only: [:index, :show, :edit, :update, :destroy], constraints: { id: /(letters|calls)/ } do
         collection { get :adjusted }
