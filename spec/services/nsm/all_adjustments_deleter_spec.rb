@@ -6,8 +6,12 @@ RSpec.describe Nsm::AllAdjustmentsDeleter do
 
     let(:params) { { claim_id: claim.id, id: item_id } }
     let(:item_id) { '1234-adj' }
-    let(:user) { User.find_by(email: 'case.worker@test.com') }
-    let(:claim) { create(:claim, :with_adjustments, :with_assignment) }
+    let(:user) { create(:caseworker) }
+    let(:claim) { create(:claim, :with_adjustments) }
+
+    before do
+      create(:assignment, submission: claim, user: user)
+    end
 
     context 'when deleting disbursement adjustments' do
       before { service.call }
