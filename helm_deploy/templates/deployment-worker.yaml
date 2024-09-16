@@ -59,7 +59,7 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           envFrom:
-            - configMapRef:
+          - configMapRef:
               name: {{ include "laa-assess-crime-forms.fullname" . }}-settings
           env:
           {{ if .Values.redis.enabled }}
