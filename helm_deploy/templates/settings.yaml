@@ -5,4 +5,4 @@ metadata:
   labels:
     {{- include "laa-assess-crime-forms.labels" . | nindent 4 }}
 data:
-  MAINTENANCE_MODE: false
+  MAINTENANCE_MODE: 'false'
