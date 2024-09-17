@@ -6,5 +6,5 @@ NAMESPACE=$1
 BRANCH_RELEASE_NAME=${2:-laa-assess-crime-forms-app}
 
 echo "Creating configmap with maintenance mode enabled"
-kubectl create configmap $BRANCH_RELEASE_NAME -n $NAMESPACE --from-literal=MAINTENANCE_MODE=false --dry-run -o yaml | kubectl -n $NAMESPACE apply -f -
+kubectl create configmap $BRANCH_RELEASE_NAME -n $NAMESPACE --from-literal=MAINTENANCE_MODE=false --dry-run=client -o yaml | kubectl -n $NAMESPACE apply -f -
 kubectl rollout restart deployment -n $NAMESPACE $BRANCH_RELEASE_NAME
