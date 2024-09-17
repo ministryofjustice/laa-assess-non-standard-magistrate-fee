@@ -9,6 +9,6 @@ en:
     search:
       application_type:
         label: Which service do you want to search?
+      filter_hint: Enter details in at least one field to search for a claim or an application
       query:
-        label: Claim or application details
-        hint: Search for a client/defendant name, firm name, UFN or LAA reference
+        label: Enter any combination of client or firm name, UFN or LAA reference

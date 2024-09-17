@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Search', :stub_oauth_token do
   let(:caseworker) { create(:caseworker, first_name: 'John', last_name: 'Everyman') }
   let(:endpoint) { 'https://appstore.example.com/v1/submissions/searches' }
+
   let(:payload) do
     {
       application_type: 'crm7',
@@ -18,8 +19,18 @@ RSpec.describe 'Search', :stub_oauth_token do
     sign_in caseworker
   end
 
+  it 'displays as expected' do
+    visit nsm_root_path
+    click_on 'Search'
+
+    expect(page)
+      .to have_title('Search for a claim')
+      .and have_content('Enter details in at least one field to search for a claim')
+  end
+
   context 'when I search for an application that has already been imported' do
     let(:claim) { create :claim }
+
     let(:stub) do
       stub_request(:post, endpoint).with(body: payload).to_return(
         status: 201,
@@ -36,7 +47,7 @@ RSpec.describe 'Search', :stub_oauth_token do
     it 'lets me search and shows me a result' do
       visit nsm_root_path
       click_on 'Search'
-      fill_in 'Claim details', with: 'QUERY'
+      fill_in 'Enter any combination', with: 'QUERY'
       within 'main' do
         click_on 'Search'
       end
@@ -49,14 +60,33 @@ RSpec.describe 'Search', :stub_oauth_token do
     end
   end
 
-  it 'validates' do
-    visit nsm_root_path
-    click_on 'Search'
-    within('main') { click_on 'Search' }
-    expect(page).to have_content 'Enter some claim details or filter your search criteria'
+  context 'when I search with invalid search criteria' do
+    it 'displays an error when no filters applied' do
+      visit nsm_root_path
+      click_on 'Search'
+      within('main') { click_on 'Search' }
+      expect(page).to have_content 'Enter some claim details or filter your search criteria'
+    end
+
+    it 'displays an error when unparsable date strings used as filters' do
+      visit nsm_root_path
+      click_on 'Search'
+      fill_in 'Submission date from', with: '31/4/2023'
+      fill_in 'Submission date to', with: '31/13/2024'
+      fill_in 'Last updated from', with: 'adaddddd'
+      fill_in 'Last updated to', with: '2024367' # the 367th day of 2024 (a leap year)
+
+      within('main') { click_on 'Search' }
+
+      expect(page)
+        .to have_content('Enter a valid submission date from')
+        .and have_content('Enter a valid submission date to')
+        .and have_content('Enter a valid last updated from')
+        .and have_content('Enter a valid last updated to')
+    end
   end
 
-  context 'if I search for something with no matches' do
+  context 'when I search for something with no matches' do
     before do
       stub_request(:post, endpoint).with(body: payload).to_return(
         status: 201,
@@ -86,14 +116,15 @@ RSpec.describe 'Search', :stub_oauth_token do
 
   context 'when there are multiple results' do
     let(:claims) { create_list(:claim, 20) }
+
     let(:payloads) do
       [
-        { application_type: 'crm7', page: 1, per_page: 20, query: 'QUERY', sort_by: 'last_updated',
-sort_direction: 'descending' },
-        { application_type: 'crm7', page: 1, per_page: 20, query: 'QUERY', sort_by: 'laa_reference',
-sort_direction: 'ascending' },
-        { application_type: 'crm7', page: 2, per_page: 20, query: 'QUERY', sort_by: 'laa_reference',
-sort_direction: 'ascending' },
+        { application_type: 'crm7', page: 1, per_page: 20, query: 'QUERY',
+          sort_by: 'last_updated', sort_direction: 'descending' },
+        { application_type: 'crm7', page: 1, per_page: 20, query: 'QUERY',
+          sort_by: 'laa_reference', sort_direction: 'ascending' },
+        { application_type: 'crm7', page: 2, per_page: 20, query: 'QUERY',
+          sort_by: 'laa_reference', sort_direction: 'ascending' },
       ]
     end
 
@@ -126,12 +157,13 @@ sort_direction: 'ascending' },
         sort_by: 'last_updated',
         sort_direction: 'descending',
         status_with_assignment: 'rejected',
-        submitted_from: '2023-04-20',
-        submitted_to: '2023-04-21',
-        updated_from: '2023-04-22',
-        updated_to: '2023-04-23'
+        submitted_from: '20/4/2023',
+        submitted_to: '21/4/2023',
+        updated_from: '22/4/2023',
+        updated_to: '23/4/2023'
       }
     end
+
     let(:stub) do
       stub_request(:post, endpoint).with(body: payload).to_return(
         status: 201,
@@ -144,26 +176,10 @@ sort_direction: 'ascending' },
     it 'lets me search and shows me a result' do
       visit nsm_root_path
       click_on 'Search'
-      within('.govuk-fieldset', text: 'Date submitted from') do
-        fill_in 'Day', with: '20'
-        fill_in 'Month', with: '4'
-        fill_in 'Year', with: '2023'
-      end
-      within('.govuk-fieldset', text: 'Date submitted to') do
-        fill_in 'Day', with: '21'
-        fill_in 'Month', with: '4'
-        fill_in 'Year', with: '2023'
-      end
-      within('.govuk-fieldset', text: 'Last updated from') do
-        fill_in 'Day', with: '22'
-        fill_in 'Month', with: '4'
-        fill_in 'Year', with: '2023'
-      end
-      within('.govuk-fieldset', text: 'Last updated to') do
-        fill_in 'Day', with: '23'
-        fill_in 'Month', with: '4'
-        fill_in 'Year', with: '2023'
-      end
+      fill_in 'Submission date from', with: '20/4/2023'
+      fill_in 'Submission date to', with: '21/4/2023'
+      fill_in 'Last updated from', with: '22/4/2023'
+      fill_in 'Last updated to', with: '23/4/2023'
       select caseworker.display_name, from: 'Caseworker'
       select 'Rejected', from: 'Status'
       within('main') { click_on 'Search' }
