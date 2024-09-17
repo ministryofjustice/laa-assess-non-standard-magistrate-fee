@@ -18,3 +18,9 @@ enable_main() {
   echo "Restarting deployment"
   kubectl -n $NAMESPACE rollout restart deployment laa-assess-crime-forms-app
 }
+
+if [[ "$CIRCLE_BRANCH" == "main" ]]; then
+  enable_branch
+else
+  enable_main
+end

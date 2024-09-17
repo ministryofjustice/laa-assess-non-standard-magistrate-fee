@@ -5,16 +5,22 @@ NAMESPACE=$1
 # Convert the branch name into a string that can be turned into a valid URL
 BRANCH_RELEASE_NAME=$(echo $CIRCLE_BRANCH | tr '[:upper:]' '[:lower:]' | sed 's:^\w*\/::' | tr -s ' _/[]().' '-' | cut -c1-18 | sed 's/-$//')
 
-enable_branch() {
+disable_branch() {
   echo "Creating configmap with maintenance mode disabled"
   kubectl -n $NAMESPACE create configmap $BRANCH_RELEASE_NAME-settings --from-literal=MAINTENANCE_MODE=false
   echo "Restarting branch deployment"
   kubectl -n $NAMESPACE rollout restart deployment $BRANCH_RELEASE_NAME
 }
 
-enable_main() {
+disable_main() {
   echo "Creating configmap with maintenance mode disabled"
   kubectl -n $NAMESPACE create configmap laa-assess-crime-forms-settings --from-literal=MAINTENANCE_MODE=false
   echo "Restarting deployment"
   kubectl -n $NAMESPACE rollout restart deployment laa-assess-crime-forms-app
 }
+
+if [[ "$CIRCLE_BRANCH" == "main" ]]; then
+  disable_branch
+else
+  disable_main
+end
