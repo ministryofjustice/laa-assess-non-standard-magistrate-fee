@@ -62,7 +62,7 @@ spec:
           - name: MAINTENANCE_MODE
             valueFrom:
               configMapRef:
-                name: {{ include "laa-assess-crime-forms.fullname" . }}-settings
+                name: {{ include "laa-assess-crime-forms.fullname" . }}
                 key: MAINTENANCE_MODE
           {{ if .Values.redis.enabled }}
             - name: REDIS_PROTOCOL
