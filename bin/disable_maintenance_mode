@@ -7,14 +7,14 @@ BRANCH_RELEASE_NAME=$(echo $CIRCLE_BRANCH | tr '[:upper:]' '[:lower:]' | sed 's:
 
 disable_branch() {
   echo "Creating configmap with maintenance mode disabled"
-  kubectl -n $NAMESPACE create configmap $BRANCH_RELEASE_NAME-settings --from-literal=MAINTENANCE_MODE=false
+  kubectl -n $NAMESPACE create configmap $BRANCH_RELEASE_NAME --from-literal=MAINTENANCE_MODE=false --dry-run -o yaml | kubectl -n $NAMESPACE apply -f -
   echo "Restarting branch deployment"
   kubectl -n $NAMESPACE rollout restart deployment $BRANCH_RELEASE_NAME
 }
 
 disable_main() {
   echo "Creating configmap with maintenance mode disabled"
-  kubectl -n $NAMESPACE create configmap laa-assess-crime-forms-settings --from-literal=MAINTENANCE_MODE=false
+  kubectl -n $NAMESPACE create configmap laa-assess-crime-forms --from-literal=MAINTENANCE_MODE=false  --dry-run -o yaml | kubectl -n $NAMESPACE apply -f -
   echo "Restarting deployment"
   kubectl -n $NAMESPACE rollout restart deployment laa-assess-crime-forms-app
 }
