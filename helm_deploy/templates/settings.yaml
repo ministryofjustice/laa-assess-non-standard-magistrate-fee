@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ include "laa-assess-crime-forms.fullname" . }}-settings
-  labels:
-    {{- include "laa-assess-crime-forms.labels" . | nindent 4 }}
-data:
-  MAINTENANCE_MODE: 'false'

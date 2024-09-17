@@ -19,6 +19,11 @@ feature_flags:
     development: true
     uat: true
     production: true
+  maintenance_mode:
+    local: <%= ENV.fetch("MAINTENANCE_MODE", false) %>
+    development: false
+    uat: false
+    production: false
   search:
     local: <%= ENV.fetch("SEARCH", true) %>
     development: true
