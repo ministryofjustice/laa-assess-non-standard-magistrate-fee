@@ -10,7 +10,9 @@ import './component/date-picker'
 
 // https://frontend.design-system.service.gov.uk/importing-css-assets-and-javascript/#javascript
 import { initAll } from 'govuk-frontend'
-
 initAll()
 
-Turbo.setFormMode("off")
+// set turbo to opt-in
+// https://turbo.hotwired.dev/handbook/drive#disabling-turbo-drive-on-specific-links-or-forms
+import { Turbo } from "@hotwired/turbo-rails"
+Turbo.session.drive = false

@@ -12,7 +12,7 @@
                 </li>
               <% end %>
               <li class="moj-primary-navigation__item">
-                  <%= link_to t('.search'), new_dashboard_path(nav_select: 'search'), class: 'moj-primary-navigation__link', 'aria-current': (@nav_select == 'search' ? 'page' :nil), data: { turbo: false } %>
+                  <%= link_to t('.search'), new_dashboard_path(nav_select: 'search'), class: 'moj-primary-navigation__link', 'aria-current': (@nav_select == 'search' ? 'page' :nil) %>
               </li>
           </ul>
         </nav>
