@@ -58,11 +58,6 @@ spec:
               exec:
                 command: ["sh", "-c", "sleep 30"] # Workaround for occasional lost requests - see https://github.com/puma/puma/blob/master/docs/kubernetes.md#running-puma-in-kubernetes
           env:
-            - name: MAINTENANCE_MODE
-              valueFrom:
-                configMapRef:
-                  name: {{ include "laa-assess-crime-forms.fullname" . }}
-                  key: MAINTENANCE_MODE
           {{ if .Values.redis.enabled }}
             - name: REDIS_PROTOCOL
               value: "redis"
@@ -215,6 +210,11 @@ spec:
                   key: metabase_secret_key
             - name: METABASE_SITE_URL
               value: '{{ .Values.metabase.siteUrl}}'
+            - name: MAINTENANCE_MODE
+              valueFrom:
+                configMapRef:
+                  name: {{ include "laa-assess-crime-forms.fullname" . }}
+                  key: MAINTENANCE_MODE
 
       {{- with .Values.nodeSelector }}
       nodeSelector:
