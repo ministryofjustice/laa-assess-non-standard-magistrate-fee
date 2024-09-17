@@ -99,7 +99,7 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
 
           it 'automatically defaults to CRM4 search' do
             within('.search-panel') do
-              fill_in 'Claim or application details', with: 'LAA-ABCDEF'
+              fill_in 'Enter any combination', with: 'LAA-ABCDEF'
               click_on 'Search'
             end
           end
@@ -181,13 +181,13 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
 
           it 'can navigate to search analytics' do
             expect(page).to have_css('.govuk-heading-xl', text: 'Search')
-            expect(page).to have_css('.govuk-label', text: 'Claim or application details')
+            expect(page).to have_css('.govuk-label', text: 'Enter any combination of client or firm name, UFN or LAA reference')
           end
 
           it 'can search for submissions' do
             within('.search-panel') do
               choose 'Prior authority'
-              fill_in 'Claim or application details', with: 'Foo'
+              fill_in 'Enter any combination', with: 'Foo'
               click_on 'Search'
             end
 
@@ -197,7 +197,7 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
           it 'can sort results' do
             within('.search-panel') do
               choose 'Prior authority'
-              fill_in 'Claim or application details', with: 'Foo'
+              fill_in 'Enter any combination', with: 'Foo'
               click_on 'Search'
             end
 
@@ -227,7 +227,7 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
 
           it 'shows validation error' do
             within('.search-panel') do
-              fill_in 'Claim or application details', with: 'test'
+              fill_in 'Enter any combination', with: 'test'
               click_on 'Search'
             end
 
