@@ -7,20 +7,20 @@ BRANCH_RELEASE_NAME=$(echo $CIRCLE_BRANCH | tr '[:upper:]' '[:lower:]' | sed 's:
 
 disable_branch() {
   echo "Creating configmap with maintenance mode disabled"
-  kubectl -n $NAMESPACE create configmap $BRANCH_RELEASE_NAME --from-literal=MAINTENANCE_MODE=false --dry-run -o yaml | kubectl -n $NAMESPACE apply -f -
+  kubectl create configmap $BRANCH_RELEASE_NAME -n $NAMESPACE --from-literal=MAINTENANCE_MODE=false --dry-run -o yaml | kubectl -n $NAMESPACE apply -f -
   echo "Restarting branch deployment"
-  kubectl -n $NAMESPACE rollout restart deployment $BRANCH_RELEASE_NAME
+  kubectl rollout restart deployment $BRANCH_RELEASE_NAME -n $NAMESPACE
 }
 
 disable_main() {
   echo "Creating configmap with maintenance mode disabled"
-  kubectl -n $NAMESPACE create configmap laa-assess-crime-forms --from-literal=MAINTENANCE_MODE=false  --dry-run -o yaml | kubectl -n $NAMESPACE apply -f -
+  kubectl create configmap laa-assess-crime-forms -n $NAMESPACE --from-literal=MAINTENANCE_MODE=false  --dry-run -o yaml | kubectl -n $NAMESPACE apply -f -
   echo "Restarting deployment"
-  kubectl -n $NAMESPACE rollout restart deployment laa-assess-crime-forms-app
+  kubectl rollout restart deployment -n $NAMESPACE laa-assess-crime-forms-app
 }
 
 if [[ "$CIRCLE_BRANCH" == "main" ]]; then
   disable_branch
 else
   disable_main
-end
+fi
