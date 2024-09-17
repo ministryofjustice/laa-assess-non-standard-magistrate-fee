@@ -7,7 +7,7 @@
     <br>
     <%= t('.reason', reason: @adjustment.reason) %>
     <br>
-    <%= raw t('.time_allowed', time_allowed: @adjustment.formatted_allowed_time_spent) %>
+    <%= t('.time_allowed_html', time_allowed: @adjustment.formatted_allowed_time_spent) %>
     <br>
     <%= t('.uplift_allowed', uplift_allowed: @adjustment.formatted_allowed_uplift) %>
     <br>
