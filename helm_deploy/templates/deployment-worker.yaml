@@ -58,10 +58,12 @@ spec:
             periodSeconds: 30
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          envFrom:
-          - configMapRef:
-              name: {{ include "laa-assess-crime-forms.fullname" . }}-settings
           env:
+          - name: MAINTENANCE_MODE
+            valueFrom:
+              configMapRef:
+                name: {{ include "laa-assess-crime-forms.fullname" . }}-settings
+                key: MAINTENANCE_MODE
           {{ if .Values.redis.enabled }}
             - name: REDIS_PROTOCOL
               value: "redis"
