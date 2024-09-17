@@ -1,4 +1,4 @@
-{{ if not (lookup "v1" "ConfigMap" {{ .Release.Namespace }} {{ include "laa-assess-crime-forms.fullname" . }}-settings) -}}
+{{ if not (lookup "v1" "ConfigMap" "{{ .Release.Namespace }}" "{{ include "laa-assess-crime-forms.fullname" . }}-settings") -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:

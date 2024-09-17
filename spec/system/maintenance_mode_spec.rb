@@ -16,8 +16,8 @@ RSpec.describe 'Maintenance mode' do
     let(:mode) { instance_double(FeatureFlags::EnabledFeature, enabled?: true) }
 
     before do
-       allow(FeatureFlags).to receive(:maintenance_mode).and_return(mode)
-       ENV['MAINTENANCE_MODE'] = 'true'
+      allow(FeatureFlags).to receive(:maintenance_mode).and_return(mode)
+      ENV['MAINTENANCE_MODE'] = 'true'
     end
 
     it 'shows the maintenance screen on all URLS' do
