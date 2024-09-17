@@ -12,10 +12,10 @@ class SearchForm
   PER_PAGE = 20
 
   attribute :query, :string
-  attribute :submitted_from, :date
-  attribute :submitted_to, :date
-  attribute :updated_from, :date
-  attribute :updated_to, :date
+  attribute :submitted_from, :string
+  attribute :submitted_to, :string
+  attribute :updated_from, :string
+  attribute :updated_to, :string
   attribute :status_with_assignment, :string
   attribute :caseworker_id, :string
   attribute :page, :integer, default: 1
@@ -25,6 +25,7 @@ class SearchForm
 
   validate :at_least_one_field_set
   validates :application_type, presence: true
+  validates :submitted_from, :submitted_to, :updated_from, :updated_to, is_a_date: true
 
   def results
     @search_response[:raw_data].map { SearchResult.new(_1) }

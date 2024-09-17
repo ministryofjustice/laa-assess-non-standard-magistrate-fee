@@ -61,13 +61,19 @@ en:
     search:
       search: Search
       clear_all: Clear all
-      filter_results:  Filter your search criteria
-      submitted_from: Date submitted from
-      submitted_to: Date submitted to
+      submission_filter_legend: Submission date
+      submission_filter_hint: Enter a start date, end date or both, for example, 17/5/2024
+      submitted_from: Submission date from
+      submitted_to: Submission date to
+      updated_filter_legend: Last updated at
+      updated_filter_hint: Enter a start date, end date or both, for example, 17/5/2024
       updated_from: Last updated from
       updated_to: Last updated to
-      search_results: Search results
-      none: There are no results that match the search criteria
+      search_results:
+        zero: There are no results that match the search criteria
+        one: "%{count} Search result"
+        other: "%{count} Search results"
+        none_para: Check you’ve entered the correct details
       result: result
       status: Status
       caseworker: Caseworker
