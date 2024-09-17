@@ -178,7 +178,7 @@ spec:
               value: 'true'
             - name: MAINTENANCE_MODE
               valueFrom:
-                configMapRef:
+                configMapKeyRef:
                   name: {{ include "laa-assess-crime-forms.fullname" . }}
                   key: MAINTENANCE_MODE
       {{- with .Values.nodeSelector }}
