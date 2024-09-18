@@ -1,6 +1,9 @@
 module Nsm
   module V1
     class DefendantDetails < BaseViewModel
+      include ActionView::Helpers::TagHelper
+      include ActionView::Helpers::OutputSafetyHelper
+
       attribute :defendants
 
       def key
@@ -19,22 +22,8 @@ module Nsm
         main_defendant_rows + additional_defendant_rows
       end
 
-      def main_defendant_name
-        main_defendant = defendants.detect { |defendant| defendant['main'] }
-        construct_name(main_defendant)
-      end
-
-      def main_defendant_maat
-        main_defendant = defendants.detect { |defendant| defendant['main'] }
-        main_defendant['maat']
-      end
-
       def main_defendant_value
-        if main_defendant_maat.present?
-          multiline_text("#{main_defendant_name}\n#{main_defendant_maat}")
-        else
-          main_defendant_name
-        end
+        construct_value(defendants.find { _1['main'] })
       end
 
       def additional_defendants
@@ -69,7 +58,7 @@ module Nsm
 
       def construct_value(defendant)
         if defendant['maat'].present?
-          multiline_text("#{construct_name(defendant)}\n#{defendant['maat']}")
+          safe_join([construct_name(defendant), tag.br, defendant['maat']])
         else
           construct_name(defendant)
         end
