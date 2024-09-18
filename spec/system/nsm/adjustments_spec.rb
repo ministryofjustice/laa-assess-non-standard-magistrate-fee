@@ -3,6 +3,19 @@ require 'rails_helper'
 RSpec.describe 'Adjustments' do
   let(:user) { create(:caseworker) }
   let(:claim) { create(:claim, :with_adjustments) }
+  let(:no_adjustments) { create(:claim) }
+  let(:client) { instance_double(AppStoreClient, get_submission: app_store_record) }
+  let(:app_store_record) do
+    {
+      'version' => 1,
+      'json_schema_version' => 1,
+      'application_state' => 'submitted',
+      'application_type' => 'crm7',
+      'application' => no_adjustments.data,
+      'events' => [],
+      'application_id' => claim.id,
+    }
+  end
 
   before do
     sign_in user
@@ -132,6 +145,10 @@ RSpec.describe 'Adjustments' do
     end
 
     describe 'delete all adjustments' do
+      before do
+        allow(AppStoreClient).to receive(:new).and_return(client)
+      end
+
       it 'asks to confirm delete all adjustments' do
         visit adjusted_nsm_claim_work_items_path(claim)
         click_on 'Delete all adjustments'
