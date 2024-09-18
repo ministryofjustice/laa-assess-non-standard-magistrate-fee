@@ -1,0 +1,10 @@
+{{- if not (lookup "v1" "ConfigMap" .Release.Namespace (include "laa-assess-crime-forms.fullname" .)) -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "laa-assess-crime-forms.fullname" . }}
+  annotations:
+    helm.sh/resource-policy: keep
+data:
+  MAINTENANCE_MODE: 'false'
+{{ end }}

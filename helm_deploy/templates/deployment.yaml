@@ -210,6 +210,11 @@ spec:
                   key: metabase_secret_key
             - name: METABASE_SITE_URL
               value: '{{ .Values.metabase.siteUrl}}'
+            - name: MAINTENANCE_MODE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "laa-assess-crime-forms.fullname" . }}
+                  key: MAINTENANCE_MODE
 
       {{- with .Values.nodeSelector }}
       nodeSelector:
