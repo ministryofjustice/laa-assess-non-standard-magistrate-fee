@@ -48,9 +48,9 @@ RSpec.describe Nsm::V1::DefendantDetails do
     context 'Main defendant and additional defendants' do
       it 'shows correct table data' do
         expect(subject.data).to eq([
-                                     { title: "Defendant 1 (lead)", value: "Main Defendant<br>AB12123" },
-                                     { title: "Defendant 2", value: "Defendant 2<br>AB454545" },
-                                     { title: "Defendant 3", value: "Defendant 3<br>AB676767" },
+                                     { title: 'Defendant 1 (lead)', value: 'Main Defendant<br>AB12123' },
+                                     { title: 'Defendant 2', value: 'Defendant 2<br>AB454545' },
+                                     { title: 'Defendant 3', value: 'Defendant 3<br>AB676767' },
                                    ])
       end
 
@@ -78,8 +78,8 @@ RSpec.describe Nsm::V1::DefendantDetails do
 
         it 'shows correct table data' do
           expect(subject.data).to eq([
-                                       { title: "Defendant 1 (lead)", value: "Main Defendant" },
-                                       { title: "Defendant 2", value: "Defendant 2" },
+                                       { title: 'Defendant 1 (lead)', value: 'Main Defendant' },
+                                       { title: 'Defendant 2', value: 'Defendant 2' },
                                      ])
         end
       end
@@ -102,7 +102,7 @@ RSpec.describe Nsm::V1::DefendantDetails do
 
       it 'shows correct table data' do
         expect(subject.data).to eq([
-                                     { title: "Defendant 1 (lead)", value: 'Main Defendant<br>AB12123' }
+                                     { title: 'Defendant 1 (lead)', value: 'Main Defendant<br>AB12123' }
                                    ])
       end
     end
