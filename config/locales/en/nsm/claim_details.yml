@@ -25,10 +25,8 @@ en:
           prom: PROM
       defendant_details:
         title: Defendant details
-        main_defendant_name: Main defendant full name
-        main_defendant_maat: Main defendant MAAT ID number
-        defendant_name: Additional defendant %{count} full name
-        defendant_maat: Additional defendant %{count} MAAT ID number
+        main_defendant: Defendant 1 (lead)
+        additional_defendant: Defendant %{count}
       case_details:
         title: Case details
         main_offence: Main offence name

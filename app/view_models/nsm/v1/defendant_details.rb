@@ -29,6 +29,10 @@ module Nsm
         main_defendant['maat']
       end
 
+      def main_defendant_value
+        "#{main_defendant_name}\n#{main_defendant_maat}"
+      end
+
       def additional_defendants
         defendants.reject { |defendant| defendant['main'] == true }
       end
@@ -36,15 +40,9 @@ module Nsm
       def main_defendant_rows
         [
           {
-            title:  I18n.t(".nsm.claim_details.#{key}.main_defendant_name"),
-            value: main_defendant_name
-          },
-          (if main_defendant_maat.present?
-             {
-               title: I18n.t(".nsm.claim_details.#{key}.main_defendant_maat"),
-              value: main_defendant_maat
-             }
-           end)
+            title:  I18n.t(".nsm.claim_details.#{key}.main_defendant"),
+            value: main_defendant_value
+          }
         ]
       end
 
@@ -52,21 +50,25 @@ module Nsm
         additional_defendants.map.with_index do |defendant, index|
           [
             {
-              title: I18n.t(".nsm.claim_details.#{key}.defendant_name", count: index + 1),
-              value: construct_name(defendant)
-            },
-            (if defendant['maat'].present?
-               {
-                 title: I18n.t(".nsm.claim_details.#{key}.defendant_maat", count: index + 1),
-                value: defendant['maat']
-               }
-             end)
+              title: I18n.t(".nsm.claim_details.#{key}.additional_defendant", count: index + 1),
+              value: construct_value(defendant)
+            }
           ]
         end
       end
 
       def rows
         { title:, data: }
+      end
+
+      private
+
+      def construct_value(defendant)
+        if defendant['maat'].present?
+          "#{construct_name(defendant)}\n#{defendant['maat']}"
+        else
+          construct_name(defendant)
+        end
       end
     end
   end
