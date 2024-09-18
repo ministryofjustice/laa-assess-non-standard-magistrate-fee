@@ -9,13 +9,15 @@
   </div>
   <div class="govuk-grid-column-full">
     <h2 class="govuk-heading-m"><%= t('.page_title') %></h2>
-    <p>
-      <strong>
-        <%= link_to t('.add_note'),
-                    new_prior_authority_application_note_path(application_summary.id),
-                    class: "govuk-link--no-visited-state" %>
-      </strong>
-    </p>
+    <% unless current_user.viewer? %>
+      <p>
+        <strong>
+          <%= link_to t('.add_note'),
+                      new_prior_authority_application_note_path(application_summary.id),
+                      class: "govuk-link--no-visited-state" %>
+        </strong>
+      </p>
+    <% end %>
 
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">

@@ -9,10 +9,10 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <p>
-      <%= link_to(t('.prior_authority'), prior_authority_root_path, class: 'govuk-link--no-visited-state', data: { turbo: false }) %>
+      <%= link_to(t('.prior_authority'), prior_authority_root_path, class: 'govuk-link--no-visited-state') %>
     </p>
     <p>
-      <%= link_to(t('.nsm'), nsm_root_path, class: 'govuk-link--no-visited-state', data: { turbo: false }) %>
+      <%= link_to(t('.nsm'), nsm_root_path, class: 'govuk-link--no-visited-state') %>
     </p>
     <% if current_user.supervisor? && FeatureFlags.insights.enabled? %>
       <p>

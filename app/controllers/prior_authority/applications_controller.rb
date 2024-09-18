@@ -3,6 +3,8 @@ module PriorAuthority
     before_action :set_default_table_sort_options, only: %i[your open closed]
 
     def your
+      return redirect_to open_prior_authority_applications_path if current_user.viewer?
+
       @pagy, applications = order_and_paginate(PriorAuthorityApplication.open_and_assigned_to(current_user))
       @applications = applications.map do |application|
         BaseViewModel.build(:table_row, application)

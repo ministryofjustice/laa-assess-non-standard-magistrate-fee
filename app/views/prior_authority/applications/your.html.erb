@@ -9,9 +9,11 @@
     <% if @applications.none? %>
       <p class="govuk-body-m"><%= t('.no_applications') %></p>
     <% end %>
-    <div class="govuk-button-group">
-      <%= govuk_button_to(t('.next_application'), prior_authority_auto_assignments_path) %>
-    </div>
+    <% unless current_user.viewer? %>
+      <div class="govuk-button-group">
+        <%= govuk_button_to(t('.next_application'), prior_authority_auto_assignments_path) %>
+      </div>
+    <% end %>
     <% if @applications.any? %>
       <%= render 'table',
                  path: your_prior_authority_applications_path,

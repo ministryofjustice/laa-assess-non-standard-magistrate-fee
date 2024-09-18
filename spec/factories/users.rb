@@ -20,4 +20,12 @@ FactoryBot.define do
     auth_oid { SecureRandom.uuid }
     auth_subject_id { SecureRandom.uuid }
   end
+
+  factory :viewer, class: 'User' do
+    email { 'readonly.viewer@test.com' }
+    first_name { 'cannot' }
+    last_name { 'edit' }
+    role { 'viewer' }
+    auth_subject_id { SecureRandom.uuid }
+  end
 end

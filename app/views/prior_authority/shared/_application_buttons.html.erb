@@ -1,6 +1,6 @@
 <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible govuk-!-margin-top-9">
 <div class="govuk-button-group">
-  <%= govuk_button_link_to(t('.make_a_decision'), new_prior_authority_application_decision_path(application_summary.id), data: { turbo: false }) %>
-  <%= govuk_button_link_to(t('.send_back'), new_prior_authority_application_send_back_path(application_summary.id), secondary: true, data: { turbo: false }) %>
+  <%= govuk_button_link_to(t('.make_a_decision'), new_prior_authority_application_decision_path(application_summary.id)) %>
+  <%= govuk_button_link_to(t('.send_back'), new_prior_authority_application_send_back_path(application_summary.id), secondary: true) %>
   <%= govuk_button_link_to(t('.save_and_exit'), your_prior_authority_applications_path, secondary: true) %>
 </div>
