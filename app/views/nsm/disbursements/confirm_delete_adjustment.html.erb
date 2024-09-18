@@ -3,15 +3,15 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl"><%= t('.page_title') %></h1>
     <p>
-    <%= t('.cost', cost: @adjustment.type_name) %>
+      <strong><%= t('.cost') %>: </strong><%= @adjustment.type_name %>
     <br>
-    <%= t('.reason', reason: @adjustment.reason) %>
+      <strong><%= t('.reason') %>: </strong><%= @adjustment.reason %>
     <br>
-    <%= t('.net_cost_allowed', net_cost_allowed: @adjustment.allowed_net) %>
+      <strong><%= t('.net_cost_allowed') %>: </strong><%= @adjustment.allowed_net %>
     <br>
-    <%= t('.vat_on_allowed', vat_on_allowed: @adjustment.allowed_vat) %>
+      <strong><%= t('.vat_on_allowed') %>: </strong><%= @adjustment.allowed_vat %>
     <br>
-    <%= t('.total_allowed', total_allowed: @adjustment.allowed_gross)%>
+      <strong><%= t('.total_allowed') %>: </strong><%= @adjustment.allowed_gross %>
     </p>
     <div class="govuk-warning-text">
       <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
