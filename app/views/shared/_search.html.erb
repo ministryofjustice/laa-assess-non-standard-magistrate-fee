@@ -86,11 +86,11 @@
         </div>
         <% if additional_param.present? %>
           <%= f.govuk_submit t('.search'), name: additional_param[:key], value: additional_param[:value] do %>
-            <%= govuk_link_to t('.clear_all'), clear_all_path, data: { turbo: false } %>
+            <%= govuk_link_to t('.clear_all'), clear_all_path %>
           <% end %>
         <% else %>
           <%= f.govuk_submit t('.search') do %>
-            <%= govuk_link_to t('.clear_all'), clear_all_path, data: { turbo: false } %>
+            <%= govuk_link_to t('.clear_all'), clear_all_path %>
           <% end %>
         <% end %>
       <% end %>
@@ -127,7 +127,7 @@
             <% @search_form.results.each do |search_result| %>
               <tr class="govuk-table__row app-task-list__item">
                 <td class="govuk-table__cell">
-                  <%= link_to search_result.laa_reference, search_result.application_path, data: { turbo: false } %>
+                  <%= link_to search_result.laa_reference, search_result.application_path %>
                 </td>
                 <td class="govuk-table__cell">
                   <%= search_result.firm_name %>
