@@ -30,7 +30,7 @@ module Nsm
       end
 
       def main_defendant_value
-        "#{main_defendant_name}\n#{main_defendant_maat}"
+        multiline_text("#{main_defendant_name}\n#{main_defendant_maat}")
       end
 
       def additional_defendants
@@ -65,7 +65,7 @@ module Nsm
 
       def construct_value(defendant)
         if defendant['maat'].present?
-          "#{construct_name(defendant)}\n#{defendant['maat']}"
+          multiline_text("#{construct_name(defendant)}\n#{defendant['maat']}")
         else
           construct_name(defendant)
         end
