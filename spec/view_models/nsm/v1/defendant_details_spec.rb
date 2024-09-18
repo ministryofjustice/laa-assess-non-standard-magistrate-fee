@@ -18,14 +18,14 @@ RSpec.describe Nsm::V1::DefendantDetails do
           'maat' => 'AB454545',
           'main' => false,
           'position' => 2,
-          'first_name' => 'Defendant', 'last_name' => '1'
+          'first_name' => 'Defendant', 'last_name' => '2'
         },
         {
           'id' => '40fb2f88-6dea-4b03-9087-590436b62dd8',
           'maat' => 'AB676767',
           'main' => false,
           'position' => 3,
-          'first_name' => 'Defendant', 'last_name' => '2'
+          'first_name' => 'Defendant', 'last_name' => '3'
         }
       ]
     }
@@ -48,12 +48,9 @@ RSpec.describe Nsm::V1::DefendantDetails do
     context 'Main defendant and additional defendants' do
       it 'shows correct table data' do
         expect(subject.data).to eq([
-                                     { title: 'Main defendant full name', value: 'Main Defendant' },
-                                     { title: 'Main defendant MAAT ID number', value: 'AB12123' },
-                                     { title: 'Additional defendant 1 full name', value: 'Defendant 1' },
-                                     { title: 'Additional defendant 1 MAAT ID number', value: 'AB454545' },
-                                     { title: 'Additional defendant 2 full name', value: 'Defendant 2' },
-                                     { title: 'Additional defendant 2 MAAT ID number', value: 'AB676767' }
+                                     { title: "Defendant 1 (lead)", value: "Main Defendant<br>AB12123" },
+                                     { title: "Defendant 2", value: "Defendant 2<br>AB454545" },
+                                     { title: "Defendant 3", value: "Defendant 3<br>AB676767" },
                                    ])
       end
 
@@ -73,7 +70,7 @@ RSpec.describe Nsm::V1::DefendantDetails do
                 'maat' => nil,
                 'main' => false,
                 'position' => 2,
-                'first_name' => 'Defendant', 'last_name' => '1'
+                'first_name' => 'Defendant', 'last_name' => '2'
               }
             ]
           }
@@ -81,8 +78,8 @@ RSpec.describe Nsm::V1::DefendantDetails do
 
         it 'shows correct table data' do
           expect(subject.data).to eq([
-                                       { title: 'Main defendant full name', value: 'Main Defendant' },
-                                       { title: 'Additional defendant 1 full name', value: 'Defendant 1' },
+                                       { title: "Defendant 1 (lead)", value: "Main Defendant" },
+                                       { title: "Defendant 2", value: "Defendant 2" },
                                      ])
         end
       end
@@ -105,8 +102,7 @@ RSpec.describe Nsm::V1::DefendantDetails do
 
       it 'shows correct table data' do
         expect(subject.data).to eq([
-                                     { title: 'Main defendant full name', value: 'Main Defendant' },
-                                     { title: 'Main defendant MAAT ID number', value: 'AB12123' }
+                                     { title: "Defendant 1 (lead)", value: 'Main Defendant<br>AB12123' }
                                    ])
       end
     end

@@ -30,7 +30,11 @@ module Nsm
       end
 
       def main_defendant_value
-        multiline_text("#{main_defendant_name}\n#{main_defendant_maat}")
+        if main_defendant_maat.present?
+          multiline_text("#{main_defendant_name}\n#{main_defendant_maat}")
+        else
+          main_defendant_name
+        end
       end
 
       def additional_defendants
@@ -50,7 +54,7 @@ module Nsm
         additional_defendants.map.with_index do |defendant, index|
           [
             {
-              title: I18n.t(".nsm.claim_details.#{key}.additional_defendant", count: index + 1),
+              title: I18n.t(".nsm.claim_details.#{key}.additional_defendant", count: index + 2),
               value: construct_value(defendant)
             }
           ]
