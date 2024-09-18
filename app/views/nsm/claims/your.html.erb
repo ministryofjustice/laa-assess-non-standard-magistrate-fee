@@ -6,9 +6,11 @@
     <% if your_claims.none? %>
       <h2 class="govuk-body-l"><%= t('.no_claims') %></h2>
     <% end %>
-    <div class="govuk-button-group">
-      <%= govuk_button_to(t('.next_claim'), nsm_claims_path) %>
-    </div>
+    <% unless current_user.viewer? %>
+      <div class="govuk-button-group">
+        <%= govuk_button_to(t('.next_claim'), nsm_claims_path) %>
+      </div>
+    <% end %>
     <% if your_claims.any? %>
       <%= render 'table',
                 path: your_nsm_claims_path,
