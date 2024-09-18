@@ -2,6 +2,7 @@ class User < ApplicationRecord
   ROLES = [
     CASEWORKER = 'caseworker'.freeze,
     SUPERVISOR = 'supervisor'.freeze,
+    VIEWER = 'viewer'.freeze
   ].freeze
   devise :omniauthable, :timeoutable
 
@@ -19,6 +20,10 @@ class User < ApplicationRecord
 
   def supervisor?
     role == SUPERVISOR
+  end
+
+  def viewer?
+    role == VIEWER
   end
 
   def pending_activation?

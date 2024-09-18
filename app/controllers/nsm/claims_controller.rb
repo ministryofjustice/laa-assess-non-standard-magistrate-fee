@@ -3,6 +3,8 @@ module Nsm
     before_action :set_default_table_sort_options, only: %i[your open closed]
 
     def your
+      return redirect_to open_nsm_claims_path if current_user.viewer?
+
       @current_section = :your
       pagy, filtered_claims = order_and_paginate(Claim.pending_and_assigned_to(current_user))
       your_claims = filtered_claims.map { |claim| BaseViewModel.build(:table_row, claim) }

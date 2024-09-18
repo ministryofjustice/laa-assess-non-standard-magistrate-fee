@@ -38,7 +38,7 @@ class Claim < Submission
   enum :state, STATES.to_h { [_1, _1] }
 
   def editable_by?(user)
-    !assessed? && assigned_to?(user)
+    !assessed? && assigned_to?(user) && !user.viewer?
   end
 
   def assigned_to?(user)
@@ -47,6 +47,14 @@ class Claim < Submission
 
   def assessed?
     ASSESSED_STATES.include?(state)
+  end
+
+  def assignment_removable_by?(user)
+    !assessed? && assignments.any? && !user.viewer?
+  end
+
+  def self_assignable_by?(user)
+    !assessed? && assignments.none? && !user.viewer?
   end
 
   def formatted_claimed_total
