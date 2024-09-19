@@ -18,6 +18,7 @@
                                         additional_classes: ) %>
           <% end %>
         <% end %>
+        <th class="govuk-table__header" scope="col"><%= t(".action") %></th>
       </tr>
     </thead>
 
@@ -53,6 +54,11 @@
           </td>
           <td class="govuk-table__cell govuk-table__cell--numeric">
             <%= work_item.formatted_allowed_amount %>
+          </td>
+          <td class="govuk-table__cell">
+            <%= link_to t(".delete"),
+              confirm_deletion_nsm_claim_work_item_path(claim, work_item.id),
+              class: "govuk-link govuk-link--no-visited-state" %>
           </td>
         </tr>
       <% end %>

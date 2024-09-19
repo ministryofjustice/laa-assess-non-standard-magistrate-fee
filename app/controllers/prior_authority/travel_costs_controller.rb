@@ -38,7 +38,7 @@ module PriorAuthority
     end
 
     def destroy
-      AdjustmentDeleter.new(params, :travel_cost, current_user).call
+      PriorAuthority::AdjustmentDeleter.new(params, :travel_cost, current_user).call
       redirect_to prior_authority_application_adjustments_path(params[:application_id])
     end
 

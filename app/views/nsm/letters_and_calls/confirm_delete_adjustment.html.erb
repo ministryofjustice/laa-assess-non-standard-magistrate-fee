@@ -1,0 +1,28 @@
+<%= title t('.page_title') %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= t('.page_title') %></h1>
+    <p>
+      <strong><%= t('.item') %></strong>: <%= @adjustment.type %>
+    <br>
+      <strong><%= t('.reason') %></strong>: <%= @adjustment.adjustment_comment %>
+    <br>
+      <strong><%= t('.number_allowed') %></strong>: <%= @adjustment.formatted_adjusted_count %>
+    <br>
+      <strong><%= t('.uplift_allowed') %></strong>: <%= @adjustment.formatted_adjusted_uplift %>
+    <br>
+      <strong><%= t('.net_cost_allowed') %></strong>: <%= @adjustment.formatted_adjusted_caseworker_amount %>
+    </p>
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-visually-hidden">Warning</span>
+        <%= t('.warning') %>
+      </strong>
+    </div>
+    <div class="govuk-button-group govuk-button-group-vertically-centred">
+      <%= govuk_button_to t('.yes_delete'), nsm_claim_letters_and_call_path, method: :delete, warning: true %>
+      <%= govuk_button_link_to t('.no_delete'), adjusted_nsm_claim_letters_and_calls_path %>
+    </div>
+  </div>
+</div>
