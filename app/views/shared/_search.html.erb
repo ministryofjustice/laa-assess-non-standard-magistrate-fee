@@ -152,14 +152,14 @@
                 <td class="govuk-table__cell">
                   <%= search_result.date_updated %>
                 </td>
+                <% if @presenter.show_risk_filter? %>
+                  <td class="govuk-table__cell">
+                    <%= search_result.risk&.capitalize %>
+                  </td>
+                <% end %>
                 <td class="govuk-table__cell">
                   <%= search_result.state_tag %>
                 </td>
-                <% if @presenter.show_risk_filter? %>
-                <td class="govuk-table__cell">
-                  <%= search_result.risk %>
-                </td>
-                <% end %>
               </tr>
             <% end %>
           </tbody>

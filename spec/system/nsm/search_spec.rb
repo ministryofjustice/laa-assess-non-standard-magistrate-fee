@@ -157,6 +157,7 @@ RSpec.describe 'Search', :stub_oauth_token do
         sort_by: 'last_updated',
         sort_direction: 'descending',
         status_with_assignment: 'rejected',
+        risk: 'high',
         submitted_from: '20/4/2023',
         submitted_to: '21/4/2023',
         updated_from: '22/4/2023',
@@ -182,9 +183,19 @@ RSpec.describe 'Search', :stub_oauth_token do
       fill_in 'Last updated to', with: '23/4/2023'
       select caseworker.display_name, from: 'Caseworker'
       select 'Rejected', from: 'Status'
+      select 'High', from: 'Risk'
+
       within('main') { click_on 'Search' }
 
       expect(stub).to have_been_requested
+    end
+  end
+
+  context 'risk filter' do
+    it 'displays in CRM7 search' do
+      visit nsm_root_path
+      click_on 'Search'
+      expect(page).to have_content 'Risk'
     end
   end
 end

@@ -12,7 +12,7 @@ RSpec.describe SearchFormPresenter do
       it 'adds risk column to headers' do
         expect(subject.result_headers).to eq %i[laa_reference
                                                 firm_name client_name caseworker
-                                                last_updated status_with_assignment risk]
+                                                last_updated risk status_with_assignment]
       end
     end
 
@@ -27,7 +27,7 @@ RSpec.describe SearchFormPresenter do
     let(:service) { 'crm4' }
 
     describe '.result_headers' do
-      it 'adds risk column to headers' do
+      it 'does not add risk column to headers' do
         expect(subject.result_headers).to eq %i[laa_reference
                                                 firm_name client_name caseworker
                                                 last_updated status_with_assignment]
@@ -49,7 +49,7 @@ RSpec.describe SearchFormPresenter do
       it 'adds risk column to headers' do
         expect(subject.result_headers).to eq %i[laa_reference
                                                 firm_name client_name caseworker
-                                                last_updated status_with_assignment risk]
+                                                last_updated risk status_with_assignment]
       end
     end
 

@@ -7,9 +7,10 @@ class SearchFormPresenter
   end
 
   def result_headers
-    headers = %i[laa_reference firm_name client_name caseworker last_updated status_with_assignment]
-    headers << :risk if show_risk_filter?
-    headers
+    risk_headers = %i[laa_reference firm_name client_name caseworker last_updated risk status_with_assignment]
+    return risk_headers if show_risk_filter?
+
+    %i[laa_reference firm_name client_name caseworker last_updated status_with_assignment]
   end
 
   def show_risk_filter?

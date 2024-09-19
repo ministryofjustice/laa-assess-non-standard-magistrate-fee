@@ -213,4 +213,12 @@ RSpec.describe 'Search', :stub_oauth_token do
       expect(stub).to have_been_requested
     end
   end
+
+  context 'risk filter' do
+    it 'does not display in CRM4 search' do
+      visit prior_authority_root_path
+      click_on 'Search'
+      expect(page).not_to have_content 'Risk'
+    end
+  end
 end
