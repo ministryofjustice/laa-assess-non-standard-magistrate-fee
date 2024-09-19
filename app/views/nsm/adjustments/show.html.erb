@@ -9,6 +9,8 @@
         <%= t('.adjusted_costs') %>
       </h2>
 
+      <%= govuk_button_link_to( t('.delete_all_adjustments'), confirm_deletion_nsm_claim_adjustments_path(claim), secondary: true,  data: { turbo: "false" }) %>
+
       <ul class="govuk-tabs__list" id="tabs">
         <li class="govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if scope == :work_items %>">
           <%= link_to t('.work_items'), adjusted_nsm_claim_work_items_path(claim, anchor: :tabs) %>

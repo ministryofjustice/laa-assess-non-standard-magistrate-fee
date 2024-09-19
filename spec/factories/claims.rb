@@ -201,6 +201,109 @@ FactoryBot.define do
       end
     end
 
+    trait :with_adjustments do
+      disbursements do
+        [
+          {
+            'id' => '1234-adj',
+            'details' => 'Details',
+            'pricing' => 1.0,
+            'vat_rate' => 0.2,
+            'apply_vat' => 'false',
+            'other_type' => {
+              'en' => 'Apples',
+              'value' => 'Apples'
+            },
+            'vat_amount' => 0.0,
+            'vat_amount_original' => 1.0,
+            'total_cost' => 140.0,
+            'total_cost_original' => 130.0,
+            'total_cost_without_vat' => 130.0,
+            'total_cost_without_vat_original' => 100.0,
+            'prior_authority' => 'yes',
+            'disbursement_date' => '2022-12-23',
+            'disbursement_type' => {
+              'en' => 'Other',
+              'value' => 'other'
+            },
+            'adjustment_comment' => 'adjusted up'
+          },
+          {
+            'id' => '5678',
+            'details' => 'Details',
+            'pricing' => 1.0,
+            'vat_rate' => 0.2,
+            'apply_vat' => 'false',
+            'other_type' => {
+              'en' => 'Apples',
+              'value' => 'Apples'
+            },
+            'vat_amount' => 0.0,
+            'total_cost' => 140.0,
+            'total_cost_without_vat' => 130.0,
+            'prior_authority' => 'yes',
+            'disbursement_date' => '2022-12-23',
+            'disbursement_type' => {
+              'en' => 'Other',
+              'value' => 'other'
+            }
+          }
+        ]
+      end
+      letters_and_calls do
+        [
+          {
+            'type' => {
+              'en' => 'Letters',
+              'value' => 'letters'
+            },
+              'count' => 12,
+              'count_original' => 5,
+              'uplift' => 95,
+              'uplift_original' => 50,
+              'pricing' => 3.56,
+              'adjustment_comment' => 'adj'
+          },
+          {
+            'type' => {
+              'en' => 'Calls',
+              'value' => 'calls'
+            },
+              'count' => 4,
+              'count_original' => 5,
+              'uplift' => 20,
+              'uplift_original' => 50,
+              'pricing' => 3.56,
+              'adjustment_comment' => 'adj'
+          },
+        ]
+      end
+      work_items do
+        [
+          {
+            'id' => '1234-adj',
+            'uplift' => 95,
+            'uplift_original' => 50,
+            'pricing' => 24.0,
+            'pricing_original' => 44.0,
+            'work_type' => {
+              'en' => 'Waiting',
+              'value' => 'waiting'
+            },
+            'work_type_original' => {
+              'en' => 'Attendance without counsel',
+              'value' => 'attendance_without_counsel'
+            },
+            'fee_earner' => 'aaa',
+            'time_spent' => 161,
+            'time_spent_original' => 181,
+            'completed_on' => '2022-12-12',
+            'adjustment_comment' => 'some comment'
+          }
+        ]
+      end
+    end
+
     trait :increase_adjustment do
       disbursements do
         [
@@ -225,7 +328,8 @@ FactoryBot.define do
             'disbursement_type' => {
               'en' => 'Other',
               'value' => 'other'
-            }
+            },
+            'adjustment_comment' => 'adjusted up'
           }
         ]
       end

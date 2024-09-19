@@ -77,6 +77,18 @@ module Nsm
         ]
       end
 
+      def formatted_adjusted_count
+        format(count.to_s, as: :number)[:text]
+      end
+
+      def formatted_adjusted_uplift
+        format(uplift.to_i, as: :number)[:text]
+      end
+
+      def formatted_adjusted_caseworker_amount
+        format(caseworker_amount)[:text]
+      end
+
       def adjusted_table_fields
         [
           type.to_s,
