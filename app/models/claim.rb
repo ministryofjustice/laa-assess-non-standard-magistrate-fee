@@ -91,10 +91,6 @@ class Claim < Submission
     :up
   end
 
-  def latest_send_back_event
-    events.where(event_type: 'Nsm::Event::SendBack').order(created_at: :desc).first
-  end
-
   private
 
   def granted_and_allowed_less_than_claim
