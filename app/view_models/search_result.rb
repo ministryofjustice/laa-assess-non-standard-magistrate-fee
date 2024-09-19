@@ -37,7 +37,7 @@ class SearchResult
     submission_state_tag(submission)
   end
 
-  delegate :application_type, to: :submission
+  delegate :application_type, :risk, to: :submission
 
   # assuming all submissions have an application_type as this has to
   # be a valid value (i.e. not blank) - testing it is both arduous and redundant
