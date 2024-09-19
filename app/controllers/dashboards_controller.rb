@@ -1,5 +1,5 @@
 class DashboardsController < ApplicationController
-  before_action :authorize_supervisor
+  before_action :authorize_supervisor, :set_presenter
 
   layout 'dashboard'
 
@@ -44,6 +44,7 @@ class DashboardsController < ApplicationController
       :status_with_assignment,
       :caseworker_id,
       :sort_by,
+      :risk,
       :sort_direction,
       :application_type
     ).merge(default_params)
@@ -82,5 +83,9 @@ class DashboardsController < ApplicationController
 
       "#{ENV.fetch('METABASE_SITE_URL')}/embed/dashboard/#{token}#bordered=true&titled=true"
     end
+  end
+
+  def set_presenter
+    @presenter = SearchFormPresenter.new('analytics', current_user)
   end
 end

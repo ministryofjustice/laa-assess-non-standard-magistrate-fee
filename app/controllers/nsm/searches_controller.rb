@@ -1,6 +1,7 @@
 module Nsm
   class SearchesController < BaseController
     before_action :set_current_section
+    before_action :set_presenter
 
     def show
       @search_form = Nsm::SearchForm.new(search_params)
@@ -22,6 +23,7 @@ module Nsm
         :updated_from,
         :updated_to,
         :status_with_assignment,
+        :risk,
         :caseworker_id,
         :sort_by,
         :sort_direction
@@ -33,6 +35,10 @@ module Nsm
         application_type: Submission::APPLICATION_TYPES[:nsm],
         page: params.fetch(:page, '1')
       }
+    end
+
+    def set_presenter
+      @presenter = SearchFormPresenter.new(Submission::APPLICATION_TYPES[:nsm], current_user)
     end
 
     def set_current_section

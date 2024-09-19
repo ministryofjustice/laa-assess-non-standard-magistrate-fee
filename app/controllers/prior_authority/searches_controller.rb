@@ -1,5 +1,7 @@
 module PriorAuthority
   class SearchesController < BaseController
+    before_action :set_presenter
+
     def show
       @search_form = PriorAuthority::SearchForm.new(search_params)
       @search_form.execute if @search_form.valid?
@@ -31,6 +33,10 @@ module PriorAuthority
         application_type: Submission::APPLICATION_TYPES[:prior_authority],
         page: params.fetch(:page, '1')
       }
+    end
+
+    def set_presenter
+      @presenter = SearchFormPresenter.new(Submission::APPLICATION_TYPES[:prior_authority], current_user)
     end
   end
 end
