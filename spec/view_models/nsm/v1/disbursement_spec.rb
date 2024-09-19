@@ -53,7 +53,7 @@ RSpec.describe Nsm::V1::Disbursement do
       {
         'total_cost_without_vat' => 83, 'vat_amount' => 17,
         'disbursement_date' => Date.new(2022, 1, 1),
-        'other_type' => { 'value' => 'type', 'en' => 'Type' },
+        'other_type' => { 'value' => 'accountants', 'en' => 'Type' },
         'details' => 'details',
         'prior_authority' => prior_authority,
         'vat_rate' => 0.2,
@@ -69,7 +69,7 @@ RSpec.describe Nsm::V1::Disbursement do
     it 'returns a hash with the correct fields if no miles' do
       expected_fields = {
         date: '1 January 2022',
-        type: 'Type',
+        type: 'Accountants',
         details: 'Details',
         prior_authority: 'Yes',
         vat: '20%',
@@ -85,7 +85,7 @@ RSpec.describe Nsm::V1::Disbursement do
       it 'returns a hash with the correct fields if miles present' do
         expected_fields = {
           date: '1 January 2022',
-          type: 'Type',
+          type: 'Accountants',
           details: 'Details',
           prior_authority: 'Yes',
           vat: '20%',
@@ -103,7 +103,7 @@ RSpec.describe Nsm::V1::Disbursement do
       it 'returns a hash with the correct fields if apply vat is false' do
         expected_fields = {
           date: '1 January 2022',
-          type: 'Type',
+          type: 'Accountants',
           details: 'Details',
           prior_authority: 'Yes',
           vat: '20%',
@@ -120,7 +120,7 @@ RSpec.describe Nsm::V1::Disbursement do
       it 'returns a hash excluding prior_authority' do
         expected_fields = {
           date: '1 January 2022',
-          type: 'Type',
+          type: 'Accountants',
           details: 'Details',
           vat: '20%',
           total: '£100.00'

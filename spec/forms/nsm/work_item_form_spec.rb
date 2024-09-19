@@ -19,7 +19,7 @@ RSpec.describe Nsm::WorkItemForm do
       uplift: uplift_provided ? 95 : nil,
       original_uplift: original_uplift,
       uplift?: uplift_provided,
-      work_type: TranslationObject.new('en' => 'Anything', 'value' => 'waiting')
+      work_type: TranslationObject.new('waiting', 'nsm.work_type')
     )
   end
   let(:uplift_provided) { !original_uplift.nil? }

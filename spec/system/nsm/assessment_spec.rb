@@ -115,7 +115,7 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
           'apply_vat' => 'false',
           'other_type' => {
             'en' => 'Apples',
-            'value' => 'Apples'
+            'value' => 'accountants'
           },
           'vat_amount' => 0.0,
           'prior_authority' => 'yes',

@@ -2,7 +2,7 @@ module Nsm
   module V1
     class DetailsOfClaim < BaseViewModel
       attribute :ufn
-      attribute :claim_type, :translated
+      attribute :claim_type, :translated, scope: 'nsm.claim_type'
       attribute :rep_order_date
       attribute :cntp_order
       attribute :cntp_date

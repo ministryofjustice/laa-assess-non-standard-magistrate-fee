@@ -5,8 +5,8 @@ module Nsm
       attribute :number_of_hearing
       attribute :court
       attribute :youth_court
-      attribute :hearing_outcome, :translated
-      attribute :matter_type, :translated
+      attribute :hearing_outcome, :translated, scope: 'nsm.hearing_outcome'
+      attribute :matter_type, :translated, scope: 'nsm.matter_type'
 
       def key
         'hearing_details'

@@ -52,7 +52,7 @@ RSpec.describe Nsm::V1::DetailsOfClaim do
     it 'shows correct table data' do
       expect(model.data).to eq([
                                  { title: 'Unique file number', value: 'ABC/12345' },
-                                 { title: 'Type of claim', value: 'Non-standard fee - magistrate' },
+                                 { title: 'Type of claim', value: "Non-standard magistrates' court payment" },
                                  { title: 'Representation order date', value: '1 February 2023' },
                                  { title: 'Stage reached', value: 'PROM' },
                                  { title: 'Firm office account number', value: '121234' },

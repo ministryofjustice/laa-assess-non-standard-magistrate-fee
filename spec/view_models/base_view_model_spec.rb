@@ -44,8 +44,8 @@ RSpec.describe BaseViewModel do
       it 'builds the object from the array of hashes of attributes' do
         work_items = described_class.build(:work_item, claim, 'work_items')
         expect(work_items.count).to eq(2)
-        expect(work_items[0]).to have_attributes(work_type: TranslationObject.new('value' => 'first'))
-        expect(work_items[1]).to have_attributes(work_type: TranslationObject.new('value' => 'second'))
+        expect(work_items[0]).to have_attributes(work_type: TranslationObject.new('first', 'nsm.work_type'))
+        expect(work_items[1]).to have_attributes(work_type: TranslationObject.new('second', 'nsm.work_type'))
       end
     end
   end

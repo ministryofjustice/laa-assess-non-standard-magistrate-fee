@@ -69,20 +69,19 @@ RSpec.describe Nsm::V1::EqualityDetails do
           [
             {
               title: 'Equality questions',
-              value: TranslationObject.new({ 'value' => 'yes',
-'en' => 'Yes, answer the equality questions (takes 2 minutes)' })
+              value: TranslationObject.new('yes', 'nsm.answer_equality')
             },
             {
               title: 'Defendants ethnic group',
-              value: TranslationObject.new({ 'value' => '01_white_british', 'en' => 'White British' })
+              value: TranslationObject.new('01_white_british', 'nsm.ethnic_group')
             },
             {
               title: 'Defendant identification',
-              value: TranslationObject.new({ 'value' => 'm', 'en' => 'Male' })
+              value: TranslationObject.new('m', 'nsm.gender')
             },
             {
               title: 'Defendant disability',
-              value: TranslationObject.new({ 'value' => 'n', 'en' => 'No' })
+              value: TranslationObject.new('n', 'nsm.disability')
             }
           ]
         )
@@ -101,7 +100,7 @@ RSpec.describe Nsm::V1::EqualityDetails do
             [
               {
                 title: 'Equality questions',
-                value: TranslationObject.new({ 'value' => 'no', 'en' => 'No, skip the equality questions' })
+                value: TranslationObject.new('no', 'nsm.answer_equality')
               },
             ]
           )

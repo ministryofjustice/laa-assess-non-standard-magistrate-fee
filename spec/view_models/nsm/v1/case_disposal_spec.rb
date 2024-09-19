@@ -16,7 +16,7 @@ RSpec.describe Nsm::V1::CaseDisposal do
             'en' => 'Cracked Trial'
           },
           'plea_category' => {
-            'value' => 'cracked_trial',
+            'value' => 'not_guilty_pleas',
             'en' => 'Category 2'
           }
         }
@@ -35,7 +35,7 @@ RSpec.describe Nsm::V1::CaseDisposal do
           'en' => 'Cracked Trial'
         },
         'plea_category' => {
-          'value' => 'cracked_trial',
+          'value' => 'not_guilty_pleas',
           'en' => 'Category 2'
         }
       }
@@ -44,7 +44,7 @@ RSpec.describe Nsm::V1::CaseDisposal do
     it 'shows correct table data' do
       expect(subject.data).to eq(
         [
-          { title: 'Category 2', value: 'Cracked Trial' }
+          { title: 'Category 2', value: 'Cracked trial' }
         ]
       )
     end

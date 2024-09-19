@@ -80,7 +80,7 @@ RSpec.describe Nsm::V1::LetterAndCall do
   end
 
   describe '#type_name' do
-    let(:params) { { type: { 'en' => 'Letters', :value => 'll' } } }
+    let(:params) { { type: { 'en' => 'Letters', 'value' => 'letters' } } }
 
     it 'returns the downcase translated type' do
       expect(letterandcall.type_name).to eq('letters')

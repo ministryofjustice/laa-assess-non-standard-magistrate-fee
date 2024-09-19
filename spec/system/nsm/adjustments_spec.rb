@@ -100,7 +100,7 @@ RSpec.describe 'Adjustments' do
 
         expect(page).to have_content('Adjusted costs')
         within('.govuk-table') do
-          expect(page).to have_content('Apples')
+          expect(page).to have_content('Accountants')
             .and have_content('Delete')
             .and have_content('adjusted up')
         end

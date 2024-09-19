@@ -127,7 +127,7 @@ FactoryBot.define do
             'apply_vat' => 'false',
             'other_type' => {
               'en' => 'Apples',
-              'value' => 'Apples'
+              'value' => 'accountants'
             },
             'vat_amount' => 0.0,
             'prior_authority' => 'yes',
@@ -212,7 +212,7 @@ FactoryBot.define do
             'apply_vat' => 'false',
             'other_type' => {
               'en' => 'Apples',
-              'value' => 'Apples'
+              'value' => 'accountants'
             },
             'vat_amount' => 0.0,
             'vat_amount_original' => 1.0,
@@ -236,7 +236,7 @@ FactoryBot.define do
             'apply_vat' => 'false',
             'other_type' => {
               'en' => 'Apples',
-              'value' => 'Apples'
+              'value' => 'accountants'
             },
             'vat_amount' => 0.0,
             'total_cost' => 140.0,
@@ -315,7 +315,7 @@ FactoryBot.define do
             'apply_vat' => 'false',
             'other_type' => {
               'en' => 'Apples',
-              'value' => 'Apples'
+              'value' => 'accountants'
             },
             'vat_amount_original' => 1.0,
             'vat_amount' => 0.0,
@@ -355,7 +355,7 @@ FactoryBot.define do
             'apply_vat' => 'false',
             'other_type' => {
               'en' => 'Apples',
-              'value' => 'Apples'
+              'value' => 'accountants'
             },
             'vat_amount_original' => 1.0,
             'vat_amount' => 0.0,
