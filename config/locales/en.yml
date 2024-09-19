@@ -76,6 +76,7 @@ en:
         none_para: Check you’ve entered the correct details
       result: result
       status: Status
+      risk: Risk
       caseworker: Caseworker
       table:
         header:
@@ -85,6 +86,7 @@ en:
           caseworker: Caseworker
           last_updated: Last updated
           status_with_assignment: Status
+          risk: Risk
 
   generic:
     cost: cost

@@ -12,6 +12,10 @@ en:
       part_grant: Part granted
       rejected: Rejected
       expired: Expired
+    risks:
+      high: High
+      low: Low
+      medium: Medium
     unassigned: Unassigned
   nsm:
     searches:
