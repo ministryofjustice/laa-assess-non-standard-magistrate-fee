@@ -25,12 +25,7 @@ FactoryBot.define do
         'unassigned_counsel' => 'yes',
         'agent_instructed' => 'no',
         'remitted_to_magistrate' => 'no',
-        'reasons_for_claim' => [
-          {
-            'value' => 'counsel_or_agent_assigned',
-            'en' => 'Counsel or agent assigned'
-          }
-        ],
+        'reasons_for_claim' => ['counsel_or_agent_assigned'],
         'supplemental_claim' => 'no',
         'preparation_time' => 'no',
         'work_before' => 'no',
@@ -39,24 +34,12 @@ FactoryBot.define do
         'has_disbursements' => 'no',
         'is_other_info' => 'no',
         'youth_court' => 'no',
-        'hearing_outcome' => {
-          'value' => 'CP05',
-          'en' => 'CP01 - Arrest warrant issued/adjourned indefinitely'
-        },
-        'claim_type' => {
-          'en' => "Non-standard magistrates' court payment",
-          'value' => 'non_standard_magistrate'
-        },
-        'matter_type' => {
-          'value' => '10',
-          'en' => '1 - Offences against the person'
-        },
+        'hearing_outcome' => 'CP05',
+        'claim_type' => 'non_standard_magistrate',
+        'matter_type' => '10',
         'concluded' => 'no',
         'solicitor' => solicitor,
-        'answer_equality' => {
-          'value' => 'no',
-          'en' => 'No, skip the equality questions'
-        },
+        'answer_equality' => 'no',
         'stage_reached' => 'prog',
         'work_item_pricing' => {
           'waiting' => 45.5,
@@ -98,22 +81,16 @@ FactoryBot.define do
       letters_and_calls do
         [
           {
-            'type' => {
-              'en' => 'Letters',
-              'value' => 'letters'
-            },
-              'count' => 12,
-              'uplift' => 95,
-              'pricing' => 3.56
+            'type' => 'letters',
+            'count' => 12,
+            'uplift' => 95,
+            'pricing' => 3.56
           },
           {
-            'type' => {
-              'en' => 'Calls',
-              'value' => 'calls'
-            },
-              'count' => 4,
-              'uplift' => 20,
-              'pricing' => 3.56
+            'type' => 'calls',
+            'count' => 4,
+            'uplift' => 20,
+            'pricing' => 3.56
           },
         ]
       end
@@ -125,17 +102,11 @@ FactoryBot.define do
             'pricing' => 1.0,
             'vat_rate' => 0.2,
             'apply_vat' => 'false',
-            'other_type' => {
-              'en' => 'Apples',
-              'value' => 'accountants'
-            },
+            'other_type' => 'accountants',
             'vat_amount' => 0.0,
             'prior_authority' => 'yes',
             'disbursement_date' => '2022-12-12',
-            'disbursement_type' => {
-              'en' => 'Other',
-              'value' => 'other'
-            },
+            'disbursement_type' => 'other',
             'total_cost_without_vat' => 100.0
           }
         ]
@@ -146,10 +117,7 @@ FactoryBot.define do
             'id' => 'cf5e303e-98dd-4b0f-97ea-3560c4c5f137',
             'uplift' => 95,
             'pricing' => 24.0,
-            'work_type' => {
-              'en' => 'Waiting',
-              'value' => 'waiting'
-            },
+            'work_type' => 'waiting',
             'fee_earner' => 'aaa',
             'time_spent' => 161,
             'completed_on' => '2022-12-12'
@@ -210,10 +178,7 @@ FactoryBot.define do
             'pricing' => 1.0,
             'vat_rate' => 0.2,
             'apply_vat' => 'false',
-            'other_type' => {
-              'en' => 'Apples',
-              'value' => 'accountants'
-            },
+            'other_type' => 'accountants',
             'vat_amount' => 0.0,
             'vat_amount_original' => 1.0,
             'total_cost' => 140.0,
@@ -234,10 +199,7 @@ FactoryBot.define do
             'pricing' => 1.0,
             'vat_rate' => 0.2,
             'apply_vat' => 'false',
-            'other_type' => {
-              'en' => 'Apples',
-              'value' => 'accountants'
-            },
+            'other_type' => 'accountants',
             'vat_amount' => 0.0,
             'total_cost' => 140.0,
             'total_cost_without_vat' => 130.0,
@@ -313,10 +275,7 @@ FactoryBot.define do
             'pricing' => 1.0,
             'vat_rate' => 0.2,
             'apply_vat' => 'false',
-            'other_type' => {
-              'en' => 'Apples',
-              'value' => 'accountants'
-            },
+            'other_type' => 'accountants',
             'vat_amount_original' => 1.0,
             'vat_amount' => 0.0,
             'total_cost_original' => 130.0,
@@ -353,10 +312,7 @@ FactoryBot.define do
             'pricing' => 1.0,
             'vat_rate' => 0.2,
             'apply_vat' => 'false',
-            'other_type' => {
-              'en' => 'Apples',
-              'value' => 'accountants'
-            },
+            'other_type' => 'accountants',
             'vat_amount_original' => 1.0,
             'vat_amount' => 0.0,
             'total_cost_original' => 130.0,
@@ -369,6 +325,127 @@ FactoryBot.define do
               'en' => 'Other',
               'value' => 'other'
             }
+          }
+        ]
+      end
+    end
+
+    trait :legacy_translations do
+      data do
+        {
+          'laa_reference' => laa_reference,
+          'ufn' => '123456/001',
+          'cntp_order' => nil,
+          'cntp_date' => nil,
+          'submitter' => submitter,
+          'send_by_post' => send_by_post,
+          'letters_and_calls' => letters_and_calls,
+          'disbursements' => disbursements,
+          'work_items' => work_items,
+          'defendants' => defendants,
+          'supporting_evidences' => supporting_evidences,
+          'vat_rate' => vat_rate,
+          'firm_office' => firm_office,
+          'assigned_counsel' => 'no',
+          'unassigned_counsel' => 'yes',
+          'agent_instructed' => 'no',
+          'remitted_to_magistrate' => 'no',
+          'reasons_for_claim' => [
+            {
+              'value' => 'counsel_or_agent_assigned',
+              'en' => 'Counsel or agent assigned'
+            }
+          ],
+          'supplemental_claim' => 'no',
+          'preparation_time' => 'no',
+          'work_before' => 'no',
+          'work_after' => 'no',
+          'work_completed_date' => '2024-01-01',
+          'has_disbursements' => 'no',
+          'is_other_info' => 'no',
+          'youth_court' => 'no',
+          'hearing_outcome' => {
+            'value' => 'CP05',
+            'en' => 'CP01 - Arrest warrant issued/adjourned indefinitely'
+          },
+          'claim_type' => {
+            'en' => "Non-standard magistrates' court payment",
+            'value' => 'non_standard_magistrate'
+          },
+          'matter_type' => {
+            'value' => '10',
+            'en' => '1 - Offences against the person'
+          },
+          'concluded' => 'no',
+          'solicitor' => solicitor,
+          'answer_equality' => {
+            'value' => 'no',
+            'en' => 'No, skip the equality questions'
+          },
+          'stage_reached' => 'prog',
+          'work_item_pricing' => {
+            'waiting' => 45.5,
+            'preparation' => 23.2,
+            'attendance_without_counsel' => 10.17,
+          }
+        }
+      end
+
+      letters_and_calls do
+        [
+          {
+            'type' => {
+              'en' => 'Letters',
+              'value' => 'letters'
+            },
+              'count' => 12,
+              'uplift' => 95,
+              'pricing' => 3.56
+          },
+          {
+            'type' => {
+              'en' => 'Calls',
+              'value' => 'calls'
+            },
+              'count' => 4,
+              'uplift' => 20,
+              'pricing' => 3.56
+          },
+        ]
+      end
+      disbursements do
+        [
+          {
+            'id' => '1c0f36fd-fd39-498a-823b-0a3837454563',
+            'details' => 'Details',
+            'pricing' => 1.0,
+            'vat_rate' => 0.2,
+            'apply_vat' => 'false',
+            'other_type' => 'accountants',
+            'vat_amount' => 0.0,
+            'prior_authority' => 'yes',
+            'disbursement_date' => '2022-12-12',
+            'disbursement_type' => {
+              'en' => 'Other',
+              'value' => 'other'
+            },
+            'total_cost_without_vat' => 100.0
+          }
+        ]
+      end
+      work_items do
+        [
+          {
+            'id' => 'cf5e303e-98dd-4b0f-97ea-3560c4c5f137',
+            'uplift' => 95,
+            'pricing' => 24.0,
+            'work_type' => {
+              'en' => 'Waiting',
+              'value' => 'waiting'
+            },
+            'fee_earner' => 'aaa',
+            'time_spent' => 161,
+            'completed_on' => '2022-12-12'
           }
         ]
       end

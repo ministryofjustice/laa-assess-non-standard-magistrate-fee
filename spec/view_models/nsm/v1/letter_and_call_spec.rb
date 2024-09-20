@@ -80,7 +80,7 @@ RSpec.describe Nsm::V1::LetterAndCall do
   end
 
   describe '#type_name' do
-    let(:params) { { type: { 'en' => 'Letters', 'value' => 'letters' } } }
+    let(:params) { { type: 'letters' } }
 
     it 'returns the downcase translated type' do
       expect(letterandcall.type_name).to eq('letters')
@@ -90,7 +90,7 @@ RSpec.describe Nsm::V1::LetterAndCall do
   describe '#form_attributes' do
     let(:params) do
       {
-        type: { 'en' => 'Letters', 'value' => 'll' },
+        type: 'letters',
         count: 10,
         uplift: 15,
         adjustment_comment: 'second adjustment'
@@ -101,7 +101,7 @@ RSpec.describe Nsm::V1::LetterAndCall do
       expect(letterandcall.form_attributes).to eq(
         'explanation' => 'second adjustment',
         'count' => 10,
-        'type' => 'll',
+        'type' => 'letters',
         'uplift' => 15,
       )
     end
@@ -110,7 +110,7 @@ RSpec.describe Nsm::V1::LetterAndCall do
   describe '#table_fields' do
     let(:params) do
       {
-        'type' => { 'en' => 'Letters', 'value' => 'letters' },
+        'type' => 'letters',
         'count' => 12,
         'uplift' => 0,
         'pricing' => 3.56,
@@ -132,7 +132,7 @@ RSpec.describe Nsm::V1::LetterAndCall do
     context 'when adjustments exist' do
       let(:params) do
         {
-          'type' => { 'en' => 'Letters', 'value' => 'letters' },
+          'type' => 'letters',
           'count' => 12,
           'uplift' => 0,
           'pricing' => 3.56,
@@ -159,7 +159,7 @@ RSpec.describe Nsm::V1::LetterAndCall do
   describe '#adjusted_table_fields' do
     let(:params) do
       {
-        'type' => { 'en' => 'Letters', 'value' => 'letters' },
+        'type' => 'letters',
         'count' => 12,
         'uplift' => 0,
         'pricing' => 3.56,
@@ -205,7 +205,7 @@ RSpec.describe Nsm::V1::LetterAndCall do
   describe '#provider_fields' do
     let(:params) do
       {
-        'type' => { 'en' => 'Letters', 'value' => 'letters' },
+        'type' => 'letters',
         'count' => 12,
         'uplift' => 0,
         'uplift_original' => 20,
@@ -225,7 +225,7 @@ RSpec.describe Nsm::V1::LetterAndCall do
 
   describe '#id' do
     let(:params) do
-      { 'type' => { 'en' => 'Letters', 'value' => 'letters' } }
+      { 'type' => 'letters' }
     end
 
     it { expect(letterandcall.id).to eq 'letters' }
@@ -320,7 +320,7 @@ RSpec.describe Nsm::V1::LetterAndCall do
       let(:claim) { create(:claim) }
       let(:params) do
         {
-          'type' => { 'en' => 'Letters', 'value' => 'letters' },
+          'type' => 'letters',
           'adjustment_comment' => 'test'
         }
       end
@@ -336,7 +336,7 @@ RSpec.describe Nsm::V1::LetterAndCall do
       let(:claim) { create(:claim) }
       let(:params) do
         {
-          'type' => { 'en' => 'Letters', 'value' => 'letters' },
+          'type' => 'letters',
         }
       end
 

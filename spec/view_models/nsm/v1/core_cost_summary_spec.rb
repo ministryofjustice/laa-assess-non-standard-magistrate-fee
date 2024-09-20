@@ -42,7 +42,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
       let(:work_items) do
         [
           {
-            work_type: { value: 'advocacy', en: 'Advocacy' },
+            work_type: 'advocacy',
             pricing: 10.0, time_spent_original: 600,
             time_spent: 480, adjustment_comment: 'Foo',
           }
@@ -66,11 +66,11 @@ RSpec.describe Nsm::V1::CoreCostSummary do
         [
           {
 
-            work_type: { value: 'advocacy', en: 'Advocacy' },
+            work_type: 'advocacy',
             pricing: 10.0, time_spent_original: 600, time_spent: 480, adjustment_comment: 'Foo',
           },
           {
-            work_type: { value: 'preparation', en: 'Preparation' },
+            work_type: 'preparation',
             pricing: 10.0, time_spent_original: 660, time_spent: 540, adjustment_comment: 'Foo',
           }
         ]
@@ -92,15 +92,15 @@ RSpec.describe Nsm::V1::CoreCostSummary do
       let(:work_items) do
         [
           {
-            work_type: { value: 'travel', en: 'Travel' },
+            work_type: 'travel',
             pricing: 10.0, time_spent_original: 600, time_spent: 480, adjustment_comment: 'Foo',
           },
           {
-            work_type: { value: 'waiting', en: 'Waiting' },
+            work_type: 'waiting',
             pricing: 10.0, time_spent_original: 600, time_spent: 480, adjustment_comment: 'Foo',
           },
           {
-            work_type: { value: 'preparation', en: 'Preparation' },
+            work_type: 'preparation',
             pricing: 10.0, time_spent_original: 660, time_spent: 540, adjustment_comment: 'Foo',
           }
         ]
@@ -130,11 +130,11 @@ RSpec.describe Nsm::V1::CoreCostSummary do
       let(:work_items) do
         [
           {
-            work_type: { value: 'advocacy', en: 'Advocacy' },
+            work_type: 'advocacy',
             pricing: 10.0, time_spent_original: 600, time_spent: 480, adjustment_comment: 'Foo',
           },
           {
-            work_type: { value: 'advocacy', en: 'Advocacy' },
+            work_type: 'advocacy',
             pricing: 10.0, time_spent_original: 660, time_spent: 540, adjustment_comment: 'Foo',
           }
         ]
@@ -156,8 +156,8 @@ RSpec.describe Nsm::V1::CoreCostSummary do
       let(:work_items) do
         [
           {
-            work_type: { value: 'advocacy', en: 'Advocacy' },
-            work_type_original: { value: 'waiting', en: 'Waiting' },
+            work_type: 'advocacy',
+            work_type_original: 'waiting',
             pricing: 10.0,
             pricing_original: 12.0,
             time_spent: 480, adjustment_comment: 'Foo',
@@ -229,8 +229,8 @@ RSpec.describe Nsm::V1::CoreCostSummary do
     context 'when letters and calls exist' do
       let(:letters_and_calls) do
         [
-          { 'type' => { 'en' => 'Letters' }, 'count' => 10, 'pricing' => 4.0 },
-          { 'type' => { 'en' => 'Calls' }, 'count' => 5, 'pricing' => 4.0 }
+          { 'type' => 'letters', 'count' => 10, 'pricing' => 4.0 },
+          { 'type' => 'calls', 'count' => 5, 'pricing' => 4.0 }
         ]
       end
 
@@ -253,7 +253,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
       let(:work_items) do
         Array.new(30) do
           {
-            work_type: { value: 'advocacy', en: 'Advocacy' },
+            work_type: 'advocacy',
             pricing: 45.35, time_spent: 175,
           }
         end
@@ -273,7 +273,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
       let(:work_items) do
         [
           {
-            work_type: { value: 'advocacy', en: 'Advocacy' },
+            work_type: 'advocacy',
             pricing: 10.0, time_spent_original: 600, time_spent: 480, adjustment_comment: 'Foo',
           }
         ]
@@ -295,7 +295,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
       let(:work_items) do
         [
           {
-            work_type: { value: 'advocacy', en: 'Advocacy' },
+            work_type: 'advocacy',
             pricing: 10.0, time_spent: 480,
           }
         ]
@@ -317,7 +317,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
       let(:work_items) do
         [
           {
-            work_type: { value: 'advocacy', en: 'Advocacy' },
+            work_type: 'advocacy',
             pricing: 10.0, time_spent: 480,
           }
         ]
@@ -338,11 +338,11 @@ RSpec.describe Nsm::V1::CoreCostSummary do
       let(:work_items) do
         [
           {
-            work_type: { value: 'advocacy', en: 'Advocacy' },
+            work_type: 'advocacy',
             pricing: 10.0, time_spent_original: 600, time_spent: 480, adjustment_comment: 'Foo',
           },
           {
-            work_type: { value: 'travel', en: 'Travel' },
+            work_type: 'travel',
             pricing: 10.0, time_spent_original: 600, time_spent: 480, adjustment_comment: 'Foo',
           }
         ]
@@ -364,11 +364,11 @@ RSpec.describe Nsm::V1::CoreCostSummary do
       let(:work_items) do
         [
           {
-            work_type: { value: 'advocacy', en: 'Advocacy' },
+            work_type: 'advocacy',
                           pricing: 10.0, time_spent_original: 600, time_spent: 480, adjustment_comment: 'Foo',
           },
           {
-            work_type: { value: 'advocacy', en: 'Advocacy' },
+            work_type: 'advocacy',
                            pricing: 10.0, time_spent_original: 600, time_spent: 480, adjustment_comment: 'Foo',
           }
         ]
@@ -389,8 +389,8 @@ RSpec.describe Nsm::V1::CoreCostSummary do
     context 'when letters and calls exist' do
       let(:letters_and_calls) do
         [
-          { 'type' => { 'en' => 'Letters' }, 'count' => 10, 'pricing' => 4.0 },
-          { 'type' => { 'en' => 'Calls' }, 'count' => 5, 'pricing' => 4.0 }
+          { 'type' => 'letters', 'count' => 10, 'pricing' => 4.0 },
+          { 'type' => 'calls', 'count' => 5, 'pricing' => 4.0 }
         ]
       end
 
@@ -413,7 +413,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
       let(:work_items) do
         [
           {
-            work_type: { value: 'advocacy', en: 'Advocacy' },
+            work_type: 'advocacy',
             pricing: 10.0, time_spent: 480,
           }
         ]
@@ -436,7 +436,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
       let(:work_items) do
         [
           {
-            work_type: { value: 'advocacy', en: 'Advocacy' },
+            work_type: 'advocacy',
             pricing: 10.0, time_spent: 480,
           }
         ]

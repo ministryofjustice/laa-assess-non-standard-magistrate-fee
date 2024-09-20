@@ -11,14 +11,8 @@ RSpec.describe Nsm::V1::CaseDisposal do
     it 'has correct structure' do
       subject = described_class.new(
         {
-          'plea' => {
-            'value' => 'cracked_trial',
-            'en' => 'Cracked Trial'
-          },
-          'plea_category' => {
-            'value' => 'not_guilty_pleas',
-            'en' => 'Category 2'
-          }
+          'plea' => 'cracked_trial',
+          'plea_category' => 'not_guilty_pleas',
         }
       )
 
@@ -30,14 +24,8 @@ RSpec.describe Nsm::V1::CaseDisposal do
   describe '#data' do
     subject = described_class.new(
       {
-        'plea' => {
-          'value' => 'cracked_trial',
-          'en' => 'Cracked Trial'
-        },
-        'plea_category' => {
-          'value' => 'not_guilty_pleas',
-          'en' => 'Category 2'
-        }
+        'plea' => 'cracked_trial',
+        'plea_category' => 'not_guilty_pleas',
       }
     )
 

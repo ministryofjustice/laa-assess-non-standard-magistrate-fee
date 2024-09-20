@@ -17,6 +17,16 @@ RSpec.describe 'Overview', type: :system do
         .to have_content('Claimed: £325.97')
         .and have_no_content('Allowed:')
     end
+
+    context 'when claim has old translation format' do
+      let(:claim) { create(:claim, :legacy_translations) }
+
+      it 'does not crash and renders the page' do
+        expect(page)
+          .to have_content('Counsel or agent assigned')
+          .and have_no_content('Allowed:')
+      end
+    end
   end
 
   context 'when I have made a change' do

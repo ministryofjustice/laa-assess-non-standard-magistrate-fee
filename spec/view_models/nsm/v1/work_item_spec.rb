@@ -7,7 +7,7 @@ RSpec.describe Nsm::V1::WorkItem do
     let(:adjustment_comment) { 'something' }
     let(:params) do
       {
-        'work_type' => { 'en' => 'Waiting', 'value' => 'waiting' },
+        'work_type' => 'waiting',
         'completed_on' => Date.new(2024, 1, 1),
         'time_spent' => 161,
         'uplift' => 0,
@@ -239,7 +239,7 @@ RSpec.describe Nsm::V1::WorkItem do
   describe '#form_attributes' do
     let(:params) do
       {
-        'work_type' => { 'en' => 'Waiting', 'value' => 'waiting' },
+        'work_type' => 'waiting',
         'time_spent' => 161,
         'uplift' => 0,
         'pricing' => 24.0,
@@ -258,7 +258,7 @@ RSpec.describe Nsm::V1::WorkItem do
     context 'when adjustments exists' do
       let(:params) do
         {
-          'work_type' => { 'en' => 'Waiting', 'value' => 'waiting' },
+          'work_type' => 'waiting',
           'time_spent' => 161,
           'uplift' => 0,
           'pricing' => 24.0,
@@ -286,7 +286,7 @@ RSpec.describe Nsm::V1::WorkItem do
         'uplift_original' => 20,
         'pricing' => 24.0,
         'fee_earner' => 'JGB',
-        'work_type' => { 'value' => 'waiting', 'en' => 'Waiting' },
+        'work_type' => 'waiting',
       }
     end
 

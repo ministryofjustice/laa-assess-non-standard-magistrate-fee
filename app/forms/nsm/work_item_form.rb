@@ -45,8 +45,7 @@ module Nsm
     end
 
     def process_work_item_fields
-      process_field(value: { value: work_type_value, en: I18n.t("nsm.work_items.work_types.#{work_type_value}") },
-                    field: 'work_type')
+      process_field(value: work_type_value, field: 'work_type')
       process_field(value: work_item_pricing[work_type_value], field: 'pricing')
     end
 

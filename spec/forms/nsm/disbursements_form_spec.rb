@@ -14,10 +14,7 @@ RSpec.describe Nsm::DisbursementsForm do
           'miles' => original_miles,
           'total_cost_without_vat' => original_total_cost_without_vat,
           'vat_amount' => vat_amount,
-          'other_type' => {
-            'en' => 'Apples',
-            'value' => 'Apples'
-          }
+          'other_type' => 'apples',
         }
       ]
     )

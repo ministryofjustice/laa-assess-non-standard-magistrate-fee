@@ -53,7 +53,7 @@ RSpec.describe Nsm::V1::Disbursement do
       {
         'total_cost_without_vat' => 83, 'vat_amount' => 17,
         'disbursement_date' => Date.new(2022, 1, 1),
-        'other_type' => { 'value' => 'accountants', 'en' => 'Type' },
+        'other_type' => 'accountants',
         'details' => 'details',
         'prior_authority' => prior_authority,
         'vat_rate' => 0.2,

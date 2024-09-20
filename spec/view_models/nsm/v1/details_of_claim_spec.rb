@@ -12,10 +12,7 @@ RSpec.describe Nsm::V1::DetailsOfClaim do
       described_class.new(
         {
           'ufn' => 'ABC/12345',
-          'claim_type' => {
-            'value' => 'non_standard_magistrate',
-            'en' => 'Non-standard fee - magistrate'
-          },
+          'claim_type' => 'non_standard_magistrate',
           'rep_order_date' => '2023-02-01',
           'stage_reached' => 'prom',
           'firm_office' => {
@@ -36,10 +33,7 @@ RSpec.describe Nsm::V1::DetailsOfClaim do
       described_class.new(
         {
           'ufn' => 'ABC/12345',
-          'claim_type' => {
-            'value' => 'non_standard_magistrate',
-            'en' => 'Non-standard fee - magistrate'
-          },
+          'claim_type' => 'non_standard_magistrate',
           'rep_order_date' => '2023-02-01',
           'stage_reached' => 'prom',
           'firm_office' => {
@@ -64,10 +58,7 @@ RSpec.describe Nsm::V1::DetailsOfClaim do
         described_class.new(
           {
             'ufn' => 'ABC/12345',
-            'claim_type' => {
-              'value' => 'breach_of_injunction',
-              'en' => 'Breach of injunction'
-            },
+            'claim_type' => 'breach_of_injunction',
             'cntp_order' => '123456',
             'cntp_date' => '2023-02-01',
             'stage_reached' => 'prog',
