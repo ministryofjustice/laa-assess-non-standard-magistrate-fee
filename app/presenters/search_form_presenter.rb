@@ -1,7 +1,7 @@
 class SearchFormPresenter
   attr_accessor :service, :current_user
 
-  def initialize(service, current_user)
+  def initialize(service)
     @service = service
     @current_user = current_user
   end
@@ -14,7 +14,7 @@ class SearchFormPresenter
   end
 
   def show_risk_filter?
-    return true if current_user.supervisor? && service == 'analytics'
+    return true if service == 'analytics'
 
     service != 'crm4'
   end

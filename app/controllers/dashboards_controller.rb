@@ -86,6 +86,6 @@ class DashboardsController < ApplicationController
   end
 
   def set_presenter
-    @presenter = SearchFormPresenter.new('analytics', current_user)
+    @presenter = SearchFormPresenter.new('analytics')
   end
 end

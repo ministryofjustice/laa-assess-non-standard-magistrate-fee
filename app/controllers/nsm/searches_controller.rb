@@ -38,7 +38,7 @@ module Nsm
     end
 
     def set_presenter
-      @presenter = SearchFormPresenter.new(Submission::APPLICATION_TYPES[:nsm], current_user)
+      @presenter = SearchFormPresenter.new(Submission::APPLICATION_TYPES[:nsm])
     end
 
     def set_current_section

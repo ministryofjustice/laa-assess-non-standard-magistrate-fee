@@ -36,7 +36,7 @@ module PriorAuthority
     end
 
     def set_presenter
-      @presenter = SearchFormPresenter.new(Submission::APPLICATION_TYPES[:prior_authority], current_user)
+      @presenter = SearchFormPresenter.new(Submission::APPLICATION_TYPES[:prior_authority])
     end
   end
 end
