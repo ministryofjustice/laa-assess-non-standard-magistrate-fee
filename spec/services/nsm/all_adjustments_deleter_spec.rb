@@ -26,6 +26,13 @@ RSpec.describe Nsm::AllAdjustmentsDeleter do
       claim.data.merge('adjusted' => true)
     end
 
+    describe '#call' do
+      it 'returns false if submission already assessed' do
+        allow(service.submission).to receive(:assessed?).and_return true
+        expect(service.call).to be false
+      end
+    end
+
     context 'when deleting disbursement adjustments' do
       before { service.call }
 

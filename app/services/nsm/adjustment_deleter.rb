@@ -3,6 +3,8 @@ module Nsm
     attr_reader :params, :adjustment_type, :current_user, :submission
 
     def call
+      return false if submission.assessed?
+
       case adjustment_type
       when :work_item
         delete_work_item_adjustment

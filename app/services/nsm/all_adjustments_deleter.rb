@@ -8,6 +8,8 @@ module Nsm
     end
 
     def call
+      return false if submission.assessed?
+
       raise StandardError, "no adjustments to delete for id:#{submission.id}" unless submission.any_adjustments?
 
       app_store_record = AppStoreClient.new.get_submission(submission)
