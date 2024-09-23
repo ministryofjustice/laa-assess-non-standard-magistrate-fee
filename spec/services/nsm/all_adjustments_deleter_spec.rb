@@ -28,7 +28,7 @@ RSpec.describe Nsm::AllAdjustmentsDeleter do
 
     describe '#call' do
       it 'returns false if submission already assessed' do
-        allow(service.submission).to receive(:assessed?).and_return true
+        allow(service.submission).to receive(:editable_by?).with(user).and_return false
         expect(service.call).to be false
       end
     end

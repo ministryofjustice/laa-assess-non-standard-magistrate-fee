@@ -18,7 +18,7 @@
                                         additional_classes:) %>
           <% end %>
         <% end %>
-        <% unless claim.assessed? %>
+        <% if claim.editable_by?(current_user) %>
           <th class="govuk-table__header" scope="col"><%= t(".action") %></th>
         <% end %>
       </tr>
@@ -48,7 +48,7 @@
           <td class="govuk-table__cell govuk-table__cell--numeric">
             <%= disbursement.allowed_gross %>
           </td>
-          <% unless claim.assessed? %>
+          <% if claim.editable_by?(current_user) %>
             <td class="govuk-table__cell">
               <%= link_to t(".delete"),
                 confirm_deletion_nsm_claim_disbursement_path(claim, disbursement.id),
