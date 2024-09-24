@@ -4,7 +4,11 @@ module Nsm
   module FeedbackMessages
     class FurtherInformationRequestFeedback < FeedbackBase
       def template
-        '9ecdec30-83d7-468d-bec2-cf770a2c9828'
+        if FeatureFlags.nsm_rfi_loop.enabled?
+          '632fc896-8019-4308-a091-67f593700f32'
+        else
+          '9ecdec30-83d7-468d-bec2-cf770a2c9828'
+        end
       end
 
       def contents
@@ -14,10 +18,18 @@ module Nsm
           main_defendant_name: defendant_name,
           defendant_reference: defendant_reference_string,
           claim_total: claim_total,
-          date_to_respond_by: 7.days.from_now.to_fs(:stamp),
+          date_to_respond_by: date_to_respond_by,
           caseworker_information_requested: @comment,
           date: DateTime.now.to_fs(:stamp),
         }
+      end
+
+      def date_to_respond_by
+        if FeatureFlags.nsm_rfi_loop.enabled?
+          @submission.data['resubmission_deadline']
+        else
+          7.days.from_now.to_fs(:stamp)
+        end
       end
     end
   end

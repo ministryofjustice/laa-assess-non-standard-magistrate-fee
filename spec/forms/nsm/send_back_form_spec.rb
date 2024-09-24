@@ -6,20 +6,20 @@ RSpec.describe Nsm::SendBackForm do
   let(:claim) { create(:claim) }
 
   describe '#validations' do
-    let(:params) { { claim:, comment: } }
+    let(:params) { { claim:, send_back_comment: } }
 
     context 'when comment is set' do
-      let(:comment) { 'some comment' }
+      let(:send_back_comment) { 'some comment' }
 
       it { expect(subject).to be_valid }
     end
 
     context 'when comment is blank' do
-      let(:comment) { nil }
+      let(:send_back_comment) { nil }
 
       it 'is invalid' do
         expect(subject).not_to be_valid
-        expect(subject.errors.of_kind?(:comment, :blank)).to be(true)
+        expect(subject.errors.of_kind?(:send_back_comment, :blank)).to be(true)
       end
     end
   end
@@ -27,7 +27,7 @@ RSpec.describe Nsm::SendBackForm do
   describe '#persistance' do
     let(:user) { instance_double(User) }
     let(:claim) { create(:claim, assignments: [build(:assignment)]) }
-    let(:params) { { claim: claim, comment: 'some comment', current_user: user } }
+    let(:params) { { claim: claim, send_back_comment: 'some comment', current_user: user } }
 
     before do
       allow(Nsm::Event::SendBack).to receive(:build)

@@ -4,23 +4,24 @@ en:
     send_backs:
       edit:
         page_title: Send back to provider
-        heading: Send back %{defendant_name}’s claim
-        submit: Send back to provider
+        heading: Send back to provider
+        submit: Submit
+        save_and_exit: Save and come back later
       update:
         decision: You sent back this claim <a class="govuk-link" href="%{url}">%{ref}</a>
 
   helpers:
     label:
       nsm_send_back_form:
-        comment: Explain your decision
+        send_back_comment: What updates to the claim are needed?
     hint:
       nsm_send_back_form:
-        comment: We’ll share this information with the provider
+        send_back_comment: This information will be shown to the provider
 
   activemodel:
     errors:
       models:
         nsm/send_back_form:
           attributes:
-            comment:
-              blank: Add an explanation for your decision
+            send_back_comment:
+              blank: Enter a description of what further information your require

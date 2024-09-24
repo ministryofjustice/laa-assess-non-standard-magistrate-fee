@@ -76,17 +76,24 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
       travel_to fixed_arbitrary_date
       visit nsm_claim_claim_details_path(claim)
       click_link_or_button 'Send back to provider'
-      fill_in 'Explain your decision', with: 'Test Data'
+      fill_in 'What updates to the claim are needed?', with: 'Test Data'
+    end
+
+    it 'lets me save and come back later' do
+      click_link_or_button 'Save and come back later'
+      visit nsm_claim_claim_details_path(claim)
+      click_link_or_button 'Send back to provider'
+      expect(page).to have_field 'What updates to the claim are needed?', with: 'Test Data'
     end
 
     it 'sends a notification' do
       expect do
-        click_link_or_button 'Send back to provider'
+        click_link_or_button 'Submit'
       end.to have_enqueued_job(NotifyAppStore)
     end
 
     context 'when I have sent a claim back' do
-      before { click_link_or_button 'Send back to provider' }
+      before { click_link_or_button 'Submit' }
 
       it 'shows the date on the details page' do
         visit nsm_claim_claim_details_path(claim)
@@ -98,6 +105,30 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
         visit nsm_claim_claim_details_path(claim)
 
         expect(page).to have_content "Sent back to provider on 4 July 2024\nTest Data"
+      end
+    end
+
+    context 'when NSM RFI loops are enabled' do
+      before do
+        allow(FeatureFlags).to receive(:nsm_rfi_loop).and_return(
+          instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+        )
+        allow(WorkingDayService).to receive(:call).with(10).and_return(14.days.from_now)
+        click_link_or_button 'Submit'
+      end
+
+      it 'adds info to the payload' do
+        expect(claim.reload.data['further_information']).to eq(
+          [
+            {
+              'requested_at' => fixed_arbitrary_date.to_json.delete('"'),
+              'information_requested' => 'Test Data',
+              'caseworker_id' => user.id,
+            }
+          ]
+        )
+
+        expect(claim.data['resubmission_deadline']).to eq 14.days.from_now.to_json.delete('"')
       end
     end
   end
