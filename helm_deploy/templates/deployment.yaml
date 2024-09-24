@@ -166,10 +166,7 @@ spec:
                   name: google-analytics
                   key: tracking_key
             - name: S3_BUCKET
-              valueFrom:
-                secretKeyRef:
-                  name: s3-policy-arns
-                  key: bucket_name
+              value: 'garbage'
             - name: SIDEKIQ_WEB_UI_USERNAME
               valueFrom:
                 secretKeyRef:
