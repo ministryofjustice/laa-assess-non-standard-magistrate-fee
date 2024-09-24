@@ -8,6 +8,8 @@ module Nsm
     end
 
     def call
+      return false unless submission.editable_by?(current_user)
+
       raise StandardError, "no adjustments to delete for id:#{submission.id}" unless submission.any_adjustments?
 
       app_store_record = AppStoreClient.new.get_submission(submission)
