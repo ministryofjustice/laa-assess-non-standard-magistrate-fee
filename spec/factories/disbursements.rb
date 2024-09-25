@@ -8,9 +8,9 @@ FactoryBot.define do
     vat_rate { 0.2 }
     vat_amount { 9.0 }
     prior_authority { 'yes' }
-    other_type { { 'en' => nil, 'value' => nil } }
+    other_type { nil }
     disbursement_date { Date.current.iso8601 }
-    disbursement_type { { 'en' => 'Car mileage', 'value' => 'car' } }
+    disbursement_type { 'car' }
     total_cost_without_vat { 45.0 }
   end
 end

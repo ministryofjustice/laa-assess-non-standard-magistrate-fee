@@ -47,8 +47,12 @@ module Nsm
 
     def selected_record
       @selected_record ||= claim.data['letters_and_calls'].detect do |row|
-        row.dig('type', 'value') == type
+        Type::TranslatedObject.new.cast(row['type']).value == type
       end
+    end
+
+    def linked_id(_)
+      type
     end
 
     def new_uplift

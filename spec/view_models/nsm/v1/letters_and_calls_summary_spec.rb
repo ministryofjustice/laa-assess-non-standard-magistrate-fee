@@ -4,7 +4,7 @@ RSpec.describe Nsm::V1::LettersAndCallsSummary, type: :model do
   subject { described_class.new(submission:) }
 
   let(:letters_and_calls) do
-    [{ 'type' => { 'en' => 'Letters', 'value' => 'letters' }, 'count' => 12, 'uplift' => uplift, 'pricing' => 3.56 }]
+    [{ 'type' => 'letters', 'count' => 12, 'uplift' => uplift, 'pricing' => 3.56 }]
   end
   let(:uplift) { 0 }
   let(:submission) { build(:claim).tap { |claim| claim.data.merge!('letters_and_calls' => letters_and_calls) } }

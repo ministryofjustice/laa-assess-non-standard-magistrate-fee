@@ -48,8 +48,12 @@ class BaseAdjustmentForm
   def linked
     {
       type: self.class::LINKED_CLASS::LINKED_TYPE,
-      id: selected_record.dig(*self.class::LINKED_CLASS::ID_FIELDS),
+      id: linked_id(selected_record),
     }
+  end
+
+  def linked_id(row)
+    row['id']
   end
 
   def data_changed

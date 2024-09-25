@@ -117,10 +117,7 @@ RSpec.describe 'Work items' do
             'id' => 'cf5e303e-98dd-4b0f-97ea-3560c4c5f137',
             'uplift' => 95,
             'pricing' => 24.0,
-            'work_type' => {
-              'en' => 'Attendance without counsel',
-              'value' => 'attendance_without_counsel'
-            },
+            'work_type' => 'attendance_without_counsel',
             'fee_earner' => 'aaa',
             'time_spent' => 161,
             'completed_on' => '2022-12-12'
