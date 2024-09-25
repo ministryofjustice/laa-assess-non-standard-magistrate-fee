@@ -7,7 +7,7 @@ module Nsm
       # used to guess position when value not set in JSON blob when position is blank
       attribute :submission
       attribute :position, :integer
-      adjustable_attribute :work_type, :translated
+      adjustable_attribute :work_type, :translated, scope: 'nsm.work_type'
       adjustable_attribute :time_spent, :time_period
       attribute :completed_on, :date
 

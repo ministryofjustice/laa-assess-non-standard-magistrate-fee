@@ -11,14 +11,8 @@ RSpec.describe Nsm::V1::CaseDisposal do
     it 'has correct structure' do
       subject = described_class.new(
         {
-          'plea' => {
-            'value' => 'cracked_trial',
-            'en' => 'Cracked Trial'
-          },
-          'plea_category' => {
-            'value' => 'cracked_trial',
-            'en' => 'Category 2'
-          }
+          'plea' => 'cracked_trial',
+          'plea_category' => 'not_guilty_pleas',
         }
       )
 
@@ -30,21 +24,15 @@ RSpec.describe Nsm::V1::CaseDisposal do
   describe '#data' do
     subject = described_class.new(
       {
-        'plea' => {
-          'value' => 'cracked_trial',
-          'en' => 'Cracked Trial'
-        },
-        'plea_category' => {
-          'value' => 'cracked_trial',
-          'en' => 'Category 2'
-        }
+        'plea' => 'cracked_trial',
+        'plea_category' => 'not_guilty_pleas',
       }
     )
 
     it 'shows correct table data' do
       expect(subject.data).to eq(
         [
-          { title: 'Category 2', value: 'Cracked Trial' }
+          { title: 'Category 2', value: 'Cracked trial' }
         ]
       )
     end

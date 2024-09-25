@@ -94,7 +94,7 @@ RSpec.describe Nsm::MakeDecisionForm do
 
       context 'with an increased letter or call adjustment' do
         before do
-          letters = claim.data['letters_and_calls'].find { |ltc| ltc['type']['value'] == 'letters' }
+          letters = claim.data['letters_and_calls'].find { |ltc| ltc['type'] == 'letters' }
           letters['count_original'] = letters['count']
           letters['count'] += 1
           letters['adjustment_comment'] = 'increasing letter count'
@@ -108,7 +108,7 @@ RSpec.describe Nsm::MakeDecisionForm do
 
       context 'with a reduced letter or call adjustment' do
         before do
-          letters = claim.data['letters_and_calls'].find { |ltc| ltc['type']['value'] == 'letters' }
+          letters = claim.data['letters_and_calls'].find { |ltc| ltc['type'] == 'letters' }
           letters['count_original'] = letters['count']
           letters['count'] -= 1
           letters['adjustment_comment'] = 'reducing letter count'
@@ -127,7 +127,7 @@ RSpec.describe Nsm::MakeDecisionForm do
           work_item['time_spent_original'] = work_item['time_spent']
           work_item['time_spent'] += 1
           work_item['adjustment_comment'] = 'reducing this work item'
-          letters = claim.data['letters_and_calls'].find { |ltc| ltc['type']['value'] == 'letters' }
+          letters = claim.data['letters_and_calls'].find { |ltc| ltc['type'] == 'letters' }
           letters['count_original'] = letters['count']
           letters['count'] -= 1
           letters['adjustment_comment'] = 'reducing letter count'

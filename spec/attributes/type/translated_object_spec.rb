@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Type::TranslatedObject do
+  subject { described_class.new(scope: 'nsm.claim_type') }
+
   let(:coerced_value) { subject.cast(value).to_s }
 
   describe 'registry' do
@@ -16,26 +18,10 @@ RSpec.describe Type::TranslatedObject do
   end
 
   describe 'when value is `hash` of translations' do
-    let(:value) { { 'en' => 'Apple', 'value' => 'apple', 'cy' => 'Afal' } }
+    let(:value) { { 'en' => 'Apple', 'value' => 'non_standard_magistrate' } }
 
-    before { allow(I18n).to receive(:locale).and_return(locale) }
-
-    context 'when locale is english' do
-      let(:locale) { :en }
-
-      it { expect(coerced_value).to eq('Apple') }
-    end
-
-    context 'when locale is welsh' do
-      let(:locale) { :cy }
-
-      it { expect(coerced_value).to eq('Afal') }
-    end
-
-    context 'when locale is unknown it returns the `value`' do
-      let(:locale) { :ru }
-
-      it { expect(coerced_value).to eq('apple') }
+    it 'ignores the embedded translation and uses the gem' do
+      expect(coerced_value).to eq("Non-standard magistrates' court payment")
     end
   end
 
@@ -45,23 +31,11 @@ RSpec.describe Type::TranslatedObject do
     it { expect(coerced_value).to eq('') }
   end
 
-  describe 'when value is `Array`' do
-    let(:value) { ['Apple'] }
-
-    it { expect { coerced_value }.to raise_error('Invalid Type for ["Apple"]') }
-  end
-
   describe 'when value is `string`' do
-    let(:value) { 'Apple' }
+    let(:value) { 'non_standard_magistrate' }
 
-    it { expect { coerced_value }.to raise_error('Invalid Type for "Apple"') }
-  end
-
-  describe '#serialize' do
-    let(:value) { 'Apple' }
-
-    it 'raises an error' do
-      expect { subject.serialize(value) }.to raise_error('Value cannot be re-serialized')
+    it 'uses the gem' do
+      expect(coerced_value).to eq("Non-standard magistrates' court payment")
     end
   end
 end

@@ -1,8 +1,8 @@
 module Nsm
   module V1
     class CaseDisposal < BaseViewModel
-      attribute :plea, :translated
-      attribute :plea_category, :translated
+      attribute :plea, :translated, scope: 'nsm.plea'
+      attribute :plea_category, :translated, scope: 'nsm.plea_category'
 
       def key
         'case_disposal'

@@ -15,14 +15,8 @@ RSpec.describe Nsm::V1::HearingDetails do
           'number_of_hearing' => 3,
           'court' => 'A Mag Court',
           'youth_court' => 'no',
-          'hearing_outcome' => {
-            'value' => 'CP01',
-            'en' => 'Hearing Done'
-          },
-          'matter_type' => {
-            'value' => 'a_matter',
-            'en' => 'A Simple Matter'
-          }
+          'hearing_outcome' => 'CP01',
+          'matter_type' => '1',
         }
       )
 
@@ -38,14 +32,8 @@ RSpec.describe Nsm::V1::HearingDetails do
         'number_of_hearing' => 3,
         'court' => 'A Mag Court',
         'youth_court' => 'no',
-        'hearing_outcome' => {
-          'value' => 'CP01',
-          'en' => 'Hearing Done'
-        },
-        'matter_type' => {
-          'value' => '2',
-          'en' => 'A Simple Matter'
-        }
+        'hearing_outcome' => 'CP01',
+        'matter_type' => '1',
       }
     )
 
@@ -56,8 +44,8 @@ RSpec.describe Nsm::V1::HearingDetails do
           { title: 'Number of hearings', value: 3 },
           { title: "Magistrates' court", value: 'A Mag Court' },
           { title: 'Youth court', value: 'No' },
-          { title: 'Hearing outcome', value: 'CP01 - Hearing Done' },
-          { title: 'Matter type', value: '2 - A Simple Matter' },
+          { title: 'Hearing outcome', value: 'CP01 - Arrest warrant issued/adjourned indefinitely' },
+          { title: 'Matter type', value: '1 - Offences against the person' },
         ]
       )
     end

@@ -113,17 +113,11 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
           'pricing' => 1.0,
           'vat_rate' => 0.2,
           'apply_vat' => 'false',
-          'other_type' => {
-            'en' => 'Apples',
-            'value' => 'Apples'
-          },
+          'other_type' => 'accountants',
           'vat_amount' => 0.0,
           'prior_authority' => 'yes',
           'disbursement_date' => Date.new(2022, 12, 12) + i,
-          'disbursement_type' => {
-            'en' => 'Other',
-            'value' => 'other'
-          },
+          'disbursement_type' => 'other',
           'total_cost_without_vat' => 100.0
         }
       end
@@ -132,10 +126,7 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
           'id' => SecureRandom.uuid,
           'uplift' => 95,
           'pricing' => 24.0,
-          'work_type' => {
-            'en' => 'Waiting',
-            'value' => 'waiting'
-          },
+          'work_type' => 'waiting',
           'fee_earner' => 'aaa',
           'time_spent' => 161,
           'completed_on' => Date.new(2022, 12, 12) + i

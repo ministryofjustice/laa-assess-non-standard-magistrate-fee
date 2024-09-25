@@ -1,9 +1,7 @@
 module Type
   class TranslatedObject < ActiveModel::Type::Value
-    attr_reader :array
-
     def initialize(*args, **kwargs)
-      @array = kwargs.delete(:array)
+      @scope = kwargs.delete(:scope)
       super
     end
 
@@ -11,16 +9,11 @@ module Type
       :translated
     end
 
-    def serialize(_value)
-      raise 'Value cannot be re-serialized'
-    end
-
     private
 
     def cast_value(value)
-      raise "Invalid Type for #{value.inspect}" unless value.is_a?(Hash)
-
-      TranslationObject.new(value)
+      key = value.is_a?(Hash) ? value['value'] : value
+      TranslationObject.new(key, @scope)
     end
   end
 end

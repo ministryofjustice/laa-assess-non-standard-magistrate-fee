@@ -23,9 +23,9 @@ RSpec.describe Nsm::V1::WorkItemSummary do
 
   describe 'footer' do
     let(:work_items) do
-      [{ 'work_type' => { 'en' => 'Travel', 'value' => 'travel' },
+      [{ 'work_type' => 'travel',
           'time_spent' => 20, 'vat_rate' => 0.2, 'pricing' => 300.0 },
-       { 'work_type' => { 'en' => 'Waiting', 'value' => 'waiting' },
+       { 'work_type' => 'waiting',
          'time_spent' => 30, 'vat_rate' => 0.2, 'pricing' => 200.0 }]
     end
 
@@ -44,7 +44,7 @@ RSpec.describe Nsm::V1::WorkItemSummary do
   describe '#table_fields' do
     context 'when a single work item exists' do
       let(:work_items) do
-        [{ 'work_type' => { 'en' => 'Travel', 'value' => 'travel' },
+        [{ 'work_type' => 'travel',
            'time_spent' => 20, 'vat_rate' => 0.2, 'pricing' => 300.0 }]
       end
 
@@ -65,7 +65,7 @@ RSpec.describe Nsm::V1::WorkItemSummary do
 
     context 'when a work item has an adjustments' do
       let(:work_items) do
-        [{ 'work_type' => { 'en' => 'Travel', 'value' => 'travel' }, 'adjustment_comment' => 'Foo',
+        [{ 'work_type' => 'travel', 'adjustment_comment' => 'Foo',
            'time_spent_original' => 40, 'time_spent' => 20, 'vat_rate' => 0.2, 'pricing' => 300.0 }]
       end
 
@@ -90,7 +90,7 @@ RSpec.describe Nsm::V1::WorkItemSummary do
 
     context 'when waiting and travel work items do not exist' do
       let(:work_items) do
-        [{ 'work_type' => { 'en' => 'preparation', 'value' => 'preparation' },
+        [{ 'work_type' => 'preparation',
            'time_spent' => 30, 'vat_rate' => 0.2, 'pricing' => 300.0 }]
       end
 
@@ -102,9 +102,9 @@ RSpec.describe Nsm::V1::WorkItemSummary do
 
     context 'when multiple work item of the same types exists' do
       let(:work_items) do
-        [{ 'work_type' => { 'en' => 'Travel', 'value' => 'travel' },
+        [{ 'work_type' => 'travel',
            'time_spent' => 20, 'vat_rate' => 0.2, 'pricing' => 150.0 },
-         { 'work_type' => { 'en' => 'Travel', 'value' => 'travel' },
+         { 'work_type' => 'travel',
            'time_spent' => 30, 'vat_rate' => 0.2, 'pricing' => 300.0 }]
       end
 
