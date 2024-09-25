@@ -33,6 +33,7 @@ gem 'redis'
 gem 'sidekiq', '~> 7.3'
 gem 'sidekiq_alive', '~> 2.4'
 gem 'sidekiq-cron'
+gem 'solid_cache'
 gem 'stimulus-rails'
 gem 'turbo-rails'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
