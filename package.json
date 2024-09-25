@@ -4,13 +4,13 @@
   "version": "1.0.0",
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
-    "@hotwired/turbo-rails": "8.0.9",
-    "@ministryofjustice/frontend": "^2.2.1",
+    "@hotwired/turbo-rails": "8.0.10",
+    "@ministryofjustice/frontend": "^2.2.3",
     "decimal.js": "^10.4.3",
-    "esbuild": "^0.23.1",
+    "esbuild": "^0.24.0",
     "govuk-frontend": "^5.6.0",
     "jquery": "^3.6.0",
-    "sass": "^1.79.1"
+    "sass": "^1.79.3"
   },
   "resolutions": {
     "braces": "^3.0.3",
