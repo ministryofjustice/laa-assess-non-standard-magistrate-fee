@@ -200,4 +200,86 @@ RSpec.describe Nsm::V1::Disbursement do
       it { expect(disbursement.allowed_gross).to eq('£83.00') }
     end
   end
+
+  describe '#reduced?' do
+    subject { disbursement.reduced? }
+
+    context 'with a reduced total cost' do
+      let(:args) do
+        {
+          'total_cost_without_vat_original' => 250,
+          'vat_amount_original' => 0,
+          'total_cost_without_vat' => 240,
+          'vat_amount' => 0,
+        }
+      end
+
+      it { is_expected.to be true }
+    end
+
+    context 'with an increased total cost' do
+      let(:args) do
+        {
+          'total_cost_without_vat_original' => 250,
+          'vat_amount_original' => 0,
+          'total_cost_without_vat' => 250,
+          'vat_amount' => 20,
+        }
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context 'with an unchanged total cost' do
+      let(:args) do
+        {
+          'total_cost_without_vat' => 250,
+          'vat_amount' => 0,
+        }
+      end
+
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#increased?' do
+    subject { disbursement.increased? }
+
+    context 'with a reduced total cost' do
+      let(:args) do
+        {
+          'total_cost_without_vat_original' => 250,
+          'vat_amount_original' => 0,
+          'total_cost_without_vat' => 240,
+          'vat_amount' => 0,
+        }
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context 'with an increased total cost' do
+      let(:args) do
+        {
+          'total_cost_without_vat_original' => 250,
+          'vat_amount_original' => 0,
+          'total_cost_without_vat' => 250,
+          'vat_amount' => 20,
+        }
+      end
+
+      it { is_expected.to be true }
+    end
+
+    context 'with an unchanged total cost' do
+      let(:args) do
+        {
+          'total_cost_without_vat' => 250,
+          'vat_amount' => 0,
+        }
+      end
+
+      it { is_expected.to be false }
+    end
+  end
 end

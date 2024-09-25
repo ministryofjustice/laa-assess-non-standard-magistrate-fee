@@ -77,6 +77,13 @@ en:
   activemodel:
     errors:
       models:
+        nsm/make_decision_form:
+          attributes:
+            state:
+              invalid:
+                granted_with_reductions: You cannot grant an application after making adjustments that reduce any of the provider costs. You can either keep those adjustments and part-grant it, or delete those adjustments to accept it
+                part_granted_without_changes: You can only part-grant an application if you have made adjustments to provider costs where some or all of the adjustments reduce the costs
+                part_granted_with_increases: You can only part-grant an application if you have made adjustments to provider costs where some or all of the adjustments reduce the costs. If you have made adjustments that increase the claim, you should grant it
         prior_authority/additional_cost_form:
           attributes:
             base:

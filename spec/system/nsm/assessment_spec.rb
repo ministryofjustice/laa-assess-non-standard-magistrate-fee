@@ -12,7 +12,7 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
     click_on 'Accept analytics cookies'
   end
 
-  context 'granted' do
+  context 'when granted' do
     before do
       travel_to fixed_arbitrary_date
       visit nsm_claim_claim_details_path(claim)
@@ -45,7 +45,9 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
     end
   end
 
-  context 'part-granted' do
+  context 'when part-granted' do
+    let(:claim) { create(:claim, :with_reduced_work_item) }
+
     it 'sends a part granted notification' do
       visit nsm_claim_claim_details_path(claim)
       click_link_or_button 'Make a decision'
@@ -58,7 +60,7 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
     end
   end
 
-  context 'rejected' do
+  context 'when rejected' do
     it 'sends a rejected notification' do
       visit nsm_claim_claim_details_path(claim)
       click_link_or_button 'Make a decision'
@@ -71,7 +73,7 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
     end
   end
 
-  context 'further information required' do
+  context 'when further information required' do
     before do
       travel_to fixed_arbitrary_date
       visit nsm_claim_claim_details_path(claim)
@@ -102,7 +104,7 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
     end
   end
 
-  context 'navigation', :javascript do
+  context 'when navigating', :javascript do
     let(:claim) do
       disbursements = Array.new(100) do |i|
         {

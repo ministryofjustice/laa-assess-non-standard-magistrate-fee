@@ -1,20 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe Nsm::V1::LetterAndCall do
-  subject { described_class.new(params) }
+  subject(:letterandcall) { described_class.new(params) }
 
   describe '#provider_requested_amount' do
     let(:params) { { count_original: 1, uplift_original: 10, pricing: 10.5 } }
 
     it 'calculates the correct provider requested amount' do
-      expect(subject.provider_requested_amount).to eq(11.55)
+      expect(letterandcall.provider_requested_amount).to eq(11.55)
     end
 
     context 'when originals are not set' do
       let(:params) { { count: 10, uplift: 10, pricing: 1.95 } }
 
       it 'calulates the initial uplift' do
-        expect(subject.provider_requested_amount).to eq(10.0 * 1.1 * 1.95)
+        expect(letterandcall.provider_requested_amount).to eq(10.0 * 1.1 * 1.95)
       end
     end
   end
@@ -24,14 +24,14 @@ RSpec.describe Nsm::V1::LetterAndCall do
       let(:params) { { uplift_original: 5, uplift: 10 } }
 
       it 'returns the uplift amount as a percentage' do
-        expect(subject.original_uplift).to eq(5)
+        expect(letterandcall.original_uplift).to eq(5)
       end
 
       context 'when there is no original value' do
         let(:params) { { uplift: 10 } }
 
         it 'uses the standard uplift' do
-          expect(subject.original_uplift).to eq(10)
+          expect(letterandcall.original_uplift).to eq(10)
         end
       end
     end
@@ -42,14 +42,14 @@ RSpec.describe Nsm::V1::LetterAndCall do
       let(:params) { { count_original: 5, count: 10 } }
 
       it 'returns the count amount as a percentage' do
-        expect(subject.original_count).to eq(5)
+        expect(letterandcall.original_count).to eq(5)
       end
 
       context 'when there is no original value' do
         let(:params) { { count: 10 } }
 
         it 'uses the standard count' do
-          expect(subject.original_count).to eq(10)
+          expect(letterandcall.original_count).to eq(10)
         end
       end
     end
@@ -59,7 +59,7 @@ RSpec.describe Nsm::V1::LetterAndCall do
     let(:params) { { count: 1, uplift: 5, pricing: 10.0 } }
 
     it 'calculates the correct caseworker amount' do
-      expect(subject.caseworker_amount).to eq(10.5)
+      expect(letterandcall.caseworker_amount).to eq(10.5)
     end
   end
 
@@ -67,7 +67,7 @@ RSpec.describe Nsm::V1::LetterAndCall do
     let(:params) { { uplift: 5 } }
 
     it 'returns the uplift value' do
-      expect(subject.uplift).to eq(5)
+      expect(letterandcall.uplift).to eq(5)
     end
   end
 
@@ -75,7 +75,7 @@ RSpec.describe Nsm::V1::LetterAndCall do
     let(:params) { { count: 5 } }
 
     it 'returns the count value' do
-      expect(subject.count).to eq(5)
+      expect(letterandcall.count).to eq(5)
     end
   end
 
@@ -83,7 +83,7 @@ RSpec.describe Nsm::V1::LetterAndCall do
     let(:params) { { type: { 'en' => 'Letters', :value => 'll' } } }
 
     it 'returns the downcase translated type' do
-      expect(subject.type_name).to eq('letters')
+      expect(letterandcall.type_name).to eq('letters')
     end
   end
 
@@ -98,7 +98,7 @@ RSpec.describe Nsm::V1::LetterAndCall do
     end
 
     it 'extracts data for form initialization' do
-      expect(subject.form_attributes).to eq(
+      expect(letterandcall.form_attributes).to eq(
         'explanation' => 'second adjustment',
         'count' => 10,
         'type' => 'll',
@@ -118,7 +118,7 @@ RSpec.describe Nsm::V1::LetterAndCall do
     end
 
     it 'returns the fields for the table display' do
-      expect(subject.table_fields).to eq(
+      expect(letterandcall.table_fields).to eq(
         [
           'Letters',
           { numeric: true, text: '12' },
@@ -143,7 +143,7 @@ RSpec.describe Nsm::V1::LetterAndCall do
       end
 
       it 'also renders caseworker values' do
-        expect(subject.table_fields).to eq(
+        expect(letterandcall.table_fields).to eq(
           [
             'Letters',
             { numeric: true, text: '15' },
@@ -170,7 +170,7 @@ RSpec.describe Nsm::V1::LetterAndCall do
     end
 
     it 'also renders caseworker values' do
-      expect(subject.adjusted_table_fields).to eq(
+      expect(letterandcall.adjusted_table_fields).to eq(
         [
           'Letters',
           'something',
@@ -186,18 +186,18 @@ RSpec.describe Nsm::V1::LetterAndCall do
     context 'when provider supplied uplift is positive' do
       let(:params) { { uplift: 10 } }
 
-      it { expect(subject).to be_uplift }
+      it { expect(letterandcall).to be_uplift }
     end
 
     context 'when uplift is zero' do
       let(:params) { { uplift: 0 } }
 
-      it { expect(subject).not_to be_uplift }
+      it { expect(letterandcall).not_to be_uplift }
 
       context 'but was positive' do
         let(:params) { { uplift: 0, uplift_original: 1 } }
 
-        it { expect(subject).to be_uplift }
+        it { expect(letterandcall).to be_uplift }
       end
     end
   end
@@ -214,7 +214,7 @@ RSpec.describe Nsm::V1::LetterAndCall do
     end
 
     it 'calculates the correct provider requested amount' do
-      expect(subject.provider_fields).to eq(
+      expect(letterandcall.provider_fields).to eq(
         '.number' => '12',
         '.rate' => '£3.56',
         '.uplift_requested' => '20%',
@@ -228,7 +228,91 @@ RSpec.describe Nsm::V1::LetterAndCall do
       { 'type' => { 'en' => 'Letters', 'value' => 'letters' } }
     end
 
-    it { expect(subject.id).to eq 'letters' }
+    it { expect(letterandcall.id).to eq 'letters' }
+  end
+
+  describe '#reduced?' do
+    subject { letterandcall.reduced? }
+
+    context 'with a reduced total cost' do
+      let(:params) do
+        {
+          count_original: 2,
+          count: 1,
+          uplift: 10,
+          pricing: 1.95,
+        }
+      end
+
+      it { is_expected.to be true }
+    end
+
+    context 'with an increased total cost' do
+      let(:params) do
+        {
+          count: 1,
+          uplift: 11,
+          uplift_original: 10,
+          pricing: 1.95,
+        }
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context 'with an unchanged total cost' do
+      let(:params) do
+        {
+          count: 1,
+          uplift: 10,
+          pricing: 1.95,
+        }
+      end
+
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#increased?' do
+    subject { letterandcall.increased? }
+
+    context 'with a reduced total cost' do
+      let(:params) do
+        {
+          count_original: 2,
+          count: 1,
+          uplift: 10,
+          pricing: 1.95,
+        }
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context 'with an increased total cost' do
+      let(:params) do
+        {
+          count: 1,
+          uplift: 11,
+          uplift_original: 10,
+          pricing: 1.95,
+        }
+      end
+
+      it { is_expected.to be true }
+    end
+
+    context 'with an unchanged total cost' do
+      let(:params) do
+        {
+          count: 1,
+          uplift: 10,
+          pricing: 1.95,
+        }
+      end
+
+      it { is_expected.to be false }
+    end
   end
 
   describe 'backlink_path' do
@@ -243,8 +327,8 @@ RSpec.describe Nsm::V1::LetterAndCall do
 
       it 'returns the expected path' do
         expected_path = Rails.application.routes.url_helpers.adjusted_nsm_claim_letters_and_calls_path(claim,
-                                                                                                       anchor: subject.id)
-        expect(subject.backlink_path(claim)).to eq(expected_path)
+                                                                                                       anchor: letterandcall.id)
+        expect(letterandcall.backlink_path(claim)).to eq(expected_path)
       end
     end
 
@@ -258,8 +342,8 @@ RSpec.describe Nsm::V1::LetterAndCall do
 
       it 'returns the expected path' do
         expected_path = Rails.application.routes.url_helpers.nsm_claim_letters_and_calls_path(claim,
-                                                                                              anchor: subject.id)
-        expect(subject.backlink_path(claim)).to eq(expected_path)
+                                                                                              anchor: letterandcall.id)
+        expect(letterandcall.backlink_path(claim)).to eq(expected_path)
       end
     end
   end
