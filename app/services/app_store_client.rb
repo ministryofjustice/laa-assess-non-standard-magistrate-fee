@@ -41,6 +41,17 @@ class AppStoreClient
     end
   end
 
+  def update_submission_metadata(submission, payload)
+    response = self.class.patch("#{host}/v1/submissions/#{submission.id}/metadata", **options(payload))
+
+    case response.code
+    when 200
+      :success
+    else
+      raise "Unexpected response from AppStore - status #{response.code} for metadata update to'#{submission.id}'"
+    end
+  end
+
   def trigger_subscription(payload, action: :create)
     method = action == :create ? :post : :delete
     response = self.class.send(method, "#{host}/v1/subscriber", **options(payload))
