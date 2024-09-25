@@ -53,7 +53,7 @@ RSpec.describe Nsm::V1::Disbursement do
       {
         'total_cost_without_vat' => 83, 'vat_amount' => 17,
         'disbursement_date' => Date.new(2022, 1, 1),
-        'other_type' => { 'value' => 'type', 'en' => 'Type' },
+        'other_type' => 'accountants',
         'details' => 'details',
         'prior_authority' => prior_authority,
         'vat_rate' => 0.2,
@@ -69,7 +69,7 @@ RSpec.describe Nsm::V1::Disbursement do
     it 'returns a hash with the correct fields if no miles' do
       expected_fields = {
         date: '1 January 2022',
-        type: 'Type',
+        type: 'Accountants',
         details: 'Details',
         prior_authority: 'Yes',
         vat: '20%',
@@ -85,7 +85,7 @@ RSpec.describe Nsm::V1::Disbursement do
       it 'returns a hash with the correct fields if miles present' do
         expected_fields = {
           date: '1 January 2022',
-          type: 'Type',
+          type: 'Accountants',
           details: 'Details',
           prior_authority: 'Yes',
           vat: '20%',
@@ -103,7 +103,7 @@ RSpec.describe Nsm::V1::Disbursement do
       it 'returns a hash with the correct fields if apply vat is false' do
         expected_fields = {
           date: '1 January 2022',
-          type: 'Type',
+          type: 'Accountants',
           details: 'Details',
           prior_authority: 'Yes',
           vat: '20%',
@@ -120,7 +120,7 @@ RSpec.describe Nsm::V1::Disbursement do
       it 'returns a hash excluding prior_authority' do
         expected_fields = {
           date: '1 January 2022',
-          type: 'Type',
+          type: 'Accountants',
           details: 'Details',
           vat: '20%',
           total: '£100.00'
@@ -198,6 +198,88 @@ RSpec.describe Nsm::V1::Disbursement do
 
     describe '#allowed_gross' do
       it { expect(disbursement.allowed_gross).to eq('£83.00') }
+    end
+  end
+
+  describe '#reduced?' do
+    subject { disbursement.reduced? }
+
+    context 'with a reduced total cost' do
+      let(:args) do
+        {
+          'total_cost_without_vat_original' => 250,
+          'vat_amount_original' => 0,
+          'total_cost_without_vat' => 240,
+          'vat_amount' => 0,
+        }
+      end
+
+      it { is_expected.to be true }
+    end
+
+    context 'with an increased total cost' do
+      let(:args) do
+        {
+          'total_cost_without_vat_original' => 250,
+          'vat_amount_original' => 0,
+          'total_cost_without_vat' => 250,
+          'vat_amount' => 20,
+        }
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context 'with an unchanged total cost' do
+      let(:args) do
+        {
+          'total_cost_without_vat' => 250,
+          'vat_amount' => 0,
+        }
+      end
+
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#increased?' do
+    subject { disbursement.increased? }
+
+    context 'with a reduced total cost' do
+      let(:args) do
+        {
+          'total_cost_without_vat_original' => 250,
+          'vat_amount_original' => 0,
+          'total_cost_without_vat' => 240,
+          'vat_amount' => 0,
+        }
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context 'with an increased total cost' do
+      let(:args) do
+        {
+          'total_cost_without_vat_original' => 250,
+          'vat_amount_original' => 0,
+          'total_cost_without_vat' => 250,
+          'vat_amount' => 20,
+        }
+      end
+
+      it { is_expected.to be true }
+    end
+
+    context 'with an unchanged total cost' do
+      let(:args) do
+        {
+          'total_cost_without_vat' => 250,
+          'vat_amount' => 0,
+        }
+      end
+
+      it { is_expected.to be false }
     end
   end
 end

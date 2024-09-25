@@ -71,6 +71,26 @@ class Claim < Submission
     core_cost_summary.show_allowed?
   end
 
+  def any_cost_changes?
+    core_cost_summary.any_changed?
+  end
+
+  def any_cost_reductions?
+    core_cost_summary.any_reduced?
+  end
+
+  def any_cost_increases?
+    core_cost_summary.any_increased?
+  end
+
+  def adjustments_direction
+    return :none unless any_cost_changes?
+    return :mixed if any_cost_increases? && any_cost_reductions?
+    return :down if any_cost_reductions?
+
+    :up
+  end
+
   private
 
   def granted_and_allowed_less_than_claim

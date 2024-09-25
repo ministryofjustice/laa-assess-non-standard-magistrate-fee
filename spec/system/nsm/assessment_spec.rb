@@ -12,7 +12,7 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
     click_on 'Accept analytics cookies'
   end
 
-  context 'granted' do
+  context 'when granted' do
     before do
       travel_to fixed_arbitrary_date
       visit nsm_claim_claim_details_path(claim)
@@ -45,7 +45,9 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
     end
   end
 
-  context 'part-granted' do
+  context 'when part-granted' do
+    let(:claim) { create(:claim, :with_reduced_work_item) }
+
     it 'sends a part granted notification' do
       visit nsm_claim_claim_details_path(claim)
       click_link_or_button 'Make a decision'
@@ -58,7 +60,7 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
     end
   end
 
-  context 'rejected' do
+  context 'when rejected' do
     it 'sends a rejected notification' do
       visit nsm_claim_claim_details_path(claim)
       click_link_or_button 'Make a decision'
@@ -71,7 +73,7 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
     end
   end
 
-  context 'further information required' do
+  context 'when further information required' do
     before do
       travel_to fixed_arbitrary_date
       visit nsm_claim_claim_details_path(claim)
@@ -102,7 +104,7 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
     end
   end
 
-  context 'navigation', :javascript do
+  context 'when navigating', :javascript do
     let(:claim) do
       disbursements = Array.new(100) do |i|
         {
@@ -111,17 +113,11 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
           'pricing' => 1.0,
           'vat_rate' => 0.2,
           'apply_vat' => 'false',
-          'other_type' => {
-            'en' => 'Apples',
-            'value' => 'Apples'
-          },
+          'other_type' => 'accountants',
           'vat_amount' => 0.0,
           'prior_authority' => 'yes',
           'disbursement_date' => Date.new(2022, 12, 12) + i,
-          'disbursement_type' => {
-            'en' => 'Other',
-            'value' => 'other'
-          },
+          'disbursement_type' => 'other',
           'total_cost_without_vat' => 100.0
         }
       end
@@ -130,10 +126,7 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
           'id' => SecureRandom.uuid,
           'uplift' => 95,
           'pricing' => 24.0,
-          'work_type' => {
-            'en' => 'Waiting',
-            'value' => 'waiting'
-          },
+          'work_type' => 'waiting',
           'fee_earner' => 'aaa',
           'time_spent' => 161,
           'completed_on' => Date.new(2022, 12, 12) + i

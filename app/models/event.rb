@@ -23,7 +23,6 @@ class Event < ApplicationRecord
   ].freeze
 
   LOCAL_EVENTS = [
-    'Event::ChangeRisk',
     'Event::DraftDecision',
     'Event::Edit',
     'Event::Note',

@@ -153,12 +153,12 @@ RSpec.describe Nsm::LettersCallsForm do
         subject.save
         letters = claim.reload
                        .data['letters_and_calls']
-                       .detect { |row| row.dig('type', 'value') == 'letters' }
+                       .detect { |row| row['type'] == 'letters' }
         expect(letters).to eq(
           'count' => 2,
           'count_original' => 12,
           'pricing' => 3.56,
-          'type' => { 'en' => 'Letters', 'value' => 'letters' },
+          'type' => 'letters',
           'uplift' => 95,
           'adjustment_comment' => 'change to letters',
         )
@@ -190,11 +190,11 @@ RSpec.describe Nsm::LettersCallsForm do
         subject.save
         letters = claim.reload
                        .data['letters_and_calls']
-                       .detect { |row| row.dig('type', 'value') == 'letters' }
+                       .detect { |row| row['type'] == 'letters' }
         expect(letters).to eq(
           'count' => 12,
           'pricing' => 3.56,
-          'type' => { 'en' => 'Letters', 'value' => 'letters' },
+          'type' => 'letters',
           'uplift' => 0,
           'uplift_original' => 95,
           'adjustment_comment' => 'change to letters'
@@ -203,6 +203,30 @@ RSpec.describe Nsm::LettersCallsForm do
     end
 
     context 'when uplift and count have changed' do
+      it 'creates an event for each field changed' do
+        expect { subject.save }.to change(Event, :count).by(2)
+      end
+
+      it 'updates the JSON data' do
+        subject.save
+        letters = claim.reload
+                       .data['letters_and_calls']
+                       .detect { |row| row['type'] == 'letters' }
+        expect(letters).to eq(
+          'count' => 2,
+          'count_original' => 12,
+          'pricing' => 3.56,
+          'type' => 'letters',
+          'uplift' => 0,
+          'uplift_original' => 95,
+          'adjustment_comment' => 'change to letters',
+        )
+      end
+    end
+
+    context 'when claim has a legacy translation format' do
+      let(:claim) { create(:claim, :legacy_translations) }
+
       it 'creates an event for each field changed' do
         expect { subject.save }.to change(Event, :count).by(2)
       end

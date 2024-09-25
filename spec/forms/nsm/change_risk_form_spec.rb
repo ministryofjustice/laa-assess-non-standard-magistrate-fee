@@ -79,9 +79,13 @@ RSpec.describe Nsm::ChangeRiskForm, type: :model do
 
     let(:params) { { id: claim.id, risk_level: risk_level, explanation: 'Test', current_user: user } }
     let(:risk_level) { 'high' }
+    let(:risk_event) { instance_double(Event::ChangeRisk) }
+    let(:client) { instance_double(AppStoreClient) }
 
     before do
-      allow(Event::ChangeRisk).to receive(:build)
+      allow(Event::ChangeRisk).to receive(:build).and_return(risk_event)
+      allow(AppStoreClient).to receive(:new).and_return(client)
+      allow(client).to receive(:update_submission_metadata)
     end
 
     it 'updates the claim' do
@@ -99,6 +103,13 @@ RSpec.describe Nsm::ChangeRiskForm, type: :model do
       subject.save
       expect(Event::ChangeRisk).to have_received(:build).with(
         submission: claim, explanation: 'Test', previous_risk_level: 'low', current_user: user
+      )
+    end
+
+    it 'syncs to the app store' do
+      subject.save
+      expect(client).to have_received(:update_submission_metadata).with(
+        claim, application_risk: risk_level, events: [risk_event]
       )
     end
 

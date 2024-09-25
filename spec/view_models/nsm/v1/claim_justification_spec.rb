@@ -5,15 +5,9 @@ RSpec.describe Nsm::V1::ClaimJustification do
 
   let(:data) do
     {
-      'reasons_for_claim' => [
-        {
-          'value' => 'enhanced_rates_claimed',
-          'en' => 'Enhanced rates claimed',
-        },
-        {
-          'value' => 'counsel_or_agent_assigned',
-          'en' => 'Counsel or agent assigned',
-        },
+      'reasons_for_claim' => %w[
+        enhanced_rates_claimed
+        counsel_or_agent_assigned
       ]
     }
   end
@@ -46,15 +40,9 @@ RSpec.describe Nsm::V1::ClaimJustification do
     context 'when `other` option is present' do
       let(:data) do
         {
-          'reasons_for_claim' => [
-            {
-              'value' => 'enhanced_rates_claimed',
-              'en' => 'Enhanced rates claimed',
-            },
-            {
-              'value' => 'other',
-              'en' => 'Other',
-            },
+          'reasons_for_claim' => %w[
+            enhanced_rates_claimed
+            other
           ],
           'reason_for_claim_other_details' => 'Other reasons for test'
         }
