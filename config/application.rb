@@ -70,8 +70,7 @@ module LaaAssessNonStandardMagistrateFee
     config.x.analytics.cookies_consent_expiration = 1.year
     config.x.analytics.analytics_consent_name = 'analytics_preferences_set'
     config.x.analytics.analytics_consent_expiration = 1.year
-    config.x.rfi.resubmission_window = 14.days
-    config.x.rfi.nsm_working_day_window = 10
+    config.x.rfi.working_day_window = 10
     config.x.redis_url = if ENV['REDIS_HOST'].present? && ENV['REDIS_PASSWORD'].present?
       protocol = ENV.fetch("REDIS_PROTOCOL", "rediss")
       password = ENV.fetch('REDIS_PASSWORD')

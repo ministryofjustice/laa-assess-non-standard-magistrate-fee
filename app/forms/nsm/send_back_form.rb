@@ -56,7 +56,7 @@ module Nsm
     end
 
     def working_days_allowed
-      Rails.application.config.x.rfi.nsm_working_day_window
+      Rails.application.config.x.rfi.working_day_window
     end
   end
 end

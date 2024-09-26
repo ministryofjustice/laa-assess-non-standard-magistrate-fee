@@ -13,7 +13,7 @@ module PriorAuthority
           ufn: ufn,
           defendant_name: defendant_name,
           application_total: application_total,
-          date_to_respond_by: Rails.configuration.x.rfi.resubmission_window.from_now.to_fs(:stamp),
+          date_to_respond_by: date_to_respond_by,
           caseworker_information_requested: comments,
           date: DateTime.now.to_fs(:stamp),
         }
@@ -43,6 +43,10 @@ module PriorAuthority
 
       def further_information_explanation
         @submission.data['further_information_explanation']
+      end
+
+      def date_to_respond_by
+        DateTime.parse(@submission.data['resubmission_deadline']).to_fs(:stamp)
       end
     end
   end

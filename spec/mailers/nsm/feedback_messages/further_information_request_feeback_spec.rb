@@ -49,7 +49,7 @@ RSpec.describe Nsm::FeedbackMessages::FurtherInformationRequestFeedback do
       allow(FeatureFlags).to receive(:nsm_rfi_loop).and_return(
         instance_double(FeatureFlags::EnabledFeature, enabled?: true)
       )
-      claim.data['resubmission_deadline'] = 'DEADLINE'
+      claim.data['resubmission_deadline'] = '2024-11-7T16:35:34.00'
     end
 
     let(:feedback_template) { '632fc896-8019-4308-a091-67f593700f32' }
@@ -63,7 +63,7 @@ RSpec.describe Nsm::FeedbackMessages::FurtherInformationRequestFeedback do
     describe '#contents' do
       it 'has correct deadline' do
         expect(subject.contents).to include(
-          date_to_respond_by: 'DEADLINE',
+          date_to_respond_by: '7 November 2024',
         )
       end
     end

@@ -105,7 +105,7 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
 
   context 'with further information state' do
     let(:feedback_template) { 'c8abf9ee-5cfe-44ab-9253-72111b7a35ba' }
-    let(:date_to_respond_by) { 14.days.from_now.to_fs(:stamp) }
+    let(:date_to_respond_by) { '4 January 2025' }
 
     let(:caseworker_information_requested) do
       "## Further information request\n\n" \
@@ -127,6 +127,7 @@ RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
           incorrect_information_explanation: 'Please correct this information...',
           further_information_explanation: 'Please provide this further info...',
           assessment_comment: 'This message is set but not used by the mailer',
+          resubmission_deadline: '2025-1-4T04:04:04.00',
         )
       )
     end

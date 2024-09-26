@@ -75,7 +75,7 @@ module PriorAuthority
     end
 
     def resubmission_deadline
-      Rails.application.config.x.rfi.resubmission_window.from_now
+      WorkingDayService.call(Rails.application.config.x.rfi.working_day_window)
     end
 
     def append_explanation(type, explanation)
