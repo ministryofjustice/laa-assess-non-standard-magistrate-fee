@@ -17,7 +17,7 @@ class Claim < Submission
   }
 
   scope :auto_assignable, lambda { |user|
-    submitted
+    where(state: [SUBMITTED, PROVIDER_UPDATED])
       .where.not(risk: :high)
       .where.missing(:assignments)
       .where.not(id: Event::Unassignment.where(primary_user_id: user.id).select(:submission_id))
