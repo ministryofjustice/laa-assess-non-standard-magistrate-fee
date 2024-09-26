@@ -23,5 +23,7 @@ en:
     title:
       self: Caseworker removed self from claim
       secondary: Caseworker removed from claim by %{display_name}
+  event/delete_adjustments:
+    title: Caseworker deleted all adjustments
   event/expiry:
     title: Claim expired
