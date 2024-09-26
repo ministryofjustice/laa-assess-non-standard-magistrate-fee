@@ -26,14 +26,16 @@ module Nsm
       previous_risk_level = claim.risk
       Claim.transaction do
         claim.update!(risk: risk_level)
-        ::Event::ChangeRisk.build(submission: claim,
-                                  explanation: explanation,
-                                  previous_risk_level: previous_risk_level,
-                                  current_user: current_user)
+        risk_event = ::Event::ChangeRisk.build(submission: claim,
+                                               explanation: explanation,
+                                               previous_risk_level: previous_risk_level,
+                                               current_user: current_user)
+        sync_to_app_store(risk_event)
       end
 
       true
     rescue StandardError
+      errors.add(:base, :sync_error)
       false
     end
 
@@ -55,6 +57,13 @@ module Nsm
 
     def risk_changed?
       claim&.risk != risk_level
+    end
+
+    def sync_to_app_store(risk_event)
+      AppStoreClient.new.update_submission_metadata(
+        claim,
+        application_risk: risk_level, events: [risk_event]
+      )
     end
   end
 end

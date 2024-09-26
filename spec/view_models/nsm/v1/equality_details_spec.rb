@@ -12,22 +12,10 @@ RSpec.describe Nsm::V1::EqualityDetails do
     it 'has correct structure' do
       subject = described_class.new(
         {
-          'answer_equality' => {
-            'en' => 'Yes, answer the equality questions (takes 2 minutes)',
-            'value' => 'yes'
-          },
-          'ethnic_group' => {
-            'en' => 'White British',
-            'value' => '01_white_british'
-          },
-          'gender' => {
-            'en' => 'Male',
-            'value' => 'm'
-          },
-          'disability' => {
-            'en' => 'No',
-            'value' => 'n'
-          }
+          'answer_equality' => 'yes',
+          'ethnic_group' => '01_white_british',
+          'gender' => 'm',
+          'disability' => 'n',
         }
       )
 
@@ -40,27 +28,13 @@ RSpec.describe Nsm::V1::EqualityDetails do
     context 'Basic accessibility details' do
       subject { described_class.new(data) }
 
-      let(:answer_equality) do
-        {
-          'en' => 'Yes, answer the equality questions (takes 2 minutes)',
-          'value' => 'yes'
-        }
-      end
+      let(:answer_equality) { 'yes' }
       let(:data) do
         {
           'answer_equality' => answer_equality,
-          'ethnic_group' => {
-            'en' => 'White British',
-            'value' => '01_white_british'
-          },
-          'gender' => {
-            'en' => 'Male',
-            'value' => 'm'
-          },
-          'disability' => {
-            'en' => 'No',
-            'value' => 'n'
-          }
+          'ethnic_group' => '01_white_british',
+          'gender' => 'm',
+          'disability' => 'n',
         }
       end
 
@@ -69,39 +43,33 @@ RSpec.describe Nsm::V1::EqualityDetails do
           [
             {
               title: 'Equality questions',
-              value: TranslationObject.new({ 'value' => 'yes',
-'en' => 'Yes, answer the equality questions (takes 2 minutes)' })
+              value: TranslationObject.new('yes', 'nsm.answer_equality')
             },
             {
               title: 'Defendants ethnic group',
-              value: TranslationObject.new({ 'value' => '01_white_british', 'en' => 'White British' })
+              value: TranslationObject.new('01_white_british', 'nsm.ethnic_group')
             },
             {
               title: 'Defendant identification',
-              value: TranslationObject.new({ 'value' => 'm', 'en' => 'Male' })
+              value: TranslationObject.new('m', 'nsm.gender')
             },
             {
               title: 'Defendant disability',
-              value: TranslationObject.new({ 'value' => 'n', 'en' => 'No' })
+              value: TranslationObject.new('n', 'nsm.disability')
             }
           ]
         )
       end
 
       context 'when answer equality is selected as no' do
-        let(:answer_equality) do
-          {
-            'en' => 'No, skip the equality questions',
-            'value' => 'no'
-          }
-        end
+        let(:answer_equality) { 'no' }
 
         it 'shows correct table data' do
           expect(subject.data).to eq(
             [
               {
                 title: 'Equality questions',
-                value: TranslationObject.new({ 'value' => 'no', 'en' => 'No, skip the equality questions' })
+                value: TranslationObject.new('no', 'nsm.answer_equality')
               },
             ]
           )

@@ -24,6 +24,8 @@ en:
       models:
         nsm/change_risk_form:
           attributes:
+            base:
+              sync_error: There was a problem saving the change. Please try again.
             risk_level:
               blank: Select what you want to change the risk to
               inclusion: Select what you want to change the risk to

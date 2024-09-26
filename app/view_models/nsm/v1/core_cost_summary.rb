@@ -53,8 +53,19 @@ module Nsm
         return @show_allowed unless @show_allowed.nil?
 
         @show_allowed ||=
-          submission.part_grant? ||
-          [disbursements, letters_calls, work_items].any? { |rows| rows.any?(&:changed?) }
+          submission.part_grant? || any_changed?
+      end
+
+      def any_changed?
+        [disbursements, letters_calls, work_items].any? { |rows| rows.any?(&:changed?) }
+      end
+
+      def any_reduced?
+        [disbursements, letters_calls, work_items].any? { |rows| rows.any?(&:reduced?) }
+      end
+
+      def any_increased?
+        [disbursements, letters_calls, work_items].any? { |rows| rows.any?(&:increased?) }
       end
 
       private

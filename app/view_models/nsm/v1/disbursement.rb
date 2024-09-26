@@ -7,8 +7,8 @@ module Nsm
       # used to guess position when value not set in JSON blob when position is blank
       attribute :submission
       attribute :position, :integer
-      attribute :disbursement_type, :translated
-      attribute :other_type, :translated
+      attribute :disbursement_type, :translated, scope: 'nsm.disbursement_type'
+      attribute :other_type, :translated, scope: 'nsm.other_disbursement_type'
       adjustable_attribute :miles, :decimal, precision: 10, scale: 3
       attribute :pricing, :decimal, precision: 10, scale: 2
       adjustable_attribute :total_cost_without_vat, :decimal, precision: 10, scale: 2
@@ -49,10 +49,12 @@ module Nsm
       def provider_requested_total_cost
         original_total_cost_without_vat + original_vat_amount
       end
+      alias provider_requested_amount provider_requested_total_cost
 
       def caseworker_total_cost
         total_cost_without_vat + vat_amount
       end
+      alias caseworker_amount caseworker_total_cost
 
       def form_attributes
         attributes.slice('total_cost_without_vat', 'miles', 'apply_vat', 'vat_rate').merge(

@@ -1,23 +1,22 @@
 class TranslationObject
-  attr_reader :values
+  attr_reader :value, :scope
 
   delegate :to_s, :blank?, to: :translated
 
-  def initialize(values)
-    @values = values
+  def initialize(value, scope)
+    @value = value
+    @scope = scope
   end
 
   def ==(other)
-    other.is_a?(self.class) && other.values['value'] == values['value']
+    other.value == value && other.scope == scope
   end
   alias === ==
   alias eql? ==
 
   def translated
-    values[I18n.locale.to_s] || value
-  end
+    return '' unless value
 
-  def value
-    values['value']
+    I18n.t("laa_crime_forms_common.#{scope}.#{value}")
   end
 end

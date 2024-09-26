@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_16_092416) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_25_081532) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -55,6 +55,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_16_092416) do
     t.index ["primary_user_id"], name: "index_events_on_primary_user_id"
     t.index ["secondary_user_id"], name: "index_events_on_secondary_user_id"
     t.index ["submission_id"], name: "index_events_on_submission_id"
+  end
+
+  create_table "solid_cache_entries", force: :cascade do |t|
+    t.binary "key", null: false
+    t.binary "value", null: false
+    t.datetime "created_at", null: false
+    t.bigint "key_hash", null: false
+    t.integer "byte_size", null: false
+    t.index ["byte_size"], name: "index_solid_cache_entries_on_byte_size"
+    t.index ["key_hash", "byte_size"], name: "index_solid_cache_entries_on_key_hash_and_byte_size"
+    t.index ["key_hash"], name: "index_solid_cache_entries_on_key_hash", unique: true
   end
 
   create_table "submissions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

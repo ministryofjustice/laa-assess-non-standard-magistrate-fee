@@ -3,8 +3,6 @@ class BaseViewModel
   include ActiveModel::Attributes
   include NameConstructable
 
-  ID_FIELDS = %w[id].freeze
-
   class Builder
     attr_reader :klass, :submission, :rows, :return_array
 
