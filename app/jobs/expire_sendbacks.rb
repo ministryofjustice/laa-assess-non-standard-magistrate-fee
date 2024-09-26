@@ -5,6 +5,11 @@ class ExpireSendbacks < ApplicationJob
                              .find_each do |expirable|
                                expire(expirable)
                              end
+    Claim.sent_back
+         .where("(data->>'resubmission_deadline')::timestamp < NOW()")
+         .find_each do |expirable|
+           expire(expirable)
+         end
   end
 
   private

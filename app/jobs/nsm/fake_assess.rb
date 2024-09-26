@@ -75,7 +75,7 @@ module Nsm
       Nsm::SendBackForm.new(
         claim: claim,
         current_user: claim.assignments.first.user,
-        comment: Faker::Lorem.paragraph
+        send_back_comment: Faker::Lorem.paragraph
       ).save
     end
 

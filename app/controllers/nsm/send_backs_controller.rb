@@ -3,23 +3,20 @@ module Nsm
     include NameConstructable
 
     def edit
-      send_back = SendBackForm.new(claim:)
-      render locals: { claim:, send_back:, defendant_name: }
+      send_back = SendBackForm.new(claim: claim, send_back_comment: claim.data['send_back_comment'])
+      render locals: { claim:, send_back: }
     end
 
     # TODO: put some sort of permissions here for non supervisors?
     def update
       send_back = SendBackForm.new(claim:, **send_back_params)
-      if send_back.save
-        reference = BaseViewModel.build(:laa_reference, claim)
-        success_notice = t(
-          '.decision',
-          ref: reference.laa_reference,
-          url: nsm_claim_claim_details_path(claim.id)
-        )
-        redirect_to your_nsm_claims_path, flash: { success: success_notice }
+      if params['save_and_exit']
+        send_back.stash
+        redirect_to your_nsm_claims_path
+      elsif send_back.save
+        redirect_to your_nsm_claims_path
       else
-        render :edit, locals: { claim:, send_back:, defendant_name: }
+        render :edit, locals: { claim:, send_back: }
       end
     end
 
@@ -29,15 +26,9 @@ module Nsm
       @claim ||= Claim.find(params[:claim_id])
     end
 
-    def defendant_name
-      defendants = claim.data['defendants']
-      main_defendant = defendants.detect { |defendant| defendant['main'] }
-      main_defendant ? construct_name(main_defendant) : ''
-    end
-
     def send_back_params
       params.require(:nsm_send_back_form).permit(
-        :comment,
+        :send_back_comment,
       ).merge(current_user:)
     end
   end

@@ -12,15 +12,15 @@
 
     <%=
       govuk_table do |table|
-        history_events.each do |event|
-          table.with_head do |head|
-            head.with_row do |row|
-              row.with_cell(text: t('.when'))
-              row.with_cell(text: t('.caseworker'))
-              row.with_cell(text: t('.what'))
-            end
+        table.with_head do |head|
+          head.with_row do |row|
+            row.with_cell(text: t('.when'))
+            row.with_cell(text: t('.caseworker'))
+            row.with_cell(text: t('.what'))
           end
-          table.with_body do |body|
+        end
+        table.with_body do |body|
+          history_events.each do |event|
             body.with_row do |row|
               row.with_cell(text: format_in_zone(event.created_at, format: '%A<br>%d %b %Y<br>%I:%M%P').html_safe)
               row.with_cell(text: event.primary_user&.display_name || '')
