@@ -63,4 +63,26 @@ RSpec.describe 'Overview', type: :system do
         .and have_link('Review quote adjustments')
     end
   end
+
+  context 'when claim has been sent back and expired' do
+    let(:claim) { create(:claim, state: 'expired') }
+
+    before do
+      claim.data['assessment_comment'] = 'Send back reason'
+      claim.data['further_information'] = [
+        {
+          requested_at: DateTime.new(2024, 9, 1, 10, 10, 10),
+          information_requested: 'Send back reason'
+        }
+      ]
+      claim.save!
+      visit nsm_claim_claim_details_path(claim)
+    end
+
+    it 'shows me the status and comment' do
+      expect(page)
+        .to have_content('Expired')
+        .and have_content('Send back reason')
+    end
+  end
 end
