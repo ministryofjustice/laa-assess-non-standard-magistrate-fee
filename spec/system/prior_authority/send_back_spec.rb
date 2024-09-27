@@ -3,11 +3,26 @@ require 'rails_helper'
 RSpec.describe 'Send an application back', :stub_oauth_token do
   let(:caseworker) { create(:caseworker) }
   let(:application) { create(:prior_authority_application, state: 'submitted') }
+  let(:bank_holiday_list) do
+    {
+      'england-and-wales': {
+        events: [
+          { date: '2024-01-01' }
+        ]
+      }
+    }
+  end
 
   before do
     stub_request(:get, "https://appstore.example.com/v1/submissions/#{application.id}").to_return(
       status: 200,
       body: { 'application' => application.data }.to_json,
+    )
+
+    stub_request(:get, 'https://www.gov.uk/bank-holidays.json').to_return(
+      status: 200,
+      body: bank_holiday_list.to_json,
+      headers: { 'Content-type' => 'application/json' }
     )
 
     sign_in caseworker

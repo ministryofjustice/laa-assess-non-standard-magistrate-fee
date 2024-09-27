@@ -14,6 +14,7 @@ RSpec.describe PriorAuthority::FakeAssess do
       allow(NotifyAppStore).to receive(:perform_later)
       allow(AppStoreClient).to receive(:new).and_return(client)
       allow(SecureRandom).to receive(:rand).and_return random_choice
+      allow(WorkingDayService).to receive(:call).and_return 3.days.from_now
       subject.perform([application.id])
     end
 

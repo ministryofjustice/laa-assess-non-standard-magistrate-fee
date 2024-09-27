@@ -3,7 +3,11 @@ require 'rails_helper'
 RSpec.describe ExpireSendbacks do
   describe '#perform' do
     context 'when the submission is a prior authority application' do
-      let(:application) { create(:prior_authority_application, state:, updated_at:) }
+      let(:application) do
+        create(:prior_authority_application,
+               state: state,
+               data: build(:prior_authority_data, resubmission_deadline: deadline))
+      end
 
       before do
         application
@@ -13,7 +17,7 @@ RSpec.describe ExpireSendbacks do
 
       context 'when an application is overdue expiry' do
         let(:state) { 'sent_back' }
-        let(:updated_at) { 15.days.ago }
+        let(:deadline) { 1.day.ago }
 
         it 'marks as expired' do
           expect(application.reload).to be_expired
@@ -30,7 +34,7 @@ RSpec.describe ExpireSendbacks do
 
       context 'when an application is not sent back' do
         let(:state) { 'submitted' }
-        let(:updated_at) { 15.days.ago }
+        let(:deadline) { 1.day.ago }
 
         it 'does not mark as expired' do
           expect(application.reload).not_to be_expired
@@ -39,7 +43,7 @@ RSpec.describe ExpireSendbacks do
 
       context 'when an application is only recently sent back' do
         let(:state) { 'sent_back' }
-        let(:updated_at) { 10.days.ago }
+        let(:deadline) { 1.day.from_now }
 
         it 'does not mark as expired' do
           expect(application.reload).not_to be_expired

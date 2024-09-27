@@ -6,6 +6,9 @@ RSpec.describe PriorAuthority::SendBackForm do
   let(:submission) { create(:prior_authority_application) }
   let(:further_information_explanation) { 'foo' }
   let(:incorrect_information_explanation) { 'bar' }
+  let(:deadline) { DateTime.new(2024, 9, 1, 6, 46, 34) }
+
+  before { allow(WorkingDayService).to receive(:call).with(10).and_return(deadline) }
 
   describe '#comments' do
     context 'when further information is requested' do
@@ -114,7 +117,7 @@ RSpec.describe PriorAuthority::SendBackForm do
         end
 
         it 'sets a resubmission deadline' do
-          expect(DateTime.parse(submission.data['resubmission_deadline'])).to eq 14.days.from_now
+          expect(DateTime.parse(submission.data['resubmission_deadline'])).to eq deadline
         end
 
         it 'updates the state' do
@@ -164,7 +167,7 @@ RSpec.describe PriorAuthority::SendBackForm do
         end
 
         it 'sets a resubmission deadline' do
-          expect(DateTime.parse(submission.data['resubmission_deadline'])).to eq 14.days.from_now
+          expect(DateTime.parse(submission.data['resubmission_deadline'])).to eq deadline
         end
 
         it 'updates the state' do

@@ -26,7 +26,7 @@ module Nsm
 
       def date_to_respond_by
         if FeatureFlags.nsm_rfi_loop.enabled?
-          @submission.data['resubmission_deadline']
+          DateTime.parse(@submission.data['resubmission_deadline']).to_fs(:stamp)
         else
           7.days.from_now.to_fs(:stamp)
         end
