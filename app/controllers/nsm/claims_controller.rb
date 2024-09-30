@@ -50,5 +50,13 @@ module Nsm
       @sort_by = params.fetch(:sort_by, default)
       @sort_direction = params.fetch(:sort_direction, 'descending')
     end
+
+    def submission_id
+      params[:id]
+    end
+
+    def secondary_id
+      nil
+    end
   end
 end

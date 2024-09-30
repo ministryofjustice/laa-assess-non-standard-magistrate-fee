@@ -36,7 +36,8 @@ RSpec.describe Nsm::HistoriesController do
   end
 
   context 'create' do
-    let(:user) { instance_double(User) }
+    let(:user) { instance_double(User, access_logs:) }
+    let(:access_logs) { double(AccessLog, create!: true) }
     let(:risk_level) { 'high' }
 
     it 'builds a note object' do

@@ -25,7 +25,8 @@ RSpec.describe Nsm::ChangeRisksController, type: :controller do
     let(:claim) { instance_double(Claim, id: claim_id) }
     let(:claim_id) { SecureRandom.uuid }
     let(:risk) { instance_double(Nsm::ChangeRiskForm, save:, risk_level:) }
-    let(:user) { instance_double(User) }
+    let(:user) { instance_double(User, access_logs:) }
+    let(:access_logs) { double(AccessLog, create!: true) }
     let(:risk_level) { 'high' }
     let(:save) { true }
 
