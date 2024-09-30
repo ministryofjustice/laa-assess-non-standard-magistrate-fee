@@ -129,6 +129,7 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
         expect(claim.reload.data['further_information']).to eq(
           [
             {
+              'documents' => [],
               'requested_at' => fixed_arbitrary_date.to_json.delete('"'),
               'information_requested' => 'Test Data',
               'caseworker_id' => user.id,

@@ -12,6 +12,11 @@
         <p><strong><%= t(".sent_back", date: claim_summary.sent_back_on.to_fs(:stamp)) %></strong></p>
         <%= simple_format claim_summary.assessment_comment %>
       </div>
+    <% elsif claim.provider_updated? %>
+      <div class="govuk-inset-text">
+        <p><strong><%= t(".provider_updated", date: format_in_zone(claim.data['updated_at'])) %></strong></p>
+        <%= govuk_link_to t('.further_information'), '#further-info' %>
+      </div>
     <% elsif claim_summary.assessment_comment.present? %>
       <div class="govuk-inset-text">
         <p><strong><%= t(".assessed_statuses.#{claim.state}") %></strong></p>
@@ -31,6 +36,19 @@
                 end
               end
       end %>
+    <% end %>
+    <% if provider_updates %>
+      <h2 class="govuk-heading-m" id="further-info"><%= t('.provider_updates') %> </h2>
+      <% provider_updates.each do |further_information| %>
+        <%= govuk_summary_list(card: { title: further_information.title }) do |table|
+          further_information.data.each do | field |
+            table.with_row do |row|
+              row.with_key(text: field[:title])
+              row.with_value(text: field[:value])
+            end
+          end
+        end %>
+      <% end %>
     <% end %>
     <%= render partial: 'shared/claim_button_group', locals: { claim: claim } %>
   </div>

@@ -10,7 +10,11 @@ en:
           granted: Granted
           part_grant: Part granted
           rejected: Rejected
+          provider_updated: Provider updated
         review_adjustments: Review quote adjustments
+        further_information: Further information
+        provider_updated: Provider updated %{date}
+        provider_updates: Provider updates
       details_of_claim:
         title: Claim summary
         ufn: Unique file number
@@ -90,3 +94,8 @@ en:
         ethnic_group: Defendants ethnic group
         identification: Defendant identification
         disability: Defendant disability
+      provider_update:
+        title: Further information request
+        caseworker: Caseworker
+        information_request: Information request
+        provider_response: Provider response

@@ -49,6 +49,7 @@ module Nsm
       claim.data['resubmission_deadline'] = WorkingDayService.call(working_days_allowed)
       claim.data['further_information'] ||= []
       claim.data['further_information'] << {
+        documents: [],
         caseworker_id: current_user.id,
         information_requested: send_back_comment,
         requested_at: DateTime.current
