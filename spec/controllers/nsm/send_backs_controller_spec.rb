@@ -23,7 +23,8 @@ RSpec.describe Nsm::SendBacksController do
 
   context 'update' do
     let(:send_back) { instance_double(Nsm::SendBackForm, save:) }
-    let(:user) { instance_double(User) }
+    let(:user) { instance_double(User, access_logs:) }
+    let(:access_logs) { double(AccessLog, create!: true) }
     let(:claim) { build(:claim, id: SecureRandom.uuid) }
     let(:laa_reference_class) do
       instance_double(Nsm::V1::LaaReference, laa_reference: 'AAA111')

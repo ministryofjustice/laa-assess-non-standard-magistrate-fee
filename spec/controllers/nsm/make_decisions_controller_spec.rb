@@ -23,7 +23,8 @@ RSpec.describe Nsm::MakeDecisionsController do
 
   context 'update' do
     let(:decision) { instance_double(Nsm::MakeDecisionForm, save: save, state: 'granted') }
-    let(:user) { instance_double(User) }
+    let(:user) { instance_double(User, access_logs:) }
+    let(:access_logs) { double(AccessLog, create!: true) }
     let(:claim) { instance_double(Claim, id: SecureRandom.uuid) }
     let(:laa_reference_class) do
       instance_double(Nsm::V1::LaaReference, laa_reference: 'AAA111')

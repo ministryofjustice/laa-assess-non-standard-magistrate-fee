@@ -36,7 +36,8 @@ RSpec.describe Nsm::UnassignmentsController do
       instance_double(Nsm::UnassignmentForm, save:, unassignment_user:, user:)
     end
     let(:unassignment_user) { 'other' }
-    let(:user) { instance_double(User, display_name: 'Jim Bob') }
+    let(:user) { instance_double(User, display_name: 'Jim Bob', access_logs: access_logs) }
+    let(:access_logs) { double(AccessLog, create!: true) }
     let(:claim) { create(:claim, :with_assignment) }
     let(:laa_reference_class) do
       instance_double(Nsm::V1::LaaReference, laa_reference: 'AAA111')

@@ -44,6 +44,12 @@ RSpec.describe 'Decide an application', :stub_oauth_token do
         click_on 'Submit decision'
         expect(page).to have_content 'This application has already been assessed'
       end
+
+      it 'records a paper trail in the access logs' do
+        expect(caseworker.access_logs.where(submission_id: application.id).order(:created_at).pluck(:controller, :action)).to eq(
+          [%w[applications show], %w[decisions new], %w[decisions create], %w[decisions show]]
+        )
+      end
     end
   end
 

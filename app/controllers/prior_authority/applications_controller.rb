@@ -31,6 +31,8 @@ module PriorAuthority
       @details = BaseViewModel.build(:application_details, application)
     end
 
+    private
+
     def order_and_paginate(query)
       pagy(Sorter.call(query, @sort_by, @sort_direction))
     end
@@ -39,6 +41,14 @@ module PriorAuthority
       default = 'date_updated'
       @sort_by = params.fetch(:sort_by, default)
       @sort_direction = params.fetch(:sort_direction, 'descending')
+    end
+
+    def submission_id
+      params[:id]
+    end
+
+    def secondary_id
+      nil
     end
   end
 end

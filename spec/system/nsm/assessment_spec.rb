@@ -42,6 +42,12 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
         visit nsm_claim_history_path(claim)
         expect(page).to have_content 'Test Data'
       end
+
+      it 'records a paper trail in the access logs' do
+        expect(user.access_logs.where(submission_id: claim.id).order(:created_at).pluck(:controller, :action)).to eq(
+          [%w[claim_details show], %w[make_decisions edit], %w[make_decisions update]]
+        )
+      end
     end
   end
 
