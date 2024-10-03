@@ -56,6 +56,8 @@ module Nsm
       end
 
       def uploaded_documents
+        return [] if documents.nil?
+
         @uploaded_documents ||= documents.map { Document.new(_1) }
       end
 
