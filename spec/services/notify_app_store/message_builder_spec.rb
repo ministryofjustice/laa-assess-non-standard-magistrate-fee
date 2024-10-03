@@ -28,4 +28,27 @@ RSpec.describe NotifyAppStore::MessageBuilder do
       application_type: 'crm7'
     )
   end
+
+  context 'when building a PA application' do
+    let(:submission) do
+      create(:prior_authority_application)
+    end
+
+    it 'does not raise an error when validating' do
+      expect { subject.message }.not_to raise_error
+    end
+
+    context 'when there is a validation issue' do
+      before do
+        submission.data.delete('status')
+      end
+
+      it 'raises an appropriate error' do
+        expect { subject.message }.to raise_error do |error|
+          expect(error.message).to include submission.id
+          expect(error.message).to include "did not contain a required property of 'status'"
+        end
+      end
+    end
+  end
 end

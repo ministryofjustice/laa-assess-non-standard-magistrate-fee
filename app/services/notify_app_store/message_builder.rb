@@ -14,10 +14,20 @@ class NotifyAppStore
         json_schema_version: JSON_SCHEMA_VERSION,
         application_type: submission.application_type,
         application_state: submission.state,
-        application: submission.data,
+        application: validated_data,
         events: submission.events.map(&:as_json),
         application_risk: submission.risk,
       }
+    end
+
+    def validated_data
+      return submission.data unless submission.application_type == Submission::APPLICATION_TYPES[:prior_authority]
+
+      issues = LaaCrimeFormsCommon::Validator.validate(:prior_authority, submission.data)
+
+      return submission.data if issues.none?
+
+      raise "Validation issues for #{submission.id}: #{issues.to_sentence}"
     end
   end
 end
