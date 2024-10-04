@@ -21,9 +21,8 @@ class NotifyAppStore
     end
 
     def validated_data
-      return submission.data unless submission.application_type == Submission::APPLICATION_TYPES[:prior_authority]
-
-      issues = LaaCrimeFormsCommon::Validator.validate(:prior_authority, submission.data)
+      service_type = Submission::APPLICATION_TYPES.invert[submission.application_type]
+      issues = LaaCrimeFormsCommon::Validator.validate(service_type, submission.data)
 
       return submission.data if issues.none?
 
