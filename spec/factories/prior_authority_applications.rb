@@ -20,13 +20,22 @@ FactoryBot.define do
       }
     end
     firm_office do
-      { 'name' => 'LegalCo' }
+      {
+        'name' => 'LegalCo',
+        'address_line_1' => nil,
+        'address_line_2' => nil,
+        'town' => nil,
+        'postcode' => nil,
+        'vat_registered' => nil,
+        'account_number' => '123ABC',
+      }
     end
     defendant do
       {
         'first_name' => 'Joe',
         'last_name' => 'Bloggs',
-        'date_of_birth' => '1950-01-01'
+        'date_of_birth' => '1950-01-01',
+        'maat' => nil,
       }
     end
     additional_costs { [] }
@@ -34,7 +43,8 @@ FactoryBot.define do
       {
         'contact_first_name' => 'Jane',
         'contact_last_name' => 'Doe',
-        'contact_email' => 'jane@doe.com'
+        'contact_email' => 'jane@doe.com',
+        'reference_number' => nil,
       }
     end
     main_offence_id { 'robbery' }
@@ -47,6 +57,23 @@ FactoryBot.define do
     rep_order_date { '2023-01-02' }
     next_hearing_date { '2025-01-01' }
     quotes { [build(:primary_quote)] }
+    created_at { 1.day.ago.as_json }
+    custom_main_offence_name { nil }
+    custom_prison_name { nil }
+    custom_service_name { nil }
+    further_information { [] }
+    incorrect_information { [] }
+    next_hearing { true }
+    no_alternative_quote_reason { nil }
+    office_code { '1AB23' }
+    prison_id { nil }
+    psychiatric_liaison { nil }
+    psychiatric_liaison_reason_not { nil }
+    reason_why { 'Foo' }
+    status { 'submitted' }
+    supporting_documents { [] }
+    updated_at { 1.hour.ago.as_json }
+    youth_court { nil }
 
     trait :related_application do
       ufn { '111111/111' }
@@ -98,7 +125,10 @@ FactoryBot.define do
     document do
       {
         'file_name' => 'test.pdf',
-        'file_path' => '123123123'
+        'file_path' => '123123123',
+        'file_type' => 'application/pdf',
+        'file_size' => 1234,
+        'document_type' => 'quote'
       }
     end
 
