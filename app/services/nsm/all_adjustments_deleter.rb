@@ -31,7 +31,7 @@ module Nsm
       revert_fields = %w[uplift count]
       letters_and_calls.each do |letter_or_call|
         revert_fields.each do |field|
-          revert(letter_or_call, field, letter_or_call['type']['value'])
+          revert(letter_or_call, field, letter_or_call['type'])
         end
         letter_or_call.delete('adjustment_comment')
       end
