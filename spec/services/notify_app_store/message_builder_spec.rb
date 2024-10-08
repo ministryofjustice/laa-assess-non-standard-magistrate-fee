@@ -12,21 +12,27 @@ RSpec.describe NotifyAppStore::MessageBuilder do
     [instance_double(Event, as_json: { 'event' => 1 }), instance_double(Event, as_json: { 'event' => 2 })]
   end
 
-  it 'generates and sends the data message for a submission' do
-    tester.process(subject.message)
+  context 'when validation passes' do
+    before do
+      allow(LaaCrimeFormsCommon::Validator).to receive(:validate).and_return([])
+    end
 
-    expect(tester).to have_received(:process).with(
-      application: { 'version' => 'data' },
-      events: [
-        { 'event' => 1 },
-        { 'event' => 2 }
-      ],
-      application_id: submission.id,
-      application_state: 'granted',
-      application_risk: 'high',
-      json_schema_version: 1,
-      application_type: 'crm7'
-    )
+    it 'generates and sends the data message for a submission' do
+      tester.process(subject.message)
+
+      expect(tester).to have_received(:process).with(
+        application: { 'version' => 'data' },
+        events: [
+          { 'event' => 1 },
+          { 'event' => 2 }
+        ],
+        application_id: submission.id,
+        application_state: 'granted',
+        application_risk: 'high',
+        json_schema_version: 1,
+        application_type: 'crm7'
+      )
+    end
   end
 
   context 'when building a PA application' do
