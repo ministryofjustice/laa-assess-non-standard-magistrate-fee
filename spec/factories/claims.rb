@@ -187,10 +187,7 @@ FactoryBot.define do
             'total_cost_without_vat_original' => 100.0,
             'prior_authority' => 'yes',
             'disbursement_date' => '2022-12-23',
-            'disbursement_type' => {
-              'en' => 'Other',
-              'value' => 'other'
-            },
+            'disbursement_type' => 'other',
             'adjustment_comment' => 'adjusted up'
           },
           {
@@ -205,38 +202,29 @@ FactoryBot.define do
             'total_cost_without_vat' => 130.0,
             'prior_authority' => 'yes',
             'disbursement_date' => '2022-12-23',
-            'disbursement_type' => {
-              'en' => 'Other',
-              'value' => 'other'
-            }
+            'disbursement_type' => 'other'
           }
         ]
       end
       letters_and_calls do
         [
           {
-            'type' => {
-              'en' => 'Letters',
-              'value' => 'letters'
-            },
-              'count' => 12,
-              'count_original' => 5,
-              'uplift' => 95,
-              'uplift_original' => 50,
-              'pricing' => 3.56,
-              'adjustment_comment' => 'adj'
+            'type' => 'letters',
+            'count' => 12,
+            'count_original' => 5,
+            'uplift' => 95,
+            'uplift_original' => 50,
+            'pricing' => 3.56,
+            'adjustment_comment' => 'adj'
           },
           {
-            'type' => {
-              'en' => 'Calls',
-              'value' => 'calls'
-            },
-              'count' => 4,
-              'count_original' => 5,
-              'uplift' => 20,
-              'uplift_original' => 50,
-              'pricing' => 3.56,
-              'adjustment_comment' => 'adj'
+            'type' => 'calls',
+            'count' => 4,
+            'count_original' => 5,
+            'uplift' => 20,
+            'uplift_original' => 50,
+            'pricing' => 3.56,
+            'adjustment_comment' => 'adj'
           },
         ]
       end
@@ -248,14 +236,8 @@ FactoryBot.define do
             'uplift_original' => 50,
             'pricing' => 24.0,
             'pricing_original' => 44.0,
-            'work_type' => {
-              'en' => 'Waiting',
-              'value' => 'waiting'
-            },
-            'work_type_original' => {
-              'en' => 'Attendance without counsel',
-              'value' => 'attendance_without_counsel'
-            },
+            'work_type' => 'waiting',
+            'work_type_original' => 'attendance_without_counsel',
             'fee_earner' => 'aaa',
             'time_spent' => 161,
             'time_spent_original' => 181,
@@ -284,10 +266,7 @@ FactoryBot.define do
             'total_cost_without_vat' => 130.0,
             'prior_authority' => 'yes',
             'disbursement_date' => '2022-12-23',
-            'disbursement_type' => {
-              'en' => 'Other',
-              'value' => 'other'
-            },
+            'disbursement_type' => 'other',
             'adjustment_comment' => 'adjusted up'
           }
         ]
@@ -321,10 +300,7 @@ FactoryBot.define do
             'total_cost_without_vat' => 80.0,
             'prior_authority' => 'yes',
             'disbursement_date' => '2022-12-12',
-            'disbursement_type' => {
-              'en' => 'Other',
-              'value' => 'other'
-            }
+            'disbursement_type' => 'other'
           }
         ]
       end
