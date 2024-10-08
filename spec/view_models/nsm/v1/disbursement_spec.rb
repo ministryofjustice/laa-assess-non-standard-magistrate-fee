@@ -53,7 +53,8 @@ RSpec.describe Nsm::V1::Disbursement do
       {
         'total_cost_without_vat' => 83, 'vat_amount' => 17,
         'disbursement_date' => Date.new(2022, 1, 1),
-        'other_type' => 'accountants',
+        'other_type' => other_type,
+        'disbursement_type' => 'car',
         'details' => 'details',
         'prior_authority' => prior_authority,
         'vat_rate' => 0.2,
@@ -65,6 +66,7 @@ RSpec.describe Nsm::V1::Disbursement do
     let(:prior_authority) { 'yes' }
     let(:miles) { nil }
     let(:apply_vat) { 'true' }
+    let(:other_type) { 'accountants' }
 
     it 'returns a hash with the correct fields if no miles' do
       expected_fields = {
@@ -127,6 +129,22 @@ RSpec.describe Nsm::V1::Disbursement do
         }
 
         expect(disbursement.disbursement_fields).to eq(expected_fields)
+      end
+    end
+
+    context 'when other type is a custom value' do
+      let(:other_type) { 'Some fun custom thing' }
+
+      it 'shows the custom value directly' do
+        expect(disbursement.disbursement_fields[:type]).to eq(other_type)
+      end
+    end
+
+    context 'when other type not set' do
+      let(:other_type) { nil }
+
+      it 'shows the main type name' do
+        expect(disbursement.disbursement_fields[:type]).to eq('Car mileage')
       end
     end
 

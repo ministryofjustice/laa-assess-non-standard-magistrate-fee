@@ -91,7 +91,24 @@ module Nsm
       end
 
       def type_name
-        other_type.to_s.presence || disbursement_type.to_s
+        # Possible values of the raw `other_type` include:
+        # - null (if disbursement_type is not "other")
+        # - a known key, e.g. `"accountants"`
+        # - a known key and its translation, e.g. `{ "en": "Accountants", "value": "accountants" }`
+        # - a custom string, e.g. `"My favourite colour"`
+        # - a custom string and its translation, e.g. `{ "en": "My favourite colour", "value": "My favourite colour" }`
+
+        # `.value` gets us down to just dealing with null or a string, but we then need to test whether
+        # this string is a known key we can translate. If not, it must be a custom, user-facing one.
+        if other_type&.value.present?
+          if I18n.t('laa_crime_forms_common.nsm.other_disbursement_type').key?(other_type.value.to_sym)
+            other_type.translated
+          else
+            other_type.value
+          end
+        else
+          disbursement_type.to_s
+        end
       end
 
       def date
