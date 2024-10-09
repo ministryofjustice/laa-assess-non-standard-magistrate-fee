@@ -55,7 +55,7 @@ RSpec.describe Nsm::SendBacksController do
           nsm_send_back_form: { send_back_comment: nil, id: claim.id }
         }
 
-        expect(response).to redirect_to(your_nsm_claims_path)
+        expect(response).to redirect_to(nsm_claim_send_back_path(claim))
       end
     end
 

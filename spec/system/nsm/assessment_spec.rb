@@ -112,7 +112,7 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
       it 'shows the FI details' do
         visit nsm_claim_claim_details_path(claim)
 
-        expect(page).to have_content "Sent back to provider on 4 July 2024\nTest Data"
+        expect(page).to have_content "Sent back to provider on 4 July 2024\nFurther information request:\nTest Data"
       end
     end
 

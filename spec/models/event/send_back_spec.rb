@@ -25,10 +25,10 @@ RSpec.describe Nsm::Event::SendBack do
   end
 
   it 'has a valid title' do
-    expect(subject.title).to eq('Claim sent back to provider')
+    expect(subject.title).to eq('Sent back')
   end
 
-  it 'body is set to comment' do
-    expect(subject.body).to eq('decison was made')
+  it 'body is set to static text' do
+    expect(subject.body).to eq('Sent back to Provider for further information')
   end
 end

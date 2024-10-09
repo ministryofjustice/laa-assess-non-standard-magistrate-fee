@@ -12,7 +12,7 @@ module Nsm
     def provider_updates
       return nil if claim.data['further_information'].blank?
 
-      BaseViewModel.build(:further_information, claim, 'further_information').sort_by(&:requested_at)
+      BaseViewModel.build(:further_information, claim, 'further_information').sort_by(&:requested_at).reverse
     end
 
     def claim

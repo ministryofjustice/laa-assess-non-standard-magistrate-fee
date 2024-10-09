@@ -15,10 +15,12 @@ en:
       rejected: Decision made to reject claim
   event/new_version:
     title: Received
+    updated_body: Received from Provider with further information
   event/note:
     title: Caseworker note
   nsm/event/send_back:
-    title: Claim sent back to provider
+    title: Sent back
+    body: Sent back to Provider for further information
   event/unassignment:
     title:
       self: Caseworker removed self from claim
