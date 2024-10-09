@@ -37,6 +37,8 @@ RSpec.describe PriorAuthority::FeedbackMessages::GrantedFeedback do
       expect(feedback.contents).to include(
         laa_case_reference: 'LAA-FHaMVK',
         ufn: '111111/111',
+        service_required: 'Pathologist report',
+        service_provider_details: 'ABC DEF, ABC, HIJ, SW1 1AA',
         defendant_name: 'Abe Abrahams',
         application_total: '£324.50',
         date: DateTime.now.to_fs(:stamp),

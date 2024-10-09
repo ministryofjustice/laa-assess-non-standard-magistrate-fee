@@ -3,6 +3,8 @@
 module PriorAuthority
   module FeedbackMessages
     class FeedbackBase
+      include ActionView::Helpers::OutputSafetyHelper
+
       def initialize(submission)
         @submission = submission
       end
@@ -45,10 +47,23 @@ module PriorAuthority
         decision.comments
       end
 
+      def service_required
+        application_summary.service_name
+      end
+
+      def service_provider_details
+        quote = application_details.primary_quote
+        [quote.contact_full_name, quote.organisation, quote.town, quote.postcode].compact.join(', ')
+      end
+
       private
 
       def application_summary
         @application_summary ||= BaseViewModel.build(:application_summary, @submission)
+      end
+
+      def application_details
+        @application_details ||= BaseViewModel.build(:application_details, @submission)
       end
 
       def decision
