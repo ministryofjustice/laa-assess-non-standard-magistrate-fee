@@ -22,7 +22,18 @@ module ApplicationHelper
   end
 
   def service_name
-    t('service.name')
+    case current_layout
+    when 'nsm'
+      t('nsm.service_name')
+    when 'prior_authority'
+      t('prior_authority.service_name')
+    else
+      t('service.name')
+    end
+  end
+
+  def current_layout
+    controller.send :_layout, lookup_context, []
   end
 
   def app_environment
