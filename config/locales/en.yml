@@ -1,7 +1,9 @@
 
 en:
   service:
-    name: Assess a non-standard magistrates’ court payment
+    name: Assess a crime form
+  nsm:
+    service_name: Assess a non-standard magistrates’ court payment
 
   flash:
     success:
