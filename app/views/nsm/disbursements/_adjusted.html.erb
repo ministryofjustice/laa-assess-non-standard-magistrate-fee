@@ -1,5 +1,7 @@
-<% if records.size.zero? %>
-  <p><%= t('.no_data') %></p>
+<% if claim.data['disbursements'].blank? %>
+  <p><%= t('.no_disbursements') %></p>
+<% elsif records.size.zero? %>
+  <p><%= t('.no_adjustments') %></p>
 <% else %>
   <table class="govuk-table" data-module="moj-sortable-table">
     <caption class="govuk-visually-hidden"><%= t('.table_caption') %></caption>
