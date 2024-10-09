@@ -14,7 +14,7 @@ en:
         claimed_gross: Total claimed
         allowed_gross: Total allowed
         table_info_item: disbursement
-        no_data: You do not have any disbursements
+        no_disbursements: This claim has no disbursements
         table_caption: Claimed disbursements
       adjusted:
         action: Action
@@ -28,12 +28,9 @@ en:
         allowed_vat: VAT on allowed
         allowed_gross: Total allowed
         table_info_item: disbursement
-        no_data: You do not have any adjusted disbursements
+        no_disbursements: This claim has no disbursements
+        no_adjustments: This claim has no adjusted disbursements
         table_caption: Adjusted disbursements
-        allowed_gross: Total allowed
-        table_info_item: disbursement
-        no_data: You do not have any disbursements
-        table_caption: Clained disbursements
       disbursements_total:
         link_title: View disbursement total
         provider_total: Requested (including any VAT)

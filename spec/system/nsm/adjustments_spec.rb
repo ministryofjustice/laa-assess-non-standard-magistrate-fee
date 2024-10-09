@@ -36,7 +36,7 @@ RSpec.describe 'Adjustments' do
         visit adjusted_nsm_claim_work_items_path(claim)
         click_on 'Delete'
         click_on 'Yes, delete it'
-        expect(page).to have_content('You do not have any adjusted work items')
+        expect(page).to have_content('This claim has no adjusted work items')
       end
     end
 
@@ -98,7 +98,7 @@ RSpec.describe 'Adjustments' do
         click_on 'Delete'
         click_on 'Yes, delete it'
         expect(page).to have_content('Adjusted costs')
-        expect(page).to have_content('You do not have any disbursements')
+        expect(page).to have_content('This claim has no adjusted disbursements')
       end
     end
 
@@ -107,12 +107,12 @@ RSpec.describe 'Adjustments' do
         visit adjusted_nsm_claim_work_items_path(claim)
         click_on 'Delete'
         click_on 'Yes, delete it'
-        expect(page).to have_content('You do not have any adjusted work items')
+        expect(page).to have_content('This claim has no adjusted work items')
 
         visit adjusted_nsm_claim_disbursements_path(claim)
         click_on 'Delete'
         click_on 'Yes, delete it'
-        expect(page).to have_content('You do not have any disbursements')
+        expect(page).to have_content('This claim has no adjusted disbursements')
 
         visit adjusted_nsm_claim_letters_and_calls_path(claim)
         within('.govuk-table__body') do
