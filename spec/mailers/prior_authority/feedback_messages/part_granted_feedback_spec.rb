@@ -45,6 +45,8 @@ RSpec.describe PriorAuthority::FeedbackMessages::PartGrantedFeedback do
         defendant_name: 'Abe Abrahams',
         application_total: '£300.00',
         part_grant_total: '£150.00',
+        service_required: 'Pathologist report',
+        service_provider_details: 'ABC DEF, ABC, HIJ, SW1 1AA',
         caseworker_decision_explanation: 'Caseworker part granted coz...',
         date: DateTime.now.to_fs(:stamp),
       )

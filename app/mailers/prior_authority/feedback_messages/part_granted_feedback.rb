@@ -12,6 +12,8 @@ module PriorAuthority
           laa_case_reference: case_reference,
           ufn: ufn,
           defendant_name: defendant_name,
+          service_required: service_required,
+          service_provider_details: service_provider_details,
           application_total: application_total,
           part_grant_total: adjusted_total,
           caseworker_decision_explanation: comments,
