@@ -51,6 +51,23 @@ RSpec.describe Nsm::Uplift::BaseForm do
       end
     end
 
+    context 'when the record has already been adjusted' do
+      before do
+        claim.data['letters_and_calls'][0]['adjustment_comment'] = 'Previous comment'
+      end
+
+      it 'preserves the previous comment' do
+        subject.save
+        expect(implementation_class::Remover).to have_received(:new)
+          .with(
+            claim: claim,
+            explanation: "Previous comment\n\n#{explanation}",
+            current_user: current_user,
+            selected_record: claim.data['letters_and_calls'][0]
+          )
+      end
+    end
+
     context 'when invalid' do
       let(:explanation) { nil }
 
