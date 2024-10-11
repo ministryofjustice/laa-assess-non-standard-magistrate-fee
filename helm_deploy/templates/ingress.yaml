@@ -28,6 +28,7 @@ metadata:
       SecRequestBodyNoFilesLimit 524288
       SecDefaultAction "phase:2,pass,log,tag:github_team=laa-crime-forms-team,status:423"
       SecDefaultAction "phase:4,pass,log,tag:github_team=laa-crime-forms-team,status:423"
+      SecRuleRemoveById 920120
       SecRuleRemoveById 921110
       SecRuleRemoveById 933210
       SecRuleRemoveById 942230
