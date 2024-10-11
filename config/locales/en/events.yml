@@ -5,7 +5,7 @@ en:
       auto_grant: Automatic decision made to grant claim
   event/assignment:
     auto_title: Claim allocated to caseworker
-    manual_title: Self assigned by %{caseworker}
+    manual_title: Self-assigned by %{caseworker}
   event/change_risk:
     title: Claim risk changed to %{risk} risk
   event/decision:
@@ -14,7 +14,7 @@ en:
       part_grant: Decision made to part grant claim
       rejected: Decision made to reject claim
   event/new_version:
-    title: New claim received
+    title: Received
   event/note:
     title: Caseworker note
   nsm/event/send_back:
