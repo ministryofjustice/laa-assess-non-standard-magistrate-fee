@@ -78,12 +78,23 @@ RSpec.describe Nsm::WorkItemForm do
         end
       end
 
-      context 'and explanation does not have an error' do
+      context 'and explanation would otherwise have an error' do
         let(:explanation) { '' }
 
-        it 'is not valid' do
+        it 'ignores the explanation error' do
           expect(subject).not_to be_valid
           expect(subject.errors.of_kind?(:explanation, :blank)).to be(false)
+        end
+      end
+
+      context 'but the explanation has' do
+        before do
+          work_item = claim.data['work_items'].detect { _1['id'] == id }
+          work_item['adjustment_comment'] = 'Previous explanation'
+        end
+
+        it 'is valid' do
+          expect(subject).to be_valid
         end
       end
     end
@@ -200,6 +211,34 @@ RSpec.describe Nsm::WorkItemForm do
         it 'saves without error' do
           expect { subject.save }.to change(Event, :count).by(1)
         end
+      end
+    end
+
+    context 'when only explanation has changed' do
+      let(:uplift) { 'no' }
+      let(:time_spent) { 161 }
+
+      before do
+        work_item = claim.data['work_items'].detect { _1['id'] == id }
+        work_item['adjustment_comment'] = 'Previous explanation'
+        claim.save!
+      end
+
+      it 'updates the JSON data' do
+        subject.save
+        work_item = claim.reload
+                         .data['work_items']
+                         .detect { |row| row['work_type'] == 'waiting' }
+        expect(work_item).to eq(
+          'id' => 'cf5e303e-98dd-4b0f-97ea-3560c4c5f137',
+          'time_spent' => 161,
+          'pricing' => 24.0,
+          'work_type' => 'waiting',
+          'uplift' => 95,
+          'fee_earner' => 'aaa',
+          'completed_on' => '2022-12-12',
+          'adjustment_comment' => 'change to work items',
+        )
       end
     end
 
