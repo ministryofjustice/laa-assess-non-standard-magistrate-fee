@@ -21,7 +21,10 @@ module Nsm
 
         Claim.transaction do
           claim.data[self.class::SCOPE].each do |selected_record|
-            row = self.class::Remover.new(claim:, explanation:, current_user:, selected_record:)
+            row = self.class::Remover.new(claim: claim,
+                                          explanation: explanation_for(selected_record),
+                                          current_user: current_user,
+                                          selected_record: selected_record)
             next unless row.valid?
 
             row.save
@@ -33,6 +36,10 @@ module Nsm
         true
       rescue StandardError
         false
+      end
+
+      def explanation_for(record)
+        [record['adjustment_comment'].presence, explanation].compact.join("\n\n")
       end
     end
   end

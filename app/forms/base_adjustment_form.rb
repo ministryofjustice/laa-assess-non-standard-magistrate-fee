@@ -11,7 +11,11 @@ class BaseAdjustmentForm
 
   private
 
-  def process_field(value:, field:, comment_field: 'adjustment_comment')
+  COMMENT_FIELD = 'adjustment_comment'.freeze
+
+  def process_field(value:, field:)
+    selected_record[self.class::COMMENT_FIELD] = explanation
+
     return if selected_record[field] == value
 
     # does this belong in the Event object as that is where it is
@@ -25,7 +29,7 @@ class BaseAdjustmentForm
     }.merge(changed_value(value, selected_record[field]))
 
     ensure_original_field_value_set(field)
-    assign_new_attributes(field, value, comment_field)
+    assign_new_attributes(field, value)
 
     Event::Edit.build(submission:, details:, linked:, current_user:)
   end
@@ -34,9 +38,8 @@ class BaseAdjustmentForm
     selected_record["#{field}_original"] ||= selected_record[field]
   end
 
-  def assign_new_attributes(field, value, comment_field)
+  def assign_new_attributes(field, value)
     selected_record[field] = value
-    selected_record[comment_field] = explanation
   end
 
   def changed_value(val1, val2)
@@ -57,7 +60,7 @@ class BaseAdjustmentForm
   end
 
   def data_changed
-    return if data_has_changed?
+    return if data_has_changed? || explanation_has_changed?
 
     errors.add(no_change_field, :no_change)
   end
@@ -68,6 +71,12 @@ class BaseAdjustmentForm
 
   def explanation_required?
     data_has_changed?
+  end
+
+  def explanation_has_changed?
+    return false if selected_record[self.class::COMMENT_FIELD].blank?
+
+    explanation != selected_record[self.class::COMMENT_FIELD]
   end
 
   # :nocov:
