@@ -5,9 +5,9 @@ en:
       show:
         page_title: Assess a non-standard magistrates’ court payment
         history: Claim history
-        when: When
+        when: Date
         caseworker: Caseworker
-        what: What
+        what: Update
         add-note: Add to claim history
         table_info_item: "events"
 
