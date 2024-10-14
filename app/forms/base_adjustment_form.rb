@@ -11,8 +11,10 @@ class BaseAdjustmentForm
 
   private
 
-  def process_field(value:, field:, comment_field: 'adjustment_comment')
-    selected_record[comment_field] = explanation
+  COMMENT_FIELD = 'adjustment_comment'.freeze
+
+  def process_field(value:, field:)
+    selected_record[self.class::COMMENT_FIELD] = explanation
 
     return if selected_record[field] == value
 
@@ -72,9 +74,9 @@ class BaseAdjustmentForm
   end
 
   def explanation_has_changed?
-    return false if selected_record['adjustment_comment'].blank?
+    return false if selected_record[self.class::COMMENT_FIELD].blank?
 
-    explanation != selected_record['adjustment_comment']
+    explanation != selected_record[self.class::COMMENT_FIELD]
   end
 
   # :nocov:
