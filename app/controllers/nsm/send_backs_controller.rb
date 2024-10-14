@@ -2,6 +2,10 @@ module Nsm
   class SendBacksController < Nsm::BaseController
     include NameConstructable
 
+    def show
+      claim
+    end
+
     def edit
       send_back = SendBackForm.new(claim: claim, send_back_comment: claim.data['send_back_comment'])
       render locals: { claim:, send_back: }
@@ -14,7 +18,7 @@ module Nsm
         send_back.stash
         redirect_to your_nsm_claims_path
       elsif send_back.save
-        redirect_to your_nsm_claims_path
+        redirect_to nsm_claim_send_back_path(claim)
       else
         render :edit, locals: { claim:, send_back: }
       end

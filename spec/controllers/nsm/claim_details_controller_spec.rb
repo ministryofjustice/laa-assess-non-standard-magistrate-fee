@@ -35,7 +35,7 @@ RSpec.describe Nsm::ClaimDetailsController do
       let(:further_information) { [instance_double(Nsm::V1::FurtherInformation)] }
 
       before do
-        allow(further_information).to receive(:sort_by).and_return true
+        allow(further_information).to receive(:sort_by).and_return further_information
         allow(BaseViewModel).to receive(:build)
           .with(:further_information, claim, 'further_information')
           .and_return(further_information)

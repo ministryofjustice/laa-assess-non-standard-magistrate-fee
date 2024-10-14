@@ -26,6 +26,8 @@ RSpec.describe 'History events' do
     claim.state = 'sent_back'
     Nsm::Event::SendBack.build(submission: claim, current_user: caseworker, previous_state: 'submitted',
                                comment: 'Send Back test')
+    claim.current_version = 2
+    Event::NewVersion.build(submission: claim)
     claim.state = 'granted'
     Event::Decision.build(submission: claim, current_user: caseworker, previous_state: 'sent_back',
                           comment: 'Decision test')
@@ -45,7 +47,8 @@ RSpec.describe 'History events' do
       [
         'case worker', 'Caseworker removed from claim by super visor', 'unassignment 2',
         'case worker', 'Decision made to grant claim', 'Decision test',
-        'case worker', 'Claim sent back to provider', 'Send Back test',
+        '', 'Received', 'Received from Provider with further information',
+        'case worker', 'Sent back', 'Sent back to Provider for further information',
         'case worker', 'Caseworker note', 'User test note',
         'case worker', 'Claim risk changed to low risk', 'Risk change test',
         'case worker', 'Self-assigned by case worker', 'Manual assignment note',

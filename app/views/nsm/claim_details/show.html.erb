@@ -10,6 +10,7 @@
     <% if claim.sent_back? || claim.expired? %>
       <div class="govuk-inset-text">
         <p><strong><%= t(".sent_back", date: claim_summary.sent_back_on.to_fs(:stamp)) %></strong></p>
+        <%= t(".further_information_request") %>
         <%= simple_format claim_summary.assessment_comment %>
       </div>
     <% elsif claim.provider_updated? %>
@@ -40,7 +41,7 @@
     <% if provider_updates %>
       <h2 class="govuk-heading-m" id="further-info"><%= t('.provider_updates') %> </h2>
       <% provider_updates.each do |further_information| %>
-        <%= govuk_summary_list(card: { title: further_information.title }) do |table|
+        <%= govuk_summary_list(card: { title: further_information.title }, actions: false) do |table|
           further_information.data.each do | field |
             table.with_row do |row|
               row.with_key(text: field[:title])

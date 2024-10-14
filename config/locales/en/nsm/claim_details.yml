@@ -6,6 +6,7 @@ en:
         page_title: Assess a non-standard magistrates’ court payment
         overview: Overview
         sent_back: Sent back to provider on %{date}
+        further_information_request: 'Further information request:'
         assessed_statuses:
           granted: Granted
           part_grant: Part granted
@@ -95,7 +96,7 @@ en:
         identification: Defendant identification
         disability: Defendant disability
       provider_update:
-        title: Further information request
+        title: Further information request %{date}
         caseworker: Caseworker
         information_request: Information request
         provider_response: Provider response
