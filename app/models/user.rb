@@ -1,17 +1,11 @@
 class User < ApplicationRecord
   has_many :access_logs, dependent: :destroy
+  has_many :roles, dependent: :destroy
 
-  ROLES = [
-    CASEWORKER = 'caseworker'.freeze,
-    SUPERVISOR = 'supervisor'.freeze,
-    VIEWER = 'viewer'.freeze
-  ].freeze
   devise :omniauthable, :timeoutable
 
   include AuthUpdateable
   include Reauthable
-
-  validates :role, inclusion: { in: ROLES }
 
   scope :active, -> { where(deactivated_at: nil).where.not(auth_subject_id: nil) }
   scope :pending_activation, -> { where(auth_subject_id: nil, deactivated_at: nil) }
@@ -21,11 +15,11 @@ class User < ApplicationRecord
   end
 
   def supervisor?
-    role == SUPERVISOR
+    roles.supervisor.any?
   end
 
   def viewer?
-    role == VIEWER
+    roles.viewer.any?
   end
 
   def pending_activation?

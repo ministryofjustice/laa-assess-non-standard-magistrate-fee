@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_15_091931) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_15_110647) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -70,6 +70,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_15_091931) do
     t.index ["submission_id"], name: "index_events_on_submission_id"
   end
 
+  create_table "roles", force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.string "role_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_roles_on_user_id"
+  end
+
   create_table "solid_cache_entries", force: :cascade do |t|
     t.binary "key", null: false
     t.binary "value", null: false
@@ -104,7 +112,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_15_091931) do
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "first_name"
-    t.string "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.citext "email"
@@ -125,4 +132,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_15_091931) do
   add_foreign_key "events", "submissions"
   add_foreign_key "events", "users", column: "primary_user_id"
   add_foreign_key "events", "users", column: "secondary_user_id"
+  add_foreign_key "roles", "users"
 end

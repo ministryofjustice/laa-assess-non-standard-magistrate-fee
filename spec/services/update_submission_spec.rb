@@ -163,7 +163,6 @@ RSpec.describe UpdateSubmission do
             )
             expect(Event::Edit.last.primary_user).to have_attributes(
               first_name: primary_user_id.split('-').first,
-              role: User::CASEWORKER,
               email: "#{primary_user_id}@fake.com",
               last_name: 'branchbuilder',
               auth_oid: primary_user_id,
