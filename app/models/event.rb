@@ -104,7 +104,7 @@ class Event < ApplicationRecord
 
   def as_json(*)
     super
-      .except('submission_id')
+      .except('submission_id', 'notify_app_store_completed')
       .merge(
         public: PUBLIC_EVENTS.include?(event_type),
         event_type: event_type.demodulize.underscore

@@ -3,12 +3,21 @@ require 'rails_helper'
 RSpec.describe NotifyAppStore do
   subject { described_class.new }
 
-  let(:submission) { instance_double(Claim) }
+  let(:submission) { instance_double(Claim, update!: true) }
   let(:message_builder) { instance_double(described_class::MessageBuilder, message: { some: 'message' }) }
 
   before do
     allow(described_class::MessageBuilder).to receive(:new)
       .and_return(message_builder)
+  end
+
+  describe '.perform_later' do
+    let(:claim) { create :claim, notify_app_store_completed: nil }
+
+    it 'sets a flag' do
+      described_class.perform_later(submission: claim)
+      expect(claim.reload.notify_app_store_completed).to be false
+    end
   end
 
   describe '#perform' do
@@ -41,6 +50,11 @@ RSpec.describe NotifyAppStore do
         expect(Nsm::SubmissionFeedbackMailer).to receive_message_chain(:notify, :deliver_later!)
         subject.perform(submission:)
       end
+    end
+
+    it 'updates the record' do
+      expect(submission).to receive(:update!).with(notify_app_store_completed: true)
+      subject.perform(submission:)
     end
 
     context 'when emails should not be triggered' do
