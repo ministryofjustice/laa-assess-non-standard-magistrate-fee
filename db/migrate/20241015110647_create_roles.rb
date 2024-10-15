@@ -1,5 +1,5 @@
 class CreateRoles < ActiveRecord::Migration[7.1]
-  def change
+  def up
     create_table :roles do |t|
       t.references :user, null: false, foreign_key: true, type: :uuid
       t.string :role_type
@@ -12,5 +12,15 @@ class CreateRoles < ActiveRecord::Migration[7.1]
     end
 
     remove_column :users, :role, :string
+  end
+
+  def down
+    add_column :users, :role, :string
+
+    User.find_each do |user|
+      user.update!(role: user.roles.first.role_type)
+    end
+
+    drop_table :roles
   end
 end
