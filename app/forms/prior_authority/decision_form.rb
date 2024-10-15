@@ -30,13 +30,13 @@ module PriorAuthority
       return false unless valid?
 
       submission.with_lock do
-        change_data_and_notify_app_store
+        change_data_and_notify_app_store!
       end
 
       true
     end
 
-    def change_data_and_notify_app_store
+    def change_data_and_notify_app_store!
       stash(add_draft_decision_event: false)
       previous_state = submission.state
 

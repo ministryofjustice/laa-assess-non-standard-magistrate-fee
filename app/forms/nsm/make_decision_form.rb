@@ -22,13 +22,13 @@ module Nsm
       return false unless valid?
 
       claim.with_lock do
-        change_data_and_notify_app_store
+        change_data_and_notify_app_store!
       end
 
       true
     end
 
-    def change_data_and_notify_app_store
+    def change_data_and_notify_app_store!
       previous_state = claim.state
 
       claim.data.merge!('status' => state, 'updated_at' => Time.current, 'assessment_comment' => comment)
