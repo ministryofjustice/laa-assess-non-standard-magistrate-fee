@@ -16,6 +16,7 @@ RSpec.describe PriorAuthority::FeedbackMessages::FurtherInformationRequestFeedba
         defendant: { 'last_name' => 'Abrahams', 'first_name' => 'Abe' },
         incorrect_information_explanation: incorrect_information_explanation,
         further_information_explanation: further_information_explanation,
+        resubmission_deadline: '2023-4-07T12:49:58.00'
       )
     ).tap do |app|
       create(
@@ -54,7 +55,7 @@ RSpec.describe PriorAuthority::FeedbackMessages::FurtherInformationRequestFeedba
         ufn: '111111/111',
         defendant_name: 'Abe Abrahams',
         application_total: '£324.50',
-        date_to_respond_by: 14.days.from_now.to_fs(:stamp),
+        date_to_respond_by: '7 April 2023',
         date: DateTime.now.to_fs(:stamp),
       )
     end

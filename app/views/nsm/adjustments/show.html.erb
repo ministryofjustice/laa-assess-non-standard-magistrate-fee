@@ -9,7 +9,9 @@
         <%= t('.adjusted_costs') %>
       </h2>
 
-      <%= govuk_button_link_to( t('.delete_all_adjustments'), confirm_deletion_nsm_claim_adjustments_path(claim), secondary: true,  data: { turbo: "false" }) %>
+      <% if claim.editable_by?(current_user) %>
+        <%= govuk_button_link_to( t('.delete_all_adjustments'), confirm_deletion_nsm_claim_adjustments_path(claim), secondary: true,  data: { turbo: "false" }) %>
+      <% end %>
 
       <ul class="govuk-tabs__list" id="tabs">
         <li class="govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if scope == :work_items %>">

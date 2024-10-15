@@ -50,17 +50,11 @@ form_attributes: {}, position: 1)
         'pricing' => 1.0,
         'vat_rate' => 0.2,
         'apply_vat' => 'false',
-        'other_type' => {
-          'en' => 'Apples',
-          'value' => 'Apples'
-        },
+        'other_type' => 'apples',
         'vat_amount' => 0.0,
         'prior_authority' => 'yes',
         'disbursement_date' => '2022-12-12',
-        'disbursement_type' => {
-          'en' => 'Other',
-          'value' => 'other'
-        },
+        'disbursement_type' => 'other',
         'total_cost_without_vat' => 100.0
       }
     end
@@ -99,17 +93,11 @@ form_attributes: {}, position: 1)
         'pricing' => 1.0,
         'vat_rate' => 0.2,
         'apply_vat' => 'false',
-        'other_type' => {
-          'en' => 'Apples',
-          'value' => 'Apples'
-        },
+        'other_type' => 'apples',
         'vat_amount' => 0.0,
         'prior_authority' => 'yes',
         'disbursement_date' => '2022-12-12',
-        'disbursement_type' => {
-          'en' => 'Other',
-          'value' => 'other'
-        },
+        'disbursement_type' => 'other',
         'total_cost_without_vat' => 100.0
       }
     end

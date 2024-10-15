@@ -10,20 +10,51 @@ RSpec.describe ApplicationHelper, type: :helper do
   describe '#title' do
     let(:title) { helper.content_for(:page_title) }
 
-    before do
-      helper.title(value)
+    context 'when using default layout' do
+      before do
+        helper.title(value)
+      end
+
+      context 'for a blank value' do
+        let(:value) { '' }
+
+        it { expect(title).to eq('Assess a crime form - GOV.UK') }
+      end
+
+      context 'for a provided value' do
+        let(:value) { 'Test page' }
+
+        it { expect(title).to eq('Test page - Assess a crime form - GOV.UK') }
+      end
     end
 
-    context 'for a blank value' do
-      let(:value) { '' }
-
-      it { expect(title).to eq('Assess a non-standard magistrates’ court payment - GOV.UK') }
-    end
-
-    context 'for a provided value' do
+    context 'when using a known layout' do
+      let(:lookup_context) { 'context' }
       let(:value) { 'Test page' }
 
-      it { expect(title).to eq('Test page - Assess a non-standard magistrates’ court payment - GOV.UK') }
+      before do
+        allow(helper).to receive(:lookup_context).and_return(lookup_context)
+      end
+
+      context 'when current_layout is nsm' do
+        before do
+          allow(helper).to receive_message_chain(:controller, :send).with(:_layout, lookup_context, [])
+                                                                    .and_return('nsm')
+          helper.title(value)
+        end
+
+        it { expect(title).to eq('Test page - Assess a non-standard magistrates’ court payment - GOV.UK') }
+      end
+
+      context 'when current_layout is oa' do
+        before do
+          allow(helper).to receive_message_chain(:controller, :send).with(:_layout, lookup_context, [])
+                                                                    .and_return('prior_authority')
+          helper.title(value)
+        end
+
+        it { expect(title).to eq('Test page - Assess prior authority to incur disbursements - GOV.UK') }
+      end
     end
   end
 

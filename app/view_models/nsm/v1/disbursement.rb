@@ -7,8 +7,8 @@ module Nsm
       # used to guess position when value not set in JSON blob when position is blank
       attribute :submission
       attribute :position, :integer
-      attribute :disbursement_type, :translated
-      attribute :other_type, :translated
+      attribute :disbursement_type, :translated, scope: 'nsm.disbursement_type'
+      attribute :other_type, :translated, scope: 'nsm.other_disbursement_type'
       adjustable_attribute :miles, :decimal, precision: 10, scale: 3
       attribute :pricing, :decimal, precision: 10, scale: 2
       adjustable_attribute :total_cost_without_vat, :decimal, precision: 10, scale: 2
@@ -49,10 +49,12 @@ module Nsm
       def provider_requested_total_cost
         original_total_cost_without_vat + original_vat_amount
       end
+      alias provider_requested_amount provider_requested_total_cost
 
       def caseworker_total_cost
         total_cost_without_vat + vat_amount
       end
+      alias caseworker_amount caseworker_total_cost
 
       def form_attributes
         attributes.slice('total_cost_without_vat', 'miles', 'apply_vat', 'vat_rate').merge(
@@ -89,7 +91,24 @@ module Nsm
       end
 
       def type_name
-        other_type.to_s.presence || disbursement_type.to_s
+        # Possible values of the raw `other_type` include:
+        # - null (if disbursement_type is not "other")
+        # - a known key, e.g. `"accountants"`
+        # - a known key and its translation, e.g. `{ "en": "Accountants", "value": "accountants" }`
+        # - a custom string, e.g. `"My favourite colour"`
+        # - a custom string and its translation, e.g. `{ "en": "My favourite colour", "value": "My favourite colour" }`
+
+        # `.value` gets us down to just dealing with null or a string, but we then need to test whether
+        # this string is a known key we can translate. If not, it must be a custom, user-facing one.
+        if other_type&.value.present?
+          if I18n.t('laa_crime_forms_common.nsm.other_disbursement_type').key?(other_type.value.to_sym)
+            other_type.translated
+          else
+            other_type.value
+          end
+        else
+          disbursement_type.to_s
+        end
       end
 
       def date

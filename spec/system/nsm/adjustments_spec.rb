@@ -3,19 +3,6 @@ require 'rails_helper'
 RSpec.describe 'Adjustments' do
   let(:user) { create(:caseworker) }
   let(:claim) { create(:claim, :with_adjustments) }
-  let(:no_adjustments) { create(:claim) }
-  let(:client) { instance_double(AppStoreClient, get_submission: app_store_record) }
-  let(:app_store_record) do
-    {
-      'version' => 1,
-      'json_schema_version' => 1,
-      'application_state' => 'submitted',
-      'application_type' => 'crm7',
-      'application' => no_adjustments.data,
-      'events' => [],
-      'application_id' => claim.id,
-    }
-  end
 
   before do
     sign_in user
@@ -49,7 +36,7 @@ RSpec.describe 'Adjustments' do
         visit adjusted_nsm_claim_work_items_path(claim)
         click_on 'Delete'
         click_on 'Yes, delete it'
-        expect(page).to have_content('You do not have any adjusted work items')
+        expect(page).to have_content('This claim has no adjusted work items')
       end
     end
 
@@ -100,7 +87,7 @@ RSpec.describe 'Adjustments' do
 
         expect(page).to have_content('Adjusted costs')
         within('.govuk-table') do
-          expect(page).to have_content('Apples')
+          expect(page).to have_content('Accountants')
             .and have_content('Delete')
             .and have_content('adjusted up')
         end
@@ -111,7 +98,7 @@ RSpec.describe 'Adjustments' do
         click_on 'Delete'
         click_on 'Yes, delete it'
         expect(page).to have_content('Adjusted costs')
-        expect(page).to have_content('You do not have any disbursements')
+        expect(page).to have_content('This claim has no adjusted disbursements')
       end
     end
 
@@ -120,12 +107,12 @@ RSpec.describe 'Adjustments' do
         visit adjusted_nsm_claim_work_items_path(claim)
         click_on 'Delete'
         click_on 'Yes, delete it'
-        expect(page).to have_content('You do not have any adjusted work items')
+        expect(page).to have_content('This claim has no adjusted work items')
 
         visit adjusted_nsm_claim_disbursements_path(claim)
         click_on 'Delete'
         click_on 'Yes, delete it'
-        expect(page).to have_content('You do not have any disbursements')
+        expect(page).to have_content('This claim has no adjusted disbursements')
 
         visit adjusted_nsm_claim_letters_and_calls_path(claim)
         within('.govuk-table__body') do
@@ -145,10 +132,6 @@ RSpec.describe 'Adjustments' do
     end
 
     describe 'delete all adjustments' do
-      before do
-        allow(AppStoreClient).to receive(:new).and_return(client)
-      end
-
       it 'asks to confirm delete all adjustments' do
         visit adjusted_nsm_claim_work_items_path(claim)
         click_on 'Delete all adjustments'

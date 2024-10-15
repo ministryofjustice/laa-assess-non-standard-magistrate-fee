@@ -26,6 +26,8 @@ RSpec.describe 'History events' do
     claim.state = 'sent_back'
     Nsm::Event::SendBack.build(submission: claim, current_user: caseworker, previous_state: 'submitted',
                                comment: 'Send Back test')
+    claim.current_version = 2
+    Event::NewVersion.build(submission: claim)
     claim.state = 'granted'
     Event::Decision.build(submission: claim, current_user: caseworker, previous_state: 'sent_back',
                           comment: 'Decision test')
@@ -45,13 +47,14 @@ RSpec.describe 'History events' do
       [
         'case worker', 'Caseworker removed from claim by super visor', 'unassignment 2',
         'case worker', 'Decision made to grant claim', 'Decision test',
-        'case worker', 'Claim sent back to provider', 'Send Back test',
+        '', 'Received', 'Received from Provider with further information',
+        'case worker', 'Sent back', 'Sent back to Provider for further information',
         'case worker', 'Caseworker note', 'User test note',
         'case worker', 'Claim risk changed to low risk', 'Risk change test',
-        'case worker', 'Self assigned by case worker', 'Manual assignment note',
+        'case worker', 'Self-assigned by case worker', 'Manual assignment note',
         'case worker', 'Caseworker removed self from claim', 'unassignment 1',
         'case worker', 'Claim allocated to caseworker', '',
-        '', 'New claim received', ''
+        '', 'Received', ''
       ]
     )
   end
@@ -64,7 +67,7 @@ RSpec.describe 'History events' do
       visit nsm_claim_history_path(claim)
       fill_in 'Add a note to the claim history (optional)', with: 'Here is a note'
       click_on 'Add to claim history'
-      expect(page).to have_content "Wednesday01 Feb 202309:00amcase worker\nCaseworker note\nHere is a note"
+      expect(page).to have_content "01 Feb 202309:00amcase worker\nCaseworker note\nHere is a note"
     end
 
     it 'rejects blank content' do

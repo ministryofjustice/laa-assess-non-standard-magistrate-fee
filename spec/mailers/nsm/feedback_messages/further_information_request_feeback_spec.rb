@@ -24,7 +24,7 @@ RSpec.describe Nsm::FeedbackMessages::FurtherInformationRequestFeedback do
   end
 
   describe '#contents' do
-    it 'throws a not implemented exception' do
+    it 'has correct details' do
       expect(subject.contents).to include(
         laa_case_reference:,
         ufn:,
@@ -41,6 +41,31 @@ RSpec.describe Nsm::FeedbackMessages::FurtherInformationRequestFeedback do
   describe '#recipient' do
     it 'has correct recipient' do
       expect(subject.recipient).to eq(recipient)
+    end
+  end
+
+  context 'when nsm_rfi_loop is enabled' do
+    before do
+      allow(FeatureFlags).to receive(:nsm_rfi_loop).and_return(
+        instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+      )
+      claim.data['resubmission_deadline'] = '2024-11-7T16:35:34.00'
+    end
+
+    let(:feedback_template) { '632fc896-8019-4308-a091-67f593700f32' }
+
+    describe '#template' do
+      it 'has correct template id' do
+        expect(subject.template).to eq(feedback_template)
+      end
+    end
+
+    describe '#contents' do
+      it 'has correct deadline' do
+        expect(subject.contents).to include(
+          date_to_respond_by: '7 November 2024',
+        )
+      end
     end
   end
 end

@@ -12,4 +12,12 @@ class BaseWithAdjustments < BaseViewModel
   def any_adjustments?
     adjustment_comment.present?
   end
+
+  def reduced?
+    provider_requested_amount > caseworker_amount
+  end
+
+  def increased?
+    provider_requested_amount < caseworker_amount
+  end
 end

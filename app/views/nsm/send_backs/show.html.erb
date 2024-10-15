@@ -1,0 +1,35 @@
+<% title t('.page_title') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-panel govuk-panel--confirmation">
+      <h1 class="govuk-panel__title">
+        <%= t('.page_title') %>
+      </h1>
+    </div>
+    <p><%= t('.sent_to_provider') %></p>
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= t('.laa_reference') %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @claim.data['laa_reference'] %>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= t('.further_information') %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= simple_format @claim.data['assessment_comment'] %>
+        </dd>
+      </div>
+    </dl>
+    <div class="govuk-button-group govuk-button-group-vertically-centred">
+      <%= govuk_button_to(t('.next_claim'), nsm_claims_path) %>
+      <%= govuk_link_to(t('.return'), nsm_claim_claim_details_path(@claim)) %>
+    </div>
+  </div>
+</div>

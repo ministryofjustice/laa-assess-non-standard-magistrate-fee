@@ -13,6 +13,15 @@ RSpec.describe Nsm::AdjustmentDeleter do
       create(:assignment, submission: claim, user: user)
     end
 
+    describe '#call' do
+      let(:adjustment_type) { :disbursement }
+
+      it 'returns false if submission already assessed' do
+        allow(service.submission).to receive(:editable_by?).with(user).and_return false
+        expect(service.call).to be false
+      end
+    end
+
     context 'when adjustment type is unknown' do
       let(:adjustment_type) { :some_new_adjustment }
 
@@ -60,7 +69,7 @@ RSpec.describe Nsm::AdjustmentDeleter do
       it 'reverts changes' do
         expect(claim.reload.data.dig('work_items', 0, 'uplift')).to eq 50
         expect(claim.data.dig('work_items', 0, 'pricing')).to eq 44
-        expect(claim.data.dig('work_items', 0, 'work_type', 'value')).to eq 'attendance_without_counsel'
+        expect(claim.data.dig('work_items', 0, 'work_type')).to eq 'attendance_without_counsel'
         expect(claim.data.dig('work_items', 0, 'time_spent')).to eq 181
         expect(claim.data.dig('work_items', 0, 'uplift_original')).to be_nil
         expect(claim.data.dig('work_items', 0, 'pricing_original')).to be_nil

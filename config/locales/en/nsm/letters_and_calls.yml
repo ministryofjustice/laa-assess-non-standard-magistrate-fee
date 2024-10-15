@@ -25,7 +25,7 @@ en:
         number_allowed: "Number allowed"
         uplift_allowed: "Uplift allowed"
         caseworker_allowed: "Net cost allowed"
-        no_data: You do not have any adjusted letters or calls
+        no_data: This claim has no adjusted letters or calls
         table_caption: Adjusted letters and calls
         table_caption: Clained disbursements Claimed letters and calls
       edit:

@@ -1,19 +1,22 @@
 <% title t('.page_title') %>
 
+<% content_for(:back_link) do %>
+  <%= govuk_back_link(href: nsm_claim_claim_details_path(claim.id), html_attributes: {'data-turbo': 'false'}) %>
+<% end %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(send_back) %>
-    <h1 class="govuk-heading-xl"><%= t('.heading', defendant_name:) %></h1>
+    <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
   </div>
 </div>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_with model: send_back, url: nsm_claim_send_back_path(claim_id: claim.id), method: :put do |f| %>
-      <%= f.govuk_text_area :comment, width: 'one-third', autocomplete: 'off', label: { size: 'm' } %>
+      <%= f.govuk_text_area :send_back_comment, width: 'one-third', autocomplete: 'off', label: { size: 's' } %>
 
       <%= f.govuk_submit(t('.submit')) do %>
-        <%= f.hidden_field :id %>
-        <%= link_to t('shared.cancel'), nsm_claim_claim_details_path(claim), class: 'govuk-link' %>
+        <%= f.govuk_submit t('.save_and_exit'), secondary: true, name: 'save_and_exit' %>
       <% end %>
 
     <% end %>

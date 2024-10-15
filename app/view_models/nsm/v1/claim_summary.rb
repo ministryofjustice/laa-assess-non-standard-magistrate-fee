@@ -29,6 +29,14 @@ module Nsm
       def display_allowed_total?
         claimed_total != allowed_total || submission.assessed?
       end
+
+      def sent_back_on
+        if submission.data['further_information']
+          submission.data['further_information'].map { _1['requested_at'].to_datetime }.max
+        else
+          last_updated_at
+        end
+      end
     end
   end
 end

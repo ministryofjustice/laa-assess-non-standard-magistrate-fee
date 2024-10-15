@@ -1,10 +1,10 @@
 class ExpireSendbacks < ApplicationJob
   def perform
-    PriorAuthorityApplication.sent_back
-                             .where(updated_at: ...Rails.application.config.x.rfi.resubmission_window.ago)
-                             .find_each do |expirable|
-                               expire(expirable)
-                             end
+    [PriorAuthorityApplication, Claim].each do |klass|
+      klass.sent_back
+           .where("(data->>'resubmission_deadline')::timestamp < NOW()")
+           .find_each { expire(_1) }
+    end
   end
 
   private

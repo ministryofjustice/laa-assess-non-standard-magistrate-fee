@@ -4,10 +4,10 @@ class Claim < Submission
   default_scope -> { where(application_type: APPLICATION_TYPES[:nsm]) }
 
   # open
-  scope :pending_decision, -> { where.not(state: ASSESSED_STATES) }
+  scope :pending_decision, -> { where.not(state: CLOSED_STATES) }
 
   # closed
-  scope :decision_made, -> { where(state: ASSESSED_STATES) }
+  scope :decision_made, -> { where(state: CLOSED_STATES) }
 
   # your
   scope :pending_and_assigned_to, lambda { |user|
@@ -17,7 +17,7 @@ class Claim < Submission
   }
 
   scope :auto_assignable, lambda { |user|
-    submitted
+    where(state: [SUBMITTED, PROVIDER_UPDATED])
       .where.not(risk: :high)
       .where.missing(:assignments)
       .where.not(id: Event::Unassignment.where(primary_user_id: user.id).select(:submission_id))
@@ -26,19 +26,23 @@ class Claim < Submission
   STATES = (
     [
       SUBMITTED = 'submitted'.freeze,
-      SENT_BACK = 'sent_back'.freeze
+      SENT_BACK = 'sent_back'.freeze,
+      PROVIDER_UPDATED = 'provider_updated'.freeze,
     ] +
-      (ASSESSED_STATES = [
-        GRANTED = 'granted'.freeze,
-        PART_GRANT = 'part_grant'.freeze,
-        REJECTED = 'rejected'.freeze
-      ].freeze)
+      CLOSED_STATES = (
+        (ASSESSED_STATES = [
+          GRANTED = 'granted'.freeze,
+          PART_GRANT = 'part_grant'.freeze,
+          REJECTED = 'rejected'.freeze
+        ].freeze) +
+        [EXPIRED = 'expired'.freeze]
+      ).freeze
   ).freeze
 
   enum :state, STATES.to_h { [_1, _1] }
 
   def editable_by?(user)
-    !assessed? && assigned_to?(user) && !user.viewer?
+    !closed? && assigned_to?(user) && !user.viewer?
   end
 
   def assigned_to?(user)
@@ -49,12 +53,16 @@ class Claim < Submission
     ASSESSED_STATES.include?(state)
   end
 
+  def closed?
+    CLOSED_STATES.include?(state)
+  end
+
   def assignment_removable_by?(user)
-    !assessed? && assignments.any? && !user.viewer?
+    !closed? && assignments.any? && !user.viewer?
   end
 
   def self_assignable_by?(user)
-    !assessed? && assignments.none? && !user.viewer?
+    !closed? && assignments.none? && !user.viewer?
   end
 
   def formatted_claimed_total
@@ -69,6 +77,26 @@ class Claim < Submission
 
   def any_adjustments?
     core_cost_summary.show_allowed?
+  end
+
+  def any_cost_changes?
+    core_cost_summary.any_changed?
+  end
+
+  def any_cost_reductions?
+    core_cost_summary.any_reduced?
+  end
+
+  def any_cost_increases?
+    core_cost_summary.any_increased?
+  end
+
+  def adjustments_direction
+    return :none unless any_cost_changes?
+    return :mixed if any_cost_increases? && any_cost_reductions?
+    return :down if any_cost_reductions?
+
+    :up
   end
 
   private

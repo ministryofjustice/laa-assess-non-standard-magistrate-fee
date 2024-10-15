@@ -1,7 +1,7 @@
 module Nsm
   module V1
     class ClaimJustification < BaseViewModel
-      attribute :reasons_for_claim
+      attribute :reasons_for_claim, :translated_array, scope: 'nsm.reason_for_claim'
       attribute :reason_for_claim_other_details
 
       def key
@@ -13,7 +13,7 @@ module Nsm
       end
 
       def reasons_for_claim_list
-        reasons = reasons_for_claim.map { |row| row[I18n.locale.to_s] || row['value'] }
+        reasons = reasons_for_claim.map(&:to_s)
         sanitize(reasons.join('<br>'), tags: %w[br])
       end
 
@@ -24,7 +24,7 @@ module Nsm
             value: reasons_for_claim_list
           },
           (
-            if reasons_for_claim.detect { _1['value'] == 'other' }
+            if reasons_for_claim.detect { _1.value == 'other' }
               {
                 title: I18n.t(".nsm.claim_details.#{key}.other_details"),
                 value: reason_for_claim_other_details

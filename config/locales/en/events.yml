@@ -5,7 +5,7 @@ en:
       auto_grant: Automatic decision made to grant claim
   event/assignment:
     auto_title: Claim allocated to caseworker
-    manual_title: Self assigned by %{caseworker}
+    manual_title: Self-assigned by %{caseworker}
   event/change_risk:
     title: Claim risk changed to %{risk} risk
   event/decision:
@@ -14,14 +14,18 @@ en:
       part_grant: Decision made to part grant claim
       rejected: Decision made to reject claim
   event/new_version:
-    title: New claim received
+    title: Received
+    updated_body: Received from Provider with further information
   event/note:
     title: Caseworker note
   nsm/event/send_back:
-    title: Claim sent back to provider
+    title: Sent back
+    body: Sent back to Provider for further information
   event/unassignment:
     title:
       self: Caseworker removed self from claim
       secondary: Caseworker removed from claim by %{display_name}
   event/delete_adjustments:
     title: Caseworker deleted all adjustments
+  event/expiry:
+    title: Claim expired

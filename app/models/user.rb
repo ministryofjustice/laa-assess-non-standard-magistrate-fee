@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :access_logs, dependent: :destroy
+
   ROLES = [
     CASEWORKER = 'caseworker'.freeze,
     SUPERVISOR = 'supervisor'.freeze,

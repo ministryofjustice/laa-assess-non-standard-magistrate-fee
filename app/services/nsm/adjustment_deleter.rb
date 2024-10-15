@@ -3,6 +3,8 @@ module Nsm
     attr_reader :params, :adjustment_type, :current_user, :submission
 
     def call
+      return false unless submission.editable_by?(current_user)
+
       case adjustment_type
       when :work_item
         delete_work_item_adjustment
@@ -38,7 +40,9 @@ module Nsm
     end
 
     def letters_and_calls
-      @letters_and_calls ||= submission.data['letters_and_calls'].find { _1.dig('type', 'value') == params[:id] }
+      @letters_and_calls ||= submission.data['letters_and_calls'].find do |row|
+        Type::TranslatedObject.new.cast(row['type']).value == params[:id]
+      end
     end
 
     def disbursement

@@ -10,11 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_16_092416) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_30_083741) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
   enable_extension "postgis"
+
+  create_table "access_logs", force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.string "path"
+    t.string "controller"
+    t.string "action"
+    t.string "submission_id"
+    t.string "secondary_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_access_logs_on_user_id"
+  end
 
   create_table "assignments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "submission_id", null: false
@@ -57,6 +69,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_16_092416) do
     t.index ["submission_id"], name: "index_events_on_submission_id"
   end
 
+  create_table "solid_cache_entries", force: :cascade do |t|
+    t.binary "key", null: false
+    t.binary "value", null: false
+    t.datetime "created_at", null: false
+    t.bigint "key_hash", null: false
+    t.integer "byte_size", null: false
+    t.index ["byte_size"], name: "index_solid_cache_entries_on_byte_size"
+    t.index ["key_hash", "byte_size"], name: "index_solid_cache_entries_on_key_hash_and_byte_size"
+    t.index ["key_hash"], name: "index_solid_cache_entries_on_key_hash", unique: true
+  end
+
   create_table "submissions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "state"
     t.string "risk"
@@ -94,6 +117,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_16_092416) do
     t.index ["email"], name: "index_users_on_email"
   end
 
+  add_foreign_key "access_logs", "users"
   add_foreign_key "assignments", "submissions"
   add_foreign_key "assignments", "users"
   add_foreign_key "events", "submissions"

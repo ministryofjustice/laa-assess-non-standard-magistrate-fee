@@ -254,4 +254,20 @@ RSpec.describe PriorAuthority::V1::ApplicationDetails do
 
     it { expect(subject.case_contact_card.card_rows).to eq(expected_rows) }
   end
+
+  describe '#section_amended?' do
+    let(:args) { { submission: build(:prior_authority_application, data: {}) } }
+
+    it 'returns nil if no usable data' do
+      expect(subject.section_amended?('anything')).to be_nil
+    end
+  end
+
+  describe '#information_cards' do
+    let(:args) { { submission: build(:prior_authority_application, data: {}) } }
+
+    it 'returns empty array if no usable data' do
+      expect(subject.information_cards).to eq []
+    end
+  end
 end

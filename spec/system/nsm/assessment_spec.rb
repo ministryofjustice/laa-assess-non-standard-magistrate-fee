@@ -12,7 +12,7 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
     click_on 'Accept analytics cookies'
   end
 
-  context 'granted' do
+  context 'when granted' do
     before do
       travel_to fixed_arbitrary_date
       visit nsm_claim_claim_details_path(claim)
@@ -42,10 +42,18 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
         visit nsm_claim_history_path(claim)
         expect(page).to have_content 'Test Data'
       end
+
+      it 'records a paper trail in the access logs' do
+        expect(user.access_logs.where(submission_id: claim.id).order(:created_at).pluck(:controller, :action)).to eq(
+          [%w[claim_details show], %w[make_decisions edit], %w[make_decisions update]]
+        )
+      end
     end
   end
 
-  context 'part-granted' do
+  context 'when part-granted' do
+    let(:claim) { create(:claim, :with_reduced_work_item) }
+
     it 'sends a part granted notification' do
       visit nsm_claim_claim_details_path(claim)
       click_link_or_button 'Make a decision'
@@ -58,7 +66,7 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
     end
   end
 
-  context 'rejected' do
+  context 'when rejected' do
     it 'sends a rejected notification' do
       visit nsm_claim_claim_details_path(claim)
       click_link_or_button 'Make a decision'
@@ -71,22 +79,29 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
     end
   end
 
-  context 'further information required' do
+  context 'when further information required' do
     before do
       travel_to fixed_arbitrary_date
       visit nsm_claim_claim_details_path(claim)
       click_link_or_button 'Send back to provider'
-      fill_in 'Explain your decision', with: 'Test Data'
+      fill_in 'What updates to the claim are needed?', with: 'Test Data'
+    end
+
+    it 'lets me save and come back later' do
+      click_link_or_button 'Save and come back later'
+      visit nsm_claim_claim_details_path(claim)
+      click_link_or_button 'Send back to provider'
+      expect(page).to have_field 'What updates to the claim are needed?', with: 'Test Data'
     end
 
     it 'sends a notification' do
       expect do
-        click_link_or_button 'Send back to provider'
+        click_link_or_button 'Submit'
       end.to have_enqueued_job(NotifyAppStore)
     end
 
     context 'when I have sent a claim back' do
-      before { click_link_or_button 'Send back to provider' }
+      before { click_link_or_button 'Submit' }
 
       it 'shows the date on the details page' do
         visit nsm_claim_claim_details_path(claim)
@@ -97,12 +112,37 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
       it 'shows the FI details' do
         visit nsm_claim_claim_details_path(claim)
 
-        expect(page).to have_content "Sent back to provider on 4 July 2024\nTest Data"
+        expect(page).to have_content "Sent back to provider on 4 July 2024\nFurther information request:\nTest Data"
+      end
+    end
+
+    context 'when NSM RFI loops are enabled' do
+      before do
+        allow(FeatureFlags).to receive(:nsm_rfi_loop).and_return(
+          instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+        )
+        allow(WorkingDayService).to receive(:call).with(10).and_return(14.days.from_now)
+        click_link_or_button 'Submit'
+      end
+
+      it 'adds info to the payload' do
+        expect(claim.reload.data['further_information']).to eq(
+          [
+            {
+              'documents' => [],
+              'requested_at' => fixed_arbitrary_date.to_json.delete('"'),
+              'information_requested' => 'Test Data',
+              'caseworker_id' => user.id,
+            }
+          ]
+        )
+
+        expect(claim.data['resubmission_deadline']).to eq 14.days.from_now.to_json.delete('"')
       end
     end
   end
 
-  context 'navigation', :javascript do
+  context 'when navigating', :javascript do
     let(:claim) do
       disbursements = Array.new(100) do |i|
         {
@@ -111,17 +151,11 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
           'pricing' => 1.0,
           'vat_rate' => 0.2,
           'apply_vat' => 'false',
-          'other_type' => {
-            'en' => 'Apples',
-            'value' => 'Apples'
-          },
+          'other_type' => 'accountants',
           'vat_amount' => 0.0,
           'prior_authority' => 'yes',
           'disbursement_date' => Date.new(2022, 12, 12) + i,
-          'disbursement_type' => {
-            'en' => 'Other',
-            'value' => 'other'
-          },
+          'disbursement_type' => 'other',
           'total_cost_without_vat' => 100.0
         }
       end
@@ -130,10 +164,7 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
           'id' => SecureRandom.uuid,
           'uplift' => 95,
           'pricing' => 24.0,
-          'work_type' => {
-            'en' => 'Waiting',
-            'value' => 'waiting'
-          },
+          'work_type' => 'waiting',
           'fee_earner' => 'aaa',
           'time_spent' => 161,
           'completed_on' => Date.new(2022, 12, 12) + i

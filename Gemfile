@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby File.read('.ruby-version').strip
 
 gem 'activerecord-postgis-adapter'
-gem 'aws-sdk-s3', '~> 1.162'
+gem 'aws-sdk-s3', '~> 1.167'
 gem 'bootsnap', require: false
 gem 'cssbundling-rails', '>= 1.4.1'
 gem 'devise', '>= 4.9.4'
@@ -17,6 +17,7 @@ gem 'govuk_notify_rails', '~> 3.0.0'
 gem 'httparty'
 gem 'jbuilder'
 gem 'jsbundling-rails', '>= 1.3.1'
+gem 'laa_crime_forms_common', '~> 0.2.6', github: 'ministryofjustice/laa-crime-forms-common'
 gem 'lograge'
 gem 'logstasher', '~> 2.1'
 gem 'logstash-event'
@@ -33,6 +34,7 @@ gem 'redis'
 gem 'sidekiq', '~> 7.3'
 gem 'sidekiq_alive', '~> 2.4'
 gem 'sidekiq-cron'
+gem 'solid_cache'
 gem 'stimulus-rails'
 gem 'turbo-rails'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
@@ -72,5 +74,5 @@ group :test do
   gem 'simplecov-lcov'
   gem 'simplecov-rcov'
   gem 'super_diff'
-  gem 'webmock', '~> 3.23'
+  gem 'webmock', '~> 3.24'
 end

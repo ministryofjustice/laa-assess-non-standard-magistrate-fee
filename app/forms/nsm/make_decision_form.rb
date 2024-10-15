@@ -16,6 +16,8 @@ module Nsm
     validates :partial_comment, presence: true, if: -> { state == Claim::PART_GRANT }
     validates :reject_comment, presence: true, if: -> { state == Claim::REJECTED }
 
+    validates :state, adjustments_dependant: true
+
     def save
       return false unless valid?
 

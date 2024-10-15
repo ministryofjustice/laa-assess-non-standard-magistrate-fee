@@ -6,28 +6,28 @@ RSpec.describe Nsm::SendBackForm do
   let(:claim) { create(:claim) }
 
   describe '#validations' do
-    let(:params) { { claim:, comment: } }
+    let(:params) { { claim:, send_back_comment: } }
 
     context 'when comment is set' do
-      let(:comment) { 'some comment' }
+      let(:send_back_comment) { 'some comment' }
 
       it { expect(subject).to be_valid }
     end
 
     context 'when comment is blank' do
-      let(:comment) { nil }
+      let(:send_back_comment) { nil }
 
       it 'is invalid' do
         expect(subject).not_to be_valid
-        expect(subject.errors.of_kind?(:comment, :blank)).to be(true)
+        expect(subject.errors.of_kind?(:send_back_comment, :blank)).to be(true)
       end
     end
   end
 
   describe '#persistance' do
-    let(:user) { instance_double(User) }
+    let(:user) { instance_double(User, id: SecureRandom.uuid) }
     let(:claim) { create(:claim, assignments: [build(:assignment)]) }
-    let(:params) { { claim: claim, comment: 'some comment', current_user: user } }
+    let(:params) { { claim: claim, send_back_comment: 'some comment', current_user: user } }
 
     before do
       allow(Nsm::Event::SendBack).to receive(:build)
@@ -55,6 +55,20 @@ RSpec.describe Nsm::SendBackForm do
       expect(Nsm::Event::SendBack).to have_received(:build).with(
         submission: claim, comment: 'some comment', previous_state: 'submitted', current_user: user
       )
+    end
+
+    context 'rfi enabled' do
+      before do
+        allow(FeatureFlags).to receive(:nsm_rfi_loop).and_return(
+          instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+        )
+        allow(WorkingDayService).to receive(:call).and_return 10.days.from_now
+      end
+
+      it 'adds a further_information array element to claim data' do
+        subject.save
+        expect(claim.reload.data['further_information']).to be_a(Array)
+      end
     end
 
     it 'trigger an update to the app store' do

@@ -44,7 +44,7 @@ en:
         allowed_net_cost: Net cost allowed
         table_caption: Adjusted work items
         table_info_item: work item
-        no_data: You do not have any adjusted work items
+        no_data: This claim has no adjusted work items
         action: Action
         delete: Delete
       edit:
