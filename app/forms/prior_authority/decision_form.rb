@@ -29,21 +29,25 @@ module PriorAuthority
     def save
       return false unless valid?
 
-      PriorAuthorityApplication.transaction do
-        stash(add_draft_decision_event: false)
-        previous_state = submission.state
-
-        submission.data.merge!('status' => pending_decision, 'updated_at' => Time.current)
-        submission.update!(state: pending_decision)
-        ::Event::Decision.build(submission: submission,
-                                comment: explanation,
-                                previous_state: previous_state,
-                                current_user: current_user)
+      submission.with_lock do
+        change_data_and_notify_app_store!
       end
 
-      NotifyAppStore.perform_later(submission:)
-
       true
+    end
+
+    def change_data_and_notify_app_store!
+      stash(add_draft_decision_event: false)
+      previous_state = submission.state
+
+      submission.data.merge!('status' => pending_decision, 'updated_at' => Time.current)
+      submission.update!(state: pending_decision)
+      ::Event::Decision.build(submission: submission,
+                              comment: explanation,
+                              previous_state: previous_state,
+                              current_user: current_user)
+
+      NotifyAppStore.perform_later(submission:)
     end
 
     def stash(add_draft_decision_event: true)

@@ -7,10 +7,16 @@ class NotifyAppStore < ApplicationJob
   end
 
   def perform(submission:, trigger_email: true)
-    notify(MessageBuilder.new(submission:))
+    # This lock is important because it forces the job to wait until
+    # the locked transaction that enqueued this job is released,
+    # ensuring that when this job runs it is working with fresh
+    # data
+    submission.with_lock do
+      notify(MessageBuilder.new(submission:))
 
-    send_email(submission:, trigger_email:)
-    submission.update!(notify_app_store_completed: true)
+      send_email(submission:, trigger_email:)
+      submission.update!(notify_app_store_completed: true)
+    end
   end
 
   def notify(message_builder)
