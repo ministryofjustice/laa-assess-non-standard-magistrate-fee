@@ -27,6 +27,6 @@ feature_flags:
   nsm_rfi_loop:
     local: <%= ENV.fetch("NSM_RFI", true) %>
     development: true
-    uat: false
+    uat: true
     production: false
 
