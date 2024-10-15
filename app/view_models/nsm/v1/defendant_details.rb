@@ -1,6 +1,9 @@
 module Nsm
   module V1
     class DefendantDetails < BaseViewModel
+      include ActionView::Helpers::TagHelper
+      include ActionView::Helpers::OutputSafetyHelper
+
       attribute :defendants
 
       def key
@@ -19,14 +22,8 @@ module Nsm
         main_defendant_rows + additional_defendant_rows
       end
 
-      def main_defendant_name
-        main_defendant = defendants.detect { |defendant| defendant['main'] }
-        construct_name(main_defendant)
-      end
-
-      def main_defendant_maat
-        main_defendant = defendants.detect { |defendant| defendant['main'] }
-        main_defendant['maat']
+      def main_defendant_value
+        construct_value(defendants.find { _1['main'] })
       end
 
       def additional_defendants
@@ -36,15 +33,9 @@ module Nsm
       def main_defendant_rows
         [
           {
-            title:  I18n.t(".nsm.claim_details.#{key}.main_defendant_name"),
-            value: main_defendant_name
-          },
-          (if main_defendant_maat.present?
-             {
-               title: I18n.t(".nsm.claim_details.#{key}.main_defendant_maat"),
-              value: main_defendant_maat
-             }
-           end)
+            title:  I18n.t(".nsm.claim_details.#{key}.main_defendant"),
+            value: main_defendant_value
+          }
         ]
       end
 
@@ -52,21 +43,25 @@ module Nsm
         additional_defendants.map.with_index do |defendant, index|
           [
             {
-              title: I18n.t(".nsm.claim_details.#{key}.defendant_name", count: index + 1),
-              value: construct_name(defendant)
-            },
-            (if defendant['maat'].present?
-               {
-                 title: I18n.t(".nsm.claim_details.#{key}.defendant_maat", count: index + 1),
-                value: defendant['maat']
-               }
-             end)
+              title: I18n.t(".nsm.claim_details.#{key}.additional_defendant", count: index + 2),
+              value: construct_value(defendant)
+            }
           ]
         end
       end
 
       def rows
         { title:, data: }
+      end
+
+      private
+
+      def construct_value(defendant)
+        if defendant['maat'].present?
+          safe_join([construct_name(defendant), tag.br, defendant['maat']])
+        else
+          construct_name(defendant)
+        end
       end
     end
   end
