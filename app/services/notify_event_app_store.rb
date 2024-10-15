@@ -1,9 +1,16 @@
 class NotifyEventAppStore < ApplicationJob
   queue_as :default
 
+  def self.perform_later(event:)
+    event.update!(notify_app_store_completed: false)
+    super
+  end
+
   def perform(event:)
     result = client.create_events(event.submission_id, events: [event.as_json])
     handle_forbidden_response(event) if result == :forbidden
+
+    event.update!(notify_app_store_completed: true)
   end
 
   private

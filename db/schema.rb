@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_30_083741) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_15_091931) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -63,6 +63,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_30_083741) do
     t.jsonb "details", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "notify_app_store_completed"
     t.index ["linked_type", "linked_id"], name: "index_events_on_linked_type_and_linked_id"
     t.index ["primary_user_id"], name: "index_events_on_primary_user_id"
     t.index ["secondary_user_id"], name: "index_events_on_secondary_user_id"
@@ -91,6 +92,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_30_083741) do
     t.jsonb "data"
     t.datetime "app_store_updated_at"
     t.string "application_type"
+    t.boolean "notify_app_store_completed"
     t.index "(((data -> 'defendant'::text) ->> 'first_name'::text)), (((data -> 'defendant'::text) ->> 'last_name'::text))", name: "index_submissions_on_client_name"
     t.index "(((data -> 'firm_office'::text) ->> 'account_number'::text))", name: "index_submissions_on_firm_account_number"
     t.index "(((data -> 'firm_office'::text) ->> 'name'::text))", name: "index_submissions_on_firm_name"

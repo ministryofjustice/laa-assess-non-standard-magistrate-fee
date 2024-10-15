@@ -3,9 +3,18 @@ require 'rails_helper'
 RSpec.describe NotifyEventAppStore do
   subject { described_class.new }
 
-  let(:event) { instance_double(Event, submission_id:, as_json:) }
+  let(:event) { instance_double(Event, submission_id: submission_id, as_json: as_json, update!: true) }
   let(:submission_id) { SecureRandom.uuid }
   let(:as_json) { { event: :json } }
+
+  describe '.perform_later' do
+    let(:event) { create :event, notify_app_store_completed: nil }
+
+    it 'sets a flag' do
+      described_class.perform_later(event:)
+      expect(event.reload.notify_app_store_completed).to be false
+    end
+  end
 
   describe '#perform' do
     let(:http_notifier) { instance_double(AppStoreClient, create_events: true) }
@@ -34,6 +43,11 @@ RSpec.describe NotifyEventAppStore do
       it 'allows the error to be raised - should reset the sidekiq job' do
         expect { subject.perform(event:) }.to raise_error('annoying_error')
       end
+    end
+
+    it 'updates the record' do
+      expect(event).to receive(:update!).with(notify_app_store_completed: true)
+      subject.perform(event:)
     end
   end
 
