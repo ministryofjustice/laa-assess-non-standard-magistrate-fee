@@ -6,8 +6,8 @@ namespace :user do
     user.update!(
       first_name: args[:first_name],
       last_name: args[:last_name],
-      role: args[:role],
       auth_oid: SecureRandom.uuid
     )
+    user.roles.create! role_type: args[:role]
   end
 end

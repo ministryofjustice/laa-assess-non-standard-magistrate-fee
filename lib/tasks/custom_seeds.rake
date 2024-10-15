@@ -26,19 +26,19 @@ namespace :custom_seeds do
     case_worker.update(
       first_name: 'case',
       last_name: 'worker',
-      role: 'caseworker',
       auth_oid: SecureRandom.uuid,
       auth_subject_id: SecureRandom.uuid,
     )
+    case_worker.roles.create! role_type: 'caseworker'
 
-    case_worker = User.find_or_initialize_by(email: 'super.visor@test.com')
-    case_worker.update(
+    supervisor = User.find_or_initialize_by(email: 'super.visor@test.com')
+    supervisor.update(
       first_name: 'super',
       last_name: 'visor',
-      role: 'supervisor',
       auth_oid: SecureRandom.uuid,
       auth_subject_id: SecureRandom.uuid,
     )
+    supervisor.roles.create! role_type: 'supervisor'
 
     Dir[Rails.root.join("db/seeds/*")].each do |path|
       claim_id = path.split('/').last

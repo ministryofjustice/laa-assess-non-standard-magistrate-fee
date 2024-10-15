@@ -74,6 +74,7 @@ class Event < ApplicationRecord
           ActiveRecord::Base.uncached do
             User.find_or_initialize_by(id: user_id) do |user|
               user.update!(dummy_attributes(user_id))
+              user.roles.create! role_type: Role::VIEWER
             end
           end
         end
@@ -83,7 +84,6 @@ class Event < ApplicationRecord
     def dummy_attributes(user_id)
       {
         first_name: user_id.split('-').first,
-        role: User::CASEWORKER,
         email: "#{user_id}@fake.com",
         last_name: 'branchbuilder',
         auth_oid: user_id,
