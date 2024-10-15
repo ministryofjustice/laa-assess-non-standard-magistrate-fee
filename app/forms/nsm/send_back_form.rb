@@ -21,11 +21,11 @@ module Nsm
     def save
       return false unless valid?
 
-      Claim.transaction do
+      claim.with_lock do
         update_local_data
-      end
 
-      NotifyAppStore.perform_later(submission: claim)
+        NotifyAppStore.perform_later(submission: claim)
+      end
 
       true
     end

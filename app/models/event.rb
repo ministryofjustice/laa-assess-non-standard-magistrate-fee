@@ -24,6 +24,7 @@ class Event < ApplicationRecord
 
   LOCAL_EVENTS = [
     'Event::DraftDecision',
+    'Event::NewVersion',
     'Event::Edit',
     'Event::Note',
     'Event::UndoEdit',

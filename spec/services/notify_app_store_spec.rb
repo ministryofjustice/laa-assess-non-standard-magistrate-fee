@@ -9,6 +9,8 @@ RSpec.describe NotifyAppStore do
   before do
     allow(described_class::MessageBuilder).to receive(:new)
       .and_return(message_builder)
+
+    allow(submission).to receive(:with_lock).and_yield
   end
 
   describe '.perform_later' do
