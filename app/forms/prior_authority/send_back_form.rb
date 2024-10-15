@@ -29,13 +29,13 @@ module PriorAuthority
     def save
       return false unless valid?
 
-      PriorAuthorityApplication.transaction do
+      submission.with_lock do
         discard_all_adjustments
         stash(add_draft_send_back_event: false)
         update_local_records
-      end
 
-      NotifyAppStore.perform_later(submission:)
+        NotifyAppStore.perform_later(submission:)
+      end
 
       true
     end

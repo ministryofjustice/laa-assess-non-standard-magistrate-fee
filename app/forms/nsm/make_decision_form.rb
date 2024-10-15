@@ -21,18 +21,23 @@ module Nsm
     def save
       return false unless valid?
 
-      previous_state = claim.state
-      Claim.transaction do
-        claim.data.merge!('status' => state, 'updated_at' => Time.current, 'assessment_comment' => comment)
-        claim.update!(state:)
-        ::Event::Decision.build(submission: claim,
-                                comment: comment,
-                                previous_state: previous_state,
-                                current_user: current_user)
+      claim.with_lock do
+        change_data_and_notify_app_store
       end
-      NotifyAppStore.perform_later(submission: claim)
 
       true
+    end
+
+    def change_data_and_notify_app_store
+      previous_state = claim.state
+
+      claim.data.merge!('status' => state, 'updated_at' => Time.current, 'assessment_comment' => comment)
+      claim.update!(state:)
+      ::Event::Decision.build(submission: claim,
+                              comment: comment,
+                              previous_state: previous_state,
+                              current_user: current_user)
+      NotifyAppStore.perform_later(submission: claim)
     end
 
     def comment
