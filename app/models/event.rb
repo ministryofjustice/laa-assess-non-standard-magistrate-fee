@@ -22,9 +22,17 @@ class Event < ApplicationRecord
     'Event::DeleteAdjustments',
   ].freeze
 
+  # These are events that we know can exist in our local database for a significant
+  # period without existing in the app store database. All other events are either
+  # synced to the app store immediately after creation via a `.notify` call, or
+  # only created as part of a larger action that is followed immediately by a
+  # call to `NotifyAppStore` which syncs all events anyway.
+  # It is important to keep track of these so that we can infer what the app
+  # store thinks the latest event date is (so that the 'last updated' date
+  # we display in the UI is consistent with the value the app store uses
+  # for sorting and filtering search results)
   LOCAL_EVENTS = [
     'Event::DraftDecision',
-    'Event::NewVersion',
     'Event::Edit',
     'Event::Note',
     'Event::UndoEdit',
