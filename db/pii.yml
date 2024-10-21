@@ -1,0 +1,74 @@
+users:
+  id: false
+  first_name: true
+  created_at: false
+  updated_at: false
+  email: true
+  last_name: true
+  auth_oid: false
+  auth_subject_id: false
+  last_auth_at: false
+  first_auth_at: false
+  deactivated_at: false
+  invitation_expires_at: false
+assignments:
+  id: false
+  submission_id: false
+  user_id: false
+  created_at: false
+  updated_at: false
+submissions:
+  id: false
+  state: false
+  risk: false
+  current_version: false
+  received_on: false
+  created_at: false
+  updated_at: false
+  json_schema_version: false
+  data: true
+  app_store_updated_at: false
+  application_type: false
+  notify_app_store_completed: false
+events:
+  id: false
+  submission_id: false
+  submission_version: false
+  event_type: false
+  primary_user_id: false
+  secondary_user_id: false
+  linked_type: false
+  linked_id: false
+  details: true
+  created_at: false
+  updated_at: false
+  notify_app_store_completed: false
+access_logs:
+  id: false
+  user_id: false
+  path: false
+  controller: false
+  action: false
+  submission_id: false
+  secondary_id: false
+  created_at: false
+  updated_at: false
+autogrant_limits:
+  id: false
+  service: false
+  unit_type: false
+  start_date: false
+  max_units: false
+  max_rate_london: false
+  max_rate_non_london: false
+  travel_hours: false
+  travel_rate_london: false
+  travel_rate_non_london: false
+  created_at: false
+  updated_at: false
+roles:
+  id: false
+  user_id: false
+  role_type: false
+  created_at: false
+  updated_at: false
