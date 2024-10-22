@@ -1,12 +1,13 @@
 module Nsm
   class MakeDecisionsController < Nsm::BaseController
     def edit
+      authorize(claim)
       decision = MakeDecisionForm.new(claim:)
       render locals: { claim:, decision: }
     end
 
-    # TODO: put some sort of permissions here for non supervisors?
     def update
+      authorize(claim)
       decision = MakeDecisionForm.new(claim:, **decision_params)
       if decision.save
         reference = BaseViewModel.build(:laa_reference, claim)

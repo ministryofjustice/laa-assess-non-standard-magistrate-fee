@@ -3,6 +3,7 @@
 module About
   class CookiesController < ApplicationController
     skip_before_action :authenticate_user!
+    before_action :skip_authorization
 
     def index
       usage_cookie = cookies[:analytics_cookies_set]

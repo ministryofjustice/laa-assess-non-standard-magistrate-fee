@@ -3,10 +3,12 @@ module PriorAuthority
     before_action :set_application, only: %i[new create]
 
     def new
+      authorize(application, :assign?)
       @form = ManualAssignmentForm.new
     end
 
     def create
+      authorize(application, :assign?)
       @form = ManualAssignmentForm.new(params.require(:prior_authority_manual_assignment_form).permit(:comment))
       if @form.valid?
         process_assignment(@form.comment)

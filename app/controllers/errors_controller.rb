@@ -1,6 +1,7 @@
 class ErrorsController < ApplicationController
   skip_before_action :authenticate_user!
   skip_before_action :set_security_headers
+  before_action :skip_authorization
 
   before_action :set_response_format
 

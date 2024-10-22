@@ -3,6 +3,7 @@
 class HealthcheckController < ApplicationController
   skip_before_action :authenticate_user!
   skip_before_action :set_security_headers
+  before_action :skip_authorization
 
   def ping
     render json: build_args

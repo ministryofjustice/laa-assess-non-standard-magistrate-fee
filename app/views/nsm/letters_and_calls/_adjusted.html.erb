@@ -6,7 +6,7 @@
       <%=
       caption = t('.table_caption')
       head = Nsm::V1::LetterAndCall.adjusted_headers
-      editable = claim.editable_by?(current_user)
+      editable = policy(claim).update?
       if editable
         head << {:text=>t('.action'), :numeric=>false, :width=>nil}
       end

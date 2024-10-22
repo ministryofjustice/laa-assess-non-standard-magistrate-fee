@@ -8,8 +8,6 @@ module Nsm
     end
 
     def call
-      return false unless submission.editable_by?(current_user)
-
       delete_work_item_adjustments if work_items
       delete_letters_and_calls_adjustments if letters_and_calls
       delete_disbursement_adjustments if disbursements

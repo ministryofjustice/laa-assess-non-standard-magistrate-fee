@@ -3,16 +3,17 @@ module Nsm
     include NameConstructable
 
     def show
-      claim
+      authorize(claim)
     end
 
     def edit
+      authorize(claim)
       send_back = SendBackForm.new(claim: claim, send_back_comment: claim.data['send_back_comment'])
       render locals: { claim:, send_back: }
     end
 
-    # TODO: put some sort of permissions here for non supervisors?
     def update
+      authorize(claim)
       send_back = SendBackForm.new(claim:, **send_back_params)
       if params['save_and_exit']
         send_back.stash
