@@ -144,5 +144,12 @@ RSpec.describe 'Overview', type: :system do
         .and have_link('Some_Info.pdf')
         .and have_link('Some_Info2.pdf')
     end
+
+    it 'lets me download files' do
+      click_on('Some_Info.pdf')
+      expect(page).to have_current_path(
+        %r{/421727bc53d347ea81edd6a00833671d\?response-content-disposition=attachment%3B%20filename%3D%22Some_Info.pdf}
+      )
+    end
   end
 end

@@ -26,8 +26,8 @@ RSpec.describe Nsm::V1::FurtherInformation do
     it 'shows correct table data' do
       allow(subject).to receive(:submission).and_return(submission)
       response_with_doc = '<p>Please find...</p><br>' \
-                          '<a href="/nsm/claims/1/supporting_evidences/' \
-                          'downloads/421727bc53d347ea81edd6a00833671d">Some_Info.pdf</a>'
+                          '<a href="/nsm/further_information_downloads/421727bc53d347ea81edd6a00833671d' \
+                          '?file_name=Some_Info.pdf">Some_Info.pdf</a>'
       expect(subject.data).to eq([{ title: 'Caseworker', value: 'Fred Falke' },
                                   { title: 'Information request', value: 'Please send...' },
                                   { title: 'Provider response', value: response_with_doc }])

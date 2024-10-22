@@ -47,7 +47,10 @@ module Nsm
       def document_link(document)
         link_to(
           document.file_name,
-          url_helpers.nsm_claim_supporting_evidences_download_path(submission.id, document.file_path)
+          url_helpers.nsm_further_information_download_path(
+            document.file_path,
+            file_name: document.file_name,
+          )
         )
       end
 
