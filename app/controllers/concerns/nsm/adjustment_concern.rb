@@ -2,12 +2,15 @@ module Nsm
   module AdjustmentConcern
     extend ActiveSupport::Concern
     def confirm_deletion
+      authorize(claim, :update?)
       @adjustment = adjustments.find { _1.id == params[:id] }
       render :confirm_delete_adjustment, locals: { claim_id: params[:claim_id], id: params[:id] }
     end
 
     def destroy
-      Nsm::AdjustmentDeleter.new(params, resource_klass, current_user).call
+      deleter = Nsm::AdjustmentDeleter.new(params, resource_klass, current_user)
+      authorize(deleter.submission, :update?)
+      deleter.call
       redirect_to destroy_redirect, flash: { success: t('.success') }
     end
 

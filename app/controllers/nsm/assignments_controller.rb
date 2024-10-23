@@ -1,8 +1,9 @@
 module Nsm
   class AssignmentsController < Nsm::BaseController
-    before_action :set_claim, only: %i[new create]
+    before_action :claim, only: %i[new create]
 
     def new
+      authorize claim, :self_assign?
       @form = AssignmentForm.new
     end
 
@@ -11,6 +12,7 @@ module Nsm
       if @form.valid?
         process_assignment(@form.comment)
       else
+        skip_authorization
         render :new
       end
     end
@@ -20,10 +22,12 @@ module Nsm
     def process_assignment(comment)
       claim.with_lock do
         if claim.assignments.none?
+          authorize(claim, :self_assign?)
           assign_claim(comment)
 
           redirect_to nsm_claim_claim_details_path(claim)
         else
+          skip_authorization
           redirect_to nsm_claim_claim_details_path(claim), flash: { notice: t('.already_assigned') }
         end
       end
@@ -34,10 +38,6 @@ module Nsm
         claim.assignments.create!(user: current_user)
         ::Event::Assignment.build(submission: claim, current_user: current_user, comment: comment)
       end
-    end
-
-    def set_claim
-      claim
     end
 
     def claim

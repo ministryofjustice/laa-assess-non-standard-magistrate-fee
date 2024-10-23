@@ -4,8 +4,9 @@ module PriorAuthority
 
     def index
       application = PriorAuthorityApplication.find(params[:application_id])
+      authorize(application, :show?)
       application_summary = BaseViewModel.build(:application_summary, application)
-      editable = application_summary.can_edit?(current_user)
+      editable = policy(application).update?
 
       @pagy, records = order_and_paginate(related_applications_query_for(application))
       @applications = records.map do |record|

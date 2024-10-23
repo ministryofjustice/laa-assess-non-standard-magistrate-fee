@@ -1,16 +1,19 @@
 module PriorAuthority
   class SendBacksController < PriorAuthority::BaseController
     def show
+      authorize(submission, :show?)
       @summary = BaseViewModel.build(:application_summary, submission)
       @model = BaseViewModel.build(:send_back, submission)
     end
 
     def new
+      authorize(submission, :edit?)
       @form_object = SendBackForm.new(submission:,
                                       **submission.data.slice(*SendBackForm.attribute_names))
     end
 
     def create
+      authorize(submission, :update?)
       @form_object = SendBackForm.new(form_params)
       if params['save_and_exit']
         @form_object.stash

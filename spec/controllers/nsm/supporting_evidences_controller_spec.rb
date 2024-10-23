@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Nsm::SupportingEvidencesController do
   context 'show' do
-    let(:claim) { instance_double(Claim, id: claim_id) }
-    let(:claim_id) { SecureRandom.uuid }
+    let(:claim) { create(:claim) }
+    let(:claim_id) { claim.id }
     let(:claim_summary) { instance_double(Nsm::V1::ClaimSummary) }
     let(:supporting_evidence) do
       [instance_double(Nsm::V1::SupportingEvidence, file_path: '#', file_name: 'test')]

@@ -31,8 +31,6 @@ en:
       models:
         prior_authority/decision_form:
           attributes:
-            base:
-              already_assessed: This application has already been assessed
             pending_decision:
               inclusion: Choose the outcome of your assessment
               no_adjustments: You can only part-grant an application if you have made adjustments to provider costs. You can either grant it without any cost adjustments, or make cost adjustments and part-grant it.

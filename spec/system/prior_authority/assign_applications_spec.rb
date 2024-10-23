@@ -44,7 +44,9 @@ RSpec.describe 'Assign applications' do
     end
 
     it 'prevents me from unassigning it' do
+      assignment = create(:assignment, user: caseworker, submission: application)
       visit new_prior_authority_application_unassignment_path(application)
+      assignment.destroy
       fill_in 'Explain your decision', with: 'It looks interesting'
       click_on 'Yes, remove from list'
       expect(page).to have_content 'This application is not on a list so cannot be removed from one'

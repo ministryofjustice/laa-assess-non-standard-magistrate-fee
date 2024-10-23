@@ -31,7 +31,7 @@
 <p class="govuk-body-m">
   <strong><%= t('.date_received') %>
   </strong> <%= application_summary.date_created_str %>
-  <% if application_summary.unassignable_by?(current_user) %>
+  <% if policy(application_summary.submission).unassign? %>
     <br>
     <strong><%= t('.caseworker') %></strong> <%= application_summary.caseworker %>
   <% elsif application_summary.assessed? %>
@@ -50,11 +50,11 @@
 </p>
 
 </p>
-<% if application_summary.unassignable_by?(current_user) %>
+<% if policy(application_summary.submission).unassign? %>
   <%= govuk_button_link_to t('.remove_from_list'),
                            new_prior_authority_application_unassignment_path(application_summary.id),
                            secondary: true %>
-<% elsif application_summary.self_assignable_by?(current_user) %>
+<% elsif policy(application_summary.submission).self_assign? %>
   <%= govuk_button_link_to t('.add_to_my_list'),
                            new_prior_authority_application_manual_assignment_path(application_summary.id),
                            secondary: true %>
@@ -65,7 +65,7 @@
       <%= link_to t('.overview'), prior_authority_application_path(application_summary.id), class: 'moj-sub-navigation__link', 'aria-current': (current_page == 'overview' ? "page" : nil) %>
     </li>
     <li class="moj-sub-navigation__item">
-      <%= link_to application_summary.can_edit?(current_user) ? t('.adjust_quote') : t('.adjustments'),
+      <%= link_to policy(application_summary.submission).update? ? t('.adjust_quote') : t('.adjustments'),
                   prior_authority_application_adjustments_path(application_summary.id), class: 'moj-sub-navigation__link', 'aria-current': (current_page == 'adjust_quote' ? "page" : nil) %>
     </li>
     <li class="moj-sub-navigation__item">

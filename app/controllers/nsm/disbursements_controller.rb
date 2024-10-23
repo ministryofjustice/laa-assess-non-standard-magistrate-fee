@@ -9,6 +9,7 @@ module Nsm
 
     def index
       claim = Claim.find(params[:claim_id])
+      authorize claim, :show?
       claim_summary = BaseViewModel.build(:claim_summary, claim)
       core_cost_summary = BaseViewModel.build(:core_cost_summary, claim)
       items = BaseViewModel.build(:disbursement, claim, 'disbursements')
@@ -26,6 +27,7 @@ module Nsm
 
     def adjusted
       claim = Claim.find(params[:claim_id])
+      authorize claim, :show?
       claim_summary = BaseViewModel.build(:claim_summary, claim)
       core_cost_summary = BaseViewModel.build(:core_cost_summary, claim)
       items = BaseViewModel.build(:disbursement, claim, 'disbursements').filter(&:any_adjustments?)
@@ -38,6 +40,7 @@ module Nsm
 
     def show
       claim = Claim.find(params[:claim_id])
+      authorize claim
       item = BaseViewModel.build(:disbursement, claim, 'disbursements').detect do |model|
         model.id == params[:id]
       end
@@ -47,6 +50,7 @@ module Nsm
 
     def edit
       claim = Claim.find(params[:claim_id])
+      authorize claim
       item = BaseViewModel.build(:disbursement, claim, 'disbursements').detect do |model|
         model.id == params[:id]
       end
@@ -57,6 +61,7 @@ module Nsm
 
     def update
       claim = Claim.find(params[:claim_id])
+      authorize claim
       item = BaseViewModel.build(:disbursement, claim, 'disbursements').detect do |model|
         model.id == params[:id]
       end

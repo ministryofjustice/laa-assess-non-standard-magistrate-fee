@@ -9,7 +9,7 @@
     <% if @applications.none? %>
       <p class="govuk-body-m"><%= t('.no_applications') %></p>
     <% end %>
-    <% unless current_user.viewer? %>
+    <% if policy(PriorAuthorityApplication).assign? %>
       <div class="govuk-button-group">
         <%= govuk_button_to(t('.next_application'), prior_authority_auto_assignments_path) %>
       </div>

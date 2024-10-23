@@ -1,9 +1,10 @@
 module PriorAuthority
   class ApplicationsController < PriorAuthority::BaseController
     before_action :set_default_table_sort_options, only: %i[your open closed]
+    before_action :authorize_list, only: %i[your open closed]
 
     def your
-      return redirect_to open_prior_authority_applications_path if current_user.viewer?
+      return redirect_to open_prior_authority_applications_path unless policy(PriorAuthorityApplication).assign?
 
       @pagy, applications = order_and_paginate(PriorAuthorityApplication.open_and_assigned_to(current_user))
       @applications = applications.map do |application|
@@ -27,6 +28,7 @@ module PriorAuthority
 
     def show
       application = PriorAuthorityApplication.find(params[:id])
+      authorize(application)
       @summary = BaseViewModel.build(:application_summary, application)
       @details = BaseViewModel.build(:application_details, application)
     end
@@ -49,6 +51,10 @@ module PriorAuthority
 
     def secondary_id
       nil
+    end
+
+    def authorize_list
+      authorize PriorAuthorityApplication, :index?
     end
   end
 end
