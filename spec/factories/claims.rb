@@ -45,7 +45,12 @@ FactoryBot.define do
           'waiting' => 45.5,
           'preparation' => 23.2,
           'attendance_without_counsel' => 10.17,
-        }
+        },
+        'cost_summary' => {
+          'profit_costs' => {
+            'gross_cost' => 120.0,
+          },
+        },
       }
     end
 

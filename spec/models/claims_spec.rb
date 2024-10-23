@@ -6,7 +6,7 @@ RSpec.describe Claim do
   describe '#auto_assignable' do
     let(:user) { create(:caseworker) }
 
-    it 'assigns the claim to the user' do
+    it 'returns claims that are assignable to the user' do
       expect(described_class.auto_assignable(user)).to eq([claim])
     end
 
@@ -22,10 +22,35 @@ RSpec.describe Claim do
       expect(described_class.auto_assignable(user)).to eq([])
     end
 
-    it 'does not include high risk claims' do
-      claim.update!(risk: 'high')
+    it 'includes low value claims' do
+      claim.data['cost_summary']['profit_costs']['gross_cost'] = 4999.99
+      claim.save!
+
+      expect(described_class.auto_assignable(user)).to eq([claim])
+    end
+
+    it 'does not include high value claims' do
+      claim.data['cost_summary']['profit_costs']['gross_cost'] = 5000.0
+      claim.save!
 
       expect(described_class.auto_assignable(user)).to eq([])
+    end
+
+    context 'when cost summary is not included' do
+      before do
+        claim.data.delete('cost_summary')
+        claim.save!
+      end
+
+      it 'includes non-high risk claims' do
+        claim.update(risk: 'medium')
+        expect(described_class.auto_assignable(user)).to eq([claim])
+      end
+
+      it 'excludes high risk claims' do
+        claim.update(risk: 'high')
+        expect(described_class.auto_assignable(user)).to eq([])
+      end
     end
 
     it 'does not include sent back claims' do
