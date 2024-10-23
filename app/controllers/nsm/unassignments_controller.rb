@@ -3,12 +3,13 @@ module Nsm
     before_action :check_claim_assigned
 
     def edit
+      authorize(claim, :unassign?)
       unassignment = UnassignmentForm.new(claim:, current_user:)
       render locals: { claim:, unassignment: }
     end
 
-    # TODO: put some sort of permissions here for non supervisors?
     def update
+      authorize(claim, :unassign?)
       unassignment = UnassignmentForm.new(claim:, **send_back_params)
       if unassignment.save
         redirect_to nsm_claim_claim_details_path(claim)

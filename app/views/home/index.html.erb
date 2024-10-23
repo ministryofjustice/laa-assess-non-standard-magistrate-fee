@@ -14,7 +14,7 @@
     <p>
       <%= link_to(t('.nsm'), nsm_root_path, class: 'govuk-link--no-visited-state') %>
     </p>
-    <% if current_user.supervisor? && FeatureFlags.insights.enabled? %>
+    <% if policy(:dashboard).show? && FeatureFlags.insights.enabled? %>
       <p>
         <%= link_to t('.analytics'), new_dashboard_path, class: 'govuk-link--no-visited-state' %>
       </p>

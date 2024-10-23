@@ -1,5 +1,7 @@
 module Users
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
+    before_action :skip_authorization
+
     def azure_ad
       @user = UserAuthenticate.new(request.env['omniauth.auth']).authenticate
 

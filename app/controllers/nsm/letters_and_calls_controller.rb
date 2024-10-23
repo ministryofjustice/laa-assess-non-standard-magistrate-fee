@@ -11,6 +11,7 @@ module Nsm
 
     def index
       claim = Claim.find(params[:claim_id])
+      authorize(claim, :show?)
       records = BaseViewModel.build(:letters_and_calls_summary, claim)
       claim_summary = BaseViewModel.build(:claim_summary, claim)
       core_cost_summary = BaseViewModel.build(:core_cost_summary, claim)
@@ -27,6 +28,7 @@ module Nsm
 
     def adjusted
       claim = Claim.find(params[:claim_id])
+      authorize(claim, :show?)
       records = BaseViewModel.build(:letters_and_calls_summary, claim)
       claim_summary = BaseViewModel.build(:claim_summary, claim)
       core_cost_summary = BaseViewModel.build(:core_cost_summary, claim)
@@ -38,6 +40,7 @@ module Nsm
 
     def show
       claim = Claim.find(params[:claim_id])
+      authorize(claim)
       item = BaseViewModel.build(:letter_and_call, claim, 'letters_and_calls').detect do |model|
         model.type.value == params[:id]
       end
@@ -47,6 +50,7 @@ module Nsm
 
     def edit
       claim = Claim.find(params[:claim_id])
+      authorize(claim)
       item = BaseViewModel.build(:letter_and_call, claim, 'letters_and_calls').detect do |model|
         model.type.value == params[:id]
       end
@@ -57,6 +61,7 @@ module Nsm
 
     def update
       claim = Claim.find(params[:claim_id])
+      authorize(claim)
       item = BaseViewModel.build(:letter_and_call, claim, 'letters_and_calls').detect do |model|
         model.type.value == params[:id]
       end

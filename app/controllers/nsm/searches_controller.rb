@@ -3,11 +3,13 @@ module Nsm
     before_action :set_current_section
 
     def show
+      authorize(Claim, :index?)
       @search_form = Nsm::SearchForm.new(search_params)
       @search_form.execute if @search_form.valid?
     end
 
     def new
+      authorize(Claim, :index?)
       @search_form = Nsm::SearchForm.new(default_params)
       render :show
     end

@@ -18,7 +18,7 @@
                                         additional_classes: ) %>
           <% end %>
         <% end %>
-        <% if claim.editable_by?(current_user) %>
+        <% if policy(claim).update? %>
           <th class="govuk-table__header" scope="col"><%= t(".action") %></th>
         <% end %>
       </tr>
@@ -31,7 +31,7 @@
           <th class="govuk-table__header" scope="row"><%= work_item.position %></th>
           <th class="govuk-table__header" scope="row">
             <% link = url_for(controller: 'nsm/work_items',
-                              action: claim.editable_by?(current_user) ? :edit : :show,
+                              action: policy(claim).update? ? :edit : :show,
                               claim_id: claim.id, id: work_item.id, only_path: true) %>
 
             <% if work_item.original_work_type != work_item.work_type %>
@@ -57,7 +57,7 @@
           <td class="govuk-table__cell govuk-table__cell--numeric">
             <%= work_item.formatted_allowed_amount %>
           </td>
-          <% if claim.editable_by?(current_user) %>
+          <% if policy(claim).update? %>
             <td class="govuk-table__cell">
               <%= link_to t(".delete"),
                 confirm_deletion_nsm_claim_work_item_path(claim, work_item.id),
@@ -79,7 +79,7 @@
           <%= t('nsm.work_items.type_changes.item_type_adjusted') %>
           <%= t('nsm.work_items.type_changes.see') %>
           <% link = url_for(controller: 'nsm/work_items',
-                              action: claim.editable_by?(current_user) ? :edit : :show,
+                              action: policy(claim).update? ? :edit : :show,
                               claim_id: claim.id, id: work_item.id, only_path: true) %>
           <%= link_to(t('nsm.work_items.type_changes.item', position: work_item.position), link, data: { turbo: 'false' }) %>
         </p>

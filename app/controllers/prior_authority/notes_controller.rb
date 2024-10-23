@@ -1,10 +1,12 @@
 module PriorAuthority
   class NotesController < PriorAuthority::BaseController
     def new
+      authorize(submission, :edit?)
       @form_object = NoteForm.new(submission:)
     end
 
     def create
+      authorize(submission, :update?)
       @form_object = NoteForm.new(form_params)
       if @form_object.save
         redirect_to prior_authority_application_events_path(submission)

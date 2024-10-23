@@ -1,6 +1,7 @@
 module Nsm
   class ClaimDetailsController < Nsm::BaseController
     def show
+      authorize(claim)
       claim_summary = BaseViewModel.build(:claim_summary, claim)
       claim_details = ClaimDetails::Table.new(claim)
 

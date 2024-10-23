@@ -2,12 +2,14 @@ module Nsm
   class ChangeRisksController < Nsm::BaseController
     def edit
       claim = Claim.find(params[:claim_id])
+      authorize(claim)
       risk = ChangeRiskForm.new(id: params[:claim_id], risk_level: claim.risk)
       render locals: { claim:, risk: }
     end
 
     def update
       claim = Claim.find(params[:claim_id])
+      authorize(claim)
       risk = ChangeRiskForm.new(risk_params)
 
       if risk.save

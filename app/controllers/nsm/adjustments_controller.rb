@@ -1,6 +1,7 @@
 module Nsm
   class AdjustmentsController < Nsm::BaseController
     def confirm_deletion
+      authorize Claim.find(params[:claim_id]), :update?
       form = DeleteAdjustmentsForm.new
 
       render :confirm_deletion_adjustments, locals: { deletion_path:, form: }
@@ -8,9 +9,11 @@ module Nsm
 
     def delete_all
       form = DeleteAdjustmentsForm.new(**safe_params)
+      deleter = Nsm::AllAdjustmentsDeleter.new(params, nil, current_user)
+      authorize deleter.submission, :update?
 
       if form.valid?
-        Nsm::AllAdjustmentsDeleter.new(params, nil, current_user).call
+        deleter.call
         redirect_to nsm_claim_claim_details_path, flash: { success: t('.success') }
       else
         render :confirm_deletion_adjustments, locals: { deletion_path:, form: }

@@ -35,7 +35,7 @@
       end %>
     <%= render "shared/pagination",  { pagy: pagy, item: t('.table_info_item') } %>
 
-    <% if claim.editable_by?(current_user) %>
+    <% if policy(claim).update? %>
       <div class='history-input'>
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-three-quarters govuk-!-padding-right-0">

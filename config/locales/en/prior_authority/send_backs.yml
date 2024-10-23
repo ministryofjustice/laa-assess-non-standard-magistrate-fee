@@ -27,8 +27,6 @@ en:
       models:
         prior_authority/send_back_form:
           attributes:
-            base:
-              already_assessed: This application has already been assessed
             updates_needed:
               blank: Select what updates to the application are needed
             further_information_explanation:

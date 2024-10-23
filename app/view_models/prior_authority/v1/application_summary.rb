@@ -95,22 +95,6 @@ module PriorAuthority
         end
       end
 
-      def can_edit?(caseworker)
-        assessable? && submission.assignments.find_by(user: caseworker) && !caseworker.viewer?
-      end
-
-      def unassignable_by?(user)
-        assessable? && submission.assignments.any? && !user.viewer?
-      end
-
-      def self_assignable_by?(user)
-        assessable? && submission.assignments.none? && !user.viewer?
-      end
-
-      def assessable?
-        submission.state.in?(PriorAuthorityApplication::ASSESSABLE_STATES)
-      end
-
       def assessed?
         submission.state.in?(PriorAuthorityApplication::ASSESSED_STATES)
       end

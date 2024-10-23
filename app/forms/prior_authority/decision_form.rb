@@ -20,7 +20,6 @@ module PriorAuthority
     validates :pending_decision, inclusion: { in: STATES }
     validates :pending_rejected_explanation, presence: true, if: -> { pending_decision == REJECTED }
     validate :check_adjustments_made
-    validate :not_yet_assessed
 
     def summary
       @summary ||= BaseViewModel.build(:application_summary, submission)
@@ -79,12 +78,6 @@ module PriorAuthority
       elsif summary.adjustments_made?
         errors.add(:pending_decision, :"adjustments_when_#{pending_decision}")
       end
-    end
-
-    def not_yet_assessed
-      return if submission.state.in?(PriorAuthorityApplication::ASSESSABLE_STATES)
-
-      errors.add(:base, :already_assessed)
     end
   end
 end

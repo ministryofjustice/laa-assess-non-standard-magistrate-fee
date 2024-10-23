@@ -2,6 +2,7 @@ class SyncController < ApplicationController
   skip_before_action :authenticate_user!
   before_action :authenticate_app_store!, only: :sync_individual
   skip_before_action :verify_authenticity_token, only: :sync_individual
+  before_action :skip_authorization
 
   def sync_all
     PullUpdates.new.perform

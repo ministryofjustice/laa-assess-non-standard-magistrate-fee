@@ -6,6 +6,7 @@ RSpec.describe 'Notes', :stub_oauth_token do
 
   before do
     sign_in caseworker
+    application.assignments.create(user: caseworker)
     visit prior_authority_application_events_path(application)
     click_on 'Add a note to the application history'
   end

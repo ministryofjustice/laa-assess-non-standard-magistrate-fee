@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Nsm::ClaimDetailsController do
   context 'show' do
-    let(:claim) { instance_double(Claim, id: claim_id, data: {}) }
-    let(:claim_id) { SecureRandom.uuid }
+    let(:claim) { create(:claim) }
+    let(:claim_id) { claim.id }
     let(:claim_summary) { instance_double(Nsm::V1::ClaimSummary) }
     let(:claim_details) { instance_double(ClaimDetails::Table) }
     let(:provider_updates) { nil }
@@ -21,7 +21,7 @@ RSpec.describe Nsm::ClaimDetailsController do
       expect(BaseViewModel).to have_received(:build).with(:claim_summary, claim)
     end
 
-    it 'renders successfully with claims' do
+    it 'renders successfully' do
       allow(controller).to receive(:render)
       get :show, params: { claim_id: }
 
@@ -31,7 +31,7 @@ RSpec.describe Nsm::ClaimDetailsController do
 
     describe 'has further_information' do
       let(:data) { { 'further_information' => { 'information_requested' => 'requesting...' } } }
-      let(:claim) { instance_double(Claim, id: claim_id, data: data) }
+      let(:claim) { create(:claim, data:) }
       let(:further_information) { [instance_double(Nsm::V1::FurtherInformation)] }
 
       before do

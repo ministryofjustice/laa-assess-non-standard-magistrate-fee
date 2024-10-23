@@ -9,7 +9,7 @@
   </div>
   <div class="govuk-grid-column-full">
     <h2 class="govuk-heading-m"><%= t('.page_title') %></h2>
-    <% unless current_user.viewer? %>
+    <% if policy(application_summary.submission).update? %>
       <p>
         <strong>
           <%= link_to t('.add_note'),

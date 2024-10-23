@@ -1,16 +1,19 @@
 module PriorAuthority
   class DecisionsController < PriorAuthority::BaseController
     def show
+      authorize(submission)
       @summary = BaseViewModel.build(:application_summary, submission)
       @decision = BaseViewModel.build(:decision, submission)
     end
 
     def new
+      authorize(submission, :edit?)
       @form_object = DecisionForm.new(submission:,
                                       **submission.data.slice(*DecisionForm.attribute_names))
     end
 
     def create
+      authorize(submission, :update?)
       @form_object = DecisionForm.new(form_params)
       if params['save_and_exit']
         @form_object.stash

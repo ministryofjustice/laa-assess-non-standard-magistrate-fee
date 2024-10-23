@@ -3,6 +3,7 @@ module Nsm
     class UpliftsController < Nsm::BaseController
       def edit
         claim = Claim.find(params[:claim_id])
+        authorize(claim)
         form = Uplift::WorkItemsForm.new(claim:)
 
         render locals: { claim:, form: }
@@ -10,6 +11,7 @@ module Nsm
 
       def update
         claim = Claim.find(params[:claim_id])
+        authorize(claim)
         form = Uplift::WorkItemsForm.new(claim:, **form_params)
 
         if form.save
