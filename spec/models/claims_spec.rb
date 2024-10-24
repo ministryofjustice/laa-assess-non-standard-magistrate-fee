@@ -23,14 +23,14 @@ RSpec.describe Claim do
     end
 
     it 'includes low value claims' do
-      claim.data['cost_summary']['profit_costs']['gross_cost'] = 4999.99
+      claim.data['cost_summary']['profit_costs']['gross_cost'] = '4999.99'
       claim.save!
 
       expect(described_class.auto_assignable(user)).to eq([claim])
     end
 
     it 'does not include high value claims' do
-      claim.data['cost_summary']['profit_costs']['gross_cost'] = 5000.0
+      claim.data['cost_summary']['profit_costs']['gross_cost'] = '5000.0'
       claim.save!
 
       expect(described_class.auto_assignable(user)).to eq([])

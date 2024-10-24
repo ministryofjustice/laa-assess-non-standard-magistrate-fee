@@ -48,7 +48,7 @@ FactoryBot.define do
         },
         'cost_summary' => {
           'profit_costs' => {
-            'gross_cost' => 120.0,
+            'gross_cost' => '120.0',
           },
         },
       }

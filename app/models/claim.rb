@@ -23,7 +23,7 @@ class Claim < Submission
   scope :auto_assignable, lambda { |user|
     where(state: [SUBMITTED, PROVIDER_UPDATED])
       .where("(data->'cost_summary' IS NULL AND risk != 'high') OR " \
-             "(data->'cost_summary'->'profit_costs'->'gross_cost')::decimal < ?",
+             "(data->'cost_summary'->'profit_costs'->>'gross_cost')::decimal < ?",
              HIGH_VALUE_THRESHOLD)
       .where.missing(:assignments)
       .where.not(id: Event::Unassignment.where(primary_user_id: user.id).select(:submission_id))
