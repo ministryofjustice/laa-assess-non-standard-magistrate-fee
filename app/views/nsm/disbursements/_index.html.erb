@@ -22,7 +22,7 @@
           <th class="govuk-table__header" scope="row"><%= disbursement.position %></th>
           <th class="govuk-table__header" scope="row">
             <%=
-              if claim.editable_by?(current_user)
+              if policy(claim).update?
                 link_to(disbursement.type_name, edit_nsm_claim_disbursement_path(claim_id: claim.id, id: disbursement.id), data: { turbo: 'false' })
               else
                 link_to(disbursement.type_name, nsm_claim_disbursement_path(claim_id: claim.id, id: disbursement.id), data: { turbo: 'false' })

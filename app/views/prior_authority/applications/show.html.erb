@@ -49,7 +49,7 @@
     <%= render 'overview_card', model: @details.overview_card %>
 
     <h2 class="govuk-heading-m"><%= t('.about_the_request') %></h2>
-    <%= render 'primary_quote_card', model: @details.primary_quote_card, editable: @summary.can_edit?(current_user) %>
+    <%= render 'primary_quote_card', model: @details.primary_quote_card, editable: policy(@summary.submission).update? %>
     <%= render 'reason_why_card', model: @details.reason_why_card %>
     <% @details.alternative_quote_cards.each_with_index do |alternative_quote_card, index| %>
       <%= render alternative_quote_card.class.name.split('::').last.underscore, model: alternative_quote_card, n: index + 1 %>
@@ -74,7 +74,7 @@
       <% end %>
     <% end %>
 
-    <% if @summary.can_edit?(current_user) %>
+    <% if policy(@summary.submission).update? %>
       <%= render 'prior_authority/shared/application_buttons', application_summary: @summary %>
     <% end %>
   </div>

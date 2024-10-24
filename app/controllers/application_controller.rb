@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   include Pagy::Backend
   include ApplicationHelper
   include CookieConcern
+  include Pundit::Authorization
+
   default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
 
   before_action :check_maintenance_mode
@@ -13,7 +15,16 @@ class ApplicationController < ActionController::Base
   before_action :set_referrer
   before_action :log_access
 
+  after_action :verify_authorized
+
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
   private
+
+  def user_not_authorized
+    flash[:alert] = t('errors.unauthorised')
+    redirect_to(root_path)
+  end
 
   def after_sign_in_path_for(_user)
     root_path

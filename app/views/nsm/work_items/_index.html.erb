@@ -13,7 +13,7 @@
   %>
 <% end %>
 
-<% if claim.editable_by?(current_user) && records.any? { |work_item| work_item.uplift&.positive? } %>
+<% if policy(claim).update? && records.any? { |work_item| work_item.uplift&.positive? } %>
   <%= govuk_button_link_to(t(".remove_uplift_all"), edit_nsm_claim_work_items_uplift_path(claim), secondary: true, data: { turbo: 'false' }) %>
 <% end %>
 
@@ -40,7 +40,7 @@
         <th class="govuk-table__header" scope="row"><%= work_item.position %></th>
         <th class="govuk-table__header" scope="row">
           <% link = url_for(controller: 'nsm/work_items',
-                            action: claim.editable_by?(current_user) ? :edit : :show,
+                            action: policy(claim).update? ? :edit : :show,
                             claim_id: claim.id, id: work_item.id, only_path: true) %>
           <% if work_item.original_work_type != work_item.work_type %>
             <% type_changed_records << work_item %>
@@ -84,7 +84,7 @@
         <%= t('nsm.work_items.type_changes.item_type_adjusted') %>
         <%= t('nsm.work_items.type_changes.see') %>
         <% link = url_for(controller: 'nsm/work_items',
-                          action: claim.editable_by?(current_user) ? :edit : :show,
+                          action: policy(claim).update? ? :edit : :show,
                           claim_id: claim.id, id: work_item.id, only_path: true) %>
         <%= link_to(t('nsm.work_items.type_changes.item', position: work_item.position),
                     link, data: { turbo: 'false' }) %>

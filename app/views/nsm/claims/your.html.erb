@@ -6,7 +6,7 @@
     <% if your_claims.none? %>
       <h2 class="govuk-body-l"><%= t('.no_claims') %></h2>
     <% end %>
-    <% unless current_user.viewer? %>
+    <% if policy(Claim).assign? %>
       <div class="govuk-button-group">
         <%= govuk_button_to(t('.next_claim'), nsm_claims_path) %>
       </div>

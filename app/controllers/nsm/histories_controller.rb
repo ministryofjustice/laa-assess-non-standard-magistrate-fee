@@ -2,6 +2,7 @@ module Nsm
   class HistoriesController < Nsm::BaseController
     def show
       claim = Claim.find(params[:claim_id])
+      authorize(claim)
       claim_summary = BaseViewModel.build(:claim_summary, claim)
       pagy, history_events = pagy(claim.events.history)
       claim_note = ClaimNoteForm.new(id: claim.id)
@@ -10,12 +11,13 @@ module Nsm
     end
 
     def create
+      claim = Claim.find(params[:claim_id])
+      authorize(claim, :edit?)
       claim_note = ClaimNoteForm.new(claim_note_params)
 
       if claim_note.save
         redirect_to nsm_claim_history_path(claim_note.id)
       else
-        claim = Claim.find(params[:claim_id])
         claim_summary = BaseViewModel.build(:claim_summary, claim)
         pagy, history_events = pagy(claim.events.history)
 

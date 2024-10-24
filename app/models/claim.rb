@@ -47,10 +47,6 @@ class Claim < Submission
 
   enum :state, STATES.to_h { [_1, _1] }
 
-  def editable_by?(user)
-    !closed? && assigned_to?(user) && !user.viewer?
-  end
-
   def assigned_to?(user)
     assignments.find_by(user:)
   end
@@ -61,14 +57,6 @@ class Claim < Submission
 
   def closed?
     CLOSED_STATES.include?(state)
-  end
-
-  def assignment_removable_by?(user)
-    !closed? && assignments.any? && !user.viewer?
-  end
-
-  def self_assignable_by?(user)
-    !closed? && assignments.none? && !user.viewer?
   end
 
   def formatted_claimed_total

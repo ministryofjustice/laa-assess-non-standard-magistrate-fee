@@ -27,6 +27,7 @@ en:
     not_a_number: The number of %{item_type} must be a number, like 25
 
   errors:
+    unauthorised: 'You are not authorised to perform this action'
     format: "%{message}"
     page_title_prefix: "Error: "
     attributes:

@@ -23,6 +23,12 @@ RSpec.describe 'Decide an application', :stub_oauth_token do
       expect { click_on 'Submit decision' }.to have_enqueued_job(NotifyAppStore)
     end
 
+    it 'prevents duplicate decisions' do
+      application.rejected!
+      click_on 'Submit decision'
+      expect(page).to have_content 'You are not authorised to perform this action'
+    end
+
     context 'once the decision has been processed' do
       before do
         click_on 'Submit decision'
@@ -37,12 +43,6 @@ RSpec.describe 'Decide an application', :stub_oauth_token do
       it 'removes the edit buttons from the application page' do
         click_on 'Return to the application'
         expect(page).to have_no_content 'Make a decision'
-      end
-
-      it 'prevents duplicate submission' do
-        visit new_prior_authority_application_decision_path(application)
-        click_on 'Submit decision'
-        expect(page).to have_content 'This application has already been assessed'
       end
 
       it 'records a paper trail in the access logs' do

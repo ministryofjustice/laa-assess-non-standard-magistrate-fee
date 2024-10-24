@@ -2,6 +2,7 @@ module PriorAuthority
   class TravelCostsController < PriorAuthority::BaseController
     def edit
       submission = PriorAuthorityApplication.find(params[:application_id])
+      authorize(submission, :edit?)
       all_travel_costs = BaseViewModel.build(:travel_cost, submission, 'quotes')
 
       item = all_travel_costs.find do |model|
@@ -15,6 +16,7 @@ module PriorAuthority
 
     def update
       submission = PriorAuthorityApplication.find(params[:application_id])
+      authorize(submission, :update?)
       all_travel_costs = BaseViewModel.build(:travel_cost, submission, 'quotes')
 
       item = all_travel_costs.find do |model|
@@ -31,6 +33,7 @@ module PriorAuthority
     end
 
     def confirm_deletion
+      authorize(PriorAuthorityApplication.find(params[:application_id]), :edit?)
       render 'prior_authority/shared/confirm_delete_adjustment',
              locals: { item_name: t('.travel_cost'),
                        deletion_path: prior_authority_application_travel_cost_path(params[:application_id],
@@ -38,7 +41,9 @@ module PriorAuthority
     end
 
     def destroy
-      PriorAuthority::AdjustmentDeleter.new(params, :travel_cost, current_user).call
+      deleter = PriorAuthority::AdjustmentDeleter.new(params, :travel_cost, current_user)
+      authorize(deleter.submission, :update?)
+      deleter.call
       redirect_to prior_authority_application_adjustments_path(params[:application_id])
     end
 

@@ -12,7 +12,7 @@ module PriorAuthority
     def caseworker_name
       @caseworker_name ||= begin
         application = PriorAuthorityApplication.find(application_id)
-        application.assignments.first&.display_name
+        application.assignments.first.display_name
       end
     end
   end

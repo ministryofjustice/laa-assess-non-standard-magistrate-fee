@@ -1,61 +1,45 @@
 require 'rails_helper'
 
 RSpec.describe Nsm::WorkItems::UpliftsController do
-  context 'edit' do
-    let(:claim) { instance_double(Claim, id: claim_id, risk: 'high') }
-    let(:claim_id) { SecureRandom.uuid }
-    let(:form) { instance_double(Nsm::Uplift::WorkItemsForm) }
+  let(:claim) { create :claim }
+  let(:user) { create :caseworker }
 
-    before do
-      allow(Claim).to receive(:find).and_return(claim)
-      allow(Nsm::Uplift::WorkItemsForm).to receive(:new).and_return(form)
-    end
+  before do
+    allow(controller).to receive(:current_user).and_return(user)
+    create :assignment, submission: claim, user: user
+  end
 
-    it 'renders successfully with claims' do
-      allow(controller).to receive(:render)
-      get :edit, params: { claim_id: }
-
-      expect(controller).to have_received(:render)
-                        .with(locals: { claim:, form: })
+  describe 'edit' do
+    it 'renders successfully' do
+      get :edit, params: { claim_id: claim.id }
       expect(response).to be_successful
     end
   end
 
-  context 'update' do
-    let(:claim) { instance_double(Claim, id: claim_id, risk: 'high') }
-    let(:claim_id) { SecureRandom.uuid }
+  describe 'update' do
     let(:form) { instance_double(Nsm::Uplift::WorkItemsForm, save:) }
 
     before do
       allow(Nsm::Uplift::WorkItemsForm).to receive(:new).and_return(form)
-      allow(Claim).to receive(:find).and_return(claim)
+      put :update,
+          params: { claim_id: claim.id,
+                    nsm_uplift_work_items_form: { some: :data } }
     end
 
     context 'when form save is successful' do
       let(:save) { true }
 
-      it 'renders successfully with claims' do
-        allow(controller).to receive(:render)
-        put :update,
-            params: { claim_id: claim_id, nsm_uplift_work_items_form: { some: :data } }
-
+      it 'redirects' do
         expect(controller).to redirect_to(
           nsm_claim_work_items_path(claim)
         )
-        expect(response).to have_http_status(:found)
       end
     end
 
     context 'when form save is unsuccessful' do
       let(:save) { false }
 
-      it 'renders successfully with claims' do
-        allow(controller).to receive(:render)
-        put :update,
-            params: { claim_id: claim_id, nsm_uplift_work_items_form: { some: :data } }
-
-        expect(controller).to have_received(:render)
-                          .with(:edit, locals: { claim:, form: })
+      it 'renders rather than redirects' do
         expect(response).to be_successful
       end
     end

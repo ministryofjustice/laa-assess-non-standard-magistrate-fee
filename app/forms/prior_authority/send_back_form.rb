@@ -16,7 +16,6 @@ module PriorAuthority
     ].freeze
 
     validate :updates_needed_chosen
-    validate :not_yet_assessed
     validates :further_information_explanation, presence: true, if: -> { updates_needed.include?(FURTHER_INFORMATION) }
     validates :incorrect_information_explanation, presence: true, if: lambda {
                                                                         updates_needed.include?(INCORRECT_INFORMATION)
@@ -109,12 +108,6 @@ module PriorAuthority
       return if updates_needed.intersect?(UPDATE_TYPES)
 
       errors.add(:updates_needed, :blank)
-    end
-
-    def not_yet_assessed
-      return if submission.state.in?(PriorAuthorityApplication::ASSESSABLE_STATES)
-
-      errors.add(:base, :already_assessed)
     end
   end
 end

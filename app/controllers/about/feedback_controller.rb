@@ -2,6 +2,8 @@
 
 module About
   class FeedbackController < ApplicationController
+    before_action :skip_authorization
+
     def index
       @feedback = Feedback.new
     end

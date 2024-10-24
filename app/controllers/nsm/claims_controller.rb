@@ -1,9 +1,10 @@
 module Nsm
   class ClaimsController < Nsm::BaseController
     before_action :set_default_table_sort_options, only: %i[your open closed]
+    before_action :authorize_list, only: %i[your open closed]
 
     def your
-      return redirect_to open_nsm_claims_path if current_user.viewer?
+      return redirect_to open_nsm_claims_path unless policy(Claim).assign?
 
       @current_section = :your
       pagy, filtered_claims = order_and_paginate(Claim.pending_and_assigned_to(current_user))
@@ -25,6 +26,7 @@ module Nsm
     end
 
     def create
+      authorize Claim, :assign?
       claim = Claim.auto_assignable(current_user).order(created_at: :asc).first
 
       if claim
@@ -49,6 +51,10 @@ module Nsm
       default = 'date_updated'
       @sort_by = params.fetch(:sort_by, default)
       @sort_direction = params.fetch(:sort_direction, 'descending')
+    end
+
+    def authorize_list
+      authorize Claim, :index?
     end
 
     def submission_id

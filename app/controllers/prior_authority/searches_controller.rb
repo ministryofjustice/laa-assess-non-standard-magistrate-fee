@@ -1,11 +1,13 @@
 module PriorAuthority
   class SearchesController < BaseController
     def show
+      authorize(PriorAuthorityApplication, :index?)
       @search_form = PriorAuthority::SearchForm.new(search_params)
       @search_form.execute if @search_form.valid?
     end
 
     def new
+      authorize(PriorAuthorityApplication, :index?)
       @search_form = PriorAuthority::SearchForm.new(default_params)
       render :show
     end
