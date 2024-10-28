@@ -5,8 +5,8 @@ module Nsm
       attribute :type, :translated, scope: 'nsm.letter_and_call_type'
       adjustable_attribute :count, :integer
       adjustable_attribute :uplift, :integer
-      attribute :pricing, :decimal
       attribute :adjustment_comment
+      attribute :submission
 
       class << self
         def headers
@@ -58,7 +58,7 @@ module Nsm
 
       def form_attributes
         attributes.except(
-          'pricing', 'adjustment_comment', 'count_original', 'uplift_original'
+          'adjustment_comment', 'count_original', 'uplift_original', 'submission'
         ).merge(
           'type' => type.value,
           'explanation' => adjustment_comment,
@@ -106,6 +106,10 @@ module Nsm
         }
       end
 
+      def pricing
+        submission.rates.letters_and_calls[type.value.to_sym]
+      end
+
       def uplift?
         !original_uplift.to_i.zero?
       end
@@ -123,8 +127,21 @@ module Nsm
       end
 
       def calculate_cost(original: false)
-        scoped_count, scoped_uplift = original ? [original_count, original_uplift] : [count, uplift]
-        pricing * scoped_count * (100 + scoped_uplift.to_i) / 100
+        data = LaaCrimeFormsCommon::Pricing::Nsm.calculate_letter_or_call(submission.data_for_calculation,
+                                                                          data_for_calculation,
+                                                                          show_assessed: !original)
+
+        original ? data[:claimed_total_exc_vat] : data[:assessed_total_exc_vat]
+      end
+
+      def data_for_calculation
+        {
+          type: type.value.to_sym,
+          claimed_items: original_count,
+          claimed_uplift_percentage: original_uplift,
+          assessed_items: count,
+          assessed_uplift_percentage: uplift,
+        }
       end
 
       def format(value, as: :pounds)

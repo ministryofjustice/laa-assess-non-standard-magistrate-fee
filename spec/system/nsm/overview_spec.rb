@@ -14,7 +14,7 @@ RSpec.describe 'Overview', type: :system do
 
     it 'shows me the total claimed but not adjusted' do
       expect(page)
-        .to have_content('Claimed: £325.97')
+        .to have_content('Claimed: £359.76')
         .and have_no_content('Allowed:')
     end
 
@@ -40,8 +40,8 @@ RSpec.describe 'Overview', type: :system do
 
     it 'shows me the total claimed and total adjusted' do
       expect(page)
-        .to have_content('Claimed: £325.97')
-        .and have_content('Allowed: £225.97')
+        .to have_content('Claimed: £359.76')
+        .and have_content('Allowed: £259.76')
     end
   end
 
@@ -52,8 +52,8 @@ RSpec.describe 'Overview', type: :system do
 
     it 'shows me the total claimed and total adjusted' do
       expect(page)
-        .to have_content('Claimed: £325.97')
-        .and have_content('Allowed: £325.97')
+        .to have_content('Claimed: £359.76')
+        .and have_content('Allowed: £359.76')
     end
   end
 

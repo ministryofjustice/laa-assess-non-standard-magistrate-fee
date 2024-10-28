@@ -17,7 +17,7 @@ module Nsm
     end
 
     def delete_work_item_adjustment
-      %w[uplift pricing work_type time_spent].each do |field|
+      %w[uplift work_type time_spent].each do |field|
         revert(work_item, field, 'work_items')
       end
       work_item.delete('adjustment_comment')

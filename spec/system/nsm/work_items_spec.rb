@@ -22,7 +22,7 @@ RSpec.describe 'Work items' do
         'aaa ' \
         '2 hours:41 minutes ' \
         '95% ' \
-        '£125.58'
+        '£144.42'
       )
       click_on 'Waiting'
     end
@@ -42,8 +42,8 @@ RSpec.describe 'Work items' do
         'aaa ' \
         '2 hours:41 minutes ' \
         '95% ' \
-        '£125.58 ' \
-        '£263.60'
+        '£144.42 ' \
+        '£303.14'
       )
     end
 
@@ -56,7 +56,7 @@ RSpec.describe 'Work items' do
         'Testing ' \
         '10 hours:59 minutes ' \
         '0% ' \
-        '£263.60'
+        '£303.14'
       )
     end
   end
@@ -78,8 +78,8 @@ RSpec.describe 'Work items' do
         'aaa ' \
         '2 hours:41 minutes ' \
         '95% ' \
-        '£125.58 ' \
-        '£64.40'
+        '£144.42 ' \
+        '£74.06'
       )
     end
 
@@ -101,9 +101,9 @@ RSpec.describe 'Work items' do
         'Date12 December 2022' \
         'Fee earner initialsaaa' \
         'Time claimed2 hours 41 minutes' \
-        'Item rate£24.00' \
+        'Item rate£27.60' \
         'Uplift claimed95%' \
-        'Net cost claimed£125.58'
+        'Net cost claimed£144.42'
       )
     end
   end
@@ -116,7 +116,7 @@ RSpec.describe 'Work items' do
           {
             'id' => 'cf5e303e-98dd-4b0f-97ea-3560c4c5f137',
             'uplift' => 95,
-            'pricing' => 24.0,
+            'pricing' => -1,
             'work_type' => 'attendance_without_counsel',
             'fee_earner' => 'aaa',
             'time_spent' => 161,
@@ -145,21 +145,21 @@ RSpec.describe 'Work items' do
 
     it 'changes the work type and associated pricing if I ask it to' do
       visit nsm_claim_work_items_path(claim)
-      expect(page).to have_content 'Sum of net cost claimed: £125.58'
+      expect(page).to have_content 'Sum of net cost claimed: £272.87'
 
       within('.govuk-table__row', text: 'Attendance without counsel') do
         click_on 'Attendance without counsel'
       end
 
-      choose 'Preparation'
+      choose 'Attendance with counsel'
       fill_in 'Explain your decision', with: 'Testing'
 
       click_on 'Save changes'
       visit nsm_claim_work_items_path(claim)
 
-      expect(page).to have_content('Preparation [1]')
-                  .and have_content('Sum of net cost claimed: £125.58')
-                  .and have_content('Sum of net cost allowed: £121.39')
+      expect(page).to have_content('Attendance with counsel [1]')
+                  .and have_content('Sum of net cost claimed: £272.87')
+                  .and have_content('Sum of net cost allowed: £186.70')
                   .and have_content('This item was adjusted to be a different work item type')
       page.find('.govuk-details__summary-text').click
       within('.govuk-details__text') do

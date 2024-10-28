@@ -19,7 +19,7 @@ RSpec.describe 'Letters and Calls' do
         'Letters' \
         '12' \
         '95%' \
-        '£83.30'
+        '£95.71'
       )
       click_on 'Letters'
     end
@@ -35,8 +35,8 @@ RSpec.describe 'Letters and Calls' do
         'Letters' \
         '12' \
         '95%' \
-        '£83.30' \
-        '£78.32'
+        '£95.71' \
+        '£89.98'
       )
     end
 
@@ -48,7 +48,7 @@ RSpec.describe 'Letters and Calls' do
         'Testing' \
         '22' \
         '0%' \
-        '£78.32'
+        '£89.98'
       )
     end
   end
@@ -61,7 +61,7 @@ RSpec.describe 'Letters and Calls' do
         'Calls' \
         '4' \
         '20%' \
-        '£17.09'
+        '£19.63'
       )
       click_on 'Calls'
     end
@@ -77,8 +77,8 @@ RSpec.describe 'Letters and Calls' do
         'Calls' \
         '4' \
         '20%' \
-        '£17.09' \
-        '£78.32'
+        '£19.63' \
+        '£89.98'
       )
     end
   end
@@ -97,8 +97,8 @@ RSpec.describe 'Letters and Calls' do
         'Letters' \
         '12' \
         '95%' \
-        '£83.30' \
-        '£42.72'
+        '£95.71' \
+        '£49.08'
       )
     end
 
@@ -107,8 +107,8 @@ RSpec.describe 'Letters and Calls' do
         'Calls' \
         '4' \
         '20%' \
-        '£17.09' \
-        '£14.24'
+        '£19.63' \
+        '£16.36'
       )
     end
 
@@ -124,9 +124,9 @@ RSpec.describe 'Letters and Calls' do
 
       expect(page).to have_content(
         'Number of letters12' \
-        'Item rate£3.56' \
+        'Item rate£4.09' \
         'Uplift claimed95%' \
-        'Net cost claimed£83.30'
+        'Net cost claimed£95.71'
       )
     end
   end

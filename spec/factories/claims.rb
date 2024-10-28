@@ -36,15 +36,17 @@ FactoryBot.define do
         'youth_court' => 'no',
         'hearing_outcome' => 'CP05',
         'claim_type' => 'non_standard_magistrate',
+        'rep_order_date' => '2024-10-13',
         'matter_type' => '10',
         'concluded' => 'no',
         'solicitor' => solicitor,
         'answer_equality' => 'no',
         'stage_reached' => 'prog',
         'work_item_pricing' => {
-          'waiting' => 45.5,
-          'preparation' => 23.2,
-          'attendance_without_counsel' => 10.17,
+          'waiting' => -1,
+          'preparation' => -1,
+          'attendance_without_counsel' => -1,
+          'attendance_with_counsel' => -1,
         },
         'cost_summary' => {
           'profit_costs' => {
@@ -353,6 +355,7 @@ FactoryBot.define do
             'en' => "Non-standard magistrates' court payment",
             'value' => 'non_standard_magistrate'
           },
+          'rep_order_date' => '2024-10-9',
           'matter_type' => {
             'value' => '10',
             'en' => '1 - Offences against the person'

@@ -8,24 +8,24 @@ RSpec.describe Nsm::V1::ContactDetails do
   end
 
   describe '#rows' do
-    it 'has correct structure' do
-      subject = described_class.new(
-        {
-          'firm_office' => {
-            'name' => 'Blundon Solicitor Firm',
-            'town' => 'Stoke Newington',
-            'postcode' => 'NE10 4AB',
-            'address_line_1' => '1 Princess Road',
-            'address_line_2' => nil
-          },
-          'solicitor' => {
-            'first_name' => 'Daniel',
-            'last_name' => 'Treaty',
-            'reference_number' => '1212333',
-          },
-        }
+    subject do
+      described_class.new(
+        'firm_office' => {
+          'name' => 'Blundon Solicitor Firm',
+          'town' => 'Stoke Newington',
+          'postcode' => 'NE10 4AB',
+          'address_line_1' => '1 Princess Road',
+          'address_line_2' => nil
+        },
+        'solicitor' => {
+          'first_name' => 'Daniel',
+          'last_name' => 'Treaty',
+          'reference_number' => '1212333',
+        },
       )
+    end
 
+    it 'has correct structure' do
       expect(subject.rows).to have_key(:title)
       expect(subject.rows).to have_key(:data)
     end
@@ -33,8 +33,8 @@ RSpec.describe Nsm::V1::ContactDetails do
 
   describe '#data' do
     context 'One line in firm address' do
-      subject = described_class.new(
-        {
+      subject do
+        described_class.new(
           'firm_office' => {
             'name' => 'Blundon Solicitor Firm',
             'town' => 'Stoke Newington',
@@ -47,8 +47,8 @@ RSpec.describe Nsm::V1::ContactDetails do
             'last_name' => 'Treaty',
             'reference_number' => '1212333',
           },
-        }
-      )
+        )
+      end
 
       it 'shows correct table data' do
         expect(subject.data).to eq(
@@ -65,8 +65,8 @@ RSpec.describe Nsm::V1::ContactDetails do
     end
 
     context 'Two lines in firm address' do
-      subject = described_class.new(
-        {
+      subject do
+        described_class.new(
           'firm_office' => {
             'name' => 'Blundon Solicitor Firm',
             'town' => 'Stoke Newington',
@@ -80,8 +80,8 @@ RSpec.describe Nsm::V1::ContactDetails do
             'last_name' => 'Treaty',
             'reference_number' => '1212333',
           },
-        }
-      )
+        )
+      end
 
       it 'shows correct table data' do
         expect(subject.data).to eq(
@@ -98,8 +98,8 @@ RSpec.describe Nsm::V1::ContactDetails do
     end
 
     context 'has contact_email' do
-      subject = described_class.new(
-        {
+      subject do
+        described_class.new(
           'firm_office' => {
             'name' => 'Blundon Solicitor Firm',
             'town' => 'Stoke Newington',
@@ -116,8 +116,8 @@ RSpec.describe Nsm::V1::ContactDetails do
             'contact_last_name' => 'Bob',
             'contact_email' => 'jim@bob.com'
           },
-        }
-      )
+        )
+      end
 
       it 'shows correct table data' do
         expect(subject.data).to eq(
@@ -135,8 +135,8 @@ RSpec.describe Nsm::V1::ContactDetails do
     end
 
     context 'is vat registered' do
-      subject = described_class.new(
-        {
+      subject do
+        described_class.new(
           'firm_office' => {
             'name' => 'Blundon Solicitor Firm',
             'town' => 'Stoke Newington',
@@ -153,9 +153,9 @@ RSpec.describe Nsm::V1::ContactDetails do
             'contact_last_name' => 'Bob',
             'contact_email' => 'jim@bob.com'
           },
-          'vat_rate' => 0.2
-        }
-      )
+          'submission' => create(:claim),
+        )
+      end
 
       it 'shows correct table data' do
         expect(subject.data).to eq(

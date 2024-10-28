@@ -34,7 +34,7 @@ module Nsm
 
       def footer
         format_row(
-          [t('total', numeric: false)] + summed_values(claimed_work_items: work_items, periods: false),
+          [t('total', numeric: false)] + summed_values(:total, periods: false),
           accessibility_text: true
         )
       end
@@ -43,11 +43,11 @@ module Nsm
         work_type, requested_cost, requested_time, allowed_cost, allowed_time, any_changed_types = *data
         result = [
           (work_type.is_a?(String) && any_changed_types ? row_with_changed_type(work_type) : work_type),
-          { text: format_period(requested_time, style: :minimal_html), numeric: true },
+          { text: as_period(requested_time), numeric: true },
           { text: prefix('claimed', accessibility_text:) + NumberTo.pounds(requested_cost), numeric: true },
         ]
         if show_allowed?
-          result << { text: format_period(allowed_time, style: :minimal_html), numeric: true }
+          result << { text: as_period(allowed_time), numeric: true }
           result << { text: prefix('allowed', accessibility_text:) + NumberTo.pounds(allowed_cost), numeric: true }
         else
           result << '' << ''
@@ -57,11 +57,9 @@ module Nsm
       end
 
       def data_for(work_type)
-        claimed_work_items = work_items.select { _1.original_work_type.value == work_type }
-        allowed_work_items = work_items.select { _1.work_type.value == work_type }
         [
           I18n.t("nsm.work_items.work_types.#{work_type}"),
-          *summed_values(claimed_work_items:, allowed_work_items:)
+          *summed_values(work_type)
         ]
       end
 
@@ -77,18 +75,21 @@ module Nsm
         submission.part_grant? || work_items.any?(&:changed?)
       end
 
-      def work_items
-        @work_items ||= BaseViewModel.build(:work_item, submission, 'work_items')
+      def summed_values(work_type, periods: true)
+        summary = submission.totals[:work_types][work_type.to_sym]
+        [
+          summary[:claimed_total_exc_vat],
+          periods ? summary[:claimed_time_spent_in_minutes] : '',
+          summary[:assessed_total_exc_vat],
+          periods ? summary[:assessed_time_spent_in_minutes] : '',
+          summary[:type_changes]
+        ]
       end
 
-      def summed_values(claimed_work_items:, allowed_work_items: claimed_work_items, periods: true)
-        [
-          claimed_work_items.sum(&:provider_requested_amount),
-          periods ? claimed_work_items.sum(&:original_time_spent) : '',
-          allowed_work_items.sum(&:caseworker_amount),
-          periods ? allowed_work_items.sum(&:time_spent) : '',
-          claimed_work_items.any? { _1.work_type != _1.original_work_type }
-        ]
+      def as_period(value)
+        return value unless value.is_a?(Numeric)
+
+        format_period(IntegerTimePeriod.new(value.to_i), style: :minimal_html)
       end
 
       def t(key, numeric: true)
@@ -106,6 +107,10 @@ module Nsm
         end
 
         safe_join([title_tag, ' ', asterisk_tag])
+      end
+
+      def work_items
+        @work_items ||= BaseViewModel.build(:work_item, submission, 'work_items')
       end
     end
   end

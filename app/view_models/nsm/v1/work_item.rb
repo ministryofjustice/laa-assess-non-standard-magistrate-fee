@@ -11,7 +11,6 @@ module Nsm
       adjustable_attribute :time_spent, :time_period
       attribute :completed_on, :date
 
-      adjustable_attribute :pricing, :decimal
       adjustable_attribute :uplift, :integer
       attribute :fee_earner, :string
       attribute :adjustment_comment
@@ -108,10 +107,14 @@ module Nsm
           '.date' => format_in_zone(completed_on),
           '.fee_earner' => fee_earner.to_s,
           '.time_spent' => format_period(original_time_spent),
-          '.item_rate' => NumberTo.pounds(original_pricing),
+          '.item_rate' => NumberTo.pounds(submission.rates.work_items[original_work_type.value.to_sym]),
           '.uplift_claimed' => "#{original_uplift.to_i}%",
           '.total_claimed' => NumberTo.pounds(provider_requested_amount),
         }
+      end
+
+      def pricing
+        submission.rates.work_items[work_type.value.to_sym]
       end
 
       def changed?
@@ -126,18 +129,25 @@ module Nsm
         end
       end
 
+      def data_for_calculation
+        {
+          claimed_time_spent_in_minutes: original_time_spent.to_i,
+          claimed_work_type: original_work_type.value,
+          claimed_uplift_percentage: original_uplift,
+          assessed_time_spent_in_minutes: time_spent.to_i,
+          assessed_work_type: work_type.value,
+          assessed_uplift_percentage: uplift,
+        }
+      end
+
       private
 
       def calculate_cost(original: false)
-        scoped_uplift, scoped_time_spent, scoped_pricing = if original
-                                                             [original_uplift, original_time_spent, original_pricing]
-                                                           else
-                                                             [uplift, time_spent, pricing]
-                                                           end
-        # We need to use a Rational because some numbers divided by 60 cannot be accurately represented as a decimal,
-        # and when summing up multiple work items with sub-penny precision, those small inaccuracies can lead to
-        # a larger inaccuracy when the total is eventually rounded to 2 decimal places.
-        Rational(scoped_pricing * scoped_time_spent * (100 + scoped_uplift.to_i), 100 * 60)
+        data = LaaCrimeFormsCommon::Pricing::Nsm.calculate_work_item(submission.data_for_calculation,
+                                                                     data_for_calculation,
+                                                                     show_assessed: !original)
+
+        original ? data[:claimed_total_exc_vat] : data[:assessed_total_exc_vat]
       end
 
       def format(value, as: :pounds)
