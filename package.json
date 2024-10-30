@@ -5,12 +5,12 @@
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "8.0.12",
-    "@ministryofjustice/frontend": "^2.2.4",
+    "@ministryofjustice/frontend": "^3.0.0",
     "decimal.js": "^10.4.3",
     "esbuild": "^0.24.0",
     "govuk-frontend": "^5.7.1",
     "jquery": "^3.6.0",
-    "sass": "^1.80.3"
+    "sass": "^1.80.5"
   },
   "resolutions": {
     "braces": "^3.0.3",
@@ -22,7 +22,7 @@
     "build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css  ./app/assets/stylesheets/print.scss:./app/assets/builds/print.css --no-source-map --load-path=node_modules  --quiet-deps"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.25.9",
+    "@babel/preset-env": "^7.26.0",
     "jest-environment-jsdom": "^29.7.0"
   }
 }
