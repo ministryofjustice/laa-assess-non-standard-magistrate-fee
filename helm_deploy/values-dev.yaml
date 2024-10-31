@@ -57,7 +57,7 @@ resources:
 
 variables:
   environment: development
-  appStoreUrl: http://crm457-2176-fix-an.laa-crime-application-store-dev.svc.cluster.local
+  appStoreUrl: http://crm457-2176-fix-cr.laa-crime-application-store-dev.svc.cluster.local
   enableSyncTriggerEndpoint: 'true'
   allowIndexing: 'false'
 
