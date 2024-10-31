@@ -176,8 +176,7 @@ module Nsm
 
       def calculation
         @calculation ||= LaaCrimeFormsCommon::Pricing::Nsm.calculate_disbursement(submission.data_for_calculation,
-                                                                                  data_for_calculation,
-                                                                                  show_assessed: true)
+                                                                                  data_for_calculation)
       end
 
       def data_for_calculation

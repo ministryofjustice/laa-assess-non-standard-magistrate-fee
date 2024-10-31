@@ -41,11 +41,11 @@ module Nsm
       end
 
       def provider_requested_amount
-        calculate_cost(original: true)
+        calculation[:claimed_total_exc_vat]
       end
 
       def caseworker_amount
-        @caseworker_amount ||= calculate_cost
+        calculation[:assessed_total_exc_vat]
       end
 
       def type_name
@@ -126,12 +126,9 @@ module Nsm
         end
       end
 
-      def calculate_cost(original: false)
-        data = LaaCrimeFormsCommon::Pricing::Nsm.calculate_letter_or_call(submission.data_for_calculation,
-                                                                          data_for_calculation,
-                                                                          show_assessed: !original)
-
-        original ? data[:claimed_total_exc_vat] : data[:assessed_total_exc_vat]
+      def calculation
+        @calculation ||= LaaCrimeFormsCommon::Pricing::Nsm.calculate_letter_or_call(submission.data_for_calculation,
+                                                                                    data_for_calculation)
       end
 
       def data_for_calculation

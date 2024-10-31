@@ -82,7 +82,7 @@ module Nsm
           periods ? summary[:claimed_time_spent_in_minutes] : '',
           summary[:assessed_total_exc_vat],
           periods ? summary[:assessed_time_spent_in_minutes] : '',
-          summary[:type_changes]
+          summary[:at_least_one_claimed_work_item_assessed_as_different_type]
         ]
       end
 

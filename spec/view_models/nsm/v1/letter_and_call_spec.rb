@@ -4,7 +4,7 @@ RSpec.describe Nsm::V1::LetterAndCall do
   subject(:letterandcall) { described_class.new(params.merge(type: 'letters', submission: create(:claim))) }
 
   describe '#provider_requested_amount' do
-    let(:params) { { count_original: 1, uplift_original: 10 } }
+    let(:params) { { count: 2, count_original: 1, uplift: 5, uplift_original: 10 } }
 
     it 'calculates the correct provider requested amount' do
       expect(letterandcall.provider_requested_amount).to eq(4.5)

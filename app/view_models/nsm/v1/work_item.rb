@@ -144,8 +144,7 @@ module Nsm
 
       def calculate_cost(original: false)
         data = LaaCrimeFormsCommon::Pricing::Nsm.calculate_work_item(submission.data_for_calculation,
-                                                                     data_for_calculation,
-                                                                     show_assessed: !original)
+                                                                     data_for_calculation)
 
         original ? data[:claimed_total_exc_vat] : data[:assessed_total_exc_vat]
       end

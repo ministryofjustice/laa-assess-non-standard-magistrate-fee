@@ -68,7 +68,8 @@ module Nsm
         data = submission.totals[:cost_summary][type]
 
         {
-          name: build_work_item_row_name(type, data[:group_changes]),
+          name: build_work_item_row_name(type,
+                                         data[:at_least_one_claimed_work_item_assessed_as_type_with_different_summary_group]),
           net_cost: format(data[:claimed_total_exc_vat]),
           vat: format(data[:claimed_vat]),
           gross_cost: format(data[:claimed_total_inc_vat]),

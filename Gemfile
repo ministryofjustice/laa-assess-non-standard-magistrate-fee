@@ -19,7 +19,7 @@ gem 'jbuilder'
 gem 'jsbundling-rails', '>= 1.3.1'
 # TODO: Delete ref before merge
 gem 'laa_crime_forms_common', '~> 0.3.0', github: 'ministryofjustice/laa-crime-forms-common',
-                                          ref: '263c591'
+                                          ref: '57aab10'
 gem 'lograge'
 gem 'logstasher', '~> 2.1'
 gem 'logstash-event'

@@ -96,16 +96,11 @@ class Claim < Submission
   end
 
   def totals
-    @totals ||= LaaCrimeFormsCommon::Pricing::Nsm.totals(
-      data_for_calculation,
-      show_assessed: true
-    )
+    @totals ||= LaaCrimeFormsCommon::Pricing::Nsm.totals(data_for_calculation)
   end
 
   def rates
-    @rates ||= LaaCrimeFormsCommon::Pricing::Nsm.rates(
-      data_for_calculation
-    )
+    @rates ||= LaaCrimeFormsCommon::Pricing::Nsm.rates(data_for_calculation)
   end
 
   def data_for_calculation
