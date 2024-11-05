@@ -36,6 +36,7 @@ en:
           laa_reference: "LAA reference"
           firm_name: "Firm name"
           main_defendant_name: "Defendant"
+          client_name: "Defendant"
           date_updated: "Last updated"
           caseworker: "Caseworker"
           status: Status

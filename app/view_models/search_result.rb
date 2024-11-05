@@ -37,6 +37,10 @@ class SearchResult
     submission_state_tag(submission)
   end
 
+  def risk_name
+    I18n.t("nsm.claims.table.risk.#{submission.risk}")
+  end
+
   delegate :application_type, to: :submission
 
   # assuming all submissions have an application_type as this has to

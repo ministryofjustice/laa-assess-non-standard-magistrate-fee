@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Assign applications', :calls_app_store do
+RSpec.describe 'Assign applications', :stub_oauth_token do
   let(:caseworker) { create(:caseworker) }
   let(:assignment_stub) do
     stub_request(:post, "https://appstore.example.com/v1/submissions/#{application.id}/assignment").to_return(status: 201)

@@ -83,8 +83,4 @@ RSpec.configure do |config|
   config.before(:each, type: :task) do
     allow($stdout).to receive(:write)
   end
-
-  config.before(:each, :calls_app_store) do
-    allow(AppStoreTokenProvider.instance).to receive(:bearer_token).and_return('stubbed-bearer-token')
-  end
 end

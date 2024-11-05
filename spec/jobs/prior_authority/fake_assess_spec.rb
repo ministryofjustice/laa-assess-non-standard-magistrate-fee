@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe PriorAuthority::FakeAssess, :calls_app_store do
+RSpec.describe PriorAuthority::FakeAssess, :stub_oauth_token do
   subject { described_class.new }
 
   let(:application) { create(:prior_authority_application, state: :submitted) }

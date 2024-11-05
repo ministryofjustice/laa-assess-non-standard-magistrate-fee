@@ -1,11 +1,15 @@
 require 'rails_helper'
 
-RSpec.describe 'Reauthentication' do
+RSpec.describe 'Reauthentication', :stub_oauth_token do
   let(:reauthenticate_in) { Rails.configuration.x.auth.reauthenticate_in }
   let(:user) { create(:caseworker) }
   let(:sign_out_all_scopes) { true }
 
   before do
+    stub_request(:post, 'https://appstore.example.com/v1/submissions/searches').to_return(
+      status: 201,
+      body: { metadata: { total_results: 0 }, raw_data: [] }.to_json
+    )
     allow(Devise).to receive(:sign_out_all_scopes).and_return(sign_out_all_scopes)
     sign_in user
     visit '/nsm/claims/your'

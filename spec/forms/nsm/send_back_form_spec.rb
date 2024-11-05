@@ -24,7 +24,7 @@ RSpec.describe Nsm::SendBackForm do
     end
   end
 
-  describe '#persistance', :calls_app_store do
+  describe '#persistance', :stub_oauth_token do
     let(:user) { instance_double(User, id: SecureRandom.uuid) }
     let(:claim) { create(:claim, assignments: [build(:assignment)]) }
     let(:params) { { claim: claim, send_back_comment: 'some comment', current_user: user } }

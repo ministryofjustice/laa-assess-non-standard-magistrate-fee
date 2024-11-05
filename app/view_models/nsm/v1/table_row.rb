@@ -31,10 +31,6 @@ module Nsm
         submission_state_tag(submission)
       end
 
-      def risk_name
-        I18n.t("nsm.claims.table.risk.#{risk}")
-      end
-
       delegate :id, to: :submission
     end
   end

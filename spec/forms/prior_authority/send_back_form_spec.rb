@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe PriorAuthority::SendBackForm, :calls_app_store do
+RSpec.describe PriorAuthority::SendBackForm, :stub_oauth_token do
   subject { described_class.new(params) }
 
   let(:submission) { create(:prior_authority_application) }

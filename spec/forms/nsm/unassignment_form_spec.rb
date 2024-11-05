@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Nsm::UnassignmentForm, :calls_app_store do
+RSpec.describe Nsm::UnassignmentForm, :stub_oauth_token do
   subject { described_class.new(params) }
 
   let(:claim) { create(:claim) }

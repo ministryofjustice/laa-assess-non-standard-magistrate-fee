@@ -8,10 +8,9 @@ module Nsm
       return redirect_to open_nsm_claims_path unless policy(Claim).assign?
 
       @current_section = :your
-      pagy, filtered_claims = order_and_paginate(Claim.pending_and_assigned_to(current_user))
-      your_claims = filtered_claims.map { |claim| BaseViewModel.build(:table_row, claim) }
-
-      render locals: { your_claims:, pagy: }
+      model = Nsm::V1::YourClaims.new(params.permit(:page, :sort_by, :sort_direction).merge(current_user:))
+      model.execute
+      render locals: { your_claims: model.results, pagy: model.pagy }
     end
 
     def open

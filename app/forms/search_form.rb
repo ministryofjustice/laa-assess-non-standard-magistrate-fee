@@ -1,15 +1,9 @@
-class SearchForm
-  include ActiveModel::Model
-  include ActiveModel::Attributes
-  include ActiveRecord::AttributeAssignment
-
+class SearchForm < SearchResults
   Option = Struct.new(:value, :label)
   APPLICATION_TYPES = [
     Option.new('crm4', I18n.t('shared.application_type.crm4')),
     Option.new('crm7', I18n.t('shared.application_type.crm7'))
   ].freeze
-
-  PER_PAGE = 20
 
   attribute :query, :string
   attribute :submitted_from, :string
@@ -18,29 +12,11 @@ class SearchForm
   attribute :updated_to, :string
   attribute :status_with_assignment, :string
   attribute :caseworker_id, :string
-  attribute :page, :integer, default: 1
-  attribute :sort_by, :string, default: 'last_updated'
-  attribute :sort_direction, :string, default: 'descending'
   attribute :application_type, :string
 
   validate :at_least_one_field_set
   validates :application_type, presence: true
   validates :submitted_from, :submitted_to, :updated_from, :updated_to, is_a_date: true
-
-  def results
-    @search_response[:raw_data].map { SearchResult.new(_1) }
-  end
-
-  def pagy
-    Pagy.new(count: @search_response.dig(:metadata, :total_results),
-             limit: PER_PAGE,
-             page: page,
-             fragment: '#search-results')
-  end
-
-  def execute
-    @search_response = conduct_search
-  end
 
   def executed?
     @search_response.present?
@@ -86,12 +62,8 @@ class SearchForm
     errors.add(:base, :nothing_specified, value: I18n.t("shared.submission_noun.#{noun}"))
   end
 
-  def search_params
-    attributes.merge(per_page: PER_PAGE).compact_blank
-  end
-
   def conduct_search
-    AppStoreClient.new.search(search_params).deep_symbolize_keys
+    super
   rescue StandardError => e
     Sentry.capture_exception(e)
     errors.add(:base, :search_error)

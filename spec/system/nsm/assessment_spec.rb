@@ -1,11 +1,16 @@
 require 'rails_helper'
 
-Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
+Rails.describe 'Assessment', :stub_oauth_token do
   let(:fixed_arbitrary_date) { DateTime.new(2024, 7, 4, 12, 3, 12) }
   let(:user) { create(:caseworker) }
   let(:claim) { create(:claim) }
 
   before do
+    stub_request(:post, 'https://appstore.example.com/v1/submissions/searches').to_return(
+      status: 201,
+      body: { metadata: { total_results: 0 }, raw_data: [] }.to_json
+    )
+
     sign_in user
     create(:assignment, submission: claim, user: user)
     visit '/'

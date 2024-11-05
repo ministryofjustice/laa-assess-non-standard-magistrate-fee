@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Nsm::FakeAssess, :calls_app_store do
+RSpec.describe Nsm::FakeAssess, :stub_oauth_token do
   subject { described_class.new }
 
   let(:claim) { create(:claim, state: :submitted) }

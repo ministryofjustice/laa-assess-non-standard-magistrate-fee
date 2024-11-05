@@ -1,7 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe Nsm::ClaimsController do
-  describe '#your' do
+  describe '#your', :stub_oauth_token do
+    before do
+      stub_request(:post, 'https://appstore.example.com/v1/submissions/searches').to_return(
+        status: 201,
+        body: { metadata: { total_results: 0 }, raw_data: [] }.to_json
+      )
+    end
+
     it 'does not raise any errors' do
       expect { get :your }.not_to raise_error
     end
@@ -19,7 +26,7 @@ RSpec.describe Nsm::ClaimsController do
     end
   end
 
-  describe '#create', :calls_app_store do
+  describe '#create', :stub_oauth_token do
     let(:assignment_stub) do
       stub_request(:post, "https://appstore.example.com/v1/submissions/#{claim.id}/assignment").to_return(status: 201)
     end

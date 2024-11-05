@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Assign claims', :calls_app_store do
+RSpec.describe 'Assign claims', :stub_oauth_token do
   let(:caseworker) { create(:caseworker, first_name: 'Me', last_name: 'Myself') }
   let(:claims) { [claim] }
 
@@ -8,8 +8,24 @@ RSpec.describe 'Assign claims', :calls_app_store do
     stub_request(:post, "https://appstore.example.com/v1/submissions/#{claim&.id}/assignment").to_return(status: 201)
   end
 
+  let(:search_stub) do
+    stub_request(:post, 'https://appstore.example.com/v1/submissions/searches').to_return(
+      status: 201,
+      body: { metadata: { total_results: (claim ? 1 : 0) },
+              raw_data: [claim_data].compact }.to_json
+    )
+  end
+
+  let(:claim_data) do
+    if claim
+      { application_id: claim&.id,
+        application: { defendant: {}, firm_office: {}, laa_reference: 'LAA-REFERENCE' } }
+    end
+  end
+
   before do
     assignment_stub
+    search_stub
     claims
     sign_in caseworker
   end
@@ -35,7 +51,7 @@ RSpec.describe 'Assign claims', :calls_app_store do
       context 'when the claim is already assigned to me' do
         it 'shows the claim in the Your Claims screen' do
           visit your_nsm_claims_path
-          expect(page).to have_content claim.data['laa_reference']
+          expect(page).to have_content 'LAA-REFERENCE'
         end
 
         context 'when I try to unassign the claim' do
