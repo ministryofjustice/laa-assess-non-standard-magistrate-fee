@@ -81,6 +81,24 @@ class AppStoreClient
     )
   end
 
+  def assign(submission, user)
+    response = self.class.post("#{host}/v1/submissions/#{submission.id}/assignment", **options(caseworker_id: user.id))
+    process_response(
+      response,
+      "Unexpected response from AppStore - status #{response.code} for assignment to :#{submission.id}",
+      201 => :created,
+    )
+  end
+
+  def unassign(submission)
+    response = self.class.delete("#{host}/v1/submissions/#{submission.id}/assignment", **options)
+    process_response(
+      response,
+      "Unexpected response from AppStore - status #{response.code} for assignment to :#{submission.id}",
+      204 => :deleted,
+    )
+  end
+
   private
 
   def options(payload = nil)

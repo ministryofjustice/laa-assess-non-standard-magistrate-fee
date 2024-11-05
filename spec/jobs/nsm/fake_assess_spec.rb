@@ -1,9 +1,15 @@
 require 'rails_helper'
 
-RSpec.describe Nsm::FakeAssess do
+RSpec.describe Nsm::FakeAssess, :calls_app_store do
   subject { described_class.new }
 
   let(:claim) { create(:claim, state: :submitted) }
+
+  let(:unassignment_stub) do
+    stub_request(:delete, "https://appstore.example.com/v1/submissions/#{claim.id}/assignment").to_return(status: 204)
+  end
+
+  before { unassignment_stub }
 
   context 'when harnessing randomness' do
     before do
@@ -66,6 +72,7 @@ RSpec.describe Nsm::FakeAssess do
 
       it 'notifies the app store' do
         expect(NotifyAppStore).to have_received(:perform_later).with(submission: claim)
+        expect(unassignment_stub).to have_been_requested
       end
     end
 

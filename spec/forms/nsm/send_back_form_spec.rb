@@ -24,14 +24,18 @@ RSpec.describe Nsm::SendBackForm do
     end
   end
 
-  describe '#persistance' do
+  describe '#persistance', :calls_app_store do
     let(:user) { instance_double(User, id: SecureRandom.uuid) }
     let(:claim) { create(:claim, assignments: [build(:assignment)]) }
     let(:params) { { claim: claim, send_back_comment: 'some comment', current_user: user } }
+    let(:unassignment_stub) do
+      stub_request(:delete, "https://appstore.example.com/v1/submissions/#{claim.id}/assignment").to_return(status: 204)
+    end
 
     before do
       allow(Nsm::Event::SendBack).to receive(:build)
       allow(NotifyAppStore).to receive(:perform_later)
+      unassignment_stub
     end
 
     it { expect(subject.save).to be_truthy }
@@ -74,6 +78,7 @@ RSpec.describe Nsm::SendBackForm do
     it 'trigger an update to the app store' do
       subject.save
       expect(NotifyAppStore).to have_received(:perform_later).with(submission: claim)
+      expect(unassignment_stub).to have_been_requested
     end
 
     context 'when not valid' do

@@ -80,7 +80,12 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
   end
 
   context 'when further information required' do
+    let(:unassignment_stub) do
+      stub_request(:delete, "https://appstore.example.com/v1/submissions/#{claim.id}/assignment").to_return(status: 204)
+    end
+
     before do
+      unassignment_stub
       travel_to fixed_arbitrary_date
       visit nsm_claim_claim_details_path(claim)
       click_link_or_button 'Send back to provider'
@@ -98,6 +103,8 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
       expect do
         click_link_or_button 'Submit'
       end.to have_enqueued_job(NotifyAppStore)
+
+      expect(unassignment_stub).to have_been_requested
     end
 
     context 'when I have sent a claim back' do

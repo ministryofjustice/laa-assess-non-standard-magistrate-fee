@@ -1,10 +1,15 @@
 require 'rails_helper'
 
-RSpec.describe 'Assign claims' do
+RSpec.describe 'Assign claims', :calls_app_store do
   let(:caseworker) { create(:caseworker, first_name: 'Me', last_name: 'Myself') }
   let(:claims) { [claim] }
 
+  let(:assignment_stub) do
+    stub_request(:post, "https://appstore.example.com/v1/submissions/#{claim&.id}/assignment").to_return(status: 201)
+  end
+
   before do
+    assignment_stub
     claims
     sign_in caseworker
   end
@@ -23,6 +28,10 @@ RSpec.describe 'Assign claims' do
         expect(page).to have_current_path nsm_claim_claim_details_path(claim)
       end
 
+      it 'tells the app store' do
+        expect(assignment_stub).to have_been_requested
+      end
+
       context 'when the claim is already assigned to me' do
         it 'shows the claim in the Your Claims screen' do
           visit your_nsm_claims_path
@@ -30,13 +39,21 @@ RSpec.describe 'Assign claims' do
         end
 
         context 'when I try to unassign the claim' do
-          before { click_on 'Remove from list' }
+          let(:unassignment_stub) do
+            stub_request(:delete, "https://appstore.example.com/v1/submissions/#{claim.id}/assignment").to_return(status: 204)
+          end
+
+          before do
+            unassignment_stub
+            click_on 'Remove from list'
+          end
 
           it 'lets me unassign the claim' do
             fill_in 'Explain your decision', with: 'Too busy'
             click_on 'Yes, remove from list'
             expect(page).to have_content 'Assigned to: Unassigned'
             expect(claim.reload.assignments).to be_empty
+            expect(unassignment_stub).to have_been_requested
           end
 
           it 'requires me to enter a reason' do
@@ -63,6 +80,7 @@ RSpec.describe 'Assign claims' do
 
     context 'when there are multiple claims' do
       let(:claims) { [new_claim, old_claim] }
+      let(:claim) { old_claim }
       let(:old_claim) { create(:claim, laa_reference: 'LAA-AAAAA', created_at: 6.days.ago) }
       let(:new_claim) { create(:claim, laa_reference: 'LAA-BBBBB', created_at: 5.days.ago) }
 
@@ -74,8 +92,14 @@ RSpec.describe 'Assign claims' do
 
   context 'when a claim is assigned to someone else' do
     let(:claim) { create(:claim, state: 'submitted') }
+    let(:unassignment_stub) do
+      stub_request(:delete, "https://appstore.example.com/v1/submissions/#{claim.id}/assignment").to_return(status: 204)
+    end
 
-    before { create(:assignment, submission: claim) }
+    before do
+      unassignment_stub
+      create(:assignment, submission: claim)
+    end
 
     it 'lets me unassign them' do
       visit nsm_claim_claim_details_path(claim)
@@ -84,6 +108,7 @@ RSpec.describe 'Assign claims' do
       click_on 'Yes, remove from list'
       expect(page).to have_content 'Assigned to: Unassigned'
       expect(claim.reload.assignments).to be_empty
+      expect(unassignment_stub).to have_been_requested
     end
   end
 

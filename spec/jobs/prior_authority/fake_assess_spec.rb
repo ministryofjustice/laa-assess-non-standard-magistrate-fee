@@ -1,12 +1,17 @@
 require 'rails_helper'
 
-RSpec.describe PriorAuthority::FakeAssess do
+RSpec.describe PriorAuthority::FakeAssess, :calls_app_store do
   subject { described_class.new }
 
   let(:application) { create(:prior_authority_application, state: :submitted) }
+  let(:unassignment_stub) do
+    stub_request(:delete, "https://appstore.example.com/v1/submissions/#{application.id}/assignment").to_return(status: 204)
+  end
+
+  before { unassignment_stub }
 
   context 'when harnessing the power of randomness' do
-    let(:client) { instance_double(AppStoreClient, get_submission: app_store_record) }
+    let(:client) { instance_double(AppStoreClient, get_submission: app_store_record, unassign: :success) }
     let(:app_store_record) { { 'application' => application.data } }
 
     before do
@@ -75,6 +80,7 @@ RSpec.describe PriorAuthority::FakeAssess do
 
       it 'notifies the app store' do
         expect(NotifyAppStore).to have_received(:perform_later).with(submission: application)
+        expect(client).to have_received(:unassign)
       end
     end
 
@@ -92,6 +98,7 @@ RSpec.describe PriorAuthority::FakeAssess do
 
       it 'notifies the app store' do
         expect(NotifyAppStore).to have_received(:perform_later).with(submission: application)
+        expect(client).to have_received(:unassign)
       end
     end
 

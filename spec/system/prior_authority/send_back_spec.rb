@@ -25,6 +25,8 @@ RSpec.describe 'Send an application back', :stub_oauth_token do
       headers: { 'Content-type' => 'application/json' }
     )
 
+    stub_request(:delete, "https://appstore.example.com/v1/submissions/#{application.id}/assignment").to_return(status: 204)
+
     sign_in caseworker
     create(:assignment, submission: application, user: caseworker)
     visit '/'

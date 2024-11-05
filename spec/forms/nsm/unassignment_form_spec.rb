@@ -1,9 +1,14 @@
 require 'rails_helper'
 
-RSpec.describe Nsm::UnassignmentForm do
+RSpec.describe Nsm::UnassignmentForm, :calls_app_store do
   subject { described_class.new(params) }
 
   let(:claim) { create(:claim) }
+  let(:unassignment_stub) do
+    stub_request(:delete, "https://appstore.example.com/v1/submissions/#{claim.id}/assignment").to_return(status: 204)
+  end
+
+  before { unassignment_stub }
 
   describe '#unassignment_user' do
     let(:params) { { claim: claim, current_user: user } }
@@ -62,6 +67,7 @@ RSpec.describe Nsm::UnassignmentForm do
       expect(Event::Unassignment).to have_received(:build).with(
         submission: claim, comment: 'some comment', current_user: user, user: assigned_user
       )
+      expect(unassignment_stub).to have_been_requested
     end
 
     context 'when not valid' do

@@ -1,5 +1,6 @@
 module Nsm
   class ClaimsController < Nsm::BaseController
+    include AssignmentConcern
     before_action :set_default_table_sort_options, only: %i[your open closed]
     before_action :authorize_list, only: %i[your open closed]
 
@@ -30,11 +31,7 @@ module Nsm
       claim = Claim.auto_assignable(current_user).order(created_at: :asc).first
 
       if claim
-        Claim.transaction do
-          claim.assignments.create!(user: current_user)
-          ::Event::Assignment.build(submission: claim, current_user: current_user)
-        end
-
+        assign(claim)
         redirect_to nsm_claim_claim_details_path(claim)
       else
         redirect_to your_nsm_claims_path, flash: { notice: t('.no_pending_claims') }
