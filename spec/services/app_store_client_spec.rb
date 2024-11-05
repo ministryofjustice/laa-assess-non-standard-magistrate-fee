@@ -57,7 +57,7 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
   describe '#update_submission' do
     let(:application_id) { SecureRandom.uuid }
     let(:message) { { application_id: } }
-    let(:response) { double(:response, code:) }
+    let(:response) { double(:response, code: code, body: '') }
     let(:code) { 201 }
     let(:username) { nil }
 
