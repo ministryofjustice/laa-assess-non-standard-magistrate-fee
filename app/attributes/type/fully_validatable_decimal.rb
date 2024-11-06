@@ -2,7 +2,7 @@ module Type
   class FullyValidatableDecimal < ActiveModel::Type::Decimal
     def cast(value)
       if suitable_for_casting?(value)
-        super(value&.to_s&.strip&.delete(','))
+        super((value.to_s.strip.delete(',') if value))
       else
         # If the user has entered a string that is not straightforwardly parseable
         # as a decimal, retain the original value so we can display it back to the user
