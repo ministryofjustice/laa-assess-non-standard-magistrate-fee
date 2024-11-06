@@ -33,6 +33,10 @@ class SearchResult
     submission.last_updated_at.to_fs(:stamp)
   end
 
+  def service_name
+    I18n.t(submission.data['service_type'], scope: 'prior_authority.service_types')
+  end
+
   def state_tag
     submission_state_tag(submission)
   end

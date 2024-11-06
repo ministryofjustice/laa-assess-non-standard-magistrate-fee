@@ -11,6 +11,10 @@ RSpec.describe 'Assign applications', :stub_oauth_token do
   end
 
   before do
+    stub_request(:post, 'https://appstore.example.com/v1/submissions/searches').to_return(
+      status: 201,
+      body: { metadata: { total_results: 0 }, raw_data: [] }.to_json
+    )
     sign_in caseworker
     visit '/'
     click_on 'Accept analytics cookies'

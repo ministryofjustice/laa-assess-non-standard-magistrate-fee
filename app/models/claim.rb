@@ -7,19 +7,6 @@ class Claim < Submission
 
   default_scope -> { where(application_type: APPLICATION_TYPES[:nsm]) }
 
-  # open
-  scope :pending_decision, -> { where.not(state: CLOSED_STATES) }
-
-  # closed
-  scope :decision_made, -> { where(state: CLOSED_STATES) }
-
-  # your
-  scope :pending_and_assigned_to, lambda { |user|
-    pending_decision
-      .joins(:assignments)
-      .where(assignments: { user_id: user.id })
-  }
-
   scope :auto_assignable, lambda { |user|
     where(state: [SUBMITTED, PROVIDER_UPDATED])
       .where("(data->'cost_summary'->'high_value' IS NOT NULL AND NOT (data->'cost_summary'->'high_value')::boolean) OR " \

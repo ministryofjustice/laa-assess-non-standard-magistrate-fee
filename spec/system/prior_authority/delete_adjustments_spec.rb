@@ -36,8 +36,7 @@ RSpec.describe 'Delete adjustments' do
            user: caseworker,
            submission: application)
 
-    visit prior_authority_root_path
-    click_on 'LAA-1234'
+    visit prior_authority_application_path(application)
     click_on 'Adjust quote'
   end
 

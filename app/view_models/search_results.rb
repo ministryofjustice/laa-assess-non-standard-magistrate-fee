@@ -15,7 +15,7 @@ class SearchResults
 
   def pagy
     Pagy.new(count: @search_response.dig(:metadata, :total_results),
-             limit: PER_PAGE,
+             limit: self.class::PER_PAGE,
              page: page,
              fragment: '#search-results')
   end
@@ -29,6 +29,6 @@ class SearchResults
   end
 
   def search_params
-    attributes.merge(per_page: PER_PAGE).compact_blank
+    attributes.merge(per_page: self.class::PER_PAGE).compact_blank
   end
 end

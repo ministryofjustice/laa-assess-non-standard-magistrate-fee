@@ -37,10 +37,10 @@ en:
           firm_name: "Firm name"
           main_defendant_name: "Defendant"
           client_name: "Defendant"
-          date_updated: "Last updated"
+          last_updated: "Last updated"
           caseworker: "Caseworker"
-          status: Status
-          risk: Risk
+          status_with_assignment: Status
+          risk_level: Risk
     adjustments:
       show:
         page_title: "Review criminal legal aid applications"

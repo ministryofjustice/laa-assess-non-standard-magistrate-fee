@@ -41,105 +41,97 @@ RSpec.describe 'View applications' do
     visit '/'
     click_on 'Accept analytics cookies'
     create(:assignment, user: caseworker, submission: application)
-    visit prior_authority_root_path
+    visit prior_authority_application_path(application)
   end
 
   context 'when an application is already assigned to me' do
-    it 'shows me that application in the list' do
-      expect(page).to have_content 'LAA-1234'
+    it 'shows summary details' do
+      expect(page).to have_current_path prior_authority_application_path(application)
+      expect(page).to have_content('LAA-1234')
+      expect(page).to have_content(
+        "Requested: £80.50\nService: Pathologist report " \
+        "Representation order date: 2 January 2023\nDate received: 2 March 2023"
+      )
     end
 
-    context 'when I click through to the application details' do
-      before { click_on 'LAA-1234' }
+    it 'shows my name' do
+      expect(page).to have_content('Caseworker: Jane Doe')
+    end
 
-      it 'shows summary details' do
-        expect(page).to have_current_path prior_authority_application_path(application)
-        expect(page).to have_content('LAA-1234')
-        expect(page).to have_content(
-          "Requested: £80.50\nService: Pathologist report " \
-          "Representation order date: 2 January 2023\nDate received: 2 March 2023"
-        )
-      end
+    it 'shows that it is in progress' do
+      expect(page).to have_content('In progress')
+    end
 
-      it 'shows my name' do
-        expect(page).to have_content('Caseworker: Jane Doe')
+    it 'shows application details card' do
+      within('.govuk-summary-card', text: 'Application details') do
+        expect(page).to have_content "LAA referenceLAA-1234\nUnique file number130324/001\nPrison LawNo"
       end
+    end
 
-      it 'shows that it is in progress' do
-        expect(page).to have_content('In progress')
+    it 'shows primary quote card' do
+      within('#primary-quote.govuk-summary-card') do
+        expect(page).to have_content "Service requiredPathologist report\n" \
+                                     "Service detailsABC DEFABC, HIJ, SW1 1AA\n" \
+                                     "Quote uploadtest – with odd-char.pdf\n" \
+                                     'Existing prior authority grantedYes'
+        expect(page).to have_content 'Cost typeAmountRateTotal requested' \
+                                     'Service3 hours 0 minutes£3.50£10.50' \
+                                     'ABC2 items£35.00£70.00'
       end
+    end
 
-      it 'shows application details card' do
-        within('.govuk-summary-card', text: 'Application details') do
-          expect(page).to have_content "LAA referenceLAA-1234\nUnique file number130324/001\nPrison LawNo"
-        end
+    it 'shows reason why card' do
+      within('.govuk-summary-card', text: 'Reason for prior authority') do
+        expect(page).to have_content 'Supporting documentsNone'
       end
+    end
 
-      it 'shows primary quote card' do
-        within('#primary-quote.govuk-summary-card') do
-          expect(page).to have_content "Service requiredPathologist report\n" \
-                                       "Service detailsABC DEFABC, HIJ, SW1 1AA\n" \
-                                       "Quote uploadtest – with odd-char.pdf\n" \
-                                       'Existing prior authority grantedYes'
-          expect(page).to have_content 'Cost typeAmountRateTotal requested' \
-                                       'Service3 hours 0 minutes£3.50£10.50' \
-                                       'ABC2 items£35.00£70.00'
-        end
+    it 'shows alternative quote card' do
+      within('.govuk-summary-card', text: 'Alternative quote 1') do
+        expect(page).to have_content "Service detailsABC DEFABC, HIJ, SW1 1AA\n" \
+                                     "Quote uploadNone\nAdditional items\nFoo Bar"
+        expect(page).to have_content 'Cost typeAlternative quotePrimary quote' \
+                                     'Service£10.50£10.50' \
+                                     'Travel£300.00£0.00' \
+                                     'Additional£100.00£70.00' \
+                                     'Total cost£410.50£80.50'
       end
+    end
 
-      it 'shows reason why card' do
-        within('.govuk-summary-card', text: 'Reason for prior authority') do
-          expect(page).to have_content 'Supporting documentsNone'
-        end
+    it 'shows client details card' do
+      within('.govuk-summary-card', text: 'Client details') do
+        expect(page).to have_content "Client nameJoe Bloggs\nDate of birth1 January 1950"
       end
+    end
 
-      it 'shows alternative quote card' do
-        within('.govuk-summary-card', text: 'Alternative quote 1') do
-          expect(page).to have_content "Service detailsABC DEFABC, HIJ, SW1 1AA\n" \
-                                       "Quote uploadNone\nAdditional items\nFoo Bar"
-          expect(page).to have_content 'Cost typeAlternative quotePrimary quote' \
-                                       'Service£10.50£10.50' \
-                                       'Travel£300.00£0.00' \
-                                       'Additional£100.00£70.00' \
-                                       'Total cost£410.50£80.50'
-        end
+    it 'shows case details card' do
+      within('.govuk-summary-card', text: 'Case details') do
+        expect(page).to have_content "Main offenceRobbery\n" \
+                                     "Date of representation order2 January 2023\n" \
+                                     "Client detainedNo\n" \
+                                     'Subject to POCANo'
       end
+    end
 
-      it 'shows client details card' do
-        within('.govuk-summary-card', text: 'Client details') do
-          expect(page).to have_content "Client nameJoe Bloggs\nDate of birth1 January 1950"
-        end
+    it 'shows hearing details card' do
+      within('.govuk-summary-card', text: 'Hearing details') do
+        expect(page).to have_content "Date of next hearing1 January 2025\n" \
+                                     "Likely or actual pleaGuilty\n" \
+                                     'Court typeCrown Court (excluding Central Criminal Court)'
       end
+    end
 
-      it 'shows case details card' do
-        within('.govuk-summary-card', text: 'Case details') do
-          expect(page).to have_content "Main offenceRobbery\n" \
-                                       "Date of representation order2 January 2023\n" \
-                                       "Client detainedNo\n" \
-                                       'Subject to POCANo'
-        end
+    it 'shows case contact card' do
+      within('.govuk-summary-card', text: 'Case contact') do
+        expect(page).to have_content "Case contactJane Doejane@doe.com\nFirm detailsLegalCo"
       end
+    end
 
-      it 'shows hearing details card' do
-        within('.govuk-summary-card', text: 'Hearing details') do
-          expect(page).to have_content "Date of next hearing1 January 2025\n" \
-                                       "Likely or actual pleaGuilty\n" \
-                                       'Court typeCrown Court (excluding Central Criminal Court)'
-        end
-      end
-
-      it 'shows case contact card' do
-        within('.govuk-summary-card', text: 'Case contact') do
-          expect(page).to have_content "Case contactJane Doejane@doe.com\nFirm detailsLegalCo"
-        end
-      end
-
-      it 'lets me view associated files' do
-        click_on 'test – with odd-char.pdf'
-        expect(page).to have_current_path(
-          %r{/123123123\?response-content-disposition=attachment%3B%20filename%3D%22test%20%20with%20odd-char\.pdf}
-        )
-      end
+    it 'lets me view associated files' do
+      click_on 'test – with odd-char.pdf'
+      expect(page).to have_current_path(
+        %r{/123123123\?response-content-disposition=attachment%3B%20filename%3D%22test%20%20with%20odd-char\.pdf}
+      )
     end
   end
 
@@ -209,8 +201,6 @@ RSpec.describe 'View applications' do
       )
     end
 
-    before { click_on 'LAA-1234' }
-
     it 'shows requested values in the primary quote card' do
       within('#primary-quote.govuk-summary-card') do
         within('.govuk-table') do
@@ -262,7 +252,7 @@ RSpec.describe 'View applications' do
              submission: application,
              details: { comment: 'Not good use of money' },
              created_at: DateTime.new(2023, 6, 5, 4, 3, 2))
-      click_on 'LAA-1234'
+      visit prior_authority_application_path(application)
     end
 
     it 'shows the rejection comment' do
@@ -279,7 +269,7 @@ RSpec.describe 'View applications' do
       application.data['updates_needed'] = ['further_information']
       application.data['further_information_explanation'] = 'Set the scene a little more'
       application.update(state: 'sent_back', updated_at: DateTime.new(2023, 6, 5, 4, 3, 2))
-      click_on 'LAA-1234'
+      visit prior_authority_application_path(application)
     end
 
     it 'shows the relevant comment' do
@@ -318,7 +308,7 @@ RSpec.describe 'View applications' do
                         corrected_info: %w[ufn alternative_quote_1] },
              created_at: DateTime.new(2023, 6, 5, 4, 3, 2))
       application.assignments.destroy_all
-      click_on 'LAA-1234'
+      visit prior_authority_application_path(application)
     end
 
     it 'shows the relevant further information comments and file links' do

@@ -1,7 +1,7 @@
 module Nsm
   class FakeAssess < ApplicationJob
     def perform(claim_ids)
-      Claim.pending_decision
+      Claim.where.not(state: Claim::CLOSED_STATES)
            .where(id: claim_ids)
            .find_each do |claim|
         assess(claim)

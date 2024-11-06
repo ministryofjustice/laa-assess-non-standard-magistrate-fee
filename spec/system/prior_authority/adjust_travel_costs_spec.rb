@@ -10,10 +10,7 @@ RSpec.describe 'Adjust travel costs' do
            user: caseworker,
            submission: application)
 
-    visit prior_authority_root_path
-    expect(page).to have_content 'LAA-1234'
-    click_on 'LAA-1234'
-    expect(page).to have_current_path prior_authority_application_path(application)
+    visit prior_authority_application_path(application)
     click_on 'Adjust quote'
     expect(page).to have_title('Adjustments')
     click_on 'Adjust travel costs'

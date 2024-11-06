@@ -1,10 +1,14 @@
 require 'rails_helper'
 
 # These specs will not run unless the `INCLUDE_ACCESSIBILITY_SPECS` env var is set
-RSpec.describe 'Accessibility', :accessibility do
+RSpec.describe 'Accessibility', :accessibility, :stub_oauth_token do
   subject { page }
 
   before do
+    stub_request(:post, 'https://appstore.example.com/v1/submissions/searches').to_return(
+      status: 201,
+      body: { metadata: { total_results: 0 }, raw_data: [] }.to_json
+    )
     driven_by(:headless_chrome)
     sign_in caseworker
   end
