@@ -26,7 +26,7 @@ class SearchResult
   end
 
   def caseworker
-    submission.assignments.first&.display_name || I18n.t('search.unassigned')
+    User.find_by(id: @data['assigned_user_id'])&.display_name || I18n.t('search.unassigned')
   end
 
   def date_updated

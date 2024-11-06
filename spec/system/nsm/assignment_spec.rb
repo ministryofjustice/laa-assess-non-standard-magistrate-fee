@@ -19,6 +19,7 @@ RSpec.describe 'Assign claims', :stub_oauth_token do
   let(:claim_data) do
     if claim
       { application_id: claim&.id,
+        assigned_user_id: caseworker.id,
         application: { defendant: {}, firm_office: {}, laa_reference: 'LAA-REFERENCE' } }
     end
   end

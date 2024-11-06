@@ -8,12 +8,27 @@ RSpec.describe 'Risk', :stub_oauth_token do
   end
   let(:status) { 200 }
 
+  let(:search_stub) do
+    stub_request(:post, 'https://appstore.example.com/v1/submissions/searches').to_return(
+      status: 201,
+      body: { metadata: { total_results: 1 },
+              raw_data: [claim_data].compact }.to_json
+    )
+  end
+
+  let(:claim_data) do
+    { application_id: claim.id,
+      assigned_user_id: user.id,
+      application: { defendant: {}, firm_office: {}, laa_reference: 'LAA-REFERENCE' } }
+  end
+
   before do
+    search_stub
     sign_in user
     create(:assignment, submission: claim, user: user)
     stub
     visit open_nsm_claims_path
-    click_on claim.data['laa_reference']
+    click_on 'LAA-REFERENCE'
     expect(page).to have_content 'Low risk'
     click_on 'Change risk'
   end

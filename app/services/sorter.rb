@@ -28,7 +28,6 @@ class Sorter
     'laa_reference' => "data->>'laa_reference' ?",
     'firm_name' => "data->'firm_office'->>'name' ?",
     'client_name' => "(data->'defendant'->>'first_name') || ' ' || (data->'defendant'->>'last_name') ?",
-    'main_defendant_name' => "(defendants.value->>'first_name') || ' ' || (defendants.value->>'last_name') ?",
     'caseworker' => CASEWORKER_ORDER_CLAUSE,
     'status' => STATUS_ORDER_CLAUSE,
     'date_updated' => UPDATED_ORDER_CLAUSE,
@@ -52,9 +51,6 @@ class Sorter
       with_users = query.left_joins(assignments: :user)
 
       case sort_by
-      when 'main_defendant_name'
-        with_users.joins("CROSS JOIN JSONB_ARRAY_ELEMENTS(data->'defendants') as defendants")
-                  .where("defendants.value->>'main' = 'true'")
       when 'date_updated'
         with_users.with(
           non_local_events: Event.non_local

@@ -15,14 +15,18 @@ module Nsm
 
     def open
       @current_section = :open
-      @pagy, claims = order_and_paginate(Claim.pending_decision)
-      @claims = claims.map { |claim| BaseViewModel.build(:table_row, claim) }
+      model = Nsm::V1::OpenClaims.new(params.permit(:page, :sort_by, :sort_direction))
+      model.execute
+      @pagy = model.pagy
+      @claims = model.results
     end
 
     def closed
       @current_section = :closed
-      @pagy, claims = order_and_paginate(Claim.decision_made)
-      @claims = claims.map { |claim| BaseViewModel.build(:table_row, claim) }
+      model = Nsm::V1::ClosedClaims.new(params.permit(:page, :sort_by, :sort_direction))
+      model.execute
+      @pagy = model.pagy
+      @claims = model.results
     end
 
     def create
@@ -38,10 +42,6 @@ module Nsm
     end
 
     private
-
-    def order_and_paginate(query)
-      pagy(Sorter.call(query, @sort_by, @sort_direction))
-    end
 
     def set_default_table_sort_options
       default = 'date_updated'
