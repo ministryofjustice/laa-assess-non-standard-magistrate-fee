@@ -23,8 +23,7 @@ module About
     def submit_feedback
       FeedbackMailer
         .notify(**feedback_params.to_h
-                    .symbolize_keys
-                    .merge(application_env: application_environment))
+                    .symbolize_keys, application_env: application_environment)
         .deliver_later!
     end
 
