@@ -5,29 +5,43 @@ RSpec.describe 'Assign claims', :stub_oauth_token do
   let(:claims) { [claim] }
   let(:assignment_event_stub) { stub_request(:post, "https://appstore.example.com/v1/submissions/#{claim&.id}/events").to_return(status: 201) }
 
-  let(:assignment_stub) do
-    stub_request(:post, "https://appstore.example.com/v1/submissions/#{claim&.id}/assignment").to_return(status: 201)
+  let(:auto_assignment_stub) do
+    stub_request(:post, 'https://appstore.example.com/v1/submissions/auto_assignments').to_return(
+      status: status,
+      body: claim_data.to_json
+    )
   end
+
+  let(:status) { 201 }
 
   let(:search_stub) do
     stub_request(:post, 'https://appstore.example.com/v1/submissions/searches').to_return(
       status: 201,
-      body: { metadata: { total_results: (claim ? 1 : 0) },
-              raw_data: [claim_data].compact }.to_json
+      body: search_response.to_json
     )
+  end
+
+  let(:search_response) do
+    { metadata: { total_results: (claim ? 1 : 0) },
+      raw_data: [claim_data].compact }
   end
 
   let(:claim_data) do
     if claim
-      { application_id: claim&.id,
+      { application_id: claim.id,
         assigned_user_id: caseworker.id,
-        application: { defendant: {}, firm_office: {}, laa_reference: 'LAA-REFERENCE' } }
+        application_type: 'crm7',
+        application_risk: 'medium',
+        application_state: 'submitted',
+        json_schema_version: 1,
+        version: 1,
+        application: claim.data }
     end
   end
 
   before do
-    assignment_stub
     assignment_event_stub
+    auto_assignment_stub
     search_stub
     claims
     sign_in caseworker
@@ -42,19 +56,19 @@ RSpec.describe 'Assign claims', :stub_oauth_token do
     context 'when there is a claim' do
       let(:claim) { create(:claim) }
 
-      it 'lets me assign the claim to myself' do
+      it 'assigns the claim to me' do
         expect(claim.reload.assignments.first.user).to eq caseworker
         expect(page).to have_current_path nsm_claim_claim_details_path(claim)
       end
 
-      it 'tells the app store' do
-        expect(assignment_stub).to have_been_requested
+      it 'used the app store' do
+        expect(auto_assignment_stub).to have_been_requested
       end
 
       context 'when the claim is already assigned to me' do
         it 'shows the claim in the Your Claims screen' do
           visit your_nsm_claims_path
-          expect(page).to have_content 'LAA-REFERENCE'
+          expect(page).to have_content claim.data['laa_reference']
         end
 
         context 'when I try to unassign the claim' do
@@ -91,9 +105,25 @@ RSpec.describe 'Assign claims', :stub_oauth_token do
 
     context 'when there is no claim' do
       let(:claim) { nil }
+      let(:status) { 404 }
 
       it 'shows me an explanation' do
         expect(page).to have_content 'There are no claims waiting to be allocated.'
+      end
+    end
+
+    context 'when there is no local claim' do
+      let(:id) { SecureRandom.uuid }
+      let(:claim) { build(:claim, id:) }
+
+      let(:search_response) do
+        { metadata: { total_results: 0 }, raw_data: [] }
+      end
+
+      it 'imports the claim to me' do
+        imported_claim = Claim.find(id)
+        expect(imported_claim.assignments.first.user).to eq caseworker
+        expect(page).to have_current_path nsm_claim_claim_details_path(imported_claim)
       end
     end
 
@@ -103,7 +133,7 @@ RSpec.describe 'Assign claims', :stub_oauth_token do
       let(:old_claim) { create(:claim, laa_reference: 'LAA-AAAAA', created_at: 6.days.ago) }
       let(:new_claim) { create(:claim, laa_reference: 'LAA-BBBBB', created_at: 5.days.ago) }
 
-      it 'assigns the oldest claim to me' do
+      it 'assigns the one returned by the app store to me' do
         expect(page).to have_content 'LAA-AAAAA'
       end
     end
@@ -133,8 +163,12 @@ RSpec.describe 'Assign claims', :stub_oauth_token do
 
   context 'when manually assigning claims' do
     let(:claim) { create(:claim, state: 'submitted') }
+    let(:assignment_stub) do
+      stub_request(:post, "https://appstore.example.com/v1/submissions/#{claim.id}/assignment").to_return(status: 201)
+    end
 
     it 'allows me to assign a claim to myself' do
+      assignment_stub
       visit nsm_claim_claim_details_path(claim)
       click_on 'Add to my list'
       fill_in 'Explain your decision', with: 'because I want to'

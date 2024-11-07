@@ -99,6 +99,16 @@ class AppStoreClient
     )
   end
 
+  def auto_assign(application_type, current_user_id)
+    response = self.class.post("#{host}/v1/submissions/auto_assignments", **options(application_type:, current_user_id:))
+    process_response(
+      response,
+      "Unexpected response from AppStore - status #{response.code} for auto-assignment",
+      201 => ->(body) { JSON.parse(body) },
+      404 => ->(body) {},
+    )
+  end
+
   private
 
   def options(payload = nil)

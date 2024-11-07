@@ -1,22 +1,5 @@
 class Claim < Submission
-  # This is the value at or above which the vat-inclusive profit costs of a claim
-  # make it "high value" meaning different allocation rules apply
-  HIGH_VALUE_THRESHOLD = 5000
-
-  validates :risk, inclusion: { in: %w[low medium high] }
-
   default_scope -> { where(application_type: APPLICATION_TYPES[:nsm]) }
-
-  scope :auto_assignable, lambda { |user|
-    where(state: [SUBMITTED, PROVIDER_UPDATED])
-      .where("(data->'cost_summary'->'high_value' IS NOT NULL AND NOT (data->'cost_summary'->'high_value')::boolean) OR " \
-             "(data->'cost_summary'->'high_value' IS NULL AND data->'cost_summary' IS NOT NULL AND " \
-             "(data->'cost_summary'->'profit_costs'->>'gross_cost')::decimal < ?) OR " \
-             "(data->'cost_summary' IS NULL AND risk != 'high')",
-             HIGH_VALUE_THRESHOLD)
-      .where.missing(:assignments)
-      .where.not(id: Event::Unassignment.where(primary_user_id: user.id).select(:submission_id))
-  }
 
   STATES = (
     [

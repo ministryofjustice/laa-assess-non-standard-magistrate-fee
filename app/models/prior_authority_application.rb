@@ -17,10 +17,4 @@ class PriorAuthorityApplication < Submission
   ).freeze
 
   enum :state, STATES.to_h { [_1, _1] }
-
-  scope :assignable, lambda { |user|
-    where(state: ASSESSABLE_STATES)
-      .where.missing(:assignments)
-      .where.not(id: Event::Unassignment.where(primary_user_id: user.id).select(:submission_id))
-  }
 end

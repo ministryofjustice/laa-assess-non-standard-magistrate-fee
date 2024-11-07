@@ -27,8 +27,9 @@ RSpec.describe Nsm::ClaimsController, :stub_oauth_token do
   end
 
   describe '#create', :stub_oauth_token do
-    let(:assignment_stub) do
-      stub_request(:post, "https://appstore.example.com/v1/submissions/#{claim.id}/assignment").to_return(status: 201)
+    before do
+      claim
+      assignment_stub
     end
 
     let(:claim) { create(:claim) }
@@ -38,25 +39,25 @@ RSpec.describe Nsm::ClaimsController, :stub_oauth_token do
         stub_request(:post, "https://appstore.example.com/v1/submissions/#{claim.id}/events").to_return(status: 201)
       end
 
-      it 'creates an assignment and event' do
-        assignment_stub
+      let(:assignment_stub) do
+        stub_request(:post, 'https://appstore.example.com/v1/submissions/auto_assignments').to_return(
+          status: 201, body: { application_id: claim.id }.to_json
+        )
+      end
 
+      it 'creates an assignment and event' do
         expect do
           expect { post :create }.to change(Assignment, :count).by(1)
         end.to change(Event::Assignment, :count).by(1)
       end
 
       it 'redirects to the assigned claim' do
-        assignment_stub
-
         post :create
 
         expect(response).to redirect_to(nsm_claim_claim_details_path(claim))
       end
 
-      it 'tells the app store' do
-        assignment_stub
-
+      it 'uses the app store' do
         post :create
 
         expect(assignment_stub).to have_been_requested
@@ -64,6 +65,12 @@ RSpec.describe Nsm::ClaimsController, :stub_oauth_token do
     end
 
     context 'when a claim is not available to assign' do
+      let(:assignment_stub) do
+        stub_request(:post, 'https://appstore.example.com/v1/submissions/auto_assignments').to_return(
+          status: 404
+        )
+      end
+
       it 'redirects to Your Claims with a flash notice' do
         post :create
 
