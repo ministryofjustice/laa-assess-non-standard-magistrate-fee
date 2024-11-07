@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Nsm::SubmissionFeedbackMailer, type: :mailer do
+RSpec.describe Nsm::EmailToProviderMailer, type: :mailer do
   let(:recipient) { 'provider@example.com' }
   let(:laa_case_reference) { 'LAA-FHaMVK' }
   let(:ufn) { '123456/001' }

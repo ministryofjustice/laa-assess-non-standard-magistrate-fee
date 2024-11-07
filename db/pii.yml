@@ -29,7 +29,7 @@ submissions:
   data: true
   app_store_updated_at: false
   application_type: false
-  notify_app_store_completed: false
+  send_email_to_provider_completed: false
 events:
   id: false
   submission_id: false
@@ -42,7 +42,6 @@ events:
   details: true
   created_at: false
   updated_at: false
-  notify_app_store_completed: false
 access_logs:
   id: false
   user_id: false

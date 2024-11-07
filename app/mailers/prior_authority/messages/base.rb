@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 module PriorAuthority
-  module FeedbackMessages
-    class FeedbackBase
+  module Messages
+    class Base
       include ActionView::Helpers::OutputSafetyHelper
 
       def initialize(submission)
-        @submission = submission
+        @submission = submission.becomes(PriorAuthorityApplication)
       end
 
       def template

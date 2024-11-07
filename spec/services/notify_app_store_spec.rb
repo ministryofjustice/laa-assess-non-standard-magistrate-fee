@@ -19,7 +19,7 @@ RSpec.describe NotifyAppStore do
     before do
       allow(AppStoreClient).to receive(:new).and_return(http_notifier)
       allow(submission).to receive(:namespace).and_return(Nsm)
-      allow(Nsm::SubmissionFeedbackMailer).to receive_message_chain(:notify, :deliver_later!)
+      allow(SendEmailToProvider).to receive(:perform_later)
     end
 
     it 'creates a new MessageBuilder' do
@@ -30,7 +30,7 @@ RSpec.describe NotifyAppStore do
     end
 
     it 'does not queue an email' do
-      expect(Nsm::SubmissionFeedbackMailer).not_to receive(:notify)
+      expect(SendEmailToProvider).not_to receive(:perform_later)
       subject.perform(submission:)
     end
 
@@ -40,14 +40,14 @@ RSpec.describe NotifyAppStore do
       end
 
       it 'queues an email' do
-        expect(Nsm::SubmissionFeedbackMailer).to receive_message_chain(:notify, :deliver_later!)
+        expect(SendEmailToProvider).to receive(:perform_later).with(submission)
         subject.perform(submission:)
       end
     end
 
     context 'when emails should not be triggered' do
       it 'does not send an email' do
-        expect(Nsm::SubmissionFeedbackMailer).not_to receive(:notify)
+        expect(SendEmailToProvider).not_to receive(:perform_later)
         subject.perform(submission: submission, trigger_email: false)
       end
     end

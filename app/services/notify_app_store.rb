@@ -19,7 +19,6 @@ class NotifyAppStore < ApplicationJob
   def send_email(submission:, trigger_email:)
     return unless trigger_email && ENV.fetch('SEND_EMAILS', 'false') == 'true'
 
-    klass = "#{submission.namespace}::SubmissionFeedbackMailer".constantize
-    klass.notify(submission).deliver_later!
+    SendEmailToProvider.perform_later(submission)
   end
 end

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe PriorAuthority::FeedbackMessages::FeedbackBase do
+RSpec.describe PriorAuthority::Messages::Base do
   subject(:feedback) { described_class.new(claim) }
 
   let(:claim) { build(:claim) }

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Nsm::FeedbackMessages::FurtherInformationRequestFeedback do
+RSpec.describe Nsm::Messages::FurtherInformationRequest do
   subject(:feedback) { described_class.new(claim, caseworker_information_requested) }
 
   let(:claim) { build(:claim, solicitor: { 'contact_email' => recipient }) }
