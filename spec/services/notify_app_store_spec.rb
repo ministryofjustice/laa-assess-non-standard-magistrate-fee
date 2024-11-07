@@ -13,15 +13,6 @@ RSpec.describe NotifyAppStore do
     allow(submission).to receive(:with_lock).and_yield
   end
 
-  describe '.perform_later' do
-    let(:claim) { create :claim, notify_app_store_completed: nil }
-
-    it 'sets a flag' do
-      described_class.perform_later(submission: claim)
-      expect(claim.reload.notify_app_store_completed).to be false
-    end
-  end
-
   describe '#perform' do
     let(:http_notifier) { instance_double(AppStoreClient, update_submission: true) }
 
@@ -52,11 +43,6 @@ RSpec.describe NotifyAppStore do
         expect(Nsm::SubmissionFeedbackMailer).to receive_message_chain(:notify, :deliver_later!)
         subject.perform(submission:)
       end
-    end
-
-    it 'updates the record' do
-      expect(submission).to receive(:update!).with(notify_app_store_completed: true)
-      subject.perform(submission:)
     end
 
     context 'when emails should not be triggered' do

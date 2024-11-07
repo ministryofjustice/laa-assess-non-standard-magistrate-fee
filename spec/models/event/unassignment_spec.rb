@@ -7,6 +7,10 @@ RSpec.describe Event::Unassignment do
   let(:user) { create(:caseworker) }
   let(:comment) { 'test comment' }
 
+  before do
+    allow(NotifyEventAppStore).to receive(:perform_now)
+  end
+
   context 'when user is the same as current user' do
     let(:current_user) { user }
 
@@ -23,9 +27,10 @@ RSpec.describe Event::Unassignment do
     it 'notifies the app store' do
       event = Event.send(:new)
       expect(described_class).to receive(:create).and_return(event)
-      expect(NotifyEventAppStore).to receive(:perform_later).with(event:)
 
       subject
+
+      expect(NotifyEventAppStore).to have_received(:perform_now).with(event:)
     end
 
     it 'has a valid title' do
@@ -50,7 +55,7 @@ RSpec.describe Event::Unassignment do
     it 'notifies the app store' do
       event = Event.send(:new)
       expect(described_class).to receive(:create).and_return(event)
-      expect(NotifyEventAppStore).to receive(:perform_later).with(event:)
+      expect(NotifyEventAppStore).to receive(:perform_now).with(event:)
 
       subject
     end

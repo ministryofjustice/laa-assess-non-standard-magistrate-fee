@@ -3,6 +3,10 @@ require 'rails_helper'
 RSpec.describe Event::NewVersion do
   subject { described_class.build(submission:) }
 
+  before do
+    allow(NotifyEventAppStore).to receive(:perform_now)
+  end
+
   let(:submission) { create(:claim) }
 
   it 'can build a new record' do

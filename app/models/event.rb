@@ -121,7 +121,7 @@ class Event < ApplicationRecord
   end
 
   def notify
-    NotifyEventAppStore.perform_later(event: self)
+    NotifyEventAppStore.perform_now(event: self)
   end
 
   private

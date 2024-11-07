@@ -11,7 +11,7 @@ RSpec.describe ExpireSendbacks do
 
       before do
         application
-        allow(NotifyAppStore).to receive(:perform_later)
+        allow(NotifyAppStore).to receive(:perform_now)
         described_class.new.perform
       end
 
@@ -28,7 +28,7 @@ RSpec.describe ExpireSendbacks do
         end
 
         it 'updates the app store without an email' do
-          expect(NotifyAppStore).to have_received(:perform_later).with(submission: application, trigger_email: false)
+          expect(NotifyAppStore).to have_received(:perform_now).with(submission: application, trigger_email: false)
         end
       end
 
@@ -57,7 +57,7 @@ RSpec.describe ExpireSendbacks do
 
     before do
       claim
-      allow(NotifyAppStore).to receive(:perform_later)
+      allow(NotifyAppStore).to receive(:perform_now)
       described_class.new.perform
     end
 
@@ -74,7 +74,7 @@ RSpec.describe ExpireSendbacks do
       end
 
       it 'updates the app store without an email' do
-        expect(NotifyAppStore).to have_received(:perform_later).with(submission: claim, trigger_email: false)
+        expect(NotifyAppStore).to have_received(:perform_now).with(submission: claim, trigger_email: false)
       end
     end
 

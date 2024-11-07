@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Assign claims', :stub_oauth_token do
   let(:caseworker) { create(:caseworker, first_name: 'Me', last_name: 'Myself') }
   let(:claims) { [claim] }
+  let(:assignment_event_stub) { stub_request(:post, "https://appstore.example.com/v1/submissions/#{claim&.id}/events").to_return(status: 201) }
 
   let(:assignment_stub) do
     stub_request(:post, "https://appstore.example.com/v1/submissions/#{claim&.id}/assignment").to_return(status: 201)
@@ -26,6 +27,7 @@ RSpec.describe 'Assign claims', :stub_oauth_token do
 
   before do
     assignment_stub
+    assignment_event_stub
     search_stub
     claims
     sign_in caseworker

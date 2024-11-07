@@ -11,12 +11,14 @@ RSpec.describe PriorAuthority::FakeAssess, :stub_oauth_token do
   before { unassignment_stub }
 
   context 'when harnessing the power of randomness' do
-    let(:client) { instance_double(AppStoreClient, get_submission: app_store_record, unassign: :success) }
+    let(:client) do
+      instance_double(AppStoreClient, get_submission: app_store_record, unassign: :success, create_events: :success)
+    end
     let(:app_store_record) { { 'application' => application.data } }
 
     before do
       create(:caseworker)
-      allow(NotifyAppStore).to receive(:perform_later)
+      allow(NotifyAppStore).to receive(:perform_now)
       allow(AppStoreClient).to receive(:new).and_return(client)
       allow(SecureRandom).to receive(:rand).and_return random_choice
       allow(WorkingDayService).to receive(:call).and_return 3.days.from_now
@@ -39,7 +41,7 @@ RSpec.describe PriorAuthority::FakeAssess, :stub_oauth_token do
       end
 
       it 'notifies the app store' do
-        expect(NotifyAppStore).to have_received(:perform_later).with(submission: application)
+        expect(NotifyAppStore).to have_received(:perform_now).with(submission: application)
       end
     end
 
@@ -51,7 +53,7 @@ RSpec.describe PriorAuthority::FakeAssess, :stub_oauth_token do
       end
 
       it 'notifies the app store' do
-        expect(NotifyAppStore).to have_received(:perform_later).with(submission: application)
+        expect(NotifyAppStore).to have_received(:perform_now).with(submission: application)
       end
     end
 
@@ -63,7 +65,7 @@ RSpec.describe PriorAuthority::FakeAssess, :stub_oauth_token do
       end
 
       it 'notifies the app store' do
-        expect(NotifyAppStore).to have_received(:perform_later).with(submission: application)
+        expect(NotifyAppStore).to have_received(:perform_now).with(submission: application)
       end
     end
 
@@ -79,7 +81,7 @@ RSpec.describe PriorAuthority::FakeAssess, :stub_oauth_token do
       end
 
       it 'notifies the app store' do
-        expect(NotifyAppStore).to have_received(:perform_later).with(submission: application)
+        expect(NotifyAppStore).to have_received(:perform_now).with(submission: application)
         expect(client).to have_received(:unassign)
       end
     end
@@ -97,7 +99,7 @@ RSpec.describe PriorAuthority::FakeAssess, :stub_oauth_token do
       end
 
       it 'notifies the app store' do
-        expect(NotifyAppStore).to have_received(:perform_later).with(submission: application)
+        expect(NotifyAppStore).to have_received(:perform_now).with(submission: application)
         expect(client).to have_received(:unassign)
       end
     end

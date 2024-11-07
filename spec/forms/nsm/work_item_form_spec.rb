@@ -162,6 +162,7 @@ RSpec.describe Nsm::WorkItemForm do
           'fee_earner' => 'aaa',
           'completed_on' => '2022-12-12',
           'adjustment_comment' => 'change to work items',
+          'position' => 1
         )
       end
     end
@@ -202,6 +203,7 @@ RSpec.describe Nsm::WorkItemForm do
           'fee_earner' => 'aaa',
           'completed_on' => '2022-12-12',
           'adjustment_comment' => 'change to work items',
+          'position' => 1,
         )
       end
 
@@ -238,6 +240,7 @@ RSpec.describe Nsm::WorkItemForm do
           'fee_earner' => 'aaa',
           'completed_on' => '2022-12-12',
           'adjustment_comment' => 'change to work items',
+          'position' => 1,
         )
       end
     end
@@ -252,9 +255,7 @@ RSpec.describe Nsm::WorkItemForm do
 
       it 'updates the JSON data' do
         subject.save
-        work_item = claim.reload
-                         .data['work_items']
-                         .detect { |row| row['work_type'] == 'travel' }
+        work_item = claim.reload.data['work_items'].detect { |row| row['work_type'] == 'travel' }
         expect(work_item).to eq(
           'id' => 'cf5e303e-98dd-4b0f-97ea-3560c4c5f137',
           'time_spent' => 95,

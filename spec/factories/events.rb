@@ -7,6 +7,7 @@ end
 FactoryBot.define do
   factory :event, class: 'EventCreatable' do
     transient do
+      comment { nil }
       claim { nil }
     end
     submission { claim || create(:claim) }
@@ -28,6 +29,24 @@ FactoryBot.define do
         {
           from: 'submitted',
           to: 'auto_grant'
+        }
+      end
+    end
+
+    trait :assignment do
+      event_type { Event::Assignment.to_s }
+      details do
+        {
+          comment:
+        }
+      end
+    end
+
+    trait :unassignment do
+      event_type { Event::Unassignment.to_s }
+      details do
+        {
+          comment:
         }
       end
     end

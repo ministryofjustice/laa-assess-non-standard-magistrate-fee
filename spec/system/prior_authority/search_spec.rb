@@ -100,6 +100,7 @@ RSpec.describe 'Search', :stub_oauth_token do
         status: 201,
         body: { metadata: { total_results: 1 }, raw_data: [record] }.to_json
       )
+      stub_request(:post, "https://appstore.example.com/v1/submissions/#{id}/events")
     end
 
     it 'imports records it did not have yet' do

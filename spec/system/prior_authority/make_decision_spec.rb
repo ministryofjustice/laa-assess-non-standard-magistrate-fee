@@ -3,12 +3,14 @@ require 'rails_helper'
 RSpec.describe 'Decide an application', :stub_oauth_token do
   let(:caseworker) { create(:caseworker) }
   let(:application) { create(:prior_authority_application, state: 'submitted') }
+  let(:update_stub) { stub_request(:put, "https://appstore.example.com/v1/application/#{application.id}").to_return(status: 201) }
 
   before do
     stub_request(:post, 'https://appstore.example.com/v1/submissions/searches').to_return(
       status: 201,
       body: { metadata: { total_results: 0 }, raw_data: [] }.to_json
     )
+    update_stub
     sign_in caseworker
     create(:assignment, submission: application, user: caseworker)
     visit '/'
@@ -23,10 +25,6 @@ RSpec.describe 'Decide an application', :stub_oauth_token do
       fill_in 'Provide detailed reasons for rejecting this application', with: 'The wrong form was used'
     end
 
-    it 'triggers a notification' do
-      expect { click_on 'Submit decision' }.to have_enqueued_job(NotifyAppStore)
-    end
-
     it 'prevents duplicate decisions' do
       application.rejected!
       click_on 'Submit decision'
@@ -36,6 +34,10 @@ RSpec.describe 'Decide an application', :stub_oauth_token do
     context 'once the decision has been processed' do
       before do
         click_on 'Submit decision'
+      end
+
+      it 'tells the app store' do
+        expect(update_stub).to have_been_requested
       end
 
       it 'shows my decision' do

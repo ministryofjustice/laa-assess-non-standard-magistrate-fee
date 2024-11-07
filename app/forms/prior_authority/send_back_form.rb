@@ -34,7 +34,7 @@ module PriorAuthority
         update_local_records
 
         AppStoreClient.new.unassign(submission)
-        NotifyAppStore.perform_later(submission:)
+        NotifyAppStore.perform_now(submission:)
       end
 
       true
