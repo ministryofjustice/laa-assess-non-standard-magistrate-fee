@@ -31,10 +31,6 @@ en:
         no_disbursements: This claim has no disbursements
         no_adjustments: This claim has no adjusted disbursements
         table_caption: Adjusted disbursements
-      disbursements_total:
-        link_title: View disbursement total
-        provider_total: Requested (including any VAT)
-        caseworker_total: Allowed (including any VAT)
       edit:
         page_title: Adjust a disbursement
         heading: Adjust a disbursement

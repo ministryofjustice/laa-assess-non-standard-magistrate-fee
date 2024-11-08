@@ -3,7 +3,7 @@ module Nsm
     class ContactDetails < BaseViewModel
       attribute :firm_office
       attribute :solicitor
-      attribute :vat_rate
+      attribute :submission
 
       def key
         'contact_details'
@@ -45,7 +45,7 @@ module Nsm
 
       def vat_registered
         if firm_office['vat_registered'] == 'yes'
-          "#{(vat_rate * 100).to_i}%"
+          "#{(submission.rates.vat * 100).to_i}%"
         else
           'No'
         end

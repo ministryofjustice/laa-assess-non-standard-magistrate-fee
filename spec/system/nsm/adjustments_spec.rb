@@ -27,7 +27,7 @@ RSpec.describe 'Adjustments' do
         expect(page).to have_content('Adjusted costs')
         within('.govuk-table') do
           expect(page).to have_content('Waiting')
-            .and have_content('£125.58')
+            .and have_content('£144.42')
             .and have_content('Delete')
         end
       end
@@ -59,7 +59,7 @@ RSpec.describe 'Adjustments' do
         expect(page).to have_content('Adjusted costs')
         within('.govuk-table') do
           expect(page).to have_content('Letters')
-            .and have_content('£83.30')
+            .and have_content('£19.63')
         end
       end
 

@@ -247,7 +247,7 @@ RSpec.describe Nsm::WorkItemForm do
       let(:work_type_value) { 'travel' }
 
       it 'creates events for the change change' do
-        expect { subject.save }.to change(Event, :count).by(4)
+        expect { subject.save }.to change(Event, :count).by(3)
       end
 
       it 'updates the JSON data' do
@@ -259,8 +259,7 @@ RSpec.describe Nsm::WorkItemForm do
           'id' => 'cf5e303e-98dd-4b0f-97ea-3560c4c5f137',
           'time_spent' => 95,
           'time_spent_original' => 161,
-          'pricing' => 4.7,
-          'pricing_original' => 24.0,
+          'pricing' => 24.0,
           'work_type' => 'travel',
           'work_type_original' => { 'en' => 'Waiting', 'value' => 'waiting' },
           'uplift' => 0,

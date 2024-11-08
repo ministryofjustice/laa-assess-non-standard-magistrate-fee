@@ -34,6 +34,12 @@ module Nsm
       true
     end
 
+    def work_item_prices
+      work_item_pricing.keys.index_with do |key|
+        claim.rates.work_items[key.to_sym]
+      end
+    end
+
     private
 
     def process_fields
@@ -46,7 +52,6 @@ module Nsm
 
     def process_work_item_fields
       process_field(value: work_type_value, field: 'work_type')
-      process_field(value: work_item_pricing[work_type_value], field: 'pricing')
     end
 
     def selected_record

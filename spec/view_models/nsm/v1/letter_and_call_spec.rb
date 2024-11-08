@@ -1,20 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe Nsm::V1::LetterAndCall do
-  subject(:letterandcall) { described_class.new(params) }
+  subject(:letterandcall) { described_class.new(params.merge(type: 'letters', submission: create(:claim))) }
 
   describe '#provider_requested_amount' do
-    let(:params) { { count_original: 1, uplift_original: 10, pricing: 10.5 } }
+    let(:params) { { count: 2, count_original: 1, uplift: 5, uplift_original: 10 } }
 
     it 'calculates the correct provider requested amount' do
-      expect(letterandcall.provider_requested_amount).to eq(11.55)
+      expect(letterandcall.provider_requested_amount).to eq(4.5)
     end
 
     context 'when originals are not set' do
-      let(:params) { { count: 10, uplift: 10, pricing: 1.95 } }
+      let(:params) { { count: 10, uplift: 10 } }
 
       it 'calulates the initial uplift' do
-        expect(letterandcall.provider_requested_amount).to eq(10.0 * 1.1 * 1.95)
+        expect(letterandcall.provider_requested_amount).to eq(44.99)
       end
     end
   end
@@ -56,10 +56,10 @@ RSpec.describe Nsm::V1::LetterAndCall do
   end
 
   describe '#caseworker_amount' do
-    let(:params) { { count: 1, uplift: 5, pricing: 10.0 } }
+    let(:params) { { count: 1, uplift: 5 } }
 
     it 'calculates the correct caseworker amount' do
-      expect(letterandcall.caseworker_amount).to eq(10.5)
+      expect(letterandcall.caseworker_amount).to eq(4.29)
     end
   end
 
@@ -113,7 +113,6 @@ RSpec.describe Nsm::V1::LetterAndCall do
         'type' => 'letters',
         'count' => 12,
         'uplift' => 0,
-        'pricing' => 3.56,
       }
     end
 
@@ -123,7 +122,7 @@ RSpec.describe Nsm::V1::LetterAndCall do
           'Letters',
           { numeric: true, text: '12' },
           { numeric: true, text: '0%' },
-          { numeric: true, text: '£42.72' },
+          { numeric: true, text: '£49.08' },
           ''
         ]
       )
@@ -135,7 +134,6 @@ RSpec.describe Nsm::V1::LetterAndCall do
           'type' => 'letters',
           'count' => 12,
           'uplift' => 0,
-          'pricing' => 3.56,
           'count_original' => 15,
           'uplift_original' => 95,
           'adjustment_comment' => 'something'
@@ -148,8 +146,8 @@ RSpec.describe Nsm::V1::LetterAndCall do
             'Letters',
             { numeric: true, text: '15' },
             { numeric: true, text: '95%' },
-            { numeric: true, text: '£104.13' },
-            { numeric: true, text: '£42.72' }
+            { numeric: true, text: '£119.63' },
+            { numeric: true, text: '£49.08' }
           ]
         )
       end
@@ -162,7 +160,6 @@ RSpec.describe Nsm::V1::LetterAndCall do
         'type' => 'letters',
         'count' => 12,
         'uplift' => 0,
-        'pricing' => 3.56,
         'count_original' => 15,
         'uplift_original' => 95,
         'adjustment_comment' => 'something'
@@ -176,7 +173,7 @@ RSpec.describe Nsm::V1::LetterAndCall do
           'something',
           { numeric: true, text: '12' },
           { numeric: true, text: '0%' },
-          { numeric: true, text: '£42.72' }
+          { numeric: true, text: '£49.08' }
         ]
       )
     end
@@ -209,16 +206,15 @@ RSpec.describe Nsm::V1::LetterAndCall do
         'count' => 12,
         'uplift' => 0,
         'uplift_original' => 20,
-        'pricing' => 3.56,
       }
     end
 
     it 'calculates the correct provider requested amount' do
       expect(letterandcall.provider_fields).to eq(
         '.number' => '12',
-        '.rate' => '£3.56',
+        '.rate' => '£4.09',
         '.uplift_requested' => '20%',
-        '.total_claimed' => '£51.26',
+        '.total_claimed' => '£58.90',
       )
     end
   end
@@ -240,7 +236,6 @@ RSpec.describe Nsm::V1::LetterAndCall do
           count_original: 2,
           count: 1,
           uplift: 10,
-          pricing: 1.95,
         }
       end
 
@@ -253,7 +248,6 @@ RSpec.describe Nsm::V1::LetterAndCall do
           count: 1,
           uplift: 11,
           uplift_original: 10,
-          pricing: 1.95,
         }
       end
 
@@ -265,7 +259,6 @@ RSpec.describe Nsm::V1::LetterAndCall do
         {
           count: 1,
           uplift: 10,
-          pricing: 1.95,
         }
       end
 
@@ -282,7 +275,6 @@ RSpec.describe Nsm::V1::LetterAndCall do
           count_original: 2,
           count: 1,
           uplift: 10,
-          pricing: 1.95,
         }
       end
 
@@ -295,7 +287,6 @@ RSpec.describe Nsm::V1::LetterAndCall do
           count: 1,
           uplift: 11,
           uplift_original: 10,
-          pricing: 1.95,
         }
       end
 
@@ -307,7 +298,6 @@ RSpec.describe Nsm::V1::LetterAndCall do
         {
           count: 1,
           uplift: 10,
-          pricing: 1.95,
         }
       end
 

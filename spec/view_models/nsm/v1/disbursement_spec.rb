@@ -23,27 +23,37 @@ RSpec.describe Nsm::V1::Disbursement do
   end
 
   describe '#provider_requested_total_cost' do
-    let(:args) { { 'total_cost_without_vat_original' => 240, 'vat_amount_original' => 60 } }
+    let(:args) do
+      { 'total_cost_without_vat_original' => 240,
+        'total_cost_without_vat' => 100,
+        'disbursement_type' => 'other',
+        'apply_vat' => 'true',
+        :submission => create(:claim) }
+    end
 
     it 'calculates the cost' do
-      expect(disbursement.provider_requested_total_cost).to eq(300)
+      expect(disbursement.provider_requested_total_cost).to eq(288.0)
     end
   end
 
   describe '#caseworker_total_cost' do
     context 'when amount without vat is zero' do
-      let(:args) { { 'total_cost_without_vat' => 0, 'vat_amount' => 60 } }
+      let(:args) do
+        { 'total_cost_without_vat' => 0, 'disbursement_type' => 'other', 'apply_vat' => 'true', :submission => create(:claim) }
+      end
 
       it 'returns calculated cost' do
-        expect(disbursement.caseworker_total_cost).to eq(60)
+        expect(disbursement.caseworker_total_cost).to eq(0)
       end
     end
 
     context 'when amount without vat is not zero' do
-      let(:args) { { 'total_cost_without_vat' => 120, 'vat_amount' => 60 } }
+      let(:args) do
+        { 'total_cost_without_vat' => 120, 'disbursement_type' => 'other', 'apply_vat' => 'true', :submission => create(:claim) }
+      end
 
       it 'returns the calculated cost' do
-        expect(disbursement.caseworker_total_cost).to eq(180)
+        expect(disbursement.caseworker_total_cost).to eq(144)
       end
     end
   end
@@ -51,15 +61,15 @@ RSpec.describe Nsm::V1::Disbursement do
   describe '#disbursement_fields' do
     let(:args) do
       {
-        'total_cost_without_vat' => 83, 'vat_amount' => 17,
+        'total_cost_without_vat' => 83.3,
         'disbursement_date' => Date.new(2022, 1, 1),
         'other_type' => other_type,
-        'disbursement_type' => 'car',
+        'disbursement_type' => disbursement_type,
         'details' => 'details',
         'prior_authority' => prior_authority,
-        'vat_rate' => 0.2,
         'apply_vat' => apply_vat,
-        'miles' => miles
+        'miles' => miles,
+        :submission => create(:claim),
       }
     end
 
@@ -67,6 +77,7 @@ RSpec.describe Nsm::V1::Disbursement do
     let(:miles) { nil }
     let(:apply_vat) { 'true' }
     let(:other_type) { 'accountants' }
+    let(:disbursement_type) { 'other' }
 
     it 'returns a hash with the correct fields if no miles' do
       expected_fields = {
@@ -75,7 +86,7 @@ RSpec.describe Nsm::V1::Disbursement do
         details: 'Details',
         prior_authority: 'Yes',
         vat: '20%',
-        total: '£100.00'
+        total: '£99.96'
       }
 
       expect(disbursement.disbursement_fields).to eq(expected_fields)
@@ -83,6 +94,7 @@ RSpec.describe Nsm::V1::Disbursement do
 
     context 'when miles is set' do
       let(:miles) { 10 }
+      let(:disbursement_type) { 'car' }
 
       it 'returns a hash with the correct fields if miles present' do
         expected_fields = {
@@ -92,7 +104,7 @@ RSpec.describe Nsm::V1::Disbursement do
           prior_authority: 'Yes',
           vat: '20%',
           miles: '10.0',
-          total: '£100.00'
+          total: '£5.40'
         }
 
         expect(disbursement.disbursement_fields).to eq(expected_fields)
@@ -109,7 +121,7 @@ RSpec.describe Nsm::V1::Disbursement do
           details: 'Details',
           prior_authority: 'Yes',
           vat: '20%',
-          total: '£100.00'
+          total: '£83.30'
         }
 
         expect(disbursement.disbursement_fields).to eq(expected_fields)
@@ -125,7 +137,7 @@ RSpec.describe Nsm::V1::Disbursement do
           type: 'Accountants',
           details: 'Details',
           vat: '20%',
-          total: '£100.00'
+          total: '£99.96'
         }
 
         expect(disbursement.disbursement_fields).to eq(expected_fields)
@@ -142,6 +154,8 @@ RSpec.describe Nsm::V1::Disbursement do
 
     context 'when other type not set' do
       let(:other_type) { nil }
+      let(:disbursement_type) { 'car' }
+      let(:miles) { 10 }
 
       it 'shows the main type name' do
         expect(disbursement.disbursement_fields[:type]).to eq('Car mileage')
@@ -179,9 +193,11 @@ RSpec.describe Nsm::V1::Disbursement do
         'total_cost_without_vat_original' => 74,
         'total_cost_without_vat' => 83,
         'disbursement_date' => Date.new(2022, 1, 1),
-        'vat_amount_original' => 16.6,
-        'vat_amount' => 0.0,
-        'adjustment_comment' => adjustment_comment
+        'apply_vat_original' => 'true',
+        'apply_vat' => 'false',
+        'adjustment_comment' => adjustment_comment,
+        :submission => create(:claim),
+        'disbursement_type' => 'other',
 
       }
     end
@@ -199,11 +215,11 @@ RSpec.describe Nsm::V1::Disbursement do
     end
 
     describe '#claimed_vat' do
-      it { expect(disbursement.claimed_vat).to eq('£16.60') }
+      it { expect(disbursement.claimed_vat).to eq('£14.80') }
     end
 
     describe '#claimed_gross' do
-      it { expect(disbursement.claimed_gross).to eq('£90.60') }
+      it { expect(disbursement.claimed_gross).to eq('£88.80') }
     end
 
     describe '#allowed_net' do
@@ -226,9 +242,9 @@ RSpec.describe Nsm::V1::Disbursement do
       let(:args) do
         {
           'total_cost_without_vat_original' => 250,
-          'vat_amount_original' => 0,
           'total_cost_without_vat' => 240,
-          'vat_amount' => 0,
+          :submission => create(:claim),
+          :disbursement_type => 'other',
         }
       end
 
@@ -239,9 +255,11 @@ RSpec.describe Nsm::V1::Disbursement do
       let(:args) do
         {
           'total_cost_without_vat_original' => 250,
-          'vat_amount_original' => 0,
+          'apply_vat_original' => 'false',
           'total_cost_without_vat' => 250,
-          'vat_amount' => 20,
+          'apply_vat' => true,
+          :submission => create(:claim),
+          :disbursement_type => 'other',
         }
       end
 
@@ -252,7 +270,8 @@ RSpec.describe Nsm::V1::Disbursement do
       let(:args) do
         {
           'total_cost_without_vat' => 250,
-          'vat_amount' => 0,
+          :submission => create(:claim),
+          :disbursement_type => 'other',
         }
       end
 
@@ -267,9 +286,9 @@ RSpec.describe Nsm::V1::Disbursement do
       let(:args) do
         {
           'total_cost_without_vat_original' => 250,
-          'vat_amount_original' => 0,
           'total_cost_without_vat' => 240,
-          'vat_amount' => 0,
+          :submission => create(:claim),
+          :disbursement_type => 'other',
         }
       end
 
@@ -280,9 +299,11 @@ RSpec.describe Nsm::V1::Disbursement do
       let(:args) do
         {
           'total_cost_without_vat_original' => 250,
-          'vat_amount_original' => 0,
+          'apply_vat_original' => 'false',
           'total_cost_without_vat' => 250,
-          'vat_amount' => 20,
+          'apply_vat' => 'true',
+          :submission => create(:claim),
+          :disbursement_type => 'other',
         }
       end
 
@@ -293,7 +314,8 @@ RSpec.describe Nsm::V1::Disbursement do
       let(:args) do
         {
           'total_cost_without_vat' => 250,
-          'vat_amount' => 0,
+          :submission => create(:claim),
+          :disbursement_type => 'other',
         }
       end
 

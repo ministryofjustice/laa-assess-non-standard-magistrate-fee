@@ -10,15 +10,12 @@ module Nsm
       attribute :disbursement_type, :translated, scope: 'nsm.disbursement_type'
       attribute :other_type, :translated, scope: 'nsm.other_disbursement_type'
       adjustable_attribute :miles, :decimal, precision: 10, scale: 3
-      attribute :pricing, :decimal, precision: 10, scale: 2
       adjustable_attribute :total_cost_without_vat, :decimal, precision: 10, scale: 2
-      attribute :vat_rate, :decimal, precision: 3, scale: 2
       attribute :disbursement_date, :date
       attribute :id, :string
       attribute :details, :string
       attribute :prior_authority, :string
       adjustable_attribute :apply_vat, :string
-      adjustable_attribute :vat_amount, :decimal, precision: 10, scale: 2
       attribute :adjustment_comment
 
       class << self
@@ -47,17 +44,17 @@ module Nsm
       end
 
       def provider_requested_total_cost
-        original_total_cost_without_vat + original_vat_amount
+        calculation[:claimed_total_inc_vat]
       end
       alias provider_requested_amount provider_requested_total_cost
 
       def caseworker_total_cost
-        total_cost_without_vat + vat_amount
+        calculation[:assessed_total_inc_vat]
       end
       alias caseworker_amount caseworker_total_cost
 
       def form_attributes
-        attributes.slice('total_cost_without_vat', 'miles', 'apply_vat', 'vat_rate').merge(
+        attributes.slice('total_cost_without_vat', 'miles', 'apply_vat').merge(
           'explanation' => adjustment_comment
         )
       end
@@ -70,15 +67,31 @@ module Nsm
         table_fields[:miles] = miles.to_s if miles.present?
         table_fields[:details] = details.capitalize
         table_fields[:prior_authority] = prior_authority.capitalize if prior_authority
-        table_fields[:vat] = format_vat_rate(vat_rate)
+        table_fields[:vat] = format_vat_rate
         table_fields[:total] = NumberTo.pounds(provider_requested_total_cost)
 
         table_fields
       end
       # rubocop:enable Metrics/AbcSize
 
-      def format_vat_rate(rate)
-        "#{(rate * 100).to_i}%"
+      def pricing
+        submission.rates.disbursements[disbursement_type.value.to_sym]
+      end
+
+      def format_vat_rate
+        "#{(vat_rate * 100).to_i}%"
+      end
+
+      def vat_rate
+        submission.rates.vat
+      end
+
+      def vat_amount
+        calculation[:assessed_vat]
+      end
+
+      def original_vat_amount
+        calculation[:claimed_vat]
       end
 
       def position
@@ -159,6 +172,23 @@ module Nsm
         else
           Rails.application.routes.url_helpers.nsm_claim_disbursements_path(claim, anchor: id)
         end
+      end
+
+      def calculation
+        @calculation ||= LaaCrimeFormsCommon::Pricing::Nsm.calculate_disbursement(submission.data_for_calculation,
+                                                                                  data_for_calculation)
+      end
+
+      def data_for_calculation
+        {
+          disbursement_type: disbursement_type.value,
+          claimed_cost: original_total_cost_without_vat,
+          claimed_miles: original_miles,
+          claimed_apply_vat: original_apply_vat == 'true',
+          assessed_cost: total_cost_without_vat,
+          assessed_miles: miles,
+          assessed_apply_vat: apply_vat == 'true',
+        }
       end
     end
   end

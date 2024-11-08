@@ -44,19 +44,15 @@ RSpec.describe Nsm::AllAdjustmentsDeleter do
     context 'when deleting work_item adjustments' do
       before { service.call }
 
-      # rubocop:disable RSpec/MultipleExpectations
       it 'reverts changes' do
         expect(claim.reload.data.dig('work_items', 0, 'uplift')).to eq 50
-        expect(claim.data.dig('work_items', 0, 'pricing')).to eq 44
         expect(claim.data.dig('work_items', 0, 'work_type')).to eq 'attendance_without_counsel'
         expect(claim.data.dig('work_items', 0, 'time_spent')).to eq 181
         expect(claim.data.dig('work_items', 0, 'uplift_original')).to be_nil
-        expect(claim.data.dig('work_items', 0, 'pricing_original')).to be_nil
         expect(claim.data.dig('work_items', 0, 'work_type_original')).to be_nil
         expect(claim.data.dig('work_items', 0, 'time_spent_original')).to be_nil
         expect(claim.data.dig('work_items', 0, 'adjustment_comment')).to be_nil
       end
-      # rubocop:enable RSpec/MultipleExpectations
 
       it 'creates relevant events' do
         event = claim.events.find { _1.details['field'] == 'time_spent' }

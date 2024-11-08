@@ -40,7 +40,7 @@
     <%= form_with model: form, url: nsm_claim_work_item_path(claim.id, item.id), method: :put do |f| %>
 
       <%= f.govuk_radio_buttons_fieldset(:work_type_value, legend: { size: 's' }) do %>
-        <% form.work_item_pricing.each do |key, amount| %>
+        <% form.work_item_prices.each do |key, amount| %>
           <%= f.govuk_radio_button :work_type_value, key,
                                    label: { text: t("nsm.work_items.work_types.#{key}") },
                                    hint: { text: t(".work_type_hint", value: NumberTo.pounds(amount)) },

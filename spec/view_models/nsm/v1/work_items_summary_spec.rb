@@ -24,9 +24,9 @@ RSpec.describe Nsm::V1::WorkItemSummary do
   describe 'footer' do
     let(:work_items) do
       [{ 'work_type' => 'travel',
-          'time_spent' => 20, 'vat_rate' => 0.2, 'pricing' => 300.0 },
+          'time_spent' => 20, 'vat_rate' => -1, 'pricing' => -1 },
        { 'work_type' => 'waiting',
-         'time_spent' => 30, 'vat_rate' => 0.2, 'pricing' => 200.0 }]
+         'time_spent' => 30, 'vat_rate' => -1, 'pricing' => -1 }]
     end
 
     it 'renders a summary row' do
@@ -34,7 +34,7 @@ RSpec.describe Nsm::V1::WorkItemSummary do
         [
           { numeric: false, text: 'Total' },
           { numeric: true, text: '' },
-          { numeric: true, text: '<span class="govuk-visually-hidden">Sum of net cost claimed: </span>£200.00' },
+          { numeric: true, text: '<span class="govuk-visually-hidden">Sum of net cost claimed: </span>£23.00' },
           '', ''
         ]
       )
@@ -45,7 +45,7 @@ RSpec.describe Nsm::V1::WorkItemSummary do
     context 'when a single work item exists' do
       let(:work_items) do
         [{ 'work_type' => 'travel',
-           'time_spent' => 20, 'vat_rate' => 0.2, 'pricing' => 300.0 }]
+           'time_spent' => 20, 'vat_rate' => -1, 'pricing' => -1 }]
       end
 
       it 'includes the summed table field row' do
@@ -56,7 +56,7 @@ RSpec.describe Nsm::V1::WorkItemSummary do
               numeric: true,
               text: '0<span class="govuk-visually-hidden"> hours</span>:20<span class="govuk-visually-hidden"> minutes</span>'
             },
-            { numeric: true, text: '£100.00' },
+            { numeric: true, text: '£9.20' },
             '', ''
           ]
         )
@@ -77,12 +77,12 @@ RSpec.describe Nsm::V1::WorkItemSummary do
               numeric: true,
               text: '0<span class="govuk-visually-hidden"> hours</span>:40<span class="govuk-visually-hidden"> minutes</span>'
             },
-            { numeric: true, text: '£200.00' },
+            { numeric: true, text: '£18.40' },
             {
               numeric: true,
               text: '0<span class="govuk-visually-hidden"> hours</span>:20<span class="govuk-visually-hidden"> minutes</span>'
             },
-            { numeric: true, text: '£100.00' }
+            { numeric: true, text: '£9.20' }
           ]
         )
       end
@@ -103,9 +103,9 @@ RSpec.describe Nsm::V1::WorkItemSummary do
     context 'when multiple work item of the same types exists' do
       let(:work_items) do
         [{ 'work_type' => 'travel',
-           'time_spent' => 20, 'vat_rate' => 0.2, 'pricing' => 150.0 },
+           'time_spent' => 20, 'vat_rate' => -1, 'pricing' => -1 },
          { 'work_type' => 'travel',
-           'time_spent' => 30, 'vat_rate' => 0.2, 'pricing' => 300.0 }]
+           'time_spent' => 30, 'vat_rate' => -1, 'pricing' => -1 }]
       end
 
       it 'includes a summed table field row' do
@@ -116,7 +116,7 @@ RSpec.describe Nsm::V1::WorkItemSummary do
               numeric: true,
               text: '0<span class="govuk-visually-hidden"> hours</span>:50<span class="govuk-visually-hidden"> minutes</span>'
             },
-            { numeric: true, text: '£200.00' },
+            { numeric: true, text: '£23.00' },
             '', ''
           ]
         )
