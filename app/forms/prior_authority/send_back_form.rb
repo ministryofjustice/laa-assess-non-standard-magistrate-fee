@@ -33,6 +33,7 @@ module PriorAuthority
         stash(add_draft_send_back_event: false)
         update_local_records
 
+        AppStoreClient.new.unassign(submission)
         NotifyAppStore.perform_later(submission:)
       end
 

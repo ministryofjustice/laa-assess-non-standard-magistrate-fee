@@ -26,15 +26,23 @@ class SearchResult
   end
 
   def caseworker
-    submission.assignments.first&.display_name || I18n.t('search.unassigned')
+    User.find_by(id: @data['assigned_user_id'])&.display_name || I18n.t('search.unassigned')
   end
 
   def date_updated
     submission.last_updated_at.to_fs(:stamp)
   end
 
+  def service_name
+    I18n.t(submission.data['service_type'], scope: 'prior_authority.service_types')
+  end
+
   def state_tag
     submission_state_tag(submission)
+  end
+
+  def risk_name
+    I18n.t("nsm.claims.table.risk.#{submission.risk}")
   end
 
   delegate :application_type, to: :submission

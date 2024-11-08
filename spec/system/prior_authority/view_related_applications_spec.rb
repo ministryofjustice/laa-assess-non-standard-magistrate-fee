@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'View related applications' do
+RSpec.describe 'View related applications', :stub_oauth_token do
   let(:me) { create(:caseworker) }
   let(:wanda) { create(:caseworker, first_name: 'Wanda', last_name: 'Worker') }
   let(:able) { create(:caseworker, first_name: 'Able', last_name: 'Worker') }
@@ -75,6 +75,36 @@ RSpec.describe 'View related applications' do
            data: build(:prior_authority_data, laa_reference: 'LAA-xxx', ufn: '010124/001'))
   end
 
+  let(:data_for) do
+    lambda do |application|
+      { application_id: application.id,
+        application: application.data }
+    end
+  end
+
+  let(:endpoint) { 'https://appstore.example.com/v1/submissions/searches' }
+
+  let(:related_applications_payload) do
+    {
+      page: 1,
+      sort_by: 'last_updated',
+      sort_direction: 'descending',
+      per_page: 10,
+      application_type: 'crm4',
+      id_to_exclude: assigned_to_me.id,
+      query: assigned_to_me.data['ufn'],
+      account_number: assigned_to_me.data['firm_office']['account_number']
+    }
+  end
+
+  let(:laa_ref_sorted_related_applications_payload) do
+    related_applications_payload.merge(sort_by: 'laa_reference', sort_direction: 'ascending')
+  end
+
+  let(:laa_ref_re_sorted_related_applications_payload) do
+    laa_ref_sorted_related_applications_payload.merge(sort_direction: 'descending')
+  end
+
   before do
     sign_in me
     visit '/'
@@ -83,13 +113,16 @@ RSpec.describe 'View related applications' do
     create(:assignment,
            user: me,
            submission: assigned_to_me)
-
-    visit prior_authority_root_path
   end
 
   context 'when the application has NO related applications' do
     before do
-      click_on 'LAA-111'
+      stub_request(:post, endpoint).to_return(
+        status: 201,
+        body: { metadata: { total_results: 0 },
+                raw_data: [] }.to_json
+      )
+      visit prior_authority_application_path(assigned_to_me)
       click_on 'Related applications'
     end
 
@@ -103,30 +136,38 @@ RSpec.describe 'View related applications' do
   end
 
   context 'when the application has related applications' do
+    let(:top_row_selector) { '.govuk-table tbody tr:nth-child(1)' }
+
     before do
-      unassigned
-      in_progress
-      rejected
-      granted
+      stub_request(:post, endpoint).with(body: related_applications_payload).to_return(
+        status: 201,
+        body: {
+          metadata: { total_results: 4 },
+          raw_data: [data_for.call(granted), data_for.call(rejected), data_for.call(in_progress), data_for.call(unassigned)]
+        }.to_json
+      )
+      stub_request(:post, endpoint).with(body: laa_ref_sorted_related_applications_payload).to_return(
+        status: 201,
+        body: {
+          metadata: { total_results: 4 },
+          raw_data: [data_for.call(unassigned), data_for.call(in_progress), data_for.call(rejected), data_for.call(granted)]
+        }.to_json
+      )
+      stub_request(:post, endpoint).with(body: laa_ref_re_sorted_related_applications_payload).to_return(
+        status: 201,
+        body: {
+          metadata: { total_results: 4 },
+          raw_data: [data_for.call(granted), data_for.call(rejected), data_for.call(in_progress), data_for.call(unassigned)]
+        }.to_json
+      )
 
-      create(:assignment, user: wanda, submission: in_progress)
-      create(:assignment, user: able, submission: rejected)
-      create(:assignment, user: able, submission: granted)
-
-      click_on 'LAA-111'
+      visit prior_authority_application_path(assigned_to_me)
       click_on 'Related applications'
     end
 
     it 'displays the required table headers' do
       within('.govuk-table') do
         expect(page).to have_content("LAA reference\nClient\nCaseworker\nService\nLast updated\nStatus\n")
-      end
-    end
-
-    it 'does NOT show the current application or unrelated applications' do
-      within('.govuk-table') do
-        expect(page).to have_no_content('LAA-1')
-        expect(page).to have_no_content('LAA-x')
       end
     end
 
@@ -155,77 +196,13 @@ RSpec.describe 'View related applications' do
         expect(page).to have_content('LAA-555')
       end
     end
-
-    it 'allows me to sort by client name' do
-      click_on 'Client'
-      within(top_row_selector) do
-        expect(page).to have_content('Abe Abrahams')
-      end
-
-      click_on 'Client'
-      within(top_row_selector) do
-        expect(page).to have_content('Zoe Ziegler')
-      end
-    end
-
-    it 'allows me to sort by case worker name' do
-      click_on 'Caseworker'
-      within(top_row_selector) do
-        expect(page).to have_content('Able Worker')
-      end
-
-      click_on 'Caseworker'
-      within(top_row_selector) do
-        expect(page).to have_content('Wanda Worker')
-      end
-    end
-
-    it 'allows me to sort by Service name' do
-      click_on 'Service'
-      within(top_row_selector) do
-        expect(page).to have_content('A&E consultant')
-      end
-
-      click_on 'Service'
-      within(top_row_selector) do
-        expect(page).to have_content('Voice recognition')
-      end
-    end
-
-    it 'allows me to sort by "Last updated" date' do
-      click_on 'Last updated'
-      within(top_row_selector) do
-        expect(page).to have_content('LAA-222')
-      end
-
-      click_on 'Last updated'
-      within(top_row_selector) do
-        expect(page).to have_content('LAA-555')
-      end
-    end
-
-    it 'allows me to sort by status' do
-      click_on 'Status'
-      within(top_row_selector) do
-        expect(page).to have_content('Granted')
-      end
-
-      click_on 'Status'
-      within(top_row_selector) do
-        expect(page).to have_content('Rejected')
-      end
-    end
-
-    def top_row_selector
-      '.govuk-table tbody tr:nth-child(1)'
-    end
   end
 
   context 'when the application has many related applications' do
     let(:other) do
       create_list(
         :prior_authority_application,
-        10,
+        11,
         state: 'submitted',
         created_at: 36.hours.ago,
         data: build(
@@ -236,11 +213,27 @@ RSpec.describe 'View related applications' do
       )
     end
 
-    before do
-      in_progress
-      other
+    let(:second_page_payload) do
+      related_applications_payload.merge(page: 2)
+    end
 
-      click_on 'LAA-111'
+    before do
+      stub_request(:post, endpoint).with(body: related_applications_payload).to_return(
+        status: 201,
+        body: {
+          metadata: { total_results: 11 },
+          raw_data: other[0..10].map { data_for.call(_1) },
+        }.to_json
+      )
+      stub_request(:post, endpoint).with(body: second_page_payload).to_return(
+        status: 201,
+        body: {
+          metadata: { total_results: 11 },
+          raw_data: [data_for.call(other.last)]
+        }.to_json
+      )
+
+      visit prior_authority_application_path(assigned_to_me)
       click_on 'Related applications'
     end
 

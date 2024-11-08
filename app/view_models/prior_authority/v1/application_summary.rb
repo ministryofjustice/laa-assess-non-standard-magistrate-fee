@@ -41,6 +41,10 @@ module PriorAuthority
         firm_office['name']
       end
 
+      def firm_account_number
+        firm_office['account_number']
+      end
+
       def date_created_str
         submission.created_at.to_fs(:stamp)
       end

@@ -1,9 +1,20 @@
 require 'rails_helper'
 
-RSpec.describe 'Assign applications' do
+RSpec.describe 'Assign applications', :stub_oauth_token do
   let(:caseworker) { create(:caseworker) }
+  let(:assignment_stub) do
+    stub_request(:post, "https://appstore.example.com/v1/submissions/#{application.id}/assignment").to_return(status: 201)
+  end
+
+  let(:unassignment_stub) do
+    stub_request(:delete, "https://appstore.example.com/v1/submissions/#{application.id}/assignment").to_return(status: 204)
+  end
 
   before do
+    stub_request(:post, 'https://appstore.example.com/v1/submissions/searches').to_return(
+      status: 201,
+      body: { metadata: { total_results: 0 }, raw_data: [] }.to_json
+    )
     sign_in caseworker
     visit '/'
     click_on 'Accept analytics cookies'
@@ -14,12 +25,15 @@ RSpec.describe 'Assign applications' do
   context 'when there is an application' do
     let(:application) { create(:prior_authority_application, state: 'submitted') }
 
+    before { assignment_stub }
+
     it 'lets me assign the application to myself automatically' do
       click_on 'Assess next application'
       expect(application.reload.assignments.first.user).to eq caseworker
       expect(application.events.first).to be_an Event::Assignment
       expect(application.state).to eq 'submitted'
       expect(page).to have_current_path prior_authority_application_path(application)
+      expect(assignment_stub).to have_been_requested
     end
 
     context 'when I click to add the application to my list' do
@@ -35,6 +49,7 @@ RSpec.describe 'Assign applications' do
         expect(application.events.first).to be_an Event::Assignment
         expect(application.state).to eq 'submitted'
         expect(page).to have_current_path prior_authority_application_path(application)
+        expect(assignment_stub).to have_been_requested
       end
 
       it 'requires me to enter an explanation' do
@@ -61,6 +76,7 @@ RSpec.describe 'Assign applications' do
 
       context "when I click to remove the application from the user's list" do
         before do
+          unassignment_stub
           visit prior_authority_application_path(application)
           click_on 'Remove from list'
         end
@@ -72,6 +88,7 @@ RSpec.describe 'Assign applications' do
           expect(application.events.last).to be_an Event::Unassignment
           expect(application.state).to eq 'submitted'
           expect(page).to have_current_path prior_authority_application_path(application)
+          expect(unassignment_stub).to have_been_requested
         end
 
         it 'requires me to enter an explanation' do

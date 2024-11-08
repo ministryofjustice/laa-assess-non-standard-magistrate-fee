@@ -29,6 +29,7 @@ module Nsm
                                       current_user: current_user,
                                       comment: comment)
 
+          AppStoreClient.new.unassign(claim)
           assignment.delete
         end
       end

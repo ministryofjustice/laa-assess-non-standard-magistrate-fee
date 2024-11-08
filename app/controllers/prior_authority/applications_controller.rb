@@ -6,24 +6,24 @@ module PriorAuthority
     def your
       return redirect_to open_prior_authority_applications_path unless policy(PriorAuthorityApplication).assign?
 
-      @pagy, applications = order_and_paginate(PriorAuthorityApplication.open_and_assigned_to(current_user))
-      @applications = applications.map do |application|
-        BaseViewModel.build(:table_row, application)
-      end
+      model = PriorAuthority::V1::YourApplications.new(params.permit(:page, :sort_by, :sort_direction).merge(current_user:))
+      model.execute
+      @pagy = model.pagy
+      @applications = model.results
     end
 
     def open
-      @pagy, applications = order_and_paginate(PriorAuthorityApplication.open)
-      @applications = applications.map do |application|
-        BaseViewModel.build(:table_row, application)
-      end
+      model = PriorAuthority::V1::OpenApplications.new(params.permit(:page, :sort_by, :sort_direction))
+      model.execute
+      @pagy = model.pagy
+      @applications = model.results
     end
 
     def closed
-      @pagy, applications = order_and_paginate(PriorAuthorityApplication.closed)
-      @applications = applications.map do |application|
-        BaseViewModel.build(:table_row, application)
-      end
+      model = PriorAuthority::V1::ClosedApplications.new(params.permit(:page, :sort_by, :sort_direction))
+      model.execute
+      @pagy = model.pagy
+      @applications = model.results
     end
 
     def show
@@ -34,10 +34,6 @@ module PriorAuthority
     end
 
     private
-
-    def order_and_paginate(query)
-      pagy(Sorter.call(query, @sort_by, @sort_direction))
-    end
 
     def set_default_table_sort_options
       default = 'date_updated'

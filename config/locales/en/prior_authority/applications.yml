@@ -20,8 +20,8 @@ en:
           client_name: Client
           service_name: Service
           caseworker: Caseworker
-          date_updated: Last updated
-          status: Status
+          last_updated: Last updated
+          status_with_assignment: Status
       show:
         page_title: Application details
         overview: Overview

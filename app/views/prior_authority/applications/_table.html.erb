@@ -2,12 +2,16 @@
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
       <% columns.keys.each_with_index do |column_key, index| %>
-        <%= table_header_with_form(column_key,
-                                   "prior_authority.applications.table.header",
-                                   index,
-                                   path,
-                                   @sort_by,
-                                   @sort_direction) %>
+        <% if column_key == :caseworker %>
+          <th scope='col' class='govuk-table__header'><%= t('prior_authority.applications.table.header.caseworker') %></th>
+        <% else %>
+          <%= table_header_with_form(column_key,
+                                    "prior_authority.applications.table.header",
+                                    index,
+                                    path,
+                                    @sort_by,
+                                    @sort_direction) %>
+        <% end %>
       <% end %>
     </tr>
   </thead>

@@ -1,5 +1,6 @@
 module Nsm
   class ClaimsController < Nsm::BaseController
+    include AssignmentConcern
     before_action :set_default_table_sort_options, only: %i[your open closed]
     before_action :authorize_list, only: %i[your open closed]
 
@@ -7,22 +8,25 @@ module Nsm
       return redirect_to open_nsm_claims_path unless policy(Claim).assign?
 
       @current_section = :your
-      pagy, filtered_claims = order_and_paginate(Claim.pending_and_assigned_to(current_user))
-      your_claims = filtered_claims.map { |claim| BaseViewModel.build(:table_row, claim) }
-
-      render locals: { your_claims:, pagy: }
+      model = Nsm::V1::YourClaims.new(params.permit(:page, :sort_by, :sort_direction).merge(current_user:))
+      model.execute
+      render locals: { your_claims: model.results, pagy: model.pagy }
     end
 
     def open
       @current_section = :open
-      @pagy, claims = order_and_paginate(Claim.pending_decision)
-      @claims = claims.map { |claim| BaseViewModel.build(:table_row, claim) }
+      model = Nsm::V1::OpenClaims.new(params.permit(:page, :sort_by, :sort_direction))
+      model.execute
+      @pagy = model.pagy
+      @claims = model.results
     end
 
     def closed
       @current_section = :closed
-      @pagy, claims = order_and_paginate(Claim.decision_made)
-      @claims = claims.map { |claim| BaseViewModel.build(:table_row, claim) }
+      model = Nsm::V1::ClosedClaims.new(params.permit(:page, :sort_by, :sort_direction))
+      model.execute
+      @pagy = model.pagy
+      @claims = model.results
     end
 
     def create
@@ -30,11 +34,7 @@ module Nsm
       claim = Claim.auto_assignable(current_user).order(created_at: :asc).first
 
       if claim
-        Claim.transaction do
-          claim.assignments.create!(user: current_user)
-          ::Event::Assignment.build(submission: claim, current_user: current_user)
-        end
-
+        assign(claim)
         redirect_to nsm_claim_claim_details_path(claim)
       else
         redirect_to your_nsm_claims_path, flash: { notice: t('.no_pending_claims') }
@@ -42,10 +42,6 @@ module Nsm
     end
 
     private
-
-    def order_and_paginate(query)
-      pagy(Sorter.call(query, @sort_by, @sort_direction))
-    end
 
     def set_default_table_sort_options
       default = 'date_updated'

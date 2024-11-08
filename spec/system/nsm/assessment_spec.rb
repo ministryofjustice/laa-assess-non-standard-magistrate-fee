@@ -1,11 +1,16 @@
 require 'rails_helper'
 
-Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
+Rails.describe 'Assessment', :stub_oauth_token do
   let(:fixed_arbitrary_date) { DateTime.new(2024, 7, 4, 12, 3, 12) }
   let(:user) { create(:caseworker) }
   let(:claim) { create(:claim) }
 
   before do
+    stub_request(:post, 'https://appstore.example.com/v1/submissions/searches').to_return(
+      status: 201,
+      body: { metadata: { total_results: 0 }, raw_data: [] }.to_json
+    )
+
     sign_in user
     create(:assignment, submission: claim, user: user)
     visit '/'
@@ -80,7 +85,12 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
   end
 
   context 'when further information required' do
+    let(:unassignment_stub) do
+      stub_request(:delete, "https://appstore.example.com/v1/submissions/#{claim.id}/assignment").to_return(status: 204)
+    end
+
     before do
+      unassignment_stub
       travel_to fixed_arbitrary_date
       visit nsm_claim_claim_details_path(claim)
       click_link_or_button 'Send back to provider'
@@ -98,6 +108,8 @@ Rails.describe 'Assessment', :stub_oauth_token, :stub_update_claim do
       expect do
         click_link_or_button 'Submit'
       end.to have_enqueued_job(NotifyAppStore)
+
+      expect(unassignment_stub).to have_been_requested
     end
 
     context 'when I have sent a claim back' do

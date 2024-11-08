@@ -14,6 +14,11 @@ RSpec.describe 'Send an application back', :stub_oauth_token do
   end
 
   before do
+    stub_request(:post, 'https://appstore.example.com/v1/submissions/searches').to_return(
+      status: 201,
+      body: { metadata: { total_results: 0 }, raw_data: [] }.to_json
+    )
+
     stub_request(:get, "https://appstore.example.com/v1/submissions/#{application.id}").to_return(
       status: 200,
       body: { 'application' => application.data }.to_json,
@@ -24,6 +29,8 @@ RSpec.describe 'Send an application back', :stub_oauth_token do
       body: bank_holiday_list.to_json,
       headers: { 'Content-type' => 'application/json' }
     )
+
+    stub_request(:delete, "https://appstore.example.com/v1/submissions/#{application.id}/assignment").to_return(status: 204)
 
     sign_in caseworker
     create(:assignment, submission: application, user: caseworker)

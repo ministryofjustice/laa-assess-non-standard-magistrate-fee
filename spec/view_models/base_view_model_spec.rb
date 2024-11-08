@@ -20,13 +20,6 @@ RSpec.describe BaseViewModel do
     context 'for a single object' do
       let(:data) { { 'laa_reference' => 'LA111', 'defendants' => [{ 'some' => 'data' }], 'risk' => 'high' } }
 
-      it 'returns an instance with the correct attributes' do
-        result = described_class.build(:table_row, claim)
-        expect(result).to have_attributes(
-          risk: 'high',
-        )
-      end
-
       it 'builds the object from the hash of attributes' do
         summary = described_class.build(:claim_summary, claim)
         expect(summary).to have_attributes(

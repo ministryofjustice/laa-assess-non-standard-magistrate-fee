@@ -14,7 +14,28 @@ RSpec.describe 'Search', :stub_oauth_token do
     }
   end
 
+  let(:your_applications_stub) do
+    stub_request(:post, endpoint).with(body: your_applications_payload).to_return(
+      status: 201,
+      body: { metadata: { total_results: 0 },
+              raw_data: [] }.to_json
+    )
+  end
+
+  let(:your_applications_payload) do
+    {
+      page: 1,
+      sort_by: 'last_updated',
+      sort_direction: 'descending',
+      per_page: 20,
+      application_type: 'crm4',
+      status_with_assignment: %w[in_progress provider_updated],
+      current_caseworker_id: caseworker.id
+    }
+  end
+
   before do
+    your_applications_stub
     sign_in caseworker
   end
 

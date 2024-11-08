@@ -28,6 +28,7 @@ module PriorAuthority
           authorize(application, :unassign?)
           ::Event::Unassignment.build(submission: application, user: assignment.user,
                                       current_user: current_user, comment: comment)
+          AppStoreClient.new.unassign(application)
 
           assignment.destroy
         end

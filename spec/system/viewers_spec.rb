@@ -1,12 +1,20 @@
 require 'rails_helper'
 
-RSpec.describe 'Viewers' do
+RSpec.describe 'Viewers', :stub_oauth_token do
   let(:viewer) { create(:viewer, first_name: 'Me', last_name: 'Myself') }
   let(:submissions) { [claim, application] }
   let(:claim) { nil }
   let(:application) { nil }
+  let(:search_stub) do
+    stub_request(:post, 'https://appstore.example.com/v1/submissions/searches').to_return(
+      status: 201,
+      body: { metadata: { total_results: 0 },
+              raw_data: [] }.to_json
+    )
+  end
 
   before do
+    search_stub
     submissions
     sign_in viewer
   end

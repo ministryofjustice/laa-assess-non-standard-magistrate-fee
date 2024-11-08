@@ -4,6 +4,26 @@ RSpec.describe 'Search', :stub_oauth_token do
   let(:caseworker) { create(:caseworker, first_name: 'John', last_name: 'Everyman') }
   let(:endpoint) { 'https://appstore.example.com/v1/submissions/searches' }
 
+  let(:your_claims_stub) do
+    stub_request(:post, endpoint).with(body: your_claims_payload).to_return(
+      status: 201,
+      body: { metadata: { total_results: 0 },
+              raw_data: [] }.to_json
+    )
+  end
+
+  let(:your_claims_payload) do
+    {
+      page: 1,
+      sort_by: 'last_updated',
+      sort_direction: 'descending',
+      per_page: 20,
+      application_type: 'crm7',
+      status_with_assignment: %w[in_progress sent_back provider_updated],
+      current_caseworker_id: caseworker.id
+    }
+  end
+
   let(:payload) do
     {
       application_type: 'crm7',
@@ -16,6 +36,7 @@ RSpec.describe 'Search', :stub_oauth_token do
   end
 
   before do
+    your_claims_stub
     sign_in caseworker
   end
 

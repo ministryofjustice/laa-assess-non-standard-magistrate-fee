@@ -58,7 +58,7 @@ module Nsm
     end
 
     def submission_scope
-      @submission_scope ||= Claim.pending_and_assigned_to(current_user).find(params[:claim_id])
+      @submission_scope ||= Claim.find(params[:claim_id])
     end
   end
 end
