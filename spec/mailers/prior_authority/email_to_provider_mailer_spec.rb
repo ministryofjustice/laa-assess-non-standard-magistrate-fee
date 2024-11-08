@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe PriorAuthority::SubmissionFeedbackMailer, type: :mailer do
+RSpec.describe PriorAuthority::EmailToProviderMailer, type: :mailer do
   let(:recipient) { 'solicitor-contact@example.com' }
   let(:laa_case_reference) { 'LAA-FHaMVK' }
   let(:ufn) { '111111/111' }

@@ -13,8 +13,10 @@ RSpec.describe Nsm::FakeAssess, :stub_oauth_token do
 
   context 'when harnessing randomness' do
     before do
+      stub_request(:put, "https://appstore.example.com/v1/application/#{claim.id}").to_return(status: 201)
+      stub_request(:post, "https://appstore.example.com/v1/submissions/#{claim.id}/events").to_return(status: 201)
       create(:caseworker)
-      allow(NotifyAppStore).to receive(:perform_later)
+      allow(NotifyAppStore).to receive(:perform_now)
       allow(SecureRandom).to receive(:rand).and_return random_choice
       subject.perform([claim.id])
     end
@@ -35,7 +37,7 @@ RSpec.describe Nsm::FakeAssess, :stub_oauth_token do
       end
 
       it 'notifies the app store' do
-        expect(NotifyAppStore).to have_received(:perform_later).with(submission: claim)
+        expect(NotifyAppStore).to have_received(:perform_now).with(submission: claim)
       end
     end
 
@@ -47,7 +49,7 @@ RSpec.describe Nsm::FakeAssess, :stub_oauth_token do
       end
 
       it 'notifies the app store' do
-        expect(NotifyAppStore).to have_received(:perform_later).with(submission: claim)
+        expect(NotifyAppStore).to have_received(:perform_now).with(submission: claim)
       end
     end
 
@@ -59,7 +61,7 @@ RSpec.describe Nsm::FakeAssess, :stub_oauth_token do
       end
 
       it 'notifies the app store' do
-        expect(NotifyAppStore).to have_received(:perform_later).with(submission: claim)
+        expect(NotifyAppStore).to have_received(:perform_now).with(submission: claim)
       end
     end
 
@@ -71,7 +73,7 @@ RSpec.describe Nsm::FakeAssess, :stub_oauth_token do
       end
 
       it 'notifies the app store' do
-        expect(NotifyAppStore).to have_received(:perform_later).with(submission: claim)
+        expect(NotifyAppStore).to have_received(:perform_now).with(submission: claim)
         expect(unassignment_stub).to have_been_requested
       end
     end

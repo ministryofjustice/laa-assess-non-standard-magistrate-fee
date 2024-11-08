@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Nsm
-  module FeedbackMessages
-    class FurtherInformationRequestFeedback < FeedbackBase
+  module Messages
+    class FurtherInformationRequest < Base
       def template
         if FeatureFlags.nsm_rfi_loop.enabled?
           '632fc896-8019-4308-a091-67f593700f32'

@@ -17,7 +17,7 @@ RSpec.describe Claim do
     end
 
     it 'does not include claims the user has been unassigned from' do
-      Event::Unassignment.build(submission: claim, user: user, current_user: user, comment: 'test')
+      create :event, :unassignment, primary_user: user, comment: 'test'
 
       expect(described_class.auto_assignable(user)).to eq([])
     end

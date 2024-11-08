@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module Nsm
-  module FeedbackMessages
-    class PartGrantedFeedback < FeedbackBase
+  module Messages
+    class Rejected < Base
       def template
-        '9df38f19-f76b-42f9-a4e1-da36a65d6aca'
+        '7e807120-b661-452c-95a6-1ae46f411cfe'
       end
 
       def contents
@@ -14,14 +14,9 @@ module Nsm
           main_defendant_name: defendant_name,
           defendant_reference: defendant_reference_string,
           claim_total: claim_total,
-          part_grant_total: adjusted_total,
           caseworker_decision_explanation: @comment,
           date: DateTime.now.to_fs(:stamp),
         }
-      end
-
-      def adjusted_total
-        @submission.formatted_allowed_total
       end
     end
   end

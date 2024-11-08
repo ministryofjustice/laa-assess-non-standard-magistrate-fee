@@ -27,7 +27,7 @@ class UpdateSubmission
       autogrant if cached_autograntable
     end
 
-    NotifyAppStore.perform_later(submission:) if cached_autograntable
+    NotifyAppStore.perform_now(submission:) if cached_autograntable
 
     submission
   end

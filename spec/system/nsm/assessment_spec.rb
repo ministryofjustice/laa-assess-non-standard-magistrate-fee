@@ -4,6 +4,7 @@ Rails.describe 'Assessment', :stub_oauth_token do
   let(:fixed_arbitrary_date) { DateTime.new(2024, 7, 4, 12, 3, 12) }
   let(:user) { create(:caseworker) }
   let(:claim) { create(:claim) }
+  let(:update_stub) { stub_request(:put, "https://appstore.example.com/v1/application/#{claim.id}").to_return(status: 201) }
 
   before do
     stub_request(:post, 'https://appstore.example.com/v1/submissions/searches').to_return(
@@ -11,6 +12,7 @@ Rails.describe 'Assessment', :stub_oauth_token do
       body: { metadata: { total_results: 0 }, raw_data: [] }.to_json
     )
 
+    update_stub
     sign_in user
     create(:assignment, submission: claim, user: user)
     visit '/'
@@ -24,35 +26,32 @@ Rails.describe 'Assessment', :stub_oauth_token do
       click_link_or_button 'Make a decision'
       choose 'Grant it'
       fill_in 'nsm-make-decision-form-grant-comment-field', with: 'Test Data'
+      click_link_or_button 'Submit decision'
     end
 
-    it 'sends a granted notification' do
-      expect { click_link_or_button 'Submit decision' }.to have_enqueued_job(NotifyAppStore)
+    it 'notifies the app store' do
+      expect(update_stub).to have_been_requested
     end
 
-    context 'when a claim has been granted' do
-      before { click_link_or_button 'Submit decision' }
+    it 'shows comment on overview page' do
+      visit nsm_claim_claim_details_path(claim)
+      expect(page).to have_content 'Test Data'
+    end
 
-      it 'shows comment on overview page' do
-        visit nsm_claim_claim_details_path(claim)
-        expect(page).to have_content 'Test Data'
-      end
+    it 'shows assessment date on overview page' do
+      visit nsm_claim_claim_details_path(claim)
+      expect(page).to have_content 'Date assessed: 4 July 2024'
+    end
 
-      it 'shows assessment date on overview page' do
-        visit nsm_claim_claim_details_path(claim)
-        expect(page).to have_content 'Date assessed: 4 July 2024'
-      end
+    it 'shows comment on history page' do
+      visit nsm_claim_history_path(claim)
+      expect(page).to have_content 'Test Data'
+    end
 
-      it 'shows comment on history page' do
-        visit nsm_claim_history_path(claim)
-        expect(page).to have_content 'Test Data'
-      end
-
-      it 'records a paper trail in the access logs' do
-        expect(user.access_logs.where(submission_id: claim.id).order(:created_at).pluck(:controller, :action)).to eq(
-          [%w[claim_details show], %w[make_decisions edit], %w[make_decisions update]]
-        )
-      end
+    it 'records a paper trail in the access logs' do
+      expect(user.access_logs.where(submission_id: claim.id).order(:created_at).pluck(:controller, :action)).to eq(
+        [%w[claim_details show], %w[make_decisions edit], %w[make_decisions update]]
+      )
     end
   end
 
@@ -64,10 +63,8 @@ Rails.describe 'Assessment', :stub_oauth_token do
       click_link_or_button 'Make a decision'
       choose 'Part grant it'
       fill_in 'nsm-make-decision-form-partial-comment-field', with: 'Test Data'
-
-      expect do
-        click_link_or_button 'Submit decision'
-      end.to have_enqueued_job(NotifyAppStore)
+      click_link_or_button 'Submit decision'
+      expect(update_stub).to have_been_requested
     end
   end
 
@@ -77,10 +74,8 @@ Rails.describe 'Assessment', :stub_oauth_token do
       click_link_or_button 'Make a decision'
       choose 'Reject it'
       fill_in 'nsm-make-decision-form-reject-comment-field', with: 'Test Data'
-
-      expect do
-        click_link_or_button 'Submit decision'
-      end.to have_enqueued_job(NotifyAppStore)
+      click_link_or_button 'Submit decision'
+      expect(update_stub).to have_been_requested
     end
   end
 
@@ -104,16 +99,13 @@ Rails.describe 'Assessment', :stub_oauth_token do
       expect(page).to have_field 'What updates to the claim are needed?', with: 'Test Data'
     end
 
-    it 'sends a notification' do
-      expect do
-        click_link_or_button 'Submit'
-      end.to have_enqueued_job(NotifyAppStore)
-
-      expect(unassignment_stub).to have_been_requested
-    end
-
     context 'when I have sent a claim back' do
       before { click_link_or_button 'Submit' }
+
+      it 'sends a notification' do
+        expect(update_stub).to have_been_requested
+        expect(unassignment_stub).to have_been_requested
+      end
 
       it 'shows the date on the details page' do
         visit nsm_claim_claim_details_path(claim)

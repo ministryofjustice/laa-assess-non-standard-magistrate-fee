@@ -24,7 +24,7 @@ module Nsm
       claim.with_lock do
         update_local_data
         AppStoreClient.new.unassign(claim)
-        NotifyAppStore.perform_later(submission: claim)
+        NotifyAppStore.perform_now(submission: claim)
       end
 
       true

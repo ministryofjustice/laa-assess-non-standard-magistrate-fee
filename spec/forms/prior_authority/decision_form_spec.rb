@@ -115,7 +115,7 @@ RSpec.describe PriorAuthority::DecisionForm do
     end
   end
 
-  describe '#save' do
+  describe '#save', :stub_oauth_token do
     let(:params) do
       {
         pending_decision: 'granted',
@@ -126,7 +126,10 @@ RSpec.describe PriorAuthority::DecisionForm do
     end
     let(:current_user) { create(:caseworker) }
 
-    before { subject.save }
+    before do
+      stub_request(:put, "https://appstore.example.com/v1/application/#{submission.id}").to_return(status: 201)
+      subject.save
+    end
 
     it 'adds an assessment comment to the payload' do
       expect(submission.reload.data).to include('assessment_comment' => 'granted_explanation')

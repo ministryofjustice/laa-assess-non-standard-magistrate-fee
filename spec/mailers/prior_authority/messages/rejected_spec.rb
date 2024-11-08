@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe PriorAuthority::FeedbackMessages::PartGrantedFeedback do
+RSpec.describe PriorAuthority::Messages::Rejected do
   subject(:feedback) { described_class.new(application) }
 
   let(:application) do
@@ -14,15 +14,12 @@ RSpec.describe PriorAuthority::FeedbackMessages::PartGrantedFeedback do
         ufn: '111111/111',
         solicitor: { 'contact_email' => 'solicitor-contact@example.com' },
         defendant: { 'last_name' => 'Abrahams', 'first_name' => 'Abe' },
-        quotes: [
-          build(:primary_quote, :with_adjustments),
-        ],
-        assessment_comment: 'Caseworker part granted coz...',
+        assessment_comment: 'Caseworker rejected coz...'
       )
     )
   end
 
-  let(:feedback_template) { '97c0245f-9fec-4ec1-98cc-c9d392a81254' }
+  let(:feedback_template) { '81e9222e-c6bd-4fba-91ff-d90d3d61af87' }
   let(:recipient) { 'provider@example.com' }
 
   describe '#template' do
@@ -38,16 +35,13 @@ RSpec.describe PriorAuthority::FeedbackMessages::PartGrantedFeedback do
   end
 
   describe '#contents' do
-    it 'has expected content' do
-      expect(feedback.contents).to include(
+    it 'throws a not implemented exception' do
+      expect(subject.contents).to include(
         laa_case_reference: 'LAA-FHaMVK',
         ufn: '111111/111',
         defendant_name: 'Abe Abrahams',
-        application_total: '£300.00',
-        part_grant_total: '£150.00',
-        service_required: 'Pathologist report',
-        service_provider_details: 'ABC DEF, ABC, HIJ, SW1 1AA',
-        caseworker_decision_explanation: 'Caseworker part granted coz...',
+        application_total: '£324.50',
+        caseworker_decision_explanation: 'Caseworker rejected coz...',
         date: DateTime.now.to_fs(:stamp),
       )
     end

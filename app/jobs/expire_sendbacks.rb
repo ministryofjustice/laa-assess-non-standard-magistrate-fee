@@ -13,6 +13,6 @@ class ExpireSendbacks < ApplicationJob
     submission.data.merge!('updated_at' => Time.current, 'status' => PriorAuthorityApplication::EXPIRED)
     submission.expired!
     Event::Expiry.build(submission:)
-    NotifyAppStore.perform_later(submission: submission, trigger_email: false)
+    NotifyAppStore.perform_now(submission: submission, trigger_email: false)
   end
 end

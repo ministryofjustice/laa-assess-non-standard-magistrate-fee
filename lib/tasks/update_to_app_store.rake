@@ -7,7 +7,7 @@ namespace :update_to_app_store do
         autogrant_event = working_submission.events.find_by(event_type: 'Event::AutoDecision')
         if autogrant_event.present?
           print "Syncing autogrant events to app store for Submission: #{submission_id}"
-          NotifyEventAppStore.perform_later(event: autogrant_event)
+          NotifyEventAppStore.perform_now(event: autogrant_event)
         end
       end
     end

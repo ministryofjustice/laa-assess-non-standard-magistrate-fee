@@ -113,7 +113,7 @@ class Event < ApplicationRecord
 
   def as_json(*)
     super
-      .except('submission_id', 'notify_app_store_completed')
+      .except('submission_id')
       .merge(
         public: PUBLIC_EVENTS.include?(event_type),
         event_type: event_type.demodulize.underscore
@@ -121,7 +121,7 @@ class Event < ApplicationRecord
   end
 
   def notify
-    NotifyEventAppStore.perform_later(event: self)
+    NotifyEventAppStore.perform_now(event: self)
   end
 
   private

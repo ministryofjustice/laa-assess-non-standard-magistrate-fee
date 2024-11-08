@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe PriorAuthority::FeedbackMessages::RejectedFeedback do
+RSpec.describe PriorAuthority::Messages::Granted do
   subject(:feedback) { described_class.new(application) }
 
   let(:application) do
@@ -14,13 +14,11 @@ RSpec.describe PriorAuthority::FeedbackMessages::RejectedFeedback do
         ufn: '111111/111',
         solicitor: { 'contact_email' => 'solicitor-contact@example.com' },
         defendant: { 'last_name' => 'Abrahams', 'first_name' => 'Abe' },
-        assessment_comment: 'Caseworker rejected coz...'
       )
     )
   end
 
-  let(:feedback_template) { '81e9222e-c6bd-4fba-91ff-d90d3d61af87' }
-  let(:recipient) { 'provider@example.com' }
+  let(:feedback_template) { 'd4f3da60-4da5-423e-bc93-d9235ff01a7b' }
 
   describe '#template' do
     it 'has correct template id' do
@@ -35,13 +33,14 @@ RSpec.describe PriorAuthority::FeedbackMessages::RejectedFeedback do
   end
 
   describe '#contents' do
-    it 'throws a not implemented exception' do
-      expect(subject.contents).to include(
+    it 'has expected content' do
+      expect(feedback.contents).to include(
         laa_case_reference: 'LAA-FHaMVK',
         ufn: '111111/111',
+        service_required: 'Pathologist report',
+        service_provider_details: 'ABC DEF, ABC, HIJ, SW1 1AA',
         defendant_name: 'Abe Abrahams',
         application_total: '£324.50',
-        caseworker_decision_explanation: 'Caseworker rejected coz...',
         date: DateTime.now.to_fs(:stamp),
       )
     end

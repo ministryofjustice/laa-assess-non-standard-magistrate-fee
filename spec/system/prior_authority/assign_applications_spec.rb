@@ -24,8 +24,14 @@ RSpec.describe 'Assign applications', :stub_oauth_token do
 
   context 'when there is an application' do
     let(:application) { create(:prior_authority_application, state: 'submitted') }
+    let(:assignment_event_stub) do
+      stub_request(:post, "https://appstore.example.com/v1/submissions/#{application.id}/events").to_return(status: 201)
+    end
 
-    before { assignment_stub }
+    before do
+      assignment_stub
+      assignment_event_stub
+    end
 
     it 'lets me assign the application to myself automatically' do
       click_on 'Assess next application'

@@ -47,12 +47,62 @@ FactoryBot.define do
           'preparation' => -1,
           'attendance_without_counsel' => -1,
           'attendance_with_counsel' => -1,
+          'advocacy' => -1,
         },
         'cost_summary' => {
           'profit_costs' => {
             'gross_cost' => '120.0',
+            'net_cost' => '100',
+            'vat' => '20.0'
+          },
+          'disbursements' => {
+            'gross_cost' => '120.0',
+            'net_cost' => '100',
+            'vat' => '20.0'
+          },
+          'travel' => {
+            'gross_cost' => '120.0',
+            'net_cost' => '100',
+            'vat' => '20.0'
+          },
+          'waiting' => {
+            'gross_cost' => '120.0',
+            'net_cost' => '100',
+            'vat' => '20.0'
           },
         },
+        'adjusted_total' => nil,
+        'adjusted_total_inc_vat' => nil,
+        'arrest_warrant_date' => nil,
+        'conclusion' => nil,
+        'court' => 'youth_court',
+        'cracked_trial_date' => nil,
+        'created_at' => '2023-12-12 15:15:15.000',
+        'defence_statement' => 12,
+        'disability' => nil,
+        'ethnic_group' => nil,
+        'first_hearing_date' => '2012-12-12',
+        'gender' => nil,
+        'id' => '123123123-123123123-123123123',
+        'main_offence' => 'assault',
+        'main_offence_date' => '2023-12-12',
+        'number_of_hearing' => 12,
+        'number_of_witnesses' => 12,
+        'office_code' => 'AB11AB',
+        'other_info' => nil,
+        'plea' => 'guilty',
+        'plea_category' => 'guilty_pleas',
+        'prosecution_evidence' => 0,
+        'reason_for_claim_other_details' => nil,
+        'remitted_to_magistrate_date' => nil,
+        'representation_order_withdrawn_date' => nil,
+        'signatory_name' => 'Joe Bloggs',
+        'submitted_total' => nil,
+        'submitted_total_inc_vat' => nil,
+        'time_spent' => nil,
+        'wasted_costs' => 'yes',
+        'work_after_date' => nil,
+        'work_before_date' => nil,
       }
     end
 
@@ -64,24 +114,32 @@ FactoryBot.define do
           'description' => nil
         }
       end
-      send_by_post { false }
+      send_by_post { nil }
       supporting_evidences do
         [
           {
             'id' =>  '650c33373ec7a3f8624fdc46',
             'file_name' =>  'Advocacy evidence _ Tom_TC.pdf',
-            'content_type' =>  'application/pdf',
             'file_path' =>  '#',
             'created_at' =>  '2023-09-18T14:12:50.825Z',
-            'updated_at' =>  '2023-09-18T14:12:50.825Z'
+            'updated_at' =>  '2023-09-18T14:12:50.825Z',
+            'document_type' => 'application/pdf',
+            'documentable_id' => '650c33373ec7a3f8624fdc46',
+            'documentable_type' => 'supporting_evidence',
+            'file_size' => 123,
+            'file_type' => 'application/pdf',
           },
           {
             'id' =>  '650c3337e9fe6be2870684e3',
-            'file_name' =>  'Prior Authority_ Psychiatric report_ Tom_TC.png',
-            'content_type' =>  'application/pdf',
+            'file_name' =>  'Other evidence _ Tom_TC.pdf',
             'file_path' =>  '#',
             'created_at' =>  '2023-09-18T14:12:50.825Z',
-            'updated_at' =>  '2023-09-18T14:12:50.825Z'
+            'updated_at' =>  '2023-09-18T14:12:50.825Z',
+            'document_type' => 'application/pdf',
+            'documentable_id' => '650c33373ec7a3f8624fdc46',
+            'documentable_type' => 'supporting_evidence',
+            'file_size' => 123,
+            'file_type' => 'application/pdf',
           }
         ]
       end
@@ -114,7 +172,9 @@ FactoryBot.define do
             'prior_authority' => 'yes',
             'disbursement_date' => '2022-12-12',
             'disbursement_type' => 'other',
-            'total_cost_without_vat' => 100.0
+            'total_cost_without_vat' => 100.0,
+            'miles' => nil,
+            'position' => 1,
           }
         ]
       end
@@ -127,7 +187,8 @@ FactoryBot.define do
             'work_type' => 'waiting',
             'fee_earner' => 'aaa',
             'time_spent' => 161,
-            'completed_on' => '2022-12-12'
+            'completed_on' => '2022-12-12',
+            'position' => 1
           }
         ]
       end
@@ -162,9 +223,9 @@ FactoryBot.define do
           'first_name' => 'Barry',
           'last_name' => 'Scott',
           'reference_number' => '2P314B',
-          'contact_first_name' => nil,
-          'contact_last_name' => nil,
-          'contact_email' => nil,
+          'contact_first_name' => 'Joe',
+          'contact_last_name' => 'Bloggs',
+          'contact_email' => 'joe@bloggs.com',
           'previous_id' => nil
         }
       end

@@ -63,7 +63,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_08_105420) do
     t.jsonb "details", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "notify_app_store_completed"
     t.index ["linked_type", "linked_id"], name: "index_events_on_linked_type_and_linked_id"
     t.index ["primary_user_id"], name: "index_events_on_primary_user_id"
     t.index ["secondary_user_id"], name: "index_events_on_secondary_user_id"
@@ -100,7 +99,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_08_105420) do
     t.jsonb "data"
     t.datetime "app_store_updated_at"
     t.string "application_type"
-    t.boolean "notify_app_store_completed"
+    t.boolean "send_email_to_provider_completed"
     t.index "(((data -> 'defendant'::text) ->> 'first_name'::text)), (((data -> 'defendant'::text) ->> 'last_name'::text))", name: "index_submissions_on_client_name"
     t.index "(((data -> 'firm_office'::text) ->> 'account_number'::text))", name: "index_submissions_on_firm_account_number"
     t.index "(((data -> 'firm_office'::text) ->> 'name'::text))", name: "index_submissions_on_firm_name"

@@ -8,7 +8,7 @@ describe 'update_to_app_store:', type: :task do
     let(:non_autogrant_submission) { create(:prior_authority_application, events: [create(:event)]) }
 
     before do
-      allow(NotifyEventAppStore).to receive(:perform_later).and_return(true)
+      allow(NotifyEventAppStore).to receive(:perform_now).and_return(true)
       autogrant_submission
       non_autogrant_submission
       Rails.application.load_tasks if Rake::Task.tasks.empty?
@@ -22,7 +22,7 @@ describe 'update_to_app_store:', type: :task do
       arguments = [autogrant_submission, non_autogrant_submission].map(&:id).join(',')
 
       Rake::Task['update_to_app_store:sync_autogrant_events'].invoke(arguments)
-      expect(NotifyEventAppStore).to have_received(:perform_later).once
+      expect(NotifyEventAppStore).to have_received(:perform_now).once
     end
   end
 end

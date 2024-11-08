@@ -13,22 +13,13 @@ RSpec.describe NotifyAppStore do
     allow(submission).to receive(:with_lock).and_yield
   end
 
-  describe '.perform_later' do
-    let(:claim) { create :claim, notify_app_store_completed: nil }
-
-    it 'sets a flag' do
-      described_class.perform_later(submission: claim)
-      expect(claim.reload.notify_app_store_completed).to be false
-    end
-  end
-
   describe '#perform' do
     let(:http_notifier) { instance_double(AppStoreClient, update_submission: true) }
 
     before do
       allow(AppStoreClient).to receive(:new).and_return(http_notifier)
       allow(submission).to receive(:namespace).and_return(Nsm)
-      allow(Nsm::SubmissionFeedbackMailer).to receive_message_chain(:notify, :deliver_later!)
+      allow(SendEmailToProvider).to receive(:perform_later)
     end
 
     it 'creates a new MessageBuilder' do
@@ -39,7 +30,7 @@ RSpec.describe NotifyAppStore do
     end
 
     it 'does not queue an email' do
-      expect(Nsm::SubmissionFeedbackMailer).not_to receive(:notify)
+      expect(SendEmailToProvider).not_to receive(:perform_later)
       subject.perform(submission:)
     end
 
@@ -49,19 +40,14 @@ RSpec.describe NotifyAppStore do
       end
 
       it 'queues an email' do
-        expect(Nsm::SubmissionFeedbackMailer).to receive_message_chain(:notify, :deliver_later!)
+        expect(SendEmailToProvider).to receive(:perform_later).with(submission)
         subject.perform(submission:)
       end
     end
 
-    it 'updates the record' do
-      expect(submission).to receive(:update!).with(notify_app_store_completed: true)
-      subject.perform(submission:)
-    end
-
     context 'when emails should not be triggered' do
       it 'does not send an email' do
-        expect(Nsm::SubmissionFeedbackMailer).not_to receive(:notify)
+        expect(SendEmailToProvider).not_to receive(:perform_later)
         subject.perform(submission: submission, trigger_email: false)
       end
     end

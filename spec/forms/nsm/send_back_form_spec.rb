@@ -34,7 +34,7 @@ RSpec.describe Nsm::SendBackForm do
 
     before do
       allow(Nsm::Event::SendBack).to receive(:build)
-      allow(NotifyAppStore).to receive(:perform_later)
+      allow(NotifyAppStore).to receive(:perform_now)
       unassignment_stub
     end
 
@@ -77,7 +77,7 @@ RSpec.describe Nsm::SendBackForm do
 
     it 'trigger an update to the app store' do
       subject.save
-      expect(NotifyAppStore).to have_received(:perform_later).with(submission: claim)
+      expect(NotifyAppStore).to have_received(:perform_now).with(submission: claim)
       expect(unassignment_stub).to have_been_requested
     end
 

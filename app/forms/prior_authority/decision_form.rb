@@ -46,7 +46,7 @@ module PriorAuthority
                               previous_state: previous_state,
                               current_user: current_user)
 
-      NotifyAppStore.perform_later(submission:)
+      NotifyAppStore.perform_now(submission:)
     end
 
     def stash(add_draft_decision_event: true)

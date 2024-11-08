@@ -37,7 +37,7 @@ module Nsm
                               comment: comment,
                               previous_state: previous_state,
                               current_user: current_user)
-      NotifyAppStore.perform_later(submission: claim)
+      NotifyAppStore.perform_now(submission: claim)
     end
 
     def comment

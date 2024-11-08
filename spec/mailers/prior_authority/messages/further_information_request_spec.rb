@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe PriorAuthority::FeedbackMessages::FurtherInformationRequestFeedback do
+RSpec.describe PriorAuthority::Messages::FurtherInformationRequest do
   subject(:feedback) { described_class.new(application) }
 
   let(:application) do

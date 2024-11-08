@@ -12,6 +12,7 @@ RSpec.describe 'Send an application back', :stub_oauth_token do
       }
     }
   end
+  let(:update_stub) { stub_request(:put, "https://appstore.example.com/v1/application/#{application.id}").to_return(status: 201) }
 
   before do
     stub_request(:post, 'https://appstore.example.com/v1/submissions/searches').to_return(
@@ -19,6 +20,7 @@ RSpec.describe 'Send an application back', :stub_oauth_token do
       body: { metadata: { total_results: 0 }, raw_data: [] }.to_json
     )
 
+    update_stub
     stub_request(:get, "https://appstore.example.com/v1/submissions/#{application.id}").to_return(
       status: 200,
       body: { 'application' => application.data }.to_json,
@@ -46,10 +48,6 @@ RSpec.describe 'Send an application back', :stub_oauth_token do
       fill_in 'Tell the provider what information they need to add', with: 'You forgot to say please'
     end
 
-    it 'triggers an app store stync' do
-      expect { click_on 'Submit' }.to have_enqueued_job(NotifyAppStore)
-    end
-
     it 'prevents duplicate submission' do
       application.sent_back!
       click_on 'Submit'
@@ -59,6 +57,10 @@ RSpec.describe 'Send an application back', :stub_oauth_token do
     context 'once the decision has been processed' do
       before do
         click_on 'Submit'
+      end
+
+      it 'triggers an app store stync' do
+        expect(update_stub).to have_been_requested
       end
 
       it 'shows my application' do

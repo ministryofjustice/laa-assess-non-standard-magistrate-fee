@@ -1,11 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe 'History events' do
+RSpec.describe 'History events', :stub_oauth_token do
   let(:caseworker) { create(:caseworker) }
   let(:claim) { create(:claim) }
   let(:fixed_arbitrary_date) { Time.zone.local(2023, 2, 1, 9, 0) }
 
   before do
+    stub_request(:post, "https://appstore.example.com/v1/submissions/#{claim.id}/events")
     claim
     sign_in caseworker
     visit '/'

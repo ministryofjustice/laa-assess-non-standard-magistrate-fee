@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 module Nsm
-  module FeedbackMessages
-    class FeedbackBase
+  module Messages
+    class Base
       include NameConstructable
 
       def initialize(submission, comment = '')
-        @submission = submission
+        @submission = submission.becomes(Claim)
         @comment = comment
       end
 

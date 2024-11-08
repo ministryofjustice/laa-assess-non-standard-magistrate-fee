@@ -34,6 +34,10 @@ RSpec.describe Nsm::ClaimsController, :stub_oauth_token do
     let(:claim) { create(:claim) }
 
     context 'when a claim is available to assign' do
+      before do
+        stub_request(:post, "https://appstore.example.com/v1/submissions/#{claim.id}/events").to_return(status: 201)
+      end
+
       it 'creates an assignment and event' do
         assignment_stub
 

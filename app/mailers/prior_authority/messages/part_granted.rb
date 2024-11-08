@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module PriorAuthority
-  module FeedbackMessages
-    class PartGrantedFeedback < FeedbackBase
+  module Messages
+    class PartGranted < Base
       def template
         '97c0245f-9fec-4ec1-98cc-c9d392a81254'
       end

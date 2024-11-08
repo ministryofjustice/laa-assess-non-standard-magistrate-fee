@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Nsm
-  module FeedbackMessages
-    class GrantedFeedback < FeedbackBase
+  module Messages
+    class Granted < Base
       def template
         '80c0dcd2-597b-4c82-8c94-f6e26af71a40'
       end

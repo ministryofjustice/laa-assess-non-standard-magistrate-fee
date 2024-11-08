@@ -74,7 +74,7 @@ RSpec.describe PriorAuthority::SendBackForm, :stub_oauth_token do
     end
 
     before do
-      allow(NotifyAppStore).to receive(:perform_later)
+      allow(NotifyAppStore).to receive(:perform_now)
       allow(AppStoreClient).to receive(:new).and_return(client)
       travel_to fixed_arbitrary_date
       create(:assignment, submission:, user:)
@@ -139,7 +139,7 @@ RSpec.describe PriorAuthority::SendBackForm, :stub_oauth_token do
         end
 
         it 'notifies the app store' do
-          expect(NotifyAppStore).to have_received(:perform_later).with(submission:)
+          expect(NotifyAppStore).to have_received(:perform_now).with(submission:)
           expect(client).to have_received(:unassign)
         end
       end
@@ -186,7 +186,7 @@ RSpec.describe PriorAuthority::SendBackForm, :stub_oauth_token do
         end
 
         it 'notifies the app store' do
-          expect(NotifyAppStore).to have_received(:perform_later).with(submission:)
+          expect(NotifyAppStore).to have_received(:perform_now).with(submission:)
         end
       end
     end
