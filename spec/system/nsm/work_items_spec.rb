@@ -5,6 +5,7 @@ RSpec.describe 'Work items', :stub_oauth_token do
   let(:claim) { create(:claim) }
 
   before do
+    stub_load_from_app_store(claim)
     stub_request(:post, "https://appstore.example.com/v1/submissions/#{claim.id}/events").to_return(status: 201)
     stub_request(:post, "https://appstore.example.com/v1/submissions/#{claim.id}/adjustments").to_return(status: 201)
     sign_in user

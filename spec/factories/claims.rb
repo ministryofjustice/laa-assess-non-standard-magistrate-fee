@@ -103,6 +103,9 @@ FactoryBot.define do
         'wasted_costs' => 'yes',
         'work_after_date' => nil,
         'work_before_date' => nil,
+        'status' => 'submitted',
+        'assessment_comment' => nil,
+        'updated_at' => 1.day.ago,
       }
     end
 
@@ -256,7 +259,9 @@ FactoryBot.define do
             'prior_authority' => 'yes',
             'disbursement_date' => '2022-12-23',
             'disbursement_type' => 'other',
-            'adjustment_comment' => 'adjusted up'
+            'adjustment_comment' => 'adjusted up',
+            'miles' => nil,
+            'position' => 1,
           },
           {
             'id' => '5678',
@@ -270,7 +275,9 @@ FactoryBot.define do
             'total_cost_without_vat' => 130.0,
             'prior_authority' => 'yes',
             'disbursement_date' => '2022-12-23',
-            'disbursement_type' => 'other'
+            'disbursement_type' => 'other',
+            'miles' => nil,
+            'position' => 1,
           }
         ]
       end
@@ -310,7 +317,8 @@ FactoryBot.define do
             'time_spent' => 161,
             'time_spent_original' => 181,
             'completed_on' => '2022-12-12',
-            'adjustment_comment' => 'some comment'
+            'adjustment_comment' => 'some comment',
+            'position' => 1,
           }
         ]
       end

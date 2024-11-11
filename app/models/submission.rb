@@ -10,6 +10,8 @@ class Submission < ApplicationRecord
   validates :current_version, numericality: { only_integer: true, greater_than: 0 }
   validates :application_type, inclusion: { in: APPLICATION_TYPES.values }
 
+  attr_accessor :assigned_user_id
+
   def namespace
     Submission::APPLICATION_TYPES.invert[application_type].to_s.camelcase.constantize
   end
@@ -29,5 +31,35 @@ class Submission < ApplicationRecord
     # So we can guarantee that the latest event in the app store will never be a Note event,
     # meaning we can disregard those when calculating the last_updated value
     events.non_local.maximum(:created_at) || updated_at
+  end
+
+  def assigned_user
+    @assigned_user ||= User.find_by(id: assigned_user_id) || assignments.first&.user
+  end
+
+  class << self
+    def load_from_app_store(submission_id)
+      data = AppStoreClient.new.get_submission(submission_id)
+      new(attributes_from_app_store_data(data)).tap do |submission|
+        submission.assigned_user_id = data['assigned_user_id']
+        # We only want these if we are loading the record from the app store for viewing purposes,
+        # not if we are going to be persisting the record
+        submission.created_at = data['created_at']
+        submission.updated_at = data['updated_at']
+      end
+    end
+
+    def attributes_from_app_store_data(data)
+      {
+        id: data['application_id'],
+        state: data['application_state'],
+        risk: data['application_risk'],
+        current_version: data['version'],
+        app_store_updated_at: data['last_updated_at'],
+        application_type: data['application_type'],
+        json_schema_version: data['json_schema_version'],
+        data: data['application'],
+      }
+    end
   end
 end

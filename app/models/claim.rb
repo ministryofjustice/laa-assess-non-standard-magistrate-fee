@@ -19,10 +19,6 @@ class Claim < Submission
 
   enum :state, STATES.to_h { [_1, _1] }
 
-  def assigned_to?(user)
-    assignments.find_by(user:)
-  end
-
   def assessed?
     ASSESSED_STATES.include?(state)
   end

@@ -7,7 +7,7 @@ RSpec.describe Nsm::ClaimNoteForm do
 
   describe '#validations' do
     context 'when note is not set' do
-      let(:params) { {} }
+      let(:params) { { id: claim.id } }
 
       it 'is invalid' do
         expect(subject).not_to be_valid

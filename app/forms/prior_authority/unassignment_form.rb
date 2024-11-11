@@ -11,8 +11,8 @@ module PriorAuthority
 
     def caseworker_name
       @caseworker_name ||= begin
-        application = PriorAuthorityApplication.find(application_id)
-        application.assignments.first.display_name
+        application = PriorAuthorityApplication.load_from_app_store(application_id)
+        User.find(application.assigned_user_id).display_name
       end
     end
   end

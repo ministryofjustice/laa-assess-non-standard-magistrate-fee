@@ -1,7 +1,7 @@
 module PriorAuthority
   class AdjustmentsController < PriorAuthority::BaseController
     def index
-      application = PriorAuthorityApplication.find(params[:application_id])
+      application = PriorAuthorityApplication.load_from_app_store(params[:application_id])
       authorize(application, :show?)
       application_summary = BaseViewModel.build(:application_summary, application)
       service_cost = BaseViewModel.build(:service_cost, application)

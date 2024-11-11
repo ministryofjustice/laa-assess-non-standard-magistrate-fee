@@ -3,7 +3,7 @@ module PriorAuthority
     before_action :set_default_table_sort_options, only: %i[index]
 
     def index
-      application = PriorAuthorityApplication.find(params[:application_id])
+      application = PriorAuthorityApplication.load_from_app_store(params[:application_id])
       authorize(application, :show?)
       application_summary = BaseViewModel.build(:application_summary, application)
       editable = policy(application).update?

@@ -6,6 +6,7 @@ RSpec.describe 'History events', :stub_oauth_token do
   let(:fixed_arbitrary_date) { Time.zone.local(2023, 2, 1, 9, 0) }
 
   before do
+    stub_load_from_app_store(claim)
     stub_request(:post, "https://appstore.example.com/v1/submissions/#{claim.id}/events")
     claim
     sign_in caseworker
@@ -34,7 +35,6 @@ RSpec.describe 'History events', :stub_oauth_token do
                           comment: 'Decision test')
     Event::Unassignment.build(submission: claim, user: caseworker, current_user: supervisor,
                               comment: 'unassignment 2')
-
     visit nsm_claim_history_path(claim)
 
     doc = Nokogiri::HTML(page.html)

@@ -7,15 +7,11 @@ module Nsm
       attribute :send_by_post
       attribute :assessment_comment
 
-      delegate :last_updated_at, to: :submission
+      delegate :last_updated_at, :assigned_user, to: :submission
 
       def main_defendant_name
         main_defendant = defendants.detect { |defendant| defendant['main'] }
         main_defendant ? construct_name(main_defendant) : ''
-      end
-
-      def assigned_to
-        @assigned_to ||= submission.assignments.first
       end
 
       def claimed_total

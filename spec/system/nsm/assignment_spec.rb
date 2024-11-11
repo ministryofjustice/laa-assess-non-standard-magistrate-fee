@@ -49,6 +49,7 @@ RSpec.describe 'Assign claims', :stub_oauth_token do
 
   context 'when automatically assigning claims' do
     before do
+      stub_load_from_app_store(claim)
       visit your_nsm_claims_path
       click_on 'Assess next claim'
     end
@@ -146,6 +147,7 @@ RSpec.describe 'Assign claims', :stub_oauth_token do
     end
 
     before do
+      stub_load_from_app_store(claim)
       unassignment_stub
       create(:assignment, submission: claim)
     end
@@ -166,6 +168,8 @@ RSpec.describe 'Assign claims', :stub_oauth_token do
     let(:assignment_stub) do
       stub_request(:post, "https://appstore.example.com/v1/submissions/#{claim.id}/assignment").to_return(status: 201)
     end
+
+    before { stub_load_from_app_store(claim) }
 
     it 'allows me to assign a claim to myself' do
       assignment_stub

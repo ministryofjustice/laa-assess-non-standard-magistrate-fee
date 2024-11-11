@@ -13,13 +13,13 @@ module PriorAuthority
     end
 
     def create
-      authorize(submission, :update?)
+      authorize(local_submission, :update?)
       @form_object = SendBackForm.new(form_params)
       if params['save_and_exit']
         @form_object.stash
         redirect_to your_prior_authority_applications_path
       elsif @form_object.save
-        redirect_to prior_authority_application_send_back_path(submission)
+        redirect_to prior_authority_application_send_back_path(local_submission)
       else
         render :new
       end
@@ -33,13 +33,17 @@ module PriorAuthority
         :incorrect_information_explanation,
         updates_needed: []
       ).merge(
-        current_user:,
-        submission:,
+        current_user: current_user,
+        submission: local_submission,
       )
     end
 
     def submission
-      @submission ||= PriorAuthorityApplication.find(params[:application_id])
+      @submission ||= PriorAuthorityApplication.load_from_app_store(params[:application_id])
+    end
+
+    def local_submission
+      @local_submission ||= PriorAuthorityApplication.find(params[:application_id])
     end
   end
 end

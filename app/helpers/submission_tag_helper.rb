@@ -28,7 +28,7 @@ module SubmissionTagHelper
   end
 
   def augmented_state(submission)
-    return 'in_progress' if submission.state == 'submitted' && submission.assignments.any?
+    return 'in_progress' if submission.state == 'submitted' && submission.assigned_user_id.present?
 
     submission.state
   end

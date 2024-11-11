@@ -6,6 +6,7 @@ RSpec.describe Nsm::DisbursementsController do
   let(:disbursement) { { id: SecureRandom.uuid } }
 
   before do
+    allow(Claim).to receive(:load_from_app_store).and_return(claim)
     allow(controller).to receive(:current_user).and_return(user)
     create :assignment, submission: claim, user: user
   end

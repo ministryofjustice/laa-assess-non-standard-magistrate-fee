@@ -21,7 +21,7 @@ module Nsm
     end
 
     def claim
-      Claim.find_by(id:)
+      @claim ||= Claim.find(id)
     end
   end
 end

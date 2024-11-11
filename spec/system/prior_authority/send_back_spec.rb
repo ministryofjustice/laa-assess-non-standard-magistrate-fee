@@ -21,10 +21,7 @@ RSpec.describe 'Send an application back', :stub_oauth_token do
     )
 
     update_stub
-    stub_request(:get, "https://appstore.example.com/v1/submissions/#{application.id}").to_return(
-      status: 200,
-      body: { 'application' => application.data }.to_json,
-    )
+    stub_load_from_app_store(application)
 
     stub_request(:get, 'https://www.gov.uk/bank-holidays.json').to_return(
       status: 200,

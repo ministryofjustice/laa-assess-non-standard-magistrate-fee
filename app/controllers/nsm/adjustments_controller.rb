@@ -1,7 +1,7 @@
 module Nsm
   class AdjustmentsController < Nsm::BaseController
     def confirm_deletion
-      authorize Claim.find(params[:claim_id]), :update?
+      authorize Claim.load_from_app_store(params[:claim_id]), :update?
       form = DeleteAdjustmentsForm.new
 
       render :confirm_deletion_adjustments, locals: { deletion_path:, form: }

@@ -17,6 +17,10 @@ RSpec.describe SendEmailToProvider do
 
     let(:dummy) { double(:mailer, deliver_now!: true) }
 
+    before do
+      allow(Submission).to receive(:load_from_app_store).and_return(submission)
+    end
+
     context 'with an NSM claim' do
       let(:submission) { create :claim, send_email_to_provider_completed: false }
 
@@ -26,7 +30,9 @@ RSpec.describe SendEmailToProvider do
 
       it 'delivers an email' do
         subject
-        expect(Nsm::EmailToProviderMailer).to have_received(:notify).with(submission.becomes(Submission))
+        expect(Nsm::EmailToProviderMailer).to have_received(:notify) do |arg|
+          expect(arg.id).to eq submission.id
+        end
         expect(dummy).to have_received(:deliver_now!)
       end
 
@@ -45,7 +51,9 @@ RSpec.describe SendEmailToProvider do
 
       it 'delivers an email' do
         subject
-        expect(PriorAuthority::EmailToProviderMailer).to have_received(:notify).with(submission.becomes(Submission))
+        expect(PriorAuthority::EmailToProviderMailer).to have_received(:notify) do |arg|
+          expect(arg.id).to eq submission.id
+        end
         expect(dummy).to have_received(:deliver_now!)
       end
 

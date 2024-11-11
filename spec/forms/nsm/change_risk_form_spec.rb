@@ -115,7 +115,7 @@ RSpec.describe Nsm::ChangeRiskForm, type: :model do
 
     context 'when error during save' do
       before do
-        allow(Claim).to receive(:find_by).and_return(claim)
+        allow(Claim).to receive(:find).and_return(claim)
         allow(claim).to receive(:update!).and_raise(StandardError)
       end
 

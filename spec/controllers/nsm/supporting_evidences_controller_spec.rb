@@ -10,7 +10,7 @@ RSpec.describe Nsm::SupportingEvidencesController do
     end
 
     before do
-      allow(Claim).to receive(:find).and_return(claim)
+      allow(Claim).to receive(:load_from_app_store).and_return(claim)
       allow(BaseViewModel).to receive(:build).with(:claim_summary, anything).and_return(claim_summary)
       allow(BaseViewModel).to receive(:build).with(:supporting_evidence, anything,
                                                    anything).and_return(supporting_evidence)
@@ -19,7 +19,7 @@ RSpec.describe Nsm::SupportingEvidencesController do
     it 'find and builds the required object' do
       get :show, params: { claim_id: }
 
-      expect(Claim).to have_received(:find).with(claim_id)
+      expect(Claim).to have_received(:load_from_app_store).with(claim_id)
       expect(BaseViewModel).to have_received(:build).with(:supporting_evidence, claim, 'supporting_evidences')
     end
 

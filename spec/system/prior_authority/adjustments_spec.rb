@@ -12,6 +12,7 @@ RSpec.describe 'Adjustments', :stub_oauth_token do
   let(:cost_adjustment_button_label) { 'Adjust additional cost' }
 
   before do
+    stub_load_from_app_store(application)
     stub_request(:post, "https://appstore.example.com/v1/submissions/#{application.id}/events").to_return(status: 201)
     stub_request(:post, "https://appstore.example.com/v1/submissions/#{application.id}/adjustments").to_return(status: 201)
     sign_in caseworker
