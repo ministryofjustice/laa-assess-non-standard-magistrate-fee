@@ -1,6 +1,6 @@
 class Event
   class DeleteAdjustments < Event
-    def self.build(submission:, comment:, current_user:)
+    def self.construct(submission:, comment:, current_user:)
       create(
         submission: submission,
         submission_version: submission.current_version,

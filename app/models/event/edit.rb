@@ -1,6 +1,6 @@
 class Event
   class Edit < Event
-    def self.build(submission:, linked:, details:, current_user:)
+    def self.construct(submission:, linked:, details:, current_user:)
       create(
         submission: submission,
         submission_version: submission.current_version,

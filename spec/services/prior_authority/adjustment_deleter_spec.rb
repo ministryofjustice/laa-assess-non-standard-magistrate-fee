@@ -8,6 +8,11 @@ RSpec.describe PriorAuthority::AdjustmentDeleter do
     let(:item_id) { '123' }
     let(:user) { create(:caseworker) }
     let(:application) { create(:prior_authority_application) }
+    let(:app_store_client) { instance_double(AppStoreClient, create_events: true, adjust: true) }
+
+    before do
+      allow(AppStoreClient).to receive(:new).and_return(app_store_client)
+    end
 
     context 'when adjustment type is unknown' do
       let(:adjustment_type) { :some_new_adjustment }
@@ -29,17 +34,15 @@ RSpec.describe PriorAuthority::AdjustmentDeleter do
                                           adjustment_comment: 'Too many items')]))
       end
 
-      before { service.call }
+      before { service.call! }
 
       it 'reverts changes' do
-        service.call
         expect(application.reload.data.dig('quotes', 0, 'items')).to eq 9
         expect(application.data.dig('quotes', 0, 'items_original')).to be_nil
         expect(application.data.dig('quotes', 0, 'adjustment_comment')).to be_nil
       end
 
       it 'creates relevant events' do
-        service.call
         event = application.events.last
         expect(event).to be_a Event::UndoEdit
         expect(event).to have_attributes(

@@ -8,6 +8,9 @@ RSpec.describe Event::ChangeRisk do
   let(:current_user) { create(:caseworker) }
   let(:previous_risk_level) { 'high' }
   let(:explanation) { 'risk has been changed' }
+  let(:app_store_client) { instance_double(AppStoreClient, create_events: true) }
+
+  before { allow(AppStoreClient).to receive(:new).and_return(app_store_client) }
 
   it 'can build a new record' do
     expect(subject).to have_attributes(

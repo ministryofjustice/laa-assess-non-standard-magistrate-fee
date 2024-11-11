@@ -17,7 +17,7 @@ RSpec.describe Nsm::WorkItems::UpliftsController do
   end
 
   describe 'update' do
-    let(:form) { instance_double(Nsm::Uplift::WorkItemsForm, save:) }
+    let(:form) { instance_double(Nsm::Uplift::WorkItemsForm, save!: save) }
 
     before do
       allow(Nsm::Uplift::WorkItemsForm).to receive(:new).and_return(form)

@@ -39,7 +39,7 @@ RSpec.describe Nsm::DisbursementsController do
   end
 
   describe 'update' do
-    let(:form) { instance_double(Nsm::DisbursementsForm, save:) }
+    let(:form) { instance_double(Nsm::DisbursementsForm, save!: save) }
 
     before do
       allow(Nsm::DisbursementsForm).to receive(:new).and_return(form)

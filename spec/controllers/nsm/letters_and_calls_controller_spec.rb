@@ -42,7 +42,7 @@ RSpec.describe Nsm::LettersAndCallsController do
   end
 
   describe 'update' do
-    let(:form) { instance_double(Nsm::LettersCallsForm::Letters, save:) }
+    let(:form) { instance_double(Nsm::LettersCallsForm::Letters, save!: save) }
 
     before do
       allow(Nsm::LettersCallsForm::Letters).to receive(:new).and_return(form)

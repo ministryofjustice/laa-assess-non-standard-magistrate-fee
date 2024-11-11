@@ -17,7 +17,7 @@ RSpec.describe Nsm::LettersAndCalls::UpliftsController do
   end
 
   describe 'update' do
-    let(:form) { instance_double(Nsm::Uplift::LettersAndCallsForm, save:) }
+    let(:form) { instance_double(Nsm::Uplift::LettersAndCallsForm, save!: save) }
 
     before do
       allow(Nsm::Uplift::LettersAndCallsForm).to receive(:new).and_return(form)

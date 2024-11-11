@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Delete adjustments' do
+RSpec.describe 'Delete adjustments', :stub_oauth_token do
   let(:caseworker) { create(:caseworker) }
   let(:application) do
     create(
@@ -28,6 +28,8 @@ RSpec.describe 'Delete adjustments' do
   end
 
   before do
+    stub_request(:post, "https://appstore.example.com/v1/submissions/#{application.id}/events").to_return(status: 201)
+    stub_request(:post, "https://appstore.example.com/v1/submissions/#{application.id}/adjustments").to_return(status: 201)
     sign_in caseworker
     visit '/'
     click_on 'Accept analytics cookies'

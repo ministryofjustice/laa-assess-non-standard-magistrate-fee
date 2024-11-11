@@ -67,7 +67,7 @@ module Nsm
       end
       form = form_class.new(claim:, item:, **form_params)
 
-      if form.save
+      if form.save!
         redirect_to nsm_claim_letters_and_calls_path(claim)
       else
         render :edit, locals: { claim:, item:, form: }

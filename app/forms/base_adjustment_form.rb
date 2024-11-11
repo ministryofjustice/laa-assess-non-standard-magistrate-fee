@@ -9,6 +9,12 @@ class BaseAdjustmentForm
   attribute :item # used to detect changes in data
   validate :data_changed
 
+  def save!
+    submission.with_lock do
+      AppStoreClient.new.adjust(submission) if save
+    end
+  end
+
   private
 
   COMMENT_FIELD = 'adjustment_comment'.freeze

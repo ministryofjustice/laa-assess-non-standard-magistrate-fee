@@ -6,6 +6,9 @@ RSpec.describe Event::Note do
   let(:submission) { create(:claim) }
   let(:current_user) { create(:caseworker) }
   let(:note) { 'new note' }
+  let(:app_store_client) { instance_double(AppStoreClient, create_events: true) }
+
+  before { allow(AppStoreClient).to receive(:new).and_return(app_store_client) }
 
   it 'can build a new record' do
     expect(subject).to have_attributes(

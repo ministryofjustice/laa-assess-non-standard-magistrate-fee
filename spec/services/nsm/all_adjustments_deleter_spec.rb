@@ -8,8 +8,10 @@ RSpec.describe Nsm::AllAdjustmentsDeleter do
     let(:item_id) { '1234-adj' }
     let(:user) { create(:caseworker) }
     let(:claim) { create(:claim, :with_adjustments) }
+    let(:app_store_client) { instance_double(AppStoreClient, create_events: true) }
 
     before do
+      allow(AppStoreClient).to receive(:new).and_return(app_store_client)
       create(:assignment, submission: claim, user: user)
     end
 

@@ -1,7 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe 'Adjust travel costs' do
+RSpec.describe 'Adjust travel costs', :stub_oauth_token do
   before do
+    stub_request(:post, "https://appstore.example.com/v1/submissions/#{application.id}/events").to_return(status: 201)
+    stub_request(:post, "https://appstore.example.com/v1/submissions/#{application.id}/adjustments").to_return(status: 201)
     sign_in caseworker
     visit '/'
     click_on 'Accept analytics cookies'

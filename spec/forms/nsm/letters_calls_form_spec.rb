@@ -21,6 +21,9 @@ RSpec.describe Nsm::LettersCallsForm do
   let(:original_uplift) { 95 }
   let(:explanation) { 'change to letters' }
   let(:current_user) { instance_double(User) }
+  let(:app_store_client) { instance_double(AppStoreClient, create_events: true) }
+
+  before { allow(AppStoreClient).to receive(:new).and_return(app_store_client) }
 
   describe '#validations' do
     describe '#type' do

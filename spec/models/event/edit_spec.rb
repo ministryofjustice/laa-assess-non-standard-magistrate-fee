@@ -15,6 +15,9 @@ RSpec.describe Event::Edit do
     }
   end
   let(:linked) { { type: 'letters' } }
+  let(:app_store_client) { instance_double(AppStoreClient, create_events: true) }
+
+  before { allow(AppStoreClient).to receive(:new).and_return(app_store_client) }
 
   it 'can build a new record' do
     expect(subject).to have_attributes(

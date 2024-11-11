@@ -1,6 +1,6 @@
 class Event
   class ChangeRisk < Event
-    def self.build(submission:, explanation:, previous_risk_level:, current_user:)
+    def self.construct(submission:, explanation:, previous_risk_level:, current_user:)
       create(
         submission: submission,
         submission_version: submission.current_version,

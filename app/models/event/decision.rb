@@ -1,6 +1,6 @@
 class Event
   class Decision < Event
-    def self.build(submission:, previous_state:, comment:, current_user:)
+    def self.construct(submission:, previous_state:, comment:, current_user:)
       create(
         submission: submission,
         submission_version: submission.current_version,

@@ -1,6 +1,6 @@
 class Event
   class AutoDecision < Event
-    def self.build(submission:, previous_state:)
+    def self.construct(submission:, previous_state:)
       create(
         submission: submission,
         submission_version: submission.current_version,

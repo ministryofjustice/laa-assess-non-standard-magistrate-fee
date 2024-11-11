@@ -7,6 +7,9 @@ RSpec.describe Nsm::Uplift::BaseForm do
   let(:claim) { build(:claim) }
   let(:current_user) { instance_double(User) }
   let(:explanation) { 'some reason' }
+  let(:app_store_client) { instance_double(AppStoreClient, adjust: true) }
+
+  before { allow(AppStoreClient).to receive(:new).and_return(app_store_client) }
 
   describe '#validations' do
     it { expect(subject).to be_valid }
@@ -30,7 +33,7 @@ RSpec.describe Nsm::Uplift::BaseForm do
     end
   end
 
-  describe '#persistance' do
+  describe '#save!' do
     let(:remover) { instance_double(implementation_class::Remover, valid?: valid, save: save) }
     let(:valid) { true }
     let(:save) { true }
@@ -40,7 +43,7 @@ RSpec.describe Nsm::Uplift::BaseForm do
     end
 
     it 'creates a remover instance for each row of data' do
-      subject.save
+      subject.save!
 
       expect(implementation_class::Remover).to have_received(:new).twice
       claim.data['letters_and_calls'].each do |selected_record|
@@ -57,7 +60,7 @@ RSpec.describe Nsm::Uplift::BaseForm do
       end
 
       it 'preserves the previous comment' do
-        subject.save
+        subject.save!
         expect(implementation_class::Remover).to have_received(:new)
           .with(
             claim: claim,
@@ -71,11 +74,11 @@ RSpec.describe Nsm::Uplift::BaseForm do
     context 'when invalid' do
       let(:explanation) { nil }
 
-      it { expect(subject.save).to be_falsey }
+      it { expect(subject.save!).to be_falsey }
 
       it 'does not save' do
         expect(implementation_class::Remover).not_to have_received(:new)
-        expect(claim).not_to receive(:save)
+        expect(claim).not_to receive(:save!)
       end
     end
 
@@ -84,31 +87,31 @@ RSpec.describe Nsm::Uplift::BaseForm do
         allow(claim.data).to receive(:[]).and_raise(StandardError)
       end
 
-      it { expect(subject.save).to be_falsey }
+      it { expect(subject.save!).to be_falsey }
     end
 
     context 'when the remove is not valid' do
       let(:valid) { false }
 
       it 'does not calls save' do
-        subject.save
+        subject.save!
 
         expect(remover).not_to have_received(:save)
       end
     end
 
-    context 'when the remove is' do
+    context 'when the remove is valid' do
       it 'calls save' do
-        subject.save
+        subject.save!
 
         expect(remover).to have_received(:save).twice
       end
     end
 
     it 'saves the claim' do
-      expect(claim).to receive(:save)
+      expect(claim).to receive(:save!)
 
-      subject.save
+      subject.save!
     end
   end
 end

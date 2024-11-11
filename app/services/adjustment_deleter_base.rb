@@ -8,6 +8,13 @@ class AdjustmentDeleterBase
     @submission = submission_scope
   end
 
+  def call!
+    submission.with_lock do
+      call
+      AppStoreClient.new.adjust(submission)
+    end
+  end
+
   def call
     raise NotImplementedError, "#{self.class} has not implemented method '#{__method__}'"
   end

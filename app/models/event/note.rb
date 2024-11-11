@@ -1,6 +1,6 @@
 class Event
   class Note < Event
-    def self.build(submission:, note:, current_user:)
+    def self.construct(submission:, note:, current_user:)
       create(
         submission: submission,
         submission_version: submission.current_version,
