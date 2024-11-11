@@ -99,6 +99,7 @@ RSpec.describe 'Send an application back', :stub_oauth_token do
 
   it 'lets me save my answers and return later' do
     stub_request(:post, "https://appstore.example.com/v1/submissions/#{application.id}/events").to_return(status: 201)
+    stub_request(:post, "https://appstore.example.com/v1/submissions/#{application.id}/adjustments").to_return(status: 201)
     check 'Further information'
     fill_in 'Tell the provider what information they need to add', with: 'You forgot to say please'
     click_on 'Save and come back later'

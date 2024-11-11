@@ -93,6 +93,7 @@ Rails.describe 'Assessment', :stub_oauth_token do
     end
 
     it 'lets me save and come back later' do
+      stub_request(:post, "https://appstore.example.com/v1/submissions/#{claim.id}/adjustments").to_return(status: 201)
       click_link_or_button 'Save and come back later'
       visit nsm_claim_claim_details_path(claim)
       click_link_or_button 'Send back to provider'

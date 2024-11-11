@@ -16,6 +16,7 @@ module Nsm
     def stash
       claim.data['send_back_comment'] = send_back_comment
       claim.save!
+      AppStoreClient.new.adjust(claim)
     end
 
     def save

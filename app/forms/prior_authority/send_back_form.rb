@@ -30,7 +30,7 @@ module PriorAuthority
 
       submission.with_lock do
         discard_all_adjustments
-        stash(add_draft_send_back_event: false)
+        persist_form_values
         update_local_records
 
         AppStoreClient.new.unassign(submission)
@@ -40,18 +40,22 @@ module PriorAuthority
       true
     end
 
-    def stash(add_draft_send_back_event: true)
-      updates_needed.compact_blank! # The checkbox array introduces an empty string value
-
-      submission.data.merge!(attributes.except('submission', 'current_user'))
-      submission.save!
-
-      return unless add_draft_send_back_event
+    def stash
+      persist_form_values
 
       PriorAuthority::Event::DraftSendBack.build(submission:,
                                                  updates_needed:,
                                                  comments:,
                                                  current_user:)
+
+      AppStoreClient.new.adjust(submission)
+    end
+
+    def persist_form_values
+      updates_needed.compact_blank! # The checkbox array introduces an empty string value
+
+      submission.data.merge!(attributes.except('submission', 'current_user'))
+      submission.save!
     end
 
     def discard_all_adjustments

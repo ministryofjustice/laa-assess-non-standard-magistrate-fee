@@ -113,7 +113,7 @@ class AppStoreClient
     response = self.class.post("#{host}/v1/submissions/#{submission.id}/adjustments", **options(application: submission.data))
     process_response(
       response,
-      "Unexpected response from AppStore - status #{response.code} for assignment to :#{submission.id}",
+      "Unexpected response from AppStore - status #{response.code} for adjustment to :#{submission.id}",
       201 => :created,
     )
   end
