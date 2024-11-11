@@ -70,7 +70,7 @@ module Nsm
 
       form = WorkItemForm.new(**common_form_attributes(claim, item), **form_params)
 
-      if form.save
+      if form.save!
         redirect_to nsm_claim_work_items_path(claim)
       else
         render :edit, locals: { claim:, item:, form: }

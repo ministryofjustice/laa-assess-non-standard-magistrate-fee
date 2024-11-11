@@ -1,6 +1,6 @@
 class Event
   class Assignment < Event
-    def self.build(submission:, current_user:, comment: nil)
+    def self.construct(submission:, current_user:, comment: nil)
       create(
         submission: submission,
         primary_user: current_user,
@@ -8,7 +8,7 @@ class Event
         details: {
           comment:
         }
-      ).tap(&:notify)
+      )
     end
 
     def title

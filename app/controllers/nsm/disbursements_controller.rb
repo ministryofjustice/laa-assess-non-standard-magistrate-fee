@@ -66,7 +66,7 @@ module Nsm
         model.id == params[:id]
       end
       form = DisbursementsForm.new(claim:, item:, **form_params)
-      if form.save
+      if form.save!
         redirect_to nsm_claim_disbursements_path(claim)
       else
         render :edit, locals: { claim:, item:, form: }

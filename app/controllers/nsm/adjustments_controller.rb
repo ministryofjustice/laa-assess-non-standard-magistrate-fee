@@ -13,7 +13,7 @@ module Nsm
       authorize deleter.submission, :update?
 
       if form.valid?
-        deleter.call
+        deleter.call!
         redirect_to nsm_claim_claim_details_path, flash: { success: t('.success') }
       else
         render :confirm_deletion_adjustments, locals: { deletion_path:, form: }

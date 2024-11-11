@@ -2,7 +2,7 @@ class Event
   class Unassignment < Event
     belongs_to :secondary_user, optional: true, class_name: 'User'
 
-    def self.build(submission:, user:, current_user:, comment:)
+    def self.construct(submission:, user:, current_user:, comment:)
       create(
         submission: submission,
         primary_user: user,
@@ -11,7 +11,7 @@ class Event
         details: {
           comment:
         }
-      ).tap(&:notify)
+      )
     end
 
     def title

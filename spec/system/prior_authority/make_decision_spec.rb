@@ -86,6 +86,8 @@ RSpec.describe 'Decide an application', :stub_oauth_token do
   end
 
   it 'lets me save my answers and return later' do
+    stub_request(:post, "https://appstore.example.com/v1/submissions/#{application.id}/events").to_return(status: 201)
+    stub_request(:post, "https://appstore.example.com/v1/submissions/#{application.id}/adjustments").to_return(status: 201)
     choose 'Rejected'
     fill_in 'Provide detailed reasons for rejecting this application', with: 'The wrong form was used'
     click_on 'Save and come back later'

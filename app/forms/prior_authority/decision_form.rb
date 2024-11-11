@@ -36,7 +36,7 @@ module PriorAuthority
     end
 
     def change_data_and_notify_app_store!
-      stash(add_draft_decision_event: false)
+      persist_form_values
       previous_state = submission.state
 
       submission.data.merge!('status' => pending_decision, 'updated_at' => Time.current)
@@ -49,16 +49,18 @@ module PriorAuthority
       NotifyAppStore.perform_now(submission:)
     end
 
-    def stash(add_draft_decision_event: true)
-      submission.data.merge!(attributes.except('submission', 'current_user').merge('assessment_comment' => explanation))
-      submission.save!
-
-      return unless add_draft_decision_event
-
+    def stash
+      persist_form_values
       ::Event::DraftDecision.build(submission: submission,
                                    comment: explanation,
                                    next_state: pending_decision,
                                    current_user: current_user)
+      AppStoreClient.new.adjust(submission)
+    end
+
+    def persist_form_values
+      submission.data.merge!(attributes.except('submission', 'current_user').merge('assessment_comment' => explanation))
+      submission.save!
     end
 
     def explanation

@@ -45,6 +45,9 @@ RSpec.describe Nsm::DisbursementsForm do
   end
   let(:explanation) { 'change to disbursements' }
   let(:current_user) { create(:caseworker) }
+  let(:app_store_client) { instance_double(AppStoreClient, create_events: true) }
+
+  before { allow(AppStoreClient).to receive(:new).and_return(app_store_client) }
 
   describe '#save' do
     context 'when the form is valid' do

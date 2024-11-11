@@ -5,6 +5,7 @@ RSpec.describe 'Notes', :stub_oauth_token do
   let(:application) { create(:prior_authority_application, state: 'submitted') }
 
   before do
+    stub_request(:post, "https://appstore.example.com/v1/submissions/#{application.id}/events").to_return(status: 201)
     sign_in caseworker
     application.assignments.create(user: caseworker)
     visit prior_authority_application_events_path(application)

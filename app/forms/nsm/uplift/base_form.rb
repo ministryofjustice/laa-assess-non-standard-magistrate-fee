@@ -16,26 +16,32 @@ module Nsm
       validates :claim, presence: true
       validates :explanation, presence: true
 
-      def save
+      def save!
         return false unless valid?
 
         Claim.transaction do
-          claim.data[self.class::SCOPE].each do |selected_record|
-            row = self.class::Remover.new(claim: claim,
-                                          explanation: explanation_for(selected_record),
-                                          current_user: current_user,
-                                          selected_record: selected_record)
-            next unless row.valid?
+          change_local_data
 
-            row.save
-          end
-
-          claim.save
+          AppStoreClient.new.adjust(claim)
         end
 
         true
       rescue StandardError
         false
+      end
+
+      def change_local_data
+        claim.data[self.class::SCOPE].each do |selected_record|
+          row = self.class::Remover.new(claim: claim,
+                                        explanation: explanation_for(selected_record),
+                                        current_user: current_user,
+                                        selected_record: selected_record)
+          next unless row.valid?
+
+          row.save
+        end
+
+        claim.save!
       end
 
       def explanation_for(record)

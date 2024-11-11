@@ -17,6 +17,7 @@ RSpec.describe Event do
         'updated_at' => an_instance_of(String),
         :event_type => 'new_version',
         :public => false,
+        :does_not_constitute_update => false,
       )
     end
 
@@ -37,6 +38,7 @@ RSpec.describe Event do
           'updated_at' => an_instance_of(String),
           :event_type => 'decision',
           :public => true,
+          :does_not_constitute_update => false,
         )
       end
     end

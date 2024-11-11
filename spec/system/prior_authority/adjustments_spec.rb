@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'View applications' do
+RSpec.describe 'Adjustments', :stub_oauth_token do
   let(:caseworker) { create(:caseworker) }
   let(:application) do
     create(:prior_authority_application,
@@ -12,6 +12,8 @@ RSpec.describe 'View applications' do
   let(:cost_adjustment_button_label) { 'Adjust additional cost' }
 
   before do
+    stub_request(:post, "https://appstore.example.com/v1/submissions/#{application.id}/events").to_return(status: 201)
+    stub_request(:post, "https://appstore.example.com/v1/submissions/#{application.id}/adjustments").to_return(status: 201)
     sign_in caseworker
     visit '/'
     click_on 'Accept analytics cookies'

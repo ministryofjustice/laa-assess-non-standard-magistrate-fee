@@ -39,7 +39,7 @@ RSpec.describe Nsm::WorkItemsController do
   end
 
   describe 'update' do
-    let(:form) { instance_double(Nsm::WorkItemForm, save:) }
+    let(:form) { instance_double(Nsm::WorkItemForm, save!: save) }
 
     before do
       allow(Nsm::WorkItemForm).to receive(:new).and_return(form)

@@ -47,10 +47,6 @@ RSpec.describe UpdateSubmission, :stub_oauth_token do
       expect { described_class.call(record) }.not_to change(Submission, :count)
     end
 
-    it 'adds a new version event' do
-      expect { described_class.call(record) }.to change(Event::NewVersion, :count).from(0).to(1)
-    end
-
     it 'updates the existing submission' do
       described_class.call(record)
       expect(submission.reload).to have_attributes(
@@ -125,7 +121,7 @@ RSpec.describe UpdateSubmission, :stub_oauth_token do
 
         it 'rehydrates the events' do
           described_class.call(record)
-          expect(Event.count).to eq(2)
+          expect(Event.count).to eq(1)
           expect(Event.find(event_id)).to have_attributes(
             submission_id: submission.id,
             submission_version: 1,
@@ -160,7 +156,7 @@ RSpec.describe UpdateSubmission, :stub_oauth_token do
             submission
             expect { described_class.call(record) }.to change(User, :count).by(1)
 
-            expect(Event.count).to eq(2)
+            expect(Event.count).to eq(1)
             expect(Event::Edit.last).to have_attributes(
               submission_id: submission.id,
               submission_version: 1,

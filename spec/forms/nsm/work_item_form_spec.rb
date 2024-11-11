@@ -28,6 +28,9 @@ RSpec.describe Nsm::WorkItemForm do
   let(:current_user) { instance_double(User) }
   let(:work_type_value) { 'waiting' }
   let(:work_item_pricing) { { 'waiting' => 12.5, 'travel' => 4.7 } }
+  let(:app_store_client) { instance_double(AppStoreClient, create_events: true) }
+
+  before { allow(AppStoreClient).to receive(:new).and_return(app_store_client) }
 
   describe '#validations' do
     context 'uplift' do

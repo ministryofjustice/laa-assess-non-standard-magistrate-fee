@@ -22,21 +22,29 @@ class Event < ApplicationRecord
     'Event::DeleteAdjustments',
   ].freeze
 
-  # These are events that we know can exist in our local database for a significant
-  # period without existing in the app store database. All other events are either
-  # synced to the app store immediately after creation via a `.notify` call, or
-  # only created as part of a larger action that is followed immediately by a
-  # call to `NotifyAppStore` which syncs all events anyway.
-  # It is important to keep track of these so that we can infer what the app
-  # store thinks the latest event date is (so that the 'last updated' date
-  # we display in the UI is consistent with the value the app store uses
-  # for sorting and filtering search results)
+  # These are events that should not update the "Last updated at" timestamp.
+  # Previously we would not even send them to the app store on creation. Now we
+  # do, but with a `does_not_constitute_update` flag so that the app store
+  # does not use them to update the timestamp
   LOCAL_EVENTS = [
     'Event::DraftDecision',
     'Event::Edit',
     'Event::Note',
     'Event::UndoEdit',
     'PriorAuthority::Event::DraftSendBack',
+  ].freeze
+
+  # These are events that are only created during a page load that also
+  # triggers a full app store update or metadata update,
+  # meaning that we don't send a separate HTTP request
+  # to tell the app store about these events as soon as they are created.
+  ACCOMPANIES_UPDATE_EVENTS = [
+    'Event::ChangeRisk',
+    'Nsm::Event::SendBack',
+    'PriorAuthority::Event::SendBack',
+    'Event::AutoDecision',
+    'Event::Decision',
+    'Event::Expiry',
   ].freeze
 
   scope :history, -> { where(event_type: HISTORY_EVENTS).order(created_at: :desc) }
@@ -64,6 +72,10 @@ class Event < ApplicationRecord
                 "Event::#{event_type.classify}".constantize
               end
       klass.new(params).save!
+    end
+
+    def build(**kwargs)
+      construct(**kwargs).tap { _1.notify unless _1.event_type.in?(ACCOMPANIES_UPDATE_EVENTS) }
     end
 
     private
@@ -116,7 +128,8 @@ class Event < ApplicationRecord
       .except('submission_id')
       .merge(
         public: PUBLIC_EVENTS.include?(event_type),
-        event_type: event_type.demodulize.underscore
+        event_type: event_type.demodulize.underscore,
+        does_not_constitute_update: LOCAL_EVENTS.include?(event_type),
       )
   end
 

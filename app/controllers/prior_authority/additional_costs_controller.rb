@@ -26,7 +26,7 @@ module PriorAuthority
 
       form = AdditionalCostForm.new(submission:, item:, **form_params)
 
-      if form.save
+      if form.save!
         redirect_to prior_authority_application_adjustments_path(submission)
       else
         render :edit, locals: { submission:, item:, form:, index: }
@@ -47,7 +47,7 @@ module PriorAuthority
     def destroy
       deleter = PriorAuthority::AdjustmentDeleter.new(params, :additional_cost, current_user)
       authorize(deleter.submission, :edit?)
-      deleter.call
+      deleter.call!
       redirect_to prior_authority_application_adjustments_path(params[:application_id])
     end
 

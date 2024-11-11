@@ -14,7 +14,7 @@ module Nsm
         authorize(claim)
         form = Uplift::LettersAndCallsForm.new(claim:, **form_params)
 
-        if form.save
+        if form.save!
           redirect_to nsm_claim_letters_and_calls_path(claim),
                       flash: { success: t('.uplift_removed') }
         else
