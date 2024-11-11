@@ -1,16 +1,13 @@
 module PriorAuthority
   class AutoAssignmentsController < PriorAuthority::AssignmentsController
     def create
-      # Lock to prevent two caseworkers from assigning the same application at the same time
-      Assignment.with_advisory_lock('assign_user') do
-        application = ChooseApplicationForAssignment.call(current_user)
-        if application
-          authorize(application, :assign?)
-          assign_and_redirect(application)
-        else
-          skip_authorization
-          redirect_to your_prior_authority_applications_path, flash: { notice: t('.no_unassigned_applications') }
-        end
+      authorize PriorAuthorityApplication, :assign?
+      data = AppStoreClient.new.auto_assign(Submission::APPLICATION_TYPES[:prior_authority], current_user.id)
+      if data
+        application = PriorAuthorityApplication.find_by(id: data['application_id']) || UpdateSubmission.call(data)
+        assign_and_redirect(application, tell_app_store: false)
+      else
+        redirect_to your_prior_authority_applications_path, flash: { notice: t('.no_unassigned_applications') }
       end
     end
   end

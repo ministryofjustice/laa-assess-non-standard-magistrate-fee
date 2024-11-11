@@ -31,10 +31,11 @@ module Nsm
 
     def create
       authorize Claim, :assign?
-      claim = Claim.auto_assignable(current_user).order(created_at: :asc).first
+      claim_data = AppStoreClient.new.auto_assign(Submission::APPLICATION_TYPES[:nsm], current_user.id)
 
-      if claim
-        assign(claim)
+      if claim_data
+        claim = Claim.find_by(id: claim_data['application_id']) || UpdateSubmission.call(claim_data)
+        assign(claim, tell_app_store: false)
         redirect_to nsm_claim_claim_details_path(claim)
       else
         redirect_to your_nsm_claims_path, flash: { notice: t('.no_pending_claims') }
