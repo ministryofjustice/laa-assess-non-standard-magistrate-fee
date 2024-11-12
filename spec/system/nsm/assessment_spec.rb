@@ -24,7 +24,7 @@ Rails.describe 'Assessment', :stub_oauth_token do
       travel_to fixed_arbitrary_date
       visit nsm_claim_claim_details_path(claim)
       click_link_or_button 'Make a decision'
-      choose 'Grant it'
+      choose 'Grant'
       fill_in 'nsm-make-decision-form-grant-comment-field', with: 'Test Data'
       click_link_or_button 'Submit decision'
     end
@@ -57,7 +57,7 @@ Rails.describe 'Assessment', :stub_oauth_token do
     it 'sends a part granted notification' do
       visit nsm_claim_claim_details_path(claim)
       click_link_or_button 'Make a decision'
-      choose 'Part grant it'
+      choose 'Part grant'
       fill_in 'nsm-make-decision-form-partial-comment-field', with: 'Test Data'
       click_link_or_button 'Submit decision'
     end
@@ -67,7 +67,7 @@ Rails.describe 'Assessment', :stub_oauth_token do
     it 'sends a rejected notification' do
       visit nsm_claim_claim_details_path(claim)
       click_link_or_button 'Make a decision'
-      choose 'Reject it'
+      choose 'Reject'
       fill_in 'nsm-make-decision-form-reject-comment-field', with: 'Test Data'
       click_link_or_button 'Submit decision'
     end

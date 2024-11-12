@@ -21,7 +21,9 @@ RSpec.describe 'Decide an application', :stub_oauth_token do
   context 'when I make a decision' do
     before do
       choose 'Rejected'
-      fill_in 'Provide detailed reasons for rejecting this application', with: 'The wrong form was used'
+      within '#prior-authority-decision-form-pending-decision-rejected-conditional' do
+        fill_in 'Explain your decision', with: 'The wrong form was used'
+      end
     end
 
     it 'prevents duplicate decisions' do
@@ -56,22 +58,22 @@ RSpec.describe 'Decide an application', :stub_oauth_token do
 
   it 'requires me to choose an option' do
     click_on 'Submit decision'
-    expect(page).to have_content 'Choose the outcome of your assessment'
+    expect(page).to have_content 'Select if you will grant, part grant or reject this application'
   end
 
   it 'requires an explanation for rejections' do
     choose 'Rejected'
     click_on 'Submit decision'
-    expect(page).to have_content 'Enter a reason for rejecting this application'
+    expect(page).to have_content 'Add an explanation for your decision'
   end
 
   it 'explanation is optional for part grants' do
     choose 'Part granted'
     click_on 'Submit decision'
-    expect(page).to have_no_content 'Enter a reason for'
+    expect(page).to have_content 'Add an explanation for your decision'
   end
 
-  it 'does not allow part grants if no adjustments mae' do
+  it 'does not allow part grants if no adjustments made' do
     choose 'Part granted'
     click_on 'Submit decision'
     expect(page).to have_content(
@@ -82,11 +84,13 @@ RSpec.describe 'Decide an application', :stub_oauth_token do
 
   it 'lets me save my answers and return later' do
     choose 'Rejected'
-    fill_in 'Provide detailed reasons for rejecting this application', with: 'The wrong form was used'
+    within '#prior-authority-decision-form-pending-decision-rejected-conditional' do
+      fill_in 'Explain your decision', with: 'The wrong form was used'
+    end
     click_on 'Save and come back later'
     visit new_prior_authority_application_decision_path(application)
     expect(page).to have_checked_field('Rejected')
-    expect(page).to have_field('Provide detailed reasons for rejecting this application',
+    expect(page).to have_field('Explain your decision',
                                with: 'The wrong form was used')
   end
 end
