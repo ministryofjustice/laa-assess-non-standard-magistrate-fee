@@ -1,5 +1,7 @@
-PATH
-  remote: ../laa-crime-forms-common
+GIT
+  remote: https://github.com/ministryofjustice/laa-crime-forms-common.git
+  revision: fca9c34bbc208de277d19e6ac84ab3aa901c895d
+  ref: fca9c34
   specs:
     laa_crime_forms_common (0.5.0)
       httparty (>= 0.22.0, < 1)
@@ -607,7 +609,7 @@ DEPENDENCIES
   httparty
   jbuilder
   jsbundling-rails (>= 1.3.1)
-  laa_crime_forms_common!
+  laa_crime_forms_common (~> 0.5.0)!
   launchy
   lograge
   logstash-event
