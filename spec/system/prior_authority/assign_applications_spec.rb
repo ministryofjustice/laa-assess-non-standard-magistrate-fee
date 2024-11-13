@@ -31,6 +31,7 @@ RSpec.describe 'Assign applications', :stub_oauth_token do
   end
 
   before do
+    stub_load_from_app_store(application)
     auto_assignment_stub
     stub_request(:post, "https://appstore.example.com/v1/submissions/#{application&.id}/events").to_return(status: 201)
     stub_request(:post, 'https://appstore.example.com/v1/submissions/searches').to_return(

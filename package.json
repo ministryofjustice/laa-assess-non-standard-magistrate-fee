@@ -10,7 +10,7 @@
     "esbuild": "^0.24.0",
     "govuk-frontend": "^5.7.1",
     "jquery": "^3.6.0",
-    "sass": "^1.80.6"
+    "sass": "^1.80.7"
   },
   "resolutions": {
     "braces": "^3.0.3",

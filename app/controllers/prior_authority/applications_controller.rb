@@ -27,7 +27,7 @@ module PriorAuthority
     end
 
     def show
-      application = PriorAuthorityApplication.find(params[:id])
+      application = PriorAuthorityApplication.load_from_app_store(params[:id])
       authorize(application)
       @summary = BaseViewModel.build(:application_summary, application)
       @details = BaseViewModel.build(:application_details, application)

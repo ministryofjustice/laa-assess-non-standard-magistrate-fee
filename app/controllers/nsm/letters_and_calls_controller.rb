@@ -10,7 +10,7 @@ module Nsm
     }.freeze
 
     def index
-      claim = Claim.find(params[:claim_id])
+      claim = Claim.load_from_app_store(params[:claim_id])
       authorize(claim, :show?)
       records = BaseViewModel.build(:letters_and_calls_summary, claim)
       claim_summary = BaseViewModel.build(:claim_summary, claim)
@@ -27,7 +27,7 @@ module Nsm
     end
 
     def adjusted
-      claim = Claim.find(params[:claim_id])
+      claim = Claim.load_from_app_store(params[:claim_id])
       authorize(claim, :show?)
       records = BaseViewModel.build(:letters_and_calls_summary, claim)
       claim_summary = BaseViewModel.build(:claim_summary, claim)
@@ -39,7 +39,7 @@ module Nsm
     end
 
     def show
-      claim = Claim.find(params[:claim_id])
+      claim = Claim.load_from_app_store(params[:claim_id])
       authorize(claim)
       item = BaseViewModel.build(:letter_and_call, claim, 'letters_and_calls').detect do |model|
         model.type.value == params[:id]
@@ -49,7 +49,7 @@ module Nsm
     end
 
     def edit
-      claim = Claim.find(params[:claim_id])
+      claim = Claim.load_from_app_store(params[:claim_id])
       authorize(claim)
       item = BaseViewModel.build(:letter_and_call, claim, 'letters_and_calls').detect do |model|
         model.type.value == params[:id]

@@ -59,7 +59,7 @@ module PriorAuthority
     end
 
     def discard_all_adjustments
-      app_store_record = AppStoreClient.new.get_submission(submission)
+      app_store_record = AppStoreClient.new.get_submission(submission.id)
       submission.update!(data: app_store_record['application'])
     end
 

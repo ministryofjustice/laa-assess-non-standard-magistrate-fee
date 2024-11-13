@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe PriorAuthority::Messages::Rejected do
-  subject(:feedback) { described_class.new(application) }
+RSpec.describe LaaCrimeFormsCommon::Messages::PriorAuthority::Rejected do
+  subject(:feedback) { described_class.new(application.data) }
 
   let(:application) do
     create(

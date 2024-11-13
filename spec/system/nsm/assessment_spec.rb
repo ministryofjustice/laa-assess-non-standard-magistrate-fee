@@ -12,6 +12,8 @@ Rails.describe 'Assessment', :stub_oauth_token do
       body: { metadata: { total_results: 0 }, raw_data: [] }.to_json
     )
 
+    stub_load_from_app_store(claim)
+
     update_stub
     sign_in user
     create(:assignment, submission: claim, user: user)

@@ -9,6 +9,8 @@ RSpec.describe 'Accessibility', :accessibility, :stub_oauth_token do
       status: 201,
       body: { metadata: { total_results: 0 }, raw_data: [] }.to_json
     )
+    stub_load_from_app_store(claim)
+    stub_load_from_app_store(application)
     driven_by(:headless_chrome)
     sign_in caseworker
   end

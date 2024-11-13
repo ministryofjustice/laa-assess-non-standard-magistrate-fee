@@ -21,7 +21,7 @@ module PriorAuthority
         if service_type == 'custom'
           custom_service_name
         else
-          I18n.t("prior_authority.service_types.#{service_type}")
+          I18n.t("laa_crime_forms_common.prior_authority.service_types.#{service_type}")
         end
       end
 
@@ -92,7 +92,7 @@ module PriorAuthority
       def current_section(current_user)
         if assessed? || expired?
           :assessed
-        elsif submission.assignments.find_by(user: current_user)
+        elsif submission.assigned_user == current_user
           :your
         else
           :open
@@ -106,7 +106,7 @@ module PriorAuthority
       delegate :sent_back?, :expired?, :provider_updated?, to: :submission
 
       def caseworker
-        submission.assignments.first.display_name
+        User.find_by(id: submission.assigned_user_id).display_name
       end
     end
   end

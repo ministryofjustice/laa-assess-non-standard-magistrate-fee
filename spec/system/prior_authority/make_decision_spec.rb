@@ -6,6 +6,7 @@ RSpec.describe 'Decide an application', :stub_oauth_token do
   let(:update_stub) { stub_request(:put, "https://appstore.example.com/v1/application/#{application.id}").to_return(status: 201) }
 
   before do
+    stub_load_from_app_store(application)
     stub_request(:post, 'https://appstore.example.com/v1/submissions/searches').to_return(
       status: 201,
       body: { metadata: { total_results: 0 }, raw_data: [] }.to_json

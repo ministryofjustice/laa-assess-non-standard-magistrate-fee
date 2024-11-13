@@ -1,7 +1,7 @@
 module Nsm
   class ChangeRisksController < Nsm::BaseController
     def edit
-      claim = Claim.find(params[:claim_id])
+      claim = Claim.load_from_app_store(params[:claim_id])
       authorize(claim)
       risk = ChangeRiskForm.new(id: params[:claim_id], risk_level: claim.risk)
       render locals: { claim:, risk: }

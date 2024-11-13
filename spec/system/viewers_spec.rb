@@ -14,6 +14,8 @@ RSpec.describe 'Viewers', :stub_oauth_token do
   end
 
   before do
+    stub_load_from_app_store(application)
+    stub_load_from_app_store(claim)
     search_stub
     submissions
     sign_in viewer

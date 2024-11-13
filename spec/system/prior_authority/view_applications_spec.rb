@@ -37,6 +37,7 @@ RSpec.describe 'View applications' do
   end
 
   before do
+    stub_load_from_app_store(application)
     sign_in caseworker
     visit '/'
     click_on 'Accept analytics cookies'

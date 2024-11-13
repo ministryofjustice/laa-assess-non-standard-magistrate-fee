@@ -12,6 +12,7 @@ RSpec.describe PriorAuthority::AdjustmentDeleter do
 
     before do
       allow(AppStoreClient).to receive(:new).and_return(app_store_client)
+      allow(PriorAuthorityApplication).to receive(:load_from_app_store).and_return(application)
     end
 
     context 'when adjustment type is unknown' do

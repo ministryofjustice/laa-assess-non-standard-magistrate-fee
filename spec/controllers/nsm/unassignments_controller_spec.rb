@@ -8,7 +8,7 @@ RSpec.describe Nsm::UnassignmentsController do
     let(:defendant_name) { 'Tracy Linklater' }
 
     before do
-      allow(Claim).to receive(:find).and_return(claim)
+      allow(Claim).to receive(:load_from_app_store).and_return(claim)
       allow(Nsm::UnassignmentForm).to receive(:new).and_return(unassignment)
     end
 
@@ -48,7 +48,7 @@ RSpec.describe Nsm::UnassignmentsController do
       allow(User).to receive(:first_or_create).and_return(user)
       allow(Nsm::UnassignmentForm).to receive(:new).and_return(unassignment)
       allow(BaseViewModel).to receive(:build).and_return(laa_reference_class)
-      allow(Claim).to receive(:find).and_return(claim)
+      allow(Claim).to receive(:load_from_app_store).and_return(claim)
     end
 
     it 'builds a decision object' do

@@ -83,10 +83,10 @@ module ApplicationHelper
     claim_id = params.fetch(:claim_id, params.fetch(:id, nil))
     return unless claim_id
 
-    current_claim = Claim.find(claim_id)
+    current_claim = Claim.load_from_app_store(claim_id)
     if current_claim.closed?
       :closed
-    elsif current_claim.assigned_to?(current_user)
+    elsif current_claim.assigned_user == current_user
       :your
     else
       :open

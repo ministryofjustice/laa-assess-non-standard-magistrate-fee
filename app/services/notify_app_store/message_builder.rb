@@ -2,10 +2,11 @@ class NotifyAppStore
   class MessageBuilder
     JSON_SCHEMA_VERSION = 1
 
-    attr_reader :submission, :scorer
+    attr_reader :submission, :validate
 
-    def initialize(submission:)
+    def initialize(submission:, validate: true)
       @submission = submission
+      @validate = validate
     end
 
     def message
@@ -21,6 +22,8 @@ class NotifyAppStore
     end
 
     def validated_data
+      return submission.data unless validate
+
       service_type = Submission::APPLICATION_TYPES.invert[submission.application_type]
       issues = LaaCrimeFormsCommon::Validator.validate(service_type, submission.data)
 

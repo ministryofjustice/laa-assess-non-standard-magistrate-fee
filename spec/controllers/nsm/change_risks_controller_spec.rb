@@ -7,6 +7,7 @@ RSpec.describe Nsm::ChangeRisksController, type: :controller do
   before do
     allow(controller).to receive(:current_user).and_return(user)
     create :assignment, submission: claim, user: user
+    allow(Claim).to receive(:load_from_app_store).and_return(claim)
   end
 
   describe 'edit' do
