@@ -21,7 +21,7 @@ module PriorAuthority
         if service_type == 'custom'
           custom_service_name
         else
-          I18n.t("prior_authority.service_types.#{service_type}")
+          I18n.t("laa_crime_forms_common.prior_authority.service_types.#{service_type}")
         end
       end
 

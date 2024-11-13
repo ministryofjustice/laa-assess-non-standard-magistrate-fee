@@ -5,11 +5,11 @@ module PriorAuthority
     class InvalidState < StandardError; end
 
     MESSAGE_KLASSES = {
-      PriorAuthorityApplication::GRANTED => Messages::Granted,
-      PriorAuthorityApplication::AUTO_GRANT => Messages::Granted,
-      PriorAuthorityApplication::PART_GRANT => Messages::PartGranted,
-      PriorAuthorityApplication::REJECTED => Messages::Rejected,
-      PriorAuthorityApplication::SENT_BACK => Messages::FurtherInformationRequest,
+      PriorAuthorityApplication::GRANTED => LaaCrimeFormsCommon::Messages::PriorAuthority::Granted,
+      PriorAuthorityApplication::AUTO_GRANT => LaaCrimeFormsCommon::Messages::PriorAuthority::Granted,
+      PriorAuthorityApplication::PART_GRANT => LaaCrimeFormsCommon::Messages::PriorAuthority::PartGranted,
+      PriorAuthorityApplication::REJECTED => LaaCrimeFormsCommon::Messages::PriorAuthority::Rejected,
+      PriorAuthorityApplication::SENT_BACK => LaaCrimeFormsCommon::Messages::PriorAuthority::FurtherInformationRequest,
     }.freeze
 
     def notify(submission)
@@ -23,7 +23,7 @@ module PriorAuthority
 
     def instantiate_message(submission)
       klass = MESSAGE_KLASSES[submission.state]
-      klass ? klass.new(submission) : raise_message_for(submission)
+      klass ? klass.new(submission.data) : raise_message_for(submission)
     end
 
     def raise_message_for(submission)

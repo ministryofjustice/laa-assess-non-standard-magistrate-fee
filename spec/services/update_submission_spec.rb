@@ -17,10 +17,6 @@ RSpec.describe UpdateSubmission, :stub_oauth_token do
   let(:events_data) { nil }
   let(:submission_id) { nil }
 
-  before do
-    stub_request(:post, "https://appstore.example.com/v1/submissions/#{submission_id}/events").to_return(status: 201)
-  end
-
   context 'when submission does not already exist' do
     let(:submission_id) { SecureRandom.uuid }
 
@@ -213,87 +209,6 @@ RSpec.describe UpdateSubmission, :stub_oauth_token do
       it 'updates the data' do
         described_class.call(record)
         expect(application.reload.data).to eq data.with_indifferent_access
-      end
-    end
-
-    context 'when pulled data can be auto-granted' do
-      let(:autograntable) { double(Autograntable, grantable?: true) }
-      let(:data) { build(:prior_authority_data) }
-
-      before do
-        allow(Autograntable).to receive(:new).and_return(autograntable)
-        allow(Event::AutoDecision).to receive(:build)
-        allow(NotifyAppStore).to receive(:perform_now)
-      end
-
-      it 'updates the state to auto_grant' do
-        described_class.call(record)
-        expect(application.reload.state).to eq('auto_grant')
-      end
-
-      it 'create an event record' do
-        described_class.call(record)
-        expect(Event::AutoDecision).to have_received(:build).with(submission: application.becomes(Submission),
-                                                                  previous_state: 'submitted')
-      end
-
-      it 'notifys the app store' do
-        described_class.call(record)
-        expect(NotifyAppStore).to have_received(:perform_now).with(submission: application.becomes(Submission))
-      end
-    end
-
-    context 'when autogrant check returns a LocationService::NotFoundError' do
-      let(:autograntable) { double(Autograntable) }
-      let(:data) { build(:prior_authority_data) }
-
-      before do
-        allow(autograntable).to receive(:grantable?).and_raise(LocationService::NotFoundError)
-        allow(Autograntable).to receive(:new).and_return(autograntable)
-        allow(Event::AutoDecision).to receive(:build)
-        allow(NotifyAppStore).to receive(:perform_now)
-        allow(Sentry).to receive(:capture_exception)
-      end
-
-      it 'updates the data' do
-        described_class.call(record)
-        expect(application.reload.data).to eq data.with_indifferent_access
-        expect(Sentry).not_to have_received(:capture_exception)
-      end
-    end
-
-    context 'when autogrant check returns a LocationService error' do
-      let(:autograntable) { double(Autograntable) }
-      let(:data) { build(:prior_authority_data) }
-
-      before do
-        allow(autograntable).to receive(:grantable?).and_raise(LocationService::ResponseError)
-        allow(Autograntable).to receive(:new).and_return(autograntable)
-        allow(Event::AutoDecision).to receive(:build)
-        allow(NotifyAppStore).to receive(:perform_now)
-        allow(Sentry).to receive(:capture_exception)
-      end
-
-      it 'updates the data' do
-        described_class.call(record)
-        expect(application.reload.data).to eq data.with_indifferent_access
-        expect(Sentry).to have_received(:capture_exception)
-      end
-    end
-
-    context 'when autogrant check returns an unknown error' do
-      let(:autograntable) { double(Autograntable) }
-      let(:data) { build(:prior_authority_data) }
-
-      before do
-        allow(autograntable).to receive(:grantable?).and_raise('unknown_error')
-        allow(Autograntable).to receive(:new).and_return(autograntable)
-        allow(Event::AutoDecision).to receive(:build)
-        allow(NotifyAppStore).to receive(:perform_now)
-      end
-
-      it 'raise the erroor' do
-        expect { described_class.call(record) }.to raise_error('unknown_error')
       end
     end
   end
