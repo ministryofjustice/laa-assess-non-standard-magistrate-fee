@@ -13,7 +13,7 @@ class NotifyEventAppStore < ApplicationJob
   private
 
   def handle_forbidden_response(event)
-    data = client.get_submission(event.submission)
+    data = client.get_submission(event.submission_id)
 
     return log_warning(event) if data['events'].find { _1['id'] == event.id }
 

@@ -23,6 +23,7 @@ RSpec.describe 'Risk', :stub_oauth_token do
   end
 
   before do
+    stub_load_from_app_store(claim)
     search_stub
     sign_in user
     create(:assignment, submission: claim, user: user)

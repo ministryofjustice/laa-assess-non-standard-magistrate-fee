@@ -8,12 +8,13 @@ module PriorAuthority
     end
 
     def create
+      local_application = PriorAuthorityApplication.find(params[:application_id])
       @form = UnassignmentForm.new(params.require(:prior_authority_unassignment_form)
                                          .permit(:comment)
-                                         .merge(application_id: application.id))
+                                         .merge(application_id: local_application.id))
       if @form.valid?
-        assignment = application.assignments.first
-        process_unassignment(@form.comment, application, assignment)
+        assignment = local_application.assignments.first
+        process_unassignment(@form.comment, local_application, assignment)
       else
         skip_authorization
         render :new
@@ -44,7 +45,7 @@ module PriorAuthority
     end
 
     def application
-      @application ||= PriorAuthorityApplication.find(params[:application_id])
+      @application ||= PriorAuthorityApplication.load_from_app_store(params[:application_id])
     end
   end
 end

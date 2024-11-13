@@ -40,7 +40,7 @@ module Nsm
     end
 
     def claim
-      Claim.find_by(id:)
+      @claim ||= Claim.find(id)
     end
 
     def available_risks
@@ -56,7 +56,7 @@ module Nsm
     end
 
     def risk_changed?
-      claim&.risk != risk_level
+      claim.risk != risk_level
     end
 
     def sync_to_app_store(risk_event)

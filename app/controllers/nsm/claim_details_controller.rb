@@ -17,7 +17,7 @@ module Nsm
     end
 
     def claim
-      @claim ||= Claim.find(params[:claim_id])
+      @claim ||= Claim.load_from_app_store(params[:claim_id])
     end
   end
 end

@@ -38,7 +38,7 @@
     <div class="govuk-grid-column-two-thirds">
       <p class="govuk-body-m govuk-!-margin-bottom-2">
         <span class="govuk-!-font-weight-bold"><%= t(".assigned_to") %></span>
-        <%= claim_summary.assigned_to&.display_name || t(".unassigned") %>
+        <%= claim_summary.assigned_user&.display_name || t(".unassigned") %>
       </p>
       <p class="govuk-body-m govuk-!-margin-bottom-2">
         <span class="govuk-!-font-weight-bold"><%= t(".date_received") %></span>

@@ -9,12 +9,13 @@ module Nsm
     end
 
     def update
-      authorize(claim, :unassign?)
-      unassignment = UnassignmentForm.new(claim:, **send_back_params)
+      local_claim = Claim.find(params[:claim_id])
+      authorize(local_claim, :unassign?)
+      unassignment = UnassignmentForm.new(claim: local_claim, **send_back_params)
       if unassignment.save
-        redirect_to nsm_claim_claim_details_path(claim)
+        redirect_to nsm_claim_claim_details_path(local_claim)
       else
-        render :edit, locals: { claim:, unassignment: }
+        render :edit, locals: { claim: local_claim, unassignment: unassignment }
       end
     end
 
@@ -27,7 +28,7 @@ module Nsm
     end
 
     def claim
-      @claim ||= Claim.find(params[:claim_id])
+      @claim ||= Claim.load_from_app_store(params[:claim_id])
     end
 
     def send_back_params

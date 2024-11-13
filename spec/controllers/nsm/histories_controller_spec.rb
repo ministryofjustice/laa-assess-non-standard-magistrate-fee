@@ -9,7 +9,7 @@ RSpec.describe Nsm::HistoriesController do
     let(:claim_note) { instance_double(Nsm::ClaimNoteForm, id: claim_id) }
 
     before do
-      allow(Claim).to receive(:find).and_return(claim)
+      allow(Claim).to receive(:load_from_app_store).and_return(claim)
       allow(BaseViewModel).to receive_messages(build: claim_summary)
       allow(Nsm::ClaimNoteForm).to receive(:new).and_return(claim_note)
     end
@@ -40,6 +40,7 @@ RSpec.describe Nsm::HistoriesController do
     let(:form) { instance_double(Nsm::ClaimNoteForm, id: claim.id, save: save) }
 
     before do
+      allow(Claim).to receive(:load_from_app_store).and_return(claim)
       claim.assignments.create(user:)
       allow(Nsm::ClaimNoteForm).to receive(:new).and_return(form)
       post :create, params: {

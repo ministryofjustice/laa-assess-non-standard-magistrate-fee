@@ -13,8 +13,8 @@ class AppStoreClient
     )
   end
 
-  def get_submission(submission)
-    url = "/v1/submissions/#{submission.id}"
+  def get_submission(submission_id)
+    url = "/v1/submissions/#{submission_id}"
     response = self.class.get "#{host}#{url}", **options
 
     process_response(

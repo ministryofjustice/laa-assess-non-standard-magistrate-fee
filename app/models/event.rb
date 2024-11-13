@@ -51,9 +51,6 @@ class Event < ApplicationRecord
 
   scope :non_local, -> { where.not(event_type: LOCAL_EVENTS) }
 
-  # simplifies the rehydrate process
-  attribute :public
-
   # Make these methods private to ensure they are created via the various `build` methods`
   class << self
     protected :new
@@ -71,7 +68,7 @@ class Event < ApplicationRecord
               else
                 "Event::#{event_type.classify}".constantize
               end
-      klass.new(params).save!
+      klass.new(params.except('does_not_constitute_update', 'public')).save!
     end
 
     def build(**kwargs)

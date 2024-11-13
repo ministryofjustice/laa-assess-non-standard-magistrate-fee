@@ -106,6 +106,7 @@ RSpec.describe 'View related applications', :stub_oauth_token do
   end
 
   before do
+    stub_load_from_app_store(assigned_to_me)
     sign_in me
     visit '/'
     click_on 'Accept analytics cookies'

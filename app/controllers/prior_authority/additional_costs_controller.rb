@@ -1,7 +1,7 @@
 module PriorAuthority
   class AdditionalCostsController < PriorAuthority::BaseController
     def edit
-      submission = PriorAuthorityApplication.find(params[:application_id])
+      submission = PriorAuthorityApplication.load_from_app_store(params[:application_id])
       authorize(submission)
       all_costs = BaseViewModel.build(:additional_cost, submission, 'additional_costs')
       index = all_costs.index do |model|
@@ -34,7 +34,7 @@ module PriorAuthority
     end
 
     def confirm_deletion
-      submission = PriorAuthorityApplication.find(params[:application_id])
+      submission = PriorAuthorityApplication.load_from_app_store(params[:application_id])
       authorize(submission, :edit?)
       index = submission.data['additional_costs'].index { _1['id'] == params[:id] }
       render 'prior_authority/shared/confirm_delete_adjustment',

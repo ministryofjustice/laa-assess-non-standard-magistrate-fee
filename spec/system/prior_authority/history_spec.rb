@@ -7,6 +7,7 @@ RSpec.describe 'History events', :stub_oauth_token do
   let(:supervisor) { create(:supervisor) }
 
   before do
+    stub_load_from_app_store(application)
     stub_request(:post, "https://appstore.example.com/v1/submissions/#{application.id}/events")
     travel_to fixed_arbitrary_date
     application

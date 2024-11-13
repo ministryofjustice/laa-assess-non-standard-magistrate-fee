@@ -9,7 +9,7 @@ RSpec.describe Nsm::ClaimDetailsController do
     let(:provider_updates) { nil }
 
     before do
-      allow(Claim).to receive(:find).and_return(claim)
+      allow(Claim).to receive(:load_from_app_store).and_return(claim)
       allow(BaseViewModel).to receive(:build).with(:claim_summary, claim).and_return(claim_summary)
       allow(ClaimDetails::Table).to receive(:new).and_return(claim_details)
     end
@@ -17,7 +17,7 @@ RSpec.describe Nsm::ClaimDetailsController do
     it 'find and builds the required object' do
       get :show, params: { claim_id: }
 
-      expect(Claim).to have_received(:find).with(claim_id)
+      expect(Claim).to have_received(:load_from_app_store).with(claim_id)
       expect(BaseViewModel).to have_received(:build).with(:claim_summary, claim)
     end
 

@@ -39,20 +39,8 @@ class UpdateSubmission
   end
 
   def assign_attributes
-    submission.assign_attributes(attributes)
+    submission.assign_attributes(Submission.attributes_from_app_store_data(@record))
     submission.received_on ||= Time.zone.today
-  end
-
-  def attributes
-    {
-      state: @record['application_state'],
-      risk: @record['application_risk'],
-      current_version: @record['version'],
-      app_store_updated_at: @record['last_updated_at'],
-      application_type: @record['application_type'],
-      json_schema_version: @record['json_schema_version'],
-      data: @record['application']
-    }
   end
 
   private

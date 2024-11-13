@@ -1,7 +1,7 @@
 module PriorAuthority
   class ServiceCostsController < PriorAuthority::BaseController
     def edit
-      submission = PriorAuthorityApplication.find(params[:application_id])
+      submission = PriorAuthorityApplication.load_from_app_store(params[:application_id])
       authorize(submission, :edit?)
       all_service_costs = BaseViewModel.build(:service_cost, submission, 'quotes')
 
@@ -33,7 +33,7 @@ module PriorAuthority
     end
 
     def confirm_deletion
-      submission = PriorAuthorityApplication.find(params[:application_id])
+      submission = PriorAuthorityApplication.load_from_app_store(params[:application_id])
       authorize(submission, :edit?)
       service_type = t(submission.data['service_type'], scope: 'prior_authority.service_types')
       render 'prior_authority/shared/confirm_delete_adjustment',

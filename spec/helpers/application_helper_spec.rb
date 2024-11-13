@@ -263,6 +263,12 @@ RSpec.describe ApplicationHelper, type: :helper do
   end
 
   describe '#infer_claim_section' do
+    let(:claim) { nil }
+
+    before do
+      allow(Claim).to receive(:load_from_app_store).and_return(claim)
+    end
+
     it 'returns nothing if there is no relevant param' do
       expect(helper.infer_claim_section).to be_nil
     end

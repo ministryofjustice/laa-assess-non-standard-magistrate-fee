@@ -62,6 +62,7 @@ RSpec.describe 'Search', :stub_oauth_token do
 
     before do
       stub
+      stub_load_from_app_store(claim)
       claim.assignments.create user: caseworker
     end
 

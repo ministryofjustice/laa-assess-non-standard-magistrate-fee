@@ -5,6 +5,7 @@ RSpec.describe 'Supporting Evidence' do
   let(:claim) { create(:claim) }
 
   before do
+    stub_load_from_app_store(claim)
     sign_in user
     visit nsm_claim_supporting_evidences_path(claim)
   end

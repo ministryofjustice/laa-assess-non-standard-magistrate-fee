@@ -64,6 +64,7 @@ RSpec.describe 'Search', :stub_oauth_token do
     end
 
     it 'lets me search and shows me a result' do
+      stub_load_from_app_store(application)
       visit prior_authority_root_path
       click_on 'Search'
       fill_in 'Enter any combination', with: 'QUERY'

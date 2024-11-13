@@ -12,6 +12,7 @@ RSpec.describe Nsm::AllAdjustmentsDeleter do
 
     before do
       allow(AppStoreClient).to receive(:new).and_return(app_store_client)
+      allow(Claim).to receive(:load_from_app_store).and_return(claim)
       create(:assignment, submission: claim, user: user)
     end
 
