@@ -1,7 +1,6 @@
 GIT
   remote: https://github.com/ministryofjustice/laa-crime-forms-common.git
-  revision: fca9c34bbc208de277d19e6ac84ab3aa901c895d
-  ref: fca9c34
+  revision: d87b3554c5b9eab918fd58ead50bbd962f725408
   specs:
     laa_crime_forms_common (0.5.0)
       httparty (>= 0.22.0, < 1)
