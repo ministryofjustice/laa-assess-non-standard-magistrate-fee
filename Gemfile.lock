@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/ministryofjustice/laa-crime-forms-common.git
-  revision: ff84817cdda9817043b22ff9e37cbe40bae063e6
+  revision: 0c6fb69c30b7c5e0904ca22c3c67e0a310e48290
   specs:
-    laa_crime_forms_common (0.3.0)
+    laa_crime_forms_common (0.4.0)
       i18n (>= 1.8.11, < 2)
       json-schema (>= 5.0.0, < 6)
 
@@ -90,8 +90,8 @@ GEM
     attr_extras (7.1.0)
     attr_required (1.0.2)
     aws-eventstream (1.3.0)
-    aws-partitions (1.993.0)
-    aws-sdk-core (3.211.0)
+    aws-partitions (1.1005.0)
+    aws-sdk-core (3.212.0)
       aws-eventstream (~> 1, >= 1.3.0)
       aws-partitions (~> 1, >= 1.992.0)
       aws-sigv4 (~> 1.9)
@@ -99,18 +99,18 @@ GEM
     aws-sdk-kms (1.95.0)
       aws-sdk-core (~> 3, >= 3.210.0)
       aws-sigv4 (~> 1.5)
-    aws-sdk-s3 (1.169.0)
+    aws-sdk-s3 (1.170.1)
       aws-sdk-core (~> 3, >= 3.210.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.5)
     aws-sigv4 (1.10.1)
       aws-eventstream (~> 1, >= 1.0.2)
-    axe-core-api (4.10.1)
+    axe-core-api (4.10.2)
       dumb_delegator
       ostruct
       virtus
-    axe-core-rspec (4.10.1)
-      axe-core-api (= 4.10.1)
+    axe-core-rspec (4.10.2)
+      axe-core-api (= 4.10.2)
       dumb_delegator
       ostruct
       virtus
@@ -120,7 +120,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.1)
     base64 (0.2.0)
     bcrypt (3.1.20)
-    benchmark (0.3.0)
+    benchmark (0.4.0)
     better_html (2.1.1)
       actionview (>= 6.0)
       activesupport (>= 6.0)
@@ -156,6 +156,9 @@ GEM
       bigdecimal
       rexml
     crass (1.0.6)
+    cronex (0.15.0)
+      tzinfo
+      unicode (>= 0.4.4.5)
     cssbundling-rails (1.4.1)
       railties (>= 6.0.0)
     csv (3.3.0)
@@ -210,11 +213,11 @@ GEM
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    govuk-components (5.7.0)
+    govuk-components (5.7.1)
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
       pagy (>= 6, < 10)
-      view_component (>= 3.9, < 3.17)
-    govuk_design_system_formbuilder (5.7.0)
+      view_component (>= 3.18, < 3.21)
+    govuk_design_system_formbuilder (5.7.1)
       actionview (>= 6.1)
       activemodel (>= 6.1)
       activesupport (>= 6.1)
@@ -339,12 +342,12 @@ GEM
       webfinger (~> 2.0)
     optimist (3.1.0)
     orm_adapter (0.5.0)
-    ostruct (0.6.0)
+    ostruct (0.6.1)
     overcommit (0.64.1)
       childprocess (>= 0.6.3, < 6)
       iniparse (~> 1.4)
       rexml (>= 3.3.9)
-    pagy (9.2.0)
+    pagy (9.2.2)
     parallel (1.26.3)
     parser (3.3.6.0)
       ast (~> 2.4.1)
@@ -362,7 +365,7 @@ GEM
     pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
-    psych (5.1.2)
+    psych (5.2.0)
       stringio
     public_suffix (6.0.1)
     puma (6.4.3)
@@ -371,7 +374,7 @@ GEM
       activesupport (>= 3.0.0)
     raabro (1.4.0)
     racc (1.8.1)
-    rack (2.2.10)
+    rack (3.1.8)
     rack-oauth2 (2.2.1)
       activesupport
       attr_required
@@ -379,16 +382,15 @@ GEM
       faraday-follow_redirects
       json-jwt (>= 1.11.0)
       rack (>= 2.1.0)
-    rack-protection (3.2.0)
+    rack-protection (4.0.0)
       base64 (>= 0.1.0)
-      rack (~> 2.2, >= 2.2.4)
-    rack-session (1.0.2)
-      rack (< 3)
+      rack (>= 3.0.0, < 4)
+    rack-session (2.0.0)
+      rack (>= 3.0.0)
     rack-test (2.1.0)
       rack (>= 1.3)
-    rackup (1.0.0)
-      rack (< 3)
-      webrick
+    rackup (2.2.0)
+      rack (>= 3)
     rails (7.2.2)
       actioncable (= 7.2.2)
       actionmailbox (= 7.2.2)
@@ -431,7 +433,7 @@ GEM
     redis-client (0.22.2)
       connection_pool
     regexp_parser (2.9.2)
-    reline (0.5.10)
+    reline (0.5.11)
       io-console (~> 0.5)
     request_store (1.5.1)
       rack (>= 1.4)
@@ -447,7 +449,7 @@ GEM
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
       rspec-mocks (~> 3.13.0)
-    rspec-core (3.13.1)
+    rspec-core (3.13.2)
       rspec-support (~> 3.13.0)
     rspec-expectations (3.13.3)
       diff-lcs (>= 1.2.0, < 2.0)
@@ -455,10 +457,10 @@ GEM
     rspec-html-matchers (0.10.0)
       nokogiri (~> 1)
       rspec (>= 3.0.0.a)
-    rspec-mocks (3.13.1)
+    rspec-mocks (3.13.2)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
-    rspec-rails (7.0.1)
+    rspec-rails (7.1.0)
       actionpack (>= 7.0)
       activesupport (>= 7.0)
       railties (>= 7.0)
@@ -493,7 +495,7 @@ GEM
       rubocop (~> 1.61)
     ruby-progressbar (1.13.0)
     rubyzip (2.3.2)
-    securerandom (0.3.1)
+    securerandom (0.3.2)
     selenium-webdriver (4.26.0)
       base64 (~> 0.2)
       logger (~> 1.4)
@@ -511,10 +513,11 @@ GEM
       logger
       rack (>= 2.2.4)
       redis-client (>= 0.22.2)
-    sidekiq-cron (1.12.0)
-      fugit (~> 1.8)
+    sidekiq-cron (2.0.0)
+      cronex (>= 0.13.0)
+      fugit (~> 1.8, >= 1.11.1)
       globalid (>= 1.0.1)
-      sidekiq (>= 6)
+      sidekiq (>= 6.5.0)
     sidekiq_alive (2.4.0)
       gserver (~> 0.0.1)
       sidekiq (>= 5, < 8)
@@ -537,7 +540,7 @@ GEM
       railties (>= 7.2)
     stimulus-rails (1.3.4)
       railties (>= 6.0.0)
-    stringio (3.1.1)
+    stringio (3.1.2)
     super_diff (0.13.0)
       attr_extras (>= 6.2.4)
       diff-lcs
@@ -555,6 +558,7 @@ GEM
       railties (>= 6.0.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    unicode (0.4.4.5)
     unicode-display_width (2.6.0)
     uri (0.13.0)
     useragent (0.16.10)
@@ -562,8 +566,8 @@ GEM
       activemodel (>= 3.0.0)
       public_suffix
     version_gem (1.1.3)
-    view_component (3.16.0)
-      activesupport (>= 5.2.0, < 8.0)
+    view_component (3.20.0)
+      activesupport (>= 5.2.0, < 8.1)
       concurrent-ruby (~> 1.0)
       method_source (~> 1.0)
     virtus (2.0.0)
@@ -599,7 +603,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-postgis-adapter
-  aws-sdk-s3 (~> 1.169)
+  aws-sdk-s3 (~> 1.170)
   axe-core-rspec
   bootsnap
   capybara
@@ -617,7 +621,7 @@ DEPENDENCIES
   httparty
   jbuilder
   jsbundling-rails (>= 1.3.1)
-  laa_crime_forms_common (~> 0.3.0)!
+  laa_crime_forms_common (~> 0.4.0)!
   launchy
   lograge
   logstash-event
