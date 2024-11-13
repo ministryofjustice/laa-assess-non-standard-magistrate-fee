@@ -57,7 +57,7 @@ resources:
 
 variables:
   environment: development
-  appStoreUrl: https://crm457-2216-6-take-nscc-store-dev.cloud-platform.service.justice.gov.uk
+  appStoreUrl: https://main-nscc-store-dev.cloud-platform.service.justice.gov.uk
   enableSyncTriggerEndpoint: 'true'
   allowIndexing: 'false'
 
