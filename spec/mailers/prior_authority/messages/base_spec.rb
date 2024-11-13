@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe PriorAuthority::Messages::Base do
-  subject(:feedback) { described_class.new(claim) }
+RSpec.describe LaaCrimeFormsCommon::Messages::PriorAuthority::Base do
+  subject(:feedback) { described_class.new(claim.data) }
 
   let(:claim) { build(:claim) }
 
