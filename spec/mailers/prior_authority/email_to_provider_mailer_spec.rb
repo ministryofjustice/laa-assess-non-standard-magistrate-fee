@@ -11,7 +11,7 @@ RSpec.describe PriorAuthority::EmailToProviderMailer, type: :mailer do
   let(:date) { DateTime.now.to_fs(:stamp) }
 
   let(:submission) do
-    create(
+    build(
       :prior_authority_application,
       state: state,
       data: build(
@@ -55,7 +55,7 @@ RSpec.describe PriorAuthority::EmailToProviderMailer, type: :mailer do
     let(:state) { 'part_grant' }
 
     let(:submission) do
-      create(
+      build(
         :prior_authority_application,
         state: state,
         data: build(
@@ -115,7 +115,7 @@ RSpec.describe PriorAuthority::EmailToProviderMailer, type: :mailer do
     end
 
     let(:submission) do
-      create(
+      build(
         :prior_authority_application,
         state: 'sent_back',
         data: build(
@@ -143,7 +143,7 @@ RSpec.describe PriorAuthority::EmailToProviderMailer, type: :mailer do
 
   context 'with an unhandled state' do
     let(:submission) do
-      create(
+      build(
         :prior_authority_application,
         state: 'submitted',
         data: build(

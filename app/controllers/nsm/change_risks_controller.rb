@@ -1,14 +1,12 @@
 module Nsm
   class ChangeRisksController < Nsm::BaseController
     def edit
-      claim = Claim.load_from_app_store(params[:claim_id])
       authorize(claim)
-      risk = ChangeRiskForm.new(id: params[:claim_id], risk_level: claim.risk)
+      risk = ChangeRiskForm.new(claim: claim, risk_level: claim.risk)
       render locals: { claim:, risk: }
     end
 
     def update
-      claim = Claim.find(params[:claim_id])
       authorize(claim)
       risk = ChangeRiskForm.new(risk_params)
 
@@ -22,10 +20,14 @@ module Nsm
 
     private
 
+    def claim
+      @claim ||= Claim.load_from_app_store(params[:claim_id])
+    end
+
     def risk_params
       params.require(:nsm_change_risk_form).permit(
-        :id, :risk_level, :explanation
-      ).merge(current_user:)
+        :risk_level, :explanation
+      ).merge(current_user:, claim:)
     end
   end
 end

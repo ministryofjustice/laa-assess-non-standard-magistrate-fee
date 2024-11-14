@@ -2,16 +2,14 @@ require 'rails_helper'
 
 RSpec.describe 'Disbursements', :stub_oauth_token do
   let(:user) { create(:caseworker) }
-  let(:claim) { create(:claim) }
+  let(:claim) { build(:claim) }
   let(:disbursement_form_error_message) do
     'activemodel.errors.models.nsm/disbursements_form.attributes'
   end
 
   before do
-    stub_load_from_app_store(claim)
-    stub_request(:post, "https://appstore.example.com/v1/submissions/#{claim.id}/events").to_return(status: 201)
-    stub_request(:post, "https://appstore.example.com/v1/submissions/#{claim.id}/adjustments").to_return(status: 201)
-    create(:assignment, submission: claim, user: user)
+    stub_app_store_interactions(claim)
+    claim.assigned_user_id = user.id
     sign_in user
   end
 
@@ -78,7 +76,7 @@ RSpec.describe 'Disbursements', :stub_oauth_token do
   end
 
   context 'when claim has been assessed' do
-    let(:claim) { create(:claim, state: 'granted') }
+    let(:claim) { build(:claim, state: 'granted') }
 
     it 'lets me view details instead of changing them' do
       visit nsm_claim_disbursements_path(claim)

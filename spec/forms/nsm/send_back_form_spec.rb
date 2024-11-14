@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Nsm::SendBackForm do
   subject { described_class.new(params) }
 
-  let(:claim) { create(:claim) }
+  let(:claim) { build(:claim) }
 
   describe '#validations' do
     let(:params) { { claim:, send_back_comment: } }
@@ -26,7 +26,7 @@ RSpec.describe Nsm::SendBackForm do
 
   describe '#persistance', :stub_oauth_token do
     let(:user) { instance_double(User, id: SecureRandom.uuid) }
-    let(:claim) { create(:claim, assignments: [build(:assignment)]) }
+    let(:claim) { build(:claim, :with_assignment) }
     let(:params) { { claim: claim, send_back_comment: 'some comment', current_user: user } }
     let(:unassignment_stub) do
       stub_request(:delete, "https://appstore.example.com/v1/submissions/#{claim.id}/assignment").to_return(status: 204)
@@ -42,16 +42,12 @@ RSpec.describe Nsm::SendBackForm do
 
     it 'updates the state' do
       subject.save
-      expect(claim.reload).to have_attributes(state: 'sent_back')
+      expect(claim).to have_attributes(state: 'sent_back')
     end
 
     it 'adds the comment' do
       subject.save
-      expect(claim.reload.data).to include('assessment_comment' => 'some comment')
-    end
-
-    it 'removes the assignment' do
-      expect { subject.save }.to change { claim.assignments.count }.from(1).to(0)
+      expect(claim.data).to include('assessment_comment' => 'some comment')
     end
 
     it 'creates a Decision event' do
@@ -71,7 +67,7 @@ RSpec.describe Nsm::SendBackForm do
 
       it 'adds a further_information array element to claim data' do
         subject.save
-        expect(claim.reload.data['further_information']).to be_a(Array)
+        expect(claim.data['further_information']).to be_a(Array)
       end
     end
 
@@ -85,15 +81,6 @@ RSpec.describe Nsm::SendBackForm do
       let(:params) { {} }
 
       it { expect(subject.save).to be_falsey }
-    end
-
-    context 'when error during save' do
-      before do
-        allow(Claim).to receive(:find_by).and_return(claim)
-        allow(claim).to receive(:update!).and_raise('not found')
-      end
-
-      it { expect { subject.save }.to raise_error('not found') }
     end
   end
 end

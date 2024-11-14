@@ -9,15 +9,15 @@ RSpec.describe 'Accessibility', :accessibility, :stub_oauth_token do
       status: 201,
       body: { metadata: { total_results: 0 }, raw_data: [] }.to_json
     )
-    stub_load_from_app_store(claim)
-    stub_load_from_app_store(application)
+    stub_app_store_interactions(claim)
+    stub_app_store_interactions(application)
     driven_by(:headless_chrome)
     sign_in caseworker
   end
 
   let(:caseworker) { create(:caseworker) }
-  let(:application) { create(:prior_authority_application) }
-  let(:claim) { create(:claim) }
+  let(:application) { build(:prior_authority_application) }
+  let(:claim) { build(:claim) }
   let(:be_axe_clean_with_caveats) do
     # Ignoring known false positive around skip links, see: https://design-system.service.gov.uk/components/skip-link/#when-to-use-this-component
     # Ignoring known false positive around aria-expanded attributes on conditional reveal radios, see: https://github.com/alphagov/govuk-frontend/issues/979
@@ -39,7 +39,7 @@ RSpec.describe 'Accessibility', :accessibility, :stub_oauth_token do
        edit_nsm_claim_work_items_uplift].each do |path|
       describe "#{path} screen" do
         before do
-          claim.assignments.create user: caseworker
+          claim.assigned_user_id = caseworker.id
           visit send(:"#{path}_path", claim)
         end
 

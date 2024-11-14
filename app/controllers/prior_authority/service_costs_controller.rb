@@ -1,7 +1,6 @@
 module PriorAuthority
   class ServiceCostsController < PriorAuthority::BaseController
     def edit
-      submission = PriorAuthorityApplication.load_from_app_store(params[:application_id])
       authorize(submission, :edit?)
       all_service_costs = BaseViewModel.build(:service_cost, submission, 'quotes')
 
@@ -15,7 +14,6 @@ module PriorAuthority
     end
 
     def update
-      submission = PriorAuthorityApplication.find(params[:application_id])
       authorize(submission, :update?)
       all_service_costs = BaseViewModel.build(:service_cost, submission, 'quotes')
 
@@ -33,7 +31,6 @@ module PriorAuthority
     end
 
     def confirm_deletion
-      submission = PriorAuthorityApplication.load_from_app_store(params[:application_id])
       authorize(submission, :edit?)
       service_type = t(submission.data['service_type'], scope: 'prior_authority.service_types')
       render 'prior_authority/shared/confirm_delete_adjustment',
@@ -42,13 +39,17 @@ module PriorAuthority
     end
 
     def destroy
-      deleter = PriorAuthority::AdjustmentDeleter.new(params, :service_cost, current_user)
-      authorize(deleter.submission, :update?)
+      authorize(submission, :update?)
+      deleter = PriorAuthority::AdjustmentDeleter.new(params, :service_cost, current_user, submission)
       deleter.call!
       redirect_to prior_authority_application_adjustments_path(params[:application_id])
     end
 
     private
+
+    def submission
+      @submission ||= PriorAuthorityApplication.load_from_app_store(params[:application_id])
+    end
 
     def form_params(item)
       params.require(:prior_authority_service_cost_form).permit(

@@ -50,7 +50,7 @@ module PriorAuthority
       end
 
       def date_updated_str
-        submission.last_updated_at.to_fs(:stamp)
+        submission.app_store_updated_at.to_fs(:stamp)
       end
 
       def rep_order_date_str

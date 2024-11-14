@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Delete adjustments', :stub_oauth_token do
   let(:caseworker) { create(:caseworker) }
   let(:application) do
-    create(
+    build(
       :prior_authority_application,
       state: 'submitted',
       data: build(
@@ -28,16 +28,12 @@ RSpec.describe 'Delete adjustments', :stub_oauth_token do
   end
 
   before do
-    stub_load_from_app_store(application)
-    stub_request(:post, "https://appstore.example.com/v1/submissions/#{application.id}/events").to_return(status: 201)
-    stub_request(:post, "https://appstore.example.com/v1/submissions/#{application.id}/adjustments").to_return(status: 201)
+    stub_app_store_interactions(application)
     sign_in caseworker
     visit '/'
     click_on 'Accept analytics cookies'
 
-    create(:assignment,
-           user: caseworker,
-           submission: application)
+    application.assigned_user_id = caseworker.id
 
     visit prior_authority_application_path(application)
     click_on 'Adjust quote'

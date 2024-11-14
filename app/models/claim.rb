@@ -1,6 +1,4 @@
 class Claim < Submission
-  default_scope -> { where(application_type: APPLICATION_TYPES[:nsm]) }
-
   STATES = (
     [
       SUBMITTED = 'submitted'.freeze,
@@ -16,8 +14,6 @@ class Claim < Submission
         [EXPIRED = 'expired'.freeze]
       ).freeze
   ).freeze
-
-  enum :state, STATES.to_h { [_1, _1] }
 
   def assessed?
     ASSESSED_STATES.include?(state)

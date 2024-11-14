@@ -6,7 +6,7 @@ module Nsm
       include NameConstructable
 
       def initialize(submission, comment = '')
-        @submission = submission.becomes(Claim)
+        @submission = submission
         @comment = comment
       end
 

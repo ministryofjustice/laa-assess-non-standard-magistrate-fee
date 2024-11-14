@@ -2,18 +2,16 @@ require 'rails_helper'
 
 RSpec.describe 'Decide an application', :stub_oauth_token do
   let(:caseworker) { create(:caseworker) }
-  let(:application) { create(:prior_authority_application, state: 'submitted') }
-  let(:update_stub) { stub_request(:put, "https://appstore.example.com/v1/application/#{application.id}").to_return(status: 201) }
+  let(:application) { build(:prior_authority_application, state: 'submitted') }
 
   before do
-    stub_load_from_app_store(application)
+    stub_app_store_interactions(application)
     stub_request(:post, 'https://appstore.example.com/v1/submissions/searches').to_return(
       status: 201,
       body: { metadata: { total_results: 0 }, raw_data: [] }.to_json
     )
-    update_stub
     sign_in caseworker
-    create(:assignment, submission: application, user: caseworker)
+    application.assigned_user_id = caseworker.id
     visit '/'
     click_on 'Accept analytics cookies'
     visit prior_authority_application_path(application)
@@ -27,7 +25,7 @@ RSpec.describe 'Decide an application', :stub_oauth_token do
     end
 
     it 'prevents duplicate decisions' do
-      application.rejected!
+      application.state = 'rejected'
       click_on 'Submit decision'
       expect(page).to have_content 'You are not authorised to perform this action'
     end
@@ -35,10 +33,6 @@ RSpec.describe 'Decide an application', :stub_oauth_token do
     context 'once the decision has been processed' do
       before do
         click_on 'Submit decision'
-      end
-
-      it 'tells the app store' do
-        expect(update_stub).to have_been_requested
       end
 
       it 'shows my decision' do
@@ -87,8 +81,6 @@ RSpec.describe 'Decide an application', :stub_oauth_token do
   end
 
   it 'lets me save my answers and return later' do
-    stub_request(:post, "https://appstore.example.com/v1/submissions/#{application.id}/events").to_return(status: 201)
-    stub_request(:post, "https://appstore.example.com/v1/submissions/#{application.id}/adjustments").to_return(status: 201)
     choose 'Rejected'
     fill_in 'Provide detailed reasons for rejecting this application', with: 'The wrong form was used'
     click_on 'Save and come back later'

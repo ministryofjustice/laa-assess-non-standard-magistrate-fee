@@ -4,11 +4,10 @@ RSpec.describe SendEmailToProvider do
   describe '#perform_later' do
     subject { described_class.perform_later(submission) }
 
-    let(:submission) { create :claim, send_email_to_provider_completed: nil }
+    let(:submission) { build :claim }
 
-    it 'sets the flag' do
-      subject
-      expect(submission.reload.send_email_to_provider_completed).to be false
+    it 'runs without error' do
+      expect { subject }.not_to raise_error
     end
   end
 
@@ -22,7 +21,7 @@ RSpec.describe SendEmailToProvider do
     end
 
     context 'with an NSM claim' do
-      let(:submission) { create :claim, send_email_to_provider_completed: false }
+      let(:submission) { build :claim }
 
       before do
         allow(Nsm::EmailToProviderMailer).to receive(:notify).and_return(dummy)
@@ -35,15 +34,10 @@ RSpec.describe SendEmailToProvider do
         end
         expect(dummy).to have_received(:deliver_now!)
       end
-
-      it 'updates the flag' do
-        subject
-        expect(submission.reload).to be_send_email_to_provider_completed
-      end
     end
 
     context 'with a PA application' do
-      let(:submission) { create :prior_authority_application, send_email_to_provider_completed: false }
+      let(:submission) { build :prior_authority_application }
 
       before do
         allow(PriorAuthority::EmailToProviderMailer).to receive(:notify).and_return(dummy)
@@ -55,11 +49,6 @@ RSpec.describe SendEmailToProvider do
           expect(arg.id).to eq submission.id
         end
         expect(dummy).to have_received(:deliver_now!)
-      end
-
-      it 'updates the flag' do
-        subject
-        expect(submission.reload).to be_send_email_to_provider_completed
       end
     end
   end

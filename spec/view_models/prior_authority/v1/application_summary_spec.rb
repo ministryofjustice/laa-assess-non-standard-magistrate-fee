@@ -32,7 +32,7 @@ RSpec.describe PriorAuthority::V1::ApplicationSummary do
   end
 
   describe '#current_section' do
-    let(:submission) { create(:prior_authority_application, state:) }
+    let(:submission) { build(:prior_authority_application, state:) }
     let(:state) { 'submitted' }
     let(:user) { create(:caseworker) }
 
@@ -46,7 +46,7 @@ RSpec.describe PriorAuthority::V1::ApplicationSummary do
 
     context 'when submission is assigned to current user' do
       before do
-        submission.assignments.create(user:)
+        submission.assigned_user_id = user.id
       end
 
       it { expect(described_class.new(submission:).current_section(user)).to eq :your }

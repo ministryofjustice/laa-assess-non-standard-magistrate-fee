@@ -6,7 +6,7 @@ RSpec.describe LaaCrimeFormsCommon::Messages::PriorAuthority::FurtherInformation
   subject(:feedback) { described_class.new(application.data) }
 
   let(:application) do
-    create(
+    build(
       :prior_authority_application,
       data: build(
         :prior_authority_data,
@@ -17,17 +17,17 @@ RSpec.describe LaaCrimeFormsCommon::Messages::PriorAuthority::FurtherInformation
         incorrect_information_explanation: incorrect_information_explanation,
         further_information_explanation: further_information_explanation,
         resubmission_deadline: '2023-4-07T12:49:58.00'
-      )
-    ).tap do |app|
-      create(
-        :event,
-        event_type: PriorAuthority::Event::SendBack.to_s,
-        details: {
-          comment: 'This message is set but not used by the mailer',
-        },
-        submission: app,
-      )
-    end
+      ),
+      events: [
+        build(
+          :event,
+          :prior_authority_send_back,
+          details: {
+            comment: 'This message is set but not used by the mailer',
+          }
+        )
+      ]
+    )
   end
 
   let(:feedback_template) { 'c8abf9ee-5cfe-44ab-9253-72111b7a35ba' }

@@ -5,15 +5,12 @@ module PriorAuthority
     include ActiveRecord::AttributeAssignment
 
     attribute :comment, :string
-    attribute :application_id, :string
+    attribute :application
 
     validates :comment, presence: true
 
     def caseworker_name
-      @caseworker_name ||= begin
-        application = PriorAuthorityApplication.load_from_app_store(application_id)
-        User.find(application.assigned_user_id).display_name
-      end
+      @caseworker_name ||= User.find(application.assigned_user_id).display_name
     end
   end
 end

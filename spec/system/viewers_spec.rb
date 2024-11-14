@@ -14,15 +14,15 @@ RSpec.describe 'Viewers', :stub_oauth_token do
   end
 
   before do
-    stub_load_from_app_store(application)
-    stub_load_from_app_store(claim)
+    stub_app_store_interactions(application)
+    stub_app_store_interactions(claim)
     search_stub
     submissions
     sign_in viewer
   end
 
   context 'when viewing NSM' do
-    let(:claim) { create(:claim, state: 'submitted') }
+    let(:claim) { build(:claim, state: 'submitted') }
 
     context 'when there is an unassigned claim' do
       it 'does not let me auto-assign a claim to myself' do
@@ -38,7 +38,7 @@ RSpec.describe 'Viewers', :stub_oauth_token do
     end
 
     context 'when a claim is assigned to someone else' do
-      before { create(:assignment, submission: claim) }
+      before { claim.assigned_user_id = SecureRandom.uuid }
 
       it 'does not let me unassign them' do
         visit nsm_claim_claim_details_path(claim)
@@ -48,7 +48,7 @@ RSpec.describe 'Viewers', :stub_oauth_token do
   end
 
   context 'when viewing Prior Authority' do
-    let(:application) { create(:prior_authority_application, state: 'submitted') }
+    let(:application) { build(:prior_authority_application, state: 'submitted') }
 
     context 'when there is an unassigned application' do
       it 'does not let me auto-assign' do
@@ -64,7 +64,7 @@ RSpec.describe 'Viewers', :stub_oauth_token do
     end
 
     context 'when there is an assigned application' do
-      before { create(:assignment, submission: application) }
+      before { application.assigned_user_id = create(:caseworker).id }
 
       it 'does not let me remove assignments' do
         visit prior_authority_application_path(application)

@@ -16,31 +16,22 @@ module Nsm
     end
 
     def user
-      @user ||= assignment.user
+      @user ||= claim.assigned_user
     end
 
     def save
       return false unless valid?
 
-      if assignment
-        Claim.transaction do
-          ::Event::Unassignment.build(submission: claim,
-                                      user: user,
-                                      current_user: current_user,
-                                      comment: comment)
+      if claim.assigned_user
+        ::Event::Unassignment.build(submission: claim,
+                                    user: user,
+                                    current_user: current_user,
+                                    comment: comment)
 
-          AppStoreClient.new.unassign(claim)
-          assignment.delete
-        end
+        AppStoreClient.new.unassign(claim)
       end
 
       true
-    end
-
-    private
-
-    def assignment
-      @assignment ||= claim.assignments.first
     end
   end
 end

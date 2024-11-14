@@ -34,7 +34,7 @@ module Nsm
       claim_data = AppStoreClient.new.auto_assign(Submission::APPLICATION_TYPES[:nsm], current_user.id)
 
       if claim_data
-        claim = Claim.find_by(id: claim_data['application_id']) || UpdateSubmission.call(claim_data)
+        claim = Claim.rehydrate(claim_data)
         assign(claim, tell_app_store: false)
         redirect_to nsm_claim_claim_details_path(claim)
       else

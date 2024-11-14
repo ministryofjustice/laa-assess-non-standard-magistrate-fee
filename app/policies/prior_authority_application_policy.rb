@@ -1,14 +1,14 @@
 class PriorAuthorityApplicationPolicy < ApplicationPolicy
   def unassign?
-    assessable? && record.assigned_user.present? && !user.viewer?
+    assessable? && record.assigned_user_id.present? && !user.viewer?
   end
 
   def self_assign?
-    assign? && assessable? && record.assigned_user.nil?
+    assign? && assessable? && record.assigned_user_id.nil?
   end
 
   def update?
-    assessable? && record.assigned_user == user && !user.viewer?
+    assessable? && record.assigned_user_id == user.id && !user.viewer?
   end
 
   def assign?

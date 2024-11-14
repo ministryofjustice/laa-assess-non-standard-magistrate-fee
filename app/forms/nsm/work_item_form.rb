@@ -27,9 +27,7 @@ module Nsm
     def save
       return false unless valid?
 
-      Claim.transaction do
-        process_fields
-      end
+      process_fields
 
       true
     end
@@ -46,8 +44,6 @@ module Nsm
       process_field(value: time_spent.to_i, field: 'time_spent') if time_spent.present?
       process_field(value: new_uplift, field: 'uplift') if item.uplift?
       process_work_item_fields if work_type_changed?
-
-      claim.save
     end
 
     def process_work_item_fields

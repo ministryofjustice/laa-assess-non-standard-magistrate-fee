@@ -5,12 +5,10 @@ class SyncController < ApplicationController
   before_action :skip_authorization
 
   def sync_all
-    PullUpdates.new.perform
     head :ok
   end
 
   def sync_individual
-    UpdateSubmission.call(params[:data].permit!.to_h)
     head :ok
   end
 
