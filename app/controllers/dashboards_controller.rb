@@ -46,7 +46,8 @@ class DashboardsController < ApplicationController
       :caseworker_id,
       :sort_by,
       :sort_direction,
-      :application_type
+      :application_type,
+      :high_value
     ).merge(default_params)
   end
 
