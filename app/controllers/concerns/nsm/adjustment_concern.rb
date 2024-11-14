@@ -10,7 +10,7 @@ module Nsm
     def destroy
       deleter = Nsm::AdjustmentDeleter.new(params, resource_klass, current_user)
       authorize(deleter.submission, :update?)
-      deleter.call
+      deleter.call!
       redirect_to destroy_redirect, flash: { success: t('.success') }
     end
 
