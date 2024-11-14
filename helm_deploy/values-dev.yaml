@@ -57,7 +57,7 @@ resources:
 
 variables:
   environment: development
-  appStoreUrl: http://crm457-2154-add-hi.laa-crime-application-store-dev.svc.cluster.local
+  appStoreUrl: https://main-nscc-store-dev.cloud-platform.service.justice.gov.uk
   enableSyncTriggerEndpoint: 'true'
   allowIndexing: 'false'
 
