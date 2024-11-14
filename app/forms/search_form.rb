@@ -13,6 +13,7 @@ class SearchForm < SearchResults
   attribute :status_with_assignment, :string
   attribute :caseworker_id, :string
   attribute :application_type, :string
+  attribute :high_value, :boolean
 
   validate :at_least_one_field_set
   validates :application_type, presence: true
@@ -24,6 +25,10 @@ class SearchForm < SearchResults
 
   def caseworkers
     [show_all] + User.order(:last_name, :first_name).map { Option.new(_1.id, _1.display_name) }
+  end
+
+  def claim_values
+    [show_all] + %i[high_value].map { Option.new(_1, I18n.t("search.claim_values.#{_1}")) }
   end
 
   def statuses

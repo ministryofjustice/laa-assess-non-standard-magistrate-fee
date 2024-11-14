@@ -67,6 +67,15 @@
         <div>
           <div class="govuk-date-input__item">
             <div class="govuk-form-group">
+              <%= f.govuk_collection_select :high_value,
+                                            @search_form.claim_values,
+                                            :value,
+                                            :label,
+                                            label: { text: t(".claim_value"), size: 's' } %>
+            </div>
+          </div>
+          <div class="govuk-date-input__item">
+            <div class="govuk-form-group">
               <%= f.govuk_collection_select :status_with_assignment,
                                             @search_form.statuses,
                                             :value,
