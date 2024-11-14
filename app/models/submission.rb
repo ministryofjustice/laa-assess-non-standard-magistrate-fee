@@ -37,10 +37,6 @@ class Submission < ApplicationRecord
     @assigned_user ||= User.find_by(id: assigned_user_id) || assignments.first&.user
   end
 
-  def high_value
-    submission.data['cost_summary']['high_value']
-  end
-
   class << self
     def load_from_app_store(submission_id)
       data = AppStoreClient.new.get_submission(submission_id)
