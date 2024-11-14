@@ -24,6 +24,7 @@ module Nsm
         :updated_from,
         :updated_to,
         :status_with_assignment,
+        :high_value,
         :caseworker_id,
         :sort_by,
         :sort_direction
