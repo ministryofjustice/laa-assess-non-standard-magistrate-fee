@@ -37,7 +37,7 @@ RSpec.describe NotifyAppStore::MessageBuilder do
 
   context 'when building a PA application' do
     let(:submission) do
-      create(:prior_authority_application)
+      build(:prior_authority_application)
     end
 
     it 'does not raise an error when validating' do

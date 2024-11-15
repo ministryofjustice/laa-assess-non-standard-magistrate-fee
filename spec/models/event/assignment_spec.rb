@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Event::Assignment do
   subject { described_class.build(submission: claim, current_user: current_user) }
 
-  let(:claim) { create(:claim) }
+  let(:claim) { build(:claim) }
   let(:current_user) { create(:caseworker) }
 
   before do
@@ -12,7 +12,6 @@ RSpec.describe Event::Assignment do
 
   it 'can build a new record' do
     expect(subject).to have_attributes(
-      submission_id: claim.id,
       primary_user_id: current_user.id,
       submission_version: 1,
       event_type: 'Event::Assignment',
@@ -20,12 +19,12 @@ RSpec.describe Event::Assignment do
   end
 
   it 'notifies the app store' do
-    event = Event.send(:new)
-    expect(described_class).to receive(:create).and_return(event)
+    event = Event.new
+    expect(described_class).to receive(:construct).and_return(event)
 
     subject
 
-    expect(NotifyEventAppStore).to have_received(:perform_now).with(event:)
+    expect(NotifyEventAppStore).to have_received(:perform_now).with(event: event, submission: claim)
   end
 
   it 'has a valid title' do

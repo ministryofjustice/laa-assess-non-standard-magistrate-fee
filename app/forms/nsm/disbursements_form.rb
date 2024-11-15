@@ -18,16 +18,13 @@ module Nsm
     def save
       return false unless valid?
 
-      Claim.transaction do
-        if mileage_based?
-          process_field(value: miles.to_f, field: 'miles')
-        else
-          process_field(value: total_cost_without_vat.to_f, field: 'total_cost_without_vat')
-        end
-
-        process_field(value: apply_vat, field: 'apply_vat')
-        claim.save
+      if mileage_based?
+        process_field(value: miles.to_f, field: 'miles')
+      else
+        process_field(value: total_cost_without_vat.to_f, field: 'total_cost_without_vat')
       end
+
+      process_field(value: apply_vat, field: 'apply_vat')
 
       true
     end

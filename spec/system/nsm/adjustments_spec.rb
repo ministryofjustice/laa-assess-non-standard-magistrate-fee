@@ -2,14 +2,12 @@ require 'rails_helper'
 
 RSpec.describe 'Adjustments', :stub_oauth_token do
   let(:user) { create(:caseworker) }
-  let(:claim) { create(:claim, :with_adjustments) }
+  let(:claim) { build(:claim, :with_adjustments) }
 
   before do
-    stub_load_from_app_store(claim)
-    stub_request(:post, "https://appstore.example.com/v1/submissions/#{claim.id}/events").to_return(status: 201)
-    stub_request(:post, "https://appstore.example.com/v1/submissions/#{claim.id}/adjustments").to_return(status: 201)
+    stub_app_store_interactions(claim)
     sign_in user
-    create(:assignment, submission: claim, user: user)
+    claim.assigned_user_id = user.id
     visit '/'
     click_on 'Accept analytics cookies'
   end

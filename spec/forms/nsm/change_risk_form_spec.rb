@@ -2,13 +2,13 @@ require 'rails_helper'
 
 RSpec.describe Nsm::ChangeRiskForm, type: :model do
   let(:user) { instance_double(User) }
-  let(:claim) { create(:claim) }
+  let(:claim) { build(:claim) }
 
   describe '#available_risks' do
     context 'when the claim has a risk level' do
-      let(:claim) { create(:claim, risk: 'medium') }
+      let(:claim) { build(:claim, risk: 'medium') }
       let(:form) do
-        described_class.new(id: claim.id, risk_level: 'medium', explanation: 'Risk level changed', current_user: user)
+        described_class.new(claim: claim, risk_level: 'medium', explanation: 'Risk level changed', current_user: user)
       end
 
       it 'returns the available risks excluding the current risk level' do
@@ -19,9 +19,8 @@ RSpec.describe Nsm::ChangeRiskForm, type: :model do
   end
 
   describe '#validations' do
-    subject { described_class.new(id:, risk_level:, explanation:) }
+    subject { described_class.new(claim:, risk_level:, explanation:) }
 
-    let(:id) { claim.id }
     let(:risk_level) { 'high' }
     let(:explanation) { 'changed to high' }
 
@@ -77,7 +76,7 @@ RSpec.describe Nsm::ChangeRiskForm, type: :model do
   describe '#save' do
     subject { described_class.new(params) }
 
-    let(:params) { { id: claim.id, risk_level: risk_level, explanation: 'Test', current_user: user } }
+    let(:params) { { claim: claim, risk_level: risk_level, explanation: 'Test', current_user: user } }
     let(:risk_level) { 'high' }
     let(:risk_event) { instance_double(Event::ChangeRisk) }
     let(:client) { instance_double(AppStoreClient) }
@@ -86,11 +85,6 @@ RSpec.describe Nsm::ChangeRiskForm, type: :model do
       allow(Event::ChangeRisk).to receive(:build).and_return(risk_event)
       allow(AppStoreClient).to receive(:new).and_return(client)
       allow(client).to receive(:update_submission_metadata)
-    end
-
-    it 'updates the claim' do
-      subject.save
-      expect(claim.reload).to have_attributes(risk: 'high')
     end
 
     context 'when not valid' do
@@ -112,19 +106,10 @@ RSpec.describe Nsm::ChangeRiskForm, type: :model do
         claim, application_risk: risk_level, events: [risk_event]
       )
     end
-
-    context 'when error during save' do
-      before do
-        allow(Claim).to receive(:find).and_return(claim)
-        allow(claim).to receive(:update!).and_raise(StandardError)
-      end
-
-      it { expect(subject.save).to be_falsey }
-    end
   end
 
   describe '#claim' do
-    subject { described_class.new(id: claim.id) }
+    subject { described_class.new(claim:) }
 
     it 'returns the claim with the given id' do
       expect(subject.claim).to eq(claim)

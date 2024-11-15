@@ -8,17 +8,12 @@ module Nsm
     end
 
     def destroy
-      deleter = Nsm::AdjustmentDeleter.new(params, resource_klass, current_user)
-      authorize(deleter.submission, :update?)
-      deleter.call!
+      authorize(claim, :update?)
+      Nsm::AdjustmentDeleter.new(params, resource_klass, current_user, claim).call!
       redirect_to destroy_redirect, flash: { success: t('.success') }
     end
 
     private
-
-    def claim
-      @claim ||= Claim.load_from_app_store(params[:claim_id])
-    end
 
     def destroy_redirect
       claim.any_adjustments? ? { action: :adjusted } : nsm_claim_work_items_path

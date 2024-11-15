@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe PriorAuthority::SendBackForm, :stub_oauth_token do
   subject { described_class.new(params) }
 
-  let(:submission) { create(:prior_authority_application) }
+  let(:submission) { build(:prior_authority_application) }
   let(:further_information_explanation) { 'foo' }
   let(:incorrect_information_explanation) { 'bar' }
   let(:deadline) { DateTime.new(2024, 9, 1, 6, 46, 34) }
@@ -77,7 +77,7 @@ RSpec.describe PriorAuthority::SendBackForm, :stub_oauth_token do
       allow(NotifyAppStore).to receive(:perform_now)
       allow(AppStoreClient).to receive(:new).and_return(client)
       travel_to fixed_arbitrary_date
-      create(:assignment, submission:, user:)
+      submission.assigned_user_id = user.id
     end
 
     context 'when params are invalid' do
@@ -108,22 +108,18 @@ RSpec.describe PriorAuthority::SendBackForm, :stub_oauth_token do
         expect(subject.save).to be true
       end
 
-      it 'removes the assignment' do
-        expect { subject.save }.to change { submission.assignments.count }.from(1).to(0)
-      end
-
       context 'when save runs' do
         before { subject.save }
 
         it 'stores information' do
           expect(submission.data['updates_needed']).to include('further_information')
           expect(submission.data['further_information_explanation']).to eq further_information_explanation
-          expect(submission.data['further_information'][0]['caseworker_id']).to eq user.id
+          expect(submission.data['further_information'][0][:caseworker_id]).to eq user.id
           expect(submission.data['incorrect_information']).to eq []
         end
 
         it 'sets a resubmission deadline' do
-          expect(DateTime.parse(submission.data['resubmission_deadline'])).to eq deadline
+          expect(submission.data['resubmission_deadline']).to eq deadline
         end
 
         it 'updates the state' do
@@ -135,7 +131,7 @@ RSpec.describe PriorAuthority::SendBackForm, :stub_oauth_token do
         end
 
         it 'pulls a clean version of the data from the app store to remove all adjustments' do
-          expect(submission.reload.data['clean']).to be true
+          expect(submission.data['clean']).to be true
         end
 
         it 'notifies the app store' do
@@ -159,22 +155,18 @@ RSpec.describe PriorAuthority::SendBackForm, :stub_oauth_token do
         expect(subject.save).to be true
       end
 
-      it 'removes the assignment' do
-        expect { subject.save }.to change { submission.assignments.count }.from(1).to(0)
-      end
-
       context 'when save runs' do
         before { subject.save }
 
         it 'stores information' do
           expect(submission.data['updates_needed']).to include('incorrect_information')
           expect(submission.data['incorrect_information_explanation']).to eq incorrect_information_explanation
-          expect(submission.data['incorrect_information'][0]['caseworker_id']).to eq user.id
+          expect(submission.data['incorrect_information'][0][:caseworker_id]).to eq user.id
           expect(submission.data['further_information']).to eq []
         end
 
         it 'sets a resubmission deadline' do
-          expect(DateTime.parse(submission.data['resubmission_deadline'])).to eq deadline
+          expect(submission.data['resubmission_deadline']).to eq deadline
         end
 
         it 'updates the state' do

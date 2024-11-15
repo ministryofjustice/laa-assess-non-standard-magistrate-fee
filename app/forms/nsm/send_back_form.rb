@@ -15,18 +15,15 @@ module Nsm
 
     def stash
       claim.data['send_back_comment'] = send_back_comment
-      claim.save!
       AppStoreClient.new.adjust(claim)
     end
 
     def save
       return false unless valid?
 
-      claim.with_lock do
-        update_local_data
-        AppStoreClient.new.unassign(claim)
-        NotifyAppStore.perform_now(submission: claim)
-      end
+      update_local_data
+      AppStoreClient.new.unassign(claim)
+      NotifyAppStore.perform_now(submission: claim)
 
       true
     end
@@ -38,8 +35,7 @@ module Nsm
                         'assessment_comment' => send_back_comment,
                         'send_back_comment' => nil)
       add_further_information_data if FeatureFlags.nsm_rfi_loop.enabled?
-      claim.sent_back!
-      claim.assignments.destroy_all
+      claim.state = SENT_BACK
       Nsm::Event::SendBack.build(submission: claim,
                                  comment: send_back_comment,
                                  previous_state: previous_state,

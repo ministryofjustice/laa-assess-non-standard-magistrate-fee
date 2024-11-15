@@ -32,7 +32,7 @@ RSpec.describe Nsm::ClaimsController, :stub_oauth_token do
       assignment_stub
     end
 
-    let(:claim) { create(:claim) }
+    let(:claim) { build(:claim) }
 
     context 'when a claim is available to assign' do
       before do
@@ -41,14 +41,8 @@ RSpec.describe Nsm::ClaimsController, :stub_oauth_token do
 
       let(:assignment_stub) do
         stub_request(:post, 'https://appstore.example.com/v1/submissions/auto_assignments').to_return(
-          status: 201, body: { application_id: claim.id }.to_json
+          status: 201, body: { application_id: claim.id, application_type: 'crm7' }.to_json
         )
-      end
-
-      it 'creates an assignment and event' do
-        expect do
-          expect { post :create }.to change(Assignment, :count).by(1)
-        end.to change(Event::Assignment, :count).by(1)
       end
 
       it 'redirects to the assigned claim' do

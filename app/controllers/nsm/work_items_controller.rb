@@ -7,8 +7,8 @@ module Nsm
 
     include Nsm::AdjustmentConcern
 
+    # rubocop:disable Metrics/AbcSize
     def index
-      claim = Claim.load_from_app_store(params[:claim_id])
       authorize(claim, :show?)
       claim_summary = BaseViewModel.build(:claim_summary, claim)
       core_cost_summary = BaseViewModel.build(:core_cost_summary, claim)
@@ -24,9 +24,9 @@ module Nsm
       render 'nsm/review_and_adjusts/show',
              locals: { claim:, records:, summary:, claim_summary:, core_cost_summary:, pagy:, scope:, type_changed_records: }
     end
+    # rubocop:enable Metrics/AbcSize
 
     def adjusted
-      claim = Claim.load_from_app_store(params[:claim_id])
       authorize(claim, :show?)
       claim_summary = BaseViewModel.build(:claim_summary, claim)
       core_cost_summary = BaseViewModel.build(:core_cost_summary, claim)
@@ -39,7 +39,6 @@ module Nsm
     end
 
     def show
-      claim = Claim.load_from_app_store(params[:claim_id])
       authorize(claim)
       item = BaseViewModel.build(:work_item, claim, 'work_items').detect do |model|
         model.id == params[:id]
@@ -49,7 +48,6 @@ module Nsm
     end
 
     def edit
-      claim = Claim.load_from_app_store(params[:claim_id])
       authorize(claim)
       item = BaseViewModel.build(:work_item, claim, 'work_items').detect do |model|
         model.id == params[:id]
@@ -62,7 +60,6 @@ module Nsm
     end
 
     def update
-      claim = Claim.find(params[:claim_id])
       authorize(claim)
       item = BaseViewModel.build(:work_item, claim, 'work_items').detect do |model|
         model.id == params[:id]
@@ -78,6 +75,10 @@ module Nsm
     end
 
     private
+
+    def claim
+      @claim ||= Claim.load_from_app_store(params[:claim_id])
+    end
 
     def common_form_attributes(claim, item)
       {

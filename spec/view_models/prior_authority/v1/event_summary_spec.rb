@@ -5,7 +5,7 @@ RSpec.describe PriorAuthority::V1::EventSummary do
     subject(:summary) { described_class.new(event:) }
 
     context 'when event type is not recognised'
-    let(:event) { create(:event, :auto_decision) }
+    let(:event) { build(:event, :auto_decision) }
 
     it 'raises an error' do
       expect { summary.heading }.to raise_error(

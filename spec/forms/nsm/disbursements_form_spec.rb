@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Nsm::DisbursementsForm do
   let(:claim) do
-    create(
+    build(
       :claim,
       disbursements: [
         {

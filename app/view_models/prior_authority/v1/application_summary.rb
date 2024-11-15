@@ -50,7 +50,7 @@ module PriorAuthority
       end
 
       def date_updated_str
-        submission.last_updated_at.to_fs(:stamp)
+        submission.app_store_updated_at.to_fs(:stamp)
       end
 
       def rep_order_date_str
@@ -106,7 +106,7 @@ module PriorAuthority
       delegate :sent_back?, :expired?, :provider_updated?, to: :submission
 
       def caseworker
-        User.find_by(id: submission.assigned_user_id).display_name
+        User.find_by(id: submission.assigned_user_id)&.display_name
       end
     end
   end

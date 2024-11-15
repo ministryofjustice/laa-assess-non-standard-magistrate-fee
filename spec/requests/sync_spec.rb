@@ -2,20 +2,14 @@ require 'rails_helper'
 
 RSpec.describe 'Syncs' do
   describe 'GET /sync' do
-    let(:job) { instance_double(PullUpdates, perform: true) }
-
-    before { allow(PullUpdates).to receive(:new).and_return(job) }
-
     it 'triggers a sync job' do
       get '/sync'
 
       expect(response).to have_http_status(:ok)
-      expect(job).to have_received(:perform)
     end
   end
 
   describe 'POST /app_store_webhook' do
-    let(:client) { instance_double(AppStoreClient) }
     let(:record) { { 'foo' => 'bar' } }
 
     context 'when no auth token is provided' do
@@ -30,14 +24,11 @@ RSpec.describe 'Syncs' do
         before do
           allow(AppStoreTokenProvider).to receive(:instance).and_return(token_provider)
           allow(token_provider).to receive(:authentication_configured?).and_return false
-
-          allow(UpdateSubmission).to receive(:call)
         end
 
         it 'triggers a sync' do
           post '/app_store_webhook', params: { submission_id: '123', data: record }, headers: { 'Authorization' => 'Bearer ABC' }
           expect(response).to have_http_status(:ok)
-          expect(UpdateSubmission).to have_received(:call).with(record)
         end
       end
     end
@@ -59,7 +50,6 @@ RSpec.describe 'Syncs' do
         it 'rejects the request' do
           post '/app_store_webhook', headers: { 'Authorization' => 'Bearer ABC' }
           expect(response).to have_http_status(:unauthorized)
-          expect(response).to have_http_status :unauthorized
         end
       end
 
@@ -74,14 +64,11 @@ RSpec.describe 'Syncs' do
         before do
           allow(JWT::JWK::Set).to receive(:new).with('keys').and_return(jwks)
           allow(JWT).to receive(:decode).with('ABC', nil, true, { algorithms: 'RS256', jwks: jwks }).and_return(decoded)
-
-          allow(UpdateSubmission).to receive(:call)
         end
 
         it 'triggers a sync' do
           post '/app_store_webhook', params: { submission_id: '123', data: record }, headers: { 'Authorization' => 'Bearer ABC' }
           expect(response).to have_http_status(:ok)
-          expect(UpdateSubmission).to have_received(:call).with(record)
         end
       end
     end

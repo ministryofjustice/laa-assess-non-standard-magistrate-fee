@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Event::Edit do
   subject { described_class.build(submission:, details:, linked:, current_user:) }
 
-  let(:submission) { create(:claim) }
+  let(:submission) { build(:claim) }
   let(:current_user) { create(:caseworker) }
   let(:details) do
     {
@@ -21,13 +21,12 @@ RSpec.describe Event::Edit do
 
   it 'can build a new record' do
     expect(subject).to have_attributes(
-      submission_id: submission.id,
       submission_version: 1,
       event_type: 'Event::Edit',
-      primary_user: current_user,
+      primary_user_id: current_user.id,
       linked_type: 'letters',
       linked_id: nil,
-      details: details.stringify_keys
+      details: details
     )
   end
 

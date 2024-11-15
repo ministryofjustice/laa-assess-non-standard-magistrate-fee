@@ -25,10 +25,7 @@ module PriorAuthority
     def save
       return false unless valid?
 
-      PriorAuthorityApplication.transaction do
-        process_fields
-        submission.save
-      end
+      process_fields
 
       true
     end

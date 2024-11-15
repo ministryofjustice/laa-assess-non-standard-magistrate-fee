@@ -132,21 +132,27 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
 
       context 'search analytics available' do
         let(:applications) do
-          create_list(:prior_authority_application,
-                      20) + create_list(:prior_authority_application, 1, state: 'sent_back', updated_at: Date.yesterday - 1)
+          build_list(:prior_authority_application,
+                     20) + build_list(:prior_authority_application, 1, state: 'sent_back', updated_at: Date.yesterday - 1)
         end
         let(:endpoint) { 'https://appstore.example.com/v1/submissions/searches' }
         let(:search_stub) do
           stub_request(:post, endpoint).with(body: search_payload).to_return(
             status: 201, body: { metadata: { total_results: 21 },
-                                 raw_data: applications.map { { application_id: _1.id, application: _1.data } } }.to_json
+                                 raw_data: applications.map do |app|
+                                   { application_id: app.id, application: app.data, application_type: 'crm7',
+                                     last_updated_at: 1.day.ago, application_state: app.state }
+                                 end }.to_json
           )
         end
 
         let(:sort_stub) do
           stub_request(:post, endpoint).with(body: sort_payload).to_return(
             status: 201, body: { metadata: { total_results: 21 },
-                                 raw_data: applications.map { { application_id: _1.id, application: _1.data } } }.to_json
+                                 raw_data: applications.map do |app|
+                                   { application_id: app.id, application: app.data, application_type: 'crm7',
+                                     last_updated_at: 1.day.ago, application_state: app.state }
+                                 end }.to_json
           )
         end
 

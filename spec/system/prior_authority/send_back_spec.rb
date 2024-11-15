@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Send an application back', :stub_oauth_token do
   let(:caseworker) { create(:caseworker) }
-  let(:application) { create(:prior_authority_application, state: 'submitted') }
+  let(:application) { build(:prior_authority_application, state: 'submitted') }
   let(:bank_holiday_list) do
     {
       'england-and-wales': {
@@ -12,7 +12,6 @@ RSpec.describe 'Send an application back', :stub_oauth_token do
       }
     }
   end
-  let(:update_stub) { stub_request(:put, "https://appstore.example.com/v1/application/#{application.id}").to_return(status: 201) }
 
   before do
     stub_request(:post, 'https://appstore.example.com/v1/submissions/searches').to_return(
@@ -20,8 +19,7 @@ RSpec.describe 'Send an application back', :stub_oauth_token do
       body: { metadata: { total_results: 0 }, raw_data: [] }.to_json
     )
 
-    update_stub
-    stub_load_from_app_store(application)
+    stub_app_store_interactions(application)
 
     stub_request(:get, 'https://www.gov.uk/bank-holidays.json').to_return(
       status: 200,
@@ -29,10 +27,8 @@ RSpec.describe 'Send an application back', :stub_oauth_token do
       headers: { 'Content-type' => 'application/json' }
     )
 
-    stub_request(:delete, "https://appstore.example.com/v1/submissions/#{application.id}/assignment").to_return(status: 204)
-
     sign_in caseworker
-    create(:assignment, submission: application, user: caseworker)
+    application.assigned_user_id = caseworker.id
     visit '/'
     click_on 'Accept analytics cookies'
     visit prior_authority_application_path(application)
@@ -46,7 +42,7 @@ RSpec.describe 'Send an application back', :stub_oauth_token do
     end
 
     it 'prevents duplicate submission' do
-      application.sent_back!
+      application.state = 'sent_back'
       click_on 'Submit'
       expect(page).to have_content 'You are not authorised to perform this action'
     end
@@ -54,10 +50,6 @@ RSpec.describe 'Send an application back', :stub_oauth_token do
     context 'once the decision has been processed' do
       before do
         click_on 'Submit'
-      end
-
-      it 'triggers an app store stync' do
-        expect(update_stub).to have_been_requested
       end
 
       it 'shows my application' do
@@ -95,8 +87,6 @@ RSpec.describe 'Send an application back', :stub_oauth_token do
   end
 
   it 'lets me save my answers and return later' do
-    stub_request(:post, "https://appstore.example.com/v1/submissions/#{application.id}/events").to_return(status: 201)
-    stub_request(:post, "https://appstore.example.com/v1/submissions/#{application.id}/adjustments").to_return(status: 201)
     check 'Further information'
     fill_in 'Tell the provider what information they need to add', with: 'You forgot to say please'
     click_on 'Save and come back later'

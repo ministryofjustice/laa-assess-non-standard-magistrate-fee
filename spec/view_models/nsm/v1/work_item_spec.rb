@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Nsm::V1::WorkItem do
-  subject(:work_item) { described_class.new(params.merge(submission: create(:claim))) }
+  subject(:work_item) { described_class.new(params.merge(submission: build(:claim))) }
 
   describe 'table fields' do
     let(:adjustment_comment) { 'something' }
@@ -301,7 +301,7 @@ RSpec.describe Nsm::V1::WorkItem do
 
   describe 'backlink_path' do
     context 'when a change has been made' do
-      let(:claim) { create(:claim) }
+      let(:claim) { build(:claim) }
       let(:params) do
         { 'adjustment_comment' => 'test' }
       end
@@ -314,7 +314,7 @@ RSpec.describe Nsm::V1::WorkItem do
     end
 
     context 'when no change has been made' do
-      let(:claim) { create(:claim) }
+      let(:claim) { build(:claim) }
       let(:params) do
         {}
       end

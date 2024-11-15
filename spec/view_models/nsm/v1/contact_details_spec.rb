@@ -153,7 +153,7 @@ RSpec.describe Nsm::V1::ContactDetails do
             'contact_last_name' => 'Bob',
             'contact_email' => 'jim@bob.com'
           },
-          'submission' => create(:claim),
+          'submission' => build(:claim),
         )
       end
 

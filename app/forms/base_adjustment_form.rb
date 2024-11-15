@@ -10,9 +10,7 @@ class BaseAdjustmentForm
   validate :data_changed
 
   def save!
-    submission.with_lock do
-      AppStoreClient.new.adjust(submission) if save
-    end
+    AppStoreClient.new.adjust(submission) if save
   end
 
   private
@@ -36,7 +34,6 @@ class BaseAdjustmentForm
 
     ensure_original_field_value_set(field)
     assign_new_attributes(field, value)
-
     Event::Edit.build(submission:, details:, linked:, current_user:)
   end
 

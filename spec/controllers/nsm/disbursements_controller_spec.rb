@@ -1,14 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Nsm::DisbursementsController do
-  let(:claim) { create :claim, data: { disbursements: [disbursement], work_items: [] } }
+  let(:claim) { build :claim, assigned_user_id: user.id, data: { disbursements: [disbursement], work_items: [] } }
   let(:user) { create :caseworker }
   let(:disbursement) { { id: SecureRandom.uuid } }
 
   before do
     allow(Claim).to receive(:load_from_app_store).and_return(claim)
     allow(controller).to receive(:current_user).and_return(user)
-    create :assignment, submission: claim, user: user
   end
 
   describe 'index' do

@@ -20,7 +20,7 @@ RSpec.describe AdjustmentsDependantValidator do
     end
   end
 
-  let(:claim) { create(:claim) }
+  let(:claim) { build(:claim) }
 
   before do
     allow(claim).to receive(:adjustments_direction).and_return(direction)
