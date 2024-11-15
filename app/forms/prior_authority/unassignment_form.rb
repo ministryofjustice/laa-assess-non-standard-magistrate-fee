@@ -10,7 +10,7 @@ module PriorAuthority
     validates :comment, presence: true
 
     def caseworker_name
-      @caseworker_name ||= User.find(application.assigned_user_id).display_name
+      @caseworker_name ||= User.find_by(id: application.assigned_user_id)&.display_name
     end
   end
 end
