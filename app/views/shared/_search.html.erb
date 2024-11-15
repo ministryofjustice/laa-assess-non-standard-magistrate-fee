@@ -65,7 +65,7 @@
           </fieldset>
         </div>
         <div>
-          <% if @search_form.application_type == 'crm7' %>
+          <% if choose_application_type || @search_form.application_type == 'crm7' %>
             <div class="govuk-date-input__item">
               <div class="govuk-form-group">
                 <%= f.govuk_collection_select :high_value,
