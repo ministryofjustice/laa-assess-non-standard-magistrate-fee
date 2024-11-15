@@ -132,12 +132,7 @@ Rails.application.routes.draw do
     resource :search, only: %i[new show]
   end
 
-  if ENV.fetch("ENABLE_SYNC_TRIGGER_ENDPOINT", false) == "true"
-    get "sync", to: "sync#sync_all"
-  end
   get "robots.txt", to: "robots#index"
-
-  post :app_store_webhook, to: 'sync#sync_individual'
 
   resource :dashboard, only: %i[new show]
 end

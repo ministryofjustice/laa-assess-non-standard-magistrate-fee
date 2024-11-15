@@ -79,9 +79,5 @@ module LaaAssessNonStandardMagistrateFee
     end
 
     config.x.contact.feedback_url = 'tbc'
-    config.after_initialize do
-      Rails.application.reload_routes!
-      AppStoreSubscriber.subscribe
-    end
   end
 end
