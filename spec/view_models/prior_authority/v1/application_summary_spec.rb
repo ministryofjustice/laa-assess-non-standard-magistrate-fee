@@ -52,4 +52,23 @@ RSpec.describe PriorAuthority::V1::ApplicationSummary do
       it { expect(described_class.new(submission:).current_section(user)).to eq :your }
     end
   end
+
+  describe '#caseworker' do
+    context 'when no caseworker is assigned' do
+      let(:submission) { build(:prior_authority_application, assigned_user_id: nil) }
+
+      it 'returns nil' do
+        expect(described_class.new(submission:).caseworker).to be_nil
+      end
+    end
+
+    context 'when a caseworker is assigned' do
+      let(:submission) { build(:prior_authority_application, assigned_user_id: user.id) }
+      let(:user) { create(:caseworker) }
+
+      it 'returns the caseworker name' do
+        expect(described_class.new(submission:).caseworker).to eq user.display_name
+      end
+    end
+  end
 end
