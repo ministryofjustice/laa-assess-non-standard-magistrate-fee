@@ -1,12 +1,9 @@
 class Event
   class Unassignment < Event
-    belongs_to :secondary_user, optional: true, class_name: 'User'
-
     def self.construct(submission:, user:, current_user:, comment:)
-      create(
-        submission: submission,
-        primary_user: user,
-        secondary_user: user == current_user ? nil : current_user,
+      new(
+        primary_user_id: user.id,
+        secondary_user_id: user == current_user ? nil : current_user.id,
         submission_version: submission.current_version,
         details: {
           comment:
@@ -14,9 +11,13 @@ class Event
       )
     end
 
+    def secondary_user
+      User.find_by(id: secondary_user_id)
+    end
+
     def title
       if secondary_user_id
-        t('title.secondary', display_name: secondary_user.display_name)
+        t('title.secondary', display_name: secondary_user&.display_name)
       else
         t('title.self')
       end

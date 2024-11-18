@@ -8,7 +8,6 @@ module Nsm
     include Nsm::AdjustmentConcern
 
     def index
-      claim = Claim.load_from_app_store(params[:claim_id])
       authorize claim, :show?
       claim_summary = BaseViewModel.build(:claim_summary, claim)
       core_cost_summary = BaseViewModel.build(:core_cost_summary, claim)
@@ -26,7 +25,6 @@ module Nsm
     end
 
     def adjusted
-      claim = Claim.load_from_app_store(params[:claim_id])
       authorize claim, :show?
       claim_summary = BaseViewModel.build(:claim_summary, claim)
       core_cost_summary = BaseViewModel.build(:core_cost_summary, claim)
@@ -39,7 +37,6 @@ module Nsm
     end
 
     def show
-      claim = Claim.load_from_app_store(params[:claim_id])
       authorize claim
       item = BaseViewModel.build(:disbursement, claim, 'disbursements').detect do |model|
         model.id == params[:id]
@@ -49,7 +46,6 @@ module Nsm
     end
 
     def edit
-      claim = Claim.load_from_app_store(params[:claim_id])
       authorize claim
       item = BaseViewModel.build(:disbursement, claim, 'disbursements').detect do |model|
         model.id == params[:id]
@@ -60,7 +56,6 @@ module Nsm
     end
 
     def update
-      claim = Claim.find(params[:claim_id])
       authorize claim
       item = BaseViewModel.build(:disbursement, claim, 'disbursements').detect do |model|
         model.id == params[:id]
@@ -74,6 +69,10 @@ module Nsm
     end
 
     private
+
+    def claim
+      @claim ||= Claim.load_from_app_store(params[:claim_id])
+    end
 
     def form_params
       params.require(:nsm_disbursements_form).permit(

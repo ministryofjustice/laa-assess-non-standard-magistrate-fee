@@ -28,9 +28,7 @@ module PriorAuthority
     def save
       return false unless valid?
 
-      submission.with_lock do
-        change_data_and_notify_app_store!
-      end
+      change_data_and_notify_app_store!
 
       true
     end
@@ -40,7 +38,7 @@ module PriorAuthority
       previous_state = submission.state
 
       submission.data.merge!('status' => pending_decision, 'updated_at' => Time.current)
-      submission.update!(state: pending_decision)
+      submission.state = pending_decision
       ::Event::Decision.build(submission: submission,
                               comment: explanation,
                               previous_state: previous_state,
@@ -60,7 +58,6 @@ module PriorAuthority
 
     def persist_form_values
       submission.data.merge!(attributes.except('submission', 'current_user').merge('assessment_comment' => explanation))
-      submission.save!
     end
 
     def explanation

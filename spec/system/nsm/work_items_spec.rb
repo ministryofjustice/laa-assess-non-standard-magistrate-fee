@@ -2,14 +2,12 @@ require 'rails_helper'
 
 RSpec.describe 'Work items', :stub_oauth_token do
   let(:user) { create(:caseworker) }
-  let(:claim) { create(:claim) }
+  let(:claim) { build(:claim) }
 
   before do
-    stub_load_from_app_store(claim)
-    stub_request(:post, "https://appstore.example.com/v1/submissions/#{claim.id}/events").to_return(status: 201)
-    stub_request(:post, "https://appstore.example.com/v1/submissions/#{claim.id}/adjustments").to_return(status: 201)
+    stub_app_store_interactions(claim)
     sign_in user
-    create(:assignment, submission: claim, user: user)
+    claim.assigned_user_id = user.id
     visit '/'
     click_on 'Accept analytics cookies'
   end
@@ -90,7 +88,7 @@ RSpec.describe 'Work items', :stub_oauth_token do
   end
 
   context 'when claim has been assessed' do
-    let(:claim) { create(:claim, state: 'granted') }
+    let(:claim) { build(:claim, state: 'granted') }
 
     it 'lets me view details instead of changing them' do
       visit nsm_claim_work_items_path(claim)
@@ -113,7 +111,7 @@ RSpec.describe 'Work items', :stub_oauth_token do
 
   context 'when there is an attendance without counsel work item' do
     let(:claim) do
-      create(
+      build(
         :claim,
         work_items: [
           {

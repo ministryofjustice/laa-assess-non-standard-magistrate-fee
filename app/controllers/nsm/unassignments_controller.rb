@@ -9,20 +9,19 @@ module Nsm
     end
 
     def update
-      local_claim = Claim.find(params[:claim_id])
-      authorize(local_claim, :unassign?)
-      unassignment = UnassignmentForm.new(claim: local_claim, **send_back_params)
+      authorize(claim, :unassign?)
+      unassignment = UnassignmentForm.new(claim:, **send_back_params)
       if unassignment.save
-        redirect_to nsm_claim_claim_details_path(local_claim)
+        redirect_to nsm_claim_claim_details_path(claim)
       else
-        render :edit, locals: { claim: local_claim, unassignment: unassignment }
+        render :edit, locals: { claim:, unassignment: }
       end
     end
 
     private
 
     def check_claim_assigned
-      return if claim.assignments.any?
+      return if claim.assigned_user_id.present?
 
       redirect_to nsm_claim_claim_details_path(claim), flash: { notice: t('nsm.unassignments.already_unassigned') }
     end

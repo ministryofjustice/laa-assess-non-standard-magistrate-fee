@@ -1,20 +1,14 @@
-class EventCreatable < Event
-  class << self
-    public :new
-  end
-end
-
 FactoryBot.define do
-  factory :event, class: 'EventCreatable' do
+  factory :event, class: 'Event' do
     transient do
       comment { nil }
       claim { nil }
     end
-    submission { claim || create(:claim) }
+    submission { claim || build(:claim) }
     submission_version { submission.current_version }
 
     trait :decision do
-      event_type { Event::Decision.to_s }
+      initialize_with { Event::Decision.new(attributes) }
       details do
         {
           from: 'submitted',
@@ -24,7 +18,7 @@ FactoryBot.define do
     end
 
     trait :auto_decision do
-      event_type { Event::AutoDecision.to_s }
+      initialize_with { Event::AutoDecision.new(attributes) }
       details do
         {
           from: 'submitted',
@@ -34,7 +28,7 @@ FactoryBot.define do
     end
 
     trait :assignment do
-      event_type { Event::Assignment.to_s }
+      initialize_with { Event::Assignment.new(attributes) }
       details do
         {
           comment:
@@ -43,7 +37,7 @@ FactoryBot.define do
     end
 
     trait :unassignment do
-      event_type { Event::Unassignment.to_s }
+      initialize_with { Event::Unassignment.new(attributes) }
       details do
         {
           comment:
@@ -52,18 +46,18 @@ FactoryBot.define do
     end
 
     trait :new_version do
-      event_type { Event::NewVersion.to_s }
+      initialize_with { Event::NewVersion.new(attributes) }
     end
 
     trait :note do
-      event_type { Event::Note.to_s }
+      initialize_with { Event::Note.new(attributes) }
       sequence(:details) do |i|
         { comment: "This is note: #{i}" }
       end
     end
 
     trait :edit_uplift do
-      event_type { Event::Edit.to_s }
+      initialize_with { Event::Edit.new(attributes) }
       linked_type { 'letters_and_calls' }
       linked_id { 'letters' }
       details do
@@ -77,7 +71,7 @@ FactoryBot.define do
     end
 
     trait :edit_work_item_uplift do
-      event_type { Event::Edit.to_s }
+      initialize_with { Event::Edit.new(attributes) }
       linked_type { 'work_item' }
       linked_id { '183ec754-d0fd-490c-b7a4-14e6951e6659' }
       details do
@@ -91,7 +85,7 @@ FactoryBot.define do
     end
 
     trait :edit_work_item_time_spent do
-      event_type { Event::Edit.to_s }
+      initialize_with { Event::Edit.new(attributes) }
       linked_type { 'work_item' }
       linked_id { '183ec754-d0fd-490c-b7a4-14e6951e6659' }
       details do
@@ -105,7 +99,7 @@ FactoryBot.define do
     end
 
     trait :edit_count do
-      event_type { Event::Edit.to_s }
+      initialize_with { Event::Edit.new(attributes) }
       linked_type { 'letters_and_calls' }
       linked_id { 'letters' }
       details do
@@ -119,7 +113,7 @@ FactoryBot.define do
     end
 
     trait :decision do
-      event_type { Event::Decision.to_s }
+      initialize_with { Event::Decision.new(attributes) }
       details do
         {
           field: 'state',
@@ -131,7 +125,7 @@ FactoryBot.define do
     end
 
     trait :part_granted do
-      event_type { Event::Decision.to_s }
+      initialize_with { Event::Decision.new(attributes) }
       details do
         {
           field: 'state',
@@ -143,7 +137,17 @@ FactoryBot.define do
     end
 
     trait :provider_updated do
-      event_type { Event::ProviderUpdated.to_s }
+      initialize_with { Event::ProviderUpdated.new(attributes) }
+      details do
+        {
+          comment: 'Added more info',
+          corrected_info: %w[ufn case_contact]
+        }
+      end
+    end
+
+    trait :prior_authority_send_back do
+      initialize_with { PriorAuthority::Event::SendBack.new(attributes) }
       details do
         {
           comment: 'Added more info',

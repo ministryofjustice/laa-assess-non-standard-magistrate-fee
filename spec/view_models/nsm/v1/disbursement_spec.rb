@@ -28,7 +28,7 @@ RSpec.describe Nsm::V1::Disbursement do
         'total_cost_without_vat' => 100,
         'disbursement_type' => 'other',
         'apply_vat' => 'true',
-        :submission => create(:claim) }
+        :submission => build(:claim) }
     end
 
     it 'calculates the cost' do
@@ -39,7 +39,7 @@ RSpec.describe Nsm::V1::Disbursement do
   describe '#caseworker_total_cost' do
     context 'when amount without vat is zero' do
       let(:args) do
-        { 'total_cost_without_vat' => 0, 'disbursement_type' => 'other', 'apply_vat' => 'true', :submission => create(:claim) }
+        { 'total_cost_without_vat' => 0, 'disbursement_type' => 'other', 'apply_vat' => 'true', :submission => build(:claim) }
       end
 
       it 'returns calculated cost' do
@@ -49,7 +49,7 @@ RSpec.describe Nsm::V1::Disbursement do
 
     context 'when amount without vat is not zero' do
       let(:args) do
-        { 'total_cost_without_vat' => 120, 'disbursement_type' => 'other', 'apply_vat' => 'true', :submission => create(:claim) }
+        { 'total_cost_without_vat' => 120, 'disbursement_type' => 'other', 'apply_vat' => 'true', :submission => build(:claim) }
       end
 
       it 'returns the calculated cost' do
@@ -69,7 +69,7 @@ RSpec.describe Nsm::V1::Disbursement do
         'prior_authority' => prior_authority,
         'apply_vat' => apply_vat,
         'miles' => miles,
-        :submission => create(:claim),
+        :submission => build(:claim),
       }
     end
 
@@ -163,7 +163,7 @@ RSpec.describe Nsm::V1::Disbursement do
     end
 
     context 'when a change has been made' do
-      let(:claim) { create(:claim) }
+      let(:claim) { build(:claim) }
       let(:args) do
         { 'adjustment_comment' => 'test' }
       end
@@ -176,7 +176,7 @@ RSpec.describe Nsm::V1::Disbursement do
     end
 
     context 'when no change has been made' do
-      let(:claim) { create(:claim) }
+      let(:claim) { build(:claim) }
 
       it 'returns the expected path' do
         expected_path = Rails.application.routes.url_helpers.nsm_claim_disbursements_path(claim,
@@ -196,7 +196,7 @@ RSpec.describe Nsm::V1::Disbursement do
         'apply_vat_original' => 'true',
         'apply_vat' => 'false',
         'adjustment_comment' => adjustment_comment,
-        :submission => create(:claim),
+        :submission => build(:claim),
         'disbursement_type' => 'other',
 
       }
@@ -243,7 +243,7 @@ RSpec.describe Nsm::V1::Disbursement do
         {
           'total_cost_without_vat_original' => 250,
           'total_cost_without_vat' => 240,
-          :submission => create(:claim),
+          :submission => build(:claim),
           :disbursement_type => 'other',
         }
       end
@@ -258,7 +258,7 @@ RSpec.describe Nsm::V1::Disbursement do
           'apply_vat_original' => 'false',
           'total_cost_without_vat' => 250,
           'apply_vat' => true,
-          :submission => create(:claim),
+          :submission => build(:claim),
           :disbursement_type => 'other',
         }
       end
@@ -270,7 +270,7 @@ RSpec.describe Nsm::V1::Disbursement do
       let(:args) do
         {
           'total_cost_without_vat' => 250,
-          :submission => create(:claim),
+          :submission => build(:claim),
           :disbursement_type => 'other',
         }
       end
@@ -287,7 +287,7 @@ RSpec.describe Nsm::V1::Disbursement do
         {
           'total_cost_without_vat_original' => 250,
           'total_cost_without_vat' => 240,
-          :submission => create(:claim),
+          :submission => build(:claim),
           :disbursement_type => 'other',
         }
       end
@@ -302,7 +302,7 @@ RSpec.describe Nsm::V1::Disbursement do
           'apply_vat_original' => 'false',
           'total_cost_without_vat' => 250,
           'apply_vat' => 'true',
-          :submission => create(:claim),
+          :submission => build(:claim),
           :disbursement_type => 'other',
         }
       end
@@ -314,7 +314,7 @@ RSpec.describe Nsm::V1::Disbursement do
       let(:args) do
         {
           'total_cost_without_vat' => 250,
-          :submission => create(:claim),
+          :submission => build(:claim),
           :disbursement_type => 'other',
         }
       end

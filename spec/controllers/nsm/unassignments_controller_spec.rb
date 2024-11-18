@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Nsm::UnassignmentsController do
   context 'edit' do
-    let(:claim) { create(:claim, id: claim_id) }
+    let(:claim) { build(:claim, id: claim_id) }
     let(:claim_id) { SecureRandom.uuid }
     let(:unassignment) { instance_double(Nsm::UnassignmentForm) }
     let(:defendant_name) { 'Tracy Linklater' }
@@ -18,15 +18,15 @@ RSpec.describe Nsm::UnassignmentsController do
     end
 
     context 'when the claim has an assignment' do
-      before { create(:assignment, submission: claim) }
+      before { claim.assigned_user_id = SecureRandom.uuid }
 
       it 'renders successfully with claims' do
         allow(controller).to receive(:render)
         get :edit, params: { claim_id: }
+        expect(response).to be_successful
 
         expect(controller).to have_received(:render)
                           .with(locals: { claim:, unassignment: })
-        expect(response).to be_successful
       end
     end
   end
@@ -37,7 +37,7 @@ RSpec.describe Nsm::UnassignmentsController do
     end
     let(:unassignment_user) { 'other' }
     let(:user) { create(:caseworker) }
-    let(:claim) { create(:claim, :with_assignment) }
+    let(:claim) { build(:claim, :with_assignment) }
     let(:laa_reference_class) do
       instance_double(Nsm::V1::LaaReference, laa_reference: 'AAA111')
     end

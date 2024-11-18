@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Nsm::LettersCallsForm do
   subject { described_class.new(params) }
 
-  let(:claim) { create(:claim) }
+  let(:claim) { build(:claim) }
   let(:params) { { claim:, type:, count:, uplift:, item:, explanation:, current_user: } }
   let(:type) { 'letters' }
   let(:count) { 2 }
@@ -135,27 +135,28 @@ RSpec.describe Nsm::LettersCallsForm do
       let(:uplift) { 'no' }
 
       it 'creates a event for the count change' do
-        expect { subject.save }.to change(Event, :count).by(1)
-        expect(Event.last).to have_attributes(
-          submission: claim.becomes(Submission),
-          submission_version: claim.current_version,
-          event_type: 'Event::Edit',
-          linked_type: 'letters_and_calls',
-          linked_id: 'letters',
+        expect(Event::Edit).to receive(:build).with(
+          submission: claim,
+          linked: {
+            type: 'letters_and_calls',
+            id: 'letters',
+          },
           details: {
-            'field' => 'count',
-            'from' => 12,
-            'to' => 2,
-            'change' => -10,
-            'comment' => 'change to letters'
-          }
+            field: 'count',
+            from: 12,
+            to: 2,
+            change: -10,
+            comment: 'change to letters'
+          },
+          current_user: current_user,
         )
+
+        subject.save
       end
 
       it 'updates the JSON data' do
         subject.save
-        letters = claim.reload
-                       .data['letters_and_calls']
+        letters = claim.data['letters_and_calls']
                        .detect { |row| row['type'] == 'letters' }
         expect(letters).to eq(
           'count' => 2,
@@ -172,27 +173,28 @@ RSpec.describe Nsm::LettersCallsForm do
       let(:count) { 12 }
 
       it 'creates a event for the uplift change' do
-        expect { subject.save }.to change(Event, :count).by(1)
-        expect(Event.last).to have_attributes(
-          submission: claim.becomes(Submission),
-          submission_version: claim.current_version,
-          event_type: 'Event::Edit',
-          linked_type: 'letters_and_calls',
-          linked_id: 'letters',
+        expect(Event::Edit).to receive(:build).with(
+          submission: claim,
+          linked: {
+            type: 'letters_and_calls',
+            id: 'letters',
+          },
           details: {
-            'field' => 'uplift',
-            'from' => 95,
-            'to' => 0,
-            'change' => -95,
-            'comment' => 'change to letters'
-          }
+            field: 'uplift',
+            from: 95,
+            to: 0,
+            change: -95,
+            comment: 'change to letters'
+          },
+          current_user: current_user
         )
+
+        subject.save
       end
 
       it 'updates the JSON data' do
         subject.save
-        letters = claim.reload
-                       .data['letters_and_calls']
+        letters = claim.data['letters_and_calls']
                        .detect { |row| row['type'] == 'letters' }
         expect(letters).to eq(
           'count' => 12,
@@ -207,13 +209,13 @@ RSpec.describe Nsm::LettersCallsForm do
 
     context 'when uplift and count have changed' do
       it 'creates an event for each field changed' do
-        expect { subject.save }.to change(Event, :count).by(2)
+        expect(Event::Edit).to receive(:build).twice
+        subject.save
       end
 
       it 'updates the JSON data' do
         subject.save
-        letters = claim.reload
-                       .data['letters_and_calls']
+        letters = claim.data['letters_and_calls']
                        .detect { |row| row['type'] == 'letters' }
         expect(letters).to eq(
           'count' => 2,
@@ -228,16 +230,16 @@ RSpec.describe Nsm::LettersCallsForm do
     end
 
     context 'when claim has a legacy translation format' do
-      let(:claim) { create(:claim, :legacy_translations) }
+      let(:claim) { build(:claim, :legacy_translations) }
 
       it 'creates an event for each field changed' do
-        expect { subject.save }.to change(Event, :count).by(2)
+        expect(Event::Edit).to receive(:build).twice
+        subject.save
       end
 
       it 'updates the JSON data' do
         subject.save
-        letters = claim.reload
-                       .data['letters_and_calls']
+        letters = claim.data['letters_and_calls']
                        .detect { |row| row.dig('type', 'value') == 'letters' }
         expect(letters).to eq(
           'count' => 2,
@@ -263,7 +265,8 @@ RSpec.describe Nsm::LettersCallsForm do
       let(:original_uplift) { nil }
 
       it 'saves without error' do
-        expect { subject.save }.to change(Event, :count).by(1)
+        expect(Event::Edit).to receive(:build).once
+        subject.save
       end
     end
   end

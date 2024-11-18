@@ -1,7 +1,8 @@
 FactoryBot.define do
   factory :claim do
+    id { SecureRandom.uuid }
     risk { 'low' }
-    received_on { Date.yesterday }
+    created_at { Date.yesterday }
     current_version { 1 }
     state { 'submitted' }
     json_schema_version { 1 }
@@ -107,6 +108,10 @@ FactoryBot.define do
         'assessment_comment' => nil,
         'updated_at' => 1.day.ago,
       }
+    end
+
+    after(:build) do |claim|
+      claim.data = claim.data.deep_stringify_keys.with_indifferent_access
     end
 
     transient do
@@ -235,9 +240,7 @@ FactoryBot.define do
     end
 
     trait :with_assignment do
-      after(:build) do |claim|
-        claim.assignments << build(:assignment, submission: claim)
-      end
+      assigned_user_id { SecureRandom.uuid }
     end
 
     trait :with_adjustments do
@@ -354,7 +357,6 @@ FactoryBot.define do
         claim.data['work_items'].first['time_spent_original'] = claim.data['work_items'].first['time_spent']
         claim.data['work_items'].first['time_spent'] -= 1
         claim.data['work_items'].first['adjustment_comment'] = 'reducing this work item'
-        claim.save!
       end
     end
 

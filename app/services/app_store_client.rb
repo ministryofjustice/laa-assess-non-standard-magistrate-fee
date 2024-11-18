@@ -2,17 +2,6 @@ class AppStoreClient
   include HTTParty
   headers 'Content-Type' => 'application/json'
 
-  def get_all_submissions(last_update)
-    url = "/v1/applications?since=#{last_update.to_i}"
-    response = self.class.get "#{host}#{url}", **options
-
-    process_response(
-      response,
-      "Unexpected response from AppStore - status #{response.code} for '#{url}'",
-      200 => ->(body) { JSON.parse(body) },
-    )
-  end
-
   def get_submission(submission_id)
     url = "/v1/submissions/#{submission_id}"
     response = self.class.get "#{host}#{url}", **options
@@ -46,17 +35,6 @@ class AppStoreClient
       response,
       "Unexpected response from AppStore - status #{response.code} for metadata update to'#{submission.id}'",
       200 => :success,
-    )
-  end
-
-  def trigger_subscription(payload, action: :create)
-    method = action == :create ? :post : :delete
-    response = self.class.send(method, "#{host}/v1/subscriber", **options(payload))
-
-    process_response(
-      response,
-      "Unexpected response from AppStore - status #{response.code} on #{action} subscription",
-      200..204 => :success,
     )
   end
 

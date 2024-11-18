@@ -50,20 +50,21 @@ RSpec.describe 'Search', :stub_oauth_token do
   end
 
   context 'when I search for an application that has already been imported' do
-    let(:claim) { create :claim }
+    let(:claim) { build :claim }
 
     let(:stub) do
       stub_request(:post, endpoint).with(body: payload).to_return(
         status: 201,
         body: { metadata: { total_results: 1 },
-                raw_data: [{ application_id: claim.id, application: claim.data }] }.to_json
+                raw_data: [{ application_id: claim.id, application: claim.data, application_type: 'crm7',
+application_state: claim.state, last_updated_at: 1.hour.ago }] }.to_json
       )
     end
 
     before do
       stub
-      stub_load_from_app_store(claim)
-      claim.assignments.create user: caseworker
+      stub_app_store_interactions(claim)
+      claim.assigned_user_id = caseworker.id
     end
 
     it 'lets me search and shows me a result' do
@@ -137,7 +138,7 @@ RSpec.describe 'Search', :stub_oauth_token do
   end
 
   context 'when there are multiple results' do
-    let(:claims) { create_list(:claim, 20) }
+    let(:claims) { build_list(:claim, 20) }
 
     let(:payloads) do
       [
@@ -154,7 +155,11 @@ RSpec.describe 'Search', :stub_oauth_token do
       payloads.map do |payload|
         stub_request(:post, endpoint).with(body: payload).to_return(
           status: 201, body: { metadata: { total_results: 21 },
-                               raw_data: claims.map { { application_id: _1.id, application: _1.data } } }.to_json
+                               raw_data: claims.map do |claim|
+                                 { application_id: claim.id, application: claim.data,
+                                   application_state: claim.state, application_type: claim.application_type,
+                                   last_updated_at: 1.day.ago }
+                               end }.to_json
         )
       end
     end

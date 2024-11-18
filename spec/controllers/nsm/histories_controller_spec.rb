@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe Nsm::HistoriesController do
   describe 'show' do
-    let(:claim) { create(:claim, id: claim_id, events: events) }
+    let(:claim) { build(:claim, id: claim_id, events: events) }
     let(:claim_id) { SecureRandom.uuid }
     let(:events) { [build(:event, :note)] }
     let(:claim_summary) { instance_double(Nsm::V1::ClaimSummary) }
-    let(:claim_note) { instance_double(Nsm::ClaimNoteForm, id: claim_id) }
+    let(:claim_note) { instance_double(Nsm::ClaimNoteForm, claim:) }
 
     before do
       allow(Claim).to receive(:load_from_app_store).and_return(claim)
@@ -26,7 +26,7 @@ RSpec.describe Nsm::HistoriesController do
 
       expect(controller).to have_received(:render).with(
         locals: {
-          claim: claim, claim_summary: claim_summary, history_events: claim.events.history,
+          claim: claim, claim_summary: claim_summary, history_events: claim.events.select(&:history?),
           claim_note: claim_note, pagy: anything
         }
       )
@@ -36,12 +36,12 @@ RSpec.describe Nsm::HistoriesController do
 
   describe 'create' do
     let(:user) { create :caseworker }
-    let(:claim) { create :claim }
-    let(:form) { instance_double(Nsm::ClaimNoteForm, id: claim.id, save: save) }
+    let(:claim) { build :claim }
+    let(:form) { instance_double(Nsm::ClaimNoteForm, claim:, save:) }
 
     before do
       allow(Claim).to receive(:load_from_app_store).and_return(claim)
-      claim.assignments.create(user:)
+      claim.assigned_user_id = user.id
       allow(Nsm::ClaimNoteForm).to receive(:new).and_return(form)
       post :create, params: {
         claim_id: claim.id,

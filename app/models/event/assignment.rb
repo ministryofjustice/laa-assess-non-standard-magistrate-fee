@@ -1,9 +1,8 @@
 class Event
   class Assignment < Event
     def self.construct(submission:, current_user:, comment: nil)
-      create(
-        submission: submission,
-        primary_user: current_user,
+      new(
+        primary_user_id: current_user.id,
         submission_version: submission.current_version,
         details: {
           comment:

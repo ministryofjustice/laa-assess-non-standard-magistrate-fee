@@ -13,7 +13,6 @@ module Nsm
       else
         raise "Unknown adjustment type '#{adjustment_type}'"
       end
-      submission.save!
     end
 
     def delete_work_item_adjustment
@@ -49,10 +48,6 @@ module Nsm
 
     def work_item
       @work_item ||= submission.data['work_items'].find { _1['id'] == params[:id] }
-    end
-
-    def submission_scope
-      @submission_scope ||= Claim.find(params[:claim_id])
     end
   end
 end

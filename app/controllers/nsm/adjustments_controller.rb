@@ -1,16 +1,16 @@
 module Nsm
   class AdjustmentsController < Nsm::BaseController
     def confirm_deletion
-      authorize Claim.load_from_app_store(params[:claim_id]), :update?
+      authorize claim, :update?
       form = DeleteAdjustmentsForm.new
 
       render :confirm_deletion_adjustments, locals: { deletion_path:, form: }
     end
 
     def delete_all
+      authorize claim, :update?
       form = DeleteAdjustmentsForm.new(**safe_params)
-      deleter = Nsm::AllAdjustmentsDeleter.new(params, nil, current_user)
-      authorize deleter.submission, :update?
+      deleter = Nsm::AllAdjustmentsDeleter.new(params, nil, current_user, claim)
 
       if form.valid?
         deleter.call!
@@ -21,6 +21,10 @@ module Nsm
     end
 
     private
+
+    def claim
+      @claim ||= Claim.load_from_app_store(params[:claim_id])
+    end
 
     def deletion_path
       delete_all_nsm_claim_adjustments_path(params[:claim_id])

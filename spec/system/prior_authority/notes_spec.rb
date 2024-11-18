@@ -2,13 +2,12 @@ require 'rails_helper'
 
 RSpec.describe 'Notes', :stub_oauth_token do
   let(:caseworker) { create(:caseworker, first_name: 'Jane', last_name: 'Bloggs') }
-  let(:application) { create(:prior_authority_application, state: 'submitted') }
+  let(:application) { build(:prior_authority_application, state: 'submitted') }
 
   before do
-    stub_load_from_app_store(application)
-    stub_request(:post, "https://appstore.example.com/v1/submissions/#{application.id}/events").to_return(status: 201)
+    stub_app_store_interactions(application)
     sign_in caseworker
-    application.assignments.create(user: caseworker)
+    application.assigned_user_id = caseworker.id
     visit prior_authority_application_events_path(application)
     click_on 'Add a note to the application history'
   end

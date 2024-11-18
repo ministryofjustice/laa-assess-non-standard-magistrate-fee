@@ -4,7 +4,7 @@ module Nsm
     include ActiveModel::Attributes
     include ActiveRecord::AttributeAssignment
 
-    attribute :id
+    attribute :claim
     attribute :note
     attribute :current_user
 
@@ -18,10 +18,6 @@ module Nsm
       true
     rescue StandardError
       false
-    end
-
-    def claim
-      @claim ||= Claim.find(id)
     end
   end
 end

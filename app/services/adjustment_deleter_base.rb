@@ -1,18 +1,16 @@
 class AdjustmentDeleterBase
   attr_reader :params, :adjustment_type, :current_user, :submission
 
-  def initialize(params, adjustment_type, current_user)
+  def initialize(params, adjustment_type, current_user, submission)
     @params = params
     @adjustment_type = adjustment_type
     @current_user = current_user
-    @submission = submission_scope
+    @submission = submission
   end
 
   def call!
-    submission.with_lock do
-      call
-      AppStoreClient.new.adjust(submission)
-    end
+    call
+    AppStoreClient.new.adjust(submission)
   end
 
   def call

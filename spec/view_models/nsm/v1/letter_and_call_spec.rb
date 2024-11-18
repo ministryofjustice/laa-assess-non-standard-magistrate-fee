@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Nsm::V1::LetterAndCall do
-  subject(:letterandcall) { described_class.new(params.merge(type: 'letters', submission: create(:claim))) }
+  subject(:letterandcall) { described_class.new(params.merge(type: 'letters', submission: build(:claim))) }
 
   describe '#provider_requested_amount' do
     let(:params) { { count: 2, count_original: 1, uplift: 5, uplift_original: 10 } }
@@ -307,7 +307,7 @@ RSpec.describe Nsm::V1::LetterAndCall do
 
   describe 'backlink_path' do
     context 'when a change has been made' do
-      let(:claim) { create(:claim) }
+      let(:claim) { build(:claim) }
       let(:params) do
         {
           'type' => 'letters',
@@ -323,7 +323,7 @@ RSpec.describe Nsm::V1::LetterAndCall do
     end
 
     context 'when no change has been made' do
-      let(:claim) { create(:claim) }
+      let(:claim) { build(:claim) }
       let(:params) do
         {
           'type' => 'letters',

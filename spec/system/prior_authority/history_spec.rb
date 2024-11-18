@@ -2,44 +2,43 @@ require 'rails_helper'
 
 RSpec.describe 'History events', :stub_oauth_token do
   let(:caseworker) { create(:caseworker) }
-  let(:application) { create(:prior_authority_application, state: 'granted') }
+  let(:application) { build(:prior_authority_application, state: 'granted') }
   let(:fixed_arbitrary_date) { Time.zone.local(2023, 2, 1, 9, 0) }
   let(:supervisor) { create(:supervisor) }
 
   before do
-    stub_load_from_app_store(application)
-    stub_request(:post, "https://appstore.example.com/v1/submissions/#{application.id}/events")
+    stub_app_store_interactions(application)
     travel_to fixed_arbitrary_date
     application
     sign_in caseworker
 
-    Event::NewVersion.build(submission: application).update(created_at: 10.hours.ago)
-    Event::Assignment.build(submission: application, current_user: caseworker).update(created_at: 9.hours.ago)
+    Event::NewVersion.build(submission: application).tap { _1.created_at = 10.hours.ago }
+    Event::Assignment.build(submission: application, current_user: caseworker).tap { _1.created_at = 9.hours.ago }
     Event::Unassignment.build(submission: application, user: caseworker, current_user: supervisor,
-                              comment: 'unassignment comment').update(created_at: 8.hours.ago)
+                              comment: 'unassignment comment').tap { _1.created_at = 8.hours.ago }
     Event::Assignment.build(submission: application, current_user: supervisor,
-                            comment: 'manual assignment comment').update(created_at: 7.hours.ago)
+                            comment: 'manual assignment comment').tap { _1.created_at = 7.hours.ago }
     Event::DraftDecision.build(submission: application, current_user: caseworker, next_state: 'rejected',
-                               comment: 'draft decision comment').update(created_at: 6.hours.ago)
+                               comment: 'draft decision comment').tap { _1.created_at = 6.hours.ago }
     Event::Decision.build(submission: application, current_user: caseworker, previous_state: 'submitted',
-                          comment: 'decision comment').update(created_at: 5.hours.ago)
+                          comment: 'decision comment').tap { _1.created_at = 5.hours.ago }
     PriorAuthority::Event::DraftSendBack.build(submission: application,
                                                current_user: caseworker,
                                                comments: { further_information: 'draft send back comment' },
-                                               updates_needed: ['further_information']).update(created_at: 4.hours.ago)
+                                               updates_needed: ['further_information']).tap { _1.created_at = 4.hours.ago }
     PriorAuthority::Event::SendBack.build(submission: application,
                                           current_user: caseworker,
                                           comments: { further_information: 'send back comment' },
-                                          updates_needed: ['further_information']).update(created_at: 3.hours.ago)
-    Event::ProviderUpdated.create!(submission: application,
-                                   details: { comment: 'Foo', corrected_info: ['bar'] },
-                                   created_at: 2.hours.ago)
-    Event::ProviderUpdated.create!(submission: application,
-                                   details: {  corrected_info: ['bar'] },
-                                   created_at: 1.hour.ago)
+                                          updates_needed: ['further_information']).tap { _1.created_at = 3.hours.ago }
+    Event::ProviderUpdated.new(submission: application,
+                               details: { comment: 'Foo', corrected_info: ['bar'] },
+                               created_at: 2.hours.ago)
+    Event::ProviderUpdated.new(submission: application,
+                               details: {  corrected_info: ['bar'] },
+                               created_at: 1.hour.ago)
     Event::Note.build(submission: application,
                       current_user: caseworker,
-                      note: "Foo\nBar").update(created_at: 0.5.hours.ago)
+                      note: "Foo\nBar").tap { _1.created_at = 0.5.hours.ago }
   end
 
   it 'shows first page events in the history' do

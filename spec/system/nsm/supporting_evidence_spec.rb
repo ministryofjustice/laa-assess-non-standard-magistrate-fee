@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe 'Supporting Evidence' do
+RSpec.describe 'Supporting Evidence', :stub_oauth_token do
   let(:user) { create(:caseworker) }
-  let(:claim) { create(:claim) }
+  let(:claim) { build(:claim) }
 
   before do
-    stub_load_from_app_store(claim)
+    stub_app_store_interactions(claim)
     sign_in user
     visit nsm_claim_supporting_evidences_path(claim)
   end
@@ -33,7 +33,7 @@ RSpec.describe 'Supporting Evidence' do
   end
 
   context 'There is supporting evidence and some evidence is sent by post' do
-    let(:claim) { create(:claim, send_by_post: true) }
+    let(:claim) { build(:claim, send_by_post: true) }
 
     before do
       allow(FeatureFlags).to receive(:postal_evidence).and_return(double(:postal_evidence, enabled?: true))
@@ -62,7 +62,7 @@ RSpec.describe 'Supporting Evidence' do
   end
 
   context 'There is supporting evidence sent by post' do
-    let(:claim) { create(:claim, send_by_post: true, supporting_evidences: []) }
+    let(:claim) { build(:claim, send_by_post: true, supporting_evidences: []) }
 
     it 'supporting evidence table not shown' do
       expect(page).to have_no_css('.govuk-table__row')

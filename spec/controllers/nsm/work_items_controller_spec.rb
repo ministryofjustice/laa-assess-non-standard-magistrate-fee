@@ -1,14 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Nsm::WorkItemsController do
-  let(:claim) { create :claim, data: { work_items: [work_item] } }
+  let(:claim) { build :claim, assigned_user_id: user.id, data: { work_items: [work_item] } }
   let(:user) { create :caseworker }
   let(:work_item) { { id: SecureRandom.uuid, work_type: 'travel' } }
 
   before do
     allow(Claim).to receive(:load_from_app_store).and_return(claim)
     allow(controller).to receive(:current_user).and_return(user)
-    create :assignment, submission: claim, user: user
   end
 
   describe 'index' do

@@ -2,14 +2,12 @@ require 'rails_helper'
 
 RSpec.describe 'Overview', :stub_oauth_token, type: :system do
   let(:user) { create(:caseworker) }
-  let(:claim) { create(:claim) }
+  let(:claim) { build(:claim) }
 
   before do
-    stub_load_from_app_store(claim)
-    stub_request(:post, "https://appstore.example.com/v1/submissions/#{claim.id}/events").to_return(status: 201)
-    stub_request(:post, "https://appstore.example.com/v1/submissions/#{claim.id}/adjustments").to_return(status: 201)
+    stub_app_store_interactions(claim)
     sign_in user
-    create(:assignment, submission: claim, user: user)
+    claim.assigned_user_id = user.id
   end
 
   context 'when claim has been submitted' do
@@ -22,7 +20,7 @@ RSpec.describe 'Overview', :stub_oauth_token, type: :system do
     end
 
     context 'when claim has old translation format' do
-      let(:claim) { create(:claim, :legacy_translations) }
+      let(:claim) { build(:claim, :legacy_translations) }
 
       it 'does not crash and renders the page' do
         expect(page)
@@ -51,7 +49,7 @@ RSpec.describe 'Overview', :stub_oauth_token, type: :system do
   context 'when claim has been assessed as granted' do
     before { visit nsm_claim_claim_details_path(claim) }
 
-    let(:claim) { create(:claim, state: 'granted') }
+    let(:claim) { build(:claim, state: 'granted') }
 
     it 'shows me the total claimed and total adjusted' do
       expect(page)
@@ -61,11 +59,10 @@ RSpec.describe 'Overview', :stub_oauth_token, type: :system do
   end
 
   context 'when claim has been assessed as part granted' do
-    let(:claim) { create(:claim, state: 'part_grant') }
+    let(:claim) { build(:claim, state: 'part_grant') }
 
     before do
       claim.data['assessment_comment'] = 'Part grant reason'
-      claim.save!
       visit nsm_claim_claim_details_path(claim)
     end
 
@@ -78,7 +75,7 @@ RSpec.describe 'Overview', :stub_oauth_token, type: :system do
   end
 
   context 'when claim has been sent back and expired' do
-    let(:claim) { create(:claim, state: 'expired') }
+    let(:claim) { build(:claim, state: 'expired') }
 
     before do
       claim.data['assessment_comment'] = 'Send back reason'
@@ -89,7 +86,6 @@ RSpec.describe 'Overview', :stub_oauth_token, type: :system do
           information_requested: 'Send back reason'
         }
       ]
-      claim.save!
       visit nsm_claim_claim_details_path(claim)
     end
 
@@ -101,7 +97,7 @@ RSpec.describe 'Overview', :stub_oauth_token, type: :system do
   end
 
   context 'further information requested' do
-    let(:claim) { create(:claim, state: 'provider_updated') }
+    let(:claim) { build(:claim, state: 'provider_updated') }
     let(:further_information) do
       [
         {
@@ -132,7 +128,6 @@ RSpec.describe 'Overview', :stub_oauth_token, type: :system do
     before do
       claim.data['further_information'] = further_information
       claim.data['updated_at'] = DateTime.new(2024, 9, 1, 10, 10, 10)
-      claim.save!
       allow(FeatureFlags).to receive(:nsm_rfi_loop).and_return(
         instance_double(FeatureFlags::EnabledFeature, enabled?: true)
       )

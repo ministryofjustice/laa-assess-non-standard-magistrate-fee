@@ -4,46 +4,58 @@ RSpec.describe 'Prior authority list views', :stub_oauth_token do
   let(:me) { create(:caseworker) }
   let(:someone_else) { create(:caseworker) }
   let(:assigned_to_me) do
-    create(:prior_authority_application,
-           state: 'submitted',
-           updated_at: 4.days.ago,
-           data: build(:prior_authority_data, laa_reference: 'LAA-111'))
+    build(:prior_authority_application,
+          state: 'submitted',
+          updated_at: 4.days.ago,
+          data: build(:prior_authority_data, laa_reference: 'LAA-111'))
   end
   let(:assigned_to_me_data) do
     { application_id: assigned_to_me.id,
+      application_type: 'crm4',
+      application_state: 'submitted',
+      last_updated_at: 1.day.ago,
       assigned_user_id: me.id,
       application: { defendant: {}, firm_office: {}, laa_reference: 'LAA-111' } }
   end
   let(:assigned_to_someone_else) do
-    create(:prior_authority_application,
-           state: 'submitted',
-           updated_at: 3.days.ago,
-           data: build(:prior_authority_data, laa_reference: 'LAA-222'))
+    build(:prior_authority_application,
+          state: 'submitted',
+          updated_at: 3.days.ago,
+          data: build(:prior_authority_data, laa_reference: 'LAA-222'))
   end
   let(:assigned_to_someone_else_data) do
     { application_id: assigned_to_someone_else.id,
+      application_type: 'crm4',
+      application_state: 'submitted',
+      last_updated_at: 1.day.ago,
       assigned_user_id: someone_else.id,
       application: { defendant: {}, firm_office: {}, laa_reference: 'LAA-222' } }
   end
   let(:unassigned) do
-    create(:prior_authority_application,
-           state: 'submitted',
-           updated_at: 2.days.ago,
-           data: build(:prior_authority_data, laa_reference: 'LAA-333'))
+    build(:prior_authority_application,
+          state: 'submitted',
+          updated_at: 2.days.ago,
+          data: build(:prior_authority_data, laa_reference: 'LAA-333'))
   end
   let(:unassigned_data) do
     { application_id: unassigned.id,
+      application_type: 'crm4',
+      application_state: 'submitted',
+      last_updated_at: 1.day.ago,
       assigned_user_id: nil,
       application: { defendant: {}, firm_office: {}, laa_reference: 'LAA-333' } }
   end
   let(:assessed) do
-    create(:prior_authority_application,
-           state: 'granted',
-           updated_at: 1.day.ago,
-           data: build(:prior_authority_data, laa_reference: 'LAA-444'))
+    build(:prior_authority_application,
+          state: 'granted',
+          updated_at: 1.day.ago,
+          data: build(:prior_authority_data, laa_reference: 'LAA-444'))
   end
   let(:assessed_data) do
     { application_id: assessed.id,
+      application_type: 'crm4',
+      application_state: 'submitted',
+      last_updated_at: 1.day.ago,
       assigned_user_id: me.id,
       application: { defendant: {}, firm_office: {}, laa_reference: 'LAA-444' } }
   end

@@ -1,14 +1,12 @@
 module Nsm
   class MakeDecisionsController < Nsm::BaseController
     def edit
-      claim = Claim.load_from_app_store(params[:claim_id])
       authorize(claim)
       decision = MakeDecisionForm.new(claim:)
       render locals: { claim:, decision: }
     end
 
     def update
-      claim = Claim.find(params[:claim_id])
       authorize(claim)
       decision = MakeDecisionForm.new(claim:, **decision_params)
       if decision.save
@@ -25,6 +23,10 @@ module Nsm
     end
 
     private
+
+    def claim
+      @claim ||= Claim.load_from_app_store(params[:claim_id])
+    end
 
     def decision_params
       params.require(:nsm_make_decision_form).permit(

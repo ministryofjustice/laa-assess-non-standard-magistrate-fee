@@ -42,17 +42,17 @@
       </p>
       <p class="govuk-body-m govuk-!-margin-bottom-2">
         <span class="govuk-!-font-weight-bold"><%= t(".date_received") %></span>
-        <%= format_in_zone(claim.received_on) %>
+        <%= format_in_zone(claim.created_at) %>
       </p>
       <% if claim.assessed? %>
         <p class="govuk-body-m govuk-!-margin-bottom-2">
           <span class="govuk-!-font-weight-bold"><%= t(".date_assessed") %></span>
-          <%= format_in_zone(claim_summary.last_updated_at) %>
+          <%= format_in_zone(claim_summary.app_store_updated_at) %>
         </p>
       <% elsif claim.sent_back? %>
         <p class="govuk-body-m govuk-!-margin-bottom-2">
           <span class="govuk-!-font-weight-bold"><%= t(".date_sent_back") %></span>
-          <%= format_in_zone(claim_summary.last_updated_at) %>
+          <%= format_in_zone(claim_summary.app_store_updated_at) %>
         </p>
       <% end %>
     </div>

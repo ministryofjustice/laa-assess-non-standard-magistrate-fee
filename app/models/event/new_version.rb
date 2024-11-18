@@ -3,7 +3,7 @@ class Event
     def self.construct(submission:)
       # We notify the app store immediately of a new version, because its analytics mechanism
       # depends on having new version events available.
-      create(submission: submission, submission_version: submission.current_version)
+      new(submission_version: submission.current_version)
     end
 
     def body

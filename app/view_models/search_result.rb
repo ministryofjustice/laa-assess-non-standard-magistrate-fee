@@ -3,34 +3,32 @@ class SearchResult
   include SubmissionTagHelper
 
   def initialize(data)
-    @data = data.deep_stringify_keys
+    @submission = Submission.rehydrate(data)
   end
+
+  attr_reader :submission
 
   delegate :id, to: :submission
 
-  def submission
-    @submission ||= Submission.find_by(id: @data['application_id']) || UpdateSubmission.call(@data)
-  end
-
   def laa_reference
-    @data.dig('application', 'laa_reference')
+    submission.data['laa_reference']
   end
 
   def firm_name
-    @data.dig('application', 'firm_office', 'name')
+    submission.data.dig('firm_office', 'name')
   end
 
   def client_name
-    defendant = @data.dig('application', 'defendant') || @data.dig('application', 'defendants').find { _1['main'] }
+    defendant = submission.data['defendant'] || submission.data['defendants'].find { _1['main'] }
     construct_name(defendant)
   end
 
   def caseworker
-    User.find_by(id: @data['assigned_user_id'])&.display_name || I18n.t('search.unassigned')
+    User.find_by(id: submission.assigned_user_id)&.display_name || I18n.t('search.unassigned')
   end
 
   def date_updated
-    submission.last_updated_at.to_fs(:stamp)
+    submission.app_store_updated_at.to_fs(:stamp)
   end
 
   def service_name
@@ -53,10 +51,8 @@ class SearchResult
     case submission.application_type
     when 'crm4'
       Rails.application.routes.url_helpers.prior_authority_application_path(submission.id)
-    when 'crm7'
-      Rails.application.routes.url_helpers.nsm_claim_claim_details_path(submission.id)
     else
-      raise 'Submission must have a valid application type'
+      Rails.application.routes.url_helpers.nsm_claim_claim_details_path(submission.id)
     end
   end
 end

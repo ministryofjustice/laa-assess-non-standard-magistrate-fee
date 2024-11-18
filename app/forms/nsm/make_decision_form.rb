@@ -21,9 +21,7 @@ module Nsm
     def save
       return false unless valid?
 
-      claim.with_lock do
-        change_data_and_notify_app_store!
-      end
+      change_data_and_notify_app_store!
 
       true
     end
@@ -32,7 +30,7 @@ module Nsm
       previous_state = claim.state
 
       claim.data.merge!('status' => state, 'updated_at' => Time.current, 'assessment_comment' => comment)
-      claim.update!(state:)
+      claim.state = state
       ::Event::Decision.build(submission: claim,
                               comment: comment,
                               previous_state: previous_state,

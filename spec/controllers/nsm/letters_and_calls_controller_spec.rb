@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Nsm::LettersAndCallsController do
   let(:claim) do
-    create :claim, data: { disbursements: [], work_items: [], letters_and_calls: [letters, calls] }
+    build :claim, assigned_user_id: user.id, data: { disbursements: [], work_items: [], letters_and_calls: [letters, calls] }
   end
   let(:user) { create :caseworker }
   let(:letters) { { type: 'letters' } }
@@ -11,7 +11,6 @@ RSpec.describe Nsm::LettersAndCallsController do
   before do
     allow(Claim).to receive(:load_from_app_store).and_return(claim)
     allow(controller).to receive(:current_user).and_return(user)
-    create :assignment, submission: claim, user: user
   end
 
   describe 'index' do

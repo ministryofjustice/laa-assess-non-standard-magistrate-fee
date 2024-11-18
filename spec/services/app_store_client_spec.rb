@@ -13,47 +13,6 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
       .and_return(response)
   end
 
-  describe '#get_all_submissions' do
-    context 'when APP_STORE_URL is present' do
-      before do
-        allow(ENV).to receive(:fetch).with('APP_STORE_URL', 'http://localhost:8000')
-                                     .and_return('http://some.url')
-      end
-
-      it 'get the claims to the specified URL' do
-        expect(described_class).to receive(:get).with('http://some.url/v1/applications?since=1',
-                                                      headers: { authorization: 'Bearer test-bearer-token' })
-
-        subject.get_all_submissions(1)
-      end
-    end
-
-    context 'when APP_STORE_URL is not present' do
-      it 'get the claims to default localhost url' do
-        expect(described_class).to receive(:get).with('https://appstore.example.com/v1/applications?since=1',
-                                                      headers: { authorization: 'Bearer test-bearer-token' })
-
-        subject.get_all_submissions(1)
-      end
-    end
-
-    context 'when response code is 200 - ok' do
-      it 'returns the parsed json' do
-        expect(subject.get_all_submissions(1)).to eq('some' => 'data')
-      end
-    end
-
-    context 'when response code is unexpected (neither 201 or 209)' do
-      let(:code) { 501 }
-
-      it 'raises and error' do
-        expect { subject.get_all_submissions(1) }.to raise_error(
-          "Unexpected response from AppStore - status 501 for '/v1/applications?since=1'"
-        )
-      end
-    end
-  end
-
   describe '#update_submission' do
     let(:application_id) { SecureRandom.uuid }
     let(:message) { { application_id: } }
@@ -133,50 +92,6 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
       it 'raises and error' do
         expect { subject.update_submission(message) }.to raise_error(
           "Unexpected response from AppStore - status 501 for '#{application_id}'"
-        )
-      end
-    end
-  end
-
-  describe '#trigger_subscription' do
-    let(:application_id) { SecureRandom.uuid }
-    let(:message) { { application_id: } }
-    let(:response) { double(:response, code:) }
-    let(:code) { 201 }
-    let(:username) { nil }
-
-    before do
-      allow(described_class).to receive_messages(post: response, delete: response)
-    end
-
-    it 'posts the message to host url' do
-      expect(described_class).to receive(:post).with('https://appstore.example.com/v1/subscriber',
-                                                     body: message.to_json,
-                                                     headers: { authorization: 'Bearer test-bearer-token' })
-
-      subject.trigger_subscription(message)
-    end
-
-    it 'uses delete if a destroy action is specified' do
-      expect(described_class).to receive(:delete).with('https://appstore.example.com/v1/subscriber',
-                                                       body: message.to_json,
-                                                       headers: { authorization: 'Bearer test-bearer-token' })
-
-      subject.trigger_subscription(message, action: :destroy)
-    end
-
-    context 'when response code is 201 - created' do
-      it 'returns a created status' do
-        expect(subject.trigger_subscription(message)).to eq(:success)
-      end
-    end
-
-    context 'when response code is unexpected (neither 200 or 201)' do
-      let(:code) { 501 }
-
-      it 'raises an error' do
-        expect { subject.trigger_subscription(message) }.to raise_error(
-          'Unexpected response from AppStore - status 501 on create subscription'
         )
       end
     end

@@ -1,8 +1,17 @@
-class Event < ApplicationRecord
-  belongs_to :submission
-  belongs_to :primary_user, optional: true, class_name: 'User'
+class Event
+  include ActiveModel::Model
+  include ActiveModel::Attributes
+  include ActiveRecord::AttributeAssignment
 
-  self.inheritance_column = :event_type
+  attribute :id, :string, default: -> { SecureRandom.uuid }
+  attribute :primary_user_id, :string
+  attribute :secondary_user_id, :string
+  attribute :linked_type, :string
+  attribute :linked_id, :string
+  attribute :details, default: -> { {} }
+  attribute :created_at, :datetime, default: -> { DateTime.current }
+  attribute :updated_at, :datetime, default: -> { DateTime.current }
+  attribute :submission_version, :integer
 
   PUBLIC_EVENTS = ['Event::Decision', 'PriorAuthority::Event::SendBack'].freeze
   NAMESPACED_EVENT_TYPES = %w[send_back draft_send_back].freeze
@@ -47,69 +56,38 @@ class Event < ApplicationRecord
     'Event::Expiry',
   ].freeze
 
-  scope :history, -> { where(event_type: HISTORY_EVENTS).order(created_at: :desc) }
-
-  scope :non_local, -> { where.not(event_type: LOCAL_EVENTS) }
-
   # Make these methods private to ensure they are created via the various `build` methods`
   class << self
-    protected :new
-    private :create
-
-    def rehydrate!(params, application_type)
-      return if find_by(id: params['id'])
-
-      create_dummy_users_if_non_production(params) unless HostEnv.production?
-
+    def rehydrate(params, application_type)
       event_type = params.delete('event_type')
       klass = if event_type.in?(NAMESPACED_EVENT_TYPES)
                 top_level = Submission::APPLICATION_TYPES.invert[application_type]
-                "#{top_level.to_s.classify}::Event::#{event_type.classify}".constantize
+                "#{top_level.to_s.classify}::Event::#{event_type.camelize}".constantize
               else
-                "Event::#{event_type.classify}".constantize
+                "Event::#{event_type.camelize}".constantize
               end
-      klass.new(params.except('does_not_constitute_update', 'public')).save!
+      klass.new(params.except('does_not_constitute_update', 'public'))
     end
 
     def build(**kwargs)
-      construct(**kwargs).tap { _1.notify unless _1.event_type.in?(ACCOMPANIES_UPDATE_EVENTS) }
-    end
-
-    private
-
-    def create_dummy_users_if_non_production(params)
-      create_dummy_user_if_non_production(params['primary_user_id'])
-      create_dummy_user_if_non_production(params['secondary_user_id'])
-    end
-
-    def create_dummy_user_if_non_production(user_id)
-      return if user_id.blank?
-
-      # This rather block-heavy chunk of code is cribbed from
-      # https://github.com/rails/rails/issues/43634#issuecomment-987240280
-      ActiveRecord::Base.transaction do
-        ActiveRecord::Base.with_advisory_lock("create_dummy_user-#{user_id}", transaction: true) do
-          ActiveRecord::Base.uncached do
-            User.find_or_initialize_by(id: user_id) do |user|
-              user.update!(dummy_attributes(user_id))
-              user.roles.create! role_type: Role::VIEWER
-            end
-          end
-        end
+      construct(**kwargs).tap do |new_event|
+        new_event.created_at = DateTime.current
+        kwargs[:submission].events << new_event
+        notify(new_event, kwargs[:submission]) unless new_event.event_type.in?(ACCOMPANIES_UPDATE_EVENTS)
       end
     end
 
-    def dummy_attributes(user_id)
-      {
-        first_name: user_id.split('-').first,
-        email: "#{user_id}@fake.com",
-        last_name: 'branchbuilder',
-        auth_oid: user_id,
-        auth_subject_id: user_id,
-        last_auth_at: Time.zone.now,
-        first_auth_at: Time.zone.now
-      }
+    def notify(event, submission)
+      NotifyEventAppStore.perform_now(event:, submission:)
     end
+  end
+
+  def submission=(submission)
+    submission.events << self
+  end
+
+  def history?
+    event_type.in?(HISTORY_EVENTS)
   end
 
   def title
@@ -117,12 +95,15 @@ class Event < ApplicationRecord
   end
 
   def body
-    details['comment']
+    details.with_indifferent_access['comment']
+  end
+
+  def primary_user
+    @primary_user ||= User.find_by(id: primary_user_id)
   end
 
   def as_json(*)
-    super
-      .except('submission_id')
+    super['attributes']
       .merge(
         public: PUBLIC_EVENTS.include?(event_type),
         event_type: event_type.demodulize.underscore,
@@ -130,8 +111,8 @@ class Event < ApplicationRecord
       )
   end
 
-  def notify
-    NotifyEventAppStore.perform_now(event: self)
+  def event_type
+    self.class.to_s
   end
 
   private

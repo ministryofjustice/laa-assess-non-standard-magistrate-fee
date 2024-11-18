@@ -6,10 +6,10 @@ module PriorAuthority
     end
 
     def create
-      authorize(local_submission, :update?)
+      authorize(submission, :update?)
       @form_object = NoteForm.new(form_params)
       if @form_object.save
-        redirect_to prior_authority_application_events_path(local_submission)
+        redirect_to prior_authority_application_events_path(submission)
       else
         render :new
       end
@@ -21,17 +21,13 @@ module PriorAuthority
       params.require(:prior_authority_note_form).permit(
         *NoteForm.attribute_names
       ).merge(
-        current_user: current_user,
-        submission: local_submission,
+        current_user:,
+        submission:,
       )
     end
 
     def submission
       @submission ||= PriorAuthorityApplication.load_from_app_store(params[:application_id])
-    end
-
-    def local_submission
-      @local_submission ||= PriorAuthorityApplication.find(params[:application_id])
     end
   end
 end
