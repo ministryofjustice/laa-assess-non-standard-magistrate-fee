@@ -73,6 +73,26 @@ Rails.describe 'Assessment', :stub_oauth_token do
     end
   end
 
+  context 'can save an assessment and come back later' do
+    it 'saves the assessment comment redirects to your claims' do
+      visit nsm_claim_claim_details_path(claim)
+      click_link_or_button 'Make a decision'
+      choose 'Reject'
+      fill_in 'nsm-make-decision-form-reject-comment-field', with: 'Test Data'
+      click_link_or_button 'Save and come back later'
+      expect(page).to have_content('Your claims')
+    end
+
+    it 'persists the assessment decision and comment' do
+      visit edit_nsm_claim_make_decision_path(claim)
+      choose 'Grant'
+      fill_in 'nsm-make-decision-form-grant-comment-field', with: 'Granted but decision not made'
+      click_link_or_button 'Save and come back later'
+      visit edit_nsm_claim_make_decision_path(claim)
+      expect(page).to have_content('Granted but decision not made')
+    end
+  end
+
   context 'when further information required' do
     before do
       travel_to fixed_arbitrary_date

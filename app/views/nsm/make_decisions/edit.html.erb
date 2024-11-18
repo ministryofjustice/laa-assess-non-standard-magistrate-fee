@@ -23,7 +23,7 @@
 
       <%= f.govuk_submit(t('.submit')) do %>
         <%= f.hidden_field :id %>
-        <%= govuk_button_link_to t('.save_and_exit'), nsm_claim_claim_details_path(claim), secondary: true, name: 'save_and_exit' %>
+        <%= f.govuk_submit t('.save_and_exit'),  secondary: true, name: 'save_and_exit' %>
       <% end %>
 
     <% end %>
