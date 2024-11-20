@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ministryofjustice/laa-crime-forms-common.git
-  revision: d87b3554c5b9eab918fd58ead50bbd962f725408
+  revision: c1b00bdcef5afe40bf2728af158e0564eb892d37
   specs:
     laa_crime_forms_common (0.5.0)
       httparty (>= 0.22.0, < 1)
@@ -63,7 +63,7 @@ GEM
       activemodel (= 7.2.2)
       activesupport (= 7.2.2)
       timeout (>= 0.4.0)
-    activerecord-postgis-adapter (10.0.0)
+    activerecord-postgis-adapter (10.0.1)
       activerecord (~> 7.2.0)
       rgeo-activerecord (~> 8.0.0)
     activestorage (7.2.2)
@@ -91,16 +91,16 @@ GEM
     attr_extras (7.1.0)
     attr_required (1.0.2)
     aws-eventstream (1.3.0)
-    aws-partitions (1.1005.0)
-    aws-sdk-core (3.212.0)
+    aws-partitions (1.1010.0)
+    aws-sdk-core (3.213.0)
       aws-eventstream (~> 1, >= 1.3.0)
       aws-partitions (~> 1, >= 1.992.0)
       aws-sigv4 (~> 1.9)
       jmespath (~> 1, >= 1.6.1)
-    aws-sdk-kms (1.95.0)
+    aws-sdk-kms (1.96.0)
       aws-sdk-core (~> 3, >= 3.210.0)
       aws-sigv4 (~> 1.5)
-    aws-sdk-s3 (1.170.1)
+    aws-sdk-s3 (1.172.0)
       aws-sdk-core (~> 3, >= 3.210.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.5)
@@ -157,9 +157,6 @@ GEM
       bigdecimal
       rexml
     crass (1.0.6)
-    cronex (0.15.0)
-      tzinfo
-      unicode (>= 0.4.4.5)
     cssbundling-rails (1.4.1)
       railties (>= 6.0.0)
     csv (3.3.0)
@@ -244,7 +241,7 @@ GEM
     jmespath (1.6.2)
     jsbundling-rails (1.3.1)
       railties (>= 6.0.0)
-    json (2.7.6)
+    json (2.8.2)
     json-jwt (1.16.6)
       activesupport (>= 4.2)
       aes_key_wrap
@@ -252,7 +249,7 @@ GEM
       bindata
       faraday (~> 2.0)
       faraday-follow_redirects
-    json-schema (5.0.1)
+    json-schema (5.1.0)
       addressable (~> 2.8)
     jwt (2.8.2)
       base64
@@ -284,7 +281,7 @@ GEM
     mini_mime (1.1.5)
     minitest (5.25.1)
     msgpack (1.7.2)
-    multi_xml (0.7.0)
+    multi_xml (0.7.1)
       bigdecimal (~> 3.1)
     net-http (0.4.1)
       uri
@@ -336,14 +333,14 @@ GEM
       tzinfo
       validate_url
       webfinger (~> 2.0)
-    optimist (3.1.0)
+    optimist (3.2.0)
     orm_adapter (0.5.0)
     ostruct (0.6.1)
     overcommit (0.64.1)
       childprocess (>= 0.6.3, < 6)
       iniparse (~> 1.4)
       rexml (>= 3.3.9)
-    pagy (9.2.2)
+    pagy (9.3.1)
     parallel (1.26.3)
     parser (3.3.6.0)
       ast (~> 2.4.1)
@@ -358,7 +355,7 @@ GEM
       activesupport (>= 7.0.0)
       rack
       railties (>= 7.0.0)
-    pry (0.14.2)
+    pry (0.15.0)
       coderay (~> 1.1)
       method_source (~> 1.0)
     psych (5.2.0)
@@ -476,9 +473,9 @@ GEM
       rubocop-ast (>= 1.32.2, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 3.0)
-    rubocop-ast (1.34.0)
+    rubocop-ast (1.36.1)
       parser (>= 3.3.1.0)
-    rubocop-performance (1.22.1)
+    rubocop-performance (1.23.0)
       rubocop (>= 1.48.1, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
     rubocop-rails (2.27.0)
@@ -531,7 +528,7 @@ GEM
     stimulus-rails (1.3.4)
       railties (>= 6.0.0)
     stringio (3.1.2)
-    super_diff (0.13.0)
+    super_diff (0.14.0)
       attr_extras (>= 6.2.4)
       diff-lcs
       patience_diff
@@ -542,13 +539,12 @@ GEM
       faraday-follow_redirects
     thor (1.3.2)
     thread_safe (0.3.6)
-    timeout (0.4.1)
+    timeout (0.4.2)
     turbo-rails (2.0.11)
       actionpack (>= 6.0.0)
       railties (>= 6.0.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
-    unicode (0.4.4.5)
     unicode-display_width (2.6.0)
     uri (0.13.0)
     useragent (0.16.10)
@@ -593,7 +589,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-postgis-adapter
-  aws-sdk-s3 (~> 1.170)
+  aws-sdk-s3 (~> 1.172)
   axe-core-rspec
   bootsnap
   capybara
