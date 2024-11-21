@@ -10,7 +10,7 @@ module Nsm
       RiskLevels.new('high', 'High risk'),
     ].freeze
 
-    attribute :id
+    attribute :claim
     attribute :risk_level
     attribute :explanation
     attribute :current_user
@@ -24,23 +24,17 @@ module Nsm
       return false unless valid?
 
       previous_risk_level = claim.risk
-      Claim.transaction do
-        claim.update!(risk: risk_level)
-        risk_event = ::Event::ChangeRisk.build(submission: claim,
-                                               explanation: explanation,
-                                               previous_risk_level: previous_risk_level,
-                                               current_user: current_user)
-        sync_to_app_store(risk_event)
-      end
+      claim.risk = risk_level
+      risk_event = ::Event::ChangeRisk.build(submission: claim,
+                                             explanation: explanation,
+                                             previous_risk_level: previous_risk_level,
+                                             current_user: current_user)
+      sync_to_app_store(risk_event)
 
       true
     rescue StandardError
       errors.add(:base, :sync_error)
       false
-    end
-
-    def claim
-      @claim ||= Claim.find(id)
     end
 
     def available_risks

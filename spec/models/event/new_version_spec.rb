@@ -7,11 +7,10 @@ RSpec.describe Event::NewVersion do
     allow(NotifyEventAppStore).to receive(:perform_now)
   end
 
-  let(:submission) { create(:claim) }
+  let(:submission) { build(:claim) }
 
   it 'can build a new record' do
     expect(subject).to have_attributes(
-      submission_id: submission.id,
       submission_version: 1,
       event_type: 'Event::NewVersion',
     )

@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'audit:', type: :task do
   let(:fixed_arbitrary_date) { DateTime.new(2023, 12, 3, 12, 3, 12) }
   let(:user) { create(:caseworker) }
-  let(:submission) { create(:claim) }
+  let(:submission) { build(:claim) }
 
   before do
     Rails.application.load_tasks if Rake::Task.tasks.empty?

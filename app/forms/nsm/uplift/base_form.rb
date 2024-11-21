@@ -19,11 +19,9 @@ module Nsm
       def save!
         return false unless valid?
 
-        Claim.transaction do
-          change_local_data
+        change_local_data
 
-          AppStoreClient.new.adjust(claim)
-        end
+        AppStoreClient.new.adjust(claim)
 
         true
       rescue StandardError
@@ -40,8 +38,6 @@ module Nsm
 
           row.save
         end
-
-        claim.save!
       end
 
       def explanation_for(record)

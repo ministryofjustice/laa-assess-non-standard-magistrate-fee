@@ -13,16 +13,15 @@ module Nsm
     end
 
     def update
-      local_claim = Claim.find(params[:claim_id])
-      authorize(local_claim)
-      send_back = SendBackForm.new(claim: local_claim, **send_back_params)
+      authorize(claim)
+      send_back = SendBackForm.new(claim:, **send_back_params)
       if params['save_and_exit']
         send_back.stash
         redirect_to your_nsm_claims_path
       elsif send_back.save
-        redirect_to nsm_claim_send_back_path(local_claim)
+        redirect_to nsm_claim_send_back_path(claim)
       else
-        render :edit, locals: { claim: local_claim, send_back: send_back }
+        render :edit, locals: { claim:, send_back: }
       end
     end
 

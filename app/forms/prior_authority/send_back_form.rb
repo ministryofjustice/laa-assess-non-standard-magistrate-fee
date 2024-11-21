@@ -28,14 +28,12 @@ module PriorAuthority
     def save
       return false unless valid?
 
-      submission.with_lock do
-        discard_all_adjustments
-        persist_form_values
-        update_local_records
+      discard_all_adjustments
+      persist_form_values
+      update_local_records
 
-        AppStoreClient.new.unassign(submission)
-        NotifyAppStore.perform_now(submission:)
-      end
+      AppStoreClient.new.unassign(submission)
+      NotifyAppStore.perform_now(submission:)
 
       true
     end
@@ -55,12 +53,11 @@ module PriorAuthority
       updates_needed.compact_blank! # The checkbox array introduces an empty string value
 
       submission.data.merge!(attributes.except('submission', 'current_user'))
-      submission.save!
     end
 
     def discard_all_adjustments
       app_store_record = AppStoreClient.new.get_submission(submission.id)
-      submission.update!(data: app_store_record['application'])
+      submission.data = app_store_record['application']
     end
 
     def update_local_records
@@ -73,8 +70,7 @@ module PriorAuthority
         'updated_at' => Time.current,
         'status' => PriorAuthorityApplication::SENT_BACK
       )
-      submission.sent_back!
-      submission.assignments.destroy_all
+      submission.state = PriorAuthorityApplication::SENT_BACK
       save_event
     end
 

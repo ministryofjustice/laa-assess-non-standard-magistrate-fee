@@ -1,6 +1,4 @@
 class PriorAuthorityApplication < Submission
-  default_scope -> { where(application_type: APPLICATION_TYPES[:prior_authority]) }
-
   STATES = (
     (ASSESSABLE_STATES = [
       SUBMITTED = 'submitted'.freeze,
@@ -15,6 +13,4 @@ class PriorAuthorityApplication < Submission
       [SENT_BACK = 'sent_back'.freeze,
        EXPIRED = 'expired'.freeze]
   ).freeze
-
-  enum :state, STATES.to_h { [_1, _1] }
 end

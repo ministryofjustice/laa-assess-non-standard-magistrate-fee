@@ -3,19 +3,18 @@ require 'rails_helper'
 RSpec.describe Event::AutoDecision do
   subject { described_class.build(submission:, previous_state:) }
 
-  let(:submission) { create(:prior_authority_application, state:) }
+  let(:submission) { build(:prior_authority_application, state:) }
   let(:state) { PriorAuthorityApplication::AUTO_GRANT }
   let(:previous_state) { 'submitted' }
 
   it 'can build a new record' do
     expect(subject).to have_attributes(
-      submission_id: submission.id,
       submission_version: 1,
       event_type: 'Event::AutoDecision',
       details: {
-        'field' => 'state',
-        'from' => 'submitted',
-        'to' => 'auto_grant'
+        field: 'state',
+        from: 'submitted',
+        to: 'auto_grant'
       }
     )
   end

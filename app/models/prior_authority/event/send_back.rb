@@ -2,10 +2,9 @@ module PriorAuthority
   module Event
     class SendBack < ::Event
       def self.construct(submission:, updates_needed:, comments:, current_user:)
-        create!(
-          submission: submission,
+        new(
           submission_version: submission.current_version,
-          primary_user: current_user,
+          primary_user_id: current_user.id,
           details: {
             updates_needed:,
             comments:

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Nsm::MakeDecisionForm do
   subject(:form) { described_class.new(params) }
 
-  let(:claim) { create(:claim) }
+  let(:claim) { build(:claim) }
 
   describe '#validate' do
     context 'when state is not set' do
@@ -41,7 +41,6 @@ RSpec.describe Nsm::MakeDecisionForm do
           claim.data['work_items'].first['time_spent_original'] = claim.data['work_items'].first['time_spent']
           claim.data['work_items'].first['time_spent'] += 60
           claim.data['work_items'].first['adjustment_comment'] = 'increasing this work item'
-          claim.save!
         end
 
         it 'form object is valid' do
@@ -54,7 +53,6 @@ RSpec.describe Nsm::MakeDecisionForm do
           claim.data['work_items'].first['time_spent_original'] = claim.data['work_items'].first['time_spent']
           claim.data['work_items'].first['time_spent'] -= 1
           claim.data['work_items'].first['adjustment_comment'] = 'reducing this work item'
-          claim.save!
         end
 
         it 'form object is invalid' do
@@ -69,7 +67,6 @@ RSpec.describe Nsm::MakeDecisionForm do
           disbursement['total_cost_without_vat_original'] = disbursement['total_cost_without_vat']
           disbursement['total_cost_without_vat'] += 1.0
           disbursement['adjustment_comment'] = 'increasing this disbursement'
-          claim.save!
         end
 
         it 'form object is valid' do
@@ -83,7 +80,6 @@ RSpec.describe Nsm::MakeDecisionForm do
           disbursement['total_cost_without_vat_original'] = disbursement['total_cost_without_vat']
           disbursement['total_cost_without_vat'] -= 1.0
           disbursement['adjustment_comment'] = 'reducing this disbursement'
-          claim.save!
         end
 
         it 'form object is invalid' do
@@ -98,7 +94,6 @@ RSpec.describe Nsm::MakeDecisionForm do
           letters['count_original'] = letters['count']
           letters['count'] += 1
           letters['adjustment_comment'] = 'increasing letter count'
-          claim.save!
         end
 
         it 'form object is valid' do
@@ -112,7 +107,6 @@ RSpec.describe Nsm::MakeDecisionForm do
           letters['count_original'] = letters['count']
           letters['count'] -= 1
           letters['adjustment_comment'] = 'reducing letter count'
-          claim.save!
         end
 
         it 'form object is invalid' do
@@ -131,7 +125,6 @@ RSpec.describe Nsm::MakeDecisionForm do
           letters['count_original'] = letters['count']
           letters['count'] -= 1
           letters['adjustment_comment'] = 'reducing letter count'
-          claim.save!
         end
 
         it 'form object is invalid' do
@@ -142,7 +135,7 @@ RSpec.describe Nsm::MakeDecisionForm do
     end
 
     context 'when state is part_grant with downward adjustments' do
-      let(:claim) { create(:claim, :with_reduced_work_item) }
+      let(:claim) { build(:claim, :with_reduced_work_item) }
 
       context 'with blank partial_comment' do
         let(:params) { { claim: claim, state: 'part_grant', partial_comment: nil } }
@@ -172,7 +165,6 @@ RSpec.describe Nsm::MakeDecisionForm do
         claim.data['work_items'].first['time_spent_original'] = claim.data['work_items'].first['time_spent']
         claim.data['work_items'].first['time_spent'] += 60
         claim.data['work_items'].first['adjustment_comment'] = 'increasing this work item'
-        claim.save!
       end
 
       it 'form object is invalid' do
@@ -213,7 +205,7 @@ RSpec.describe Nsm::MakeDecisionForm do
     end
 
     context 'when state is rejected with any adjustment' do
-      let(:claim) { create(:claim, :with_reduced_work_item) }
+      let(:claim) { build(:claim, :with_reduced_work_item) }
 
       context 'with reject_comment set' do
         let(:params) { { claim: claim, state: 'rejected', reject_comment: 'reject comment' } }
@@ -225,7 +217,7 @@ RSpec.describe Nsm::MakeDecisionForm do
 
   describe '#save' do
     let(:user) { instance_double(User) }
-    let(:claim) { create(:claim, :with_reduced_work_item) }
+    let(:claim) { build(:claim, :with_reduced_work_item) }
     let(:params) { { claim: claim, state: 'part_grant', partial_comment: 'part comment', current_user: user } }
 
     before do
@@ -236,11 +228,11 @@ RSpec.describe Nsm::MakeDecisionForm do
     it { expect(form.save).to be_truthy }
 
     it 'updates the state' do
-      expect { form.save }.to change { claim.reload.state }.from('submitted').to('part_grant')
+      expect { form.save }.to change(claim, :state).from('submitted').to('part_grant')
     end
 
     it 'adds an assessment comment' do
-      expect { form.save }.to change { claim.reload.data['assessment_comment'] }.from(nil).to('part comment')
+      expect { form.save }.to change { claim.data['assessment_comment'] }.from(nil).to('part comment')
     end
 
     it 'creates a Decision event' do
@@ -259,15 +251,6 @@ RSpec.describe Nsm::MakeDecisionForm do
       let(:params) { { claim: } }
 
       it { expect(form.save).to be_falsey }
-    end
-
-    context 'when error during save' do
-      before do
-        allow(Claim).to receive(:find_by).and_return(claim)
-        allow(claim).to receive(:update!).and_raise('not found')
-      end
-
-      it { expect { form.save }.to raise_error('not found') }
     end
   end
 

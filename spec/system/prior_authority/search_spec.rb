@@ -49,22 +49,23 @@ RSpec.describe 'Search', :stub_oauth_token do
   end
 
   context 'when I search for an application that has already been imported' do
-    let(:application) { create :prior_authority_application }
+    let(:application) { build :prior_authority_application }
     let(:stub) do
       stub_request(:post, endpoint).with(body: payload).to_return(
         status: 201,
         body: { metadata: { total_results: 1 },
-                raw_data: [{ application_id: application.id, application: application.data }] }.to_json
+                raw_data: [{ application_id: application.id, application: application.data, application_type: 'crm4',
+application_state: application.state, last_updated_at: 1.day.ago }] }.to_json
       )
     end
 
     before do
       stub
-      application.assignments.create user: caseworker
+      application.assigned_user_id = caseworker.id
     end
 
     it 'lets me search and shows me a result' do
-      stub_load_from_app_store(application)
+      stub_app_store_interactions(application)
       visit prior_authority_root_path
       click_on 'Search'
       fill_in 'Enter any combination', with: 'QUERY'
@@ -77,36 +78,6 @@ RSpec.describe 'Search', :stub_oauth_token do
       click_on application.data['laa_reference']
 
       expect(page).to have_current_path prior_authority_application_path(application)
-    end
-  end
-
-  context 'when the app store has unsynced records' do
-    let(:id) { SecureRandom.uuid }
-    let(:record) do
-      {
-        application: build(:prior_authority_data),
-        events: [],
-        application_id: id,
-        application_state: 'submitted',
-        application_risk: 'n/1',
-        json_schema_version: 1,
-        version: 1,
-        application_type: 'crm4',
-        updated_at: 1.second.ago.to_json
-      }.deep_stringify_keys
-    end
-
-    before do
-      stub_request(:post, endpoint).with(body: payload).to_return(
-        status: 201,
-        body: { metadata: { total_results: 1 }, raw_data: [record] }.to_json
-      )
-      stub_request(:post, "https://appstore.example.com/v1/submissions/#{id}/events")
-    end
-
-    it 'imports records it did not have yet' do
-      visit prior_authority_search_path(prior_authority_search_form: { query: 'QUERY' })
-      expect(PriorAuthorityApplication.find_by(id:)).not_to be_nil
     end
   end
 
@@ -165,7 +136,7 @@ RSpec.describe 'Search', :stub_oauth_token do
   end
 
   context 'when there are multiple results' do
-    let(:applications) { create_list(:prior_authority_application, 20) }
+    let(:applications) { build_list(:prior_authority_application, 20) }
     let(:payloads) do
       [
         { application_type: 'crm4', page: 1, per_page: 20, query: 'QUERY',
@@ -181,7 +152,10 @@ RSpec.describe 'Search', :stub_oauth_token do
       payloads.map do |payload|
         stub_request(:post, endpoint).with(body: payload).to_return(
           status: 201, body: { metadata: { total_results: 21 },
-                               raw_data: applications.map { { application_id: _1.id, application: _1.data } } }.to_json
+                               raw_data: applications.map do |app|
+                                 { application_id: app.id, application: app.data, application_type: 'crm4',
+                                   application_state: app.state, last_updated_at: 1.day.ago }
+                               end }.to_json
         )
       end
     end

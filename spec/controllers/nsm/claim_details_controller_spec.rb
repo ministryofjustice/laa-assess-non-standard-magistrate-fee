@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Nsm::ClaimDetailsController do
   context 'show' do
-    let(:claim) { create(:claim) }
+    let(:claim) { build(:claim) }
     let(:claim_id) { claim.id }
     let(:claim_summary) { instance_double(Nsm::V1::ClaimSummary) }
     let(:claim_details) { instance_double(ClaimDetails::Table) }
@@ -31,7 +31,7 @@ RSpec.describe Nsm::ClaimDetailsController do
 
     describe 'has further_information' do
       let(:data) { { 'further_information' => { 'information_requested' => 'requesting...' } } }
-      let(:claim) { create(:claim, data:) }
+      let(:claim) { build(:claim, data:) }
       let(:further_information) { [instance_double(Nsm::V1::FurtherInformation)] }
 
       before do

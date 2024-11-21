@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Nsm::WorkItemForm do
   subject { described_class.new(params) }
 
-  let(:claim) { create(:claim) }
+  let(:claim) { build(:claim) }
   let(:params) do
     { claim:, id:, time_spent:, uplift:, item:, explanation:, current_user:, work_type_value:,
       work_item_pricing:, }
@@ -133,27 +133,26 @@ RSpec.describe Nsm::WorkItemForm do
       let(:time_spent) { nil }
 
       it 'creates a event for the time_spent change' do
-        expect { subject.save }.to change(Event, :count).by(1)
-        expect(Event.last).to have_attributes(
-          submission: claim.becomes(Submission),
+        subject.save
+        expect(claim.events.count).to eq 1
+        expect(claim.events.first).to have_attributes(
           submission_version: claim.current_version,
           event_type: 'Event::Edit',
           linked_type: 'work_items',
           linked_id: id,
           details: {
-            'field' => 'uplift',
-            'from' => 95,
-            'to' => 0,
-            'change' => -95,
-            'comment' => 'change to work items'
+            field: 'uplift',
+            from: 95,
+            to: 0,
+            change: -95,
+            comment: 'change to work items'
           }
         )
       end
 
       it 'updates the JSON data' do
         subject.save
-        work_item = claim.reload
-                         .data['work_items']
+        work_item = claim.data['work_items']
                          .detect { |row| row['work_type'] == 'waiting' }
         expect(work_item).to eq(
           'id' => 'cf5e303e-98dd-4b0f-97ea-3560c4c5f137',
@@ -174,27 +173,26 @@ RSpec.describe Nsm::WorkItemForm do
       let(:uplift) { 'no' }
 
       it 'creates a event for the time_spent change' do
-        expect { subject.save }.to change(Event, :count).by(1)
-        expect(Event.last).to have_attributes(
-          submission: claim.becomes(Submission),
+        subject.save
+        expect(claim.events.count).to eq 1
+        expect(claim.events.last).to have_attributes(
           submission_version: claim.current_version,
           event_type: 'Event::Edit',
           linked_type: 'work_items',
           linked_id: id,
           details: {
-            'field' => 'time_spent',
-            'from' => 161,
-            'to' => 95,
-            'change' => -66,
-            'comment' => 'change to work items'
+            field: 'time_spent',
+            from: 161,
+            to: 95,
+            change: -66,
+            comment: 'change to work items'
           }
         )
       end
 
       it 'updates the JSON data' do
         subject.save
-        work_item = claim.reload
-                         .data['work_items']
+        work_item = claim.data['work_items']
                          .detect { |row| row['work_type'] == 'waiting' }
         expect(work_item).to eq(
           'id' => 'cf5e303e-98dd-4b0f-97ea-3560c4c5f137',
@@ -214,7 +212,8 @@ RSpec.describe Nsm::WorkItemForm do
         let(:original_uplift) { nil }
 
         it 'saves without error' do
-          expect { subject.save }.to change(Event, :count).by(1)
+          subject.save
+          expect(claim.events.count).to eq 1
         end
       end
     end
@@ -226,13 +225,11 @@ RSpec.describe Nsm::WorkItemForm do
       before do
         work_item = claim.data['work_items'].detect { _1['id'] == id }
         work_item['adjustment_comment'] = 'Previous explanation'
-        claim.save!
       end
 
       it 'updates the JSON data' do
         subject.save
-        work_item = claim.reload
-                         .data['work_items']
+        work_item = claim.data['work_items']
                          .detect { |row| row['work_type'] == 'waiting' }
         expect(work_item).to eq(
           'id' => 'cf5e303e-98dd-4b0f-97ea-3560c4c5f137',
@@ -249,16 +246,17 @@ RSpec.describe Nsm::WorkItemForm do
     end
 
     context 'when claim has legacy translations and work type value has changed' do
-      let(:claim) { create :claim, :legacy_translations }
+      let(:claim) { build :claim, :legacy_translations }
       let(:work_type_value) { 'travel' }
 
       it 'creates events for the change change' do
-        expect { subject.save }.to change(Event, :count).by(3)
+        subject.save
+        expect(claim.events.count).to eq 3
       end
 
       it 'updates the JSON data' do
         subject.save
-        work_item = claim.reload.data['work_items'].detect { |row| row['work_type'] == 'travel' }
+        work_item = claim.data['work_items'].detect { |row| row['work_type'] == 'travel' }
         expect(work_item).to eq(
           'id' => 'cf5e303e-98dd-4b0f-97ea-3560c4c5f137',
           'time_spent' => 95,

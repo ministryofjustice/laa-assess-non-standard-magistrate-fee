@@ -1,11 +1,17 @@
 FactoryBot.define do
   factory :prior_authority_application do
-    received_on { Date.yesterday }
+    id { SecureRandom.uuid }
+    created_at { Date.yesterday }
     current_version { 1 }
     state { 'submitted' }
     json_schema_version { 1 }
     application_type { 'crm4' }
+    app_store_updated_at { 1.day.ago }
     data factory: :prior_authority_data, strategy: :build
+
+    after(:build) do |application|
+      application.data = application.data.deep_stringify_keys.with_indifferent_access
+    end
   end
 
   factory :prior_authority_data, class: Hash do

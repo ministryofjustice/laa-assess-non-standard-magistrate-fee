@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe PriorAuthority::DecisionForm do
   subject { described_class.new(params) }
 
-  let(:submission) { create(:prior_authority_application, data:) }
+  let(:submission) { build(:prior_authority_application, data:) }
   let(:data) { build(:prior_authority_data) }
 
   describe '#explanation' do
@@ -132,7 +132,7 @@ RSpec.describe PriorAuthority::DecisionForm do
     end
 
     it 'adds an assessment comment to the payload' do
-      expect(submission.reload.data).to include('assessment_comment' => 'granted_explanation')
+      expect(submission.data).to include('assessment_comment' => 'granted_explanation')
     end
   end
 end

@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe 'View applications' do
+RSpec.describe 'View applications', :stub_oauth_token do
   let(:caseworker) { create(:caseworker, first_name: 'Jane', last_name: 'Doe') }
   let(:application) do
-    create(
+    build(
       :prior_authority_application,
       state: 'submitted',
       created_at: '2023-3-2',
@@ -37,11 +37,11 @@ RSpec.describe 'View applications' do
   end
 
   before do
-    stub_load_from_app_store(application)
+    stub_app_store_interactions(application)
     sign_in caseworker
     visit '/'
     click_on 'Accept analytics cookies'
-    create(:assignment, user: caseworker, submission: application)
+    application.assigned_user_id = caseworker.id
     visit prior_authority_application_path(application)
   end
 
@@ -138,7 +138,7 @@ RSpec.describe 'View applications' do
 
   context 'when adjustments have been made to the primary quote' do
     let(:application) do
-      create(
+      build(
         :prior_authority_application,
         created_at: '2023-3-2',
         data: build(
@@ -247,12 +247,8 @@ RSpec.describe 'View applications' do
   context 'when application has been assessed' do
     before do
       application.data['assessment_comment'] = 'Not good use of money'
-      application.update(state: 'rejected')
-      create(:event,
-             :decision,
-             submission: application,
-             details: { comment: 'Not good use of money' },
-             created_at: DateTime.new(2023, 6, 5, 4, 3, 2))
+      application.state = 'rejected'
+      application.app_store_updated_at = DateTime.new(2023, 6, 5, 4, 3, 2)
       visit prior_authority_application_path(application)
     end
 
@@ -269,7 +265,8 @@ RSpec.describe 'View applications' do
     before do
       application.data['updates_needed'] = ['further_information']
       application.data['further_information_explanation'] = 'Set the scene a little more'
-      application.update(state: 'sent_back', updated_at: DateTime.new(2023, 6, 5, 4, 3, 2))
+      application.state = 'sent_back'
+      application.app_store_updated_at = DateTime.new(2023, 6, 5, 4, 3, 2)
       visit prior_authority_application_path(application)
     end
 
@@ -302,13 +299,14 @@ RSpec.describe 'View applications' do
           sections_changed: %w[ufn alternative_quote_1],
           requested_at: DateTime.new(2023, 5, 2, 4, 3, 2), },
       ]
-      application.update!(state: 'provider_updated')
-      create(:event, :provider_updated,
-             submission: application,
-             details: { comment: 'Added more info',
-                        corrected_info: %w[ufn alternative_quote_1] },
-             created_at: DateTime.new(2023, 6, 5, 4, 3, 2))
-      application.assignments.destroy_all
+      application.app_store_updated_at = DateTime.new(2023, 6, 5, 4, 3, 2)
+      application.state = 'provider_updated'
+      build(:event, :provider_updated,
+            submission: application,
+            details: { comment: 'Added more info',
+                       corrected_info: %w[ufn alternative_quote_1] },
+            created_at: DateTime.new(2023, 6, 5, 4, 3, 2))
+      application.assigned_user_id = nil
       visit prior_authority_application_path(application)
     end
 

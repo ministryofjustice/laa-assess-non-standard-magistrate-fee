@@ -11,7 +11,6 @@ module PriorAuthority
       else
         raise "Unknown adjustment type '#{adjustment_type}'"
       end
-      submission.save!
     end
 
     def delete_service_cost_adjustment
@@ -41,10 +40,6 @@ module PriorAuthority
 
     def additional_cost
       @additional_cost ||= submission.data['additional_costs'].find { _1['id'] == params[:id] }
-    end
-
-    def submission_scope
-      @submission_scope ||= PriorAuthorityApplication.find(params[:application_id])
     end
   end
 end

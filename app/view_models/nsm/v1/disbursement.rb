@@ -163,7 +163,7 @@ module Nsm
       end
 
       def changed?
-        original_total_cost_without_vat != total_cost_without_vat
+        provider_requested_total_cost != caseworker_total_cost
       end
 
       def backlink_path(claim)

@@ -2,12 +2,11 @@ require 'rails_helper'
 
 RSpec.describe 'History events', :stub_oauth_token do
   let(:caseworker) { create(:caseworker) }
-  let(:claim) { create(:claim) }
+  let(:claim) { build(:claim) }
   let(:fixed_arbitrary_date) { Time.zone.local(2023, 2, 1, 9, 0) }
 
   before do
-    stub_load_from_app_store(claim)
-    stub_request(:post, "https://appstore.example.com/v1/submissions/#{claim.id}/events")
+    stub_app_store_interactions(claim)
     claim
     sign_in caseworker
     visit '/'
@@ -17,24 +16,42 @@ RSpec.describe 'History events', :stub_oauth_token do
   it 'shows all (visible) events in the history' do
     supervisor = create(:supervisor)
 
+    now = DateTime.current
+
+    travel_to(now - 10.hours)
     Event::NewVersion.build(submission: claim)
+
+    travel_to(now - 9.hours)
     Event::Assignment.build(submission: claim, current_user: caseworker)
+
+    travel_to(now - 8.hours)
     Event::Unassignment.build(submission: claim, user: caseworker, current_user: caseworker,
                               comment: 'unassignment 1')
+
+    travel_to(now - 7.hours)
     Event::Assignment.build(submission: claim, current_user: caseworker, comment: 'Manual assignment note')
+
+    travel_to(now - 6.hours)
     Event::ChangeRisk.build(submission: claim, explanation: 'Risk change test', previous_risk_level: 'high',
                             current_user: caseworker)
+
+    travel_to(now - 5.hours)
     Event::Note.build(submission: claim, current_user: caseworker, note: 'User test note')
     claim.state = 'sent_back'
+    travel_to(now - 4.hours)
     Nsm::Event::SendBack.build(submission: claim, current_user: caseworker, previous_state: 'submitted',
                                comment: 'Send Back test')
     claim.current_version = 2
+    travel_to(now - 3.hours)
     Event::NewVersion.build(submission: claim)
     claim.state = 'granted'
+    travel_to(now - 2.hours)
     Event::Decision.build(submission: claim, current_user: caseworker, previous_state: 'sent_back',
                           comment: 'Decision test')
+    travel_to(now - 1.hour)
     Event::Unassignment.build(submission: claim, user: caseworker, current_user: supervisor,
                               comment: 'unassignment 2')
+    travel_to(now)
     visit nsm_claim_history_path(claim)
 
     doc = Nokogiri::HTML(page.html)
@@ -61,10 +78,10 @@ RSpec.describe 'History events', :stub_oauth_token do
   end
 
   context 'when I am assigned to the claim' do
-    before { create(:assignment, submission: claim, user: caseworker) }
+    before { claim.assigned_user_id = caseworker.id }
 
     it 'lets me add a note' do
-      travel_to fixed_arbitrary_date
+      travel_to(fixed_arbitrary_date)
       visit nsm_claim_history_path(claim)
       fill_in 'Add a note to the claim history (optional)', with: 'Here is a note'
       click_on 'Add to claim history'

@@ -6,7 +6,7 @@ RSpec.describe LaaCrimeFormsCommon::Messages::PriorAuthority::Rejected do
   subject(:feedback) { described_class.new(application.data) }
 
   let(:application) do
-    create(
+    build(
       :prior_authority_application,
       data: build(
         :prior_authority_data,

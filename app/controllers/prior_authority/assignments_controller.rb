@@ -3,7 +3,6 @@ module PriorAuthority
     private
 
     def assign_and_redirect(application, comment = nil, tell_app_store: true)
-      application.assignments.create!(user: current_user)
       AppStoreClient.new.assign(application, current_user) if tell_app_store
       ::Event::Assignment.build(submission: application, current_user: current_user, comment: comment)
 

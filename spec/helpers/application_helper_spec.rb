@@ -278,14 +278,14 @@ RSpec.describe ApplicationHelper, type: :helper do
         allow(helper).to receive_messages(params: { claim_id: claim.id }, current_user: user)
       end
 
-      let(:claim) { create :claim }
+      let(:claim) { build :claim }
       let(:user) { create :caseworker }
 
       it { expect(helper.infer_claim_section).to eq :open }
 
       context 'when the claim is assessed' do
         let(:claim) do
-          create :claim, state: 'granted'
+          build :claim, state: 'granted'
         end
 
         it { expect(helper.infer_claim_section).to eq :closed }
@@ -293,7 +293,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
       context 'when the claim is assigned to current user' do
         before do
-          claim.assignments.create(user:)
+          claim.assigned_user_id = user.id
         end
 
         it { expect(helper.infer_claim_section).to eq :your }

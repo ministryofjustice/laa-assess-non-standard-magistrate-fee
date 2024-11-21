@@ -3,11 +3,11 @@ require 'rails_helper'
 RSpec.describe Nsm::ClaimNoteForm do
   subject { described_class.new(params) }
 
-  let(:claim) { create(:claim) }
+  let(:claim) { build(:claim) }
 
   describe '#validations' do
     context 'when note is not set' do
-      let(:params) { { id: claim.id } }
+      let(:params) { { claim: } }
 
       it 'is invalid' do
         expect(subject).not_to be_valid
@@ -18,8 +18,8 @@ RSpec.describe Nsm::ClaimNoteForm do
 
   describe '#persistance' do
     let(:user) { instance_double(User) }
-    let(:claim) { create(:claim) }
-    let(:params) { { id: claim.id, note: 'this is a note', current_user: user } }
+    let(:claim) { build(:claim) }
+    let(:params) { { claim: claim, note: 'this is a note', current_user: user } }
 
     before do
       allow(Event::Note).to receive(:build)

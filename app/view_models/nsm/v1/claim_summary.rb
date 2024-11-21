@@ -7,7 +7,7 @@ module Nsm
       attribute :send_by_post
       attribute :assessment_comment
 
-      delegate :last_updated_at, :assigned_user, to: :submission
+      delegate :app_store_updated_at, :assigned_user, to: :submission
 
       def main_defendant_name
         main_defendant = defendants.detect { |defendant| defendant['main'] }
@@ -30,7 +30,7 @@ module Nsm
         if submission.data['further_information']
           submission.data['further_information'].map { _1['requested_at'].to_datetime }.max
         else
-          last_updated_at
+          app_store_updated_at
         end
       end
     end

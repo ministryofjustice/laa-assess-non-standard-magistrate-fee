@@ -3,8 +3,7 @@ require 'rails_helper'
 Rails.describe 'Assessment', :stub_oauth_token do
   let(:fixed_arbitrary_date) { DateTime.new(2024, 7, 4, 12, 3, 12) }
   let(:user) { create(:caseworker) }
-  let(:claim) { create(:claim) }
-  let(:update_stub) { stub_request(:put, "https://appstore.example.com/v1/application/#{claim.id}").to_return(status: 201) }
+  let(:claim) { build(:claim) }
 
   before do
     stub_request(:post, 'https://appstore.example.com/v1/submissions/searches').to_return(
@@ -12,11 +11,10 @@ Rails.describe 'Assessment', :stub_oauth_token do
       body: { metadata: { total_results: 0 }, raw_data: [] }.to_json
     )
 
-    stub_load_from_app_store(claim)
+    stub_app_store_interactions(claim)
 
-    update_stub
     sign_in user
-    create(:assignment, submission: claim, user: user)
+    claim.assigned_user_id = user.id
     visit '/'
     click_on 'Accept analytics cookies'
   end
@@ -29,10 +27,6 @@ Rails.describe 'Assessment', :stub_oauth_token do
       choose 'Grant it'
       fill_in 'nsm-make-decision-form-grant-comment-field', with: 'Test Data'
       click_link_or_button 'Submit decision'
-    end
-
-    it 'notifies the app store' do
-      expect(update_stub).to have_been_requested
     end
 
     it 'shows comment on overview page' do
@@ -58,7 +52,7 @@ Rails.describe 'Assessment', :stub_oauth_token do
   end
 
   context 'when part-granted' do
-    let(:claim) { create(:claim, :with_reduced_work_item) }
+    let(:claim) { build(:claim, :with_reduced_work_item) }
 
     it 'sends a part granted notification' do
       visit nsm_claim_claim_details_path(claim)
@@ -66,7 +60,6 @@ Rails.describe 'Assessment', :stub_oauth_token do
       choose 'Part grant it'
       fill_in 'nsm-make-decision-form-partial-comment-field', with: 'Test Data'
       click_link_or_button 'Submit decision'
-      expect(update_stub).to have_been_requested
     end
   end
 
@@ -77,17 +70,11 @@ Rails.describe 'Assessment', :stub_oauth_token do
       choose 'Reject it'
       fill_in 'nsm-make-decision-form-reject-comment-field', with: 'Test Data'
       click_link_or_button 'Submit decision'
-      expect(update_stub).to have_been_requested
     end
   end
 
   context 'when further information required' do
-    let(:unassignment_stub) do
-      stub_request(:delete, "https://appstore.example.com/v1/submissions/#{claim.id}/assignment").to_return(status: 204)
-    end
-
     before do
-      unassignment_stub
       travel_to fixed_arbitrary_date
       visit nsm_claim_claim_details_path(claim)
       click_link_or_button 'Send back to provider'
@@ -95,7 +82,6 @@ Rails.describe 'Assessment', :stub_oauth_token do
     end
 
     it 'lets me save and come back later' do
-      stub_request(:post, "https://appstore.example.com/v1/submissions/#{claim.id}/adjustments").to_return(status: 201)
       click_link_or_button 'Save and come back later'
       visit nsm_claim_claim_details_path(claim)
       click_link_or_button 'Send back to provider'
@@ -106,8 +92,7 @@ Rails.describe 'Assessment', :stub_oauth_token do
       before { click_link_or_button 'Submit' }
 
       it 'sends a notification' do
-        expect(update_stub).to have_been_requested
-        expect(unassignment_stub).to have_been_requested
+        expect(claim.assigned_user_id).to be_nil
       end
 
       it 'shows the date on the details page' do
@@ -133,7 +118,7 @@ Rails.describe 'Assessment', :stub_oauth_token do
       end
 
       it 'adds info to the payload' do
-        expect(claim.reload.data['further_information']).to eq(
+        expect(claim.data['further_information']).to eq(
           [
             {
               'documents' => [],
@@ -177,7 +162,7 @@ Rails.describe 'Assessment', :stub_oauth_token do
           'completed_on' => Date.new(2022, 12, 12) + i
         }
       end
-      create(:claim, disbursements:, work_items:)
+      build(:claim, disbursements:, work_items:)
     end
 
     it 'includes the disbursement ID when navigating back' do

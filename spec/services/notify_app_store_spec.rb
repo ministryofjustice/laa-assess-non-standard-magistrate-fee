@@ -3,14 +3,12 @@ require 'rails_helper'
 RSpec.describe NotifyAppStore do
   subject { described_class.new }
 
-  let(:submission) { instance_double(Claim, update!: true) }
+  let(:submission) { instance_double(Claim) }
   let(:message_builder) { instance_double(described_class::MessageBuilder, message: { some: 'message' }) }
 
   before do
     allow(described_class::MessageBuilder).to receive(:new)
       .and_return(message_builder)
-
-    allow(submission).to receive(:with_lock).and_yield
   end
 
   describe '#perform' do

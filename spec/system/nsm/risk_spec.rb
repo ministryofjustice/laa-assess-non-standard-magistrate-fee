@@ -2,11 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Risk', :stub_oauth_token do
   let(:user) { create(:caseworker) }
-  let(:claim) { create(:claim) }
-  let(:stub) do
-    stub_request(:patch, "https://appstore.example.com/v1/submissions/#{claim.id}/metadata").to_return(status:)
-  end
-  let(:status) { 200 }
+  let(:claim) { build(:claim) }
 
   let(:search_stub) do
     stub_request(:post, 'https://appstore.example.com/v1/submissions/searches').to_return(
@@ -19,15 +15,17 @@ RSpec.describe 'Risk', :stub_oauth_token do
   let(:claim_data) do
     { application_id: claim.id,
       assigned_user_id: user.id,
+      last_updated_at: 1.day.ago,
+      application_type: 'crm7',
+      application_state: claim.state,
       application: { defendant: {}, firm_office: {}, laa_reference: 'LAA-REFERENCE' } }
   end
 
   before do
-    stub_load_from_app_store(claim)
+    stub_app_store_interactions(claim)
     search_stub
     sign_in user
-    create(:assignment, submission: claim, user: user)
-    stub
+    claim.assigned_user_id = user.id
     visit open_nsm_claims_path
     click_on 'LAA-REFERENCE'
     expect(page).to have_content 'Low risk'
@@ -39,7 +37,6 @@ RSpec.describe 'Risk', :stub_oauth_token do
     fill_in 'Explain your decision', with: 'Looks shifty to me'
     click_on 'Change risk'
     expect(page).to have_content 'You changed the claim risk to medium'
-    expect(stub).to have_been_requested
   end
 
   it 'prevents me changing the risk without a reason' do
@@ -55,7 +52,9 @@ RSpec.describe 'Risk', :stub_oauth_token do
   end
 
   context 'when app store errors out' do
-    let(:status) { 500 }
+    before do
+      stub_request(:patch, "https://appstore.example.com/v1/submissions/#{claim.id}/metadata").to_return(status: 500)
+    end
 
     it 'errors out' do
       choose 'Medium risk'

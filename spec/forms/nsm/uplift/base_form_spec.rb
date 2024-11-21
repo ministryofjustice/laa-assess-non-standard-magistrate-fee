@@ -78,7 +78,6 @@ RSpec.describe Nsm::Uplift::BaseForm do
 
       it 'does not save' do
         expect(implementation_class::Remover).not_to have_received(:new)
-        expect(claim).not_to receive(:save!)
       end
     end
 
@@ -106,12 +105,6 @@ RSpec.describe Nsm::Uplift::BaseForm do
 
         expect(remover).to have_received(:save).twice
       end
-    end
-
-    it 'saves the claim' do
-      expect(claim).to receive(:save!)
-
-      subject.save!
     end
   end
 end

@@ -6,13 +6,13 @@ RSpec.describe 'View related applications', :stub_oauth_token do
   let(:able) { create(:caseworker, first_name: 'Able', last_name: 'Worker') }
 
   let(:assigned_to_me) do
-    create(:prior_authority_application,
-           state: 'submitted',
-           data: build(:prior_authority_data, :related_application, laa_reference: 'LAA-111'))
+    build(:prior_authority_application,
+          state: 'submitted',
+          data: build(:prior_authority_data, :related_application, laa_reference: 'LAA-111'))
   end
 
   let(:unassigned) do
-    create(
+    build(
       :prior_authority_application,
       state: 'submitted',
       created_at: 4.days.ago,
@@ -27,7 +27,7 @@ RSpec.describe 'View related applications', :stub_oauth_token do
   end
 
   let(:in_progress) do
-    create(
+    build(
       :prior_authority_application,
       state: 'submitted',
       created_at: 3.days.ago,
@@ -42,7 +42,7 @@ RSpec.describe 'View related applications', :stub_oauth_token do
   end
 
   let(:rejected) do
-    create(
+    build(
       :prior_authority_application,
       state: 'rejected',
       created_at: 2.days.ago,
@@ -56,7 +56,7 @@ RSpec.describe 'View related applications', :stub_oauth_token do
   end
 
   let(:granted) do
-    create(
+    build(
       :prior_authority_application,
       state: 'granted',
       created_at: 1.day.ago,
@@ -70,15 +70,18 @@ RSpec.describe 'View related applications', :stub_oauth_token do
   end
 
   let(:unrelated) do
-    create(:prior_authority_application,
-           state: 'granted',
-           data: build(:prior_authority_data, laa_reference: 'LAA-xxx', ufn: '010124/001'))
+    build(:prior_authority_application,
+          state: 'granted',
+          data: build(:prior_authority_data, laa_reference: 'LAA-xxx', ufn: '010124/001'))
   end
 
   let(:data_for) do
     lambda do |application|
       { application_id: application.id,
-        application: application.data }
+        application: application.data,
+        application_type: application.application_type,
+        application_state: application.state,
+        last_updated_at: 1.hour.ago }
     end
   end
 
@@ -106,14 +109,12 @@ RSpec.describe 'View related applications', :stub_oauth_token do
   end
 
   before do
-    stub_load_from_app_store(assigned_to_me)
+    stub_app_store_interactions(assigned_to_me)
     sign_in me
     visit '/'
     click_on 'Accept analytics cookies'
 
-    create(:assignment,
-           user: me,
-           submission: assigned_to_me)
+    assigned_to_me.assigned_user_id = me.id
   end
 
   context 'when the application has NO related applications' do
@@ -201,7 +202,7 @@ RSpec.describe 'View related applications', :stub_oauth_token do
 
   context 'when the application has many related applications' do
     let(:other) do
-      create_list(
+      build_list(
         :prior_authority_application,
         11,
         state: 'submitted',

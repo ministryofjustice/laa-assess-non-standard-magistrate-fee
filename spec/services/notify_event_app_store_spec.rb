@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe NotifyEventAppStore do
   subject { described_class.new }
 
-  let(:event) { instance_double(Event, submission_id: submission_id, as_json: as_json, update!: true) }
+  let(:event) { instance_double(Event, as_json:) }
+  let(:submission) { instance_double(Submission, id: submission_id) }
   let(:submission_id) { SecureRandom.uuid }
   let(:as_json) { { event: :json } }
 
@@ -17,13 +18,13 @@ RSpec.describe NotifyEventAppStore do
     it 'creates a new AppStoreClient instance' do
       expect(AppStoreClient).to receive(:new)
 
-      subject.perform(event:)
+      subject.perform(event:, submission:)
     end
 
     it 'sends a HTTP message' do
       expect(http_notifier).to receive(:create_events).with(submission_id, events: [as_json])
 
-      subject.perform(event:)
+      subject.perform(event:, submission:)
     end
 
     describe 'when error during notify process' do
@@ -32,14 +33,14 @@ RSpec.describe NotifyEventAppStore do
       end
 
       it 'allows the error to be raised - should reset the sidekiq job' do
-        expect { subject.perform(event:) }.to raise_error('annoying_error')
+        expect { subject.perform(event:, submission:) }.to raise_error('annoying_error')
       end
     end
   end
 
   context 'when App Store returns a forbidden response', :stub_oauth_token do
-    let(:event) { create(:event, submission:) }
-    let(:submission) { create(:claim) }
+    let(:event) { build(:event) }
+    let(:submission) { build(:claim) }
 
     before do
       allow(ENV).to receive(:fetch).and_call_original
@@ -57,7 +58,7 @@ RSpec.describe NotifyEventAppStore do
       end
 
       it "doesn't raise an error" do
-        expect { subject.perform(event:) }.not_to raise_error
+        expect { subject.perform(event:, submission:) }.not_to raise_error
       end
     end
 
@@ -70,7 +71,7 @@ RSpec.describe NotifyEventAppStore do
       end
 
       it 'raises an error' do
-        expect { subject.perform(event:) }.to raise_error(
+        expect { subject.perform(event:, submission:) }.to raise_error(
           "Cannot sync event #{event.id} to submission #{submission.id} in App Store: Forbidden"
         )
       end
@@ -84,7 +85,7 @@ RSpec.describe NotifyEventAppStore do
       end
 
       it 'raises an error' do
-        expect { subject.perform(event:) }.to raise_error(
+        expect { subject.perform(event:, submission:) }.to raise_error(
           "Unexpected response from AppStore - status 500 for '/v1/submissions/#{submission.id}'"
         )
       end

@@ -2,7 +2,7 @@ module Nsm
   class AllAdjustmentsDeleter < AdjustmentDeleterBase
     attr_reader :params, :current_user, :submission, :comment
 
-    def initialize(params, adjustment_type, current_user)
+    def initialize(params, adjustment_type, current_user, submission)
       super
       @comment = params[:nsm_delete_adjustments_form][:comment]
     end
@@ -12,7 +12,6 @@ module Nsm
       delete_letters_and_calls_adjustments if letters_and_calls
       delete_disbursement_adjustments if disbursements
       ::Event::DeleteAdjustments.build(submission:, comment:, current_user:)
-      submission.save!
     end
 
     def delete_work_item_adjustments
@@ -55,10 +54,6 @@ module Nsm
 
     def work_items
       @work_items ||= submission.data['work_items'].filter { _1['adjustment_comment'] }
-    end
-
-    def submission_scope
-      @submission_scope ||= Claim.find(params[:claim_id])
     end
   end
 end

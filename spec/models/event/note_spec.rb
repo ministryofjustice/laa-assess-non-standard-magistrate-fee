@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Event::Note do
   subject { described_class.build(submission:, note:, current_user:) }
 
-  let(:submission) { create(:claim) }
+  let(:submission) { build(:claim) }
   let(:current_user) { create(:caseworker) }
   let(:note) { 'new note' }
   let(:app_store_client) { instance_double(AppStoreClient, create_events: true) }
@@ -12,12 +12,11 @@ RSpec.describe Event::Note do
 
   it 'can build a new record' do
     expect(subject).to have_attributes(
-      submission_id: submission.id,
       submission_version: 1,
       event_type: 'Event::Note',
-      primary_user: current_user,
+      primary_user_id: current_user.id,
       details: {
-        'comment' => 'new note'
+        comment: 'new note'
       }
     )
   end
