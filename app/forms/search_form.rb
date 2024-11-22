@@ -55,7 +55,7 @@ class SearchForm < SearchResults
     fields = [:query, :submitted_from,
               :submitted_to, :updated_from,
               :updated_to, :status_with_assignment,
-              :caseworker_id]
+              :caseworker_id, :high_value]
 
     field_set = fields.any? do |field|
       send(field).present?
