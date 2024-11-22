@@ -5,14 +5,6 @@ en:
         page_title: Make a decision
         submit: Submit decision
         save_and_exit: Save and come back later
-        pending_decision: What is the outcome of your assessment?
-        pending_decision_hint: Your decision and any relevant information will be sent to the provider.
-        granted: Granted
-        part_grant: Part granted
-        rejected: Rejected
-        pending_granted_explanation: Additional comments for the provider (optional)
-        pending_part_grant_explanation: Additional comments for the provider (optional)
-        pending_rejected_explanation: Provide detailed reasons for rejecting this application
       show:
         page_title: Decision sent
         sent_to_provider: Your decision has been sent to the provider.
@@ -26,18 +18,36 @@ en:
         no_comments: No comments
         next_application: Assess next application
         return: Return to the application
+  helpers:
+    legend:
+      prior_authority_decision_form:
+        pending_decision: Make a decision
+    label:
+      prior_authority_decision_form:
+        pending_decision_options:
+          granted: Grant
+          part_grant: Part granted
+          rejected: Rejected
+        pending_granted_explanation: Enter additional comments (optional)
+        pending_part_grant_explanation: Explain your decision
+        pending_rejected_explanation: Explain your decision
+    hint:
+      prior_authority_decision_form:
+        pending_granted_explanation: We’ll share this information with the provider
+        pending_part_grant_explanation: We’ll share this information with the provider
+        pending_rejected_explanation: We’ll share this information with the provider
   activemodel:
     errors:
       models:
         prior_authority/decision_form:
           attributes:
             pending_decision:
-              inclusion: Choose the outcome of your assessment
+              inclusion: Select if you will grant, part grant or reject this application
+              blank: Select if you will grant, part grant or reject this claim
               no_adjustments: You can only part-grant an application if you have made adjustments to provider costs. You can either grant it without any cost adjustments, or make cost adjustments and part-grant it.
               adjustments_when_rejected: You cannot reject an application after making adjustments to provider costs. You can either keep the adjustments and part-grant it, or delete the cost adjustments to reject it.
               adjustments_when_granted: You cannot grant an application after making adjustments to provider costs. You can either keep the adjustments and part-grant it, or delete the cost adjustments to reject it.
             pending_rejected_explanation:
-              blank: Enter a reason for rejecting this application
+              blank: Add an explanation for your decision
             pending_part_grant_explanation:
-              blank: Enter a reason for part granting this application
-
+              blank: Add an explanation for your decision

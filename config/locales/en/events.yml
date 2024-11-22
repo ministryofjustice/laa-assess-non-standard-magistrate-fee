@@ -13,6 +13,8 @@ en:
       granted: Decision made to grant claim
       part_grant: Decision made to part grant claim
       rejected: Decision made to reject claim
+  event/draft_decision:
+    title: 'Draft decision saved'
   event/new_version:
     title: Received
     updated_body: Received from Provider with further information

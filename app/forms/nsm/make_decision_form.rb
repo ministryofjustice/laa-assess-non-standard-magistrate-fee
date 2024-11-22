@@ -26,7 +26,21 @@ module Nsm
       true
     end
 
+    def stash
+      persist_form_values
+      ::Event::DraftDecision.build(submission: claim,
+                                   comment: nil,
+                                   next_state: state,
+                                   current_user: current_user)
+      AppStoreClient.new.adjust(claim)
+    end
+
+    def persist_form_values
+      claim.data.merge!(attributes.except('claim', 'current_user').merge('assessment_comment' => comment))
+    end
+
     def change_data_and_notify_app_store!
+      persist_form_values
       previous_state = claim.state
 
       claim.data.merge!('status' => state, 'updated_at' => Time.current, 'assessment_comment' => comment)
