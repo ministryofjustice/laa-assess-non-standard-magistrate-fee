@@ -6,6 +6,7 @@ en:
         page_title: Make a decision
         heading: Make a decision
         submit: Submit decision
+        save_and_exit: Save and come back later
       update:
         decision:
           granted: You granted this claim <a class="govuk-link" href="%{url}">%{ref}</a>
@@ -18,9 +19,9 @@ en:
     label:
       nsm_make_decision_form:
         state_options:
-          granted: Grant it
-          part_grant: Part grant it
-          rejected: Reject it
+          granted: Grant
+          part_grant: Part grant
+          rejected: Reject
         grant_comment: Additional comments (optional)
         partial_comment: Explain your decision
         reject_comment: Explain your decision
@@ -36,8 +37,8 @@ en:
         nsm/make_decision_form:
           attributes:
             state:
-              blank: Select what you want to do with this claim
-              inclusion: Select what you want to do with this claim
+              blank: Select if you will grant, part grant or reject this claim
+              inclusion: Select if you will grant, part grant or reject this claim
             partial_comment:
               blank: Add an explanation for your decision
             reject_comment:

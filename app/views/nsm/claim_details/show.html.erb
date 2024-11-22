@@ -18,7 +18,7 @@
         <p><strong><%= t(".provider_updated", date: format_in_zone(claim.data['updated_at'])) %></strong></p>
         <%= govuk_link_to t('.further_information'), '#further-info' %>
       </div>
-    <% elsif claim_summary.assessment_comment.present? %>
+    <% elsif claim.assessed? && claim_summary.assessment_comment.present? %>
       <div class="govuk-inset-text">
         <p><strong><%= t(".assessed_statuses.#{claim.state}") %></strong></p>
         <%= simple_format claim_summary.assessment_comment %>

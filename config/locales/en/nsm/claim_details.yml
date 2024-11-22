@@ -12,6 +12,7 @@ en:
           part_grant: Part granted
           rejected: Rejected
           provider_updated: Provider updated
+          submitted: Submitted
         review_adjustments: Review quote adjustments
         further_information: Further information
         provider_updated: Provider updated %{date}
