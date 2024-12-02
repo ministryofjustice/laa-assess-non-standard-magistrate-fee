@@ -1,0 +1,46 @@
+---
+en:
+  nsm:
+    youth_court_fee_adjustments:
+      summary_table:
+        title: Provider submission
+        net_cost_claimed: Net cost claimed
+        additional_fee: Additional fee
+        youth_court_fee: Youth court fee
+      edit:
+        page_title: Adjust additional fee
+        provider_submission: Provider submission
+        claimed_cost_summary: Claimed cost summary
+        laa_adjustments: LAA adjustments
+        remove_youth_court_fee: Remove the youth court fee?
+        heading: Make a decision
+        remove_youth_court_fee_options:
+          'true': Yes, remove fee
+          'false': No, do not remove fee
+        submit: Save changes
+        cancel: cancel
+      update:
+
+  helpers:
+    legend:
+      nsm_youth_court_fee_form:
+        remove_youth_court_fee: Remove the youth court fee?
+    label:
+      nsm_youth_court_fee_form:
+        remove_youth_court_fee_options:
+          'true': Yes, remove fee
+          'false': No, do not remove fee
+        explanation: Explain your decision
+    hint:
+      nsm_youth_court_fee_form:
+        explanation: Explain why you are removing the additional fee. We'll share this explanation with the provider.
+
+  activemodel:
+    errors:
+      models:
+        nsm/youth_court_fee_form:
+          attributes:
+            base:
+              no_change: 'No change'
+            explanation:
+              blank: "Selected ‘Yes’ but not entered a reason: 'Enter a reason for the adjustment'"

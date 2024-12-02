@@ -39,7 +39,7 @@ module Nsm
         [
           I18n.t("nsm.additional_fees.index.#{type}"),
           format(claimed_total_exc_vat),
-          format(any_adjustments? ? assessed_total_exc_vat : nil),
+          format(adjusted? ? assessed_total_inc_vat : nil),
         ]
       end
 
@@ -48,6 +48,10 @@ module Nsm
           '.additional_fee' => I18n.t("nsm.additional_fees.edit.#{type}"),
           '.net_cost_claimed' => NumberTo.pounds(claimed_total_exc_vat)
         }
+      end
+
+      def adjusted?
+        submission.data['youth_court_fee_adjustment_comment'].present?
       end
 
       def backlink_path(claim)

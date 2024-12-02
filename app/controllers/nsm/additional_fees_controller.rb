@@ -7,7 +7,7 @@ module Nsm
     include Nsm::AdjustmentConcern
 
     FORMS = {
-      'youth_court_fee' => AdditionalFeesForm::YouthCourtFee
+      'youth_court_fee' => AdditionalFeesForm::YouthCourtFeeForm
     }.freeze
 
     def index
