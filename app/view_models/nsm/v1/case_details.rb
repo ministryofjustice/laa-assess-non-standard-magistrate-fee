@@ -8,6 +8,7 @@ module Nsm
       attribute :agent_instructed
       attribute :remitted_to_magistrate
       attribute :remitted_to_magistrate_date
+      attribute :main_offence_type
 
       def key
         'case_details'
@@ -24,6 +25,12 @@ module Nsm
             title: I18n.t(".nsm.claim_details.#{key}.main_offence"),
             value: main_offence
           },
+          (if main_offence_type.present?
+             {
+               title: I18n.t(".nsm.claim_details.#{key}.main_offence_type"),
+               value: I18n.t(".nsm.claim_details.#{key}.#{main_offence_type}")
+             }
+           end),
           {
             title: I18n.t(".nsm.claim_details.#{key}.main_offence_date"),
             value: format_in_zone(main_offence_date)

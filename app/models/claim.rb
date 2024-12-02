@@ -49,6 +49,21 @@ class Claim < Submission
     core_cost_summary.any_increased?
   end
 
+  def additional_fees
+    totals.fetch(:additional_fees, nil)
+  end
+
+  def youth_court_fee_elligible?
+    data['claim_type'] == 'non_standard_magistrate' &&
+      data['youth_court'] == 'yes' &&
+      data['plea_category'].match?(/category_(?:2|[12]a)$/)
+  end
+
+  def additional_fees?
+    FeatureFlags.youth_court_fee.enabled? &&
+      youth_court_fee_elligible?
+  end
+
   def adjustments_direction
     return :none unless any_cost_changes?
     return :mixed if any_cost_increases? && any_cost_reductions?
@@ -65,6 +80,7 @@ class Claim < Submission
     @rates ||= LaaCrimeFormsCommon::Pricing::Nsm.rates(data_for_calculation)
   end
 
+  # rubocop:disable Metrics/AbcSize
   def data_for_calculation
     {
       claim_type: BaseViewModel.build(:details_of_claim, self).claim_type.value,
@@ -74,8 +90,17 @@ class Claim < Submission
       work_items: work_items_for_calculation,
       disbursements: disbursements_for_calculation,
       letters_and_calls: letters_and_calls_for_calculation,
+      youth_court: data['youth_court'] == 'yes',
+      # TODO: CRM457-2306: Amend these as the fields will exist
+      claimed_youth_court_fee_included: data['include_youth_court_fee'],
+      plea_category: data['plea_category'],
+      # TODO: CRM457-2306: Remove these as the fields will exist
+      # :nocov:
+      assessed_youth_court_fee_included: data['youth_court_fee_adjustment_comment']&.present?,
+      # :nocov:
     }
   end
+  # rubocop:enable Metrics/AbcSize
 
   private
 

@@ -76,6 +76,12 @@ Rails.application.routes.draw do
         collection { get :adjusted }
         member { get :confirm_deletion }
       end
+      constraints ->(_req) { FeatureFlags.youth_court_fee.enabled? } do
+        resources :additional_fees, only: [:index, :show, :edit, :update, :destroy] do
+          collection { get :adjusted }
+          member { get :confirm_deletion }
+        end
+      end
       resource :supporting_evidences, only: [:show] do
         resources :downloads, only: :show
       end

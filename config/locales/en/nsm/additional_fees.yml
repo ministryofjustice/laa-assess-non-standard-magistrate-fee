@@ -1,0 +1,26 @@
+---
+en:
+  nsm:
+    additional_fees:
+      index:
+        table_caption: Additional fees
+        fee_type: Fee type
+        net_cost_claimed: Net cost claimed
+        net_cost_allowed: Net cost allowed
+        youth_court_fee: Youth court fee
+      show:
+        page_title: Additional fees
+        heading: Additional fees
+        additional_fee: Additional fee
+        net_cost_claimed: Net cost claimed
+        provider_submission: Provider submission
+        youth_court_fee: Youth court fee
+      edit:
+        page_title: Additional fees
+        heading: Additional fees
+        additional_fee: Additional fee
+        net_cost_claimed: Net cost claimed
+        provider_submission: Provider submission
+        youth_court_fee: Youth court fee
+      adjusted:
+        no_data: This claim has no adjusted additional fees
