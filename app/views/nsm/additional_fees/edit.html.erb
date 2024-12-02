@@ -19,22 +19,40 @@
   class: "govuk-back-link" %>
 <% end %>
 
-<div class="govuk-grid-row" id="letters-and-calls-adjustment-container">
-  <div class="govuk-grid-column-three-quarters">
-
-    <h1 class="govuk-heading-xl">
-        <%= t('.heading', type: item.type) %>
-    </h1>
-  </div>
+<div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%=
-      rows = item.provider_fields.map do |key, value|
-        [{ text: t(key, type: item.type), width: 'govuk-!-width-one-half' }, value]
-      end
-      govuk_table(head: '', first_cell_is_header: true, rows:) do |tab|
-        tab.with_caption(text: t('.provider_submission'), size: 'l')
-      end
-    %>
+    <%= govuk_error_summary(form) %>
+  </div>
+</div>
 
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= t('.page_title') %></h1>
+    <h2 class="govuk-heading-l"><%= t('.provider_submission') %></h2>
+      <table class="govuk-table">
+        <caption class="govuk-visually-hidden"><%= t('.claimed_cost_summary') %></caption>
+        <tbody class="govuk-table__body">
+          <% item.rows[:data].each do |row| %>
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header govuk-!-width-one-half"><%= row[:title] %></th>
+              <td class="govuk-table__cell"><%= row[:value] %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <h2 class="govuk-heading-l"><%= t('.laa_adjustments') %></h2>
+        <div class="govuk-grid-column-three-thirds">
+          <%= form_with model: form, url: nsm_claim_additional_fee_path(claim_id: claim.id), method: :put, id: dom_id(form) do |f| %>
+            <%= f.govuk_radio_buttons_fieldset :remove_youth_court_fee, legend: { size: 's' } do %>
+              <%= f.govuk_radio_button :remove_youth_court_fee, 'true' do %>
+                <%= f.govuk_text_area :explanation, width: 'two-third', autocomplete: 'off', label: { size: 's' } %>
+              <% end %>
+              <%= f.govuk_radio_button :remove_youth_court_fee, 'false' %>
+            <% end %>
+            <%= f.govuk_submit(t('.submit')) do %>
+              <%= link_to t('shared.cancel'), nsm_claim_additional_fees_path(claim), class: 'govuk-link' %>
+            <% end %>
+          <% end %>
+        </div>
   </div>
 </div>

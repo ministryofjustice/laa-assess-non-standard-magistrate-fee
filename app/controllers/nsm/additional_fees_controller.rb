@@ -7,7 +7,7 @@ module Nsm
     include Nsm::AdjustmentConcern
 
     FORMS = {
-      'youth_court_fee' => AdditionalFeesForm::YouthCourtFee
+      'youth_court_fee' => YouthCourtFeeForm
     }.freeze
 
     def index
@@ -43,8 +43,25 @@ module Nsm
         model.type == params[:id].to_sym
       end
 
-      render locals: { claim:, item:, }
+      form = form_class.new(claim:, item:, **item.form_attributes)
+      render :edit, locals: { claim:, item:, form: }
     end
+
+    # rubocop:disable Metrics/AbcSize
+    def update
+      authorize(claim, :edit?)
+      rows = BaseViewModel.build(:additional_fees_summary, claim).rows
+      item = rows.detect do |model|
+        model.type == params[:id].to_sym
+      end
+      form = form_class.new(claim:, item:, **form_params)
+      if form.save!
+        redirect_to nsm_claim_additional_fees_path(claim)
+      else
+        render :edit, locals: { claim:, item:, form: }
+      end
+    end
+    # rubocop:enable Metrics/AbcSize
 
     def adjusted
       authorize(claim, :show?)
@@ -69,6 +86,12 @@ module Nsm
       FORMS[params[:id]]
     end
     # :nocov:
+
+    def form_params
+      params.require(:nsm_youth_court_fee_form)
+            .permit(:remove_youth_court_fee, :explanation)
+            .merge(current_user:)
+    end
 
     def fail_if_no_additional_fees
       raise ActionController::RoutingError, 'Not Found' unless claim.additional_fees?

@@ -4,12 +4,17 @@ module Nsm
       attribute :submission
 
       def rows
-        @rows ||= submission.additional_fees.map do |type, details|
-          # TODO: CRM457-2306 ensure adjustment comment
-          # attribute is instantiated on AdditionalFee instance
-          # so that any_adjustments? works as expected
-          AdditionalFee.new({ type: }.merge(details))
+        @rows ||= submission.additional_fees.except(*excluded).map do |type, details|
+          model = BaseViewModel.build(type, submission)
+          model.assign_attributes(details)
+          model
         end
+      end
+
+      private
+
+      def excluded
+        [:total]
       end
     end
   end

@@ -56,9 +56,8 @@ RSpec.describe BaseViewModel do
 
       it 'builds the object from the array of hashes of attributes' do
         additional_fees = described_class.build(:additional_fees_summary, claim).rows
-        expect(additional_fees.count).to eq(2)
+        expect(additional_fees.count).to eq(1)
         expect(additional_fees[0]).to have_attributes(type: :youth_court_fee)
-        expect(additional_fees[1]).to have_attributes(type: :total)
       end
     end
   end
