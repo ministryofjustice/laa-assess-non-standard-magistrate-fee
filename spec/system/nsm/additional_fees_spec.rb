@@ -8,7 +8,7 @@ RSpec.describe 'Additional Fees', :stub_oauth_token do
   let(:youth_court) { 'yes' }
   let(:claim_type) { 'non_standard_magistrate' }
   let(:plea_category) { 'category_1a' }
-  let(:rep_order_date) { Date.new(2024, 6, 12) }
+  let(:rep_order_date) { Date.new(2024, 12, 6) }
   let(:state) { 'granted' }
   let(:claim) do
     build(:claim, state:).tap do |claim|

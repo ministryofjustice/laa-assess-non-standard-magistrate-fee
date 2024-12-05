@@ -55,6 +55,7 @@ class Claim < Submission
 
   def youth_court_fee_elligible?
     data['claim_type'] == 'non_standard_magistrate' &&
+      (data['rep_order_date']&.to_date&.>= Date.new(2024, 12, 6)) &&
       data['youth_court'] == 'yes' &&
       data['plea_category'].match?(/category_(?:2|[12]a)$/)
   end

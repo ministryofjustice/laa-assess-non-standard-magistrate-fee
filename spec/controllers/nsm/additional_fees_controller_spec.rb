@@ -2,8 +2,10 @@ require 'rails_helper'
 
 RSpec.describe Nsm::AdditionalFeesController do
   let(:data) do
-    { youth_court: 'yes', claim_type: 'non_standard_magistrate', plea_category: 'category_1a' }
+    { youth_court: 'yes', claim_type: 'non_standard_magistrate', plea_category: 'category_1a', rep_order_date: rep_order_date }
   end
+
+  let(:rep_order_date) { Date.new(2024, 12, 6) }
 
   let(:claim) do
     build(:claim, assigned_user_id: user.id).tap do |claim|
@@ -23,6 +25,14 @@ RSpec.describe Nsm::AdditionalFeesController do
         total: { claimed_total_exc_vat: 598.59 }
       }
     )
+  end
+
+  context 'No additional fee applicable' do
+    let(:rep_order_date) { Date.new(2024, 12, 5) }
+
+    it 'raises error when trying to render' do
+      expect{get :index, params: { claim_id: claim.id }}.to raise_error(ActionController::RoutingError)
+    end
   end
 
   describe 'index' do
