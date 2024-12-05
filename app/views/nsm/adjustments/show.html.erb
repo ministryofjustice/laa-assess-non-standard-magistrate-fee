@@ -20,6 +20,11 @@
         <li class="govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if scope == :letters_and_calls %>">
           <%= link_to t('.letters_and_calls'), adjusted_nsm_claim_letters_and_calls_path(claim, anchor: :tabs) %>
         </li>
+	<% if claim.additional_fees? %>
+          <li class="govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if scope == :additional_fees %>">
+            <%= link_to t('.additional_fees'), adjusted_nsm_claim_additional_fees_path(claim, anchor: :tabs) %>
+          </li>
+	<% end %>
         <li class="govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if scope == :disbursements %>">
           <%= link_to t('.disbursements'), adjusted_nsm_claim_disbursements_path(claim, anchor: :tabs) %>
         </li>

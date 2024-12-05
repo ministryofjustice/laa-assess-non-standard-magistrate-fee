@@ -1,0 +1,10 @@
+---
+en:
+  nsm:
+    case_disposal:
+      additional_fee: Additional fee
+      youth_court_fee_claimed: Youth court fee claimed
+      youth_court_fee_not_claimed: Youth court fee not claimed
+      change_solicitor_date: Date solicitor was changed
+      arrest_warrant_date: Date of warrant
+      cracked_trial_date: Date of cracked trial
