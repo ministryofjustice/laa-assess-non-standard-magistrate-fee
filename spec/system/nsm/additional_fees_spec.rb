@@ -47,8 +47,7 @@ RSpec.describe 'Additional Fees', :stub_oauth_token do
   end
 
   context 'when claim cannot apply a youth court fee' do
-    let(:state) { 'granted' }
-    let(:youth_court) { 'no' }
+    let(:rep_order_date) { Date.new(2024, 12, 5) }
 
     it 'lets me view details instead of changing them' do
       visit nsm_claim_additional_fees_path(claim)
