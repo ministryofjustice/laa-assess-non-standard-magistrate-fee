@@ -31,7 +31,7 @@ RSpec.describe Nsm::AdditionalFeesController do
     let(:rep_order_date) { Date.new(2024, 12, 5) }
 
     it 'raises error when trying to render' do
-      expect{get :index, params: { claim_id: claim.id }}.to raise_error(ActionController::RoutingError)
+      expect { get :index, params: { claim_id: claim.id } }.to raise_error(ActionController::RoutingError)
     end
   end
 

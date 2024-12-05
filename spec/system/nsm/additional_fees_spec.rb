@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Additional Fees', :stub_oauth_token do
   let(:user) { create(:caseworker) }
   let(:data) do
-    { youth_court:, claim_type:, plea_category:, rep_order_date:}
+    { youth_court:, claim_type:, plea_category:, rep_order_date: }
   end
   let(:youth_court) { 'yes' }
   let(:claim_type) { 'non_standard_magistrate' }
