@@ -3,10 +3,15 @@ require 'rails_helper'
 RSpec.describe 'Additional Fees', :stub_oauth_token do
   let(:user) { create(:caseworker) }
   let(:data) do
-    { youth_court: 'yes', claim_type: 'non_standard_magistrate', plea_category: 'category_1a' }
+    { youth_court:, claim_type:, plea_category:, rep_order_date:}
   end
+  let(:youth_court) { 'yes' }
+  let(:claim_type) { 'non_standard_magistrate' }
+  let(:plea_category) { 'category_1a' }
+  let(:rep_order_date) { Date.new(2024, 6, 12) }
+  let(:state) { 'granted' }
   let(:claim) do
-    build(:claim).tap do |claim|
+    build(:claim, state:).tap do |claim|
       claim.data.merge!(data)
     end
   end
@@ -27,11 +32,8 @@ RSpec.describe 'Additional Fees', :stub_oauth_token do
   end
 
   context 'when claim is valid' do
-    let(:claim) do
-      build(:claim, state: 'granted').tap do |claim|
-        claim.data.merge!(data)
-      end
-    end
+    let(:state) { 'granted' }
+    let(:youth_court) { 'yes' }
 
     it 'lets me view details instead of changing them' do
       visit nsm_claim_additional_fees_path(claim)
@@ -44,12 +46,9 @@ RSpec.describe 'Additional Fees', :stub_oauth_token do
     end
   end
 
-  context 'when claim is not valid' do
-    let(:claim) do
-      build(:claim, state: 'granted').tap do |claim|
-        claim.data.merge!(data).merge!({ youth_court: 'no' })
-      end
-    end
+  context 'when claim cannot apply a youth court fee' do
+    let(:state) { 'granted' }
+    let(:youth_court) { 'no' }
 
     it 'lets me view details instead of changing them' do
       visit nsm_claim_additional_fees_path(claim)
