@@ -96,7 +96,7 @@ class Claim < Submission
       plea_category: data['plea_category'],
       # TODO: CRM457-2306: Remove these as the fields will exist
       # :nocov:
-      assessed_youth_court_fee_included: data['youth_court_fee_adjustment_comment']&.present?,
+      assessed_youth_court_fee_included: data['include_youth_court_fee'],
       # :nocov:
     }
   end
