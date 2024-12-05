@@ -39,7 +39,7 @@ module Nsm
         [
           I18n.t("nsm.additional_fees.index.#{type}"),
           format(claimed_total_exc_vat),
-          format(assessed_total_inc_vat.positive? ? assessed_total_inc_vat : nil),
+          format(any_adjustments? ? assessed_total_exc_vat : nil),
         ]
       end
 
