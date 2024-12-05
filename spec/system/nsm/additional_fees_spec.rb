@@ -49,12 +49,32 @@ RSpec.describe 'Additional Fees', :stub_oauth_token do
   context 'when claim cannot apply a youth court fee' do
     let(:rep_order_date) { Date.new(2024, 12, 5) }
 
-    it 'lets me view details instead of changing them' do
+    it 'does not let me view details' do
       visit nsm_claim_additional_fees_path(claim)
 
       expect(page).to have_content(
         'Page not found'
       )
+    end
+  end
+
+  context 'rep order date is nil' do
+    let(:rep_order_date) { nil }
+
+    it 'does not let me view details' do
+      visit nsm_claim_additional_fees_path(claim)
+
+      expect(page).to have_content(
+        'Page not found'
+      )
+    end
+  end
+
+  context 'rep order date is not a valid date' do
+    let(:rep_order_date) { 'garbage' }
+
+    it 'does not let me view details' do
+      expect{ visit nsm_claim_additional_fees_path(claim) }.to raise_error(Date::Error)
     end
   end
 end
