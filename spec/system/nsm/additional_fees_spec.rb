@@ -74,7 +74,7 @@ RSpec.describe 'Additional Fees', :stub_oauth_token do
     let(:rep_order_date) { 'garbage' }
 
     it 'does not let me view details' do
-      expect{ visit nsm_claim_additional_fees_path(claim) }.to raise_error(Date::Error)
+      expect { visit nsm_claim_additional_fees_path(claim) }.to raise_error(Date::Error)
     end
   end
 end
