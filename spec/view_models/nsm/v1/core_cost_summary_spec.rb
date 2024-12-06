@@ -31,7 +31,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
   let(:claim_type) { 'non_standard_magistrate' }
   let(:plea_category) { 'category_1a' }
   let(:youth_court) { 'yes' }
-  let(:rep_order_date) { Date.new(2024, 12, 5) }
+  let(:rep_order_date) { '2024-12-05' }
   let(:include_youth_court_fee) { false }
   let(:include_youth_court_fee_original) { nil }
 
@@ -268,11 +268,10 @@ RSpec.describe Nsm::V1::CoreCostSummary do
 
     context 'when a youth court fee has been added' do
       before do
-        submission.data.merge(data)
         subject { described_class.new(submission:) }
       end
 
-      let(:rep_order_date) { Date.new(2024, 12, 6) }
+      let(:rep_order_date) { '2024-12-06' }
       let(:include_youth_court_fee) { true }
       let(:include_youth_court_fee_original) { nil }
 
@@ -292,11 +291,7 @@ RSpec.describe Nsm::V1::CoreCostSummary do
     end
 
     context 'when a youth court fee has been added and assessed' do
-      before do
-        submission.data.merge(data)
-      end
-
-      let(:rep_order_date) { Date.new(2024, 12, 6) }
+      let(:rep_order_date) { '2024-12-06' }
       let(:include_youth_court_fee) { false }
       let(:include_youth_court_fee_original) { true }
 

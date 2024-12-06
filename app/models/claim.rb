@@ -102,7 +102,7 @@ class Claim < Submission
   private
 
   def youth_court_fee_claimed
-    data.fetch('include_youth_court_fee_original', data['include_youth_court_fee'])
+    data['include_youth_court_fee_original'] || data['include_youth_court_fee']
   end
 
   def granted_and_allowed_less_than_claim
