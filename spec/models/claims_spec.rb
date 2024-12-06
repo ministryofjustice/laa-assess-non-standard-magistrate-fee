@@ -10,10 +10,10 @@ RSpec.describe Claim do
       let(:state) { Claim::GRANTED }
 
       context 'increased adjustment' do
-        let(:data) { build(:nsm_data, :decrease_adjustment) }
+        let(:data) { build(:nsm_data, :increase_adjustment) }
 
         it 'adjusted cost if adjusted more than claimed' do
-          expect(claim.formatted_allowed_total).to be > claim.formatted_claimed_total
+          expect(claim.formatted_allowed_total > claim.formatted_claimed_total).to eq true
         end
       end
 
