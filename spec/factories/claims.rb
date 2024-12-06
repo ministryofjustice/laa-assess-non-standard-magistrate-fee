@@ -346,10 +346,10 @@ FactoryBot.define do
     end
 
     trait :with_reduced_work_item do
-      after(:build) do |claim, _context|
-        claim.data['work_items'].first['time_spent_original'] = claim.data['work_items'].first['time_spent']
-        claim.data['work_items'].first['time_spent'] -= 1
-        claim.data['work_items'].first['adjustment_comment'] = 'reducing this work item'
+      after(:build) do |data, _context|
+        data['work_items'].first['time_spent_original'] = data['work_items'].first['time_spent']
+        data['work_items'].first['time_spent'] -= 1
+        data['work_items'].first['adjustment_comment'] = 'reducing this work item'
       end
     end
 
