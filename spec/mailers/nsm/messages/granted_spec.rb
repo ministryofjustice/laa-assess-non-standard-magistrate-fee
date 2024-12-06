@@ -5,7 +5,8 @@ require 'rails_helper'
 RSpec.describe Nsm::Messages::Granted do
   subject(:feedback) { described_class.new(claim) }
 
-  let(:claim) { build(:claim, solicitor: { 'contact_email' => recipient }) }
+  let(:claim) { build(:claim, data:) }
+  let(:data) { build(:nsm_data, solicitor: { 'contact_email' => recipient }) }
   let(:feedback_template) { '80c0dcd2-597b-4c82-8c94-f6e26af71a40' }
   let(:recipient) { 'provider@example.com' }
   let(:laa_case_reference) { 'LAA-FHaMVK' }

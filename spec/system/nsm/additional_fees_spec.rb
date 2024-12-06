@@ -2,12 +2,6 @@ require 'rails_helper'
 
 RSpec.describe 'Additional Fees', :stub_oauth_token do
   let(:user) { create(:caseworker) }
-  let(:data) do
-    {
-      youth_court:, claim_type:, plea_category:, rep_order_date:,
-      include_youth_court_fee:, include_youth_court_fee_original:
-    }
-  end
   let(:youth_court) { 'yes' }
   let(:claim_type) { 'non_standard_magistrate' }
   let(:include_youth_court_fee_original) { nil }
@@ -15,10 +9,12 @@ RSpec.describe 'Additional Fees', :stub_oauth_token do
   let(:plea_category) { 'category_1a' }
   let(:rep_order_date) { Date.new(2024, 12, 6) }
   let(:state) { 'granted' }
-  let(:claim) do
-    build(:claim, state:).tap do |claim|
-      claim.data.merge!(data)
-    end
+  let(:claim) { build(:claim, data:) }
+  let(:data) do
+    build(
+      :nsm_data, youth_court:, claim_type:, plea_category:, rep_order_date:,
+      include_youth_court_fee:, include_youth_court_fee_original:
+    )
   end
 
   before do
