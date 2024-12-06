@@ -13,13 +13,14 @@ RSpec.describe Nsm::UnassignmentForm, :stub_oauth_token do
 
   describe '#unassignment_user' do
     let(:params) { { claim: claim, current_user: user } }
-    let(:claim) { build(:claim, data:) }
-    let(:data) { build(:nsm_data, :with_assignment) }
+    let(:claim) { build(:claim, :with_assignment) }
 
     context 'when assigned user and current_user are the same' do
       before { claim.assigned_user_id = user.id }
 
-      it { expect(subject.unassignment_user).to eq('assigned') }
+      it do
+        expect(subject.unassignment_user).to eq('assigned')
+      end
     end
 
     context 'when assigned user and current_user are different' do
@@ -47,8 +48,7 @@ RSpec.describe Nsm::UnassignmentForm, :stub_oauth_token do
   describe '#persistance' do
     let(:user) { instance_double(User) }
     let(:assigned_user) { create(:caseworker) }
-    let(:claim) { build(:claim, data:) }
-    let(:data) { build(:nsm_data, assigned_user_id: assigned_user.id) }
+    let(:claim) { build(:claim, assigned_user_id: assigned_user.id) }
     let(:params) { { claim: claim, comment: 'some comment', current_user: user } }
 
     before do

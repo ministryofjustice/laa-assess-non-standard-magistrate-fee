@@ -7,10 +7,15 @@ FactoryBot.define do
     state { 'submitted' }
     json_schema_version { 1 }
     application_type { 'crm7' }
+    assigned_user_id { nil }
     data factory: :nsm_data, strategy: :build
 
     after(:build) do |claim|
       claim.data = claim.data.deep_stringify_keys.with_indifferent_access
+    end
+
+    trait :with_assignment do
+      assigned_user_id { SecureRandom.uuid }
     end
   end
 
@@ -231,10 +236,6 @@ FactoryBot.define do
     updated_at { 1.day.ago }
     include_youth_court_fee { false }
     include_youth_court_fee_original { nil }
-
-    trait :with_assignment do
-      assigned_user_id { SecureRandom.uuid }
-    end
 
     trait :with_adjustments do
       disbursements do
