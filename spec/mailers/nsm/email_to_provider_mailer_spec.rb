@@ -10,11 +10,16 @@ RSpec.describe Nsm::EmailToProviderMailer, type: :mailer do
   let(:defendant_reference) { 'MAAT ID number: AB12123' }
   let(:claim_total) { '£359.76' }
   let(:date) { DateTime.now.to_fs(:stamp) }
+  let(:solicitor) do
+    {
+      'contact_email' => recipient
+    }
+  end
 
   describe 'granted' do
     context 'with maat id' do
       let(:submission) { build(:claim, state: 'granted', data: data) }
-      let(:data) { build(:nsm_data, solicitor: { 'contact_email' => recipient }) }
+      let(:data) { build(:nsm_data, solicitor:) }
       let(:feedback_template) { '80c0dcd2-597b-4c82-8c94-f6e26af71a40' }
       let(:personalisation) do
         [laa_case_reference:, ufn:, main_defendant_name:, defendant_reference:, claim_total:, date:]
@@ -29,11 +34,23 @@ RSpec.describe Nsm::EmailToProviderMailer, type: :mailer do
       let(:data) do
         build(
           :nsm_data,
-          solicitor: { 'contact_email' => recipient },
-          cntp_order: 'CNTP12345'
-        ).tap do |data|
-          data['defendants'].first['maat'] = nil
-        end
+          solicitor: solicitor,
+          cntp_order: 'CNTP12345',
+          defendants: defendants
+        )
+      end
+
+      let(:defendants) do
+        [
+          {
+            'id' => '40fb1f88-6dea-4b03-9087-590436b62dd8',
+            'maat' => nil,
+            'main' =>  true,
+            'position' =>  1,
+            'first_name' =>  'Tracy',
+            'last_name' => 'Linklater'
+          }
+        ]
       end
 
       let(:feedback_template) { '80c0dcd2-597b-4c82-8c94-f6e26af71a40' }
@@ -47,7 +64,7 @@ RSpec.describe Nsm::EmailToProviderMailer, type: :mailer do
 
   describe 'part granted' do
     let(:submission) { build(:claim, state: 'part_grant', data: data) }
-    let(:data) { build(:nsm_data, solicitor: { 'contact_email' => recipient }) }
+    let(:data) { build(:nsm_data, solicitor:) }
     let(:feedback_template) { '9df38f19-f76b-42f9-a4e1-da36a65d6aca' }
     let(:part_grant_total) { '£359.76' }
     let(:caseworker_decision_explanation) { '' }
@@ -62,7 +79,7 @@ RSpec.describe Nsm::EmailToProviderMailer, type: :mailer do
 
   describe 'rejected' do
     let(:submission) { build(:claim, state: 'rejected', data: data) }
-    let(:data) { build(:nsm_data, solicitor: { 'contact_email' => recipient }) }
+    let(:data) { build(:nsm_data, solicitor:) }
     let(:feedback_template) { '7e807120-b661-452c-95a6-1ae46f411cfe' }
     let(:caseworker_decision_explanation) { '' }
     let(:personalisation) do
@@ -74,8 +91,8 @@ RSpec.describe Nsm::EmailToProviderMailer, type: :mailer do
   end
 
   describe 'further information' do
-    let(:submission) { build(:claim, state: 'sent_back') }
-    let(:data) { build(:nsm_data, solicitor: { 'contact_email' => recipient }) }
+    let(:submission) { build(:claim, state: 'sent_back', data: data) }
+    let(:data) { build(:nsm_data, solicitor:) }
     let(:feedback_template) { '9ecdec30-83d7-468d-bec2-cf770a2c9828' }
     let(:date_to_respond_by) { 7.days.from_now.to_fs(:stamp) }
     let(:caseworker_information_requested) { '' }
@@ -89,8 +106,8 @@ RSpec.describe Nsm::EmailToProviderMailer, type: :mailer do
   end
 
   describe 'other status' do
-    let(:submission) { build(:claim, state: 'submitted') }
-    let(:data) { build(:nsm_data, solicitor: { 'contact_email' => recipient }) }
+    let(:submission) { build(:claim, state: 'submitted', data: data) }
+    let(:data) { build(:nsm_data, solicitor:) }
     let(:feedback_template) { '9ecdec30-83d7-468d-bec2-cf770a2c9828' }
     let(:date_to_respond_by) { 7.days.from_now.to_fs(:stamp) }
     let(:caseworker_information_requested) { '' }
