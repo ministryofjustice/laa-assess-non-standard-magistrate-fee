@@ -47,6 +47,7 @@ FactoryBot.define do
     concluded { 'no' }
     answer_equality { 'no' }
     stage_reached { 'prog' }
+    court { 'youth_court' }
     work_item_pricing do
       {
         'waiting' => -1,
