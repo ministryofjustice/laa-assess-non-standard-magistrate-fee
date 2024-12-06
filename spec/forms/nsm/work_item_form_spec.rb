@@ -246,7 +246,8 @@ RSpec.describe Nsm::WorkItemForm do
     end
 
     context 'when claim has legacy translations and work type value has changed' do
-      let(:claim) { build :claim, :legacy_translations }
+      let(:claim) { build :claim, data: }
+      let(:data) { build(:nsm_data, :legacy_translations) }
       let(:work_type_value) { 'travel' }
 
       it 'creates events for the change change' do
