@@ -137,6 +137,7 @@ RSpec.describe Nsm::MakeDecisionForm do
     context 'when state is part_grant with downward adjustments' do
       let(:claim) { build(:claim, data:) }
       let(:data) { build(:nsm_data, :with_reduced_work_item) }
+
       context 'with blank partial_comment' do
         let(:params) { { claim: claim, state: 'part_grant', partial_comment: nil } }
 

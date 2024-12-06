@@ -8,8 +8,7 @@ RSpec.describe Nsm::AdditionalFeesController do
   let(:data) do
     build(:nsm_data, assigned_user_id: user.id, youth_court: 'yes',
       claim_type: 'non_standard_magistrate', plea_category: 'category_1a',
-      rep_order_date: rep_order_date
-    )
+      rep_order_date: rep_order_date)
   end
 
   let(:user) { create :caseworker }
@@ -57,7 +56,6 @@ RSpec.describe Nsm::AdditionalFeesController do
 
   describe 'edit' do
     it 'renders successfully' do
-      binding.pry
       get :edit, params: { claim_id: claim.id, id: youth_court_fee[:type] }
       expect(response).to be_successful
     end

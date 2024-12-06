@@ -34,7 +34,7 @@ RSpec.describe Nsm::EmailToProviderMailer, type: :mailer do
       let(:data) do
         build(
           :nsm_data,
-          solicitor:{ 'contact_email' => recipient },
+          solicitor: { 'contact_email' => recipient },
           cntp_order: 'CNTP12345'
         ).tap do |data|
           data.defendants.first['maat'] = nil
