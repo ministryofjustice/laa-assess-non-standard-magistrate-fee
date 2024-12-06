@@ -53,7 +53,13 @@ Rails.describe 'Assessment', :stub_oauth_token do
 
   context 'when part-granted' do
     let(:claim) { build(:claim, data:) }
-    let(:data) { build(:nsm_data, :with_reduced_work_item) }
+    let(:data) { build(:nsm_data) }
+
+    before do
+      claim.data['work_items'].first['time_spent_original'] = claim.data['work_items'].first['time_spent']
+      claim.data['work_items'].first['time_spent'] -= 1
+      claim.data['work_items'].first['adjustment_comment'] = 'reducing this work item'
+    end
 
     it 'sends a part granted notification' do
       visit nsm_claim_claim_details_path(claim)
