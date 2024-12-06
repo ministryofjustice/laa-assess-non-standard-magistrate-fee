@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe Nsm::AdditionalFeesController do
-  let(:rep_order_date) { Date.new(2024, 12, 6) }
+  let(:rep_order_date) { '2024-12-06' }
   let(:claim) do
-    build(:claim, data:)
+    build(:claim, data: data, assigned_user_id: user.id)
   end
   let(:data) do
-    build(:nsm_data, assigned_user_id: user.id, youth_court: 'yes',
+    build(:nsm_data, youth_court: 'yes',
       claim_type: 'non_standard_magistrate', plea_category: 'category_1a',
-      rep_order_date: rep_order_date)
+      include_youth_court_fee: true, rep_order_date: rep_order_date)
   end
 
   let(:user) { create :caseworker }
@@ -26,7 +26,7 @@ RSpec.describe Nsm::AdditionalFeesController do
   end
 
   context 'No additional fee applicable' do
-    let(:rep_order_date) { Date.new(2024, 12, 5) }
+    let(:rep_order_date) { '2024-12-05' }
 
     it 'raises error when trying to render' do
       expect { get :index, params: { claim_id: claim.id } }.to raise_error(ActionController::RoutingError)
