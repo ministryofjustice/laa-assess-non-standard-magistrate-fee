@@ -26,7 +26,8 @@ RSpec.describe Nsm::SendBackForm do
 
   describe '#persistance', :stub_oauth_token do
     let(:user) { instance_double(User, id: SecureRandom.uuid) }
-    let(:claim) { build(:claim, :with_assignment) }
+    let(:claim) { build(:claim, data:) }
+    let(:data) { build(:nsm_data, :with_assignment) }
     let(:params) { { claim: claim, send_back_comment: 'some comment', current_user: user } }
     let(:unassignment_stub) do
       stub_request(:delete, "https://appstore.example.com/v1/submissions/#{claim.id}/assignment").to_return(status: 204)

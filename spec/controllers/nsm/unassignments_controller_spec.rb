@@ -37,7 +37,8 @@ RSpec.describe Nsm::UnassignmentsController do
     end
     let(:unassignment_user) { 'other' }
     let(:user) { create(:caseworker) }
-    let(:claim) { build(:claim, :with_assignment) }
+    let(:claim) { build(:claim, data:) }
+    let(:data) { build(:nsm_data, :with_assignment) }
     let(:laa_reference_class) do
       instance_double(Nsm::V1::LaaReference, laa_reference: 'AAA111')
     end

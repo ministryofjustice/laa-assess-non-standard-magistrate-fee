@@ -13,7 +13,8 @@ RSpec.describe Nsm::EmailToProviderMailer, type: :mailer do
 
   describe 'granted' do
     context 'with maat id' do
-      let(:submission) { build(:claim, solicitor: { 'contact_email' => recipient }, state: 'granted') }
+      let(:submission) { build(:claim, state: 'granted', data: data) }
+      let(:data) { build(:nsm_data, solicitor: { 'contact_email' => recipient }) }
       let(:feedback_template) { '80c0dcd2-597b-4c82-8c94-f6e26af71a40' }
       let(:personalisation) do
         [laa_case_reference:, ufn:, main_defendant_name:, defendant_reference:, claim_total:, date:]
@@ -25,9 +26,18 @@ RSpec.describe Nsm::EmailToProviderMailer, type: :mailer do
     context 'with cntp id' do
       let(:defendant_reference) { "Client's CNTP number: CNTP12345" }
       let(:submission) do
-        build(:claim, solicitor: { 'contact_email' => recipient }, state: 'granted').tap do |claim|
+        build(:claim, state: 'granted').tap do |claim|
           claim.data['cntp_order'] = 'CNTP12345'
           claim.data['defendants'].first['maat'] = nil
+        end
+      end
+      let(:data) do
+        build(
+          :nsm_data,
+          solicitor:{ 'contact_email' => recipient },
+          cntp_order: 'CNTP12345'
+        ).tap do |data|
+          data.defendants.first['maat'] = nil
         end
       end
 
