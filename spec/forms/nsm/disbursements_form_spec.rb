@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Nsm::DisbursementsForm do
-  let(:claim) do
+  let(:claim) { build(:claim, data:) }
+  let(:data) do
     build(
-      :claim,
+      :nsm_data,
       disbursements: [
         {
           'id' => id,
