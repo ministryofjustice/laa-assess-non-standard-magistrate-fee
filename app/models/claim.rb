@@ -91,7 +91,7 @@ class Claim < Submission
       disbursements: disbursements_for_calculation,
       letters_and_calls: letters_and_calls_for_calculation,
       youth_court: data['youth_court'] == 'yes',
-      claimed_youth_court_fee_included: youth_court_fee_allowed,
+      claimed_youth_court_fee_included: youth_court_fee_claimed,
       plea_category: data['plea_category'],
       # :nocov:
       assessed_youth_court_fee_included: data['include_youth_court_fee'],
@@ -101,12 +101,8 @@ class Claim < Submission
 
   private
 
-  def youth_court_fee_allowed
-    if data['include_youth_court_fee_original'].nil?
-      data['include_youth_court_fee']
-    else
-      data['include_youth_court_fee_original']
-    end
+  def youth_court_fee_claimed
+    data.fetch('include_youth_court_fee_original', data['include_youth_court_fee'])
   end
 
   def granted_and_allowed_less_than_claim
