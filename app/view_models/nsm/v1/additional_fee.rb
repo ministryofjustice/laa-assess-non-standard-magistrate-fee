@@ -15,6 +15,9 @@ module Nsm
       attribute :claimed_total_inc_vat
       attribute :assessed_total_inc_vat
 
+      adjustable_attribute :include_youth_court_fee, :boolean
+      attribute :youth_court_fee_adjustment_comment, :string
+
       class << self
         def headers
           [
@@ -35,23 +38,44 @@ module Nsm
         end
       end
 
-      def table_fields
+      def key
+        'summary_table'
+      end
+
+      def title
+        I18n.t(".nsm.youth_court_fee_adjustments.#{key}.title")
+      end
+
+      def data
         [
-          I18n.t("nsm.additional_fees.index.#{type}"),
-          format(claimed_total_exc_vat),
-          format(adjusted? ? assessed_total_inc_vat : nil),
-        ]
+          {
+            title: I18n.t(".nsm.youth_court_fee_adjustments.#{key}.additional_fee"),
+            value: I18n.t(".nsm.youth_court_fee_adjustments.#{key}.youth_court_fee")
+          },
+          {
+            title: I18n.t(".nsm.youth_court_fee_adjustments.#{key}.net_cost_claimed"),
+            value: NumberTo.pounds(calculated_claimed_total_exc_vat)
+          }
+        ].compact
       end
 
-      def provider_fields
-        {
-          '.additional_fee' => I18n.t("nsm.additional_fees.edit.#{type}"),
-          '.net_cost_claimed' => NumberTo.pounds(claimed_total_exc_vat)
-        }
+      def rows
+        { title:, data: }
       end
 
-      def adjusted?
+      def any_adjustments?
         submission.data['youth_court_fee_adjustment_comment'].present?
+      end
+      alias changed? any_adjustments?
+
+      def form_attributes
+        remove_bool = ActiveModel::Type::Boolean.new.cast(include_youth_court_fee)
+        remove_youth_court_fee = include_youth_court_fee_original.nil? ? nil : !remove_bool
+
+        {
+          'remove_youth_court_fee' => remove_youth_court_fee,
+          'explanation' => youth_court_fee_adjustment_comment
+        }
       end
 
       def backlink_path(claim)
@@ -63,6 +87,29 @@ module Nsm
         else
           Rails.application.routes.url_helpers.nsm_claim_additional_fees_path(claim)
         end
+      end
+
+      def table_fields
+        [
+          I18n.t("nsm.additional_fees.index.#{type}"),
+          format(claimed_total_exc_vat),
+          format(any_adjustments? ? assessed_total_inc_vat : nil),
+        ]
+      end
+
+      def provider_fields
+        {
+          '.additional_fee' => I18n.t("nsm.additional_fees.edit.#{type}"),
+          '.net_cost_claimed' => NumberTo.pounds(claimed_total_exc_vat)
+        }
+      end
+
+      def calculated_claimed_total_exc_vat
+        calculated[:claimed_total_exc_vat]
+      end
+
+      def calculated
+        @calculated ||= submission.additional_fees[:youth_court_fee]
       end
 
       private

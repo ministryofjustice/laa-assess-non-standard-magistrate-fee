@@ -91,4 +91,90 @@ RSpec.describe 'Additional Fees', :stub_oauth_token do
       expect { visit nsm_claim_additional_fees_path(claim) }.to raise_error(Date::Error)
     end
   end
+
+  context 'youth court fee included' do
+    let(:include_youth_court_fee) { true }
+    let(:state) { 'in_progress' }
+
+    it 'review and adjust page shows additional fees tab' do
+      visit nsm_claim_work_items_path(claim)
+
+      expect(page).to have_content(
+        'Additional fees'
+      )
+    end
+
+    it 'Additional fees tab shows link to net allowed/net claimed' do
+      visit nsm_claim_work_items_path(claim)
+
+      click_on 'Additional fees'
+
+      within('.govuk-tabs__panel') do
+        within('.govuk-table__body') do
+          expect(page).to have_content('Youth court fee£598.59')
+        end
+      end
+    end
+
+    it 'Youth court fee link allows adjustment' do
+      visit nsm_claim_additional_fees_path(claim)
+
+      click_on 'Youth court fee'
+
+      expect(page).to have_content('Adjust additional fee')
+    end
+
+    it 'allows removal adjustment of youth court fee' do
+      visit nsm_claim_additional_fees_path(claim)
+
+      within('.govuk-tabs__panel') do
+        click_on 'Youth court fee'
+      end
+
+      expect(page).to have_content('Adjust additional fee')
+
+      choose 'Yes, remove fee'
+      fill_in 'nsm-youth-court-fee-form-explanation-field', with: 'Because I can'
+
+      click_button 'Save changes'
+
+      within('.govuk-tabs__panel') do
+        within('.govuk-table__body') do
+          expect(page).to have_content('Youth court fee£598.59£0.00')
+        end
+      end
+    end
+
+    context 'CW removed fee' do # CW = caseworker
+      let(:claim) do
+        build(:claim, state: 'in_progress').tap do |claim|
+          claim.data.merge!(data).merge!({ rep_order_date: Date.new(2024, 12, 6),
+                                           include_youth_court_fee: false,
+                                           include_youth_court_fee_original: true,
+                                           youth_court_fee_adjustment_comment: 'Because I can' })
+        end
+      end
+
+      it 'allows restoration adjustment of youth court fee' do
+        visit nsm_claim_additional_fees_path(claim)
+
+        within('.govuk-tabs__panel') do
+          click_on 'Youth court fee'
+        end
+
+        expect(page).to have_content('Adjust additional fee')
+
+        choose 'No, do not remove fee'
+
+        click_button 'Save changes'
+
+        within('.govuk-tabs__panel') do
+          within('.govuk-table__body') do
+            expect(page).not_to have_content('Youth court fee£598.59£0.00')
+            expect(page).to have_content('Youth court fee£598.59')
+          end
+        end
+      end
+    end
+  end
 end

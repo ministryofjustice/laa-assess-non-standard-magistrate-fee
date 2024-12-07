@@ -4,7 +4,7 @@ head = Nsm::V1::AdditionalFee.headers
 rows = records.rows.reject{|item| item.type == :total}.map do |additional_fee|
   fields = additional_fee.table_fields.dup
   destination = if policy(claim).update?
-                  edit_nsm_claim_youth_court_fee_adjustments_path(claim_id: claim.id)
+                  edit_nsm_claim_additional_fee_path(claim_id: claim.id, id: additional_fee.type)
                 else
                   nsm_claim_additional_fee_path(claim_id: claim.id, id: additional_fee.type)
                 end

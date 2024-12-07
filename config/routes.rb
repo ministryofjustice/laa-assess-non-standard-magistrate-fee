@@ -91,7 +91,6 @@ Rails.application.routes.draw do
       resource :send_back, only: [:edit, :update, :show]
       resource :unassignment, only: [:edit, :update], path_names: { edit: '' }
       resources :assignments, only: %i[new create]
-      resource :youth_court_fee_adjustments, only: %i[edit update]
     end
 
     resources :further_information_downloads, only: :show
