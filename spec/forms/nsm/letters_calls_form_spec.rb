@@ -230,7 +230,8 @@ RSpec.describe Nsm::LettersCallsForm do
     end
 
     context 'when claim has a legacy translation format' do
-      let(:claim) { build(:claim, :legacy_translations) }
+      let(:claim) { build(:claim, data:) }
+      let(:data) { build(:nsm_data, :legacy_translations) }
 
       it 'creates an event for each field changed' do
         expect(Event::Edit).to receive(:build).twice

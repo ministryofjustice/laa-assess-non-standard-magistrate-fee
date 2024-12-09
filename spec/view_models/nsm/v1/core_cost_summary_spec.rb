@@ -6,13 +6,21 @@ RSpec.describe Nsm::V1::CoreCostSummary do
   let(:submission) do
     build(
       :claim,
-      work_items: work_items.map(&:deep_stringify_keys),
-      letters_and_calls: letters_and_calls,
-      disbursements: disbursements.map(&:deep_stringify_keys),
-      vat_registered: vat_registered,
-      state: state
+      state:,
+      data:
     )
   end
+
+  let(:data) do
+    build(
+      :nsm_data, claim_type: claim_type, include_youth_court_fee: include_youth_court_fee,
+      include_youth_court_fee_original: include_youth_court_fee_original,
+      youth_court: youth_court, plea_category: plea_category, rep_order_date: rep_order_date,
+      work_items: work_items.map(&:deep_stringify_keys), letters_and_calls: letters_and_calls,
+      disbursements: disbursements.map(&:deep_stringify_keys), vat_registered: vat_registered,
+    )
+  end
+
   let(:vat_registered) { 'no' }
   let(:letters_and_calls) { [] }
   let(:disbursements) do
@@ -20,9 +28,15 @@ RSpec.describe Nsm::V1::CoreCostSummary do
   end
   let(:work_items) { [] }
   let(:state) { 'submitted' }
+  let(:claim_type) { 'non_standard_magistrate' }
+  let(:plea_category) { 'category_1a' }
+  let(:youth_court) { 'yes' }
+  let(:rep_order_date) { '2024-12-05' }
+  let(:include_youth_court_fee) { false }
+  let(:include_youth_court_fee_original) { nil }
 
   describe '#headers' do
-    it 'retruns the translated headers' do
+    it 'returns the translated headers' do
       expect(subject.headers).to eq(
         [
           { numeric: false, text: 'Items', width: 'govuk-!-width-one-quarter' },
@@ -246,6 +260,50 @@ RSpec.describe Nsm::V1::CoreCostSummary do
             gross_cost: { numeric: true, text: '£61.35' },
             name: { numeric: false, text: 'Profit costs', width: nil },
             net_cost: { numeric: true, text: '£61.35' },
+            vat: { numeric: true, text: '£0.00' }
+          }
+        )
+      end
+    end
+
+    context 'when a youth court fee has been added' do
+      before do
+        subject { described_class.new(submission:) }
+      end
+
+      let(:rep_order_date) { '2024-12-06' }
+      let(:include_youth_court_fee) { true }
+      let(:include_youth_court_fee_original) { nil }
+
+      it 'adds the fee to the profit costs' do
+        expect(subject.table_fields[0]).to eq(
+          {
+            allowed_gross_cost: '',
+            allowed_net_cost: '',
+            allowed_vat: '',
+            gross_cost: { numeric: true, text: '£598.59' },
+            name: { numeric: false, text: 'Profit costs', width: nil },
+            net_cost: { numeric: true, text: '£598.59' },
+            vat: { numeric: true, text: '£0.00' }
+          }
+        )
+      end
+    end
+
+    context 'when a youth court fee has been added and assessed' do
+      let(:rep_order_date) { '2024-12-06' }
+      let(:include_youth_court_fee) { false }
+      let(:include_youth_court_fee_original) { true }
+
+      it 'adds the fee to the profit costs' do
+        expect(subject.table_fields[0]).to eq(
+          {
+            allowed_gross_cost: '',
+            allowed_net_cost: '',
+            allowed_vat: '',
+            gross_cost: { numeric: true, text: '£598.59' },
+            name: { numeric: false, text: 'Profit costs', width: nil },
+            net_cost: { numeric: true, text: '£598.59' },
             vat: { numeric: true, text: '£0.00' }
           }
         )

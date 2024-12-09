@@ -30,7 +30,7 @@ RSpec.describe Nsm::ClaimDetailsController do
     end
 
     describe 'has further_information' do
-      let(:data) { { 'further_information' => { 'information_requested' => 'requesting...' } } }
+      let(:data) { build(:nsm_data, further_information: { 'information_requested' => 'requesting...' }) }
       let(:claim) { build(:claim, data:) }
       let(:further_information) { [instance_double(Nsm::V1::FurtherInformation)] }
 

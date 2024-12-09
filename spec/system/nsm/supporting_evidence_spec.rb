@@ -33,7 +33,7 @@ RSpec.describe 'Supporting Evidence', :stub_oauth_token do
   end
 
   context 'There is supporting evidence and some evidence is sent by post' do
-    let(:claim) { build(:claim, send_by_post: true) }
+    let(:claim) { build(:claim, data: build(:nsm_data, send_by_post: true)) }
 
     before do
       allow(FeatureFlags).to receive(:postal_evidence).and_return(double(:postal_evidence, enabled?: true))
@@ -62,7 +62,8 @@ RSpec.describe 'Supporting Evidence', :stub_oauth_token do
   end
 
   context 'There is supporting evidence sent by post' do
-    let(:claim) { build(:claim, send_by_post: true, supporting_evidences: []) }
+    let(:claim) { build(:claim, data:) }
+    let(:data) { build(:nsm_data, send_by_post: true, supporting_evidences: []) }
 
     it 'supporting evidence table not shown' do
       expect(page).to have_no_css('.govuk-table__row')

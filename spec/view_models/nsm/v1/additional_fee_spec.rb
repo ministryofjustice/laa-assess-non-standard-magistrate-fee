@@ -29,7 +29,8 @@ RSpec.describe Nsm::V1::AdditionalFee do
           'type' => 'youth_court_fee',
           'include_youth_court_fee' => true,
           'claimed_total_exc_vat' => 598.59,
-          'assessed_total_inc_vat' => 598.59
+          'assessed_total_exc_vat' => 598.59,
+          'adjustment_comment' => 'assessed'
         }
       end
 

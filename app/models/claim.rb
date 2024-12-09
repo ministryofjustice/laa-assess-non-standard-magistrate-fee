@@ -81,7 +81,6 @@ class Claim < Submission
     @rates ||= LaaCrimeFormsCommon::Pricing::Nsm.rates(data_for_calculation)
   end
 
-  # rubocop:disable Metrics/AbcSize
   def data_for_calculation
     {
       claim_type: BaseViewModel.build(:details_of_claim, self).claim_type.value,
@@ -92,18 +91,19 @@ class Claim < Submission
       disbursements: disbursements_for_calculation,
       letters_and_calls: letters_and_calls_for_calculation,
       youth_court: data['youth_court'] == 'yes',
-      # TODO: CRM457-2306: Amend these as the fields will exist
-      claimed_youth_court_fee_included:  data.fetch('include_youth_court_fee_original', data['include_youth_court_fee']),
+      claimed_youth_court_fee_included: youth_court_fee_claimed,
       plea_category: data['plea_category'],
-      # TODO: CRM457-2306: Remove these as the fields will exist
       # :nocov:
       assessed_youth_court_fee_included: data['include_youth_court_fee'],
       # :nocov:
     }
   end
-  # rubocop:enable Metrics/AbcSize
 
   private
+
+  def youth_court_fee_claimed
+    data['include_youth_court_fee_original'] || data['include_youth_court_fee']
+  end
 
   def granted_and_allowed_less_than_claim
     allowed_gross_cost = totals.dig(:totals, :assessed_total_inc_vat)

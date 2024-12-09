@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe 'Adjustments', :stub_oauth_token do
   let(:user) { create(:caseworker) }
-  let(:claim) { build(:claim, :with_adjustments) }
+  let(:claim) { build(:claim, data:) }
+  let(:data) { build(:nsm_data, :with_adjustments) }
 
   before do
     stub_app_store_interactions(claim)
