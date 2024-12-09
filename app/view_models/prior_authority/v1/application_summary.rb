@@ -106,7 +106,7 @@ module PriorAuthority
       delegate :sent_back?, :expired?, :provider_updated?, to: :submission
 
       def caseworker
-        User.find_by(id: submission.assigned_user_id)&.display_name
+        submission.assigned_user&.display_name
       end
     end
   end

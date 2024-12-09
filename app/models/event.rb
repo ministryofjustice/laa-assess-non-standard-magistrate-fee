@@ -99,7 +99,7 @@ class Event
   end
 
   def primary_user
-    @primary_user ||= User.find_by(id: primary_user_id)
+    @primary_user ||= User.load(primary_user_id)
   end
 
   def as_json(*)

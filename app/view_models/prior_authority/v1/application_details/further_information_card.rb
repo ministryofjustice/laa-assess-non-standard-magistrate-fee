@@ -14,7 +14,7 @@ module PriorAuthority
         end
 
         def caseworker
-          User.find(@further_information['caseworker_id']).display_name
+          User.load(@further_information['caseworker_id']).display_name
         end
 
         def information_request

@@ -65,7 +65,7 @@ module Nsm
       end
 
       def caseworker
-        User.find_by(id: caseworker_id)&.display_name
+        User.load(caseworker_id)&.display_name
       end
 
       private
