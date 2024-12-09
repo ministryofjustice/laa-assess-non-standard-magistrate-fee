@@ -305,7 +305,7 @@ RSpec.describe Nsm::V1::LetterAndCall do
     end
   end
 
-  describe 'backlink_path' do
+  describe '#backlink_path' do
     context 'when a change has been made' do
       let(:claim) { build(:claim) }
       let(:params) do

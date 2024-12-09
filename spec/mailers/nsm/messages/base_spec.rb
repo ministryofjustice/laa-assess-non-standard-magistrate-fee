@@ -5,9 +5,8 @@ require 'rails_helper'
 RSpec.describe Nsm::Messages::Base do
   subject(:feedback) { described_class.new(claim) }
 
-  let(:claim) do
-    build(:claim, solicitor: { 'contact_email' => 'provider@example.com' })
-  end
+  let(:claim) { build(:claim, data:) }
+  let(:data) { build(:nsm_data, solicitor: { 'contact_email' => 'provider@example.com' }) }
 
   describe '#template' do
     it 'throws a not implemented exception' do

@@ -7,7 +7,8 @@ RSpec.describe Nsm::AllAdjustmentsDeleter do
     let(:params) { { claim_id: claim.id, id: item_id, nsm_delete_adjustments_form: { comment: 'test' } } }
     let(:item_id) { '1234-adj' }
     let(:user) { create(:caseworker) }
-    let(:claim) { build(:claim, :with_adjustments) }
+    let(:claim) { build(:claim, data:) }
+    let(:data) { build(:nsm_data, :with_adjustments) }
     let(:app_store_client) { instance_double(AppStoreClient, create_events: true) }
 
     before do

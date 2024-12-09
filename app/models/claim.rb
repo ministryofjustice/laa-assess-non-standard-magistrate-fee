@@ -49,6 +49,22 @@ class Claim < Submission
     core_cost_summary.any_increased?
   end
 
+  def additional_fees
+    totals.fetch(:additional_fees, nil)
+  end
+
+  def youth_court_fee_elligible?
+    data['claim_type'] == 'non_standard_magistrate' &&
+      (data['rep_order_date']&.to_date&.>= Date.new(2024, 12, 6)) &&
+      data['youth_court'] == 'yes' &&
+      data['plea_category'].match?(/category_(?:2|[12]a)$/)
+  end
+
+  def additional_fees?
+    FeatureFlags.youth_court_fee.enabled? &&
+      youth_court_fee_elligible?
+  end
+
   def adjustments_direction
     return :none unless any_cost_changes?
     return :mixed if any_cost_increases? && any_cost_reductions?
@@ -74,10 +90,20 @@ class Claim < Submission
       work_items: work_items_for_calculation,
       disbursements: disbursements_for_calculation,
       letters_and_calls: letters_and_calls_for_calculation,
+      youth_court: data['youth_court'] == 'yes',
+      claimed_youth_court_fee_included: youth_court_fee_claimed,
+      plea_category: data['plea_category'],
+      # :nocov:
+      assessed_youth_court_fee_included: data['include_youth_court_fee'],
+      # :nocov:
     }
   end
 
   private
+
+  def youth_court_fee_claimed
+    data['include_youth_court_fee_original'].nil? ? data['include_youth_court_fee'] : data['include_youth_court_fee_original']
+  end
 
   def granted_and_allowed_less_than_claim
     allowed_gross_cost = totals.dig(:totals, :assessed_total_inc_vat)
