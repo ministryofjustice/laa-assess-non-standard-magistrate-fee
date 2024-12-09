@@ -64,7 +64,12 @@ module Nsm
       end
 
       def any_adjustments?
-        submission.data['youth_court_fee_adjustment_comment'].present?
+        include_ycf = submission.data['include_youth_court_fee']
+        include_ycf_original = submission.data['include_youth_court_fee_original']
+
+        return false if include_ycf.nil? || include_ycf_original.nil?
+
+        include_ycf != include_ycf_original
       end
       alias changed? any_adjustments?
 

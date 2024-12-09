@@ -3,46 +3,28 @@ module Nsm
     COMMENT_FIELD = 'youth_court_fee_adjustment_comment'.freeze
     LINKED_CLASS = V1::AdditionalFee
 
-    attribute :remove_youth_court_fee
+    attribute :remove_youth_court_fee, :boolean
     attribute :youth_court_fee_adjustment_comment
+
+    # UX only requires and explanation for when CW wants to remove fee
+    validates :explanation, presence: true, if: :remove_youth_court_fee
 
     def save
       return false unless valid?
 
-      remove_bool = ActiveModel::Type::Boolean.new.cast(remove_youth_court_fee)
-
-      process_field(value: !remove_bool, field: 'include_youth_court_fee')
+      process_field(value: !remove_youth_court_fee, field: 'include_youth_court_fee')
 
       true
     end
 
     private
 
-    def ensure_original_field_value_set(field)
-      if selected_record["#{field}_original"].present?
-        selected_record.delete("#{field}_original")
-        selected_record.delete(self.class::COMMENT_FIELD)
-      else
-        selected_record["#{field}_original"] ||= selected_record[field]
-      end
-    end
-
-    def explanation_required?
-      remove_youth_court_fee == 'true'
-    end
-
     def selected_record
       @selected_record ||= submission.data
     end
 
     def data_has_changed?
-      remove_youth_court_fee != item.include_youth_court_fee
-    end
-
-    def linked
-      {
-        type: self.class::LINKED_CLASS::LINKED_TYPE
-      }
+      !remove_youth_court_fee != item.include_youth_court_fee
     end
   end
 end
