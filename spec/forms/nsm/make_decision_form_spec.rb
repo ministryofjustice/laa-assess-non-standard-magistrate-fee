@@ -135,7 +135,13 @@ RSpec.describe Nsm::MakeDecisionForm do
     end
 
     context 'when state is part_grant with downward adjustments' do
-      let(:claim) { build(:claim, :with_reduced_work_item) }
+      let(:claim) { build(:claim) }
+
+      before do
+        claim.data['work_items'].first['time_spent_original'] = claim.data['work_items'].first['time_spent']
+        claim.data['work_items'].first['time_spent'] -= 1
+        claim.data['work_items'].first['adjustment_comment'] = 'reducing this work item'
+      end
 
       context 'with blank partial_comment' do
         let(:params) { { claim: claim, state: 'part_grant', partial_comment: nil } }
@@ -205,7 +211,11 @@ RSpec.describe Nsm::MakeDecisionForm do
     end
 
     context 'when state is rejected with any adjustment' do
-      let(:claim) { build(:claim, :with_reduced_work_item) }
+      before do
+        claim.data['work_items'].first['time_spent_original'] = claim.data['work_items'].first['time_spent']
+        claim.data['work_items'].first['time_spent'] -= 1
+        claim.data['work_items'].first['adjustment_comment'] = 'reducing this work item'
+      end
 
       context 'with reject_comment set' do
         let(:params) { { claim: claim, state: 'rejected', reject_comment: 'reject comment' } }
@@ -217,10 +227,14 @@ RSpec.describe Nsm::MakeDecisionForm do
 
   describe '#save' do
     let(:user) { instance_double(User) }
-    let(:claim) { build(:claim, :with_reduced_work_item) }
+    let(:claim) { build(:claim, data:) }
+    let(:data) { build(:nsm_data) }
     let(:params) { { claim: claim, state: 'part_grant', partial_comment: 'part comment', current_user: user } }
 
     before do
+      claim.data['work_items'].first['time_spent_original'] = claim.data['work_items'].first['time_spent']
+      claim.data['work_items'].first['time_spent'] -= 1
+      claim.data['work_items'].first['adjustment_comment'] = 'reducing this work item'
       allow(Event::Decision).to receive(:build)
       allow(NotifyAppStore).to receive(:perform_now)
     end

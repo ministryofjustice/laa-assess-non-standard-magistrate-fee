@@ -5,7 +5,8 @@ require 'rails_helper'
 RSpec.describe Nsm::Messages::FurtherInformationRequest do
   subject(:feedback) { described_class.new(claim, caseworker_information_requested) }
 
-  let(:claim) { build(:claim, solicitor: { 'contact_email' => recipient }) }
+  let(:claim) { build(:claim, data:) }
+  let(:data) { build(:nsm_data, solicitor: { 'contact_email' => recipient }) }
   let(:feedback_template) { '9ecdec30-83d7-468d-bec2-cf770a2c9828' }
   let(:recipient) { 'provider@example.com' }
   let(:laa_case_reference) { 'LAA-FHaMVK' }

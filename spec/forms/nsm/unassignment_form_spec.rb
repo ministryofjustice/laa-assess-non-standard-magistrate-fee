@@ -18,7 +18,9 @@ RSpec.describe Nsm::UnassignmentForm, :stub_oauth_token do
     context 'when assigned user and current_user are the same' do
       before { claim.assigned_user_id = user.id }
 
-      it { expect(subject.unassignment_user).to eq('assigned') }
+      it do
+        expect(subject.unassignment_user).to eq('assigned')
+      end
     end
 
     context 'when assigned user and current_user are different' do

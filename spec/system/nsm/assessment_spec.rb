@@ -52,7 +52,14 @@ Rails.describe 'Assessment', :stub_oauth_token do
   end
 
   context 'when part-granted' do
-    let(:claim) { build(:claim, :with_reduced_work_item) }
+    let(:claim) { build(:claim, data:) }
+    let(:data) { build(:nsm_data) }
+
+    before do
+      claim.data['work_items'].first['time_spent_original'] = claim.data['work_items'].first['time_spent']
+      claim.data['work_items'].first['time_spent'] -= 1
+      claim.data['work_items'].first['adjustment_comment'] = 'reducing this work item'
+    end
 
     it 'sends a part granted notification' do
       visit nsm_claim_claim_details_path(claim)
@@ -155,7 +162,8 @@ Rails.describe 'Assessment', :stub_oauth_token do
   end
 
   context 'when navigating', :javascript do
-    let(:claim) do
+    let(:claim) { build(:claim, data:) }
+    let(:data) do
       disbursements = Array.new(100) do |i|
         {
           'id' => SecureRandom.uuid,
@@ -182,7 +190,7 @@ Rails.describe 'Assessment', :stub_oauth_token do
           'completed_on' => Date.new(2022, 12, 12) + i
         }
       end
-      build(:claim, disbursements:, work_items:)
+      build(:nsm_data, disbursements:, work_items:)
     end
 
     it 'includes the disbursement ID when navigating back' do

@@ -5,7 +5,8 @@ require 'rails_helper'
 RSpec.describe Nsm::Messages::Rejected do
   subject(:feedback) { described_class.new(claim, caseworker_decision_explanation) }
 
-  let(:claim) { build(:claim, solicitor: { 'contact_email' => recipient }) }
+  let(:claim) { build(:claim, data:) }
+  let(:data) { build(:nsm_data, solicitor: { 'contact_email' => recipient }) }
   let(:feedback_template) { '7e807120-b661-452c-95a6-1ae46f411cfe' }
   let(:recipient) { 'provider@example.com' }
   let(:laa_case_reference) { 'LAA-FHaMVK' }

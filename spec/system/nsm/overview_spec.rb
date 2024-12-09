@@ -20,7 +20,7 @@ RSpec.describe 'Overview', :stub_oauth_token, type: :system do
     end
 
     context 'when claim has old translation format' do
-      let(:claim) { build(:claim, :legacy_translations) }
+      let(:claim) { build(:claim, data: build(:nsm_data, :legacy_translations)) }
 
       it 'does not crash and renders the page' do
         expect(page)
