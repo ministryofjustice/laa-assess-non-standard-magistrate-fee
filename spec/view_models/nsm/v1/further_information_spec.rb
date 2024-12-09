@@ -43,10 +43,10 @@ RSpec.describe Nsm::V1::FurtherInformation do
         'documents' => [] }
     end
 
-    it 'falls back to nil if CW not found' do
+    it 'falls back to sensible default if CW not found' do
       subject { described_class.new(params) }
 
-      expect(subject.caseworker).to be_nil
+      expect(subject.caseworker).to eq 'Unknown caseworker'
     end
   end
 

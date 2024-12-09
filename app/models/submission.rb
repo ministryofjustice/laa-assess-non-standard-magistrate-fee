@@ -28,7 +28,7 @@ class Submission
   end
 
   def assigned_user
-    @assigned_user ||= User.find_by(id: assigned_user_id)
+    @assigned_user ||= User.load(assigned_user_id)
   end
 
   def to_param

@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  DummyUser = Struct.new(:display_name)
+
   has_many :access_logs, dependent: :destroy
   has_many :roles, dependent: :destroy
 
@@ -24,5 +26,11 @@ class User < ApplicationRecord
 
   def pending_activation?
     auth_subject_id.nil? && first_auth_at.nil?
+  end
+
+  def self.load(user_id)
+    return unless user_id
+
+    find_by(id: user_id) || DummyUser.new(I18n.t('helpers.non_local_caseworker'))
   end
 end
