@@ -40,8 +40,7 @@ RSpec.describe 'Additional Fees', :stub_oauth_token do
       click_on 'Youth court fee'
 
       expect(page).to have_content(
-        'Youth court fee' \
-        'Net cost claimed£0.00' \
+        'Youth court fee Net cost claimed £0.00'
       )
     end
   end
@@ -54,8 +53,7 @@ RSpec.describe 'Additional Fees', :stub_oauth_token do
       click_on 'Youth court fee'
 
       expect(page).to have_content(
-        'Youth court fee' \
-        'Net cost claimed£598.59' \
+        'Youth court fee Net cost claimed £598.59'
       )
     end
   end
@@ -145,7 +143,20 @@ RSpec.describe 'Additional Fees', :stub_oauth_token do
       end
     end
 
-    context 'CW removed fee' do # CW = caseworker
+    it 'shows error message if no explanation given' do
+      visit nsm_claim_additional_fees_path(claim)
+      within('.govuk-tabs__panel') do
+        click_on 'Youth court fee'
+      end
+
+      choose 'Yes, remove fee'
+
+      click_button 'Save changes'
+
+      expect(page).to have_content('Enter a reason for the adjustment')
+    end
+
+    context 'Caseworker removes fee' do
       let(:claim) do
         build(:claim, state: 'in_progress').tap do |claim|
           claim.data.merge!(data).merge!({ rep_order_date: Date.new(2024, 12, 6),
@@ -174,6 +185,30 @@ RSpec.describe 'Additional Fees', :stub_oauth_token do
             expect(page).to have_content('Youth court fee£598.59')
           end
         end
+      end
+
+      it 'additonal fee shows in adjustments' do
+        visit nsm_claim_work_items_path(claim)
+        expect(page).to have_content('Adjustments')
+        click_on 'Adjustments'
+        expect(page).to have_content('Additional fees')
+        click_on 'Additional fees'
+        within('.govuk-tabs__panel') do
+          click_on 'Youth court fee'
+        end
+
+        expect(page).to have_content('Adjust additional fee')
+      end
+
+      it 'removeing additional fee adjustment also removes adjustments tab if only adjustment' do
+        visit nsm_claim_additional_fees_path(claim)
+        within('.govuk-tabs__panel') do
+          click_on 'Youth court fee'
+        end
+        expect(page).to have_content('Adjust additional fee')
+        choose 'No, do not remove fee'
+        click_button 'Save changes'
+        expect(page).not_to have_content('Adjustments')
       end
     end
   end

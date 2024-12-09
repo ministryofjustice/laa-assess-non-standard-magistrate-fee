@@ -39,10 +39,7 @@ module Nsm
     def edit
       authorize(claim, :edit?)
 
-      item = BaseViewModel.build(:additional_fee, claim) do |model|
-        model.type == params[:id].to_sym
-      end
-
+      item = BaseViewModel.build(:additional_fee, claim)
       form = YouthCourtFeeForm.new(claim:, item:, **item.form_attributes)
       render :edit, locals: { claim:, item:, form: }
     end

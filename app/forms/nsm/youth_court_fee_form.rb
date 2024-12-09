@@ -31,10 +31,6 @@ module Nsm
       remove_youth_court_fee == 'true'
     end
 
-    def adjustment_comment
-      youth_court_fee_adjustment_comment
-    end
-
     def selected_record
       @selected_record ||= submission.data
     end

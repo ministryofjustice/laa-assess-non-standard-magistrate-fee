@@ -60,4 +60,33 @@ RSpec.describe Nsm::AdditionalFeesController do
       expect(response).to be_successful
     end
   end
+
+  describe 'update' do
+    let(:form) { instance_double(Nsm::YouthCourtFeeForm, save!: save) }
+
+    before do
+      allow(Nsm::YouthCourtFeeForm).to receive(:new).and_return(form)
+      put :update,
+          params: { claim_id: claim.id, id: 'youth_court_fee',
+                    nsm_youth_court_fee_form: { some: :data } }
+    end
+
+    context 'when form save is successful' do
+      let(:save) { true }
+
+      it 'redirects' do
+        expect(controller).to redirect_to(
+          nsm_claim_additional_fees_path(claim)
+        )
+      end
+    end
+
+    context 'when form save is unsuccessful' do
+      let(:save) { false }
+
+      it 'renders rather than redirects' do
+        expect(response).to be_successful
+      end
+    end
+  end
 end

@@ -16,15 +16,15 @@ en:
         provider_submission: Provider submission
         youth_court_fee: Youth court fee
       edit:
+        page_title: Adjust additional fee
+        heading: Additional fee
         additional_fee: Additional fee
         net_cost_claimed: Net cost claimed
         provider_submission: Provider submission
         youth_court_fee: Youth court fee
-        page_title: Adjust additional fee
         claimed_cost_summary: Claimed cost summary
         laa_adjustments: LAA adjustments
         remove_youth_court_fee: Remove the youth court fee?
-        heading: Make a decision
         remove_youth_court_fee_options:
           'true': Yes, remove fee
           'false': No, do not remove fee
