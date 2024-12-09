@@ -102,7 +102,11 @@ class Claim < Submission
   private
 
   def youth_court_fee_claimed
-    data.key?('include_youth_court_fee_original') ? data['include_youth_court_fee_original'] : data['include_youth_court_fee']
+    if data.key?('include_youth_court_fee_original') && !data['include_youth_court_fee_original'].nil?
+      data['include_youth_court_fee_original']
+    else
+      data['include_youth_court_fee']
+    end
   end
 
   def granted_and_allowed_less_than_claim
