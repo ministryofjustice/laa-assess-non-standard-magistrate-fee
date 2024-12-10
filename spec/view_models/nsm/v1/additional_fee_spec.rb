@@ -38,7 +38,7 @@ RSpec.describe Nsm::V1::AdditionalFee do
           [
             I18n.t("nsm.additional_fees.index.#{params['type']}"),
             { numeric: true, text: '£598.59' },
-            '',
+            { numeric: true, text: '£598.59' },
           ]
         )
       end

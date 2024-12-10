@@ -6,7 +6,7 @@
 
   # Did we just reload the same page?
   came_from_current_path =
-    url_for == nsm_claim_additional_fee_path(claim.id)
+    url_for == nsm_claim_additional_fee_path(claim.id, item.type)
 
   link_to t("helpers.back_link"),
   (
@@ -51,7 +51,7 @@
                 <%= f.govuk_radio_button :remove_youth_court_fee, 'false' %>
               <% end %>
               <%= f.govuk_submit(t('.submit')) do %>
-              <%= link_to t('shared.cancel'), nsm_claim_claim_details_path(claim), class: 'govuk-link' %>
+                <%= link_to t('shared.cancel'), nsm_claim_claim_details_path(claim), class: 'govuk-link' %>
               <% end %>
             <% end %>
           </div>

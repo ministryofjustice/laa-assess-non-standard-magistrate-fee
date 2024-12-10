@@ -51,7 +51,7 @@ module Nsm
       end
 
       def any_changed?
-        [disbursements, letters_calls, work_items].any? { |rows| rows.any?(&:changed?) } || additional_fees.changed?
+        [disbursements, letters_calls, work_items, additional_fees].any? { |rows| rows.any?(&:changed?) }
       end
 
       def any_reduced?
@@ -124,7 +124,7 @@ module Nsm
       end
 
       def additional_fees
-        @additional_fees ||= BaseViewModel.build(:additional_fee, submission)
+        @additional_fees ||= AdditionalFeesSummary.new('submission' => submission).rows
       end
     end
   end

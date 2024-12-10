@@ -7,7 +7,7 @@ module Nsm
     include Nsm::AdjustmentConcern
 
     FORMS = {
-      'youth_court_fee' => AdditionalFeesForm::YouthCourtFeeForm
+      'youth_court_fee' => YouthCourtFeeForm
     }.freeze
 
     def index
@@ -38,22 +38,29 @@ module Nsm
 
     def edit
       authorize(claim, :edit?)
-
-      item = BaseViewModel.build(:additional_fee, claim)
-      form = YouthCourtFeeForm.new(claim:, item:, **item.form_attributes)
+      rows = BaseViewModel.build(:additional_fees_summary, claim).rows
+      item = rows.detect do |model|
+        model.type == params[:id].to_sym
+      end
+      form = form_class.new(claim:, item:, **item.form_attributes)
       render :edit, locals: { claim:, item:, form: }
     end
 
+    # rubocop:disable Metrics/AbcSize
     def update
       authorize(claim, :edit?)
-      item = BaseViewModel.build(:additional_fee, claim)
-      form = YouthCourtFeeForm.new(claim:, item:, **form_params)
+      rows = BaseViewModel.build(:additional_fees_summary, claim).rows
+      item = rows.detect do |model|
+        model.type == params[:id].to_sym
+      end
+      form = form_class.new(claim:, item:, **form_params)
       if form.save!
         redirect_to nsm_claim_additional_fees_path(claim)
       else
         render :edit, locals: { claim:, item:, form: }
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     def adjusted
       authorize(claim, :show?)
