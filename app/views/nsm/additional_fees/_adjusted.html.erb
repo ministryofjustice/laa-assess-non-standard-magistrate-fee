@@ -6,7 +6,7 @@
       <%=
       caption = t('.table_caption')
       head = Nsm::V1::AdditionalFee.headers
-      rows = records.rows.reject{|item| item.type == :total}.map do |additional_fee|
+      rows = records.rows.reject{ _1.type == :total }.map do |additional_fee|
         next unless additional_fee.any_adjustments?
 
         fields = additional_fee.table_fields.dup

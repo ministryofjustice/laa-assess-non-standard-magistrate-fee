@@ -5,7 +5,6 @@ module Nsm
 
       attribute :type
       attribute :submission
-      attribute :include_youth_court_fee
       attribute :claimed_total_exc_vat
       attribute :claimed_vatable
       attribute :assessed_total_exc_vat
@@ -36,10 +35,8 @@ module Nsm
       end
 
       def backlink_path(claim)
-        # :nocov:
         if any_adjustments?
           Rails.application.routes.url_helpers.adjusted_nsm_claim_additional_fees_path(claim)
-        # :nocov:
         else
           Rails.application.routes.url_helpers.nsm_claim_additional_fees_path(claim)
         end

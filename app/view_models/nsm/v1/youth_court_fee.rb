@@ -40,7 +40,7 @@ module Nsm
       alias changed? any_adjustments?
 
       def form_attributes
-        remove_bool = ActiveModel::Type::Boolean.new.cast(include_youth_court_fee)
+        remove_bool = include_youth_court_fee
         remove_youth_court_fee = include_youth_court_fee_original.nil? ? nil : !remove_bool
 
         {

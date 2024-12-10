@@ -24,7 +24,7 @@ module Nsm
     end
 
     def data_has_changed?
-      !remove_youth_court_fee != item.include_youth_court_fee
+      remove_youth_court_fee == item.include_youth_court_fee
     end
   end
 end
