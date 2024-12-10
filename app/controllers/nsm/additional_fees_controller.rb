@@ -42,6 +42,7 @@ module Nsm
       item = rows.detect do |model|
         model.type == params[:id].to_sym
       end
+
       form = form_class.new(claim:, item:, **item.form_attributes)
       render :edit, locals: { claim:, item:, form: }
     end

@@ -30,4 +30,4 @@ en:
             base:
               no_change: 'No change'
             explanation:
-              blank: "Selected ‘Yes’ but not entered a reason: 'Enter a reason for the adjustment'"
+              blank: Enter a reason for the adjustment
