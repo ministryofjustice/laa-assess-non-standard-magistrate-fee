@@ -13,8 +13,11 @@ en:
         heading: Additional fees
         additional_fee: Additional fee
         net_cost_claimed: Net cost claimed
+        net_cost_allowed: Net cost allowed
         provider_submission: Provider submission
         youth_court_fee: Youth court fee
+        reason_for_adjustments: Reason for adjustments
+        laa_adjustments: LAA adjustments
       edit:
         page_title: Adjust additional fee
         heading: Additional fee

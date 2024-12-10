@@ -62,6 +62,24 @@ RSpec.describe Nsm::V1::YouthCourtFee do
     end
   end
 
+  describe '#caseworker_fields' do
+    let(:params) do
+      {
+        'type' => 'youth_court_fee',
+        'claimed_total_exc_vat' => 598.59,
+        'assessed_total_exc_vat' => 0.00,
+        'youth_court_fee_adjustment_comment' => 'assessed'
+      }
+    end
+
+    it 'returns the fields for the table display' do
+      expect(additional_fee.caseworker_fields).to eq(
+        { '.net_cost_allowed' => '£0.00',
+          '.reason_for_adjustments' => 'assessed' }
+      )
+    end
+  end
+
   describe '#backlink_path' do
     context 'when no change has been made' do
       let(:claim) { build(:claim) }

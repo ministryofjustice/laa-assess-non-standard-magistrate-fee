@@ -35,6 +35,18 @@
         tab.with_caption(text: t('.provider_submission'), size: 'l')
       end
     %>
+  </div>
 
+  <div class="govuk-grid-column-two-thirds">
+  <% if item.any_adjustments? %>
+    <%=
+      rows = item.caseworker_fields.map do |key, value|
+        [{ text: t(key, type: item.type), width: 'govuk-!-width-one-half' }, value]
+      end
+      govuk_table(head: '', first_cell_is_header: true, rows:) do |tab|
+        tab.with_caption(text: t('.laa_adjustments'), size: 'l')
+      end
+    %>
+  <% end %>
   </div>
 </div>

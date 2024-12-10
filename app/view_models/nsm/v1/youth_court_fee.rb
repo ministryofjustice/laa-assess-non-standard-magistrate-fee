@@ -46,6 +46,13 @@ module Nsm
         }
       end
 
+      def caseworker_fields
+        {
+          '.net_cost_allowed' => NumberTo.pounds(assessed_total_exc_vat),
+          '.reason_for_adjustments' => youth_court_fee_adjustment_comment
+        }
+      end
+
       def type
         :youth_court_fee
       end
