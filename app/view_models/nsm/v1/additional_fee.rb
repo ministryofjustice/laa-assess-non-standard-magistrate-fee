@@ -26,7 +26,7 @@ module Nsm
         def adjusted_headers
           [
             t('.fee_type', width: 'govuk-!-width-one-fifth', numeric: false),
-            t('.reason_for_adjustments', width: 'govuk-!-width-one-third', numeric: false),
+            t('.reason_for_adjustments', numeric: false),
             t('.net_cost_allowed')
           ]
         end
