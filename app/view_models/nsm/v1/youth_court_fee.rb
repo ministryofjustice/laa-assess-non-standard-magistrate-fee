@@ -3,6 +3,7 @@ module Nsm
     class YouthCourtFee < AdditionalFee
       adjustable_attribute :include_youth_court_fee, :boolean
       attribute :youth_court_fee_adjustment_comment, :string
+      alias adjustment_comment youth_court_fee_adjustment_comment
 
       def key
         'summary_table'
