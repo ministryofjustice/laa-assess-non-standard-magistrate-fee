@@ -55,11 +55,11 @@ module Nsm
       end
 
       def any_reduced?
-        [disbursements, letters_calls, work_items].any? { |rows| rows.any?(&:reduced?) }
+        [disbursements, letters_calls, work_items, additional_fees].any? { |rows| rows.any?(&:reduced?) }
       end
 
       def any_increased?
-        [disbursements, letters_calls, work_items].any? { |rows| rows.any?(&:increased?) }
+        [disbursements, letters_calls, work_items, additional_fees].any? { |rows| rows.any?(&:increased?) }
       end
 
       private
