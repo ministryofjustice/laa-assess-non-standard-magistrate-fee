@@ -19,6 +19,10 @@ module Nsm
 
     private
 
+    def no_change_field
+      :remove_youth_court_fee
+    end
+
     def selected_record
       @selected_record ||= submission.data
     end

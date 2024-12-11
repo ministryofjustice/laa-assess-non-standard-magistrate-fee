@@ -156,6 +156,19 @@ RSpec.describe 'Additional Fees', :stub_oauth_token do
       expect(page).to have_content('Enter a reason for the adjustment')
     end
 
+    it 'shows error message if no change' do
+      visit nsm_claim_additional_fees_path(claim)
+      within('.govuk-tabs__panel') do
+        click_on 'Youth court fee'
+      end
+
+      choose 'No, do not remove fee'
+
+      click_button 'Save changes'
+
+      expect(page).to have_content('You cannot save changes as you have not changed anything.')
+    end
+
     context 'Caseworker removes fee' do
       let(:claim) do
         build(:claim, state: 'in_progress').tap do |claim|
