@@ -53,6 +53,14 @@ module Nsm
         }
       end
 
+      def adjusted_fields
+        [
+          I18n.t("nsm.additional_fees.index.#{type}"),
+          youth_court_fee_adjustment_comment,
+          format(assessed_total_exc_vat)
+        ]
+      end
+
       def type
         :youth_court_fee
       end

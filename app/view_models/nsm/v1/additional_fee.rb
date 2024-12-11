@@ -23,6 +23,14 @@ module Nsm
           ]
         end
 
+        def adjusted_headers
+          [
+            t('.fee_type', width: 'govuk-!-width-one-fifth', numeric: false),
+            t('.reason_for_adjustments', width: 'govuk-!-width-one-third', numeric: false),
+            t('.net_cost_allowed')
+          ]
+        end
+
         private
 
         def t(key, width: nil, numeric: true, scope: 'nsm.additional_fees.index')

@@ -28,6 +28,6 @@ en:
         nsm/youth_court_fee_form:
           attributes:
             base:
-              no_change: 'No change'
+              no_change: You cannot save changes as you have not changed anything. You can make a change and save it, or select cancel.
             explanation:
               blank: Enter a reason for the adjustment

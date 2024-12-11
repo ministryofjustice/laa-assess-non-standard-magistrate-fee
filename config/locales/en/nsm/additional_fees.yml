@@ -8,6 +8,7 @@ en:
         net_cost_claimed: Net cost claimed
         net_cost_allowed: Net cost allowed
         youth_court_fee: Youth court fee
+        reason_for_adjustments: Reason for adjustments
       show:
         page_title: Additional fees
         heading: Additional fees
