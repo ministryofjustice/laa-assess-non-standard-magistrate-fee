@@ -249,8 +249,9 @@ GEM
       bindata
       faraday (~> 2.0)
       faraday-follow_redirects
-    json-schema (5.1.0)
+    json-schema (5.1.1)
       addressable (~> 2.8)
+      bigdecimal (~> 3.1)
     jwt (2.8.2)
       base64
     language_server-protocol (3.17.0.3)
