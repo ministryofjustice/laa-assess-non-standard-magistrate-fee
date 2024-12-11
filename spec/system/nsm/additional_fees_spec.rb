@@ -40,7 +40,13 @@ RSpec.describe 'Additional Fees', :stub_oauth_token do
       click_on 'Youth court fee'
 
       expect(page).to have_content(
-        'Youth court fee Net cost claimed £0.00'
+        'Youth court feeNet cost claimed£0.00'
+      )
+      expect(page).not_to have_content(
+        'LAA adjustments'
+      )
+      expect(page).not_to have_content(
+        'Save changes'
       )
     end
   end
@@ -213,7 +219,7 @@ RSpec.describe 'Additional Fees', :stub_oauth_token do
         expect(page).to have_content('Adjust additional fee')
       end
 
-      it 'removeing additional fee adjustment also removes adjustments tab if only adjustment' do
+      it 'removing additional fee adjustment also removes adjustments tab if only adjustment' do
         visit nsm_claim_additional_fees_path(claim)
         within('.govuk-tabs__panel') do
           click_on 'Youth court fee'

@@ -73,6 +73,10 @@ module Nsm
         @calculation ||= LaaCrimeFormsCommon::Pricing::Nsm.calculate_youth_court_fee(submission.data_for_calculation,)
       end
 
+      def adjustable?
+        include_youth_court_fee || (!include_youth_court_fee && submission.data['include_youth_court_fee_original'].present?)
+      end
+
       def type
         :youth_court_fee
       end
