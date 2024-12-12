@@ -5,7 +5,6 @@ module Nsm
 
       attribute :type
       attribute :submission
-      attribute :include_youth_court_fee
       attribute :claimed_total_exc_vat
       attribute :claimed_vatable
       attribute :assessed_total_exc_vat
@@ -24,6 +23,14 @@ module Nsm
           ]
         end
 
+        def adjusted_headers
+          [
+            t('.fee_type', width: 'govuk-!-width-one-fifth', numeric: false),
+            t('.reason_for_adjustments', numeric: false),
+            t('.net_cost_allowed')
+          ]
+        end
+
         private
 
         def t(key, width: nil, numeric: true, scope: 'nsm.additional_fees.index')
@@ -32,6 +39,14 @@ module Nsm
             numeric: numeric,
             width: width
           }
+        end
+      end
+
+      def backlink_path(claim)
+        if any_adjustments?
+          Rails.application.routes.url_helpers.adjusted_nsm_claim_additional_fees_path(claim)
+        else
+          Rails.application.routes.url_helpers.nsm_claim_additional_fees_path(claim)
         end
       end
 
@@ -48,17 +63,6 @@ module Nsm
           '.additional_fee' => I18n.t("nsm.additional_fees.edit.#{type}"),
           '.net_cost_claimed' => NumberTo.pounds(claimed_total_exc_vat)
         }
-      end
-
-      def backlink_path(claim)
-        # :nocov:
-        # TODO: CRM457-2306: Remove these as the fields will exist
-        if any_adjustments?
-          Rails.application.routes.url_helpers.adjusted_nsm_claim_additional_fees_path(claim)
-        # :nocov:
-        else
-          Rails.application.routes.url_helpers.nsm_claim_additional_fees_path(claim)
-        end
       end
 
       private

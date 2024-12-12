@@ -8,19 +8,32 @@ en:
         net_cost_claimed: Net cost claimed
         net_cost_allowed: Net cost allowed
         youth_court_fee: Youth court fee
+        reason_for_adjustments: Reason for adjustments
       show:
         page_title: Additional fees
         heading: Additional fees
         additional_fee: Additional fee
         net_cost_claimed: Net cost claimed
+        net_cost_allowed: Net cost allowed
         provider_submission: Provider submission
         youth_court_fee: Youth court fee
+        reason_for_adjustments: Reason for adjustments
+        laa_adjustments: LAA adjustments
       edit:
-        page_title: Additional fees
-        heading: Additional fees
+        page_title: Adjust additional fee
+        heading: Additional fee
         additional_fee: Additional fee
         net_cost_claimed: Net cost claimed
         provider_submission: Provider submission
         youth_court_fee: Youth court fee
+        claimed_cost_summary: Claimed cost summary
+        laa_adjustments: LAA adjustments
+        remove_youth_court_fee: Remove the youth court fee?
+        remove_youth_court_fee_options:
+          'true': Yes, remove fee
+          'false': No, do not remove fee
+        submit: Save changes
+        cancel: cancel
       adjusted:
         no_data: This claim has no adjusted additional fees
+        table_caption: Claimed additional fees

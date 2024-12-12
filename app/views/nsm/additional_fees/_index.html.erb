@@ -3,7 +3,7 @@ caption = t('.table_caption')
 head = Nsm::V1::AdditionalFee.headers
 rows = records.rows.reject{|item| item.type == :total}.map do |additional_fee|
   fields = additional_fee.table_fields.dup
-  destination = if policy(claim).update?
+  destination = if policy(claim).update? && additional_fee.adjustable?
                   edit_nsm_claim_additional_fee_path(claim_id: claim.id, id: additional_fee.type)
                 else
                   nsm_claim_additional_fee_path(claim_id: claim.id, id: additional_fee.type)

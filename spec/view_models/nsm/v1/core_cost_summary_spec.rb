@@ -298,9 +298,9 @@ RSpec.describe Nsm::V1::CoreCostSummary do
       it 'adds the fee to the profit costs' do
         expect(subject.table_fields[0]).to eq(
           {
-            allowed_gross_cost: '',
-            allowed_net_cost: '',
-            allowed_vat: '',
+            allowed_gross_cost: { numeric: true, text: '£0.00' },
+            allowed_net_cost: { numeric: true, text: '£0.00' },
+            allowed_vat: { numeric: true, text: '£0.00' },
             gross_cost: { numeric: true, text: '£598.59' },
             name: { numeric: false, text: 'Profit costs', width: nil },
             net_cost: { numeric: true, text: '£598.59' },
