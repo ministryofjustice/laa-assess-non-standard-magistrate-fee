@@ -23,7 +23,7 @@ module Nsm
 
       if form.valid?
         deleter.call!
-        redirect_to 'nsm/review_and_adjusts/show', locals: { claim:, records:, summary:, claim_summary:, core_cost_summary:, pagy:, scope:, type_changed_records: }, flash: { success: t('.success') }
+        redirect_to nsm_claim_claim_details_path, flash: { success: t('.success') }
       else
         render :confirm_deletion_adjustments, locals: { deletion_path:, form: }
       end
