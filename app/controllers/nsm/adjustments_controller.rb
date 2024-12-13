@@ -11,15 +11,6 @@ module Nsm
       authorize claim, :update?
       form = DeleteAdjustmentsForm.new(**safe_params)
       deleter = Nsm::AllAdjustmentsDeleter.new(params, nil, current_user, claim)
-      records = BaseViewModel.build(:additional_fees_summary, claim)
-      claim_summary = BaseViewModel.build(:claim_summary, claim)
-      core_cost_summary = BaseViewModel.build(:core_cost_summary, claim)
-      summary = nil
-      scope = :work_items
-      pagy = nil
-      type_changed_records = BaseViewModel.build(:work_item, claim, 'work_items').filter do |work_item|
-        work_item.work_type != work_item.original_work_type
-      end
 
       if form.valid?
         deleter.call!
