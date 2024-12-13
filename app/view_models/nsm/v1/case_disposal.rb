@@ -21,10 +21,7 @@ module Nsm
       def youth_court_row
         return if include_youth_court_fee.nil?
 
-        # :nocov:
-        # TODO: CRM457-2306: Remove these as the fields will exist
         youth_court_included = include_youth_court_fee_original.nil? ? include_youth_court_fee : include_youth_court_fee_original
-        # :nocov:
         {
           title: I18n.t('.nsm.case_disposal.additional_fee'),
           value: if youth_court_included

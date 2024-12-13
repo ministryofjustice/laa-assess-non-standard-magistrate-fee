@@ -6,6 +6,7 @@ RSpec.describe 'Additional Fees', :stub_oauth_token do
   let(:claim_type) { 'non_standard_magistrate' }
   let(:include_youth_court_fee_original) { nil }
   let(:include_youth_court_fee) { false }
+  let(:youth_court_fee_adjustment_comment) { nil }
   let(:plea_category) { 'category_1a' }
   let(:rep_order_date) { Date.new(2024, 12, 6) }
   let(:state) { 'granted' }
@@ -13,7 +14,8 @@ RSpec.describe 'Additional Fees', :stub_oauth_token do
   let(:data) do
     build(
       :nsm_data, youth_court:, claim_type:, plea_category:, rep_order_date:,
-      include_youth_court_fee:, include_youth_court_fee_original:
+      include_youth_court_fee:, include_youth_court_fee_original:,
+      youth_court_fee_adjustment_comment:
     )
   end
 
@@ -176,14 +178,9 @@ RSpec.describe 'Additional Fees', :stub_oauth_token do
     end
 
     context 'Caseworker removes fee' do
-      let(:claim) do
-        build(:claim, state: 'in_progress').tap do |claim|
-          claim.data.merge!(data).merge!({ rep_order_date: Date.new(2024, 12, 6),
-                                           include_youth_court_fee: false,
-                                           include_youth_court_fee_original: true,
-                                           youth_court_fee_adjustment_comment: 'Because I can' })
-        end
-      end
+      let(:include_youth_court_fee_original) { true }
+      let(:include_youth_court_fee) { false }
+      let(:youth_court_fee_adjustment_comment) { 'Because I can' }
 
       it 'allows restoration adjustment of youth court fee' do
         visit nsm_claim_additional_fees_path(claim)
@@ -228,6 +225,21 @@ RSpec.describe 'Additional Fees', :stub_oauth_token do
         choose 'No, do not remove fee'
         click_button 'Save changes'
         expect(page).not_to have_content('Adjustments')
+      end
+
+      it 'can remove youth court fee adjustment through the adjustments tab' do
+        visit adjusted_nsm_claim_additional_fees_path(claim)
+
+        click_on 'Additional fees'
+
+        within('.govuk-table__row', text: 'Youth court fee') do
+          click_on 'Delete'
+        end
+        expect(page).to have_content('Are you sure you want to delete this adjustment?')
+        expect(page).to have_content('Youth court fee')
+        click_on 'Yes, delete it'
+        expect(page).to have_content('You deleted the adjustment')
+        expect(claim.data['youth_court_fee_adjustment_comment']).to be_nil
       end
     end
   end

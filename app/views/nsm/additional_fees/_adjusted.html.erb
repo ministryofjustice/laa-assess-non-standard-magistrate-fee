@@ -6,16 +6,23 @@
       <%=
       caption = t('.table_caption')
       head = Nsm::V1::AdditionalFee.adjusted_headers
+      editable = policy(claim).update?
+
+      if editable
+        head << {:text=>t('.action'), :numeric=>false, :width=>nil}
+      end
       rows = records.rows.reject{ _1.type == :total }.map do |additional_fee|
         next unless additional_fee.any_adjustments?
 
         fields = additional_fee.adjusted_fields.dup
-        destination = if policy(claim).update?
+        destination = if editable
                         edit_nsm_claim_additional_fee_path(claim_id: claim.id, id: additional_fee.type)
                       else
                         nsm_claim_additional_fee_path(claim_id: claim.id, id: additional_fee.type)
                       end
+        deletion_path = confirm_deletion_nsm_claim_additional_fee_path(claim_id: claim.id, id: additional_fee.type) if editable
         fields[0] = link_to(fields[0], destination, data: { turbo: 'false' })
+        fields << link_to(t('.delete'), deletion_path, data: { turbo: 'false' }) if editable
         fields
       end
       govuk_table(first_cell_is_header: true) do |t|
@@ -27,4 +34,3 @@
     <% end %>
   </div>
 </div>
-
