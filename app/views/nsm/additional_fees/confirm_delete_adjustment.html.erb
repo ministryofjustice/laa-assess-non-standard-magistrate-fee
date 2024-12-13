@@ -17,7 +17,7 @@
     </div>
     <div class="govuk-button-group govuk-button-group-vertically-centred">
       <%= govuk_button_to t('.yes_delete'), nsm_claim_additional_fee_path(claim_id, id), method: :delete, warning: true %>
-      <%= govuk_button_link_to t('.no_delete'), adjusted_nsm_claim_additional_fee_path(claim_id) %>
+      <%= govuk_button_link_to t('.no_delete'), adjusted_nsm_claim_additional_fees_path(claim_id) %>
     </div>
   </div>
 </div>
