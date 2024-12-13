@@ -10,6 +10,8 @@ module Nsm
         delete_letters_and_calls_adjustment
       when :disbursement
         delete_disbursement_adjustment
+      when :youth_court_fee
+        delete_youth_court_fee_adjustment
       else
         raise "Unknown adjustment type '#{adjustment_type}'"
       end
@@ -34,6 +36,11 @@ module Nsm
         revert(disbursement, field, 'disbursements')
       end
       disbursement.delete('adjustment_comment')
+    end
+
+    def delete_youth_court_fee_adjustment
+      revert(submission.data, 'include_youth_court_fee', 'additional_fees')
+      submission.data.delete('youth_court_fee_adjustment_comment')
     end
 
     def letters_and_calls
