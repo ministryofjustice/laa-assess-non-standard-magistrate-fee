@@ -93,9 +93,7 @@ class Claim < Submission
       youth_court: data['youth_court'] == 'yes',
       claimed_youth_court_fee_included: youth_court_fee_claimed,
       plea_category: data['plea_category'],
-      # :nocov:
       assessed_youth_court_fee_included: data['include_youth_court_fee'],
-      # :nocov:
     }
   end
 

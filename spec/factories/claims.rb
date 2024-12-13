@@ -319,6 +319,9 @@ FactoryBot.define do
           }
         ]
       end
+      include_youth_court_fee { false }
+      include_youth_court_fee_original { true }
+      youth_court_fee_adjustment_comment { 'removed the fee' }
     end
 
     trait :increase_adjustment do

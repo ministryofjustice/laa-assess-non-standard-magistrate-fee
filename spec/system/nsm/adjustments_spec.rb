@@ -40,6 +40,17 @@ RSpec.describe 'Adjustments', :stub_oauth_token do
         click_on 'Yes, delete it'
         expect(page).to have_content('This claim has no adjusted work items')
       end
+
+      context 'there are no adjustments' do
+        let(:data) { build(:nsm_data) }
+
+        it 'raises error when trying to delete a non existent adjustment' do
+          work_item_id = claim.data['work_items'][0]['id']
+          expect do
+            visit confirm_deletion_nsm_claim_work_item_path(claim, work_item_id)
+          end.to raise_error 'Cannot delete non-existent adjustment'
+        end
+      end
     end
 
     describe 'letters and calls' do
@@ -73,6 +84,22 @@ RSpec.describe 'Adjustments', :stub_oauth_token do
         click_on 'Yes, delete it'
         expect(page).to have_content('You deleted the adjustment')
       end
+
+      context 'there are no adjustments' do
+        let(:data) { build(:nsm_data) }
+
+        it 'raises error when trying to delete a non existent letters adjustment' do
+          expect do
+            visit confirm_deletion_nsm_claim_letters_and_call_path(claim_id: claim.id, id: 'letters')
+          end.to raise_error 'Cannot delete non-existent adjustment'
+        end
+
+        it 'raises error when trying to delete a non existent calls adjustment' do
+          expect do
+            visit confirm_deletion_nsm_claim_letters_and_call_path(claim_id: claim.id, id: 'calls')
+          end.to raise_error 'Cannot delete non-existent adjustment'
+        end
+      end
     end
 
     describe 'disbursements' do
@@ -101,6 +128,17 @@ RSpec.describe 'Adjustments', :stub_oauth_token do
         click_on 'Yes, delete it'
         expect(page).to have_content('Adjusted costs')
         expect(page).to have_content('This claim has no adjusted disbursements')
+      end
+
+      context 'there are no adjustments' do
+        let(:data) { build(:nsm_data) }
+
+        it 'raises error when trying to delete a non existent adjustment' do
+          disbursement_id = claim.data['disbursements'][0]['id']
+          expect do
+            visit confirm_deletion_nsm_claim_disbursement_path(claim, disbursement_id)
+          end.to raise_error 'Cannot delete non-existent adjustment'
+        end
       end
     end
 

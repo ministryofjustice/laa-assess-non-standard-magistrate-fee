@@ -80,12 +80,9 @@ module Nsm
       @claim ||= Claim.load_from_app_store(params[:claim_id])
     end
 
-    # :nocov:
-    # Remove these when this is implemented
     def form_class
       FORMS[params[:id]]
     end
-    # :nocov:
 
     def form_params
       params.require(:nsm_youth_court_fee_form)

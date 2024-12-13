@@ -125,22 +125,38 @@ RSpec.describe Nsm::AllAdjustmentsDeleter do
       end
     end
 
+    context 'deleting youth court fee adjustments' do
+      before { service.call }
+
+      it 'reverts youth court fee change' do
+        expect(claim.data['include_youth_court_fee']).to be(true)
+        expect(claim.data['include_youth_court_fee_original']).to be_nil
+        expect(claim.data['youth_court_fee_adjustment_comment']).to be_nil
+      end
+    end
+
     context 'no adjustments' do
-      it 'wont try to disbursement adjustments if none' do
+      it 'wont try to remove disbursement adjustments if none' do
         allow(subject).to receive(:work_items).and_return nil
         expect(subject).not_to receive(:delete_work_item_adjustments)
         subject.call
       end
 
-      it 'wont try to work_item adjustments if none' do
+      it 'wont try to remove work_item adjustments if none' do
         allow(subject).to receive(:letters_and_calls).and_return nil
         expect(subject).not_to receive(:delete_letters_and_calls_adjustments)
         subject.call
       end
 
-      it 'wont try to letter and call adjustments if none' do
+      it 'wont try to remove letter and call adjustments if none' do
         allow(subject).to receive(:disbursements).and_return nil
         expect(subject).not_to receive(:delete_disbursement_adjustments)
+        subject.call
+      end
+
+      it 'wont try to remove youth court fee adjustment if none' do
+        allow(subject).to receive(:youth_court_fee_adjustment_comment).and_return nil
+        expect(subject).not_to receive(:delete_youth_court_fee_adjustment)
         subject.call
       end
     end
