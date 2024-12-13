@@ -199,7 +199,7 @@ RSpec.describe 'Adjustments', :stub_oauth_token do
         click_on 'Delete all adjustments'
         fill_in 'nsm-delete-adjustments-form-comment-field', with: 'Test Data'
         click_on 'Yes, delete all'
-        expect(page).to have_content('Deleted all adjustments')
+        expect(page).to have_content('You deleted all adjustments')
         expect(page).to have_content('Review and adjust')
       end
     end
