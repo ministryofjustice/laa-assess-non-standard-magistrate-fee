@@ -48,8 +48,8 @@ module Nsm
 
       def caseworker_fields
         {
-          '.net_cost_allowed' => NumberTo.pounds(assessed_total_exc_vat),
-          '.reason_for_adjustments' => youth_court_fee_adjustment_comment
+          '.net_cost_allowed' => allowed_net,
+          '.reason_for_adjustments' => reason
         }
       end
 
@@ -57,7 +57,7 @@ module Nsm
         [
           I18n.t("nsm.additional_fees.index.#{type}"),
           youth_court_fee_adjustment_comment,
-          format(assessed_total_exc_vat)
+          format(caseworker_amount)
         ]
       end
 
@@ -71,6 +71,18 @@ module Nsm
 
       def calculation
         @calculation ||= LaaCrimeFormsCommon::Pricing::Nsm.calculate_youth_court_fee(submission.data_for_calculation,)
+      end
+
+      def type_name
+        I18n.t(".nsm.youth_court_fee_adjustments.#{key}.youth_court_fee")
+      end
+
+      def allowed_net
+        NumberTo.pounds(caseworker_amount)
+      end
+
+      def reason
+        youth_court_fee_adjustment_comment
       end
 
       def adjustable?
