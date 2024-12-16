@@ -16,14 +16,13 @@ To determine the initial value we look at the form value on the first adjustment
 
 In order to load adjustments on a view model the following needs to be present:
 
-* `LINKED_TYPE` - this is used to select the adjustments (events) required to be loaded based on the `linked_type` field on the event record
 * `< BaseWithAdjustments` - we need to inherit from this class as it adds the `adjustments` attribute and `value_from_first_event` helper.
 
 ## Form object
 
 The `BaseAdjustmentForm` acts as the base when making adjustments to the data. It provides the following helpers:
 
-* `process_field` - which generates the `Event::Edit` records as required.
+* `process_field` - which generates the adjusted records as required.
 * `linked` - provides standard approach to linking the `Event` record to the current data record - this is currently overwritten for letters and calls, however this will be adjusted to provide a standard interface moving forward
 * `claim`,`explanation`, `current_user` and `item` attributes which are required to make the underlying implemenation work
 

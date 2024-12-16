@@ -9,13 +9,10 @@ RSpec.describe Event do
         'id' => event.id,
         'created_at' => an_instance_of(String),
         'details' => {},
-        'linked_id' => nil,
-        'linked_type' => nil,
         'primary_user_id' => nil,
         'secondary_user_id' => nil,
         'updated_at' => an_instance_of(String),
         :event_type => 'new_version',
-        :public => false,
         :does_not_constitute_update => false,
       )
     end
@@ -29,16 +26,53 @@ RSpec.describe Event do
           'id' => event.id,
           'created_at' => an_instance_of(String),
           'details' => { 'from' => 'submitted', 'to' => 'granted' },
-          'linked_id' => nil,
-          'linked_type' => nil,
           'primary_user_id' => nil,
           'secondary_user_id' => nil,
           'updated_at' => an_instance_of(String),
           :event_type => 'decision',
-          :public => true,
           :does_not_constitute_update => false,
         )
       end
+    end
+  end
+
+  describe '.rehydrate' do
+    it 'can handle standard events' do
+      rehydrated = described_class.rehydrate(
+        {
+          'event_type' => 'new_version',
+          'submission_version' => 3
+        },
+        'crm4'
+      )
+
+      expect(rehydrated).to be_a(Event::NewVersion)
+      expect(rehydrated.submission_version).to eq 3
+    end
+
+    it 'can handle namespaced events' do
+      rehydrated = described_class.rehydrate(
+        {
+          'event_type' => 'send_back',
+          'submission_version' => 3
+        },
+        'crm4'
+      )
+
+      expect(rehydrated).to be_a(PriorAuthority::Event::SendBack)
+      expect(rehydrated.submission_version).to eq 3
+    end
+
+    it 'can handle unrecognised events' do
+      rehydrated = described_class.rehydrate(
+        {
+          'event_type' => 'edit',
+          'submission_version' => 3
+        },
+        'crm4'
+      )
+
+      expect(rehydrated).to be_nil
     end
   end
 end

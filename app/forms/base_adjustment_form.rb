@@ -22,19 +22,8 @@ class BaseAdjustmentForm
 
     return if selected_record[field] == value
 
-    # does this belong in the Event object as that is where it is
-    # created for everything else? as that would require passing a
-    # lot of varibles across....
-    details = {
-      field: field,
-      from: selected_record[field],
-      to: value,
-      comment: explanation,
-    }.merge(changed_value(value, selected_record[field]))
-
     ensure_original_field_value_set(field)
     assign_new_attributes(field, value)
-    Event::Edit.build(submission:, details:, linked:, current_user:)
   end
 
   def ensure_original_field_value_set(field)
@@ -43,23 +32,6 @@ class BaseAdjustmentForm
 
   def assign_new_attributes(field, value)
     selected_record[field] = value
-  end
-
-  def changed_value(val1, val2)
-    return { change: val1 - val2 } if val1.respond_to?(:-) && val2.respond_to?(:-)
-
-    {}
-  end
-
-  def linked
-    {
-      type: self.class::LINKED_CLASS::LINKED_TYPE,
-      id: linked_id(selected_record),
-    }
-  end
-
-  def linked_id(row)
-    row['id']
   end
 
   def data_changed

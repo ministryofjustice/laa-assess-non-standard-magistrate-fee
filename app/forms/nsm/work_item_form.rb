@@ -1,6 +1,5 @@
 module Nsm
   class WorkItemForm < BaseAdjustmentForm
-    LINKED_CLASS = V1::WorkItem
     UPLIFT_PROVIDED = 'no'.freeze
     UPLIFT_RESET = 'yes'.freeze
 

@@ -31,10 +31,10 @@ RSpec.describe 'History events', :stub_oauth_token do
                                           comments: { further_information: 'send back comment' },
                                           updates_needed: ['further_information']).tap { _1.created_at = 3.hours.ago }
     Event::ProviderUpdated.new(submission: application,
-                               details: { comment: 'Foo', corrected_info: ['bar'] },
+                               details: { comment: 'Foo', corrected_info: true },
                                created_at: 2.hours.ago)
     Event::ProviderUpdated.new(submission: application,
-                               details: {  corrected_info: ['bar'] },
+                               details: {  corrected_info: true },
                                created_at: 1.hour.ago)
     Event::Note.build(submission: application,
                       current_user: caseworker,

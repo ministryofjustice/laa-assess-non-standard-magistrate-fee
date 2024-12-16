@@ -304,7 +304,7 @@ RSpec.describe 'View applications', :stub_oauth_token do
       build(:event, :provider_updated,
             submission: application,
             details: { comment: 'Added more info',
-                       corrected_info: %w[ufn alternative_quote_1] },
+                       corrected_info: true },
             created_at: DateTime.new(2023, 6, 5, 4, 3, 2))
       application.assigned_user_id = nil
       visit prior_authority_application_path(application)

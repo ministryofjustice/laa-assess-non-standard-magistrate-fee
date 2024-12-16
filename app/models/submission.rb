@@ -88,7 +88,7 @@ class Submission
         created_at: data['created_at'],
         updated_at: data['updated_at'],
         assigned_user_id: data['assigned_user_id'],
-        events: (data['events'] || []).map { Event.rehydrate(_1, data['application_type']) },
+        events: (data['events'] || []).map { Event.rehydrate(_1, data['application_type']) }.compact,
       }
     end
   end

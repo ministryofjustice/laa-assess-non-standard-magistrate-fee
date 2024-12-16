@@ -1,7 +1,5 @@
 module PriorAuthority
   class ServiceCostForm < BaseCostAdjustmentForm
-    LINKED_CLASS = V1::ServiceCost
-
     attribute :cost_type, :string
     attribute :item_type, :string
     attribute :service_type, :string

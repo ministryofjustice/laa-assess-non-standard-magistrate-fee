@@ -1,8 +1,6 @@
 module PriorAuthority
   module V1
     class ServiceCost < BaseWithAdjustments
-      LINKED_TYPE = 'quotes'.freeze
-
       attribute :id, :string
       attribute :cost_type, :string
       attribute :cost_item_type, :string

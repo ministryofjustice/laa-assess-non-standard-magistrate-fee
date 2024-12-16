@@ -1,7 +1,6 @@
 module Nsm
   module V1
     class LetterAndCall < BaseWithAdjustments
-      LINKED_TYPE = 'letters_and_calls'.freeze
       attribute :type, :translated, scope: 'nsm.letter_and_call_type'
       adjustable_attribute :count, :integer
       adjustable_attribute :uplift, :integer

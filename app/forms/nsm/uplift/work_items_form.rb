@@ -4,7 +4,6 @@ module Nsm
       SCOPE = 'work_items'.freeze
 
       class Remover < Uplift::RemoverForm
-        LINKED_CLASS = V1::WorkItem
       end
     end
   end

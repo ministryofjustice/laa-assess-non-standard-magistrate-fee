@@ -17,16 +17,6 @@ FactoryBot.define do
       end
     end
 
-    trait :auto_decision do
-      initialize_with { Event::AutoDecision.new(attributes) }
-      details do
-        {
-          from: 'submitted',
-          to: 'auto_grant'
-        }
-      end
-    end
-
     trait :assignment do
       initialize_with { Event::Assignment.new(attributes) }
       details do
@@ -53,62 +43,6 @@ FactoryBot.define do
       initialize_with { Event::Note.new(attributes) }
       sequence(:details) do |i|
         { comment: "This is note: #{i}" }
-      end
-    end
-
-    trait :edit_uplift do
-      initialize_with { Event::Edit.new(attributes) }
-      linked_type { 'letters_and_calls' }
-      linked_id { 'letters' }
-      details do
-        {
-          field: 'uplift',
-          from: 95,
-          to: 0,
-          change: -95
-        }
-      end
-    end
-
-    trait :edit_work_item_uplift do
-      initialize_with { Event::Edit.new(attributes) }
-      linked_type { 'work_item' }
-      linked_id { '183ec754-d0fd-490c-b7a4-14e6951e6659' }
-      details do
-        {
-          field: 'uplift',
-          from: 20,
-          to: 0,
-          change: -20
-        }
-      end
-    end
-
-    trait :edit_work_item_time_spent do
-      initialize_with { Event::Edit.new(attributes) }
-      linked_type { 'work_item' }
-      linked_id { '183ec754-d0fd-490c-b7a4-14e6951e6659' }
-      details do
-        {
-          field: 'time_spent',
-          from: 171,
-          to: 100,
-          change: -71
-        }
-      end
-    end
-
-    trait :edit_count do
-      initialize_with { Event::Edit.new(attributes) }
-      linked_type { 'letters_and_calls' }
-      linked_id { 'letters' }
-      details do
-        {
-          field: 'count',
-          from: 10,
-          to: 5,
-          change: -5
-        }
       end
     end
 
@@ -141,7 +75,7 @@ FactoryBot.define do
       details do
         {
           comment: 'Added more info',
-          corrected_info: %w[ufn case_contact]
+          corrected_info: true
         }
       end
     end
@@ -151,7 +85,16 @@ FactoryBot.define do
       details do
         {
           comment: 'Added more info',
-          corrected_info: %w[ufn case_contact]
+          corrected_info: true
+        }
+      end
+    end
+
+    trait :nsm_send_back do
+      initialize_with { Nsm::Event::SendBack.new(attributes) }
+      details do
+        {
+          comment: 'Give me more info',
         }
       end
     end
