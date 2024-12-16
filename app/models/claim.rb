@@ -82,7 +82,7 @@ class Claim < Submission
   end
 
   def data_for_calculation
-    {
+    @data_for_calculation ||= {
       claim_type: BaseViewModel.build(:details_of_claim, self).claim_type.value,
       rep_order_date: data['rep_order_date'],
       cntp_date: data['cntp_date'],
