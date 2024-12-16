@@ -134,26 +134,6 @@ RSpec.describe Nsm::LettersCallsForm do
     context 'when only count has changed' do
       let(:uplift) { 'no' }
 
-      it 'creates a event for the count change' do
-        expect(Event::Edit).to receive(:build).with(
-          submission: claim,
-          linked: {
-            type: 'letters_and_calls',
-            id: 'letters',
-          },
-          details: {
-            field: 'count',
-            from: 12,
-            to: 2,
-            change: -10,
-            comment: 'change to letters'
-          },
-          current_user: current_user,
-        )
-
-        subject.save
-      end
-
       it 'updates the JSON data' do
         subject.save
         letters = claim.data['letters_and_calls']
@@ -167,30 +147,31 @@ RSpec.describe Nsm::LettersCallsForm do
           'adjustment_comment' => 'change to letters',
         )
       end
+
+      context 'when there was no uplift originally' do
+        let(:original_uplift) { nil }
+
+        before do
+          claim.data['letters_and_calls'].first['uplift'] = nil
+        end
+
+        it 'retains the original lack of uplift' do
+          subject.save
+          letters = claim.data['letters_and_calls'].detect { |row| row['type'] == 'letters' }
+          expect(letters).to eq(
+            'count' => 2,
+            'count_original' => 12,
+            'pricing' => 3.56,
+            'type' => 'letters',
+            'uplift' => nil,
+            'adjustment_comment' => 'change to letters',
+          )
+        end
+      end
     end
 
     context 'when only uplift has changed' do
       let(:count) { 12 }
-
-      it 'creates a event for the uplift change' do
-        expect(Event::Edit).to receive(:build).with(
-          submission: claim,
-          linked: {
-            type: 'letters_and_calls',
-            id: 'letters',
-          },
-          details: {
-            field: 'uplift',
-            from: 95,
-            to: 0,
-            change: -95,
-            comment: 'change to letters'
-          },
-          current_user: current_user
-        )
-
-        subject.save
-      end
 
       it 'updates the JSON data' do
         subject.save
@@ -208,11 +189,6 @@ RSpec.describe Nsm::LettersCallsForm do
     end
 
     context 'when uplift and count have changed' do
-      it 'creates an event for each field changed' do
-        expect(Event::Edit).to receive(:build).twice
-        subject.save
-      end
-
       it 'updates the JSON data' do
         subject.save
         letters = claim.data['letters_and_calls']
@@ -233,11 +209,6 @@ RSpec.describe Nsm::LettersCallsForm do
       let(:claim) { build(:claim, data:) }
       let(:data) { build(:nsm_data, :legacy_translations) }
 
-      it 'creates an event for each field changed' do
-        expect(Event::Edit).to receive(:build).twice
-        subject.save
-      end
-
       it 'updates the JSON data' do
         subject.save
         letters = claim.data['letters_and_calls']
@@ -251,23 +222,6 @@ RSpec.describe Nsm::LettersCallsForm do
           'uplift_original' => 95,
           'adjustment_comment' => 'change to letters',
         )
-      end
-    end
-
-    context 'when error during save' do
-      before do
-        allow(Event::Edit).to receive(:build).and_raise(StandardError)
-      end
-
-      it { expect(subject.save).to be_falsey }
-    end
-
-    context 'when uplift is not populated from provider' do
-      let(:original_uplift) { nil }
-
-      it 'saves without error' do
-        expect(Event::Edit).to receive(:build).once
-        subject.save
       end
     end
   end

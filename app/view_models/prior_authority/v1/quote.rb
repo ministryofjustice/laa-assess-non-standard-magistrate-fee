@@ -1,8 +1,6 @@
 module PriorAuthority
   module V1
     class Quote < BaseWithAdjustments
-      LINKED_TYPE = 'quotes'.freeze
-
       include ServiceCostsWithAdjustments
       include TravelCostsWithAdjustments
 

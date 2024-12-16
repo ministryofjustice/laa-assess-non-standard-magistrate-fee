@@ -4,7 +4,6 @@ module Nsm
     class Letters < LettersCallsForm; end
     class Calls < LettersCallsForm; end
 
-    LINKED_CLASS = V1::LetterAndCall
     UPLIFT_PROVIDED = 'no'.freeze
     UPLIFT_RESET = 'yes'.freeze
 
@@ -35,8 +34,6 @@ module Nsm
       process_field(value: new_uplift, field: 'uplift') if item.uplift?
 
       true
-    rescue StandardError
-      false
     end
 
     private
@@ -45,10 +42,6 @@ module Nsm
       @selected_record ||= claim.data['letters_and_calls'].detect do |row|
         Type::TranslatedObject.new.cast(row['type']).value == type
       end
-    end
-
-    def linked_id(_)
-      type
     end
 
     def new_uplift

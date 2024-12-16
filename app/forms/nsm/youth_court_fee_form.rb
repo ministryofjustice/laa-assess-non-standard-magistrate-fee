@@ -1,7 +1,6 @@
 module Nsm
   class YouthCourtFeeForm < BaseAdjustmentForm
     COMMENT_FIELD = 'youth_court_fee_adjustment_comment'.freeze
-    LINKED_CLASS = V1::AdditionalFee
 
     attribute :remove_youth_court_fee, :boolean
     attribute :youth_court_fee_adjustment_comment

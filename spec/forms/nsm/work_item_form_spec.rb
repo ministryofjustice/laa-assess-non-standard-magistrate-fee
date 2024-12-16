@@ -132,24 +132,6 @@ RSpec.describe Nsm::WorkItemForm do
       let(:uplift) { 'yes' }
       let(:time_spent) { nil }
 
-      it 'creates a event for the time_spent change' do
-        subject.save
-        expect(claim.events.count).to eq 1
-        expect(claim.events.first).to have_attributes(
-          submission_version: claim.current_version,
-          event_type: 'Event::Edit',
-          linked_type: 'work_items',
-          linked_id: id,
-          details: {
-            field: 'uplift',
-            from: 95,
-            to: 0,
-            change: -95,
-            comment: 'change to work items'
-          }
-        )
-      end
-
       it 'updates the JSON data' do
         subject.save
         work_item = claim.data['work_items']
@@ -171,24 +153,6 @@ RSpec.describe Nsm::WorkItemForm do
 
     context 'when only time_spent has changed' do
       let(:uplift) { 'no' }
-
-      it 'creates a event for the time_spent change' do
-        subject.save
-        expect(claim.events.count).to eq 1
-        expect(claim.events.last).to have_attributes(
-          submission_version: claim.current_version,
-          event_type: 'Event::Edit',
-          linked_type: 'work_items',
-          linked_id: id,
-          details: {
-            field: 'time_spent',
-            from: 161,
-            to: 95,
-            change: -66,
-            comment: 'change to work items'
-          }
-        )
-      end
 
       it 'updates the JSON data' do
         subject.save
@@ -212,8 +176,7 @@ RSpec.describe Nsm::WorkItemForm do
         let(:original_uplift) { nil }
 
         it 'saves without error' do
-          subject.save
-          expect(claim.events.count).to eq 1
+          expect { subject.save }.not_to raise_error
         end
       end
     end
@@ -249,11 +212,6 @@ RSpec.describe Nsm::WorkItemForm do
       let(:claim) { build :claim, data: }
       let(:data) { build(:nsm_data, :legacy_translations) }
       let(:work_type_value) { 'travel' }
-
-      it 'creates events for the change change' do
-        subject.save
-        expect(claim.events.count).to eq 3
-      end
 
       it 'updates the JSON data' do
         subject.save

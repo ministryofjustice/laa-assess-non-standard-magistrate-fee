@@ -1,6 +1,5 @@
 # Special form to process each row/record when running the
-# remove uplift from all processing. It requires the `LINKED_CLASS`
-# constant to be set in the subclass to work.
+# remove uplift from all processing.
 module Nsm
   module Uplift
     class RemoverForm < BaseAdjustmentForm

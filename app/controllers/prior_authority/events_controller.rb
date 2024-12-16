@@ -6,7 +6,7 @@ module PriorAuthority
       application_summary = BaseViewModel.build(:application_summary, application)
       editable = policy(application).update?
 
-      pagy, records = pagy_array(application.events.select(&:history?).sort_by(&:created_at).reverse)
+      pagy, records = pagy_array(application.events.sort_by(&:created_at).reverse)
       events = records.map { V1::EventSummary.new(event: _1) }
 
       render locals: { application_summary:, editable:, pagy:, events: }

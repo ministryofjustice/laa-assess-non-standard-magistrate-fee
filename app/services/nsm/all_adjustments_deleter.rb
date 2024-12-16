@@ -19,7 +19,7 @@ module Nsm
       revert_fields = %w[uplift work_type time_spent]
       work_items.each do |work_item|
         revert_fields.each do |field|
-          revert(work_item, field, 'work_items')
+          revert(work_item, field)
         end
         work_item.delete('adjustment_comment')
       end
@@ -29,7 +29,7 @@ module Nsm
       revert_fields = %w[uplift count]
       letters_and_calls.each do |letter_or_call|
         revert_fields.each do |field|
-          revert(letter_or_call, field, letter_or_call['type'])
+          revert(letter_or_call, field)
         end
         letter_or_call.delete('adjustment_comment')
       end
@@ -39,14 +39,14 @@ module Nsm
       revert_fields = %w[total_cost vat_amount total_cost_without_vat]
       disbursements.each do |disbursement|
         revert_fields.each do |field|
-          revert(disbursement, field, 'disbursements')
+          revert(disbursement, field)
         end
         disbursement.delete('adjustment_comment')
       end
     end
 
     def delete_youth_court_fee_adjustment
-      revert(submission.data, 'include_youth_court_fee', 'additional_fees')
+      revert(submission.data, 'include_youth_court_fee')
       submission.data.delete('youth_court_fee_adjustment_comment')
     end
 

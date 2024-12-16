@@ -1,8 +1,6 @@
 module Nsm
   module V1
     class WorkItem < BaseWithAdjustments
-      LINKED_TYPE = 'work_items'.freeze
-
       attribute :id, :string
       # used to guess position when value not set in JSON blob when position is blank
       attribute :submission

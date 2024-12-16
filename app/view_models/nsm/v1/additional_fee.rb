@@ -1,8 +1,6 @@
 module Nsm
   module V1
     class AdditionalFee < BaseWithAdjustments
-      LINKED_TYPE = 'additional_fees'.freeze
-
       attribute :type
       attribute :submission
       attribute :claimed_total_exc_vat

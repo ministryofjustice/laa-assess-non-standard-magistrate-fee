@@ -3,7 +3,7 @@ module Nsm
     def show
       authorize(claim)
       claim_summary = BaseViewModel.build(:claim_summary, claim)
-      pagy, history_events = pagy_array(claim.events.select(&:history?).sort_by(&:created_at).reverse)
+      pagy, history_events = pagy_array(claim.events.sort_by(&:created_at).reverse)
       claim_note = ClaimNoteForm.new(claim:)
 
       render locals: { claim:, claim_summary:, history_events:, claim_note:, pagy: }
@@ -16,7 +16,7 @@ module Nsm
         redirect_to nsm_claim_history_path(claim)
       else
         claim_summary = BaseViewModel.build(:claim_summary, claim)
-        pagy, history_events = pagy_array(claim.events.select(&:history?).sort_by(&:created_at).reverse)
+        pagy, history_events = pagy_array(claim.events.sort_by(&:created_at).reverse)
 
         render :show, locals: { claim:, claim_summary:, history_events:, claim_note:, pagy: }
       end

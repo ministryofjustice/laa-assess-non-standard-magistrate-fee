@@ -1,8 +1,6 @@
 module Nsm
   module V1
     class Disbursement < BaseWithAdjustments
-      LINKED_TYPE = 'disbursements'.freeze
-
       attribute :id
       # used to guess position when value not set in JSON blob when position is blank
       attribute :submission
