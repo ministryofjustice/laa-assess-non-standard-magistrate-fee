@@ -97,6 +97,22 @@ class Claim < Submission
     }
   end
 
+  def any_work_items_adjusted?
+    section_adjusted?(totals[:work_types][:total])
+  end
+
+  def any_letters_or_calls_adjusted?
+    section_adjusted?(totals[:letters_and_calls])
+  end
+
+  def any_disbursements_adjusted?
+    section_adjusted?(totals[:cost_summary][:disbursements])
+  end
+
+  def any_additional_fees_adjusted?
+    section_adjusted?(totals[:additional_fees][:total])
+  end
+
   private
 
   def youth_court_fee_claimed
@@ -128,5 +144,9 @@ class Claim < Submission
 
   def letters_and_calls_for_calculation
     BaseViewModel.build(:letter_and_call, self, 'letters_and_calls').map(&:data_for_calculation)
+  end
+
+  def section_adjusted?(section)
+    section[:claimed_total_inc_vat] != section[:assessed_total_inc_vat]
   end
 end

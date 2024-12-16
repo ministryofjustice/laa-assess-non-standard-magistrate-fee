@@ -23,7 +23,20 @@
         <p><strong><%= t(".assessed_statuses.#{claim.state}") %></strong></p>
         <%= simple_format claim_summary.assessment_comment %>
         <% if claim.part_grant? %>
-          <p> <%= link_to t('.review_adjustments'), adjusted_nsm_claim_work_items_path(claim) %></p>
+          <ul class="govuk-list">
+          <% if claim.any_work_items_adjusted? %>
+            <li> <%= link_to t('.review_adjustments', items: t('.item_types.work_items')), adjusted_nsm_claim_work_items_path(claim) %></li>
+          <% end %>
+          <% if claim.any_letters_or_calls_adjusted? %>
+            <li> <%= link_to t('.review_adjustments', items: t('.item_types.letters_and_calls')), adjusted_nsm_claim_letters_and_calls_path(claim) %></li>
+          <% end %>
+          <% if claim.any_disbursements_adjusted? %>
+            <li> <%= link_to t('.review_adjustments', items: t('.item_types.disbursements')), adjusted_nsm_claim_disbursements_path(claim) %></li>
+          <% end %>
+          <% if claim.any_additional_fees_adjusted? %>
+            <li> <%= link_to t('.review_adjustments', items: t('.item_types.additional_fees')), adjusted_nsm_claim_additional_fees_path(claim) %></li>
+          <% end %>
+          <ul>
         <% end %>
       </div>
     <% end %>
