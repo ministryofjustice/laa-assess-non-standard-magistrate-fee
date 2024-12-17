@@ -13,7 +13,12 @@ en:
           rejected: Rejected
           provider_updated: Provider updated
           submitted: Submitted
-        review_adjustments: Review quote adjustments
+        review_adjustments: Review adjustments to %{items}
+        item_types:
+          work_items: work items
+          letters_and_calls: letters and calls
+          disbursements: disbursements
+          additional_fees: additional fees
         further_information: Further information
         provider_updated: Provider updated %{date}
         provider_updates: Provider updates
