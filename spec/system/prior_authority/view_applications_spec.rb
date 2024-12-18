@@ -131,7 +131,10 @@ RSpec.describe 'View applications', :stub_oauth_token do
     it 'lets me view associated files' do
       click_on 'test – with odd-char.pdf'
       expect(page).to have_current_path(
-        %r{/123123123\?response-content-disposition=attachment%3B%20filename%3D%22test%20%20with%20odd-char\.pdf}
+        %r{
+          /123123123\?response-content-disposition=
+          attachment%3B%20filename%3D%22test%2520%25E2%2580%2593%2520with%2520odd-char\.pdf
+        }x
       )
     end
   end
