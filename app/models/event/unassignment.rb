@@ -12,12 +12,12 @@ class Event
     end
 
     def secondary_user
-      User.find_by(id: secondary_user_id)
+      User.load(secondary_user_id)
     end
 
     def title
       if secondary_user_id
-        t('title.secondary', display_name: secondary_user&.display_name)
+        t('title.secondary', display_name: secondary_user.display_name)
       else
         t('title.self')
       end

@@ -1,8 +1,6 @@
 module PriorAuthority
   module V1
     class AdditionalCost < BaseWithAdjustments
-      LINKED_TYPE = 'additional_costs'.freeze
-
       include AdditionalCostsWithAdjustments
 
       attribute :id, :string

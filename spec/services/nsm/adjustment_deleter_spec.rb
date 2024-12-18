@@ -7,7 +7,8 @@ RSpec.describe Nsm::AdjustmentDeleter do
     let(:params) { { claim_id: claim.id, id: item_id } }
     let(:item_id) { '1234-adj' }
     let(:user) { create(:caseworker) }
-    let(:claim) { build(:claim, :with_adjustments) }
+    let(:claim) { build(:claim, data:) }
+    let(:data) { build(:nsm_data, :with_adjustments) }
     let(:app_store_client) { instance_double(AppStoreClient, create_events: true) }
 
     before do
@@ -38,20 +39,6 @@ RSpec.describe Nsm::AdjustmentDeleter do
         expect(claim.data.dig('disbursements', 0, 'total_cost_without_vat_original')).to be_nil
         expect(claim.data.dig('disbursements', 0, 'adjustment_comment')).to be_nil
       end
-
-      it 'creates relevant events' do
-        event = claim.events.find { _1.details[:field] == 'total_cost_without_vat' }
-        expect(event).to be_a Event::UndoEdit
-        expect(event).to have_attributes(
-          linked_id: item_id,
-          linked_type: 'disbursements',
-          details: {
-            field: 'total_cost_without_vat',
-            from: 130.0,
-            to: 100.0,
-          }
-        )
-      end
     end
 
     context 'when deleting work_item adjustments' do
@@ -68,20 +55,6 @@ RSpec.describe Nsm::AdjustmentDeleter do
         expect(claim.data.dig('work_items', 0, 'time_spent_original')).to be_nil
         expect(claim.data.dig('work_items', 0, 'adjustment_comment')).to be_nil
       end
-
-      it 'creates relevant events' do
-        event = claim.events.find { _1.details[:field] == 'time_spent' }
-        expect(event).to be_a Event::UndoEdit
-        expect(event).to have_attributes(
-          linked_id: item_id,
-          linked_type: 'work_items',
-          details: {
-            field: 'time_spent',
-            from: 161,
-            to: 181,
-          }
-        )
-      end
     end
 
     context 'when deleting calls adjustments' do
@@ -97,20 +70,6 @@ RSpec.describe Nsm::AdjustmentDeleter do
         expect(claim.data.dig('letters_and_calls', 1, 'count_original')).to be_nil
         expect(claim.data.dig('letters_and_calls', 1, 'adjustment_comment')).to be_nil
       end
-
-      it 'creates relevant events' do
-        event = claim.events.find { _1.details[:field] == 'count' }
-        expect(event).to be_a Event::UndoEdit
-        expect(event).to have_attributes(
-          linked_id: nil,
-          linked_type: 'calls',
-          details: {
-            field: 'count',
-            from: 4,
-            to: 5,
-          }
-        )
-      end
     end
 
     context 'when deleting letters adjustments' do
@@ -125,20 +84,6 @@ RSpec.describe Nsm::AdjustmentDeleter do
         expect(claim.data.dig('letters_and_calls', 0, 'uplift_original')).to be_nil
         expect(claim.data.dig('letters_and_calls', 0, 'count_original')).to be_nil
         expect(claim.data.dig('letters_and_calls', 0, 'adjustment_comment')).to be_nil
-      end
-
-      it 'creates relevant events' do
-        event = claim.events.find { _1.details[:field] == 'count' }
-        expect(event).to be_a Event::UndoEdit
-        expect(event).to have_attributes(
-          linked_id: nil,
-          linked_type: 'letters',
-          details: {
-            field: 'count',
-            from: 12,
-            to: 5,
-          }
-        )
       end
     end
   end

@@ -1,7 +1,5 @@
 module PriorAuthority
   class AdditionalCostForm < BaseCostAdjustmentForm
-    LINKED_CLASS = V1::AdditionalCost
-
     attribute :unit_type, :string
 
     def per_item?

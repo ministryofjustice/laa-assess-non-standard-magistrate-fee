@@ -1,6 +1,5 @@
 module Nsm
   class DisbursementsForm < BaseAdjustmentForm
-    LINKED_CLASS = V1::Disbursement
     attribute :total_cost_without_vat, :gbp
     attribute :miles, :fully_validatable_decimal, precision: 10, scale: 3
     attribute :apply_vat, :string

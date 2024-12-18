@@ -10,11 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_11_112720) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_13_171004) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
-  enable_extension "postgis"
 
   create_table "access_logs", force: :cascade do |t|
     t.uuid "user_id", null: false

@@ -2,7 +2,7 @@ feature_flags:
   dev_auth:
     local: <%= ENV.fetch("DEV_AUTH_ENABLED", false) %>
     development: true
-    uat: true
+    uat: false
     production: false # must never be enabled in the live service
   postal_evidence:
     local: <%= ENV.fetch("POSTAL_EVIDENCE", false) %>
@@ -29,4 +29,8 @@ feature_flags:
     development: true
     uat: true
     production: true
-
+  youth_court_fee:
+    local: <%= ENV.fetch("NSM_YOUTH_COURT_FEE", true) %>
+    development: true
+    uat: true
+    production: true

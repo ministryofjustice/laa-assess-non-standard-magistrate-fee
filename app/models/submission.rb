@@ -28,7 +28,7 @@ class Submission
   end
 
   def assigned_user
-    @assigned_user ||= User.find_by(id: assigned_user_id)
+    @assigned_user ||= User.load(assigned_user_id)
   end
 
   def to_param
@@ -88,7 +88,7 @@ class Submission
         created_at: data['created_at'],
         updated_at: data['updated_at'],
         assigned_user_id: data['assigned_user_id'],
-        events: (data['events'] || []).map { Event.rehydrate(_1, data['application_type']) },
+        events: (data['events'] || []).map { Event.rehydrate(_1, data['application_type']) }.compact,
       }
     end
   end

@@ -20,7 +20,7 @@ RSpec.describe 'Overview', :stub_oauth_token, type: :system do
     end
 
     context 'when claim has old translation format' do
-      let(:claim) { build(:claim, :legacy_translations) }
+      let(:claim) { build(:claim, data: build(:nsm_data, :legacy_translations)) }
 
       it 'does not crash and renders the page' do
         expect(page)
@@ -63,6 +63,7 @@ RSpec.describe 'Overview', :stub_oauth_token, type: :system do
 
     before do
       claim.data['assessment_comment'] = 'Part grant reason'
+      claim.data['disbursements'][0]['total_cost_without_vat_original'] = 150
       visit nsm_claim_claim_details_path(claim)
     end
 
@@ -70,7 +71,7 @@ RSpec.describe 'Overview', :stub_oauth_token, type: :system do
       expect(page)
         .to have_selector('strong', text: 'Part granted')
         .and have_content('Part grant reason')
-        .and have_link('Review quote adjustments')
+        .and have_link('Review adjustments to disbursements')
     end
   end
 

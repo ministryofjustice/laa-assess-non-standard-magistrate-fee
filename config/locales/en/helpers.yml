@@ -29,3 +29,4 @@ en:
         minimal_html:
           one: '%{minutes}<span class="govuk-visually-hidden"> minute</span>'
           other: '%{minutes}<span class="govuk-visually-hidden"> minutes</span>'
+    non_local_caseworker: Unknown caseworker

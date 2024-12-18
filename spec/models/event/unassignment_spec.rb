@@ -67,7 +67,7 @@ RSpec.describe Event::Unassignment do
     let(:current_user) { build(:supervisor, id: SecureRandom.uuid) }
 
     it 'at least does not explode' do
-      expect(subject.title).to eq('Caseworker removed from claim by ')
+      expect(subject.title).to eq('Caseworker removed from claim by Unknown caseworker')
     end
   end
 end

@@ -17,7 +17,8 @@ RSpec.describe Nsm::V1::CaseDetails do
           'unassigned_counsel' => 'no',
           'agent_instructed' => 'yes',
           'remitted_to_magistrate' => 'yes',
-          'remitted_to_magistrate_date' => '2023-02-01'
+          'remitted_to_magistrate_date' => '2023-02-01',
+          'main_offence_type' => 'summary_only'
         }
       )
 
@@ -36,13 +37,15 @@ RSpec.describe Nsm::V1::CaseDetails do
           'unassigned_counsel' => 'no',
           'agent_instructed' => 'yes',
           'remitted_to_magistrate' => 'yes',
-          'remitted_to_magistrate_date' => '2023-02-01'
+          'remitted_to_magistrate_date' => '2023-02-01',
+          'main_offence_type' => 'summary_only'
         }
       )
 
       it 'shows correct table data' do
         expect(subject.data).to eq([
                                      { title: 'Main offence name', value: 'Stole an apple' },
+                                     { title: 'Offence type', value: 'Summary only' },
                                      { title: 'Offence date', value: '1 January 2023' },
                                      { title: 'Assigned counsel', value: 'Yes' },
                                      { title: 'Unassigned counsel', value: 'No' },
@@ -62,13 +65,15 @@ RSpec.describe Nsm::V1::CaseDetails do
           'unassigned_counsel' => 'no',
           'agent_instructed' => 'yes',
           'remitted_to_magistrate' => 'no',
-          'remitted_to_magistrate_date' => '2023-02-01'
+          'remitted_to_magistrate_date' => '2023-02-01',
+          'main_offence_type' => 'summary_only',
         }
       )
 
       it 'shows correct table data' do
         expect(subject.data).to eq([
                                      { title: 'Main offence name', value: 'Stole an apple' },
+                                     { title: 'Offence type', value: 'Summary only' },
                                      { title: 'Offence date', value: '1 January 2023' },
                                      { title: 'Assigned counsel', value: 'Yes' },
                                      { title: 'Unassigned counsel', value: 'No' },

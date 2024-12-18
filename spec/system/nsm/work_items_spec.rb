@@ -110,9 +110,9 @@ RSpec.describe 'Work items', :stub_oauth_token do
   end
 
   context 'when there is an attendance without counsel work item' do
-    let(:claim) do
+    let(:data) do
       build(
-        :claim,
+        :nsm_data,
         work_items: [
           {
             'id' => 'cf5e303e-98dd-4b0f-97ea-3560c4c5f137',
@@ -126,6 +126,7 @@ RSpec.describe 'Work items', :stub_oauth_token do
         ]
       )
     end
+    let(:claim) { build(:claim, data:) }
 
     it 'does not change the work type if I ask it not to when making other adjustments' do
       visit nsm_claim_work_items_path(claim)

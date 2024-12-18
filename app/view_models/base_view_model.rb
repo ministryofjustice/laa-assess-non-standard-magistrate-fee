@@ -34,7 +34,15 @@ class BaseViewModel
     end
 
     def process(&block)
-      result = rows.map(&block)
+      # :nocov:
+      # This change is needed because AdditionalFeesSummary doesn't
+      # call `build` the way other summary viewmodels do.
+      #
+      # We also can't easily cover it without writing a complex test
+      # for it, and since we want to hopefully remove all this
+      # evantually it's simpler to just not cover it.
+      result = rows&.map(&block)
+      # :nocov:
       return_array ? result : result[0]
     end
   end

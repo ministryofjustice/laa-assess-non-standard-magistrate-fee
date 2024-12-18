@@ -6,30 +6,12 @@ class Event
   attribute :id, :string, default: -> { SecureRandom.uuid }
   attribute :primary_user_id, :string
   attribute :secondary_user_id, :string
-  attribute :linked_type, :string
-  attribute :linked_id, :string
   attribute :details, default: -> { {} }
   attribute :created_at, :datetime, default: -> { DateTime.current }
   attribute :updated_at, :datetime, default: -> { DateTime.current }
   attribute :submission_version, :integer
 
-  PUBLIC_EVENTS = ['Event::Decision', 'PriorAuthority::Event::SendBack'].freeze
   NAMESPACED_EVENT_TYPES = %w[send_back draft_send_back].freeze
-  HISTORY_EVENTS = [
-    'Event::Assignment',
-    'Event::ChangeRisk',
-    'Event::Decision',
-    'Event::DraftDecision',
-    'Event::Expiry',
-    'Event::NewVersion',
-    'Event::Note',
-    'Event::ProviderUpdated',
-    'Event::Unassignment',
-    'Nsm::Event::SendBack',
-    'PriorAuthority::Event::DraftSendBack',
-    'PriorAuthority::Event::SendBack',
-    'Event::DeleteAdjustments',
-  ].freeze
 
   # These are events that should not update the "Last updated at" timestamp.
   # Previously we would not even send them to the app store on creation. Now we
@@ -37,9 +19,7 @@ class Event
   # does not use them to update the timestamp
   LOCAL_EVENTS = [
     'Event::DraftDecision',
-    'Event::Edit',
     'Event::Note',
-    'Event::UndoEdit',
     'PriorAuthority::Event::DraftSendBack',
   ].freeze
 
@@ -67,6 +47,10 @@ class Event
                 "Event::#{event_type.camelize}".constantize
               end
       klass.new(params.except('does_not_constitute_update', 'public'))
+    rescue NameError
+      # The app store may contain legacy events that we don't display in our UI
+      # therefore don't have a class for. If so we ignore them
+      nil
     end
 
     def build(**kwargs)
@@ -86,10 +70,6 @@ class Event
     submission.events << self
   end
 
-  def history?
-    event_type.in?(HISTORY_EVENTS)
-  end
-
   def title
     t('title', **title_options)
   end
@@ -99,13 +79,12 @@ class Event
   end
 
   def primary_user
-    @primary_user ||= User.find_by(id: primary_user_id)
+    @primary_user ||= User.load(primary_user_id)
   end
 
   def as_json(*)
     super['attributes']
       .merge(
-        public: PUBLIC_EVENTS.include?(event_type),
         event_type: event_type.demodulize.underscore,
         does_not_constitute_update: LOCAL_EVENTS.include?(event_type),
       )

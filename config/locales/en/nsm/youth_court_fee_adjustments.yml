@@ -1,0 +1,33 @@
+---
+en:
+  nsm:
+    youth_court_fee_adjustments:
+      summary_table:
+        title: Provider submission
+        net_cost_claimed: Net cost claimed
+        additional_fee: Additional fee
+        youth_court_fee: Youth court fee
+
+  helpers:
+    legend:
+      nsm_youth_court_fee_form:
+        remove_youth_court_fee: Remove the youth court fee?
+    label:
+      nsm_youth_court_fee_form:
+        remove_youth_court_fee_options:
+          'true': Yes, remove fee
+          'false': No, do not remove fee
+        explanation: Explain your decision
+    hint:
+      nsm_youth_court_fee_form:
+        explanation: Explain why you are removing the additional fee. We'll share this explanation with the provider.
+
+  activemodel:
+    errors:
+      models:
+        nsm/youth_court_fee_form:
+          attributes:
+            remove_youth_court_fee:
+              no_change: You cannot save changes as you have not changed anything. You can make a change and save it, or select cancel.
+            explanation:
+              blank: Enter a reason for the adjustment

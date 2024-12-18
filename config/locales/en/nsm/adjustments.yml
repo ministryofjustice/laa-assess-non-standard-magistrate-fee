@@ -11,8 +11,9 @@ en:
         explanation_warning: This will delete all of the adjustments made to this claim
       show:
         delete_all_adjustments: Delete all adjustments
+        additional_fees: Additional fees
       delete_all:
-        success: Deleted all adjustments
+        success: You deleted all adjustments
 
   helpers:
     label:

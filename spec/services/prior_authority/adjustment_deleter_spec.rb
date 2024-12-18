@@ -42,20 +42,6 @@ RSpec.describe PriorAuthority::AdjustmentDeleter do
         expect(application.data.dig('quotes', 0, 'items_original')).to be_nil
         expect(application.data.dig('quotes', 0, 'adjustment_comment')).to be_nil
       end
-
-      it 'creates relevant events' do
-        event = application.events.last
-        expect(event).to be_a Event::UndoEdit
-        expect(event).to have_attributes(
-          linked_id: item_id,
-          linked_type: 'quotes',
-          details: {
-            field: 'items',
-            from: 8,
-            to: 9,
-          }
-        )
-      end
     end
   end
 end

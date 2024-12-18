@@ -1,7 +1,5 @@
 module PriorAuthority
   class TravelCostForm < BaseAdjustmentForm
-    LINKED_CLASS = V1::TravelCost
-
     attribute :id, :string
     attribute :travel_time, :time_period
     attribute :travel_cost_per_hour, :gbp

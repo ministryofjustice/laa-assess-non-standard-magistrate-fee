@@ -13,7 +13,12 @@ en:
           rejected: Rejected
           provider_updated: Provider updated
           submitted: Submitted
-        review_adjustments: Review quote adjustments
+        review_adjustments: Review adjustments to %{items}
+        item_types:
+          work_items: work items
+          letters_and_calls: letters and calls
+          disbursements: disbursements
+          additional_fees: additional fees
         further_information: Further information
         provider_updated: Provider updated %{date}
         provider_updates: Provider updates
@@ -42,6 +47,11 @@ en:
         agent_instructed: Instructed agent
         remitted_to_magistrate: Case remitted from Crown Court to magistrates' court
         remitted_to_magistrate_date: Remittal date
+        main_offence_type: Offence type
+        summary_only: Summary only
+        either_way: Either way
+        indictable_only: Indictable only
+        prescribed_proceedings: Prescribed proceedings
       case_disposal:
         title: Case disposal
       claim_justification:

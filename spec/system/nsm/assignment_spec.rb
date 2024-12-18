@@ -112,8 +112,8 @@ RSpec.describe 'Assign claims', :stub_oauth_token do
     context 'when there are multiple claims' do
       let(:claims) { [new_claim, old_claim] }
       let(:claim) { old_claim }
-      let(:old_claim) { build(:claim, laa_reference: 'LAA-AAAAA', created_at: 6.days.ago) }
-      let(:new_claim) { build(:claim, laa_reference: 'LAA-BBBBB', created_at: 5.days.ago) }
+      let(:old_claim) { build(:claim, created_at: 6.days.ago, data: build(:nsm_data, laa_reference: 'LAA-AAAAA')) }
+      let(:new_claim) { build(:claim, created_at: 5.days.ago, data: build(:nsm_data, laa_reference: 'LAA-BBBBB')) }
 
       it 'assigns the one returned by the app store to me' do
         expect(page).to have_content 'LAA-AAAAA'

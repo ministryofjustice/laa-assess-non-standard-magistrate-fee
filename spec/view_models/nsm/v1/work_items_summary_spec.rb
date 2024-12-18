@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Nsm::V1::WorkItemSummary do
   subject { described_class.build(:work_item_summary, claim) }
 
-  let(:claim) { build(:claim, work_items:) }
+  let(:claim) { build(:claim, data: build(:nsm_data, work_items:)) }
 
   describe '#header' do
     let(:work_items) { [] }

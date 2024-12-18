@@ -15,21 +15,21 @@ module PriorAuthority
 
     def delete_service_cost_adjustment
       %w[items cost_per_item period cost_per_hour].each do |field|
-        revert(quote, field, 'quotes')
+        revert(quote, field)
       end
       quote.delete('adjustment_comment')
     end
 
     def delete_travel_cost_adjustment
       %w[travel_time travel_cost_per_hour].each do |field|
-        revert(quote, field, 'quotes')
+        revert(quote, field)
       end
       quote.delete('travel_adjustment_comment')
     end
 
     def delete_additional_cost_adjustment
       %w[items cost_per_item period cost_per_hour].each do |field|
-        revert(additional_cost, field, 'additional_costs')
+        revert(additional_cost, field)
       end
       additional_cost.delete('adjustment_comment')
     end

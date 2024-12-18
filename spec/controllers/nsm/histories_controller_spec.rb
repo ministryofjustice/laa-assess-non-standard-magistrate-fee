@@ -26,7 +26,7 @@ RSpec.describe Nsm::HistoriesController do
 
       expect(controller).to have_received(:render).with(
         locals: {
-          claim: claim, claim_summary: claim_summary, history_events: claim.events.select(&:history?),
+          claim: claim, claim_summary: claim_summary, history_events: claim.events,
           claim_note: claim_note, pagy: anything
         }
       )

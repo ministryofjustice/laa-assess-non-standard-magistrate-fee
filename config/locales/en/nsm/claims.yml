@@ -50,6 +50,7 @@ en:
         letters_and_calls: Letters and calls
     review_and_adjusts:
       show:
+        additional_fees: Additional fees
         page_title: "Review criminal legal aid applications"
         cost_summary: Costs summary
         disbursements: Disbursements
