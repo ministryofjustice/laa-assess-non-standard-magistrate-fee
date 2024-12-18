@@ -28,7 +28,7 @@ class SearchForm < SearchResults
   end
 
   def claim_values
-    [show_all] + %i[high_value].map { Option.new(_1, I18n.t("search.claim_values.#{_1}")) }
+    [show_all, Option.new(:high_value, I18n.t('search.claim_values.high_value'))]
   end
 
   def statuses
