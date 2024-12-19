@@ -13,6 +13,8 @@ en:
       rejected: Rejected
       expired: Expired
     unassigned: Unassigned
+    claim_values:
+      high_value: High value
   nsm:
     searches:
       show:

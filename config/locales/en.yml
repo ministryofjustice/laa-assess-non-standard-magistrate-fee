@@ -71,6 +71,7 @@ en:
       updated_filter_hint: Enter a start date, end date or both, for example, 17/5/2024
       updated_from: Last updated from
       updated_to: Last updated to
+      claim_value: Claim value
       search_results:
         zero: There are no results that match the search criteria
         one: "%{count} Search result"

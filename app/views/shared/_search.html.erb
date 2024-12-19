@@ -65,6 +65,17 @@
           </fieldset>
         </div>
         <div>
+          <% if choose_application_type || @search_form.application_type == 'crm7' %>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <%= f.govuk_collection_select :high_value,
+                                              @search_form.claim_values,
+                                              :value,
+                                              :label,
+                                              label: { text: t(".claim_value"), size: 's' } %>
+              </div>
+            </div>
+          <% end %>
           <div class="govuk-date-input__item">
             <div class="govuk-form-group">
               <%= f.govuk_collection_select :status_with_assignment,
