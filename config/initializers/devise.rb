@@ -2,6 +2,7 @@ require Rails.root.join('app/lib/host_env')
 require Rails.root.join('app/lib/feature_flags')
 require Rails.root.join('app/lib/omni_auth/strategies/dev_auth')
 
+# rubocop:disable Metrics/BlockLength
 Devise.setup do |config|
   require 'devise/orm/active_record'
 
@@ -67,3 +68,4 @@ Devise.setup do |config|
 
   OmniAuth.config.logger = Rails.logger
 end
+# rubocop:enable Metrics/BlockLength
