@@ -73,7 +73,7 @@ Rails.application.configure do
 
   # Use a different cache store in production.
   config.cache_store = :solid_cache_store, {
-    error_handler: lambda do |method:, returning:, exception:|
+    error_handler: lambda do |_method:, _returning:, exception:|
       # We want to make sure that if something goes wrong retrieving information from the
       # session/cache both we and the end user know that something is amiss - we definitely
       # don't want to just treat it as a cache miss and move on, as that's a poor UX.
