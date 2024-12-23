@@ -1,18 +1,22 @@
 # frozen_string_literal: true
+
 require 'sidekiq/web'
 
+# rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
   Sidekiq::Web.use Rack::Auth::Basic do |username, password|
     # Protect against timing attacks:
     # - See https://codahale.com/a-lesson-in-timing-attacks/
     # - See https://web.archive.org/web/20180709235757/https://thisdata.com/blog/timing-attacks-against-string-comparison/
     # - Use & (do not use &&) so that it doesn't short circuit.
-    ActiveSupport::SecurityUtils.secure_compare(::Digest::SHA256.hexdigest(username), ::Digest::SHA256.hexdigest(ENV["SIDEKIQ_WEB_UI_USERNAME"])) &
-      ActiveSupport::SecurityUtils.secure_compare(::Digest::SHA256.hexdigest(password), ::Digest::SHA256.hexdigest(ENV["SIDEKIQ_WEB_UI_PASSWORD"]))
+    ActiveSupport::SecurityUtils.secure_compare(Digest::SHA256.hexdigest(username),
+                                                Digest::SHA256.hexdigest(ENV.fetch('SIDEKIQ_WEB_UI_USERNAME', nil))) &
+      ActiveSupport::SecurityUtils.secure_compare(Digest::SHA256.hexdigest(password),
+                                                  Digest::SHA256.hexdigest(ENV.fetch('SIDEKIQ_WEB_UI_PASSWORD', nil)))
   end
-  mount Sidekiq::Web => "/sidekiq"
+  mount Sidekiq::Web => '/sidekiq'
 
-  root "home#index"
+  root 'home#index'
 
   get :ping, to: 'healthcheck#ping'
 
@@ -23,11 +27,11 @@ Rails.application.routes.draw do
     }
   )
 
-  get "users/auth/failure", to: "errors#forbidden"
+  get 'users/auth/failure', to: 'errors#forbidden'
 
   devise_scope :user do
     if FeatureFlags.dev_auth.enabled?
-      get "dev_auth", to: "users/dev_auth#new", as: :new_user_session
+      get 'dev_auth', to: 'users/dev_auth#new', as: :new_user_session
     else
       get 'unauthorized', to: 'errors#forbidden', as: :new_user_session
     end
@@ -44,7 +48,7 @@ Rails.application.routes.draw do
   end
 
   namespace :nsm do
-    root to: "claims#your"
+    root to: 'claims#your'
     resources :claims, only: [:create] do
       collection do
         get :your
@@ -107,7 +111,7 @@ Rails.application.routes.draw do
   end
 
   namespace :prior_authority do
-    root to: "applications#your"
+    root to: 'applications#your'
     resources :applications, only: [:new, :show] do
       collection do
         get :your
@@ -138,7 +142,8 @@ Rails.application.routes.draw do
     resource :search, only: %i[new show]
   end
 
-  get "robots.txt", to: "robots#index"
+  get 'robots.txt', to: 'robots#index'
 
   resource :dashboard, only: %i[new show]
 end
+# rubocop:enable Metrics/BlockLength

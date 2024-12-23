@@ -32,7 +32,7 @@ module LaaAssessNonStandardMagistrateFee
     # NOTE: govuk_design_system_formbuilder monkey patch in lib folder is not
     # autoloaded because it the gem itself uses a non-standard/convention filename
     # to classname pattern.
-    config.autoload_lib(ignore: %w(assets tasks govuk_design_system_formbuilder))
+    config.autoload_lib(ignore: %w[assets tasks govuk_design_system_formbuilder])
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -56,13 +56,13 @@ module LaaAssessNonStandardMagistrateFee
     config.active_job.queue_adapter = :sidekiq
     config.action_mailer.deliver_later_queue_name = :mailers
 
-    config.exceptions_app = ->(env) {
+    config.exceptions_app = lambda { |env|
       ErrorsController.action(:show).call(env)
     }
 
     config.active_model.i18n_customize_full_message = true
 
-    config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets")
+    config.assets.paths << Rails.root.join('node_modules/govuk-frontend/dist/govuk/assets')
 
     config.x.contact.support_email = 'CRM457@digital.justice.gov.uk'
     config.x.application.name = 'Assess a crime form'
@@ -72,11 +72,11 @@ module LaaAssessNonStandardMagistrateFee
     config.x.analytics.analytics_consent_expiration = 1.year
     config.x.rfi.working_day_window = 10
     config.x.redis_url = if ENV['REDIS_HOST'].present? && ENV['REDIS_PASSWORD'].present?
-      protocol = ENV.fetch("REDIS_PROTOCOL", "rediss")
-      password = ENV.fetch('REDIS_PASSWORD')
-      host = ENV.fetch('REDIS_HOST')
-      "#{protocol}://:#{password}@#{host}:6379"
-    end
+                           protocol = ENV.fetch('REDIS_PROTOCOL', 'rediss')
+                           password = ENV.fetch('REDIS_PASSWORD')
+                           host = ENV.fetch('REDIS_HOST')
+                           "#{protocol}://:#{password}@#{host}:6379"
+                         end
 
     config.x.contact.feedback_url = 'tbc'
   end

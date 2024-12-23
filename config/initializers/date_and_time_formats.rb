@@ -5,5 +5,5 @@
 #
 Date::DATE_FORMATS[:stamp] = '%-d %B %Y' # DD MONTH YYYY
 Time::DATE_FORMATS[:stamp] = '%-d %B %Y' # DD MONTH YYYY
-Date::DATE_FORMATS[:date_picker] = "%-d/%-m/%Y" # d/m/yyyy
+Date::DATE_FORMATS[:date_picker] = '%-d/%-m/%Y' # d/m/yyyy
 Time::DATE_FORMATS[:time_of_day] = '%-I:%M%P' # H:MM with am/pm

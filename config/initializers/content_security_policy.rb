@@ -21,7 +21,7 @@ Rails.application.configure do
     # Sentry creates workers from "blobs" in order to report on errors, so we allow that
     policy.worker_src :blob
 
-    policy.frame_src ENV["METABASE_URL"]
+    policy.frame_src ENV.fetch('METABASE_URL', nil)
   end
 
   # Generate session nonces for permitted importmap and inline scripts

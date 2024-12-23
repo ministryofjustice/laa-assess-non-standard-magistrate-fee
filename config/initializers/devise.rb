@@ -2,6 +2,7 @@ require Rails.root.join('app/lib/host_env')
 require Rails.root.join('app/lib/feature_flags')
 require Rails.root.join('app/lib/omni_auth/strategies/dev_auth')
 
+# rubocop:disable Metrics/BlockLength
 Devise.setup do |config|
   require 'devise/orm/active_record'
 
@@ -41,8 +42,8 @@ Devise.setup do |config|
   #
   # Uses the DevAuth strategy if local/docker env and feature flag for dev_auth is true
 
-  unless HostEnv.local? || ENV.key?('IS_LOCAL_DOCKER_ENV')
-    raise "The DevAuth strategy must not be used in this environment" if FeatureFlags.dev_auth.enabled?
+  if !(HostEnv.local? || ENV.key?('IS_LOCAL_DOCKER_ENV')) && FeatureFlags.dev_auth.enabled?
+    raise 'The DevAuth strategy must not be used in this environment'
   end
 
   strategy_class = FeatureFlags.dev_auth.enabled? ? OmniAuth::Strategies::DevAuth : OmniAuth::Strategies::OpenIDConnect
@@ -67,3 +68,4 @@ Devise.setup do |config|
 
   OmniAuth.config.logger = Rails.logger
 end
+# rubocop:enable Metrics/BlockLength
