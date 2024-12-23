@@ -41,8 +41,8 @@ Devise.setup do |config|
   #
   # Uses the DevAuth strategy if local/docker env and feature flag for dev_auth is true
 
-  unless HostEnv.local? || ENV.key?('IS_LOCAL_DOCKER_ENV')
-    raise "The DevAuth strategy must not be used in this environment" if FeatureFlags.dev_auth.enabled?
+  if !(HostEnv.local? || ENV.key?('IS_LOCAL_DOCKER_ENV')) && FeatureFlags.dev_auth.enabled?
+    raise 'The DevAuth strategy must not be used in this environment'
   end
 
   strategy_class = FeatureFlags.dev_auth.enabled? ? OmniAuth::Strategies::DevAuth : OmniAuth::Strategies::OpenIDConnect
