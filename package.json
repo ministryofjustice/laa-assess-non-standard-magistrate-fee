@@ -5,9 +5,9 @@
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "8.0.12",
-    "@ministryofjustice/frontend": "^3.2.1",
+    "@ministryofjustice/frontend": "^3.3.0",
     "decimal.js": "^10.4.3",
-    "esbuild": "^0.24.0",
+    "esbuild": "^0.24.2",
     "govuk-frontend": "^5.7.1",
     "jquery": "^3.6.0",
     "sass": "^1.83.0"
