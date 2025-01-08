@@ -65,4 +65,13 @@ class ApplicationController < ActionController::Base
   def secondary_id
     params[:id]
   end
+
+  def controller_params
+    # when we actually use this, the line below would be uncommented and the "true" removed
+    # so any class that inherits ApplicationController would raise an error
+    # if this method is not overriden
+
+    # raise NotImplementedError, "#{self.class} has not implemented method '#{__method__}'"
+    true
+  end
 end
