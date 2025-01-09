@@ -18,6 +18,16 @@ RSpec.describe Nsm::ClaimsController, :stub_oauth_token do
     it 'does not raise any errors' do
       expect { get :open }.not_to raise_error
     end
+
+    it 'succeeds if all params are valid' do
+      expect { get :open, params: { page: 1, sort_by: 'client_name', sort_direction: 'ascending' } }.not_to raise_error
+    end
+
+    it 'raises an error if params are invalid' do
+      expect { get :open, params: { page: -1 } }.to raise_error
+      expect { get :open, params: { sort_by: 'garbage' } }.to raise_error
+      expect { get :open, params: { sort_direction: 'garbage' } }.to raise_error
+    end
   end
 
   describe '#closed' do
