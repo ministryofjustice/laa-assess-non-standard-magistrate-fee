@@ -42,6 +42,8 @@ module Nsm
       end
     end
 
+    private
+
     def controller_params
       safe_params = params.permit(
         :id,
@@ -54,8 +56,6 @@ module Nsm
 
       safe_params
     end
-
-    private
 
     def set_default_table_sort_options
       default = 'date_updated'
