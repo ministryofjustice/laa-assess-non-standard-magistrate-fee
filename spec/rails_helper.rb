@@ -80,6 +80,7 @@ RSpec.configure do |config|
   end
 
   # swallow sdtdout to keep output from rspec clean
+  # ...also swallows/hangs debug output sessions
   config.before(:each, type: :task) do
     allow($stdout).to receive(:write)
   end

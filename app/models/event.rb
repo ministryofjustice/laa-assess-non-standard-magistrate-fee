@@ -46,7 +46,7 @@ class Event
               else
                 "Event::#{event_type.camelize}".constantize
               end
-      klass.new(params.except('does_not_constitute_update', 'public'))
+      klass.new(params.except('does_not_constitute_update', 'public', 'linked_id', 'linked_type'))
     rescue NameError
       # The app store may contain legacy events that we don't display in our UI
       # therefore don't have a class for. If so we ignore them
