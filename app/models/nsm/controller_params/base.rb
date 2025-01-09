@@ -5,7 +5,7 @@ module Nsm
       include ActiveModel::Attributes
 
       def error_summary
-        self.errors.messages.map {|key, value| "Field: #{key}, Errors: #{value}" }
+        errors.messages.map { |key, value| "Field: #{key}, Errors: #{value}" }
       end
     end
   end

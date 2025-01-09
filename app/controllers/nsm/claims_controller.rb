@@ -50,11 +50,9 @@ module Nsm
         :page
       )
       param_model = Nsm::ControllerParams::Claims.new(safe_params)
-      if param_model.valid?
-        safe_params
-      else
-        raise "#{param_model.error_summary}"
-      end
+      raise param_model.error_summary.to_s unless param_model.valid?
+
+      safe_params
     end
 
     private
